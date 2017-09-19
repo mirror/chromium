@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267b224a_833f9c1d",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-19T21:36:22Z",
+      "side": 1,
+      "message": "Like so?",
+      "range": {
+        "startLine": 695,
+        "startChar": 29,
+        "endLine": 695,
+        "endChar": 40
+      },
+      "revId": "dd74963ffe8f67bb5576f8a730a639f9c71a5399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
