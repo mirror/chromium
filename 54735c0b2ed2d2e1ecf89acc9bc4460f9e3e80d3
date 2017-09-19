@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d6c9e4_86d23778",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3139,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-19T17:23:23Z",
+      "side": 1,
+      "message": "Delete extra \"before\"",
+      "range": {
+        "startLine": 3139,
+        "startChar": 60,
+        "endLine": 3139,
+        "endChar": 66
+      },
+      "revId": "54735c0b2ed2d2e1ecf89acc9bc4460f9e3e80d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d58f24_50ea5224",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-19T17:23:23Z",
+      "side": 1,
+      "message": "Avoid \"we\". How about \"...when the UIScrollView\u0027s contentSize is reset.\"",
+      "range": {
+        "startLine": 3144,
+        "startChar": 71,
+        "endLine": 3145,
+        "endChar": 35
+      },
+      "revId": "54735c0b2ed2d2e1ecf89acc9bc4460f9e3e80d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
