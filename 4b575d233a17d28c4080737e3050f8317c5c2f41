@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e4cf5e5_e88d1077",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:44:18Z",
+      "side": 1,
+      "message": "This function kinda returns a bit of an odd state.\n\nThe resources are transferred to the parent, but the ids in the quads are of the child still, so they would have to be mapped with the parent\u0027s ResourceProvider before they could be used. Is that intended?",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd9017e_aa02630c",
+        "filename": "cc/test/render_pass_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:44:18Z",
+      "side": 1,
+      "message": "Use a different name instead of function overloading.\n\n\"Use overloaded functions (including constructors) only if a reader looking at a call site can get a good idea of what is happening without having to first figure out exactly which overload is being called.\" https://google.github.io/styleguide/cppguide.html#Function_Overloading\n\nMaybe AddOneOfEveryQuadTypeInDisplayResourceProvider or something?",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9000ae3_75bc4162",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:44:18Z",
+      "side": 1,
+      "message": "Please put a comment on each line explaining why it\u0027s here.",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
