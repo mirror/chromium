@@ -387,11 +387,20 @@ bool BrowserPlugin::Initialize(WebPluginContainer* container) {
   BrowserPluginManager::Get()->AddBrowserPlugin(
       browser_plugin_instance_id_, this);
 
+  auto* render_frame =
+      RenderFrameImpl::FromRoutingID(render_frame_routing_id());
+
   // Defer attach call so that if there's any pending browser plugin
   // destruction, then it can progress first.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&BrowserPlugin::UpdateInternalInstanceId,
-                                weak_ptr_factory_.GetWeakPtr()));
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner;
+  if (render_frame) {
+    task_runner = render_frame->GetTaskRunner(blink::TaskType::kUnspecedTimer);
+  } else {
+    task_runner = base::ThreadTaskRunnerHandle::Get();
+  }
+  task_runner->PostTask(FROM_HERE,
+                        base::BindOnce(&BrowserPlugin::UpdateInternalInstanceId,
+                                       weak_ptr_factory_.GetWeakPtr()));
   return true;
 }
 
@@ -410,7 +419,14 @@ void BrowserPlugin::Destroy() {
       render_frame ? render_frame->GetRenderView() : nullptr);
   if (render_view)
     render_view->mouse_lock_dispatcher()->OnLockTargetDestroyed(this);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner;
+  if (render_frame) {
+    task_runner = render_frame->GetTaskRunner(blink::TaskType::kUnspecedTimer);
+  } else {
+    task_runner = base::ThreadTaskRunnerHandle::Get();
+  }
+  task_runner->DeleteSoon(FROM_HERE, this);
 }
 
 v8::Local<v8::Object> BrowserPlugin::V8ScriptableObject(v8::Isolate* isolate) {
