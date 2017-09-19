@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2324405a_65277155",
+        "filename": "chrome/browser/ui/browser_commands_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T21:01:22Z",
+      "side": 1,
+      "message": "Discussed offline, I\u0027ll keep this for now. I like the idea of pattern-based DEPS rules though -- I\u0027ll look for opportunities to do that in the future.",
+      "parentUuid": "d24e3cca_9741771e",
+      "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5df65194_376ad643",
         "filename": "chrome/browser/ui/webui/DEPS",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-19T18:28:36Z",
       "side": 1,
       "message": "How does this relate to chrome/browser/ui/webui/chromeos/login/DEPS?",
+      "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51c6a15_7fa9ee90",
+        "filename": "chrome/browser/ui/webui/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T21:01:22Z",
+      "side": 1,
+      "message": "It\u0027s not related to that one. There are a bunch of ash includes under c/b/ui/webui and I didn\u0027t want to make rules for all the subdirs. I just pushed the existing +ash DEPS to here. I can make more subdir DEPS if you prefer.",
+      "parentUuid": "5df65194_376ad643",
       "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
