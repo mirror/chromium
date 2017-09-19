@@ -798,8 +798,8 @@ void GraphicsContext::DrawImage(
   image_flags.setColor(SK_ColorBLACK);
   image_flags.setFilterQuality(ComputeFilterQuality(image, dest, src));
   image_flags.setAntiAlias(ShouldAntialias());
-  if (ShouldApplyHighContrastFilterToImage(*image))
-    image_flags.setColorFilter(high_contrast_filter_);
+  //if (ShouldApplyHighContrastFilterToImage(*image))
+  //  image_flags.setColorFilter(high_contrast_filter_);
   image->Draw(canvas_, image_flags, dest, src, should_respect_image_orientation,
               Image::kClampImageToSourceRect);
   paint_controller_.SetImagePainted();
