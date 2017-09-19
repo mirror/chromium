@@ -46,6 +46,7 @@
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/sessions/tab_restore_service_factory.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
@@ -76,9 +77,11 @@
 #include "components/sessions/core/tab_restore_service.h"
 #include "components/web_cache/browser/web_cache_manager.h"
 #include "content/public/browser/browsing_data_filter_builder.h"
+#include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/plugin_data_remover.h"
 #include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/browser/web_contents.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/reporting/reporting_browsing_data_remover.h"
@@ -91,9 +94,14 @@
 #include "chrome/browser/android/webapps/webapp_registry.h"
 #include "chrome/browser/media/android/cdm/media_drm_license_manager.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
+#include "chrome/browser/ui/android/tab_model/tab_model.h"
+#include "chrome/browser/ui/android/tab_model/tab_model_list.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "sql/connection.h"
+#else
+#include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -577,7 +585,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
 
     // If the caller is removing history for all hosts, then clear ancillary
     // historical information.
-    if (filter_builder.IsEmptyBlacklist()) {
+    if (filter_builder.GetMode() == BrowsingDataFilterBuilder::BLACKLIST) {
       // We also delete the list of recently closed tabs. Since these expire,
       // they can't be more than a day old, so we can simply clear them all.
       sessions::TabRestoreService* tab_service =
@@ -586,13 +594,43 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
         tab_service->ClearEntries();
         tab_service->DeleteLastSession();
       }
+// Remove tab navigation history.
+#if defined(OS_ANDROID)
+      // test phone and tablet
+      for (auto it = TabModelList::begin(); it != TabModelList::end(); ++it) {
+        TabModel* tab_model = *it;
+        if (!tab_model->IsOffTheRecord()) {
+          for (int i = 0; i < tab_model->GetTabCount(); i++) {
+            content::WebContents* web_contents = tab_model->GetWebContentsAt(i);
+            if (web_contents->GetController().CanPruneAllButLastCommitted())
+              web_contents->GetController().PruneAllButLastCommitted();
+          }
+        }
+      }
+#else
+      for (auto* browser : *BrowserList::GetInstance()) {
+        if (browser->profile() == profile_) {
+          DCHECK(browser->profile().GetProfileType() ==
+                 Profile::ProfileType::REGULAR_PROFILE);
+          TabStripModel* tab_strip = browser->tab_strip_model();
+          for (int i = 0; i < tab_strip->count(); i++) {
+            content::WebContents* web_contents = tab_strip->GetWebContentsAt(i);
+            if (web_contents->GetController().CanPruneAllButLastCommitted())
+              web_contents->GetController().PruneAllButLastCommitted();
+          }
+        }
+      }
+#endif
+// TODO IOS?
 
 #if BUILDFLAG(ENABLE_SESSION_SERVICE)
       // We also delete the last session when we delete the history.
       SessionService* session_service =
           SessionServiceFactory::GetForProfile(profile_);
-      if (session_service)
+      if (session_service) {
         session_service->DeleteLastSession();
+        session_service->ResetFromCurrentBrowsers();
+      }
 #endif
     }
 
