@@ -22,15 +22,27 @@
 #include "extensions/common/constants.h"
 #include "ui/base/l10n/l10n_util.h"
 
+base::string16 TrimLeadingWhitespaceAndControlChars(
+    const base::string16& input) {
+  for (size_t i = 0; i < input.size(); ++i) {
+    // The candidate scheme starts at the first non-whitespace, non-control
+    // character.
+    if (!base::IsUnicodeWhitespace(input[i]) && (input[i] > 0x20)) {
+      return input.substr(i, base::string16::npos);
+    }
+  }
+  return input;
+}
+
 // static
 base::string16 OmniboxView::StripJavascriptSchemas(const base::string16& text) {
   const base::string16 kJsPrefix(
       base::ASCIIToUTF16(url::kJavaScriptScheme) + base::ASCIIToUTF16(":"));
-  base::string16 out(text);
+
+  base::string16 out(TrimLeadingWhitespaceAndControlChars(text));
   while (base::StartsWith(out, kJsPrefix,
                           base::CompareCase::INSENSITIVE_ASCII)) {
-    base::TrimWhitespace(out.substr(kJsPrefix.length()), base::TRIM_LEADING,
-                         &out);
+    out = TrimLeadingWhitespaceAndControlChars(out.substr(kJsPrefix.length()));
   }
   return out;
 }
