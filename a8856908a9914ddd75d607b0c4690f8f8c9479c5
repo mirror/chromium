@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f333991_f9e4334e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T12:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24d5852_f8f07cb7",
+      "revId": "a8856908a9914ddd75d607b0c4690f8f8c9479c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac898085_4fa617b6",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "63c7d080_bc95c98b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T12:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac898085_4fa617b6",
+      "range": {
+        "startLine": 267,
+        "startChar": 12,
+        "endLine": 267,
+        "endChar": 31
+      },
+      "revId": "a8856908a9914ddd75d607b0c4690f8f8c9479c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6be2531_2b9c981a",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-19T10:03:01Z",
       "side": 1,
       "message": "return from method instead of making it an instance member?",
+      "range": {
+        "startLine": 297,
+        "startChar": 8,
+        "endLine": 297,
+        "endChar": 20
+      },
+      "revId": "a8856908a9914ddd75d607b0c4690f8f8c9479c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028921f3_79f26592",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T12:41:15Z",
+      "side": 1,
+      "message": "Because mSigninPromo.itemView is later used in \u0027mRenderTestRule.render(...)\u0027, this needs to either be a final variable or a member of the class (the Runnable from \u0027ThreadUtils.runOnUiThreadBlocking(...)\u0027 adds this constraint).",
+      "parentUuid": "a6be2531_2b9c981a",
       "range": {
         "startLine": 297,
         "startChar": 8,
@@ -85,6 +151,30 @@
       "revId": "a8856908a9914ddd75d607b0c4690f8f8c9479c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58cbc93_65de3e4b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T12:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779fb138_b2e1bfea",
+      "range": {
+        "startLine": 298,
+        "startChar": 42,
+        "endLine": 298,
+        "endChar": 61
+      },
+      "revId": "a8856908a9914ddd75d607b0c4690f8f8c9479c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
