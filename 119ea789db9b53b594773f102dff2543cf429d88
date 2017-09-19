@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17af0bd8_6b443a95",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-19T15:41:59Z",
+      "side": 1,
+      "message": "Can you use base::ContainsValue(stored_payment_app_info_-\u003eenabled_methods, modifier_supported_method)? \n\nSee https://cs.chromium.org/chromium/src/components/payments/content/payment_request.cc?type\u003dcs\u0026q\u003dbase::ContainsValue+file:components\u0026sq\u003dpackage:chromium\u0026l\u003d141",
+      "revId": "119ea789db9b53b594773f102dff2543cf429d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
