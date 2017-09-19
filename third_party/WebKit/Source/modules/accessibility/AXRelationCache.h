@@ -69,15 +69,22 @@ class AXRelationCache {
   // just changed, check to see if another object wants to be its parent due to
   // aria-owns. If so, update the tree by calling childrenChanged() on the
   // potential owner, possibly reparenting this element.
-  void UpdateTreeIfElementIdIsAriaOwned(Element*);
+  // In addition, if any object is related to this object via aria-owns,
+  // aria-describedby or aria-labeledby, update the text for the related object.
+  void UpdateRelatedContent(Node*);
 
   // Remove given AXID from cache.
   void RemoveAXID(AXID);
+
+  // Update map of ids to related objects.
+  void UpdateReverseRelationMap(Element* relation_source,
+                                HeapVector<Member<Element>> elements);
 
  private:
   bool IsValidOwnsRelation(AXObject* owner, AXObject* child) const;
   void UnmapOwnedChildren(const AXObject* owner, Vector<AXID>);
   void MapOwnedChildren(const AXObject* owner, Vector<AXID>);
+  void UpdateReverseRelationMap(AXID, Vector<String>&);
 
   WeakPersistent<AXObjectCacheImpl> object_cache_;
 
@@ -94,22 +101,22 @@ class AXRelationCache {
   // own it.
   HashMap<AXID, AXID> aria_owned_child_to_real_parent_mapping_;
 
-  // Map from the AXID of any object with an aria-owns attribute to the set of
-  // ids of its children. This is *unvalidated*, it includes ids that may not
-  // currently exist in the tree.
-  HashMap<AXID, HashSet<String>> aria_owner_to_ids_mapping_;
-
-  // Map from an ID (the ID attribute of a DOM element) to the set of elements
-  // that want to own that ID. This is *unvalidated*, it includes possible
-  // duplicates.  This is used so that when an element with an ID is added to
-  // the tree or changes its ID, we can quickly determine if it affects an
-  // aria-owns relationship.
-  HashMap<String, std::unique_ptr<HashSet<AXID>>> id_to_aria_owners_mapping_;
+  // Reverse relation map from an ID (the ID attribute of a DOM element) to the
+  // set of elements that at some time pointed to that ID via aria-owns,
+  // aria-labelledby, aria-desribedby. This is *unvalidated*, it includes
+  // possible extras and duplicates.
+  // This is used so that:
+  // - When an element with an ID is added to the tree or changes its ID, we can
+  //   quickly determine if it affects an aria-owns relationship.
+  // - When text changes, we can recompute any label or description based on it
+  //   and fire the appropriate change events.
+  HashMap<String, std::unique_ptr<HashSet<AXID>>> id_to_related_mapping_;
 
   // Helpers that call back into object cache
   AXObject* ObjectFromAXID(AXID) const;
   AXObject* GetOrCreate(Node*);
   void ChildrenChanged(AXObject*);
+  void TextChanged(AXObject*);
 };
 
 }  // namespace blink
