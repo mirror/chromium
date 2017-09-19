@@ -34,6 +34,24 @@
       "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d966ea_c33b3e54",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-19T17:49:17Z",
+      "side": 1,
+      "message": "yes, but the concerning part is that Choose is still being called.  AVDA should enter an error state and take no further actions when MediaCrypto fails.\n\nwhatever path it\u0027s taking to get into Choose is broken, and should be fixed.  the null check here isn\u0027t sufficient, since whatever is calling Choose likely has other side-effects.\n\ndo you have a stack trace?",
+      "parentUuid": "cda35f0c_c20e7ae6",
+      "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
