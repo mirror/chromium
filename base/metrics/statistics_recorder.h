@@ -204,6 +204,7 @@ class BASE_EXPORT StatisticsRecorder {
   // the ShouldRecord() method of the record checker.
   // If the record checker is not set, returns true.
   static bool ShouldRecordHistogram(uint64_t histogram_hash);
+  static void SetRecordCheckerEnabled(bool enabled);
 
  private:
   // We keep a map of callbacks to histograms, so that as histograms are
@@ -250,7 +251,7 @@ class BASE_EXPORT StatisticsRecorder {
 
   static void Reset();
   static void DumpHistogramsToVlog(void* instance);
-
+  static bool record_checker_enabled_;
   static HistogramMap* histograms_;
   static CallbackMap* callbacks_;
   static RangesMap* ranges_;
