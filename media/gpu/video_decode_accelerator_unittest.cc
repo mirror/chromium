@@ -161,7 +161,7 @@ const base::TimeDelta kReuseDelay = base::TimeDelta::FromSeconds(1);
 const int kWebRtcDecodeCallsPerSecond = 30;
 // Simulate an adjustment to a larger number of pictures to make sure the
 // decoder supports an upwards adjustment.
-const int kExtraPictureBuffers = 2;
+const int kExtraPictureBuffers = 0;
 
 struct TestVideoFile {
   explicit TestVideoFile(base::FilePath::StringType file_name)
