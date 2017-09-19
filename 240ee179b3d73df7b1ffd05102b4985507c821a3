@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b99041b_4525ece6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795809ef_00bccd60",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efab269_0ae25a4a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f56812f_50bbb4db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efab269_0ae25a4a",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 76
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5496f802_304f1319",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca490f1_ea4e2e37",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 10
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35337ae_27f71248",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6467b46a_84a88fd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "I used a lambda, not sure how to use a method reference exactly here.",
+      "parentUuid": "a35337ae_27f71248",
+      "range": {
+        "startLine": 134,
+        "startChar": 33,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da6aa1f2_66b4c15e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef5e94f_c2f3da0b",
+      "range": {
+        "startLine": 149,
+        "startChar": 34,
+        "endLine": 149,
+        "endChar": 35
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6926b84a_d34a95b7",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ad5670_77d861c0",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T16:15:21Z",
+      "side": 1,
+      "message": "Done.\n\nwow, I had no idea! I thought it was simply another header that could be included anywhere.",
+      "parentUuid": "6926b84a_d34a95b7",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
