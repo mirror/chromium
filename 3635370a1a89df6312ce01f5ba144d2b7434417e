@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d16a71_f1c7eda6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-19T16:33:18Z",
+      "side": 1,
+      "message": "Instead of adding this special logic, how would you feel about using something like the PlaceholderSheetContent? (https://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/PlaceholderSheetContent.java?q\u003dplaceholdersheetcontent\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d18)\n\nThe placeholder itself probably doesn\u0027t even need a content view any more since the sheet draws with a background now.",
+      "range": {
+        "startLine": 986,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 9
+      },
+      "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
