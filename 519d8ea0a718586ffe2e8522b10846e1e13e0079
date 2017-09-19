@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d38d759_bebb01c5",
+        "filename": "chrome/browser/web_data_service_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-19T12:08:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "519d8ea0a718586ffe2e8522b10846e1e13e0079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd623847_5ae78420",
+        "filename": "chrome/browser/web_data_service_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-19T12:08:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "519d8ea0a718586ffe2e8522b10846e1e13e0079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2a3832_9d8eef24",
+        "filename": "chrome/browser/web_data_service_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-19T12:08:26Z",
+      "side": 1,
+      "message": "Why this change?\n\nBTW, no file below src/chrome/... should be built on iOS, so if the change was intended, you can just remove the conditional completely as it will always be true, i.e. do:\n\n  namespace payments {\n  class PaymentManifestWebDataService;\n  }",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "519d8ea0a718586ffe2e8522b10846e1e13e0079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2c1e7b_8482364e",
+        "filename": "chrome/browser/web_data_service_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-19T12:08:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "519d8ea0a718586ffe2e8522b10846e1e13e0079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
