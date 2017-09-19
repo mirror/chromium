@@ -343,6 +343,21 @@ void FakeShillDeviceClient::AddWakeOnPacketConnection(
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
 
+void FakeShillDeviceClient::AddWakeOnPacketOfType(
+    const dbus::ObjectPath& device_path,
+    const ShillDeviceClient::PacketTypesForWake& packet_type,
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  if (!stub_devices_.HasKey(device_path.value())) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+
+  wake_on_packet_types_[device_path].insert(packet_type);
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+}
+
 void FakeShillDeviceClient::RemoveWakeOnPacketConnection(
     const dbus::ObjectPath& device_path,
     const net::IPEndPoint& ip_endpoint,
@@ -356,6 +371,29 @@ void FakeShillDeviceClient::RemoveWakeOnPacketConnection(
   }
 
   const auto endpoint_iter = device_iter->second.find(ip_endpoint);
+  if (endpoint_iter == device_iter->second.end()) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+
+  device_iter->second.erase(endpoint_iter);
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+}
+
+void FakeShillDeviceClient::RemoveWakeOnPacketOfType(
+    const dbus::ObjectPath& device_path,
+    const ShillDeviceClient::PacketTypesForWake& packet_type,
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  const auto device_iter = wake_on_packet_types_.find(device_path);
+  if (!stub_devices_.HasKey(device_path.value()) ||
+      device_iter == wake_on_packet_types_.end()) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+
+  const auto endpoint_iter = device_iter->second.find(packet_type);
   if (endpoint_iter == device_iter->second.end()) {
     PostNotFoundError(error_callback);
     return;

@@ -488,6 +488,25 @@ void NetworkDeviceHandlerImpl::AddWifiWakeOnPacketConnection(
                  error_callback));
 }
 
+void NetworkDeviceHandlerImpl::AddWifiWakeOnPacketOfType(
+      const chromeos::ShillDeviceClient::PacketTypesForWake& packet_type,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback) {
+  const DeviceState* device_state = GetWifiDeviceState(error_callback);
+  if (!device_state)
+    return;
+
+  NET_LOG(USER) << "Device.AddWakeOnPacketOfType: " << device_state->path();
+  DBusThreadManager::Get()->GetShillDeviceClient()->AddWakeOnPacketConnection(
+      dbus::ObjectPath(device_state->path()),
+      packet_type,
+      callback,
+      base::Bind(&HandleShillCallFailure,
+                 device_state->path(),
+                 error_callback));
+}
+
+
 void NetworkDeviceHandlerImpl::RemoveWifiWakeOnPacketConnection(
       const net::IPEndPoint& ip_endpoint,
       const base::Closure& callback,
@@ -501,6 +520,25 @@ void NetworkDeviceHandlerImpl::RemoveWifiWakeOnPacketConnection(
       ->GetShillDeviceClient()
       ->RemoveWakeOnPacketConnection(dbus::ObjectPath(device_state->path()),
                                      ip_endpoint,
+                                     callback,
+                                     base::Bind(&HandleShillCallFailure,
+                                                device_state->path(),
+                                                error_callback));
+}
+
+void NetworkDeviceHandlerImpl::RemoveWifiWakeOnPacketOfType(
+      const chromeos::ShillDeviceClient::PacketTypesForWake& packet_type,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback) {
+  const DeviceState* device_state = GetWifiDeviceState(error_callback);
+  if (!device_state)
+    return;
+
+  NET_LOG(USER) << "Device.RemoveWakeOnPacketOfType: " << device_state->path();
+  DBusThreadManager::Get()
+      ->GetShillDeviceClient()
+      ->RemoveWakeOnPacketConnection(dbus::ObjectPath(device_state->path()),
+                                     packet_type,
                                      callback,
                                      base::Bind(&HandleShillCallFailure,
                                                 device_state->path(),

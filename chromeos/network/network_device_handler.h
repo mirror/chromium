@@ -225,10 +225,22 @@ class CHROMEOS_EXPORT NetworkDeviceHandler {
       const base::Closure& callback,
       const network_handler::ErrorCallback& error_callback) = 0;
 
+  // Programs the wifi device to wake the system on every packet  of type
+  // |packet_type|.
+  virtual void AddWifiWakeOnPacketOfType(
+      const chromeos::ShillDeviceClient::PacketTypesForWake& packet_type,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback) = 0;
+
   // Removes |ip_endpoint| from the list of tcp connections that the wifi device
   // should monitor to wake the system from suspend.
   virtual void RemoveWifiWakeOnPacketConnection(
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback) = 0;
+
+  virtual void RemoveWifiWakeOnPacketOfType(
+      const chromeos::ShillDeviceClient::PacketTypesForWake& packet_type,
       const base::Closure& callback,
       const network_handler::ErrorCallback& error_callback) = 0;
 

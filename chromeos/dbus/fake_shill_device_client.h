@@ -84,11 +84,25 @@ class CHROMEOS_EXPORT FakeShillDeviceClient
       const net::IPEndPoint& ip_endpoint,
       const base::Closure& callback,
       const ErrorCallback& error_callback) override;
+
+  void AddWakeOnPacketOfType(
+      const dbus::ObjectPath& device_path,
+      const ShillDeviceClient::PacketTypesForWake& packet_type,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) override;
+
   void RemoveWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
       const base::Closure& callback,
       const ErrorCallback& error_callback) override;
+
+  void RemoveWakeOnPacketOfType(
+      const dbus::ObjectPath& device_path,
+      const ShillDeviceClient::PacketTypesForWake& packet_type,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) override;
+
   void RemoveAllWakeOnPacketConnections(
       const dbus::ObjectPath& device_path,
       const base::Closure& callback,
@@ -164,6 +178,10 @@ class CHROMEOS_EXPORT FakeShillDeviceClient
   // Wake on packet connections for each device.
   std::map<dbus::ObjectPath, std::set<net::IPEndPoint> >
       wake_on_packet_connections_;
+
+  // Wake on packet connections for each device.
+  std::map<dbus::ObjectPath, std::set<ShillDeviceClient::PacketTypesForWake>>
+      wake_on_packet_types_;
 
   // Current SIM PIN per device path.
   std::map<std::string, std::string> sim_pin_;

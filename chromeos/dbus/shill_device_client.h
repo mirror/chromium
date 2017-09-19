@@ -12,6 +12,7 @@
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/shill_client_helper.h"
+#include "chromeos/dbus/shill_device_client.h"
 
 namespace base {
 
@@ -44,6 +45,16 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
   typedef ShillClientHelper::DictionaryValueCallback DictionaryValueCallback;
   typedef ShillClientHelper::StringCallback StringCallback;
   typedef ShillClientHelper::ErrorCallback ErrorCallback;
+
+  enum class PacketTypesForWake {
+    TCP = 0,
+    UDP,
+    IDP,
+    IPIP,
+    IGMP,
+    ICMP,
+    IP
+  };
 
   // Interface for setting up devices for testing.
   // Accessed through GetTestInterface(), only implemented in the Stub Impl.
@@ -172,9 +183,16 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
 
   // Adds |ip_endpoint| to the list of tcp connections that the device should
   // monitor to wake the system from suspend.
-   virtual void AddWakeOnPacketConnection(
+  virtual void AddWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) = 0;
+
+  // Adds a pattern to wake the system on packet of type |packet_type|.
+  virtual void AddWakeOnPacketOfType(
+      const dbus::ObjectPath& device_path,
+      const ShillDeviceClient::PacketTypesForWake&,
       const base::Closure& callback,
       const ErrorCallback& error_callback) = 0;
 
@@ -183,6 +201,14 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
   virtual void RemoveWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) = 0;
+
+  // Removes a pattern that wakes the system on packet of type |packet_type| if
+  // previously programmed.
+  virtual void RemoveWakeOnPacketOfType(
+      const dbus::ObjectPath& device_path,
+      const ShillDeviceClient::PacketTypesForWake&,
       const base::Closure& callback,
       const ErrorCallback& error_callback) = 0;
 
