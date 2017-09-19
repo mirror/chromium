@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3cc08c5_08ec7ea9",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-19T00:01:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is the correct place for this check.\ntyoshino: Should we do this at DocumentThreadableLoader?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 30,
+        "endLine": 1090,
+        "endChar": 31
+      },
+      "revId": "4d25a0a02d4988b66f95a9b61cf782e9ae14a606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
