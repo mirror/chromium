@@ -186,9 +186,9 @@ public class SnippetsBridge implements SuggestionsSource {
 
     @Override
     public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
-            Callback<List<SnippetArticle>> callback) {
+            FetchSuggestionsCallbacks callbacks) {
         assert mNativeSnippetsBridge != 0;
-        nativeFetch(mNativeSnippetsBridge, category, displayedSuggestionIds, callback);
+        nativeFetch(mNativeSnippetsBridge, category, displayedSuggestionIds, callbacks);
     }
 
     @CalledByNative
@@ -257,6 +257,16 @@ public class SnippetsBridge implements SuggestionsSource {
         for (Observer observer : mObserverList) observer.onFullRefreshRequired();
     }
 
+    @CalledByNative
+    private void onFetchSuccess(FetchSuggestionsCallbacks callbacks, List<SnippetArticle> results) {
+        callbacks.onMoreSuggestions(results);
+    }
+
+    @CalledByNative
+    private void onFetchFailure(FetchSuggestionsCallbacks callbacks) {
+        callbacks.onFailure();
+    }
+
     private native long nativeInit(Profile profile);
     private native void nativeDestroy(long nativeNTPSnippetsBridge);
     private native void nativeReloadSuggestions(long nativeNTPSnippetsBridge);
@@ -277,7 +287,7 @@ public class SnippetsBridge implements SuggestionsSource {
             String idWithinCategory, int minimumSizePx, int desiredSizePx,
             Callback<Bitmap> callback);
     private native void nativeFetch(long nativeNTPSnippetsBridge, int category,
-            String[] knownSuggestions, Callback<List<SnippetArticle>> callback);
+            String[] knownSuggestions, FetchSuggestionsCallbacks callbacks);
     private native void nativeFetchContextualSuggestions(
             long nativeNTPSnippetsBridge, String url, Callback<List<SnippetArticle>> callback);
     private native void nativeFetchContextualSuggestionImage(long nativeNTPSnippetsBridge,
