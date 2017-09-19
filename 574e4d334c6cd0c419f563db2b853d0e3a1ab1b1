@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "8925010b_5a270549",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d24bc6_473c8208",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c5ed087_cc31e046",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5e9e63_acb148ab",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 195
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30abd2aa_e7051254",
         "filename": "components/cryptauth/device_capability_manager.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1d9ef1_407e4406",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30abd2aa_e7051254",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b56cd772_eb52d541",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a273cf_29e238f0",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e929e2ca_c2903d6e",
         "filename": "components/cryptauth/fake_device_capability_manager.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27adba62_a78c495c",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e929e2ca_c2903d6e",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "da01bfa0_ec9e6f4d",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ec8b50_b7166db6",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d66113ea_336f07a2",
         "filename": "components/cryptauth/fake_device_capability_manager.h",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5193770_b26ce75c",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-19T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d66113ea_336f07a2",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 3
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
