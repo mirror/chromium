@@ -16,6 +16,7 @@
 #include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/ownership/owner_settings_service.h"
@@ -129,6 +130,12 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // that question, simply check whether device_settings() is different from
   // nullptr.
   Status status() const { return store_status_; }
+
+  // Returns the currently device off hours controller.
+  // Returns nullptr if controller haven't been initialized.
+  const policy::DeviceOffHoursController* device_off_hours_controller() const {
+    return device_off_hours_controller_.get();
+  }
 
   // Triggers an attempt to pull the public half of the owner key from disk and
   // load the device settings.
@@ -257,6 +264,9 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
 
   // Whether the device will be establishing consumer ownership.
   bool will_establish_consumer_ownership_ = false;
+
+  std::unique_ptr<policy::DeviceOffHoursController>
+      device_off_hours_controller_ = nullptr;
 
   base::WeakPtrFactory<DeviceSettingsService> weak_factory_{this};
 
