@@ -22,6 +22,30 @@
       "revId": "9d5306cf3a84dc6566647d8296f1c6caa2209065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a99fc6_48fc0cb7",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-19T04:13:56Z",
+      "side": 1,
+      "message": "I\u0027m sorry.  Shall I remove this comment?",
+      "parentUuid": "34e075dd_c7bbe137",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "9d5306cf3a84dc6566647d8296f1c6caa2209065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
