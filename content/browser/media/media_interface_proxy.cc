@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_util.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/content_client.h"
@@ -25,6 +26,11 @@
 #include "net/url_request/url_request_context_getter.h"
 #endif
 
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#include "content/public/browser/cdm_registry.h"
+#include "content/public/common/cdm_info.h"
+#endif
+
 namespace content {
 
 MediaInterfaceProxy::MediaInterfaceProxy(
@@ -33,7 +39,7 @@ MediaInterfaceProxy::MediaInterfaceProxy(
     const base::Closure& error_handler)
     : render_frame_host_(render_frame_host),
       binding_(this, std::move(request)) {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   DCHECK(render_frame_host_);
   DCHECK(!error_handler.is_null());
 
@@ -44,7 +50,7 @@ MediaInterfaceProxy::MediaInterfaceProxy(
 }
 
 MediaInterfaceProxy::~MediaInterfaceProxy() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
@@ -69,14 +75,15 @@ void MediaInterfaceProxy::CreateRenderer(
 }
 
 void MediaInterfaceProxy::CreateCdm(
+    const std::string& key_system,
     media::mojom::ContentDecryptionModuleRequest request) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  GetCdmInterfaceFactory()->CreateCdm(std::move(request));
+  GetCdmInterfaceFactory(key_system)->CreateCdm(key_system, std::move(request));
 }
 
 media::mojom::InterfaceFactory*
 MediaInterfaceProxy::GetMediaInterfaceFactory() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!interface_factory_ptr_)
@@ -87,14 +94,15 @@ MediaInterfaceProxy::GetMediaInterfaceFactory() {
   return interface_factory_ptr_.get();
 }
 
-media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory() {
-  DVLOG(1) << __FUNCTION__;
+media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
+    const std::string& key_system) {
+  DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 #if !BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
   return GetMediaInterfaceFactory();
 #else
   if (!cdm_interface_factory_ptr_)
-    ConnectToCdmService();
+    ConnectToCdmService(key_system);
 
   DCHECK(cdm_interface_factory_ptr_);
 
@@ -103,14 +111,14 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory() {
 }
 
 void MediaInterfaceProxy::OnMediaServiceConnectionError() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
   interface_factory_ptr_.reset();
 }
 
 void MediaInterfaceProxy::OnCdmServiceConnectionError() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
   cdm_interface_factory_ptr_.reset();
@@ -145,7 +153,8 @@ MediaInterfaceProxy::GetFrameServices() {
 }
 
 void MediaInterfaceProxy::ConnectToMediaService() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
+  DCHECK(!interface_factory_ptr_);
 
   media::mojom::MediaServicePtr media_service;
 
@@ -162,8 +171,36 @@ void MediaInterfaceProxy::ConnectToMediaService() {
                      base::Unretained(this)));
 }
 
-void MediaInterfaceProxy::ConnectToCdmService() {
-  DVLOG(1) << __FUNCTION__;
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+// TODO(xhwang): This is currently only used for External Clear Key which is
+// test only. Refine this function if needed.
+static bool IsSubKeySystem(const std::string& key_system,
+                           const std::string& sub_key_system) {
+  std::string prefix = key_system + ".";
+  return sub_key_system.size() > prefix.size() &&
+         base::StartsWith(sub_key_system, prefix, base::CompareCase::SENSITIVE);
+}
+
+static std::unique_ptr<CdmInfo> GetCdmInfoForKeySystem(
+    const std::string& key_system) {
+  DVLOG(2) << __func__ << ": key_system = " << key_system;
+  for (const auto& cdm : CdmRegistry::GetInstance()->GetAllRegisteredCdms()) {
+    if (cdm.supported_key_system == key_system ||
+        (cdm.supports_sub_key_systems &&
+         IsSubKeySystem(cdm.supported_key_system, key_system))) {
+      return base::MakeUnique<CdmInfo>(cdm);
+    }
+  }
+
+  return nullptr;
+}
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
+
+// TODO(xhwang): Use different "Instance ID" based on the CDM type to launch
+// different CDMs in different processes. See https://crbug.com/510604
+void MediaInterfaceProxy::ConnectToCdmService(const std::string& key_system) {
+  DVLOG(1) << __func__;
+  DCHECK(!cdm_interface_factory_ptr_);
 
   media::mojom::MediaServicePtr media_service;
 
@@ -171,6 +208,16 @@ void MediaInterfaceProxy::ConnectToCdmService() {
   service_manager::Connector* connector =
       ServiceManagerConnection::GetForProcess()->GetConnector();
   connector->BindInterface(media::mojom::kCdmServiceName, &media_service);
+
+  // PreSandboxStartup() must always be called to ensure sandbox initialization.
+  // Also it should be called before CreateInterfaceFactory().
+  base::FilePath cdm_path;
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  auto cdm_info = GetCdmInfoForKeySystem(key_system);
+  if (cdm_info)
+    cdm_path = cdm_info->path;
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  media_service->PreSandboxStartup(cdm_path);
 
   media_service->CreateInterfaceFactory(
       MakeRequest(&cdm_interface_factory_ptr_), GetFrameServices());
