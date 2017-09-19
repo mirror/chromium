@@ -48,6 +48,7 @@ TabletModeWindowManager::~TabletModeWindowManager() {
   added_windows_.clear();
   Shell::Get()->RemoveShellObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
+  Shell::Get()->split_view_controller()->RemoveObserver(this);
   EnableBackdropBehindTopWindowOnEachDisplay(false);
   RemoveWindowCreationObservers();
   RestoreAllWindows();
@@ -80,11 +81,13 @@ void TabletModeWindowManager::WindowStateDestroyed(aura::Window* window) {
 }
 
 void TabletModeWindowManager::OnOverviewModeStarting() {
-  SetDeferBoundsUpdates(true);
+  for (auto& pair : window_state_map_)
+    SetDeferBoundsUpdates(pair.first, true);
 }
 
 void TabletModeWindowManager::OnOverviewModeEnded() {
-  SetDeferBoundsUpdates(false);
+  for (auto& pair : window_state_map_)
+    SetDeferBoundsUpdates(pair.first, false);
 }
 
 void TabletModeWindowManager::OnSplitViewModeEnded() {
@@ -194,6 +197,22 @@ void TabletModeWindowManager::OnDisplayMetricsChanged(const display::Display&,
   // Nothing to do here.
 }
 
+void TabletModeWindowManager::OnSplitViewStateChanged(
+    SplitViewController::State previous_state,
+    SplitViewController::State state) {
+  // It might be possible that split view mode and overview mode are active at
+  // the same time. We need make sure the snapped windows bounds can be updated
+  // immediately.
+  if (state != SplitViewController::NO_SNAP) {
+    SplitViewController* split_view_controller =
+        Shell::Get()->split_view_controller();
+    if (split_view_controller->left_window())
+      SetDeferBoundsUpdates(split_view_controller->left_window(), false);
+    if (split_view_controller->right_window())
+      SetDeferBoundsUpdates(split_view_controller->right_window(), false);
+  }
+}
+
 void TabletModeWindowManager::SetIgnoreWmEventsForExit() {
   for (auto& pair : window_state_map_) {
     pair.second->set_ignore_wm_events(true);
@@ -210,6 +229,7 @@ TabletModeWindowManager::TabletModeWindowManager() {
   EnableBackdropBehindTopWindowOnEachDisplay(true);
   display::Screen::GetScreen()->AddObserver(this);
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->split_view_controller()->AddObserver(this);
   event_handler_ = ShellPort::Get()->CreateTabletModeEventHandler();
 }
 
@@ -229,9 +249,11 @@ void TabletModeWindowManager::RestoreAllWindows() {
     ForgetWindow(window_state_map_.begin()->first);
 }
 
-void TabletModeWindowManager::SetDeferBoundsUpdates(bool defer_bounds_updates) {
-  for (auto& pair : window_state_map_)
-    pair.second->SetDeferBoundsUpdates(defer_bounds_updates);
+void TabletModeWindowManager::SetDeferBoundsUpdates(aura::Window* window,
+                                                    bool defer_bounds_updates) {
+  auto iter = window_state_map_.find(window);
+  if (iter != window_state_map_.end())
+    iter->second->SetDeferBoundsUpdates(defer_bounds_updates);
 }
 
 void TabletModeWindowManager::MaximizeAndTrackWindow(aura::Window* window) {
