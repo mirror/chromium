@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "946a5750_84cfdacf",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "Neither of the following worked:\n\n\u003e [super setUp];\nbase::test::ScopedFeatureList feature_list;\nfeature_list.InitAndEnableFeature(features::kCredentialManager);\n\n\u003e base::test::ScopedFeatureList feature_list;\nfeature_list.InitAndEnableFeature(features::kCredentialManager);\n[super setUp];\n\nPayments do the same",
+      "parentUuid": "3dda0ea6_e81a35b0",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7055bc98_c6b31234",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-14T11:57:46Z",
       "side": 1,
       "message": "Can\u0027t we reuse IDS_MANAGE_PASSWORDS_AUTO_SIGNIN_TITLE that is shared between all the platforms?",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2055af91_2976a32a",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/search/?q\u003d+IDS_MANAGE_PASSWORDS_AUTO_SIGNIN_TITLE\nIt\u0027s defined in a file under //chrome directory, so my code shouldn\u0027t depend on it, right?",
+      "parentUuid": "7055bc98_c6b31234",
       "range": {
         "startLine": 560,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9632c4d8_cfbc5e1f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "kSnackbarAppearanceTimeout:\n\nIt seems to me to be a common way of waiting for UI changes in EG tests, i.e. |WaitUntilConditionOrTimeout| with safe timeout value:\nhttps://cs.chromium.org/search/?q\u003dwaituntilcondition+file:egtest\u0026p\u003d1\u0026type\u003dcs\n\n\nkSnackbarDisappearanceTimeout:\n\nTest\u0027s own timeout would only allow me to test that snackbar disappears at all. I think it\u0027s good to test that it\u0027s displayed for 3 seconds.",
+      "parentUuid": "458d1747_42004405",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32dd7843_51338afe",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8380929f_7aa4a044",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32dd7843_51338afe",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "067007a5_25b22a52",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-14T11:57:46Z",
       "side": 1,
       "message": "Normally a test would just enable what it needs",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 47
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029c5868_d727e588",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "Neither of the following worked:\n\n\u003e [super setUp];\nbase::test::ScopedFeatureList feature_list;\nfeature_list.InitAndEnableFeature(features::kCredentialManager);\n\n\u003e base::test::ScopedFeatureList feature_list;\nfeature_list.InitAndEnableFeature(features::kCredentialManager);\n[super setUp];\n\nPayments do the same",
+      "parentUuid": "067007a5_25b22a52",
       "range": {
         "startLine": 62,
         "startChar": 7,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "92d9bd2c_674bb034",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6087e95_7198a832",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 77
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0f6dc45_39411f1f",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0d06f054_35633557",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f6dc45_39411f1f",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2edfe527_64f8b843",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 11
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-14T11:57:46Z",
       "side": 1,
       "message": "3;",
+      "range": {
+        "startLine": 720,
+        "startChar": 21,
+        "endLine": 720,
+        "endChar": 23
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e03554_758cbb15",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-19T12:11:51Z",
+      "side": 1,
+      "message": "I don\u0027t use a snackbar anymore",
+      "parentUuid": "2edfe527_64f8b843",
       "range": {
         "startLine": 720,
         "startChar": 21,
