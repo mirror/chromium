@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "97343c56_cf9a2535",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T15:01:39Z",
+      "side": 1,
+      "message": "What does \"native resolution\" mean if it\u0027s not scaled by device scale factor?",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badca6fe_d55da141",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T15:01:39Z",
+      "side": 1,
+      "message": "This seems less like you want to change the state of the canvas than that you want to be able to specify a scale for the icon. Why isn\u0027t the scale being passed as a parameter along the icon painting path instead?",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
@@ -131,6 +165,30 @@
       "side": 1,
       "message": "Since we do expose gfx::Canvas::sk_canvas(), I guess it may be a reasonable expectation that using SkCanvas::save()/restore() should behave similarly to gfx::Canvas::Save()/Restore().\n\nOn the other hand, it also makes sense to require the users of gfx::Canvas to fallback to sk_canvas() only when the Canvas api is not sufficient. Thus, for Save()/Restore(), the users should not directly use SkCanvas api. With this reasoning, it\u0027d make sense to save/restore |image_scale_| in Save()/Restore(), I think. (I guess we would want to make sure it gets saved in all the Canvas::Save* functions?)\n\nI don\u0027t really feel strongly either way. danakj@ may have opinions here.",
       "parentUuid": "438c34f6_3ca8002e",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781e4167_449a249c",
+        "filename": "ui/gfx/canvas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T15:01:39Z",
+      "side": 1,
+      "message": "The long-term goal is for gfx::Canvas to not exist, move functionality into other helpers that act-on instead of be-a canvas, or up into cc::PaintCanvas. ui\u0027s DSF stuff would probably not fit in cc::PaintCanvas tho fwiw.",
+      "parentUuid": "2d398806_575cde91",
       "range": {
         "startLine": 147,
         "startChar": 13,
