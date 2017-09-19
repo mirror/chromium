@@ -16,6 +16,24 @@
       "revId": "733523737d0c22c6b9b32d3e879b888bb6d4fcbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e4d805_c640fe1c",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-09-19T00:40:46Z",
+      "side": 0,
+      "message": "You\u0027re right. I added code to delete old entries if the version is less than 6.",
+      "parentUuid": "89bfe756_49595433",
+      "revId": "733523737d0c22c6b9b32d3e879b888bb6d4fcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
