@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ccd55a_9fe245c5",
+        "filename": "chrome/browser/language/language_model_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-19T02:36:46Z",
+      "side": 1,
+      "message": "Note the style guide says \"Don\u0027t use else after return\". See https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "revId": "877e529864e3dbed24870db9609f4ef97ca03463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
