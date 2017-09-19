@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca3c4d7_f806d34f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-19T20:10:16Z",
+      "side": 1,
+      "message": "this was String previously and was causing the crash.",
+      "range": {
+        "startLine": 497,
+        "startChar": 12,
+        "endLine": 497,
+        "endChar": 16
+      },
+      "revId": "e7fa69eca41c5b07998b47b9fb89d9c9384a280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
