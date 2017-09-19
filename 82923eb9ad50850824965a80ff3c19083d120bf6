@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cf69bb0_9085951a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T20:08:46Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t thrilled with that name.\n\nChanged the enum name to SavePreviousDocumentResources, and the values to never, untilondomcontentloaded and untilonload.",
+      "parentUuid": "823c6236_7161ac28",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8351478d_95656e36",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d117536_83976dc3",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T20:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8351478d_95656e36",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "100076a5_e87c5d30",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5728,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T20:08:46Z",
+      "side": 1,
+      "message": "Yep, done.",
+      "parentUuid": "93990561_002ff4c5",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81b02fa6_c25ec3fe",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-19T12:18:02Z",
       "side": 1,
       "message": "Should we call this in ClearContext too?",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f8c4a2_da97953c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T20:08:46Z",
+      "side": 1,
+      "message": "DCHECK(resources_from_previous_fetcher_.IsEmpty()) instead :)",
+      "parentUuid": "81b02fa6_c25ec3fe",
       "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
