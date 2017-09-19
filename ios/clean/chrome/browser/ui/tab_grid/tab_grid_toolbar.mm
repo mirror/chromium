@@ -116,6 +116,7 @@ const CGFloat kSpacing = 16.0f;
   [incognitoButton addTarget:self
                       action:@selector(toggleIncognito)
             forControlEvents:UIControlEventTouchUpInside];
+  incognitoButton.accessibilityIdentifier = @"incognitoToggleControl";
 
   NSArray* items = @[
     [UIButton cr_tabGridToolbarDoneButton], incognitoButton, spacerView,

@@ -602,6 +602,11 @@
     "type": "raw",
     "args": [],
   },
+  "ios_clean_skeleton_integration_egtests": {
+    "label": "//ios/clean/chrome/test/earl_grey:ios_clean_skeleton_integration_egtests",
+    "type": "raw",
+    "args": [],
+  },
   "ios_components_unittests": {
     "label": "//ios/components:ios_components_unittests",
     "type": "raw",
