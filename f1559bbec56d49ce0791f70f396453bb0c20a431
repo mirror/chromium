@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e090b9d0_b557e5fa",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-19T20:00:26Z",
+      "side": 1,
+      "message": "added default member initializer",
+      "parentUuid": "6c25469f_45919105",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28eb8e2a_44318303",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a2131fea_437875a1",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-19T20:00:26Z",
+      "side": 1,
+      "message": "added more details in the structure header",
+      "parentUuid": "28eb8e2a_44318303",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ea348dc_ca0d0506",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T19:05:13Z",
       "side": 1,
       "message": "does this need a default constructor that sets both fields to 0?",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16036c62_ebefa618",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-19T20:00:26Z",
+      "side": 1,
+      "message": "added default member initializer",
+      "parentUuid": "8ea348dc_ca0d0506",
       "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
