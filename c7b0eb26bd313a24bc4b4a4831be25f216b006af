@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "c7c0046a_f9c8174d",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T14:59:31Z",
+      "side": 1,
+      "message": "You\u0027re reading a variable that\u0027s set on the test server\u0027s task runner on the UI thread without a lock, and then after waiting, we\u0027re reading callbacks that have the same property.  Without waiting on a lock, there\u0027s no guarantee that they\u0027ve all be written to and committed to memory, just because |embedded_test_server_task_runner_| is non-NULL.",
+      "parentUuid": "5d619fb8_11dedbfb",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "274deb4c_71476c6a",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "d1728e93_9eaed91e",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T14:59:31Z",
+      "side": 1,
+      "message": "Users being able to assume OnConnection has already been called can lead to racy tests.  If a test fails 10% of the time, bots retrying will generally hide the error, but it will still sometimes crop up as bot failures.  This can lead to long term pain, just to save a single call, so I don\u0027t think we want to let consumers call Send without waiting for a connection first.",
+      "parentUuid": "61aff194_8f37fee0",
+      "range": {
+        "startLine": 66,
+        "startChar": 59,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6db38693_328cdd83",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -543,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "d56baee3_527f88e7",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T14:59:31Z",
+      "side": 1,
+      "message": "Sorry - the send_ callback already uses a weak pointer internally.  I had thought it used base::Unretained.",
+      "parentUuid": "b81102bd_79a414da",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bf78e0_3e1f54c4",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -578,6 +650,30 @@
       "side": 1,
       "message": "Okay. I moved the files into content/public/test for the moment.\nI am not really sure how useful it might be for other people and if it worth to put the class in this directory. What do you think Camille?\n\n--\n\nI made this class able to handle several requests to a relative url, but only one at a time.\nIf you don\u0027t like it, the alternative would be not to handle the second request (i.e. returning nullptr in HandleRequest  the second time). But I can\u0027t store a mutable state in the Callback. I can\u0027t either ask the |controller| (ControllableHttpRequest::Controller in patchet #5) since it live in another thread and might be deleted or not.\n\nI probably need a test that make use of one ControllableHttpRequest for several requests (or a test for ControllableHttpRequest if I don\u0027t have any idea of an useful test)",
       "parentUuid": "c6bf78e0_3e1f54c4",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7598b26e_748bbf99",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T14:59:31Z",
+      "side": 1,
+      "message": "I\u0027ll comment on this when looking at the next patch set.",
+      "parentUuid": "a0bc9c92_077a5dea",
       "range": {
         "startLine": 3,
         "startChar": 16,
