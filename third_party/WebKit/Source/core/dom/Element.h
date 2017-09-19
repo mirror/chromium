@@ -474,10 +474,12 @@ class CORE_EXPORT Element : public ContainerNode {
   // bindings instead so adding a ShadowRoot from C++ doesn't need one.
   ShadowRoot* createShadowRoot(const ScriptState* = nullptr,
                                ExceptionState& = ASSERT_NO_EXCEPTION);
+  bool CanAttachShadowRoot(const AtomicString& tag_name) const;
   ShadowRoot* attachShadow(const ScriptState*,
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot* CreateShadowRootInternal(ShadowRootType, ExceptionState&);
+  ShadowRoot* AttachShadowRootInternal(ShadowRootType);
 
   ShadowRoot* OpenShadowRoot() const;
   ShadowRoot* ClosedShadowRoot() const;
