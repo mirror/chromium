@@ -373,7 +373,7 @@ CompositorAnimations::CheckCanStartElementOnCompositor(
         target_element.GetLayoutObject()->GetCompositingState() ==
             kPaintsIntoOwnBacking;
     if (!paints_into_own_backing) {
-      return FailureCode::NonActionable(
+      return FailureCode::NotPaintIntoOwnBacking(
           "Element does not paint into own backing");
     }
   }
