@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "243786c1_84006f53",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35956769_650b0d41",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 25
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f972fe_609d4910",
         "filename": "chrome/browser/ui/page_info/page_info.h",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0b18f98f_ce8b8d65",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f09e36_74f13163",
+      "range": {
+        "startLine": 749,
+        "startChar": 4,
+        "endLine": 750,
+        "endChar": 54
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f0aa91_9e2573ad",
         "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
         "patchSetId": 1
@@ -91,6 +139,30 @@
       "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f147c7_2e90d0e6",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "I added the exception because that is what actually causes the button to be visible, I clarified this in the comment now. (This was the way I though would be the simplest to make the button visible, but if there is another way to make it visible just for the test without having to add the exception I can change it).",
+      "parentUuid": "a4f0aa91_9e2573ad",
+      "range": {
+        "startLine": 756,
+        "startChar": 38,
+        "endLine": 756,
+        "endChar": 39
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "561a392a_fa0d04a9",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd382ff_2b017934",
+      "range": {
+        "startLine": 767,
+        "startChar": 32,
+        "endLine": 767,
+        "endChar": 78
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "871725c9_21f2a26f",
         "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
         "patchSetId": 1
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1828513c_bfb98650",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "871725c9_21f2a26f",
+      "range": {
+        "startLine": 768,
+        "startChar": 8,
+        "endLine": 768,
+        "endChar": 20
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b081dc_581fa154",
         "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9a5d55_21c320b1",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b081dc_581fa154",
+      "range": {
+        "startLine": 787,
+        "startChar": 20,
+        "endLine": 787,
+        "endChar": 79
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +350,30 @@
       "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c780ef2_f8152fb5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28655,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-19T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d28f9298_560dc54b",
+      "range": {
+        "startLine": 28654,
+        "startChar": 45,
+        "endLine": 28655,
+        "endChar": 74
+      },
+      "revId": "89d226e1a31f21456e69ddd1af162d5c0cde2691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
