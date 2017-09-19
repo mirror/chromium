@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef41c4d3_ff84756e",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "Why can\u0027t ArchiveManager depend on PathService directly?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c290df_2c35408c",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "this should probably also record whether it\u0027s temporary or not.",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27cf4cb0_56a07028",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "I don\u0027t know if this will be true forever.  Is there some sort of DCHECK or assert we can make so developers don\u0027t unknowingly mess this up?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea52e79_78095e8e",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "this comment makes no sense to me - could you explan?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b60a9f5_df1c4534",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "does it make sense to change StorageStats to reflect temporary sizes?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef882e81_9d7cc7f2",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T20:41:33Z",
+      "side": 1,
+      "message": "This means that the next release of Chrome will certainly delete all the temporary pages immediately. Is this what you want?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
