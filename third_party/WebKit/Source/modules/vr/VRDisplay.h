@@ -5,8 +5,8 @@
 #ifndef VRDisplay_h
 #define VRDisplay_h
 
+#include "bindings/core/v8/v8_frame_request_callback.h"
 #include "core/dom/Document.h"
-#include "core/dom/FrameRequestCallback.h"
 #include "core/dom/SuspendableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "device/vr/vr_service.mojom-blink.h"
@@ -28,7 +28,6 @@ class GLES2Interface;
 namespace blink {
 
 class NavigatorVR;
-class ScriptedAnimationController;
 class VRController;
 class VREyeParameters;
 class VRFrameData;
@@ -44,6 +43,7 @@ class VRDisplay final : public EventTargetWithInlineData,
                         public device::mojom::blink::VRDisplayClient,
                         public device::mojom::blink::VRSubmitFrameClient {
   DEFINE_WRAPPERTYPEINFO();
+  DECLARE_TRACE_WRAPPERS();
   USING_GARBAGE_COLLECTED_MIXIN(VRDisplay);
   USING_PRE_FINALIZER(VRDisplay, Dispose);
 
@@ -68,7 +68,7 @@ class VRDisplay final : public EventTargetWithInlineData,
 
   VREyeParameters* getEyeParameters(const String&);
 
-  int requestAnimationFrame(FrameRequestCallback*);
+  int requestAnimationFrame(V8FrameRequestCallback*);
   void cancelAnimationFrame(int id);
 
   ScriptPromise requestPresent(ScriptState*,
@@ -199,7 +199,8 @@ class VRDisplay final : public EventTargetWithInlineData,
   // waitForPreviousTransferToFinish.
   RefPtr<Image> previous_image_;
 
-  Member<ScriptedAnimationController> scripted_animation_controller_;
+  TraceWrapperMember<ScriptedAnimationController>
+      scripted_animation_controller_;
   bool pending_vrdisplay_raf_ = false;
   bool pending_vsync_ = false;
   int pending_vsync_id_ = -1;
