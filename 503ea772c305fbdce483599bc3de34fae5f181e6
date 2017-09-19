@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec5d990c_6fa405fc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T10:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562bcd72_01205db5",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f974be6_8895ae93",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eada7a4_a776d10a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T10:45:39Z",
+      "side": 1,
+      "message": "New patch set uses posixpath.*.",
+      "parentUuid": "0afe941f_1801c298",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
