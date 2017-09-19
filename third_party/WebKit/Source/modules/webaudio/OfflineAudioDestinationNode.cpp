@@ -65,7 +65,7 @@ RefPtr<OfflineAudioDestinationHandler> OfflineAudioDestinationHandler::Create(
     unsigned number_of_channels,
     size_t frames_to_process,
     float sample_rate) {
-  return AdoptRef(new OfflineAudioDestinationHandler(
+  return WTF::AdoptRef(new OfflineAudioDestinationHandler(
       node, number_of_channels, frames_to_process, sample_rate));
 }
 
@@ -199,8 +199,8 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
       // To ensure that the rendering step eventually happens, repost.
       GetRenderingThread()->GetWebTaskRunner()->PostTask(
           BLINK_FROM_HERE,
-          Bind(&OfflineAudioDestinationHandler::DoOfflineRendering,
-               WrapRefPtr(this)));
+          WTF::Bind(&OfflineAudioDestinationHandler::DoOfflineRendering,
+                    WrapRefPtr(this)));
       return;
     }
 
