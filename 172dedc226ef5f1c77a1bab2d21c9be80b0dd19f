@@ -16,6 +16,24 @@
       "revId": "172dedc226ef5f1c77a1bab2d21c9be80b0dd19f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c578ed1f_d62d0653",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-19T18:33:29Z",
+      "side": 1,
+      "message": "Yeah, makes sense.\n\nChanged to fail all partial requests for |fetch_error_body|. The intention here is error response body cannot be attached to the correct content in any case.\n\nFor parallel download, it will send an interrupt reason and DownloadFileImpl can handle that.",
+      "parentUuid": "1c94507c_b81fce7e",
+      "revId": "172dedc226ef5f1c77a1bab2d21c9be80b0dd19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
