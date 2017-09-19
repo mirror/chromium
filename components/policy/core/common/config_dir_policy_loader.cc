@@ -93,9 +93,8 @@ std::unique_ptr<PolicyBundle> ConfigDirPolicyLoader::Load() {
 }
 
 base::Time ConfigDirPolicyLoader::LastModificationTime() {
-  static const base::FilePath::CharType* kConfigDirSuffixes[] = {
-    kMandatoryConfigDir,
-    kRecommendedConfigDir,
+  static constexpr const base::FilePath::CharType* kConfigDirSuffixes[] = {
+      kMandatoryConfigDir, kRecommendedConfigDir,
   };
 
   base::Time last_modification = base::Time();
