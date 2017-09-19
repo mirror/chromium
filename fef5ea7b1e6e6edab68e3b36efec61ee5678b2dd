@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7f514a7e_f4951933",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-19T22:24:39Z",
+      "side": 1,
+      "message": "Two cases:\n1) Sometimes it needs to be null, so that we don\u0027t loop.\n2) Passing it in avoids the problem where the object was null, but the node or layout_object were non-null. We still need to update content in that case. For example, if content inside a \u003cspan\u003e is changed, but it has no accessible object, the labelled control that points to its ancestor still needs to change.",
+      "parentUuid": "a2907664_d20865cb",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3797f90a_33f47aa8",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
         "patchSetId": 5
