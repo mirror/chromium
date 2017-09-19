@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf212744_fb0fc0da",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T13:10:15Z",
+      "side": 1,
+      "message": "Do we have to split |ext| from |name|?",
+      "revId": "f450dd9ee5f1f1966e1dd631e5629d3094f30dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c7ee0f_1473a6ba",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T13:10:15Z",
+      "side": 1,
+      "message": "Do we have to avoid applying to_snake_case() on snake case names?",
+      "revId": "f450dd9ee5f1f1966e1dd631e5629d3094f30dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

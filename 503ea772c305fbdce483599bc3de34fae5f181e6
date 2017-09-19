@@ -87,6 +87,24 @@
       "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9618439_2d5a35c4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T13:10:15Z",
+      "side": 1,
+      "message": "Thank you for your understanding.\nI believe it could be a temporary usage, but unfortunately we don\u0027 know when the great mv is planed.",
+      "parentUuid": "5eada7a4_a776d10a",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
