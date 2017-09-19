@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753dc2c4_c7e62ffb",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T09:59:24Z",
+      "side": 1,
+      "message": "Carry over adjusted phrasing from SchedulerWorkerPool",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5a4eb2_33ec6ff7",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T09:59:24Z",
+      "side": 1,
+      "message": "If we want to play the paranoid game, do we want to have a DCHECK only lazy-inited SEQUENCE_CHECKER out here to verify the sequence setting the bool?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edf35db_186e900b",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T09:59:24Z",
+      "side": 1,
+      "message": "This reads as if even unit tests don\u0027t bring this down, which I believe is the opposite intention.\n\nIs this phrasing accurate?\nOnly when unit tests tear down the task environment and never in production.",
+      "range": {
+        "startLine": 22,
+        "startChar": 57,
+        "endLine": 22,
+        "endChar": 76
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3a0bc8_aa80170f",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T09:59:24Z",
+      "side": 1,
+      "message": "Nit: torn",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf1f6ed_a3f46b11",
+        "filename": "chrome/test/base/chrome_unit_test_suite.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T09:59:24Z",
+      "side": 1,
+      "message": "Seems CrOS needs a ScopedTaskEnvironment as well.\n\nCheck failed: TaskScheduler::GetInstance(). Ref. Prerequisite section of post_task.h.\nHint: if this is in a unit test, you\u0027re likely merely missing a base::test::ScopedTaskEnvironment member in your fixture.\n#0 0x000004c662bc base::debug::StackTrace::StackTrace()\n#1 0x000004c7ed4c logging::LogMessage::~LogMessage()\n#2 0x000004cc93c6 base::CreateSequencedTaskRunnerWithTraits()\n#3 0x000004fcb676 policy::ChromeBrowserPolicyConnector::CreatePlatformProvider()\n#4 0x000004fcb5c6 policy::ChromeBrowserPolicyConnector::ChromeBrowserPolicyConnector()\n#5 0x00000346d50c policy::BrowserPolicyConnectorChromeOS::BrowserPolicyConnectorChromeOS()\n#6 0x000004e9b00f BrowserProcessPlatformPart::CreateBrowserPolicyConnector()\n#7 0x0000041cd70a TestingBrowserProcess::browser_policy_connector()\n#8 0x0000034ebdb2 chromeos::DeviceSettingsProvider::UpdateValuesCache()\n#9 0x0000034eb374 chromeos::DeviceSettingsProvider::RetrieveCachedData()\n#10 0x0000034e6eb7 chromeos::CrosSettings::CrosSettings()\n#11 0x0000034e637d chromeos::CrosSettings::Initialize()\n#12 0x000000cbf10a testing::internal::TestFactoryImpl\u003c\u003e::CreateTest()\n#13 0x0000021775fc testing::TestInfo::Run()\n#14 0x000002177b47 testing::TestCase::Run()\n#15 0x00000217e0d7 testing::internal::UnitTestImpl::RunAllTests()\n#16 0x00000217dd57 testing::UnitTest::Run()\n#17 0x0000041da372 base::TestSuite::Run()\n#18 0x0000041dbadb base::LaunchUnitTests()\n#19 0x0000041d2dc9 main",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
