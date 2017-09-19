@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4c4c4045_1b11ceb0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T13:12:52Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "841b2f74_67774705",
+      "range": {
+        "startLine": 389,
+        "startChar": 2,
+        "endLine": 389,
+        "endChar": 23
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c1dd2c_fc319325",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 2
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Because all the tests are assumed to start at root folder, they will break if when a non-root (e.g. MobileBookmarks) position is cached by a previous test.\nI moved this to the end of those tests which will cache a non-root position.\nPTAL again.",
       "parentUuid": "b12b98d6_f17000ac",
+      "range": {
+        "startLine": 1939,
+        "startChar": 2,
+        "endLine": 1939,
+        "endChar": 53
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21e92d30_750a4ea5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T13:12:52Z",
+      "side": 1,
+      "message": "No don\u0027t, this is okay in that case. Or even in setup? I wasnt sure if NSUserDefaults are cleared between tests.",
+      "parentUuid": "e11d8ce4_f76bd6c5",
       "range": {
         "startLine": 1939,
         "startChar": 2,
