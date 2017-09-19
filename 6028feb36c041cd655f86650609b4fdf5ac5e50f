@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198d1ffb_ebfd958b",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-19T00:39:02Z",
+      "side": 1,
+      "message": "can you explain why UpdateAnchorPosition is being called before Show() or after the widget closes? It doesn\u0027t seem like that should be able to happen, so this fix might be papering over a bug.",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 19
+      },
+      "revId": "6028feb36c041cd655f86650609b4fdf5ac5e50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
