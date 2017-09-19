@@ -10,6 +10,7 @@
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -142,7 +143,7 @@ bool ZoomController::SetZoomLevelByClient(
   event_data_.reset(new ZoomChangedEventData(web_contents(), GetZoomLevel(),
                                              zoom_level, zoom_mode_,
                                              false /* can_show_bubble */));
-  int render_process_id = web_contents()->GetRenderProcessHost()->GetID();
+  int render_process_id = web_contents()->GetMainFrame()->GetProcess()->GetID();
   int render_view_id = web_contents()->GetRenderViewHost()->GetRoutingID();
   if (zoom_mode_ == ZOOM_MODE_ISOLATED ||
       zoom_map->UsesTemporaryZoomLevel(render_process_id, render_view_id)) {
@@ -173,7 +174,7 @@ void ZoomController::SetZoomMode(ZoomMode new_mode) {
   content::HostZoomMap* zoom_map =
       content::HostZoomMap::GetForWebContents(web_contents());
   DCHECK(zoom_map);
-  int render_process_id = web_contents()->GetRenderProcessHost()->GetID();
+  int render_process_id = web_contents()->GetMainFrame()->GetProcess()->GetID();
   int render_view_id = web_contents()->GetRenderViewHost()->GetRoutingID();
   double original_zoom_level = GetZoomLevel();
 
@@ -264,7 +265,7 @@ void ZoomController::ResetZoomModeOnNavigationIfNeeded(const GURL& url) {
   if (zoom_mode_ != ZOOM_MODE_ISOLATED && zoom_mode_ != ZOOM_MODE_MANUAL)
     return;
 
-  int render_process_id = web_contents()->GetRenderProcessHost()->GetID();
+  int render_process_id = web_contents()->GetMainFrame()->GetProcess()->GetID();
   int render_view_id = web_contents()->GetRenderViewHost()->GetRoutingID();
   content::HostZoomMap* zoom_map =
       content::HostZoomMap::GetForWebContents(web_contents());
@@ -369,7 +370,7 @@ void ZoomController::UpdateState(const std::string& host) {
 }
 
 void ZoomController::SetPageScaleFactorIsOneForTesting(bool is_one) {
-  int render_process_id = web_contents()->GetRenderProcessHost()->GetID();
+  int render_process_id = web_contents()->GetMainFrame()->GetProcess()->GetID();
   int render_view_id = web_contents()->GetRenderViewHost()->GetRoutingID();
   host_zoom_map_->SetPageScaleFactorIsOneForView(render_process_id,
                                                  render_view_id, is_one);
