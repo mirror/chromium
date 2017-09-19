@@ -471,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "cf406b0a_7767c8fa",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "Friendly ping. But I\u0027m fine with deferring this, if decided to do, to a separate CL.",
+      "parentUuid": "a87e680e_cf8341fe",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "932baf6c_ffed2919",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 28

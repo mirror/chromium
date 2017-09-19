@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94bdcd64_6c1c8596",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: #include \"third_party/icu/source/i18n/unicode/timezone.h\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bb030f_cb6c62fd",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: #include \"third_party/icu/source/common/unicode/unistr.h\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc887ec_df2f9c64",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: #include \"third_party/icu/source/common/unicode/utypes.h\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba5539a_66082695",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: Not insisting, but maybe use base::Optional?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7e4e55_f52f23db",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: \"ConvertWeeklyTimeToGmt\", \"ConvertIntervalsToGmt\":\n\n  Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "range": {
+        "startLine": 119,
+        "startChar": 11,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af437530_b9516c2f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: Forgotten \"\u0026\" (so that the parameter is passed by a const-ref).",
+      "range": {
+        "startLine": 155,
+        "startChar": 38,
+        "endLine": 155,
+        "endChar": 39
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dc0d5c_6f2d4a54",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: #include \u003calgorithm\u003e",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 16
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d740f4f7_fd3b568d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: Why specifically milliseconds? You can just compare with base::TimeDelta().",
+      "range": {
+        "startLine": 232,
+        "startChar": 17,
+        "endLine": 232,
+        "endChar": 34
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0641644_32296f37",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: Unnecessary.",
+      "range": {
+        "startLine": 256,
+        "startChar": 51,
+        "endLine": 256,
+        "endChar": 56
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658d83ab_13c9c8b6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: Brackets {} around the multi-line body.",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 17
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b6bab6_027a1f69",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: \"using namespace\" is disallowed by the style guide.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d2018e_43ab9fef",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T23:06:45Z",
+      "side": 1,
+      "message": "nit: It\u0027s already in the namespace \"off_hours\", so no need to duplicate these words in the class name. (Sorry if I brought this confusion during the previous review iteration.)",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "30aecb31c2f4098d4b30386720f78c057b3740c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
