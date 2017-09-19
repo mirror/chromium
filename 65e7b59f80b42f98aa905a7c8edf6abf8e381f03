@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac189ab2_2d412eb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T19:35:32Z",
+      "side": 1,
+      "message": "static",
+      "revId": "65e7b59f80b42f98aa905a7c8edf6abf8e381f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
