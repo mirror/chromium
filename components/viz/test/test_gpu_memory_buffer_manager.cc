@@ -52,6 +52,9 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
     return reinterpret_cast<uint8_t*>(shared_memory_->memory()) + offset_ +
            gfx::BufferOffsetForBufferFormat(size_, format_, plane);
   }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {
+    DCHECK(mapped_);
+  }
   void Unmap() override {
     DCHECK(mapped_);
     shared_memory_->Unmap();
@@ -101,6 +104,9 @@ class GpuMemoryBufferFromClient : public gfx::GpuMemoryBuffer {
 
   bool Map() override { return client_buffer_->Map(); }
   void* memory(size_t plane) override { return client_buffer_->memory(plane); }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {
+    client_buffer_->Flush(plane, offset, bytes);
+  }
   void Unmap() override { client_buffer_->Unmap(); }
   gfx::Size GetSize() const override { return client_buffer_->GetSize(); }
   gfx::BufferFormat GetFormat() const override {

@@ -23,6 +23,7 @@ class GFX_EXPORT ClientNativePixmap {
 
   virtual void* GetMemoryAddress(size_t plane) const = 0;
   virtual int GetStride(size_t plane) const = 0;
+  virtual void Flush(size_t plane, off_t offset, size_t bytes) = 0;
 };
 
 }  // namespace gfx
