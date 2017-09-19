@@ -22,6 +22,30 @@
       "revId": "646e13934ab848f066ad680672842be044500c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e8eb2f_1317cf9f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/payments/payment-instruments.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-19T02:23:25Z",
+      "side": 1,
+      "message": "If the \u0027src\u0027 is an invalid url or not https scheme, the set() operation is failed.\nWe are already checking them in renderer side[1] and browser side[2].\nThere is a test for checking it as well[3].\n\nOn the other hand, \u0027sizes\u0027 and \u0027type\u0027 are just ignored if they are invalid.\n\nIf the \u0027sizes\u0027 field is invalid, WebIconSizesParser::ParseIconSizes will return empty size vector.\nIt means \u0027any\u0027 size[4][5]. When UA should display an icon, will select last input icon if it is set to \u0027any\u0027.\n\nIf the \u0027type\u0027 field is invalid, UA does not display an icon because its information is ignored. [6]\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp?l\u003d167\n[2] https://cs.chromium.org/chromium/src/content/browser/payments/payment_instrument_icon_fetcher.cc?l\u003d92\n[3] https://cs.chromium.org/chromium/src/content/test/data/payments/payment_app_invocation.html?l\u003d63\n[4] https://cs.chromium.org/chromium/src/content/public/common/manifest.h?l\u003d55\n[5] https://cs.chromium.org/chromium/src/content/browser/manifest/manifest_icon_selector.cc?l\u003d44\n[6] https://cs.chromium.org/chromium/src/content/browser/manifest/manifest_icon_selector.cc?l\u003d32",
+      "parentUuid": "96d0d400_5c73c7ff",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "646e13934ab848f066ad680672842be044500c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
