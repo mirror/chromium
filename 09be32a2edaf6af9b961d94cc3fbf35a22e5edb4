@@ -45,6 +45,54 @@
       "revId": "09be32a2edaf6af9b961d94cc3fbf35a22e5edb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7eb52ed_71b1bd4d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48030,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-19T08:15:19Z",
+      "side": 1,
+      "message": "Enum isn\u0027t feasible given the number of Doodles we run - it\u0027d have to be updated pretty much every single day.\nIn practice, the IDs are just internal bug numbers (as in b/\u003cid\u003e), I\u0027ve added that to the description.",
+      "parentUuid": "3b7bf93e_5ce61fd7",
+      "range": {
+        "startLine": 48030,
+        "startChar": 44,
+        "endLine": 48030,
+        "endChar": 0
+      },
+      "revId": "09be32a2edaf6af9b961d94cc3fbf35a22e5edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24b9e9e8_ef2a8da6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48030,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-19T08:15:19Z",
+      "side": 1,
+      "message": "Indeed, that\u0027s much better, thanks! Done.",
+      "parentUuid": "8f4c885c_3b14b47e",
+      "range": {
+        "startLine": 48030,
+        "startChar": 28,
+        "endLine": 48030,
+        "endChar": 42
+      },
+      "revId": "09be32a2edaf6af9b961d94cc3fbf35a22e5edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
