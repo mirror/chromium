@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b49d5e_ecb6f069",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-19T18:32:19Z",
+      "side": 1,
+      "message": "Actually just make it Class\u003c? implements Observer\u003e.  That way it\u0027s impossible to call it with the wrong thing which could silently break later.",
+      "range": {
+        "startLine": 50,
+        "startChar": 35,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "6d923d6046f6dee0fbeb5e109606c134b5d2bd09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1214b368_63c2d413",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationServiceObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-19T18:32:19Z",
+      "side": 1,
+      "message": "I think this just adds a way to break the API.  Why can\u0027t the caller just do DownloadNotificationServiceObserver.class(.getName())?",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 96
+      },
+      "revId": "6d923d6046f6dee0fbeb5e109606c134b5d2bd09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
