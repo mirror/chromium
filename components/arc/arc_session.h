@@ -31,7 +31,8 @@ class ArcSession {
 
     // Called when ARC instance is stopped. This is called exactly once
     // per instance which is Start()ed.
-    virtual void OnSessionStopped(ArcStopReason reason) = 0;
+    virtual void OnSessionStopped(ArcStopReason reason,
+                                  bool was_mojo_connected) = 0;
 
    protected:
     virtual ~Observer() = default;
@@ -60,6 +61,14 @@ class ArcSession {
   // login screen.
   // The completion is notified via OnSessionStopped() of the Observer.
   virtual void Stop() = 0;
+
+  // Returns true if this instance is fully set up successfully, and running.
+  // Currently, this means, this is a fully functional instance, and
+  // Mojo connection is already connected successfully.
+  virtual bool IsRunning() = 0;
+
+  // Returns true if Stop() has been called already.
+  virtual bool IsStopRequested() = 0;
 
   // Called when Chrome is in shutdown state. This is called when the message
   // loop is already stopped, and the instance will soon be deleted. Caller
