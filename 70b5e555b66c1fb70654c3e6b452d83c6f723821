@@ -413,6 +413,29 @@
       "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57cd714_82302635",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:40:53Z",
+      "side": 1,
+      "message": "nit: Could you add \"(No-op if the transaction is null.)\" to this comment?",
+      "range": {
+        "startLine": 246,
+        "startChar": 16,
+        "endLine": 246,
+        "endChar": 27
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
