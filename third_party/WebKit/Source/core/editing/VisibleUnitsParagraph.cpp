@@ -57,7 +57,7 @@ PositionTemplate<Strategy> StartOfParagraphAlgorithm(
     return PositionTemplate<Strategy>::BeforeNode(*start_node);
 
   Element* const start_block = EnclosingBlock(
-      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),
+      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(*start_node),
       kCannotCrossEditingBoundary);
   ContainerNode* const highest_root = HighestEditableRoot(position);
   const bool start_node_is_editable = HasEditableStyle(*start_node);
@@ -165,7 +165,7 @@ PositionTemplate<Strategy> EndOfParagraphAlgorithm(
     return PositionTemplate<Strategy>::AfterNode(*start_node);
 
   Element* const start_block = EnclosingBlock(
-      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),
+      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(*start_node),
       kCannotCrossEditingBoundary);
   ContainerNode* const highest_root = HighestEditableRoot(position);
   const bool start_node_is_editable = HasEditableStyle(*start_node);

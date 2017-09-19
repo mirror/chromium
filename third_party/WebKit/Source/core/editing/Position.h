@@ -194,9 +194,9 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
       const Node& anchor_node);
   static PositionTemplate<Strategy> LastPositionInNode(const Node& anchor_node);
   static PositionTemplate<Strategy> FirstPositionInOrBeforeNode(
-      Node* anchor_node);
+      const Node& anchor_node);
   static PositionTemplate<Strategy> LastPositionInOrAfterNode(
-      Node* anchor_node);
+      const Node& anchor_node);
 
   String ToAnchorTypeAndOffsetString() const;
 #ifndef NDEBUG

@@ -215,13 +215,19 @@ Position PositionAfterContainingSpecialElement(
     const Position&,
     HTMLElement** containing_special_element = nullptr);
 
-inline Position FirstPositionInOrBeforeNode(Node* node) {
+inline Position FirstPositionInOrBeforeNode(const Node& node) {
   return Position::FirstPositionInOrBeforeNode(node);
 }
+// Deprecated, use FirstPositionInOrBeforeNode instead.
+// This function will check the given node for nullptr value.
+Position FirstPositionInOrBeforeNodeDeprecated(Node*);
 
-inline Position LastPositionInOrAfterNode(Node* node) {
+inline Position LastPositionInOrAfterNode(const Node& node) {
   return Position::LastPositionInOrAfterNode(node);
 }
+// Deprecated, use LastPositionInOrAfterNode instead.
+// This function will check the given node for nullptr value.
+Position LastPositionInOrAfterNodeDeprecated(Node*);
 
 CORE_EXPORT Position FirstEditablePositionAfterPositionInRoot(const Position&,
                                                               Node&);

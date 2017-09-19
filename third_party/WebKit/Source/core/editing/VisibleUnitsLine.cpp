@@ -88,10 +88,7 @@ ContainerNode* HighestEditableRoot(const Position& position,
 
 ContainerNode* HighestEditableRootOfNode(const Node& node,
                                          EditableType editable_type) {
-  // TODO(editing-dev): We should introduce |const Node&| version of
-  // |FirstPositionInOrBeforeNode()|. See http://crbug.com/734849
-  return HighestEditableRoot(
-      FirstPositionInOrBeforeNode(const_cast<Node*>(&node)), editable_type);
+  return HighestEditableRoot(FirstPositionInOrBeforeNode(node), editable_type);
 }
 
 Node* PreviousNodeConsideringAtomicNodes(const Node& start) {
@@ -264,8 +261,7 @@ LayoutPoint AbsoluteLineDirectionPointToLocalPointInBlock(
 bool InSameLine(const Node& node, const VisiblePosition& visible_position) {
   if (!node.GetLayoutObject())
     return true;
-  return InSameLine(CreateVisiblePosition(
-                        FirstPositionInOrBeforeNode(const_cast<Node*>(&node))),
+  return InSameLine(CreateVisiblePosition(FirstPositionInOrBeforeNode(node)),
                     visible_position);
 }
 
