@@ -61,6 +61,13 @@ class StubOfflinePageModel : public OfflinePageModel, public KeyedService {
   void GetPagesByRequestOrigin(
       const std::string& origin,
       const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesRemovedOnCacheReset(
+      const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesByNamespace(
+      const std::string& name_space,
+      const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesSupportedByDownloads(
+      const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
   bool is_loaded() const override;
   OfflineEventLogger* GetLogger() override;
