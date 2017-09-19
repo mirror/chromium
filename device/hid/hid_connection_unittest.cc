@@ -17,9 +17,9 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_io_thread.h"
+#include "build/build_config.h"
 #include "device/hid/hid_service.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
-#include "device/test/test_device_client.h"
 #include "device/test/usb_test_gadget.h"
 #include "device/usb/usb_device.h"
 #include "net/base/io_buffer.h"
@@ -159,7 +159,10 @@ class HidConnectionTest : public testing::Test {
   void SetUp() override {
     if (!UsbTestGadget::IsTestEnabled()) return;
 
-    service_ = DeviceClient::Get()->GetHidService();
+#if !defined(OS_ANDROID) && !defined(OS_IOS) && \
+    !(defined(OS_LINUX) && !defined(USE_UDEV))
+    service_ = HidService::Create();
+#endif
     ASSERT_TRUE(service_);
 
     test_gadget_ = UsbTestGadget::Claim(io_thread_.task_runner());
@@ -174,7 +177,6 @@ class HidConnectionTest : public testing::Test {
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::TestIOThread io_thread_;
-  TestDeviceClient device_client_;
   HidService* service_;
   std::unique_ptr<UsbTestGadget> test_gadget_;
   std::string device_guid_;

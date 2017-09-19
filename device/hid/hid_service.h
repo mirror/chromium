@@ -53,7 +53,9 @@ class HidService {
       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN};
 
   // This function should be called on a thread with a MessageLoopForUI.
-  static std::unique_ptr<HidService> Create();
+  static device::HidService* Create();
+
+  static void SetHidServiceForTesting(device::HidService* hid_service);
 
   virtual ~HidService();
 
