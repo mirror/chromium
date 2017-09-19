@@ -143,13 +143,13 @@ component("events") {
 
   public_deps = [
     ":events_base",
+    "//skia",
     "//ui/latency",
   ]
   deps = [
     ":dom_keycode_converter",
     ":gesture_detection",
     "//base/third_party/dynamic_annotations",
-    "//skia",
     "//ui/display",
     "//ui/gfx",
     "//ui/gfx/geometry",
@@ -500,4 +500,14 @@ if (is_android) {
     jni_package = "ui"
     classes = [ "android/view/KeyEvent.class" ]
   }
+}
+
+component("key_event_filter") {
+  sources = [
+    "key_event_filter.h",
+  ]
+
+  deps = [
+    ":events",
+  ]
 }
