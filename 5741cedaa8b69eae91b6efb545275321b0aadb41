@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29141ece_012a5b09",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T20:25:48Z",
+      "side": 1,
+      "message": "If I understand correctly: the default is that touch-exploration is disabled for arc++ windows, until we receive the accessibility event? If that is the case, then the following would make sense I think:\n . On exo window creation (in exo::Surface, I think?), set this flag so touch-exploration is disabled (or consult the profile).\n . On AccessibilityEvent [1], find the Window (Windows?) associated with the package/task, and remove the flag (or turn the flag off).\n\nLooking at the code more closely, it doesn\u0027t look like there\u0027s currently a good way of getting the Window(s) associated with a package/task. So this may be more involved than I think. Also, the code in components/exo probably doesn\u0027t know about profile?\n\nSo I guess I don\u0027t really have any suggestion that doesn\u0027t involve some amount of additional work. I am not sure if that\u0027s going to be really worth it though. So I guess this lgtm?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc?l\u003d243",
+      "revId": "5741cedaa8b69eae91b6efb545275321b0aadb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bcf431_f8fcaba4",
+        "filename": "ui/aura/client/aura_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T20:25:48Z",
+      "side": 1,
+      "message": "Can you call this kAccessibilityTouchExplorationDisabled instead?",
+      "revId": "5741cedaa8b69eae91b6efb545275321b0aadb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
