@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#import "ui/base/cocoa/focus_tracker.h"
 #include "ui/base/ui_features.h"
 
 ChromeWebContentsViewDelegateMac::ChromeWebContentsViewDelegateMac(
@@ -81,6 +82,42 @@ void ChromeWebContentsViewDelegateMac::ShowMenu(
   context_menu_->Show();
 }
 
+bool ChromeWebContentsViewDelegateMac::Focus() {
+  gfx::NativeView native_view = GetNativeViewForFocus();
+  NSWindow* window = [native_view window];
+  [window makeFirstResponder:native_view];
+  if (![window isVisible])
+    return false;
+  [window makeKeyAndOrderFront:nil];
+
+  return true;
+}
+
+void ChromeWebContentsViewDelegateMac::StoreFocus() {
+  gfx::NativeView native_view = GetNativeViewForFocus();
+  // We're explicitly being asked to store focus, so don't worry if there's
+  // already a view saved.
+  focus_tracker_.reset(
+      [[FocusTracker alloc] initWithWindow:[native_view window]]);
+}
+
+void ChromeWebContentsViewDelegateMac::RestoreFocus() {
+  gfx::NativeView native_view = GetNativeViewForFocus();
+  // TODO(avi): Could we be restoring a view that's no longer in the key view
+  // chain?
+  if (!(focus_tracker_.get() &&
+        [focus_tracker_ restoreFocusInWindow:[native_view window]])) {
+    // Fall back to the default focus behavior if we could not restore focus.
+    // TODO(shess): If location-bar gets focus by default, this will
+    // select-all in the field.  If there was a specific selection in
+    // the field when we navigated away from it, we should restore
+    // that selection.
+    SetInitialFocus();
+  }
+
+  focus_tracker_.reset(nil);
+}
+
 std::unique_ptr<RenderViewContextMenuBase>
 ChromeWebContentsViewDelegateMac::BuildMenu(
     content::WebContents* web_contents,
@@ -123,6 +160,24 @@ ChromeWebContentsViewDelegateMac::GetActiveRenderWidgetHostView() {
   return web_contents_->GetFullscreenRenderWidgetHostView() ?
       web_contents_->GetFullscreenRenderWidgetHostView() :
       web_contents_->GetTopLevelRenderWidgetHostView();
+}
+
+void ChromeWebContentsViewDelegateMac::SetInitialFocus() {
+  if (web_contents_->FocusLocationBarByDefault()) {
+    if (web_contents_->GetDelegate())
+      web_contents_->GetDelegate()->SetFocusToLocationBar(false);
+  } else {
+    web_contents_->Focus();
+  }
+}
+
+gfx::NativeView ChromeWebContentsViewDelegateMac::GetNativeViewForFocus()
+    const {
+  content::RenderWidgetHostView* rwhv =
+      web_contents_->GetFullscreenRenderWidgetHostView();
+  if (!rwhv)
+    rwhv = web_contents_->GetRenderWidgetHostView();
+  return rwhv ? rwhv->GetNativeView() : nil;
 }
 
 #if !BUILDFLAG(MAC_VIEWS_BROWSER)

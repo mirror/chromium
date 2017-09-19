@@ -13,11 +13,18 @@ class ChromeWebContentsViewDelegateViewsMac
  public:
   explicit ChromeWebContentsViewDelegateViewsMac(
       content::WebContents* web_contents);
+  ~ChromeWebContentsViewDelegateViewsMac() override;
 
   // ChromeWebContentsViewDelegateMac:
   void SizeChanged(const gfx::Size& size) override;
+  bool Focus() override;
+  void StoreFocus() override;
+  void RestoreFocus() override;
 
  private:
+  // Used to handle Views related requests, such as restoring view focus.
+  std::unique_ptr<WebContentsViewDelegate> views_delegate_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeWebContentsViewDelegateViewsMac);
 };
 
