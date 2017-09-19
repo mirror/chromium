@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "7696a611_9f5ae4ec",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-19T16:53:27Z",
+      "side": 1,
+      "message": "nit: \"may already be in the process of stopping or be stopped\".",
+      "range": {
+        "startLine": 101,
+        "startChar": 31,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649617d8_966a976a",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-19T16:53:27Z",
+      "side": 1,
+      "message": "This does not exactly map to the older meaning. Now even if it\u0027s stopping or running, this will return true. do we want to preserve the old semantics (by, say, adding !arc_session_-\u003eIsRunning()) or do we want to rename this method and update the comments?",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c158ec1_5ac246c0",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-19T16:53:27Z",
+      "side": 1,
+      "message": "nit: look",
+      "range": {
+        "startLine": 199,
+        "startChar": 41,
+        "endLine": 199,
+        "endChar": 47
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80aa054_c5c1dc9e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-19T16:53:27Z",
+      "side": 1,
+      "message": "super nit: can you indent these two cases two spaces to the right so they align with the beginning of the text in L202?\n\n  // * If ...\n  //   case ...",
+      "range": {
+        "startLine": 203,
+        "startChar": 5,
+        "endLine": 203,
+        "endChar": 7
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a466ed99_5c5106e5",
         "filename": "components/arc/test/fake_arc_session.h",
         "patchSetId": 1
