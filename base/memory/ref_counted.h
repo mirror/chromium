@@ -136,7 +136,7 @@ class BASE_EXPORT RefCountedBase {
   bool CalledOnValidSequence() const;
 #endif
 
-  mutable size_t ref_count_ = 0;
+  mutable int ref_count_ = 0;
 
 #if DCHECK_IS_ON()
   mutable bool needs_adopt_ref_ = false;
