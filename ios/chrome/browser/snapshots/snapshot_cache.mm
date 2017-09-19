@@ -15,6 +15,7 @@
 #include "base/logging.h"
 #include "base/mac/bind_objc_block.h"
 #include "base/mac/scoped_nsobject.h"
+#include "base/observer_list.h"
 #include "base/path_service.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
@@ -25,6 +26,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/snapshots/lru_cache.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache_internal.h"
+#import "ios/chrome/browser/snapshots/snapshot_cache_observer.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
@@ -238,6 +240,9 @@ void ConvertAndSaveGreyImage(NSString* session_id,
   // by not posting the task).
   scoped_refptr<base::SequencedTaskRunner> taskRunner_;
 
+  // List of observers to be notified of changes to the snapshot cache.
+  base::ObserverList<SnapshotCacheObserver, true> observers_;
+
   // Check that public API is called from the correct sequence.
   SEQUENCE_CHECKER(sequenceChecker_);
 }
@@ -348,6 +353,9 @@ void ConvertAndSaveGreyImage(NSString* session_id,
     return;
 
   [lruCache_ setObject:image forKey:sessionID];
+
+  for (auto& observer : observers_)
+    observer.SnapshotDidUpdate(self, sessionID);
 
   // Copy ivars used by the block so that it does not reference |self|.
   const base::FilePath cacheDirectory = cacheDirectory_;
@@ -612,6 +620,14 @@ void ConvertAndSaveGreyImage(NSString* session_id,
         ConvertAndSaveGreyImage(sessionID, snapshotsScale,
                                 backgroundingColorImage, cacheDirectory);
       }));
+}
+
+- (void)addObserver:(SnapshotCacheObserver*)observer {
+  observers_.AddObserver(observer);
+}
+
+- (void)removeObserver:(SnapshotCacheObserver*)observer {
+  observers_.RemoveObserver(observer);
 }
 
 - (void)shutdown {
