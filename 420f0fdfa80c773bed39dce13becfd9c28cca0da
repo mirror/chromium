@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f5ba891_686a0a13",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "Double space fixed.\nDescription for translators clarified.\nRegarding the strings, these come straight from UX folks and my understanding is that they are the result of some serious wordsmithing to balance technical aspects and user-understandable language. So I\u0027m going to leave as is. Note that the option won\u0027t show in case TPM firmware is up-to-date. So while I can see your point I think users will realize that this is a one-time action when the option is absent after the update.",
+      "parentUuid": "46b0ab06_65f3d0b3",
+      "range": {
+        "startLine": 60,
+        "startChar": 67,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf08ac1_d7e22e70",
         "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc9b9a3_82b4c7ca",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf08ac1_d7e22e70",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fcc969ab_ef73acce",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553afff2_d5a9c048",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d01726e4_3a3f9664",
         "filename": "chrome/browser/resources/settings/lifetime_browser_proxy.js",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5961bd0d_955f3c9d",
+        "filename": "chrome/browser/resources/settings/lifetime_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "Yes, good catch! Leftover from a previous iteration.",
+      "parentUuid": "d01726e4_3a3f9664",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "2725827a_914aa3a4",
+        "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "We should bail. I screwed up in a last-minute code reshuffling operation...",
+      "parentUuid": "8a51223d_362f11a4",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40f48355_a81596d8",
         "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d98369_f78ba469",
+        "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-19T14:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f48355_a81596d8",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
