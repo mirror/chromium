@@ -34,6 +34,24 @@
       "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4758506f_c7df17e9",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T23:10:25Z",
+      "side": 1,
+      "message": "If this is a mash/mus-only bug, how about testing for mash/mus here?\n\nOr are you thinking that this doesn\u0027t happen on classic because the cursor position is set to the middle of the screen on login, but the bug is probably still there?",
+      "parentUuid": "7ff3e452_eac36bdd",
+      "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
