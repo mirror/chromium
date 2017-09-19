@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab24e9d6_6e04e1d7",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-19T01:39:20Z",
+      "side": 1,
+      "message": "If you do NORMAL, it will work. GDI_TEXT is actually behind a feature flag. It would be nice to get that working though, as that tests a more interesting code path in PDFium.",
+      "range": {
+        "startLine": 76,
+        "startChar": 58,
+        "endLine": 76,
+        "endChar": 66
+      },
+      "revId": "3630045e8ba2964dc73173b0007d73df1fb5659e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8a1894f_a3cd5dc4",
         "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
         "patchSetId": 2
