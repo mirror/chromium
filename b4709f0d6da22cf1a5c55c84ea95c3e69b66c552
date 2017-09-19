@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcedb574_36a77897",
+        "filename": "chrome/browser/profiles/profile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-19T05:37:19Z",
+      "side": 1,
+      "message": "!result.has_value() might be more readable when the value type is also bool.",
+      "revId": "b4709f0d6da22cf1a5c55c84ea95c3e69b66c552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
