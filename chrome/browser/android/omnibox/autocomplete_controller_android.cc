@@ -181,6 +181,8 @@ void AutocompleteControllerAndroid::OnOmniboxFocused(
     jboolean focused_from_fakebox) {
   if (!autocomplete_controller_)
     return;
+  if (!autocomplete_controller_->done())
+    return;
 
   base::string16 url = ConvertJavaStringToUTF16(env, j_current_url);
   const GURL current_url = GURL(url);
