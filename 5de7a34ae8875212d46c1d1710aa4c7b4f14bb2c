@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd4b1b97_509ef276",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:43:03Z",
+      "side": 1,
+      "message": "How about extending ImpressionTracker to OneShotImpressionTracker or something similar, that would unregister when firing and not reset if it already was triggered?",
+      "parentUuid": "58f4728e_6c557174",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce82a62d_db77ea28",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
         "patchSetId": 3
