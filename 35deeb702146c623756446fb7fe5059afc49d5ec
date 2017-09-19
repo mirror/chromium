@@ -16,6 +16,24 @@
       "revId": "35deeb702146c623756446fb7fe5059afc49d5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58affd5_f49ee9e2",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-19T17:39:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef3360c2_af418d62",
+      "revId": "35deeb702146c623756446fb7fe5059afc49d5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
