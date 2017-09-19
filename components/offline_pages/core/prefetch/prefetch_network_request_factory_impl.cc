@@ -37,6 +37,11 @@ bool PrefetchNetworkRequestFactoryImpl::HasOutstandingRequests() const {
            get_operation_requests_.empty());
 }
 
+void PrefetchNetworkRequestFactoryImpl::CancelOutstandingRequests() {
+  generate_page_bundle_requests_.clear();
+  get_operation_requests_.clear();
+}
+
 void PrefetchNetworkRequestFactoryImpl::MakeGeneratePageBundleRequest(
     const std::vector<std::string>& url_strings,
     const std::string& gcm_registration_id,

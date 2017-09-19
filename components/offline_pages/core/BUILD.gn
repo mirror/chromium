@@ -158,6 +158,7 @@ if (is_android) {
       "downloads/download_ui_item.h",
       "offline_page_types.h",
       "offline_store_types.h",
+      "prefetch/prefetch_types.h",
     ]
   }
 }

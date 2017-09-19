@@ -51,9 +51,8 @@ class PrefetchDispatcher {
     ScopedBackgroundTask() = default;
     virtual ~ScopedBackgroundTask() = default;
 
-    // Used on destruction to inform the system about whether rescheduling with
-    // or without backoff is required.
-    virtual void SetNeedsReschedule(bool reschedule, bool backoff) = 0;
+    // Used on destruction to inform the system about the rescheduling.
+    virtual void SetReschedule(PrefetchBackgroundTaskRescheduleType type) = 0;
   };
 
   virtual ~PrefetchDispatcher() = default;
@@ -100,7 +99,7 @@ class PrefetchDispatcher {
 
   // Called when a task must stop immediately due to system constraints. After
   // this call completes, the system will reschedule the task based on whether
-  // SetNeedsReschedule has been called.
+  // SetReschedule has been called.
   virtual void StopBackgroundTask() = 0;
 
   // Called when the GCM app handler receives a GCM message with an embeddeed

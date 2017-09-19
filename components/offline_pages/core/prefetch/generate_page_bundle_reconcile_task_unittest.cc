@@ -28,6 +28,7 @@ class FakePrefetchNetworkRequestFactory : public PrefetchNetworkRequestFactory {
 
   // Implementation of PrefetchNetworkRequestFactory
   bool HasOutstandingRequests() const override { return false; }
+  void CancelOutstandingRequests() override {}
   void MakeGeneratePageBundleRequest(
       const std::vector<std::string>& prefetch_urls,
       const std::string& gcm_registration_id,

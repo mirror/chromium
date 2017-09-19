@@ -204,9 +204,9 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     }
 
     @VisibleForTesting
-    void setTaskReschedulingForTesting(boolean reschedule, boolean backoff) {
+    void setTaskReschedulingForTesting(int rescheduleType) {
         if (mNativeTask == 0) return;
-        nativeSetTaskReschedulingForTesting(mNativeTask, reschedule, backoff);
+        nativeSetTaskReschedulingForTesting(mNativeTask, rescheduleType);
     }
 
     @VisibleForTesting
@@ -220,6 +220,6 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     @VisibleForTesting
     native boolean nativeOnStopTask(long nativePrefetchBackgroundTaskAndroid);
     native void nativeSetTaskReschedulingForTesting(
-            long nativePrefetchBackgroundTaskAndroid, boolean reschedule, boolean backoff);
+            long nativePrefetchBackgroundTaskAndroid, int rescheduleType);
     native void nativeSignalTaskFinishedForTesting(long nativePrefetchBackgroundTaskAndroid);
 }

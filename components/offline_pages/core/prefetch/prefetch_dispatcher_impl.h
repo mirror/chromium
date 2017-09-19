@@ -85,6 +85,7 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   PrefetchService* service_;
   TaskQueue task_queue_;
   bool needs_pipeline_processing_ = false;
+  bool suspended_ = false;
   std::unique_ptr<ScopedBackgroundTask> background_task_;
 
   base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;

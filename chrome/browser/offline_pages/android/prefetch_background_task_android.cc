@@ -5,6 +5,7 @@
 
 #include <memory>
 
+#include "base/logging.h"
 #include "base/time/time.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
@@ -70,21 +71,20 @@ PrefetchBackgroundTaskAndroid::PrefetchBackgroundTaskAndroid(
 PrefetchBackgroundTaskAndroid::~PrefetchBackgroundTaskAndroid() {
   JNIEnv* env = base::android::AttachCurrentThread();
   prefetch::Java_PrefetchBackgroundTask_doneProcessing(
-      env, java_prefetch_background_task_, needs_reschedule_);
+      env, java_prefetch_background_task_, NeedsReschedule());
 
   PrefetchBackgroundTaskHandler* handler =
       service_->GetPrefetchBackgroundTaskHandler();
-  if (needs_backoff_)
+  if (reschedule_type_ ==
+      PrefetchBackgroundTaskRescheduleType::RETRY_WITH_BACKOFF) {
     handler->Backoff();
-  else
+  } else {
     handler->ResetBackoff();
+  }
 
-  if (needs_reschedule_) {
-    // If the task is killed due to the system, it should be rescheduled without
-    // backoff even when it is in effect because we want to rerun the task asap.
-    PrefetchBackgroundTask::Schedule(
-        task_killed_by_system_ ? 0 : handler->GetAdditionalBackoffSeconds(),
-        true /*update_current*/);
+  if (NeedsReschedule()) {
+    PrefetchBackgroundTask::Schedule(GetAdditionalSeconds(),
+                                     true /*update_current*/);
   }
 }
 
@@ -92,7 +92,6 @@ bool PrefetchBackgroundTaskAndroid::OnStopTask(
     JNIEnv* env,
     const JavaParamRef<jobject>& jcaller) {
   task_killed_by_system_ = true;
-  needs_reschedule_ = true;
   service_->GetPrefetchDispatcher()->StopBackgroundTask();
   return false;
 }
@@ -100,9 +99,9 @@ bool PrefetchBackgroundTaskAndroid::OnStopTask(
 void PrefetchBackgroundTaskAndroid::SetTaskReschedulingForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
-    jboolean reschedule,
-    jboolean backoff) {
-  SetNeedsReschedule(static_cast<bool>(reschedule), static_cast<bool>(backoff));
+    int reschedule_type) {
+  SetReschedule(
+      static_cast<PrefetchBackgroundTaskRescheduleType>(reschedule_type));
 }
 
 void PrefetchBackgroundTaskAndroid::SignalTaskFinishedForTesting(
@@ -111,10 +110,55 @@ void PrefetchBackgroundTaskAndroid::SignalTaskFinishedForTesting(
   service_->GetPrefetchDispatcher()->RequestFinishBackgroundTaskForTest();
 }
 
-void PrefetchBackgroundTaskAndroid::SetNeedsReschedule(bool reschedule,
-                                                       bool backoff) {
-  needs_reschedule_ = needs_reschedule_ || reschedule;
-  needs_backoff_ = needs_backoff_ || backoff;
+void PrefetchBackgroundTaskAndroid::SetReschedule(
+    PrefetchBackgroundTaskRescheduleType type) {
+  switch (type) {
+    // |SUSPEND| takes highest precendence.
+    case PrefetchBackgroundTaskRescheduleType::SUSPEND:
+      reschedule_type_ = PrefetchBackgroundTaskRescheduleType::SUSPEND;
+      break;
+    // |RETRY_WITH_BACKOFF| takes 2nd highest precendence and thus it can't
+    // overwrite |SUSPEND|.
+    case PrefetchBackgroundTaskRescheduleType::RETRY_WITH_BACKOFF:
+      if (reschedule_type_ != PrefetchBackgroundTaskRescheduleType::SUSPEND) {
+        reschedule_type_ =
+            PrefetchBackgroundTaskRescheduleType::RETRY_WITH_BACKOFF;
+      }
+      break;
+    // |RETRY_WITHOUT_BACKOFF| takes 3rd highest precendence and thus it only
+    // overwrites the lowest precendence |NO_RETRY|.
+    case PrefetchBackgroundTaskRescheduleType::RETRY_WITHOUT_BACKOFF:
+      if (reschedule_type_ == PrefetchBackgroundTaskRescheduleType::NO_RETRY) {
+        reschedule_type_ =
+            PrefetchBackgroundTaskRescheduleType::RETRY_WITHOUT_BACKOFF;
+      }
+      break;
+    case PrefetchBackgroundTaskRescheduleType::NO_RETRY:
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+}
+
+int PrefetchBackgroundTaskAndroid::GetAdditionalSeconds() const {
+  // The task should be rescheduled after 1 day if the suspension is requested.
+  // This will happen even when the task is then killed due to the system.
+  if (reschedule_type_ == PrefetchBackgroundTaskRescheduleType::SUSPEND)
+    return static_cast<int>(base::TimeDelta::FromDays(1).InSeconds());
+
+  // If the task is killed due to the system, it should be rescheduled without
+  // backoff even when it is in effect because we want to rerun the task asap.
+  if (task_killed_by_system_)
+    return 0;
+
+  return service_->GetPrefetchBackgroundTaskHandler()
+      ->GetAdditionalBackoffSeconds();
+}
+
+bool PrefetchBackgroundTaskAndroid::NeedsReschedule() const {
+  return reschedule_type_ != PrefetchBackgroundTaskRescheduleType::NO_RETRY ||
+         task_killed_by_system_;
 }
 
 }  // namespace offline_pages

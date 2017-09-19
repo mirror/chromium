@@ -35,22 +35,27 @@ namespace offline_pages {
 namespace {
 
 const std::string kTestNamespace = "TestPrefetchClientNamespace";
+const std::string kTestID = "id";
+const GURL kTestURL("https://www.chromium.org");
+const GURL kTestURL2("https://www.chromium.org/2");
 
 class TestScopedBackgroundTask
     : public PrefetchDispatcher::ScopedBackgroundTask {
  public:
   TestScopedBackgroundTask() = default;
-  TestScopedBackgroundTask(base::RepeatingCallback<void(bool, bool)> callback)
+  TestScopedBackgroundTask(
+      base::RepeatingCallback<void(PrefetchBackgroundTaskRescheduleType)>
+          callback)
       : callback_(std::move(callback)) {}
   ~TestScopedBackgroundTask() override = default;
 
-  void SetNeedsReschedule(bool reschedule, bool backoff) override {
+  void SetReschedule(PrefetchBackgroundTaskRescheduleType type) override {
     if (!callback_.is_null())
-      callback_.Run(reschedule, backoff);
+      callback_.Run(type);
   }
 
  private:
-  base::RepeatingCallback<void(bool, bool)> callback_;
+  base::RepeatingCallback<void(PrefetchBackgroundTaskRescheduleType)> callback_;
 };
 
 }  // namespace
@@ -71,10 +76,9 @@ class PrefetchDispatcherTest : public PrefetchRequestTestBase {
     return prefetch_dispatcher->task_queue_;
   }
 
-  void SetNeedsReschedule(bool reschedule, bool backoff) {
-    needs_reschedule_called_ = true;
-    reschedule_result_ = reschedule;
-    backoff_result_ = backoff;
+  void SetReschedule(PrefetchBackgroundTaskRescheduleType type) {
+    reschedule_called_ = true;
+    reschedule_type_ = type;
   }
 
   TaskQueue* dispatcher_task_queue() { return &dispatcher_->task_queue_; }
@@ -83,9 +87,10 @@ class PrefetchDispatcherTest : public PrefetchRequestTestBase {
     return network_request_factory_;
   }
 
-  bool needs_reschedule_called() const { return needs_reschedule_called_; }
-  bool reschedule_result() const { return reschedule_result_; }
-  bool backoff_result() const { return backoff_result_; }
+  bool reschedule_called() const { return reschedule_called_; }
+  PrefetchBackgroundTaskRescheduleType reschedule_type_result() const {
+    return reschedule_type_;
+  }
 
  protected:
   std::vector<PrefetchURL> test_urls_;
@@ -100,9 +105,9 @@ class PrefetchDispatcherTest : public PrefetchRequestTestBase {
   // Owned by |taco_|.
   TestPrefetchNetworkRequestFactory* network_request_factory_;
 
-  bool needs_reschedule_called_ = false;
-  bool reschedule_result_ = false;
-  bool backoff_result_ = false;
+  bool reschedule_called_ = false;
+  PrefetchBackgroundTaskRescheduleType reschedule_type_ =
+      PrefetchBackgroundTaskRescheduleType::NO_RETRY;
 };
 
 PrefetchDispatcherTest::PrefetchDispatcherTest() {
@@ -193,8 +198,7 @@ TEST_F(PrefetchDispatcherTest, DispatcherDoesNothingIfSettingsDoNotAllowIt) {
 }
 
 TEST_F(PrefetchDispatcherTest, DispatcherReleasesBackgroundTask) {
-  PrefetchURL prefetch_url("id", GURL("https://www.chromium.org"),
-                           base::string16());
+  PrefetchURL prefetch_url(kTestID, kTestURL, base::string16());
   prefetch_dispatcher()->AddCandidatePrefetchURLs(
       kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url));
   PumpLoop();
@@ -226,47 +230,97 @@ TEST_F(PrefetchDispatcherTest, DispatcherReleasesBackgroundTask) {
 }
 
 TEST_F(PrefetchDispatcherTest, RetryWithBackoffAfterFailedNetworkRequest) {
-  PrefetchURL prefetch_url("id", GURL("https://www.chromium.org"),
-                           base::string16());
+  PrefetchURL prefetch_url(kTestID, kTestURL, base::string16());
   prefetch_dispatcher()->AddCandidatePrefetchURLs(
       kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url));
   PumpLoop();
 
   prefetch_dispatcher()->BeginBackgroundTask(
-      base::MakeUnique<TestScopedBackgroundTask>(
-          base::BindRepeating(&PrefetchDispatcherTest::SetNeedsReschedule,
-                              base::Unretained(this))));
+      base::MakeUnique<TestScopedBackgroundTask>(base::BindRepeating(
+          &PrefetchDispatcherTest::SetReschedule, base::Unretained(this))));
+  PumpLoop();
+
+  // Trigger another request to make sure we have more work to do.
+  PrefetchURL prefetch_url2(kTestID, kTestURL2, base::string16());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
+      kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url2));
   PumpLoop();
 
   // This should trigger retry with backoff.
   RespondWithHttpError(net::HTTP_INTERNAL_SERVER_ERROR);
   PumpLoop();
 
-  EXPECT_TRUE(needs_reschedule_called());
-  EXPECT_TRUE(reschedule_result());
-  EXPECT_TRUE(backoff_result());
+  EXPECT_TRUE(reschedule_called());
+  EXPECT_EQ(PrefetchBackgroundTaskRescheduleType::RETRY_WITH_BACKOFF,
+            reschedule_type_result());
+
+  // There are still outstanding requests.
+  EXPECT_TRUE(network_request_factory()->HasOutstandingRequests());
+
+  // Still holding onto the background task.
+  EXPECT_NE(nullptr, GetBackgroundTask());
 }
 
 TEST_F(PrefetchDispatcherTest, RetryWithoutBackoffAfterFailedNetworkRequest) {
-  PrefetchURL prefetch_url("id", GURL("https://www.chromium.org"),
-                           base::string16());
+  PrefetchURL prefetch_url(kTestID, kTestURL, base::string16());
   prefetch_dispatcher()->AddCandidatePrefetchURLs(
       kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url));
   PumpLoop();
 
   prefetch_dispatcher()->BeginBackgroundTask(
-      base::MakeUnique<TestScopedBackgroundTask>(
-          base::BindRepeating(&PrefetchDispatcherTest::SetNeedsReschedule,
-                              base::Unretained(this))));
+      base::MakeUnique<TestScopedBackgroundTask>(base::BindRepeating(
+          &PrefetchDispatcherTest::SetReschedule, base::Unretained(this))));
   PumpLoop();
+
+  // Trigger another request to make sure we have more work to do.
+  PrefetchURL prefetch_url2(kTestID, kTestURL2, base::string16());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
+      kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url2));
 
   // This should trigger retry without backoff.
   RespondWithNetError(net::ERR_CONNECTION_CLOSED);
   PumpLoop();
 
-  EXPECT_TRUE(needs_reschedule_called());
-  EXPECT_TRUE(reschedule_result());
-  EXPECT_FALSE(backoff_result());
+  EXPECT_TRUE(reschedule_called());
+  EXPECT_EQ(PrefetchBackgroundTaskRescheduleType::RETRY_WITHOUT_BACKOFF,
+            reschedule_type_result());
+
+  // There are still outstanding requests.
+  EXPECT_TRUE(network_request_factory()->HasOutstandingRequests());
+
+  // Still holding onto the background task.
+  EXPECT_NE(nullptr, GetBackgroundTask());
+}
+
+TEST_F(PrefetchDispatcherTest, SuspendAfterFailedNetworkRequest) {
+  PrefetchURL prefetch_url(kTestID, kTestURL, base::string16());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
+      kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url));
+  PumpLoop();
+
+  prefetch_dispatcher()->BeginBackgroundTask(
+      base::MakeUnique<TestScopedBackgroundTask>(base::BindRepeating(
+          &PrefetchDispatcherTest::SetReschedule, base::Unretained(this))));
+  PumpLoop();
+
+  // Trigger another request to make sure we have more work to do.
+  PrefetchURL prefetch_url2(kTestID, kTestURL2, base::string16());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
+      kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url2));
+
+  // This should trigger suspend.
+  RespondWithNetError(net::ERR_BLOCKED_BY_ADMINISTRATOR);
+  PumpLoop();
+
+  EXPECT_TRUE(reschedule_called());
+  EXPECT_EQ(PrefetchBackgroundTaskRescheduleType::SUSPEND,
+            reschedule_type_result());
+
+  // Outstanding requests should be aborted due to suspension.
+  EXPECT_FALSE(network_request_factory()->HasOutstandingRequests());
+
+  // The background task should be released due to suspension.
+  EXPECT_EQ(nullptr, GetBackgroundTask());
 }
 
 }  // namespace offline_pages

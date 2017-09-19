@@ -24,6 +24,9 @@ class PrefetchNetworkRequestFactory {
   // closed.
   virtual bool HasOutstandingRequests() const = 0;
 
+  // Cancels all outstanding active network requests.
+  virtual void CancelOutstandingRequests() = 0;
+
   // Creates and starts a new GeneratePageBundle request, retaining ownership.
   // If a GeneratePageBundle request for one or more specified URLs already
   // exists, this will create another one regardless.

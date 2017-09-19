@@ -29,7 +29,8 @@ class TestScopedBackgroundTask
   TestScopedBackgroundTask() = default;
   ~TestScopedBackgroundTask() override = default;
 
-  void SetNeedsReschedule(bool reschedule, bool backoff) override {}
+  void SetReschedule(
+      offline_pages::PrefetchBackgroundTaskRescheduleType type) override {}
 };
 }  // namespace
 
