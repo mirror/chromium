@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7868a26_2f85c5d5",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "Good catch, I have updated this in the new patch.",
+      "parentUuid": "1f56120a_d8218f5a",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "846a811b_8f17ce8d",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 25
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T07:22:52Z",
       "side": 1,
       "message": "We might be able to move updating this new active tree draw time out of this if condition (since it is drawn any time used_new_active_tree is true) and re-use it, but having a separate variable for safety is fine.",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349bfdf0_9025e519",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer a separate variable because I think the code is probably cleaner this way.",
+      "parentUuid": "846a811b_8f17ce8d",
       "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a0ead59f_325f58f7",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "Actually we do know that. For a real main thread animation such as color animation, the |element_does_not_paint_into_own_backing| should always be false. For a transform animation that gets here due to an experiment, the above variable should be true. Does that make sense?",
+      "parentUuid": "287be6e4_f132d05e",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e5d195_c27ef87c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 25
@@ -67,6 +121,24 @@
       "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c13241d_90245c36",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "This was originally suggested by wkorman@. Now that I think about it, we don\u0027t really need that. The logic for |main_thread_compositable| is used in an experiment only. Once we got conclusion for the experiment, we should remove all the code associated with that logic.",
+      "parentUuid": "a3e5d195_c27ef87c",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a029e128_d9ad9e35",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d8b21eb_7978ac4c",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66caf344_b1185848",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 25
@@ -101,6 +191,24 @@
       "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27660a33_51b2ed22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 70253,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-19T13:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66caf344_b1185848",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
