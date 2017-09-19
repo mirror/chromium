@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "981a7be5_3663aae2",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-19T04:01:34Z",
+      "side": 1,
+      "message": "I think we should use LayoutTextControl::AdjustInnerEditorStyle() as\ntkent@\u0027s suggested. It seems \"html.css\" or selector aren\u0027t good tool\nto specify style for text field.",
+      "parentUuid": "0647ec05_39700ab8",
+      "range": {
+        "startLine": 429,
+        "startChar": 5,
+        "endLine": 429,
+        "endChar": 15
+      },
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56cb198_e6af2a00",
         "filename": "third_party/WebKit/Source/core/css/html.css",
         "patchSetId": 4
@@ -108,6 +132,24 @@
       "side": 1,
       "message": "1. I\u0027m thinking that forcing selectability in all text controls might be a too big change for being able to backport this CL to M62? I think it is safer that M62 keeps M61\u0027s behavior.\n\n2. DisabledInputDoesNotInheritUserSelect tests M61\u0027s behavior (the behavior we also want in M62?): disabled fields _can_ be selected.",
       "parentUuid": "0dd9b0f1_ad1e01ba",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6fef65_8ac971e3",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-19T04:01:34Z",
+      "side": 1,
+      "message": "I don\u0027t think the issues are release blocker and need to backport to M62,\nsince selecting text in disabled control is not popular user scenario.",
+      "parentUuid": "3fa1e79d_44a96dd7",
       "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
