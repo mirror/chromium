@@ -164,6 +164,7 @@ class SimpleSynchronousEntry {
                         uint64_t entry_hash,
                         bool had_index,
                         const base::TimeTicks& time_enqueued,
+                        SimpleFileTracker* file_tracker,
                         SimpleEntryCreationResults* out_results);
 
   static void CreateEntry(net::CacheType cache_type,
@@ -172,6 +173,7 @@ class SimpleSynchronousEntry {
                           uint64_t entry_hash,
                           bool had_index,
                           const base::TimeTicks& time_enqueued,
+                          SimpleFileTracker* file_tracker,
                           SimpleEntryCreationResults* out_results);
 
   // Deletes an entry from the file system without affecting the state of the
@@ -237,6 +239,29 @@ class SimpleSynchronousEntry {
  private:
   FRIEND_TEST_ALL_PREFIXES(::DiskCacheBackendTest,
                            SimpleCacheEnumerationLongKeys);
+  friend class SimpleFileTrackerTest;
+
+  class FileHandle {
+   public:
+    FileHandle(SimpleSynchronousEntry* entry,
+               SimpleFileTracker::SubFile subfile);
+    ~FileHandle();
+    base::File* operator->() const;
+    bool IsOK() const;
+
+   private:
+    SimpleSynchronousEntry* entry_;
+    SimpleFileTracker::SubFile subfile_;
+    base::File* file_;
+    DISALLOW_COPY_AND_ASSIGN(FileHandle);
+  };
+
+  struct AcquiredFileState {
+    AcquiredFileState() : file(nullptr), ref_count(0) {}
+
+    base::File* file;
+    int ref_count;
+  };
 
   enum CreateEntryResult {
     CREATE_ENTRY_SUCCESS = 0,
@@ -267,15 +292,17 @@ class SimpleSynchronousEntry {
   // make it likely the entire key is read.
   static const size_t kInitialHeaderRead = 64 * 1024;
 
-  SimpleSynchronousEntry(net::CacheType cache_type,
-                         const base::FilePath& path,
-                         const std::string& key,
-                         uint64_t entry_hash,
-                         bool had_index);
+  NET_EXPORT_PRIVATE SimpleSynchronousEntry(
+      net::CacheType cache_type,
+      const base::FilePath& path,
+      const std::string& key,
+      uint64_t entry_hash,
+      bool had_index,
+      SimpleFileTracker* simple_file_tracker);
 
   // Like Entry, the SimpleSynchronousEntry self releases when Close() is
   // called.
-  ~SimpleSynchronousEntry();
+  NET_EXPORT_PRIVATE ~SimpleSynchronousEntry();
 
   // Tries to open one of the cache entry files. Succeeds if the open succeeds
   // or if the file was not found and is allowed to be omitted if the
@@ -399,9 +426,12 @@ class SimpleSynchronousEntry {
 
   base::FilePath GetFilenameFromFileIndex(int file_index);
 
-  bool sparse_file_open() const {
-    return sparse_file_.IsValid();
-  }
+  bool sparse_file_open() const { return sparse_file_open_; }
+
+  // Helpers for grabbing File's out of SimpleFileTracker which also keep
+  // track of recursion level, and only release on matching amount;
+  base::File* AcquireFile(SimpleFileTracker::SubFile subfile);
+  void ReleaseFile(SimpleFileTracker::SubFile subfile);
 
   const net::CacheType cache_type_;
   const base::FilePath path_;
@@ -419,7 +449,7 @@ class SimpleSynchronousEntry {
       false,
   };
 
-  base::File files_[kSimpleEntryFileCount];
+  SimpleFileTracker* file_tracker_;
 
   // True if the corresponding stream is empty and therefore no on-disk file
   // was created to store it.
@@ -428,7 +458,8 @@ class SimpleSynchronousEntry {
   typedef std::map<int64_t, SparseRange> SparseRangeOffsetMap;
   typedef SparseRangeOffsetMap::iterator SparseRangeIterator;
   SparseRangeOffsetMap sparse_ranges_;
-  base::File sparse_file_;
+  bool sparse_file_open_;
+
   // Offset of the end of the sparse file (where the next sparse range will be
   // written).
   int64_t sparse_tail_offset_;
@@ -436,6 +467,9 @@ class SimpleSynchronousEntry {
   // True if the entry was created, or false if it was opened. Used to log
   // SimpleCache.*.EntryCreatedWithStream2Omitted only for created entries.
   bool files_created_;
+
+  // State for AcquireFile/ReleaseFile
+  AcquiredFileState acquired_files_[3];
 };
 
 }  // namespace disk_cache
