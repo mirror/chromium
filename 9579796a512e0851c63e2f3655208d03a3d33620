@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5496e8a9_5c8b333c",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T21:32:46Z",
+      "side": 1,
+      "message": "Hrm. Does this mean that if I slam the mouse into the top-left corner of the screen I won\u0027t get a tooltip?",
+      "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
