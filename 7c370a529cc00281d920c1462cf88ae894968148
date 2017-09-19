@@ -134,6 +134,24 @@
     },
     {
       "key": {
+        "uuid": "3e0dc99c_1988c58a",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-19T10:39:44Z",
+      "side": 1,
+      "message": "Yes we should pass the Connector. But I found it is hard to fix the existed unittests\n:(\n\nSuppose we don\u0027t move the U2fHidDevice::Connect to U2fRequest. We let the U2fRequest takes a Connector*. In the U2fRequest::OnEnumerate()/DeviceAdded() the U2fHidDevice instances are created. The U2fHidDevice constructor takes a Connector* and connect the HidManager by itself. \n\nThen to fix the existed unittests. I\u0027ll add a static flag like: \"bool U2fHidDevice::for_test\", so the code is like:\n\n--------in U2fHidDevice.cc:\nif(!U2fHidDevice::for_test) {\n  // only connect the real device service in product code.\n  connector-\u003eBindInterface(\"kServiceName\", mojo::MakeRequest(\u0026hid_manager_);\n}\n\n--------in unit test:\nU2fHidDevice::mock_hid_mojo_connection_for_test \u003d true;\nFakeHidManagerImpl fake_hid_manager_impl;\n// bind the interfacePtr of u2f_hid_device to FakeHidManagerImpl.\nfake_hid_manager_impl.AddBinding(mojo::MakeRequest(u2f_hid_device-\u003eGetHidManagerPtr()));\n\nWDYT?\n\nOn the other hand, if we move the U2fHidDevice::Connect out, the U2fHidDevice doesn\u0027t need to have the interfacePtr at all. But I found the U2fHidDevice::Connect() is used for get a HidConnectionPtr on which the Read/Write will be called. Seems we shouldn\u0027t move it out?\n\nPlease help to give some comments! Thanks very much!",
+      "parentUuid": "daaab630_9ed9dea7",
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8e002a3_0046dce6",
         "filename": "device/u2f/u2f_request.cc",
         "patchSetId": 2
