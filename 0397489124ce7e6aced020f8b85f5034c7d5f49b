@@ -16,6 +16,24 @@
       "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea966ac6_8bed4894",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-19T20:31:56Z",
+      "side": 1,
+      "message": "My first thought is that PDF may be another thing to consider; though git grep doesn\u0027t show that.  Similarly, git grep doesn\u0027t show any reference to inflateBack within chromium source, so I guess that can\u0027t be the source of the Cronet bug?\n\nIndeed this implementation does look vulnerable to such a bug when used in infback.c, and to another bug as well: in inflate.c the window allocation is extended by a few bytes so that unaligned reads have the freedom to spill off the end of the window without extra tests to avoid that illegal read.  Since a pre-allocated window is provided to infback.c, and the size is not based on a query from the library, there\u0027s no way to allocate that same wiggle room, so calls from infback.c may result in illegal reads.\n\nAs it stands this implementation only risks window damage within N (16?) bytes of the _start_ of a copy.  If the copy is longer than N then exactly the correct number of bytes is overwritten.  Depending on the order of loads and stores this might still result in a corrupt copy, but that can be mitigated by deferring the first store until after the second store (or simply the end of the loop).  But I have no mitigation for the short copy case.\n\nUnfortunately most copies are short (try https://github.com/madler/infgen to analyse specific files), which means that the single-iteration wide load/store is the case that most benefits from optimisation.  To reduce it to a more careful loop is a big compromise.\n\n\nI think the simplest solution is two separate inflate_fast implementations for the different cases, accommodating infback.c usage demands too much compromise.",
+      "parentUuid": "3779fc23_7a9cb562",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
