@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "7d632eca_7d3bebe7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-19T08:21:41Z",
+      "side": 1,
+      "message": "Sorry, my comment was vague.\n\nWhat I meant was\nassign MAX_SIZE to kOutstandingUnlimited instead of 0u, and keep using 0u here. See my other comments for the latest patch set too.",
+      "parentUuid": "add95b44_1cd8dc02",
+      "range": {
+        "startLine": 210,
+        "startChar": 37,
+        "endLine": 210,
+        "endChar": 38
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e0b0103_49f8eca6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 2

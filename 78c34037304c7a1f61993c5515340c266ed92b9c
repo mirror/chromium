@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4efec181_b7831cdf",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-19T08:21:41Z",
+      "side": 1,
+      "message": "Probably, we do not want to say \u0027InBackground\u0027 here because our current design does not expose reasons of throttling because that is decided inside the scheduler. So just kStopped sounds better.\n\nSami: WDYT?",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "78c34037304c7a1f61993c5515340c266ed92b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c8185b3_43f08f30",
         "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
         "patchSetId": 3
@@ -18,6 +41,52 @@
         "startChar": 5,
         "endLine": 67,
         "endChar": 10
+      },
+      "revId": "78c34037304c7a1f61993c5515340c266ed92b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c69a62_7d3be06f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-19T08:21:41Z",
+      "side": 1,
+      "message": "My last comment was vague, but once we assigned SIZE_MAX to kOutstandUnlimited as I suggest in the header, we can use 0u here to stop all new loading requests.",
+      "range": {
+        "startLine": 210,
+        "startChar": 37,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "78c34037304c7a1f61993c5515340c266ed92b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4f2d24_7d5dca9d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-19T08:21:41Z",
+      "side": 1,
+      "message": "Use std::numeric_limits\u003csize_t\u003e::max() instead of 0u?",
+      "range": {
+        "startLine": 58,
+        "startChar": 50,
+        "endLine": 58,
+        "endChar": 52
       },
       "revId": "78c34037304c7a1f61993c5515340c266ed92b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
