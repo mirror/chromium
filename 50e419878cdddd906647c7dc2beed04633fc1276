@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9106b71d_416b687c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-19T20:15:47Z",
+      "side": 1,
+      "message": "On Mac, we are actively removing the pre-sandboxed warmup phase from all process types. So I don\u0027t think we should introduce this at all on Mac. What resource is the sandbox blocking?",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
@@ -42,6 +59,23 @@
         "endLine": 65,
         "endChar": 56
       },
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79639533_b22c18e1",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-19T20:15:47Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this is needed. I think the browser can open() the .so and transfer the FD to the CDM modules over IPC, and then you could dlopen using /proc/self/fd/\u003cfd\u003e.",
       "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
