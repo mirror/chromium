@@ -8,6 +8,8 @@
 #include <stdint.h>
 
 #include "cc/base/filter_operations.h"
+#include "cc/resources/display_resource_provider.h"
+#include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource_provider.h"
 #include "components/viz/common/quads/render_pass.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -62,6 +64,15 @@ void AddRenderPassQuad(viz::RenderPass* to_pass,
 void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
                            ResourceProvider* resource_provider,
                            viz::RenderPassId child_pass_id,
+                           gpu::SyncToken* sync_token_for_mailbox_texture);
+
+// Adds a render pass quad with the given mask resource, filter, and transform.
+// The resource used in render pass is created by LayerTreeResourceProvider,
+// then transferred to DisplayResourceProvider.
+void AddOneOfEveryQuadType(RenderPass* to_pass,
+                           DisplayResourceProvider* resource_provider,
+                           LayerTreeResourceProvider* child_resource_provider,
+                           RenderPassId child_pass_id,
                            gpu::SyncToken* sync_token_for_mailbox_texture);
 
 }  // namespace cc
