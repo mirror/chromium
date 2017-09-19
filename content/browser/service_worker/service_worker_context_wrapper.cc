@@ -1049,8 +1049,15 @@ void ServiceWorkerContextWrapper::StopAllServiceWorkersOnIO(
     return;
   }
   std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
-  base::RepeatingClosure barrier =
-      base::BarrierClosure(live_versions.size(), std::move(callback));
+  base::RepeatingClosure barrier = base::BarrierClosure(
+      live_versions.size(),
+      base::BindOnce(
+          [](base::OnceClosure callback,
+             scoped_refptr<base::SingleThreadTaskRunner>
+                 task_runner_for_callback) {
+            task_runner_for_callback->PostTask(FROM_HERE, std::move(callback));
+          },
+          std::move(callback), std::move(task_runner_for_callback)));
   for (const ServiceWorkerVersionInfo& info : live_versions) {
     ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
     DCHECK(version);
