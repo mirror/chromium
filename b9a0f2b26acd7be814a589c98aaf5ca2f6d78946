@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc920f4a_54d645de",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "FocusNavigation would be a better name IMO.",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39545616_3d69fe1d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "SlotScopedFocusNavigation would be a better name IMO.",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e2ed2f_d4ea7edb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "Can you have separate files for each class?",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44bbb77_f85b4716",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "Same here, FallbackScopedFocusNavigation would be better IMO",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c29c80b_334ff646",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "next instead of temp would be better",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10655957_27daaa12",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "previous instead of temp would be better",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccafbb8_ce1d6a6a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "TreeScopedFocusNavigation?",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57ed416_99d35fcd",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "Same here, next would be a better name",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1aa4ee_9005d1fb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "previous would be a better name",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e038ed79_51bb4b7a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-09-19T06:40:04Z",
+      "side": 1,
+      "message": "Can this take rootnode as an argument just like other navigations?\nYou can pass tree_scope.RootNode().",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
