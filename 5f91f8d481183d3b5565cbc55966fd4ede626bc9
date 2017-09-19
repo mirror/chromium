@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "eaa66b90_6c87ea36",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T17:59:20Z",
+      "side": 1,
+      "message": "Preconditions noted in the functions.  I\u0027ve made the check explicit while exiting the function so it\u0027ll crash in debug mode and nop in release.",
+      "parentUuid": "b60e2d25_31df0a53",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29abb49_1d778b22",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -242,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "fe97daf9_f98fcc98",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T17:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0921e10_c50f0899",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db4f37f_438d64d4",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -286,6 +322,30 @@
       "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fc82dd_f11c567e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T17:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0923e5d0_8ae2859b",
+      "range": {
+        "startLine": 762,
+        "startChar": 2,
+        "endLine": 763,
+        "endChar": 73
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
