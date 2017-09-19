@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284cae1c_29e10e99",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:57:52Z",
+      "side": 1,
+      "message": "I think the issue here is that a views::Widget has a minimum size, and it is probably more than 30? That would explain the test failures.",
+      "revId": "4458c802b4899c5ca596f467d3228e5b3a9db984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
