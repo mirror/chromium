@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd2247e2_6a3e69c3",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:35:32Z",
+      "side": 1,
+      "message": "This sounds like it should be followed by a TODO.  Strange notifications sent for ambiguous reasons can lead to bugs.",
+      "revId": "32792ca8d7c0cf59020b264e8c25def21afb26f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
