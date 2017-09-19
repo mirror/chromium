@@ -116,6 +116,7 @@ class AccountReconcilor : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, DiceReconcileNoop);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            DiceReconcileReuseGaiaFirstAccount);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, TokensNotLoaded);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            StartReconcileCookiesDisabled);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
@@ -207,6 +208,7 @@ class AccountReconcilor : public KeyedService,
 
   // Overriden from OAuth2TokenService::Observer.
   void OnEndBatchChanges() override;
+  void OnRefreshTokensLoaded() override;
 
   // Overriden from SigninManagerBase::Observer.
   void GoogleSigninSucceeded(const std::string& account_id,
