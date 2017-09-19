@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d4115ad_9cd77998",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-19T19:46:44Z",
+      "side": 1,
+      "message": "Is a nullptr dereference a security issue? Looks more like a DCHECK.",
+      "revId": "9db4f0de626b292e80031a3cecfa7ff80d3c86d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
