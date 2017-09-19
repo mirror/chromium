@@ -83,7 +83,7 @@ class SharedSamplerTest : public testing::Test {
 
   void OnPhysicalMemoryUsageRefreshDone(int64_t physical_bytes) {
     physical_bytes_ = physical_bytes;
-    OnRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
+    OnRefreshTypeFinished(REFRESH_TYPE_MEMORY_FOOTPRINT);
   }
 
   void OnIdleWakeupsRefreshDone(int idle_wakeups_per_second) {
@@ -141,9 +141,9 @@ TEST_F(SharedSamplerTest, IdleWakeups) {
 
 // Verifies that Memory (Private WS) value can be obtained from Shared Sampler.
 TEST_F(SharedSamplerTest, PhysicalMemory) {
-  StartRefresh(REFRESH_TYPE_PHYSICAL_MEMORY);
+  StartRefresh(REFRESH_TYPE_MEMORY_FOOTPRINT);
   WaitUntilRefreshDone();
-  EXPECT_EQ(REFRESH_TYPE_PHYSICAL_MEMORY, finished_refresh_type());
+  EXPECT_EQ(REFRESH_TYPE_MEMORY_FOOTPRINT, finished_refresh_type());
 
   int64_t initial_value = physical_bytes();
 
@@ -151,7 +151,7 @@ TEST_F(SharedSamplerTest, PhysicalMemory) {
   const int allocated_size = 4 * 1024 * 1024;
   std::vector<uint8_t> memory_block(allocated_size);
 
-  StartRefresh(REFRESH_TYPE_PHYSICAL_MEMORY);
+  StartRefresh(REFRESH_TYPE_MEMORY_FOOTPRINT);
   WaitUntilRefreshDone();
 
   // Verify that physical bytes has increased accordingly.
@@ -194,10 +194,10 @@ TEST_F(SharedSamplerTest, CpuTime) {
 
 // Verifies that multiple refresh types can be refreshed at the same time.
 TEST_F(SharedSamplerTest, MultipleRefreshTypes) {
-  StartRefresh(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_PHYSICAL_MEMORY |
+  StartRefresh(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_MEMORY_FOOTPRINT |
                REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME);
   WaitUntilRefreshDone();
-  EXPECT_EQ(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_PHYSICAL_MEMORY |
+  EXPECT_EQ(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_MEMORY_FOOTPRINT |
                 REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME,
             finished_refresh_type());
 }
@@ -241,10 +241,10 @@ TEST_F(SharedSamplerTest, ZeroThreadProcess) {
   SharedSampler::SetQuerySystemInformationForTest(
       ReturnZeroThreadProcessInformation);
 
-  StartRefresh(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_PHYSICAL_MEMORY |
+  StartRefresh(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_MEMORY_FOOTPRINT |
                REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME);
   WaitUntilRefreshDone();
-  EXPECT_EQ(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_PHYSICAL_MEMORY |
+  EXPECT_EQ(REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_MEMORY_FOOTPRINT |
                 REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME,
             finished_refresh_type());
 

@@ -248,7 +248,7 @@ SharedSampler::SharedSampler(
 SharedSampler::~SharedSampler() {}
 
 int64_t SharedSampler::GetSupportedFlags() const {
-  return REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_PHYSICAL_MEMORY |
+  return REFRESH_TYPE_IDLE_WAKEUPS | REFRESH_TYPE_MEMORY_DETAILS |
          REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME;
 }
 
@@ -583,7 +583,7 @@ void SharedSampler::OnRefreshDone(
     }
 
     if (TaskManagerObserver::IsResourceRefreshEnabled(
-        REFRESH_TYPE_PHYSICAL_MEMORY, refresh_flags_)) {
+            REFRESH_TYPE_MEMORY_DETAILS, refresh_flags_)) {
       DCHECK(callback_entry.second.on_physical_memory);
       callback_entry.second.on_physical_memory.Run(physical_bytes);
     }
