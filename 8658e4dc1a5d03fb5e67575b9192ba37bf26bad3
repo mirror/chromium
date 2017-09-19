@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e7efa7_06960226",
+        "filename": "net/http/transport_security_state_static.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 5521,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-19T00:27:44Z",
+      "side": 0,
+      "message": "Hmm, actually, looks like this should be marked as manual.",
+      "revId": "8658e4dc1a5d03fb5e67575b9192ba37bf26bad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
