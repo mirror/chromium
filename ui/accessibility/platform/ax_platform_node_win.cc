@@ -629,6 +629,7 @@ STDMETHODIMP AXPlatformNodeWin::accHitTest(
     LONG x_left, LONG y_top, VARIANT* child) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_HIT_TEST);
   COM_OBJECT_VALIDATE_1_ARG(child);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   gfx::Point point(x_left, y_top);
   if (!delegate_->GetScreenBoundsRect().Contains(point)) {
@@ -669,10 +670,11 @@ STDMETHODIMP AXPlatformNodeWin::accHitTest(
   return result;
 }
 
-HRESULT AXPlatformNodeWin::accDoDefaultAction(VARIANT var_id) {
+STDMETHODIMP AXPlatformNodeWin::accDoDefaultAction(VARIANT var_id) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_DO_DEFAULT_ACTION);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_AND_GET_TARGET(var_id, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   AXActionData data;
   data.action = AX_ACTION_DO_DEFAULT;
 
@@ -687,6 +689,7 @@ STDMETHODIMP AXPlatformNodeWin::accLocation(
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_4_ARGS_AND_GET_TARGET(var_id, x_left, y_top, width,
                                                    height, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   gfx::Rect bounds = target->delegate_->GetScreenBoundsRect();
   *x_left = bounds.x();
@@ -705,6 +708,7 @@ STDMETHODIMP AXPlatformNodeWin::accNavigate(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_NAVIGATE);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(start, end, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   end->vt = VT_EMPTY;
   if ((nav_dir == NAVDIR_FIRSTCHILD || nav_dir == NAVDIR_LASTCHILD) &&
       V_VT(&start) == VT_I4 && V_I4(&start) != CHILDID_SELF) {
@@ -815,6 +819,7 @@ STDMETHODIMP AXPlatformNodeWin::accNavigate(
 STDMETHODIMP AXPlatformNodeWin::get_accChild(VARIANT var_child,
                                              IDispatch** disp_child) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_CHILD);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   *disp_child = nullptr;
   AXPlatformNodeWin* target;
@@ -828,6 +833,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accChild(VARIANT var_child,
 STDMETHODIMP AXPlatformNodeWin::get_accChildCount(LONG* child_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_CHILD_COUNT);
   COM_OBJECT_VALIDATE_1_ARG(child_count);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   *child_count = delegate_->GetChildCount();
   return S_OK;
 }
@@ -862,6 +868,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accDescription(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_DESCRIPTION);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, desc, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   return target->GetStringAttributeAsBstr(AX_ATTR_DESCRIPTION, desc);
 }
@@ -869,6 +876,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accDescription(
 STDMETHODIMP AXPlatformNodeWin::get_accFocus(VARIANT* focus_child) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_FOCUS);
   COM_OBJECT_VALIDATE_1_ARG(focus_child);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   gfx::NativeViewAccessible focus_accessible = delegate_->GetFocus();
   if (focus_accessible == this) {
     focus_child->vt = VT_I4;
@@ -890,6 +898,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accKeyboardShortcut(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_KEYBOARD_SHORTCUT);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, acc_key, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   return target->GetStringAttributeAsBstr(AX_ATTR_KEY_SHORTCUTS, acc_key);
 }
@@ -899,6 +908,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accName(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_NAME);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, name, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   HRESULT result = target->GetStringAttributeAsBstr(AX_ATTR_NAME, name);
   if (FAILED(result) && MSAARole() == ROLE_SYSTEM_DOCUMENT && GetParent()) {
@@ -918,6 +928,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accParent(
     IDispatch** disp_parent) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_PARENT);
   COM_OBJECT_VALIDATE_1_ARG(disp_parent);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   *disp_parent = GetParent();
   if (*disp_parent) {
     (*disp_parent)->AddRef();
@@ -932,6 +943,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accRole(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_ROLE);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, role, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   // For historical reasons, we return a string (typically
   // containing the HTML tag name) as the MSAA role, rather
@@ -955,6 +967,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accState(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_STATE);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, state, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   state->vt = VT_I4;
   state->lVal = target->MSAAState();
   return S_OK;
@@ -964,6 +977,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accHelp(
     VARIANT var_id, BSTR* help) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_HELP);
   COM_OBJECT_VALIDATE_1_ARG(help);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   return S_FALSE;
 }
 
@@ -971,6 +985,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_VALUE);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, value, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   // get_accValue() has two sets of special cases depending on the node's role.
   // The first set apply without regard for the nodes |value| attribute. That is
@@ -1056,6 +1071,7 @@ STDMETHODIMP AXPlatformNodeWin::put_accValue(VARIANT var_id,
                                              BSTR new_value) {
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_AND_GET_TARGET(var_id, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   AXActionData data;
   data.action = AX_ACTION_SET_VALUE;
@@ -1068,6 +1084,7 @@ STDMETHODIMP AXPlatformNodeWin::put_accValue(VARIANT var_id,
 STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_SELECTION);
   COM_OBJECT_VALIDATE_1_ARG(selected);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   if (GetData().role != AX_ROLE_LIST_BOX)
     return E_NOTIMPL;
@@ -1127,6 +1144,7 @@ STDMETHODIMP AXPlatformNodeWin::accSelect(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_SELECT);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_AND_GET_TARGET(var_id, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   if (flagsSelect & SELFLAG_TAKEFOCUS) {
     AXActionData action_data;
@@ -1144,6 +1162,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accHelpTopic(
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_2_ARGS_AND_GET_TARGET(var_id, help_file, topic_id,
                                                    target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (help_file) {
     *help_file = nullptr;
   }
@@ -1156,6 +1175,9 @@ STDMETHODIMP AXPlatformNodeWin::get_accHelpTopic(
 STDMETHODIMP AXPlatformNodeWin::put_accName(
     VARIANT var_id, BSTR put_name) {
   // TODO(dougt): We may want to collect an API histogram here.
+  AXPlatformNodeWin* target;
+  COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, put_name, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   // Deprecated.
   return E_NOTIMPL;
 }
