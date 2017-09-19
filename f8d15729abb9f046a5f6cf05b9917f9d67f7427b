@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00cba4f1_249feaf1",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T05:59:50Z",
+      "side": 1,
+      "message": "Can we ever get into a situation where there is no fallback quad?",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be68bcbb_9bd0d9e5",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T05:59:50Z",
+      "side": 1,
+      "message": "Add a comment as to why we would want this.",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470ce202_1c2b53b2",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T05:59:50Z",
+      "side": 1,
+      "message": "Make variables const maybe?",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb10efcf_9351e2d7",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T05:59:50Z",
+      "side": 1,
+      "message": "Would the test be clearer if there was only a SurfaceDrawQuad?",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
