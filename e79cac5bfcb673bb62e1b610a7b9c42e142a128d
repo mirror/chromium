@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "903e6e7d_482df814",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-19T23:47:06Z",
+      "side": 1,
+      "message": "nit: Wording; can we make clearer why we only want to set the DCHECK handler when DCHECKs are non-fatal?  Or could we just always set the DCHECK error handler, so that V8 creates consistent DCHECK crashes with the rest of Chromium?",
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "640770f8_f9fef904",
         "filename": "content/renderer/render_process_impl.cc",
         "patchSetId": 1
@@ -36,6 +53,30 @@
       "writtenOn": "2017-09-19T21:27:13Z",
       "side": 1,
       "message": "Hard-coding flags in here seems like technical debt. Is there a better path here? What would be the ideal way to address this?",
+      "parentUuid": "640770f8_f9fef904",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211443f2_a564a39a",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-19T23:47:06Z",
+      "side": 1,
+      "message": "Could we make inclusion of --noverify_csa conditional on the same #ifdef...?\n\nRather than mention the additional checks in the comment above the if(...), how about putting a brief comment before kDisabledFlags, explaining that we disable these to reduce run-time performance overhead?",
       "parentUuid": "640770f8_f9fef904",
       "range": {
         "startLine": 144,
