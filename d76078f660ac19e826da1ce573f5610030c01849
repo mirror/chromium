@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12daf2f0_525ab0ef",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-19T14:01:10Z",
+      "side": 1,
+      "message": "will revert back to single line",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93a2121_3614eb1b",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-19T14:01:10Z",
+      "side": 1,
+      "message": "I thought about making this just return a bundle of extras to be included but since the actual start url is dictated by the subclass it doesn\u0027t seem like a meaningful distinction",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db90fcf_4d3dec4e",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-19T14:01:10Z",
+      "side": 1,
+      "message": "just some garbage examples",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
