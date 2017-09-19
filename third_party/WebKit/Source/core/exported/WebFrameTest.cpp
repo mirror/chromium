@@ -1479,16 +1479,13 @@ TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithoutViewportTag) {
   web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(980, web_view_helper.WebView()
-                     ->MainFrameImpl()
-                     ->GetFrameView()
-                     ->ContentsSize()
-                     .Width());
-  EXPECT_EQ(980.0 / viewport_width * viewport_height, web_view_helper.WebView()
-                                                          ->MainFrameImpl()
-                                                          ->GetFrameView()
-                                                          ->ContentsSize()
-                                                          .Height());
+  IntRect document_rect = web_view_helper.WebView()
+                              ->MainFrameImpl()
+                              ->GetFrameView()
+                              ->GetLayoutView()
+                              ->DocumentRect();
+  EXPECT_EQ(980, document_rect.Width());
+  EXPECT_EQ(980.0 / viewport_width * viewport_height, document_rect.Height());
 }
 
 TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithXhtmlMp) {
@@ -2537,7 +2534,8 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorDoesNotApplyCssTransform) {
   EXPECT_EQ(980, web_view_helper.WebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
-                     ->ContentsSize()
+                     ->GetLayoutView()
+                     ->DocumentRect()
                      .Width());
 }
 
@@ -3132,19 +3130,19 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorUpdatesScrollbars) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   LocalFrameView* view = web_view_helper.LocalMainFrame()->GetFrameView();
+  IntRect document_rect = view->GetLayoutView()->DocumentRect();
   EXPECT_EQ(view->ScrollSize(kHorizontalScrollbar),
-            view->ContentsSize().Width() - view->VisibleContentRect().Width());
-  EXPECT_EQ(
-      view->ScrollSize(kVerticalScrollbar),
-      view->ContentsSize().Height() - view->VisibleContentRect().Height());
+            document_rect.Width() - view->VisibleContentRect().Width());
+  EXPECT_EQ(view->ScrollSize(kVerticalScrollbar),
+            document_rect.Height() - view->VisibleContentRect().Height());
 
   web_view_helper.WebView()->SetPageScaleFactor(10);
 
+  document_rect = view->GetLayoutView()->DocumentRect();
   EXPECT_EQ(view->ScrollSize(kHorizontalScrollbar),
-            view->ContentsSize().Width() - view->VisibleContentRect().Width());
-  EXPECT_EQ(
-      view->ScrollSize(kVerticalScrollbar),
-      view->ContentsSize().Height() - view->VisibleContentRect().Height());
+            document_rect.Width() - view->VisibleContentRect().Width());
+  EXPECT_EQ(view->ScrollSize(kVerticalScrollbar),
+            document_rect.Height() - view->VisibleContentRect().Height());
 }
 
 TEST_P(ParameterizedWebFrameTest, CanOverrideScaleLimits) {
