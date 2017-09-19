@@ -4,6 +4,7 @@
 
 #include "content/browser/host_zoom_map_impl.h"
 
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -33,7 +34,7 @@ void RunTestForURL(const GURL& url,
       HostZoomMap::GetForWebContents(web_contents));
 
   int view_id = web_contents->GetRenderViewHost()->GetRoutingID();
-  int render_process_id = web_contents->GetRenderProcessHost()->GetID();
+  int render_process_id = web_contents->GetMainFrame()->GetProcess()->GetID();
 
   // Assume caller has set the zoom level to |host_zoom_level| using
   // either a host or host+scheme entry in the HostZoomMap prior to
