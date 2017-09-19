@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0f9c0f3_a2bc13db",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37db6253_0205904e",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b647ab63_20e51165",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dbc260_79067484",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "Yes. Once when the first one finishes fading out; this starts the second transition. Then, a second time when it finishes.",
+      "parentUuid": "b647ab63_20e51165",
+      "range": {
+        "startLine": 584,
+        "startChar": 72,
+        "endLine": 584,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f2a399b_6c97eb12",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "I added the annotations for the types, but duplicating the function-level description doesn\u0027t seem useful.\n\nI did elaborate on the type of onload, though, because \u0027function\u0027 is not a very specific type.",
+      "parentUuid": "dae1225d_32b3dd69",
+      "range": {
+        "startLine": 685,
+        "startChar": 27,
+        "endLine": 685,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46a43c6_6307e9af",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-19T11:43:23Z",
       "side": 1,
       "message": "Hm, one idea for hiding the entire page without any extra logic: Put this script tag (without v) statically into the \u003chead\u003e, then it\u0027ll be loaded and executed before anything is drawn. If the feature is disabled, LocalNtpSource would just return an empty file (or an empty ddl{} dict or whatever). WDYT?",
+      "range": {
+        "startLine": 689,
+        "startChar": 56,
+        "endLine": 689,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacf2f34_a4ddaed2",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "That sounds reasonable. I think I would like to leave that for a separate CL, if that\u0027s alright.",
+      "parentUuid": "e46a43c6_6307e9af",
       "range": {
         "startLine": 689,
         "startChar": 56,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a42d01ef_af6b972b",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bad5c392_7ebd78ff",
+      "range": {
+        "startLine": 714,
+        "startChar": 37,
+        "endLine": 714,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9690db2_29090c9d",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-19T11:43:23Z",
       "side": 1,
       "message": "Aaah, so the old thing will first fade out fully before the new thing starts fading in? I believe on the remote NTP, we just fade from one to the other directly. Not sure which is preferable actually... WDYT? I guess the way to implement the direct fade would be to have a \"logo-old\" element that\u0027s fading out, and that gets deleted in its transitionend, similar as we do for the tiles.",
+      "range": {
+        "startLine": 761,
+        "startChar": 32,
+        "endLine": 761,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7e55b0_d4aa1830",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "\u003e Aaah, so the old thing will first fade out fully before the new thing starts fading in? I believe on the remote NTP, we just fade from one to the other directly. Not sure which is preferable actually... WDYT? I guess the way to implement the direct fade would be to have a \"logo-old\" element that\u0027s fading out, and that gets deleted in its transitionend, similar as we do for the tiles.\n\nI did it this way because:\n- It\u0027s easier when fading between two doodles, as you note\n- I thought I\u0027d seen Android behave this way (reading the code, I think I\u0027m correct in that, although it uses a slightly longer 200ms fade-in/out. Couldn\u0027t find iOS)\n- I think it looks nicer, myself :)\n\nMy reading of the remote NTP page is that there is fade-in, but no fade-out, so no cross-fading. That sounds worse to me, but then, I\u0027m not UX.",
+      "parentUuid": "a9690db2_29090c9d",
       "range": {
         "startLine": 761,
         "startChar": 32,
@@ -160,6 +304,30 @@
       "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca81b3de_c8d322ff",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-19T15:15:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08c5485_71869e41",
+      "range": {
+        "startLine": 783,
+        "startChar": 60,
+        "endLine": 783,
+        "endChar": 0
+      },
+      "revId": "c11cf3cafaabb441b4fa19bf6909b782504f6521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
