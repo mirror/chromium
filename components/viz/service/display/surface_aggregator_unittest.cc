@@ -317,7 +317,6 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
                                                &manager_,
                                                kArbitraryReservedFrameSinkId,
                                                kChildIsRoot,
-
                                                kNeedsSyncPoints)) {}
   SurfaceAggregatorValidSurfaceTest()
       : SurfaceAggregatorValidSurfaceTest(false) {}
@@ -1122,6 +1121,39 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, ValidSurfaceReferenceWithNoFrame) {
                      arraysize(ids));
 }
 
+// Tests a reference to a valid primary surface and a fallback surface
+// with no submitted frame. A SolidColorDrawQuad should be placed in lieu of a
+// frame.
+TEST_F(SurfaceAggregatorValidSurfaceTest, ValidFallbackWithNoFrame) {
+  LocalSurfaceId empty_local_surface_id = allocator_.GenerateId();
+  SurfaceId surface_with_no_frame_id(support_->frame_sink_id(),
+                                     empty_local_surface_id);
+
+  Quad quads[] = {
+      Quad::SolidColorQuad(SK_ColorGREEN),
+      Quad::SurfaceQuad(surface_with_no_frame_id, surface_with_no_frame_id,
+                        SK_ColorYELLOW, 1.f),
+      Quad::SolidColorQuad(SK_ColorBLUE)};
+  Pass passes[] = {Pass(quads, arraysize(quads))};
+
+  SubmitCompositorFrame(support_.get(), passes, arraysize(passes),
+                        root_local_surface_id_);
+
+  Quad expected_quads[] = {
+    Quad::SolidColorQuad(SK_ColorGREEN),
+#if DCHECK_IS_ON()
+    Quad::SolidColorQuad(SK_ColorMAGENTA),
+#else
+    Quad::SolidColorQuad(SK_ColorYELLOW),
+#endif
+    Quad::SolidColorQuad(SK_ColorBLUE)
+  };
+  Pass expected_passes[] = {Pass(expected_quads, arraysize(expected_quads))};
+  SurfaceId root_surface_id(support_->frame_sink_id(), root_local_surface_id_);
+  SurfaceId ids[] = {root_surface_id, surface_with_no_frame_id};
+  AggregateAndVerify(expected_passes, arraysize(expected_passes), ids,
+                     arraysize(ids));
+}
 // Tests a surface quad referencing itself, generating a trivial cycle.
 // The quad creating the cycle should be dropped from the final frame.
 TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleCyclicalReference) {
