@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "377eb6ae_a83340c4",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T18:18:35Z",
+      "side": 1,
+      "message": "I overlooked the fact that you need those in the tests as well.\n\nBut let\u0027s keep them in our files instead of here.\n\nMove them as static attributes in PolicyToolUIHandler and declare them in PolicyToolUIHandler.cc. And for the test that need them, make those tests friends of that class.\n\nSee this file as example:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+      "revId": "ddd00ecedcbd5bfda7b0655bd4950e53c382f19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
