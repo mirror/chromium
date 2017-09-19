@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eda4ba7f_df96dfdb",
+        "filename": "build/android/pylib/gtest/gtest_test_instance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-19T00:31:01Z",
+      "side": 1,
+      "message": "That\u0027s fine, but please update the --json-results-file argument\u0027s help text to actually describe what behavior it controls (it currently says nothing about logdog)",
+      "parentUuid": "3ebf9e26_ba6e2d00",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9404b189_b6a79858",
         "filename": "build/android/pylib/local/device/local_device_environment.py",
         "patchSetId": 6
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "I believe `logdog_butler serve` runs indefinitely. I talked to Dan since sending this review; he said that SIGTERM should cause it to shut down gracefully.",
       "parentUuid": "0abab72d_6cdb8a4f",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08f185b7_22ab9198",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-19T00:31:01Z",
+      "side": 1,
+      "message": "Sadly, \"should\" doth butter no parsnips\n\n:P",
+      "parentUuid": "d1d2b725_01f38c78",
       "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
