@@ -165,7 +165,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
                                 const cryptohome::Identification& cryptohome_id,
                                 const std::string& key_prefix,
                                 DBusMethodCallback<bool> callback) override;
-  void TpmGetVersion(DBusMethodCallback<std::string> callback) override;
+  void TpmGetVersion(DBusMethodCallback<TpmVersionInfo> callback) override;
   void GetKeyDataEx(const cryptohome::Identification& cryptohome_id,
                     const cryptohome::AuthorizationRequest& auth,
                     const cryptohome::GetKeyDataRequest& request,
