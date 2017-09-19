@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ed63795_b5cf2e20",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-19T12:06:12Z",
+      "side": 1,
+      "message": "I\u0027m not saying that we should necessarily put a DCHECK there - just that if we say in a comment that it shouldn\u0027t be called before A, this should be enforced in a DCHECK. In practice this does mean that you can\u0027t call it from DidFinishNavigation in the current interface. Another option could be not to return a boolean but an enum value, for example:\nenum class IsDownload {\nTRUE,\nFALSE,\nUNKNOWN\n} (note: a bool* or Optional\u003cbool\u003e work as well).\n\nand only set it to yes or no when we know for sure what the status of the navigation is. This allow the function to be called at any time.",
+      "parentUuid": "dc74673b_20efcf57",
+      "revId": "26ae6fb2097c253d67fc67cc4b61cdc0ea68688f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba8ff5_3ce1dbab",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 47
