@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "165f3f56_934a9f73",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-19T19:19:12Z",
+      "side": 1,
+      "message": "There are some views which have borders (and focus rings). In fact, that is part of the conditional for whether the overflow indicators are shown. It only makes sense to show these when the view has no border.\n\nThe header should be treated the same as the scrollbars. If the given edge has a scrollbar or a header, the indicator should not be shown because it would be hard to see and provide little value.\n\nGiven those conditions and assuming they\u0027re acceptable, we could just enable it all the time.",
+      "parentUuid": "8408c6bd_bb345f2a",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8739e601_53b74548",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554a062_2eb4a90a",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-19T19:19:12Z",
+      "side": 1,
+      "message": "I\u0027d considered that, however I had elected to use the existing pattern established by the scrollbars and the corner view. The controls are added/removed from the child view depending on whether they\u0027re visible. See SetControlVisibility().\n\nThey could be dynamically allocated only when SetShowEdgesWithHiddenContent() is called or when they\u0027re about to be made visible. More nullptr checks would be necessary. Manual deletion would still be necessary since SetControlVisibility().",
+      "parentUuid": "8739e601_53b74548",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f2310e_48a0f7ec",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-19T19:19:12Z",
+      "side": 1,
+      "message": "The formatter kept moving the comment. I wanted it indented 2 more spaces.",
+      "parentUuid": "75a87ca6_a85ebff0",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
