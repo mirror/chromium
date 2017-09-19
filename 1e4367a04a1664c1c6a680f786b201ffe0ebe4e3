@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9ce925c_7c01e5d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-19T06:26:24Z",
+      "side": 1,
+      "message": "nit: Could you add a title for this patch? Something like \"scheduler: stop loading tasks in background\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "1e4367a04a1664c1c6a680f786b201ffe0ebe4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
