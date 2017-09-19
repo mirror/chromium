@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd79987_7951bbad",
+        "filename": "chrome/android/java/res/layout/personalized_signin_promo_view_modern_content_suggestions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:06:20Z",
+      "side": 1,
+      "message": "Looks good overall, but this one needs to be renamed to PersonalizedSigninPromoView too.",
+      "range": {
+        "startLine": 6,
+        "startChar": 36,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "a5cc5dd21f7e22fb30b466080047b79dbe770950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
