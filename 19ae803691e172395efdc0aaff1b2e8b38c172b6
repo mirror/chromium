@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce65ef96_3753bd17",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T02:56:43Z",
+      "side": 1,
+      "message": "This won\u0027t work because SurfaceReferencesToString isn\u0027t defined for non-dcheck builds.",
+      "revId": "19ae803691e172395efdc0aaff1b2e8b38c172b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
