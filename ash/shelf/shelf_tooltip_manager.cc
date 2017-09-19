@@ -217,6 +217,10 @@ void ShelfTooltipManager::OnMouseEvent(ui::MouseEvent* event) {
   if (event->type() != ui::ET_MOUSE_MOVED)
     return;
 
+  // A workaround for crbug.com/756163, likely not needed as Mus/Mash matures.
+  if (event->location().IsOrigin())
+    return;
+
   gfx::Point point = event->location();
   views::View::ConvertPointFromWidget(shelf_view_, &point);
   views::View* view = shelf_view_->GetTooltipHandlerForPoint(point);
