@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e4f59c_9a535e6b",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "Rename this to StringToFilePathStringType.\n\nAlso consider using StringPiece instead of string\u0026. It will allow you this function to be more flexible (accepts char * and literals without converting).",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4942325_6fce5f4b",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "nit: add /* recursive */ after false for clarity.",
+      "range": {
+        "startLine": 58,
+        "startChar": 49,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfab815_75e80285",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "Make this a global variable (in empty namespace), in case we want to change it one day.",
+      "range": {
+        "startLine": 60,
+        "startChar": 34,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1df9aa_9b458249",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "I suggest using either a std::map or base::flat_map here (elements would be automatically sorted).",
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e617191_235f0598",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "range": {
+        "startLine": 76,
+        "startChar": 33,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4766320_f4a67fa5",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "nit: use empty() instead.",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5569600f_d95d8601",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "Make global.",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 37
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681deba0_532da7de",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-19T15:37:33Z",
+      "side": 1,
+      "message": "nit: braces (missed that ones last time!).",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 17
+      },
+      "revId": "3a5eeebcdc8b2e36562885ce905d035c47b257c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
