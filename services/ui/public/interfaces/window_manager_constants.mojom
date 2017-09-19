@@ -22,6 +22,8 @@ enum ShowState {
   MAXIMIZED,
   INACTIVE,
   FULLSCREEN,
+  LEFT_SNAPPED,
+  RIGHT_SNAPPED,
 };
 
 const int32 kResizeBehaviorNone = 0;

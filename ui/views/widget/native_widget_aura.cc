@@ -642,6 +642,15 @@ bool NativeWidgetAura::IsFullscreen() const {
       ui::SHOW_STATE_FULLSCREEN;
 }
 
+bool NativeWidgetAura::IsSnapped() const {
+  if (!window_)
+    return false;
+
+  ui::WindowShowState state = window_->GetProperty(aura::client::kShowStateKey);
+  return state == ui::SHOW_STATE_LEFT_SNAPPED ||
+         state == ui::SHOW_STATE_RIGHT_SNAPPED;
+}
+
 void NativeWidgetAura::SetOpacity(float opacity) {
   if (window_)
     window_->layer()->SetOpacity(opacity);

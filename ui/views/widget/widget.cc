@@ -717,6 +717,10 @@ bool Widget::IsFullscreen() const {
   return native_widget_->IsFullscreen();
 }
 
+bool Widget::IsSnapped() const {
+  return native_widget_->IsSnapped();
+}
+
 void Widget::SetOpacity(float opacity) {
   DCHECK(opacity >= 0.0f);
   DCHECK(opacity <= 1.0f);

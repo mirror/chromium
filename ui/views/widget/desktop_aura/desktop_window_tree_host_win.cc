@@ -442,6 +442,13 @@ bool DesktopWindowTreeHostWin::IsFullscreen() const {
   return message_handler_->fullscreen_handler()->fullscreen();
 }
 
+bool DesktopWindowTreeHostWin::IsSnapped() const {
+  // This is an ash-ism. It could be plumbed through on windows, but isn't used
+  // outside of ash code.
+  NOTIMPLEMENTED();
+  return false;
+}
+
 void DesktopWindowTreeHostWin::SetOpacity(float opacity) {
   content_window_->layer()->SetOpacity(opacity);
 }

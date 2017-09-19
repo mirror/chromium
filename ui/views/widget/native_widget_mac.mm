@@ -420,6 +420,8 @@ void NativeWidgetMac::ShowWithWindowState(ui::WindowShowState state) {
     case ui::SHOW_STATE_MINIMIZED:
     case ui::SHOW_STATE_MAXIMIZED:
     case ui::SHOW_STATE_FULLSCREEN:
+    case ui::SHOW_STATE_LEFT_SNAPPED:
+    case ui::SHOW_STATE_RIGHT_SNAPPED:
       NOTIMPLEMENTED();
       break;
     case ui::SHOW_STATE_END:
@@ -508,6 +510,13 @@ void NativeWidgetMac::SetFullscreen(bool fullscreen) {
 
 bool NativeWidgetMac::IsFullscreen() const {
   return bridge_ && bridge_->target_fullscreen_state();
+}
+
+bool NativeWidgetMac::IsSnapped() const {
+  // While there might be edge snapping on osx, it doesn't correspond with the
+  // internal show state.
+  NOTIMPLEMENTED();
+  return false;
 }
 
 void NativeWidgetMac::SetOpacity(float opacity) {

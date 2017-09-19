@@ -20,7 +20,9 @@ enum WindowShowState {
   SHOW_STATE_MAXIMIZED = 3,
   SHOW_STATE_INACTIVE = 4,  // Views only, not persisted.
   SHOW_STATE_FULLSCREEN = 5,
-  SHOW_STATE_END = 6  // The end of show state enum.
+  SHOW_STATE_LEFT_SNAPPED = 6,
+  SHOW_STATE_RIGHT_SNAPPED = 7,
+  SHOW_STATE_END = 8  // The end of show state enum.
 };
 
 // Dialog button identifiers used to specify which buttons to show the user.
