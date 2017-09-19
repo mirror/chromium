@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88c0e6f9_62083817",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-19T16:47:10Z",
+      "side": 1,
+      "message": "let\u0027s still avoid this in cl description for now.",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "406980e4dca2ae3c28790b6295c4e0648bdc0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df67776_69aafa39",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-19T16:47:10Z",
+      "side": 1,
+      "message": "nit: add inline comment /* is_toggle */\nsame for the other one.",
+      "range": {
+        "startLine": 477,
+        "startChar": 31,
+        "endLine": 477,
+        "endChar": 36
+      },
+      "revId": "406980e4dca2ae3c28790b6295c4e0648bdc0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
