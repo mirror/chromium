@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da693aab_812d306e",
+        "filename": "chrome/browser/ui/views/tabs/tab_drag_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T21:19:45Z",
+      "side": 1,
+      "message": "Even better!",
+      "range": {
+        "startLine": 1535,
+        "startChar": 4,
+        "endLine": 1535,
+        "endChar": 52
+      },
+      "revId": "ecf15cf572309be7eb800cdfc801acb06e563bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
