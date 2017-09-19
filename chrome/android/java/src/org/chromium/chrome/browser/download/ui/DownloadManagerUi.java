@@ -68,24 +68,22 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     }
 
     private static class DownloadBackendProvider implements BackendProvider {
-        private OfflinePageDownloadBridge mOfflinePageBridge;
         private SelectionDelegate<DownloadHistoryItemWrapper> mSelectionDelegate;
         private ThumbnailProvider mThumbnailProvider;
 
         DownloadBackendProvider(DiscardableReferencePool referencePool) {
-            mOfflinePageBridge = new OfflinePageDownloadBridge(Profile.getLastUsedProfile());
             mSelectionDelegate = new DownloadItemSelectionDelegate();
             mThumbnailProvider = new ThumbnailProviderImpl(referencePool);
+
+            // Create a OfflinePageDownloadBridge in order to initialize and register the offline
+            // pages backend to the offline content aggregator.
+            // TODO(shaktisahu): Find an explicit way of doing this.
+            new OfflinePageDownloadBridge(Profile.getLastUsedProfile().getOriginalProfile());
         }
 
         @Override
         public DownloadDelegate getDownloadDelegate() {
             return DownloadManagerService.getDownloadManagerService();
-        }
-
-        @Override
-        public OfflinePageDownloadBridge getOfflinePageBridge() {
-            return mOfflinePageBridge;
         }
 
         @Override
@@ -100,8 +98,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
         @Override
         public void destroy() {
-            getOfflinePageBridge().destroy();
-
             mThumbnailProvider.destroy();
             mThumbnailProvider = null;
         }
