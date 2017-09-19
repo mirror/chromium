@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b0544d34_ee43a9f9",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-19T23:28:47Z",
+      "side": 1,
+      "message": "Please revert to the hardcoded path :)\n\nThat\u0027s because we\u0027re not linking against the \u0027system\u0027 BoringSSL, but our hermetic copy. The path itself is reflective of the Fuschia system (that is, not related to our BoringSSL), so we should be explicit about its location. :)",
+      "parentUuid": "fe83bc1f_785463d2",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 54
+      },
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f512bfb_91b33ed2",
         "filename": "net/cert/internal/system_trust_store.cc",
         "patchSetId": 4
