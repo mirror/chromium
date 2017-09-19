@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "99a31a52_c74563d4",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "Is the \"\u003d\u003d\u003d true\" part necessary? Could this simply be\n\nreturn Array.from(this.isDestinationSearchInProgress_.values()).some(el \u003d\u003e el);",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956293e6_11aeb9d2",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "Can we preserve the comment here? Otherwise it is not clear why only PRIVET_PRINTER case can fail.",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f274bd_ccb25a39",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "Per styleguide: s/printer_type/printerType\n\nAlso (optional): You can now use the for..of loop which does not require creating anonymous fuctions, see https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#for_of-Loops\n\nfor (printerType of Object.values(print_preview.PrinterType)) {\n  if (printerType !\u003d\u003d print_preview.PrinterType.PDF_PRINTER)\n    this.startLoadDestinations(printerType);\n}",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe920bf_4d5ba6cc",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "@param missing",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c497f4f_c82cdc1c",
+        "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "It seems that we should never get here. How about using an assertNotReached() instead of just console.error? See example https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/prefs/pref_util.js?l\u003d33",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e3df36_fc1993b2",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 1,
+      "message": "Is it possible to document the returned type here (even if it is a union of mulitple types)?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a1e27c6_dbc7a5d4",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
         "patchSetId": 6

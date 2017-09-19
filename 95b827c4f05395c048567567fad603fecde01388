@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b28029a_d1f493c8",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-19T20:47:22Z",
+      "side": 0,
+      "message": "I thought that the capabilities fetching would be unified in a follow up CL. Is that not the case here?",
+      "revId": "95b827c4f05395c048567567fad603fecde01388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
