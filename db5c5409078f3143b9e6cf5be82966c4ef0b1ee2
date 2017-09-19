@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca667034_c5769491",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "just store the resource pointer?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee14e729_76d5d44c",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03244cc1_49c538bd",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "Is this path used for display-allocated resources?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04dd01b_ad57c6e6",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "needs {} for multiline body",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1d5a34_068959c0",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "There\u0027s no code in display that would try to use this, so it could be a DCHECK.",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ef3416_01111f17",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "Is this hint used by display-allocated resources?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27a46f0_4a96d741",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "\"lock\" no longer applies?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68579912_574b828e",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "\"lock\"",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72fa421_2c053767",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "Should these 2 helpers go in https://cs.chromium.org/chromium/src/components/viz/common/resources/resource_format_utils.cc instead?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72121ce_064d780e",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "no const on a bool argument (this repeats)\n\nwhat calls this with local\u003dtrue?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26e0c7e_cd20e3ff",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "I don\u0027t see what\u0027s calling this with local\u003dtrue?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3e21a0_b985e0fc",
+        "filename": "cc/resources/scoped_resource.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "Can you make a separate function instead? This isn\u0027t the case you\u0027d need to call the same function with local true/false conditionally.",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bee9a90_6f10f649",
+        "filename": "cc/resources/scoped_resource.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure what problem storing local on the ScopedResource is solving. Like you said, maybe we don\u0027t need it on the ResourceProvider::Resource at all. But why do we need it here either? I don\u0027t see it being used.",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683a3add_69bb9851",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "Why template?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa732408_dd77855d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "I\u0027d like to understand why we want\na) To make local resources look just like non-local resources (they are ResourceIds in ResourceProvider)\nbut\nb) To not make us use the same Read/WriteLock to access them.\n\nThis seems to kinda ruin the point of them, and there\u0027s nothing that I can see stopping you from using the wrong lock (local for remote or remote for local).\n\nIs this just to LazyAllocate()? Is that something we need for local resources? Could we just just allocate them and make them normal resources up front, and then share the read/write locks? This feels like kinda halfway between two worlds, and maybe there\u0027s some future steps I\u0027m not seeing but I\u0027m not sure this is the right place to land.",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed39aa8_5894ff94",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T16:01:28Z",
+      "side": 1,
+      "message": "How would a RenderPass texture not be local? This points at the non-type-safety we\u0027re introducing where it\u0027s very easy to use the wrong thing and it\u0027s hard to tell what you\u0027ve got..",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
