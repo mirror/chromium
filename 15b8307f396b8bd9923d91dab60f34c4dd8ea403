@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4b9ac79_6adf3ceb",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-19T16:12:38Z",
+      "side": 1,
+      "message": "Yes, it should not skip. The focus movement inside folder is broken before and after this CL. But it will be fixed along with other focus issues once the implementation of go/applist-focus is landed.",
+      "parentUuid": "69ecc128_239caa6e",
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc5f3861_7ff688b2",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09445af4_b23be3fd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-19T16:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5f3861_7ff688b2",
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fef261_e8f223b7",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-19T16:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4586a3_3e1de54f",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 10
+      },
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
