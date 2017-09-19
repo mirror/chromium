@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "365fba24_13088ec7",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-19T06:13:19Z",
+      "side": 1,
+      "message": "I concur with pdr@ about not passing a LayoutObject back into Style code. That goes against the notion of a pipeline system for the rendering engine where we each stage of the pipeline is considered read only by the next step. I would prefer that the LayoutObject manipulation happen in SVGElement?",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
