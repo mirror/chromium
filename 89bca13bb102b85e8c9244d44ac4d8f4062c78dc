@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d322f3c0_03c78be5",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b3ed8d_a3ce17fb",
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431de917_2d8f7afc",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-14T16:18:08Z",
       "side": 1,
       "message": "Is this guaranteed to distinguish between package names and other things? What other sorts of names might be used?",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bae29a2_d0a12aaf",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Only android package names and chrome extension ids are allowed here.\nextension ids should not contain \u0027.\u0027.",
+      "parentUuid": "431de917_2d8f7afc",
       "range": {
         "startLine": 49,
         "startChar": 9,
@@ -105,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "e46804ae_3d11d36b",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3cdb6c_2a4aaf06",
+      "range": {
+        "startLine": 279,
+        "startChar": 29,
+        "endLine": 279,
+        "endChar": 39
+      },
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db5c580_de946617",
         "filename": "net/cert/scoped_nss_types.h",
         "patchSetId": 10
@@ -119,6 +185,24 @@
       "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e771999_4530dfb2",
+        "filename": "net/cert/scoped_nss_types.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db5c580_de946617",
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

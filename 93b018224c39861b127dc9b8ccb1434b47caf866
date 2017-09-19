@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9dcb573c_e5b70d5b",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed999420_d71739b4",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c683dad4_9d53a7ca",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 9
@@ -315,6 +333,24 @@
       "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9c1acb_e2d28709",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Re-wrote an interface. PTAL.",
+      "parentUuid": "28fb1dc0_0b140992",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

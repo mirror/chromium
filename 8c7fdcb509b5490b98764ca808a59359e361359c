@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c0a1d93e_b5c85dd7",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-19T18:48:55Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "4c587134_46d7bbca",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a40ad8_ae348669",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
