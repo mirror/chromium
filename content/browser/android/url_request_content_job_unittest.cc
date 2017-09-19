@@ -14,7 +14,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_file_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -43,12 +42,9 @@ class CallbacksJobFactory : public net::URLRequestJobFactory {
       const std::string& scheme,
       net::URLRequest* request,
       net::NetworkDelegate* network_delegate) const override {
-    URLRequestContentJob* job =
-        new URLRequestContentJob(
-            request,
-            network_delegate,
-            path_,
-            base::ThreadTaskRunnerHandle::Get());
+    URLRequestContentJob* job = new URLRequestContentJob(
+        request, network_delegate, path_,
+        const_cast<base::MessageLoop*>(&message_loop_)->task_runner());
     observer_->OnJobCreated();
     return job;
   }
@@ -75,6 +71,7 @@ class CallbacksJobFactory : public net::URLRequestJobFactory {
   }
 
  private:
+  base::MessageLoop message_loop_;
   base::FilePath path_;
   JobObserver* observer_;
 };

@@ -375,7 +375,6 @@ std::vector<GURL> ComputeCookieURLs(RenderFrameHostImpl* frame_host,
 
 String resourcePriority(net::RequestPriority priority) {
   switch (priority) {
-    case net::MINIMUM_PRIORITY:
     case net::IDLE:
       return Network::ResourcePriorityEnum::VeryLow;
     case net::LOWEST:

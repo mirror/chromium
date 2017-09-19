@@ -244,7 +244,6 @@ bool ResemblesMulticastDNSName(const std::string& hostname) {
       case LOW: DNS_HISTOGRAM(basename "_LOW", time); break; \
       case LOWEST: DNS_HISTOGRAM(basename "_LOWEST", time); break; \
       case IDLE: DNS_HISTOGRAM(basename "_IDLE", time); break; \
-      case THROTTLED: DNS_HISTOGRAM(basename "_THROTTLED", time); break; \
     } \
     DNS_HISTOGRAM(basename, time); \
   } while (0)
