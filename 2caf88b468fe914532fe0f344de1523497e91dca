@@ -16,6 +16,24 @@
       "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda35f0c_c20e7ae6",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-19T17:41:39Z",
+      "side": 1,
+      "message": "Yes, if MediaDrm failed to create MediaCrypto, StartSurfaceChooser isn\u0027t called.\n\nandroid_video_decode_accelerator.cc:1509",
+      "parentUuid": "d62f4a09_41de10be",
+      "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
