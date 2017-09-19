@@ -200,27 +200,35 @@ TEST_P(WaitableEventWatcherTest, MultipleWatchersManual) {
 
   int counter1 = 0;
   int counter2 = 0;
+  int expected_total_count = 2;
 
-  auto callback = [](RunLoop* run_loop, int* counter, WaitableEvent* event) {
+  auto callback = [](RunLoop* run_loop, int* counter, int* expected_total_count,
+                     WaitableEvent* event) {
     ++(*counter);
-    run_loop->QuitWhenIdle();
+    --(*expected_total_count);
+    if (*expected_total_count == 0) {
+      run_loop->QuitWhenIdle();
+    }
   };
 
   RunLoop run_loop;
 
   WaitableEventWatcher watcher1;
   watcher1.StartWatching(
-      &event, BindOnce(callback, Unretained(&run_loop), Unretained(&counter1)));
+      &event, BindOnce(callback, Unretained(&run_loop), Unretained(&counter1),
+                       Unretained(&expected_total_count)));
 
   WaitableEventWatcher watcher2;
   watcher2.StartWatching(
-      &event, BindOnce(callback, Unretained(&run_loop), Unretained(&counter2)));
+      &event, BindOnce(callback, Unretained(&run_loop), Unretained(&counter2),
+                       Unretained(&expected_total_count)));
 
   event.Signal();
   run_loop.Run();
 
   EXPECT_EQ(1, counter1);
   EXPECT_EQ(1, counter2);
+  EXPECT_EQ(0, expected_total_count);
   EXPECT_TRUE(event.IsSignaled());
 }
 
