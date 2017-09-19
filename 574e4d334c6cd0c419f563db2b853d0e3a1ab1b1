@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "eab9d03c_4de09f38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T23:16:52Z",
+      "side": 1,
+      "message": "The first line is supposed to be the title, then after that you can add more description.\n\nHow about:\n[CrOS MultiDevice] Add test double for DeviceCapabilityManager.\n\n// rest of your stuff",
+      "parentUuid": "1c5ed087_cc31e046",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 195
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30abd2aa_e7051254",
         "filename": "components/cryptauth/device_capability_manager.h",
         "patchSetId": 2

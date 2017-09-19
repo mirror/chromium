@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbd20921_6459c1f5",
+        "filename": "components/cryptauth/fake_device_capability_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T23:16:52Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 39,
+        "startChar": 25,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "82269675dbfa06c5dc56e60799968ff705cf9a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea62ac5_41c44d1d",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T23:16:52Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary since you use the error code to determine if the capability is promotable.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "82269675dbfa06c5dc56e60799968ff705cf9a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
