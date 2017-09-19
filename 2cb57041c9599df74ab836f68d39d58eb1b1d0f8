@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b9d29d_8e587c4e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/scripts.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T09:52:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure but can\u0027t we use source_expansion? (See gn help source_expansion for the details.)\n\nsources \u003d invoker.interfaces\noutput_idl_file \u003d [ \"${output_dir}/{{source_name_part}}_${component}_constructors.idl\" ]\nargs +\u003d sources + [ rebase_path(output_idl_file, root_build_dir) ]\noutput_header_files \u003d [ \"${output_dir}/{{source_name_part}}_${component}_constructors.h\" ]",
+      "revId": "2cb57041c9599df74ab836f68d39d58eb1b1d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
