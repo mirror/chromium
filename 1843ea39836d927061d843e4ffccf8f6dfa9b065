@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3fb3412a_6b1530a0",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T19:39:24Z",
+      "side": 1,
+      "message": "Yeah, I think as long as the conditions for enabling each indicator adequately capture the cases we don\u0027t want indicators, it would be fine to go ahead and just enable all the time.",
+      "parentUuid": "165f3f56_934a9f73",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8739e601_53b74548",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027d considered that, however I had elected to use the existing pattern established by the scrollbars and the corner view. The controls are added/removed from the child view depending on whether they\u0027re visible. See SetControlVisibility().\n\nThey could be dynamically allocated only when SetShowEdgesWithHiddenContent() is called or when they\u0027re about to be made visible. More nullptr checks would be necessary. Manual deletion would still be necessary since SetControlVisibility().",
       "parentUuid": "8739e601_53b74548",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "411c96b4_61a76683",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T19:39:24Z",
+      "side": 1,
+      "message": "Hmm.  I suppose we could stack-allocate and declare them not-parent-owned, but that doesn\u0027t really save any memory, just the delete statements.  Ugh.  I don\u0027t have good suggestions here.",
+      "parentUuid": "0554a062_2eb4a90a",
       "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
