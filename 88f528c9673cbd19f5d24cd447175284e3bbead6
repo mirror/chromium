@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "89a8f2fb_91151f45",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-19T16:01:37Z",
+      "side": 1,
+      "message": "I don\u0027t want to expose the ability to override canvas scale in PaintVectorIcon because\n\na) there are already too many PaintVectorIcon variations\nb) there are no other known use cases for manually setting the scale\nc) depending on the canvas\u0027s scale matches the way gfx::Image picks the correct ImageRep",
+      "parentUuid": "badca6fe_d55da141",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
