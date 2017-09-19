@@ -8,6 +8,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -26,6 +27,7 @@
 #include "chrome/browser/ui/web_contents_sizer.h"
 #include "chrome/common/url_constants.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -1207,7 +1209,7 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
       if (delegate_->ShouldRunUnloadListenerBeforeClosing(closing_contents))
         continue;
       content::RenderProcessHost* process =
-          closing_contents->GetRenderProcessHost();
+          closing_contents->GetMainFrame()->GetProcess();
       ++processes[process];
     }
 
