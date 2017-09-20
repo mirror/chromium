@@ -141,7 +141,8 @@ void OfflineAudioDestinationHandler::InitializeOfflineRenderThread(
     AudioBuffer* render_target) {
   DCHECK(IsMainThread());
 
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled()) {
+  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+      Context()->WorkletMessagingProxy()) {
     AudioWorkletThread::EnsureSharedBackingThread();
     worklet_backing_thread_ = AudioWorkletThread::GetSharedBackingThread();
   } else {

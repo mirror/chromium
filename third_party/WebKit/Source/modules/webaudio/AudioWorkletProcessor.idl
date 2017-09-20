@@ -9,8 +9,4 @@
     Global=(Worklet,AudioWorklet),
     RuntimeEnabled=AudioWorklet
 ] interface AudioWorkletProcessor {
-    // TODO(hongchan): implement spec features.
-    // readonly attribute AudioContextInfo contextInfo;
-    // attribute EventHandler onnodedata;
-    // void sendData(any data);
 };
