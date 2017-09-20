@@ -2361,4 +2361,55 @@ TEST_F(InputMethodControllerTest, InputModeOfFocusedElement) {
   EXPECT_EQ(kWebTextInputModeDefault, Controller().InputModeOfFocusedElement());
 }
 
+// The following tests are for http://crbug.com/766680.
+
+TEST_F(InputMethodControllerTest, SetCompositionDeletesMarkupBeforeText) {
+  Element* a = InsertHTMLElement(
+      "<a id='a' href='#' contenteditable='true'><img />test</a>", "a");
+  // Select the contents of the a element.
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange::RangeOfContents(*a))
+          .Build());
+
+  Controller().SetComposition("t", Vector<ImeTextSpan>(), 0, 1);
+
+  EXPECT_EQ(1u, a->CountChildren());
+  Text* text = ToText(a->firstChild());
+  EXPECT_EQ("t", text->data());
+}
+
+TEST_F(InputMethodControllerTest, SetCompositionDeletesMarkupAfterText) {
+  Element* a = InsertHTMLElement(
+      "<a id='a' href='#' contenteditable='true'>test<img /></a>", "a");
+  // Select the contents of the a element.
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange::RangeOfContents(*a))
+          .Build());
+
+  Controller().SetComposition("t", Vector<ImeTextSpan>(), 0, 1);
+
+  EXPECT_EQ(1u, a->CountChildren());
+  Text* text = ToText(a->firstChild());
+  EXPECT_EQ("t", text->data());
+}
+
+TEST_F(InputMethodControllerTest,
+       SetCompositionDeletesMarkupBeforeAndAfterText) {
+  Element* a = InsertHTMLElement(
+      "<a id='a' href='#' contenteditable='true'><img />test<img /></a>", "a");
+  // Select the contents of the a element.
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange::RangeOfContents(*a))
+          .Build());
+
+  Controller().SetComposition("t", Vector<ImeTextSpan>(), 0, 1);
+
+  EXPECT_EQ(1u, a->CountChildren());
+  Text* text = ToText(a->firstChild());
+  EXPECT_EQ("t", text->data());
+}
+
 }  // namespace blink

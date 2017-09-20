@@ -100,16 +100,11 @@ const String ComputeTextForInsertion(const String& new_text,
       new_text.length() - common_prefix_length - common_suffix_length);
 }
 
-SelectionInDOMTree ComputeSelectionForInsertion(
-    const EphemeralRange& selection_range,
-    const int offset,
-    const int length) {
+EphemeralRange ComputeRangeForInsertion(const EphemeralRange& selection_range,
+                                        const int offset,
+                                        const int length) {
   CharacterIterator char_it(selection_range);
-  const EphemeralRange& range_for_insertion =
-      char_it.CalculateCharacterSubrange(offset, length);
-  return SelectionInDOMTree::Builder()
-      .SetBaseAndExtent(range_for_insertion)
-      .Build();
+  return char_it.CalculateCharacterSubrange(offset, length);
 }
 
 }  // anonymous namespace
@@ -151,14 +146,46 @@ void InsertIncrementalTextCommand::DoApply(EditingState* editing_state) {
       new_text.Right(new_text_length - common_prefix_length));
   DCHECK_GE(old_text_length, common_prefix_length + common_suffix_length);
 
-  text_ = ComputeTextForInsertion(text_, common_prefix_length,
-                                  common_suffix_length);
+  // No need to try to do an incremental update in this case.
+  if (common_prefix_length == 0 && common_suffix_length == 0) {
+    InsertTextCommand::DoApply(editing_state);
+    return;
+  }
 
   const int offset = static_cast<int>(common_prefix_length);
   const int length = static_cast<int>(old_text_length - common_prefix_length -
                                       common_suffix_length);
+
+  // If some extra markup is selected before or after the actual text,
+  // ComputeRangeForInsertion() won't include the extra markup, and the markup
+  // won't be replaced properly. So in this case, we have to use the existing
+  // selection endpoint and not try to do an incremental update.
+  const EphemeralRange& range_snapped_to_text =
+      ComputeRangeForInsertion(selection_range, 0, old_text_length);
+  const EphemeralRange& provisional_insertion_range =
+      ComputeRangeForInsertion(selection_range, offset, length);
+
+  const bool preserve_text_at_start =
+      selection_range.StartPosition().IsEquivalent(
+          range_snapped_to_text.StartPosition());
+  const bool preserve_text_at_end = selection_range.EndPosition().IsEquivalent(
+      range_snapped_to_text.EndPosition());
+
+  const Position& start_to_use =
+      preserve_text_at_start ? provisional_insertion_range.StartPosition()
+                             : selection_start;
+  const Position& end_to_use = preserve_text_at_end
+                                   ? provisional_insertion_range.EndPosition()
+                                   : EndingVisibleSelection().End();
+
+  text_ = ComputeTextForInsertion(
+      text_, preserve_text_at_start ? common_prefix_length : 0,
+      preserve_text_at_end ? common_suffix_length : 0);
+
   const VisibleSelection& selection_for_insertion = CreateVisibleSelection(
-      ComputeSelectionForInsertion(selection_range, offset, length));
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(start_to_use, end_to_use))
+          .Build());
 
   SetEndingSelectionWithoutValidation(selection_for_insertion.Start(),
                                       selection_for_insertion.End());
