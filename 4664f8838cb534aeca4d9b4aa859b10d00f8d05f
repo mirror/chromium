@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bf7f8e_c34a23b0",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-20T16:58:03Z",
+      "side": 1,
+      "message": "this function should use C++ style naming rather than c_hacker_style because it has a non-trivial implementation",
+      "range": {
+        "startLine": 299,
+        "startChar": 34,
+        "endLine": 299,
+        "endChar": 52
+      },
+      "revId": "4664f8838cb534aeca4d9b4aa859b10d00f8d05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
