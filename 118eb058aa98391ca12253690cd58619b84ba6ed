@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "deace82c_1a67387e",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T23:36:56Z",
+      "side": 1,
+      "message": "Sorry, I must be missing something. You always add null, which means all the code in the callback effectively does nothing (because ack_callback is always null). So, what is the point? How is this making debugging easier?",
+      "parentUuid": "11f8f846_1bc76768",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6caca24b_0f8bcfe6",
         "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
         "patchSetId": 9
