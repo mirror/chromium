@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46136e75_1dbbaaf0",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-20T14:23:47Z",
+      "side": 1,
+      "message": "Reading the spec, it seems like you implemented: \n\nhttps://www.w3.org/TR/payment-method-id/#dfn-syntax-of-a-standardized-payment-method-identifier\n\n\"stdpmi \u003d part *( \"-\" part )\n        part \u003d 1loweralpha *( DIGIT / loweralpha )\n        loweralpha \u003d  %x61-7A\"\n\nAlso, it says \"User agents may support zero or more standardized payment method identifiers listed in section 4. Registry of standardized payment methods .\", and the registry is only basic-card so far. Do you think we should simply check for \"basic-card\" then? If regex, can you include a comment linking to the spec.",
+      "revId": "fa0cf687772ad0500995dee7a6eec2e72a5c34fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
