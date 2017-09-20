@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e60d793_3941ce5a",
+        "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-20T23:19:10Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "e2c45fa495fe5e271b887af1120dcbf22ecc705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
