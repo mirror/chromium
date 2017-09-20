@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a3b133_b6a937be",
+        "filename": "chromeos/components/tether/initializer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-20T00:15:40Z",
+      "side": 1,
+      "message": "Please clarify what you mean by \"these objects\" (I assume BleScanner and DisconnectTetheringRequestSender)",
+      "range": {
+        "startLine": 314,
+        "startChar": 47,
+        "endLine": 314,
+        "endChar": 52
+      },
+      "revId": "ad97126c1576bd36b1e006cf58fbd0e18ca8ac8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
