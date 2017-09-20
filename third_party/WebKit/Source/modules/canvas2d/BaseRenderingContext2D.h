@@ -7,6 +7,8 @@
 
 #include "bindings/modules/v8/canvas_image_source.h"
 #include "bindings/modules/v8/string_or_canvas_gradient_or_canvas_pattern.h"
+#include "core/geometry/DOMMatrix.h"
+#include "core/geometry/DOMMatrix2DInit.h"
 #include "core/html/ImageData.h"
 #include "modules/ModulesExport.h"
 #include "modules/canvas2d/CanvasGradient.h"
@@ -105,6 +107,8 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
                     double m22,
                     double dx,
                     double dy);
+  void setTransform(DOMMatrix2DInit&);
+  DOMMatrix* getTransform();
   void resetTransform();
 
   void beginPath();
