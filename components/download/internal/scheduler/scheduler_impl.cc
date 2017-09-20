@@ -97,6 +97,11 @@ Entry* SchedulerImpl::Next(const Model::EntryList& entries,
         break;
     }
   }
+
+  if (entry) {
+    LOG(ERROR) << "@@@ "
+               << " next entry :" << entry->guid;
+  }
   return entry;
 }
 

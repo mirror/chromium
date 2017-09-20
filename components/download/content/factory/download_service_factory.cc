@@ -19,35 +19,32 @@
 
 namespace download {
 namespace {
+
 const base::FilePath::CharType kEntryDBStorageDir[] =
     FILE_PATH_LITERAL("EntryDB");
 const base::FilePath::CharType kFilesStorageDir[] = FILE_PATH_LITERAL("Files");
-}  // namespace
 
-DownloadService* CreateDownloadService(
+DownloadService* CreateDownloadServiceInternal(
     std::unique_ptr<DownloadClientMap> clients,
-    content::DownloadManager* download_manager,
-    const base::FilePath& storage_dir,
+    std::unique_ptr<Configuration> config,
+    content::BrowserContext* browser_context,
+    const base::FilePath& files_storage_dir,
+    const base::FilePath& db_storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler) {
   auto client_set = base::MakeUnique<ClientSet>(std::move(clients));
-  auto config = Configuration::CreateFromFinch();
-
-  auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
-  auto driver = base::MakeUnique<DownloadDriverImpl>(download_manager);
-
-  auto entry_db_storage_dir = storage_dir.Append(kEntryDBStorageDir);
+  auto driver = base::MakeUnique<DownloadDriverImpl>(
+      content::BrowserContext::GetDownloadManager(browser_context));
   auto entry_db =
       base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<protodb::Entry>>(
           background_task_runner);
-  auto store = base::MakeUnique<DownloadStore>(entry_db_storage_dir,
-                                               std::move(entry_db));
+  auto store =
+      base::MakeUnique<DownloadStore>(db_storage_dir, std::move(entry_db));
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
   auto device_status_listener =
       base::MakeUnique<DeviceStatusListener>(config->network_change_delay);
   NavigationMonitor* navigation_monitor =
-      NavigationMonitorFactory::GetForBrowserContext(
-          download_manager->GetBrowserContext());
+      NavigationMonitorFactory::GetForBrowserContext(browser_context);
   auto scheduler = base::MakeUnique<SchedulerImpl>(
       task_scheduler.get(), config.get(), client_set.get());
   auto file_monitor = base::MakeUnique<FileMonitorImpl>(
@@ -58,6 +55,38 @@ DownloadService* CreateDownloadService(
       std::move(scheduler), std::move(task_scheduler), std::move(file_monitor),
       files_storage_dir);
   return new DownloadServiceImpl(std::move(config), std::move(controller));
+}
+
+}  // namespace
+
+DownloadService* CreateDownloadService(
+    std::unique_ptr<DownloadClientMap> clients,
+    content::BrowserContext* browser_context,
+    const base::FilePath& storage_dir,
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+    std::unique_ptr<TaskScheduler> task_scheduler) {
+  auto config = Configuration::CreateFromFinch();
+  auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
+  auto db_storage_dir = storage_dir.Append(kEntryDBStorageDir);
+
+  return CreateDownloadServiceInternal(
+      std::move(clients), std::move(config), browser_context, files_storage_dir,
+      db_storage_dir, background_task_runner, std::move(task_scheduler));
+}
+
+// TODO(xingliu): See if we don't need this.
+std::unique_ptr<KeyedService> CreateDownloadServiceForTest(
+    std::unique_ptr<DownloadClientMap> clients,
+    content::BrowserContext* browser_context,
+    const base::FilePath& files_storage_dir,
+    const base::FilePath& db_storage_dir,
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+    std::unique_ptr<TaskScheduler> task_scheduler) {
+  auto config = Configuration::CreateFromFinch();
+
+  return std::unique_ptr<DownloadService>(CreateDownloadServiceInternal(
+      std::move(clients), std::move(config), browser_context, files_storage_dir,
+      db_storage_dir, background_task_runner, std::move(task_scheduler)));
 }
 
 }  // namespace download

@@ -53,6 +53,8 @@ DeviceStatusListener::~DeviceStatusListener() {
 
 const DeviceStatus& DeviceStatusListener::CurrentDeviceStatus() const {
   DCHECK(listening_) << "Call Start() before querying the status.";
+  LOG(ERROR) << "@@@ status, net = " << static_cast<int>(status_.network_status)
+             << " , battery = " << static_cast<int>(status_.battery_status);
   return status_;
 }
 
