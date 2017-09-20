@@ -20,7 +20,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "content/browser/shared_worker/shared_worker_connector_impl.h"
-#include "content/browser/shared_worker/shared_worker_message_filter.h"
 #include "content/browser/shared_worker/worker_storage_partition.h"
 #include "content/common/message_port.h"
 #include "content/public/browser/storage_partition.h"
@@ -35,11 +34,9 @@ namespace content {
 class SharedWorkerServiceImplTest : public testing::Test {
  public:
   static void RegisterRunningProcessID(int process_id) {
-    base::AutoLock lock(s_lock_);
     s_running_process_id_set_.insert(process_id);
   }
   static void UnregisterRunningProcessID(int process_id) {
-    base::AutoLock lock(s_lock_);
     s_running_process_id_set_.erase(process_id);
   }
 
@@ -49,7 +46,7 @@ class SharedWorkerServiceImplTest : public testing::Test {
       ResourceContext* resource_context,
       WorkerStoragePartition partition,
       mojom::SharedWorkerConnectorRequest request) {
-    SharedWorkerConnectorImpl::CreateOnIOThread(
+    SharedWorkerConnectorImpl::CreateInternal(
         process_id, frame_id, resource_context, partition, std::move(request));
   }
 
@@ -78,9 +75,11 @@ class SharedWorkerServiceImplTest : public testing::Test {
             nullptr /* database_tracker */,
             nullptr /* indexed_db_context */,
             nullptr /* service_worker_context */)) {
+#if 0
     SharedWorkerServiceImpl::GetInstance()
         ->ChangeUpdateWorkerDependencyFuncForTesting(
             &SharedWorkerServiceImplTest::MockUpdateWorkerDependency);
+#endif
     SharedWorkerServiceImpl::GetInstance()
         ->ChangeTryReserveWorkerFuncForTesting(
             &SharedWorkerServiceImplTest::MockTryReserveWorker);
@@ -94,18 +93,19 @@ class SharedWorkerServiceImplTest : public testing::Test {
     s_running_process_id_set_.clear();
     SharedWorkerServiceImpl::GetInstance()->ResetForTesting();
   }
+#if 0
   static void MockUpdateWorkerDependency(const std::vector<int>& added_ids,
                                          const std::vector<int>& removed_ids) {
     ++s_update_worker_dependency_call_count_;
     s_worker_dependency_added_ids_ = added_ids;
     s_worker_dependency_removed_ids_ = removed_ids;
   }
-  static bool MockTryReserveWorker(
-      int worker_process_id,
-      mojom::SharedWorkerFactoryPtrInfo* factory_info) {
-    if (factory_info)
-      s_factory_request_received_.push(mojo::MakeRequest(factory_info));
-    base::AutoLock lock(s_lock_);
+#endif
+  static bool MockTryReserveWorker(int worker_process_id,
+                                   int* route_id,
+                                   mojom::SharedWorkerFactoryPtr* factory) {
+    s_factory_request_received_.push(mojo::MakeRequest(factory));
+    *route_id = s_next_routing_id_++;
     return s_running_process_id_set_.find(worker_process_id) !=
            s_running_process_id_set_.end();
   }
@@ -113,10 +113,10 @@ class SharedWorkerServiceImplTest : public testing::Test {
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   std::unique_ptr<WorkerStoragePartition> partition_;
+  static int s_next_routing_id_;
   static int s_update_worker_dependency_call_count_;
   static std::vector<int> s_worker_dependency_added_ids_;
   static std::vector<int> s_worker_dependency_removed_ids_;
-  static base::Lock s_lock_;
   static std::set<int> s_running_process_id_set_;
   static std::queue<mojom::SharedWorkerFactoryRequest>
       s_factory_request_received_;
@@ -126,10 +126,10 @@ class SharedWorkerServiceImplTest : public testing::Test {
 };
 
 // static
+int SharedWorkerServiceImplTest::s_next_routing_id_ = 1;
 int SharedWorkerServiceImplTest::s_update_worker_dependency_call_count_;
 std::vector<int> SharedWorkerServiceImplTest::s_worker_dependency_added_ids_;
 std::vector<int> SharedWorkerServiceImplTest::s_worker_dependency_removed_ids_;
-base::Lock SharedWorkerServiceImplTest::s_lock_;
 std::set<int> SharedWorkerServiceImplTest::s_running_process_id_set_;
 std::queue<mojom::SharedWorkerFactoryRequest>
     SharedWorkerServiceImplTest::s_factory_request_received_;
@@ -154,6 +154,7 @@ void BlockingReadFromMessagePort(MessagePort port,
   EXPECT_TRUE(should_be_empty.empty());
 }
 
+#if 0
 class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
  public:
   MockSharedWorkerMessageFilter(
@@ -183,6 +184,7 @@ class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
  private:
   ~MockSharedWorkerMessageFilter() override {}
 };
+#endif
 
 class MockSharedWorker : public mojom::SharedWorker {
  public:
@@ -346,19 +348,12 @@ class MockRendererProcessHost {
                           const WorkerStoragePartition& partition)
       : process_id_(process_id),
         resource_context_(resource_context),
-        partition_(partition),
-        worker_filter_(new MockSharedWorkerMessageFilter(
-            process_id,
-            resource_context,
-            partition,
-            base::Bind(&base::AtomicSequenceNumber::GetNext,
-                       base::Unretained(&next_routing_id_)))) {
+        partition_(partition) {
     SharedWorkerServiceImplTest::RegisterRunningProcessID(process_id);
   }
 
   ~MockRendererProcessHost() {
     SharedWorkerServiceImplTest::UnregisterRunningProcessID(process_id_);
-    worker_filter_->Close();
   }
 
   void FastShutdownIfPossible() {
@@ -377,8 +372,6 @@ class MockRendererProcessHost {
   const int process_id_;
   ResourceContext* resource_context_;
   WorkerStoragePartition partition_;
-  base::AtomicSequenceNumber next_routing_id_;
-  scoped_refptr<MockSharedWorkerMessageFilter> worker_filter_;
 };
 
 class MockSharedWorkerConnector {
