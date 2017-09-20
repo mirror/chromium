@@ -106,7 +106,8 @@
           "coordination_unit",
           "coordination_unit_introspector",
           "service_callbacks",
-          "tab_signal"
+          "tab_signal",
+          "tracing"
         ],
         "video_capture": [ "capture", "tests" ]
       }
