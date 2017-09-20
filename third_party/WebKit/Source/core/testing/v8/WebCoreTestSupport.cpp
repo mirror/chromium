@@ -55,7 +55,8 @@ v8::Local<v8::Value> createInternalsObject(v8::Local<v8::Context> context) {
     return blink::ToV8(blink::Internals::Create(executionContext), global,
                        scriptState->GetIsolate());
   }
-  if (executionContext->IsWorkerGlobalScope()) {
+  if (executionContext->IsWorkerOrWorkletGlobalScope()) {
+    LOG(ERROR) << "createInternalsObject";
     return blink::ToV8(blink::WorkerInternals::Create(), global,
                        scriptState->GetIsolate());
   }

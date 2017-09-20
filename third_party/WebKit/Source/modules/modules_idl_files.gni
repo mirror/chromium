@@ -71,6 +71,7 @@ modules_idl_files =
                     "compositorworker/AnimationWorkletGlobalScope.idl",
                     "compositorworker/CompositorWorker.idl",
                     "compositorworker/CompositorWorkerGlobalScope.idl",
+                    "compositorworker/EffectProxy.idl",
                     "credentialmanager/AuthenticatorAssertionResponse.idl",
                     "credentialmanager/AuthenticatorAttestationResponse.idl",
                     "credentialmanager/AuthenticatorResponse.idl",
@@ -687,6 +688,7 @@ modules_testing_dependency_idl_files =
     get_path_info(
         [
           "accessibility/testing/InternalsAccessibility.idl",
+          "compositorworker/testing/InternalsAnimationWorklet.idl",
           "fetch/testing/InternalsFetch.idl",
           "fetch/testing/WorkerInternalsFetch.idl",
           "mediastream/testing/InternalsMediaStream.idl",
