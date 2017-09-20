@@ -53,6 +53,8 @@ void AllocationTracker::OnFree(const FreePacket& free_packet) {
   }
 }
 
+void AllocationTracker::OnBarrier(const BarrierPacket& barrier_packet) {}
+
 void AllocationTracker::OnComplete() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                 std::move(complete_callback_));

@@ -58,4 +58,8 @@ void MemlogClient::StartProfiling(mojo::ScopedHandle sender_pipe) {
   InitAllocatorShim(memlog_sender_pipe_.get());
 }
 
+void MemlogClient::FlushPipe(uint32_t barrier_id) {
+  AllocatorShimFlushPipe(barrier_id);
+}
+
 }  // namespace profiling

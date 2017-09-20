@@ -31,6 +31,7 @@ class AllocationTracker : public MemlogReceiver {
                std::vector<Address>&& bt,
                std::string&& context) override;
   void OnFree(const FreePacket& free_packet) override;
+  void OnBarrier(const BarrierPacket& barrier_packet) override;
   void OnComplete() override;
 
   const AllocationEventSet& live_allocs() const { return live_allocs_; }

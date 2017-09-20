@@ -29,6 +29,7 @@ class MemlogClient : public mojom::MemlogClient {
 
   // mojom::MemlogClient overrides:
   void StartProfiling(mojo::ScopedHandle sender_pipe) override;
+  void FlushPipe(uint32_t barrier_id) override;
 
   void OnServiceManagerConnected(content::ServiceManagerConnection* connection);
   void BindToInterface(profiling::mojom::MemlogClientRequest request);
