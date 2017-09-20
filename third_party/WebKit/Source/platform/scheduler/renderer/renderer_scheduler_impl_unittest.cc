@@ -24,6 +24,7 @@
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
+#include "platform/scheduler/test/scoped_auto_advance_now_enabler.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -187,26 +188,6 @@ void AnticipationTestTask(RendererSchedulerImpl* scheduler,
   }
   *is_anticipated_after = scheduler->IsHighPriorityWorkAnticipated();
 }
-
-// RAII helper class to enable auto advancing of time inside mock task runner.
-// Automatically disables auto-advancement when destroyed.
-class ScopedAutoAdvanceNowEnabler {
- public:
-  ScopedAutoAdvanceNowEnabler(
-      scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner)
-      : task_runner_(task_runner) {
-    task_runner_->SetAutoAdvanceNowToPendingTasks(true);
-  }
-
-  ~ScopedAutoAdvanceNowEnabler() {
-    task_runner_->SetAutoAdvanceNowToPendingTasks(false);
-  }
-
- private:
-  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScopedAutoAdvanceNowEnabler);
-};
 
 };  // namespace
 

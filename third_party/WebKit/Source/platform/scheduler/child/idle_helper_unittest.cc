@@ -22,6 +22,7 @@
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_impl.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
+#include "platform/scheduler/test/scoped_auto_advance_now_enabler.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -152,28 +153,6 @@ void ShutdownIdleTask(IdleHelper* helper,
   *shutdown_task_run = true;
   helper->Shutdown();
 }
-
-// RAII helper class to enable auto advancing of time inside mock task runner.
-// Automatically disables auto-advancement when destroyed.
-class ScopedAutoAdvanceNowEnabler {
- public:
-  ScopedAutoAdvanceNowEnabler(
-      scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner)
-      : task_runner_(task_runner) {
-    if (task_runner_)
-      task_runner_->SetAutoAdvanceNowToPendingTasks(true);
-  }
-
-  ~ScopedAutoAdvanceNowEnabler() {
-    if (task_runner_)
-      task_runner_->SetAutoAdvanceNowToPendingTasks(false);
-  }
-
- private:
-  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScopedAutoAdvanceNowEnabler);
-};
 
 };  // namespace
 
