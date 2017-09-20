@@ -16,6 +16,24 @@
       "revId": "38b40ae4c96ea79122e4e036bcb55a374f487bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4d6bc6_97dce9b1",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-20T01:05:04Z",
+      "side": 1,
+      "message": "Passing viz::ContextProvider directly. PTAL.",
+      "parentUuid": "d13b6b49_933c966b",
+      "revId": "38b40ae4c96ea79122e4e036bcb55a374f487bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
