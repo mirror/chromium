@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9700b2ed_f7a5a54a",
+        "filename": "components/arc/test/fake_bluetooth_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-20T16:47:19Z",
+      "side": 1,
+      "message": "IWYU: the .h file is missing #include \u003cmemory\u003e",
+      "revId": "5f49af1d8acdd5254a12ef4d95ff9607bf2b4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
