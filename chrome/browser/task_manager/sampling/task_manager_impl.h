@@ -65,9 +65,11 @@ class TaskManagerImpl : public TaskManagerInterface,
   const std::string& GetTaskNameForRappor(TaskId task_id) const override;
   base::string16 GetProfileName(TaskId task_id) const override;
   const gfx::ImageSkia& GetIcon(TaskId task_id) const override;
+  const ProcessSortKey& GetProcessSortKey(TaskId task_id) const override;
   const base::ProcessHandle& GetProcessHandle(TaskId task_id) const override;
   const base::ProcessId& GetProcessId(TaskId task_id) const override;
   Task::Type GetType(TaskId task_id) const override;
+  bool HasParentTask(TaskId task_id) const override;
   int GetTabId(TaskId task_id) const override;
   int GetChildProcessUniqueId(TaskId task_id) const override;
   void GetTerminationStatus(TaskId task_id,
@@ -94,6 +96,7 @@ class TaskManagerImpl : public TaskManagerInterface,
   // task_manager::TaskProviderObserver:
   void TaskAdded(Task* task) override;
   void TaskRemoved(Task* task) override;
+  void TaskReplaced(Task* old_task, Task* new_task) override;
   void TaskUnresponsive(Task* task) override;
 
   // The notification method on the UI thread when multiple bytes are
@@ -132,18 +135,28 @@ class TaskManagerImpl : public TaskManagerInterface,
   // background thread has completed.
   void OnTaskGroupBackgroundCalculationsDone();
 
-  const base::Closure on_background_data_ready_callback_;
+  // Helpers to add/remove a task from this class's data structures, without
+  // notifying observers.
+  void DoAddTask(Task* task);
+  void DoRemoveTask(Task* task);
+
+  ProcessSortKey MakeSortKey(Task* task) const;
+
+  base::Closure on_background_data_ready_callback_;
 
   // Map TaskGroups by the IDs of the processes they represent.
-  std::map<base::ProcessId, std::unique_ptr<TaskGroup>> task_groups_by_proc_id_;
+  std::map<base::ProcessId, TaskGroup*> task_groups_by_proc_id_;
 
-  // Map each task by its ID to the TaskGroup on which it resides.
-  // Keys are unique but values will have duplicates (i.e. multiple tasks
-  // running on the same process represented by a single TaskGroup).
-  std::map<TaskId, TaskGroup*> task_groups_by_task_id_;
-
-  // A cached sorted list of the task IDs.
-  mutable std::vector<TaskId> sorted_task_ids_;
+  // Vectors of task IDs and their assigned task groups. These two vectors
+  // always have the same number of elements. This is kept as a pair of vectors,
+  // rather than as a map, so that we can cheaply access the list of
+  // |task_ids_|.
+  //
+  // |task_ids_| is sorted and can be thought of as the keys. |task_groups_| can
+  // be thought of as the values; it may contain duplicates. |task_groups_[i]|
+  // gives the group for |task_ids_[i]|.
+  std::vector<TaskId> task_ids_;
+  std::vector<TaskGroup*> task_groups_;
 
   // The manager of the IO thread helper used to handle network bytes
   // notifications on IO thread. The manager itself lives on the UI thread, but

@@ -112,8 +112,17 @@ const base::ProcessId& TestTaskManager::GetProcessId(TaskId task_id) const {
   return pid_;
 }
 
+const TaskManagerInterface::ProcessSortKey& TestTaskManager::GetProcessSortKey(
+    TaskId task_id) const {
+  return sort_key_;
+}
+
 Task::Type TestTaskManager::GetType(TaskId task_id) const {
   return Task::UNKNOWN;
+}
+
+bool TestTaskManager::HasParentTask(TaskId task_id) const {
+  return false;
 }
 
 int TestTaskManager::GetTabId(TaskId task_id) const {
