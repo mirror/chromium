@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f20fe82_db366eb2",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-20T13:24:08Z",
+      "side": 1,
+      "message": "It hadn\u0027t occurred to me to funnel the DCHECKs right through all the time - that\u0027s actually not totally insane. Done.",
+      "parentUuid": "903e6e7d_482df814",
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "640770f8_f9fef904",
         "filename": "content/renderer/render_process_impl.cc",
         "patchSetId": 1
@@ -87,6 +105,30 @@
       "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736575d1_a821cfe3",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-20T13:24:08Z",
+      "side": 1,
+      "message": "The define is a V8 private implementation detail we don\u0027t have access to here. Also this isn\u0027t about run-time performance, this is about getting nearer to identical behavior to non-DEBUG builds. Added some comments.",
+      "parentUuid": "211443f2_a564a39a",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
