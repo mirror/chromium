@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f2aecea_8cbca940",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-20T20:52:41Z",
+      "side": 1,
+      "message": "nit: doc and rename to something like \u0027onContentChanged\u0027 since this doesn\u0027t actually detach or swap content.",
+      "range": {
+        "startLine": 1703,
+        "startChar": 17,
+        "endLine": 1703,
+        "endChar": 27
+      },
+      "revId": "418280a777d805da2951feefef038579883f2494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
