@@ -46,6 +46,98 @@
       "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb62d5f_600191cc",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-20T22:43:07Z",
+      "side": 1,
+      "message": "Can we move display_info into the VRDevice constructor so that we don\u0027t leave a bunch of members uninitialized when creating the VRDevice?",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 29
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b156d67_c83b0141",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-20T22:43:07Z",
+      "side": 1,
+      "message": "So calling this here when the devices aren\u0027t finished syncing always felt strange to me, and maybe we want to change these semantics with WebVR 2.0.\n\nIt feels wrong that in response to getDevices we fire a bunch of deviceconnect events for devices that we\u0027re about to return from getDevices. It feels like we should only fire deviceconnect for new devices that connect after VR has initialized that the page should be made aware of. Now the page would probably have to do something like de-dup the devices they see in deviceconnect with the ones they get from getDevices, which feels gross.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6e0e50_d4db521c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-20T22:43:07Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this using declaration is very useful. Would prefer if we just used the exact type in the one spot it\u0027s used.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cc052c_52959ed8",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-20T22:43:07Z",
+      "side": 1,
+      "message": "Can we add a test for this and requestSession? We probably just want to make sure they\u0027re properly rejected for now.",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
