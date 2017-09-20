@@ -88,6 +88,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   void RemoveAllChildren();
   void SetChildren(const LayerList& children);
   bool HasAncestor(const Layer* ancestor) const;
+  bool HasScrollNodeChild() const;
 
   const LayerList& children() const { return inputs_.children; }
   Layer* child_at(size_t index) { return inputs_.children[index].get(); }
@@ -102,6 +103,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   void SetSubtreeHasCopyRequest(bool subtree_has_copy_request);
   bool SubtreeHasCopyRequest() const;
+  virtual bool IsPictureLayer();
 
   void TakeCopyRequests(
       std::vector<std::unique_ptr<viz::CopyOutputRequest>>* requests);
