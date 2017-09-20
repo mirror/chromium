@@ -42,6 +42,7 @@
 
 namespace blink {
 
+class Event;
 class ExceptionState;
 class ExecutionContext;
 class MessagePort;
@@ -145,6 +146,7 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
   // WebMessagePortChannelClient implementation.
   void MessageAvailable() override;
   void DispatchMessages();
+  void DispatchMessage(Event*);
 
   std::unique_ptr<WebMessagePortChannel> entangled_channel_;
 

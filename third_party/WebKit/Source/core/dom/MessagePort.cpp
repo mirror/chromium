@@ -221,8 +221,15 @@ void MessagePort::DispatchMessages() {
         MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
     Event* evt = MessageEvent::Create(ports, std::move(message));
 
-    DispatchEvent(evt);
+    task_runner_->PostTask(
+        BLINK_FROM_HERE,
+        WTF::Bind(&MessagePort::DispatchMessage, WrapWeakPersistent(this),
+                  WrapPersistent(evt)));
   }
+}
+
+void MessagePort::DispatchMessage(Event* event) {
+  DispatchEvent(event);
 }
 
 bool MessagePort::HasPendingActivity() const {
