@@ -36,7 +36,8 @@ namespace blink {
 class RangeTest : public EditingTestBase {};
 
 TEST_F(RangeTest, createAdjustedToTreeScopeWithPositionInShadowTree) {
-  GetDocument().body()->setInnerHTML("<div><select><option>012</option></div>");
+  GetDocument().body()->SetInnerHTMLFromString(
+      "<div><select><option>012</option></div>");
   Element* const select_element = GetDocument().QuerySelector("select");
   const Position& position =
       Position::AfterNode(*select_element->UserAgentShadowRoot());
@@ -49,7 +50,7 @@ TEST_F(RangeTest, createAdjustedToTreeScopeWithPositionInShadowTree) {
 }
 
 TEST_F(RangeTest, extractContentsWithDOMMutationEvent) {
-  GetDocument().body()->setInnerHTML("<span><b>abc</b>def</span>");
+  GetDocument().body()->SetInnerHTMLFromString("<span><b>abc</b>def</span>");
   GetDocument().GetSettings()->SetScriptEnabled(true);
   Element* const script_element = GetDocument().createElement("script");
   script_element->setTextContent(
@@ -68,16 +69,16 @@ TEST_F(RangeTest, extractContentsWithDOMMutationEvent) {
   Element* const result = GetDocument().createElement("div");
   result->AppendChild(range->extractContents(ASSERT_NO_EXCEPTION));
 
-  EXPECT_EQ("<b>abc</b>", result->innerHTML())
+  EXPECT_EQ("<b>abc</b>", result->InnerHTMLAsString())
       << "DOM mutation event handler should not affect result.";
-  EXPECT_EQ("<span>DEF</span>", span_element->outerHTML())
+  EXPECT_EQ("<span>DEF</span>", span_element->OuterHTMLAsString())
       << "DOM mutation event handler should be executed.";
 }
 
 TEST_F(RangeTest, SplitTextNodeRangeWithinText) {
   V8TestingScope scope;
 
-  GetDocument().body()->setInnerHTML("1234");
+  GetDocument().body()->SetInnerHTMLFromString("1234");
   Text* old_text = ToText(GetDocument().body()->firstChild());
 
   Range* range04 = Range::Create(GetDocument(), old_text, 0, old_text, 4);
@@ -118,7 +119,7 @@ TEST_F(RangeTest, SplitTextNodeRangeWithinText) {
 TEST_F(RangeTest, SplitTextNodeRangeOutsideText) {
   V8TestingScope scope;
 
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<span id=\"outer\">0<span id=\"inner-left\">1</span>SPLITME<span "
       "id=\"inner-right\">2</span>3</span>");
 
@@ -202,7 +203,7 @@ TEST_F(RangeTest, updateOwnerDocumentIfNeeded) {
 
 // Regression test for crbug.com/639184
 TEST_F(RangeTest, NotMarkedValidByIrrelevantTextInsert) {
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<div><span id=span1>foo</span>bar<span id=span2>baz</span></div>");
 
   Element* div = GetDocument().QuerySelector("div");
@@ -224,7 +225,7 @@ TEST_F(RangeTest, NotMarkedValidByIrrelevantTextInsert) {
 
 // Regression test for crbug.com/639184
 TEST_F(RangeTest, NotMarkedValidByIrrelevantTextRemove) {
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<div><span id=span1>foofoo</span>bar<span id=span2>baz</span></div>");
 
   Element* div = GetDocument().QuerySelector("div");
@@ -267,7 +268,7 @@ static void LoadAhem(DummyPageHolder& page_holder, Document& document) {
 
 TEST_F(RangeTest, BoundingRectMustIndependentFromSelection) {
   LoadAhem(GetDummyPageHolder(), GetDocument());
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<div style='font: Ahem; width: 2em;letter-spacing: 5px;'>xx xx </div>");
   Node* const div = GetDocument().QuerySelector("div");
   // "x^x
@@ -288,7 +289,8 @@ TEST_F(RangeTest, BoundingRectMustIndependentFromSelection) {
 
 // Regression test for crbug.com/681536
 TEST_F(RangeTest, BorderAndTextQuadsWithInputInBetween) {
-  GetDocument().body()->setInnerHTML("<div>foo <u><input> bar</u></div>");
+  GetDocument().body()->SetInnerHTMLFromString(
+      "<div>foo <u><input> bar</u></div>");
   GetDocument().UpdateStyleAndLayout();
 
   Node* foo = GetDocument().QuerySelector("div")->firstChild();
@@ -319,7 +321,7 @@ static Vector<IntSize> ComputeSizesOfQuads(const Vector<FloatQuad>& quads) {
 }
 
 TEST_F(RangeTest, GetBorderAndTextQuadsWithFirstLetterOne) {
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<style>"
       "  body { font-size: 20px; }"
       "  #sample::first-letter { font-size: 500%; }"
@@ -363,7 +365,7 @@ TEST_F(RangeTest, GetBorderAndTextQuadsWithFirstLetterOne) {
 }
 
 TEST_F(RangeTest, GetBorderAndTextQuadsWithFirstLetterThree) {
-  GetDocument().body()->setInnerHTML(
+  GetDocument().body()->SetInnerHTMLFromString(
       "<style>"
       "  body { font-size: 20px; }"
       "  #sample::first-letter { font-size: 500%; }"
