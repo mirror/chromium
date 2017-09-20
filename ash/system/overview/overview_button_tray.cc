@@ -73,6 +73,7 @@ bool OverviewButtonTray::PerformAction(const ui::Event& event) {
       if (!Shell::Get()->window_selector_controller()->IsSelecting())
         return true;
 
+      base::RecordAction(base::UserMetricsAction("Tablet_QuickSwitch"));
       MruWindowTracker::WindowList mru_window_list =
           Shell::Get()->mru_window_tracker()->BuildMruWindowList();
 
