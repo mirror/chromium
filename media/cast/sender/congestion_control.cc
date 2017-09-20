@@ -16,8 +16,8 @@
 #include "media/cast/sender/congestion_control.h"
 
 #include <algorithm>
-#include <deque>
 
+#include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/trace_event/trace_event.h"
@@ -85,7 +85,7 @@ class AdaptiveCongestionControl : public CongestionControl {
 
   // This can not be a base::circular_deque because the AckFrame implementation
   // preserves a FrameStats* pointing inside the deque across mutations.
-  std::deque<FrameStats> frame_stats_;
+  base::circular_deque<FrameStats> frame_stats_;
 
   FrameId last_frame_stats_;
   // This is the latest known frame that all previous frames (having smaller
