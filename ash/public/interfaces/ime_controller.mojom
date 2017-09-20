@@ -30,6 +30,9 @@ interface ImeController {
   // Report caps lock state changes from chrome (which is the source of truth)
   // to the tray.
   SetCapsLockState(bool enabled);
+
+  // TODO: comment. Better naming.
+  SetEhvState(bool is_ehv_enabled, bool emoji, bool handwriting, bool voice);
 };
 
 // Interface for ash to send input method requests to its client (e.g. Chrome).

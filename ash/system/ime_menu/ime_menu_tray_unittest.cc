@@ -124,6 +124,24 @@ class ImeMenuTrayTest : public AshTestBase {
     ui::IMEBridge::Get()->SetCurrentInputContext(input_context);
   }
 
+  // This synchronously simulates the propagation that would be done by
+  // the Ime Controller/Client mojo bridge.
+  void PropagateInputeMethodManagerData() {
+    InputMethodManager* input_method_manager = InputMethodManager::Get();
+    const bool ehvEnabled =
+        input_method_manager &&
+        input_method_manager->IsEmojiHandwritingVoiceOnImeMenuEnabled();
+    const bool emoji_enabled = input_method_manager->GetImeMenuFeatureEnabled(
+        InputMethodManager::FEATURE_EMOJI);
+    const bool handwriting_enabled =
+        input_method_manager->GetImeMenuFeatureEnabled(
+            InputMethodManager::FEATURE_HANDWRITING);
+    const bool voice_enabled = input_method_manager->GetImeMenuFeatureEnabled(
+        InputMethodManager::FEATURE_VOICE);
+    Shell::Get()->ime_controller()->SetEhvState(
+        ehvEnabled, emoji_enabled, handwriting_enabled, voice_enabled);
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ImeMenuTrayTest);
 };
@@ -333,6 +351,8 @@ TEST_F(ImeMenuTrayTest, ForceToShowEmojiKeyset) {
 TEST_F(ImeMenuTrayTest, TapEmojiButton) {
   Shell::Get()->ime_controller()->ShowImeMenuOnShelf(true);
 
+  PropagateInputeMethodManagerData();
+
   // Open the menu.
   ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
                        ui::GestureEventDetails(ui::ET_GESTURE_TAP));
@@ -358,6 +378,7 @@ TEST_F(ImeMenuTrayTest, ShouldShowBottomButtons) {
   EXPECT_TRUE(input_method_manager->GetImeMenuFeatureEnabled(
       InputMethodManager::FEATURE_VOICE));
 
+  PropagateInputeMethodManagerData();
   FocusInInputContext(ui::TEXT_INPUT_TYPE_TEXT);
   EXPECT_TRUE(GetTray()->ShouldShowBottomButtons());
   EXPECT_TRUE(IsEmojiEnabled());
@@ -382,6 +403,8 @@ TEST_F(ImeMenuTrayTest, ShouldShowBottomButtonsSeperate) {
       InputMethodManager::FEATURE_EMOJI, false);
   EXPECT_FALSE(input_method_manager->GetImeMenuFeatureEnabled(
       InputMethodManager::FEATURE_EMOJI));
+
+  PropagateInputeMethodManagerData();
   EXPECT_TRUE(GetTray()->ShouldShowBottomButtons());
   EXPECT_FALSE(IsEmojiEnabled());
   EXPECT_TRUE(IsHandwritingEnabled());
@@ -400,6 +423,8 @@ TEST_F(ImeMenuTrayTest, ShouldShowBottomButtonsSeperate) {
       InputMethodManager::FEATURE_VOICE));
   EXPECT_FALSE(input_method_manager->GetImeMenuFeatureEnabled(
       InputMethodManager::FEATURE_HANDWRITING));
+
+  PropagateInputeMethodManagerData();
   EXPECT_TRUE(GetTray()->ShouldShowBottomButtons());
   EXPECT_TRUE(IsEmojiEnabled());
   EXPECT_FALSE(IsHandwritingEnabled());

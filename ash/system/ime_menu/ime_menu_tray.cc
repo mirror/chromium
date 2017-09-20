@@ -407,10 +407,9 @@ bool ImeMenuTray::ShouldShowBottomButtons() {
   // 2) third party IME extensions.
   // 3) login/lock screen.
   // 4) password input client.
-  InputMethodManager* input_method_manager = InputMethodManager::Get();
+
   bool should_show_buttom_buttoms =
-      input_method_manager &&
-      input_method_manager->IsEmojiHandwritingVoiceOnImeMenuEnabled() &&
+      ime_controller_->IsEhvEnabled() &&
       !ime_controller_->current_ime().third_party && !IsInLoginOrLockScreen() &&
       !IsInPasswordInputContext();
 
@@ -419,12 +418,10 @@ bool ImeMenuTray::ShouldShowBottomButtons() {
     return false;
   }
 
-  emoji_enabled_ = input_method_manager->GetImeMenuFeatureEnabled(
-      InputMethodManager::FEATURE_EMOJI);
-  handwriting_enabled_ = input_method_manager->GetImeMenuFeatureEnabled(
-      InputMethodManager::FEATURE_HANDWRITING);
-  voice_enabled_ = input_method_manager->GetImeMenuFeatureEnabled(
-      InputMethodManager::FEATURE_VOICE);
+  emoji_enabled_ = ime_controller_->GetEmojiState();
+  handwriting_enabled_ = ime_controller_->GetHandwritingState();
+  voice_enabled_ = ime_controller_->GetVoiceState();
+
   return emoji_enabled_ || handwriting_enabled_ || voice_enabled_;
 }
 
