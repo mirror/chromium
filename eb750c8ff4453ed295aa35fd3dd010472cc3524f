@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b0068a_f87b3791",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "Given that this function (CheckAndProcessPartialCompletion) is the only caller of DoPartialNetworkReadCompleted, it should be possible to put all of this function\u0027s logic into DoPartialNetworkReadCompleted and then remove CheckAndProcessPartialCompletion.",
+      "range": {
+        "startLine": 2103,
+        "startChar": 11,
+        "endLine": 2103,
+        "endChar": 40
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dccf2b_64ed229f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2804,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "As discussed in F2F, let\u0027s delete this function and copy the two lines everywhere that called it.",
+      "range": {
+        "startLine": 2804,
+        "startChar": 2,
+        "endLine": 2804,
+        "endChar": 30
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a21120_64be3ca0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "Once mode_ is NONE, will we really use the entry_-\u003ewriters object to read from the network? I don\u0027t think this will work.\n\nTransitionToReadingState() DCHECKS that if the transaction isn\u0027t in writers, that its mode has to be either READ or READ_WRITE \u0026\u0026 partial. But here we hope to read while in mode NONE.\n\nWe definitely need to test ContinueInNetworkReadOnlyMode behavior.",
+      "range": {
+        "startLine": 2914,
+        "startChar": 4,
+        "endLine": 2914,
+        "endChar": 16
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6385d5_acc6b76a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "return InWriters() ? entry_-\u003ewriters-\u003enetwork_transaction() : network_trans_.get();",
+      "range": {
+        "startLine": 3063,
+        "startChar": 0,
+        "endLine": 3067,
+        "endChar": 17
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8307ad65_b9eaa601",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 213,
+        "startChar": 69,
+        "endLine": 213,
+        "endChar": 70
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e80fb_0898f942",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "That description sounds a lot like DoneWritingToEntry. Need to clarify more what the purpose of this is.",
+      "range": {
+        "startLine": 432,
+        "startChar": 5,
+        "endLine": 432,
+        "endChar": 75
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a896b522_86113369",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "Not sure this is true, I see it called in Read() and in StopCaching().",
+      "range": {
+        "startLine": 441,
+        "startChar": 5,
+        "endLine": 441,
+        "endChar": 29
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

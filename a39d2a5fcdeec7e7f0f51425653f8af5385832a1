@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "02b7e36e_3eabd0a8",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "Sorry, I meant cache_-\u003eDoneWithEntry. That should do the right thing, and looking at the code I believe it will. I don\u0027t think Writers::DoneReading is necessary.",
+      "parentUuid": "882fbcde_5db1439b",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 41
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ee70621_1761117b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -389,6 +413,30 @@
       "side": 1,
       "message": "The earlier if also works for partial for result \u003c 0.",
       "parentUuid": "fd78a8ab_e6a06f7d",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2089,
+        "endChar": 3
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4a1f05_74efc5db",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-20T16:40:16Z",
+      "side": 1,
+      "message": "I\u0027d prefer the switch but it\u0027s only a suggestion.",
+      "parentUuid": "c024c86f_603c6d99",
       "range": {
         "startLine": 2085,
         "startChar": 0,
