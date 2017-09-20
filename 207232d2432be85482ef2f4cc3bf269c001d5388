@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca331a94_72221496",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-20T23:44:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e51546_b471af47",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f9fe8a8_cb43dee0",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "408f621c_d9b2d49e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-20T23:44:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f9fe8a8_cb43dee0",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e85f1d76_ba464b29",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-20T17:34:10Z",
       "side": 1,
       "message": "I think that historically we haven\u0027t gone this far when getting an error code.  If those requests don\u0027t return SUSPEND then should they be cancelled?",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0761cbee_832def47",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-20T23:44:10Z",
+      "side": 1,
+      "message": "With more thought, I changed not to cancel any outstanding requests since they will eventually fail.",
+      "parentUuid": "e85f1d76_ba464b29",
       "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "32535d22_9dcaaddb",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-20T23:44:10Z",
+      "side": 1,
+      "message": "Good catch. With now adding suspended_ logic in the dispatcher, we don\u0027t need this.",
+      "parentUuid": "646b7fe2_9e5ee24a",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aa55ab3_3f8451b2",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3d05e7_9ec3a31e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-20T23:44:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa55ab3_3f8451b2",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
