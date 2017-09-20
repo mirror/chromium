@@ -22,6 +22,30 @@
       "revId": "b46d0581134a7be3067251171f12b78aa26223e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6681d614_24e1e746",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:07:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "757e661e_9316ba2d",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "b46d0581134a7be3067251171f12b78aa26223e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
