@@ -57,7 +57,7 @@ class PageCyclerV2Typical25(_PageCyclerV2):
   def CreateStorySet(self, options):
     return page_sets.Typical25PageSet(run_no_page_interactions=True,
         cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
@@ -80,7 +80,7 @@ class PageCyclerV2IntlArFaHe(_PageCyclerV2):
 
   def CreateStorySet(self, options):
     return page_sets.IntlArFaHePageSet(cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
@@ -103,7 +103,7 @@ class PageCyclerV2IntlEsFrPtBr(_PageCyclerV2):
 
   def CreateStorySet(self, options):
     return page_sets.IntlEsFrPtBrPageSet(cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
@@ -126,7 +126,7 @@ class PageCyclerV2IntlHiRu(_PageCyclerV2):
 
   def CreateStorySet(self, options):
     return page_sets.IntlHiRuPageSet(cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
@@ -149,7 +149,7 @@ class PageCyclerV2IntlJaZh(_PageCyclerV2):
 
   def CreateStorySet(self, options):
     return page_sets.IntlJaZhPageSet(cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
@@ -172,7 +172,7 @@ class PageCyclerV2IntlKoThVi(_PageCyclerV2):
 
   def CreateStorySet(self, options):
     return page_sets.IntlKoThViPageSet(cache_temperatures=[
-          cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
+          cache_temperature.COLD, cache_temperature.WARM])
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
