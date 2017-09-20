@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "64bba147_54bd5489",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T08:19:48Z",
+      "side": 1,
+      "message": "Oh right, it uses |action|, and Java lambdas can\u0027t be curried. Never mind :)",
+      "parentUuid": "6467b46a_84a88fd0",
+      "range": {
+        "startLine": 134,
+        "startChar": 33,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "240ee179b3d73df7b1ffd05102b4985507c821a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef5e94f_c2f3da0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 7

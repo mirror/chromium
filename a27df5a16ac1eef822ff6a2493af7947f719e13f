@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5129edd9_2136832d",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T08:19:48Z",
+      "side": 1,
+      "message": "How does this work on non-Android now?",
+      "revId": "a27df5a16ac1eef822ff6a2493af7947f719e13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
