@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a5fbb3e7_671c7d39",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:10:57Z",
+      "side": 1,
+      "message": "Since this doesn\u0027t change anymore, let\u0027s use:\n$i18n{passwordDeleted}",
+      "range": {
+        "startLine": 123,
+        "startChar": 28,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cb344da_f62472f3",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 8
@@ -13,6 +36,75 @@
       "writtenOn": "2017-09-19T16:18:59Z",
       "side": 1,
       "message": "nit: When using multiple lines put one behavior per line and add a trailing , to the last item to make clang happy",
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36b5f26_ddae46f8",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:10:57Z",
+      "side": 1,
+      "message": "You should be able to delete this if you switch to $i18n{}",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd78f8b_5fa74d12",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:10:57Z",
+      "side": 1,
+      "message": "Where is this event thrown from?",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 58
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a052f487_62200e7c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:10:57Z",
+      "side": 1,
+      "message": "If you switch to using $i18n{}, then these 2 lines become:\nthis.fire(\u0027iron-announce\u0027, {text: this.$.undoLabel.textContent});",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 55
+      },
       "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
