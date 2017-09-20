@@ -407,6 +407,8 @@ bool RenderWidgetInputHandler::ProcessTouchAction(
     return false;
 
   handling_touch_action_ = touch_action;
+  if (touch_action == cc::kTouchActionAuto)
+    return false;
   return true;
 }
 
