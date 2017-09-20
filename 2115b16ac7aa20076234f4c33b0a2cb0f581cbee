@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c66be60_5e3840d4",
+        "filename": "components/cloud_devices/common/printer_description_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T18:11:17Z",
+      "side": 0,
+      "message": "It seems like JSONReader::Read can return nullptr if result is not a properly formatted string, so this check might still be useful since we dereference value below.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "2115b16ac7aa20076234f4c33b0a2cb0f581cbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
