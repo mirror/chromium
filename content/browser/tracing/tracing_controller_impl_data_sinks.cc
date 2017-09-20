@@ -198,25 +198,24 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
       : endpoint_(endpoint), already_tried_open_(false) {}
 
   void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&CompressedTraceDataEndpoint::CompressOnFileThread, this,
-                       base::Passed(std::move(chunk))));
+    background_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&CompressedTraceDataEndpoint::CompressOnBackgroundThread,
+                       this, base::Passed(std::move(chunk))));
   }
 
   void ReceiveTraceFinalContents(
       std::unique_ptr<const base::DictionaryValue> metadata) override {
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&CompressedTraceDataEndpoint::CloseOnFileThread, this,
-                       base::Passed(std::move(metadata))));
+    background_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&CompressedTraceDataEndpoint::CloseOnBackgroundThread,
+                       this, base::Passed(std::move(metadata))));
   }
 
  private:
   ~CompressedTraceDataEndpoint() override {}
 
-  bool OpenZStreamOnFileThread() {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  bool OpenZStreamOnBackgroundThread() {
     if (stream_)
       return true;
 
@@ -238,19 +237,16 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
     return result == 0;
   }
 
-  void CompressOnFileThread(std::unique_ptr<std::string> chunk) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-    if (!OpenZStreamOnFileThread())
+  void CompressOnBackgroundThread(std::unique_ptr<std::string> chunk) {
+    if (!OpenZStreamOnBackgroundThread())
       return;
 
     stream_->avail_in = chunk->size();
     stream_->next_in = reinterpret_cast<unsigned char*>(&*chunk->begin());
-    DrainStreamOnFileThread(false);
+    DrainStreamOnBackgroundThread(false);
   }
 
-  void DrainStreamOnFileThread(bool finished) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
+  void DrainStreamOnBackgroundThread(bool finished) {
     int err;
     const int kChunkSize = 0x4000;
     char buffer[kChunkSize];
@@ -272,13 +268,12 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
     } while (stream_->avail_out == 0);
   }
 
-  void CloseOnFileThread(
+  void CloseOnBackgroundThread(
       std::unique_ptr<const base::DictionaryValue> metadata) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-    if (!OpenZStreamOnFileThread())
+    if (!OpenZStreamOnBackgroundThread())
       return;
 
-    DrainStreamOnFileThread(true);
+    DrainStreamOnBackgroundThread(true);
     deflateEnd(stream_.get());
     stream_.reset();
 
@@ -288,6 +283,9 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
   scoped_refptr<TraceDataEndpoint> endpoint_;
   std::unique_ptr<z_stream> stream_;
   bool already_tried_open_;
+  const scoped_refptr<base::SequencedTaskRunner> background_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::TaskPriority::BACKGROUND});
 
   DISALLOW_COPY_AND_ASSIGN(CompressedTraceDataEndpoint);
 };
