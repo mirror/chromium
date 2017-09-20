@@ -257,6 +257,24 @@
     },
     {
       "key": {
+        "uuid": "7cf3d44d_5a126b16",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-20T18:29:05Z",
+      "side": 1,
+      "message": "Apologies, I should have provided suggestions/cautions here.\n\n(1) If possible, pass 16-bit strings around.\n\n(2) If necessary, convert 16-bit strings to UTF-8. WARNING: there is no requirement that the 16-bit strings are valid UTF-16 and therefore can be converted safely to UTF-8 and back. For example, \"\\uDC00\\uD800\" is not valid UTF-16*, but is an allowed name. If you try to convert that to UTF-8 it may produce \"WTF-8\" data depending entirely on the specific API used. And then if you try and convert back to a 16-bit string it may not round trip - again, depending on the APIs used. Hence, #1 above.\n\n(3) If ASCII is a requirement (for protocol reasons), then do something like %-encode or base64-encode the 16-bit strings. \n\n(4) Test with these cases! Some suggested strings are at: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/IndexedDB/idbtransaction_objectStoreNames.html?dr\u003dC\u0026l\u003d130\n\n(* \u003d google \"utf-16 surrogate pair\" if you\u0027re curious)",
+      "parentUuid": "9ff344f7_9cea2723",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7db9d937_01d6d714",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 8
