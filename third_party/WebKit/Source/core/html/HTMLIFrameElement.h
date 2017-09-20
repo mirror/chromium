@@ -26,6 +26,7 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
+#include "core/html/HTMLIFrameElementAllowedGestureDelegation.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
 #include "platform/Supplementable.h"
 #include "public/platform/WebFeaturePolicy.h"
@@ -43,6 +44,7 @@ class CORE_EXPORT HTMLIFrameElement final
   DECLARE_NODE_FACTORY(HTMLIFrameElement);
   DECLARE_VIRTUAL_TRACE();
   ~HTMLIFrameElement() override;
+  DOMTokenList* allowedGestureDelegation() const;
   DOMTokenList* sandbox() const;
 
   Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
@@ -88,6 +90,7 @@ class CORE_EXPORT HTMLIFrameElement final
   bool allow_fullscreen_;
   bool allow_payment_request_;
   bool collapsed_by_client_;
+  Member<HTMLIFrameElementAllowedGestureDelegation> allowed_gesture_delegation_;
   Member<HTMLIFrameElementSandbox> sandbox_;
 
   ReferrerPolicy referrer_policy_;
