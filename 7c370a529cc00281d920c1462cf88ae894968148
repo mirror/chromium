@@ -152,6 +152,24 @@
     },
     {
       "key": {
+        "uuid": "d4dc0b48_08e52cef",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-20T02:41:25Z",
+      "side": 1,
+      "message": "You can use service_manager::Connector::TestApi::OverrideBinderForTesting to configure a new service_manager::Connector instance to bind to a test instance of HidManager in the unit tests when the HID service is requested.",
+      "parentUuid": "3e0dc99c_1988c58a",
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8e002a3_0046dce6",
         "filename": "device/u2f/u2f_request.cc",
         "patchSetId": 2
