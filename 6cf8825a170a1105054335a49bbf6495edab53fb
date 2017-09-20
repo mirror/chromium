@@ -256,6 +256,76 @@
     },
     {
       "key": {
+        "uuid": "5a70fdd0_d8b1609b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T23:56:52Z",
+      "side": 1,
+      "message": "Per offline discussion, TabModelSelectorImpl has stronger dependencies on ChromeActivity than I originally thought.\n\nIn particular, tabcontentmanager and the signals it uses to determine when to save tabs.  We would need to add changes specific to browser actions there and that isn\u0027t good.  So we can work on trying to slim down this class instead.",
+      "parentUuid": "83ec8f71_1b335377",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d9574a_407d0d77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T23:56:52Z",
+      "side": 1,
+      "message": "look into calling this in getInstance() and make private",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e413ae_b17c3b14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T23:56:52Z",
+      "side": 1,
+      "message": "per offline discussion, we might want a general \"restore\" function that takes a callback when it is done.  Then we could hide the need for callers to care about the load order.\n\nIt also would give us the opportunity to do this off the UI thread.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f387e8b_56313a37",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
