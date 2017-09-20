@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88617e0b_78f9fa20",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T13:17:45Z",
+      "side": 1,
+      "message": "Can you get rid of this if you also change…",
+      "revId": "00c34b4cbffd50c2e7e90d28c72cd750f3531bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919f23b5_2e1814a1",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T13:17:45Z",
+      "side": 1,
+      "message": "…this?",
+      "revId": "00c34b4cbffd50c2e7e90d28c72cd750f3531bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f81ea7c_86449ad8",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T13:17:45Z",
+      "side": 1,
+      "message": "(and this too)",
+      "revId": "00c34b4cbffd50c2e7e90d28c72cd750f3531bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
