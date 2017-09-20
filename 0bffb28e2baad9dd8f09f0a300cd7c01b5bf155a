@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f98a40ed_09e4835a",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdaterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-20T03:56:02Z",
+      "side": 1,
+      "message": "Correct, if they are not positioned (or similar) the PaintLayer is destroyed and that sets the previous ancestor overflow pointer to nullptr.\n\nLet me know if you feel the comment could change to make that clearer (I was unable to think of a better phrasing).",
+      "parentUuid": "33e888e9_99a25d27",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "0bffb28e2baad9dd8f09f0a300cd7c01b5bf155a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f701a43b_bbfb257f",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdaterTest.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "0bffb28e2baad9dd8f09f0a300cd7c01b5bf155a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca8dbb8_f9a70af6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdaterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-20T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f701a43b_bbfb257f",
+      "revId": "0bffb28e2baad9dd8f09f0a300cd7c01b5bf155a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
