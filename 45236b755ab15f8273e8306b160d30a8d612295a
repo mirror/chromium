@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a69e4e3_1ffc68c2",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-20T20:08:52Z",
+      "side": 1,
+      "message": "Let\u0027s also have this as a constant, just in case.",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6126e8_0fc65c45",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-20T20:08:52Z",
+      "side": 1,
+      "message": "nit: Name this kSessionsPattern.\n\nAlso, it should now be based on the \"json\" literal (see comment above).",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faac472_6562aab6",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-09-20T20:08:52Z",
+      "side": 1,
+      "message": "As we are not modifying the file, let\u0027s keep the modification time intact. I don\u0027t think there\u0027s an API for only changing the access time, so you\u0027ll have to fetch the modification time and feed that to TouchFile.",
+      "range": {
+        "startLine": 141,
+        "startChar": 51,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
