@@ -1142,7 +1142,8 @@ void PaymentRequest::OnPaymentResponse(PaymentResponsePtr response) {
       return;
     }
 
-    shipping_address_ = new PaymentAddress(response->shipping_address.Clone());
+    shipping_address_ =
+        new PaymentAddress(std::move(response->shipping_address));
     shipping_option_ = response->shipping_option;
   } else {
     if (response->shipping_address || !response->shipping_option.IsNull()) {
@@ -1165,7 +1166,8 @@ void PaymentRequest::OnPaymentResponse(PaymentResponsePtr response) {
 
   complete_timer_.StartOneShot(kCompleteTimeoutSeconds, BLINK_FROM_HERE);
 
-  show_resolver_->Resolve(new PaymentResponse(std::move(response), this, id_));
+  show_resolver_->Resolve(new PaymentResponse(
+      std::move(response), shipping_address_.Get(), this, id_));
 
   // Do not close the mojo connection here. The merchant website should call
   // PaymentResponse::complete(String), which will be forwarded over the mojo
