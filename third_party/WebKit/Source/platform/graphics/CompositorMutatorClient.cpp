@@ -32,11 +32,12 @@ CompositorMutatorClient::~CompositorMutatorClient() {
                "CompositorMutatorClient::~CompositorMutatorClient");
 }
 
-bool CompositorMutatorClient::Mutate(base::TimeTicks monotonic_time) {
+void CompositorMutatorClient::Mutate(
+    base::TimeTicks monotonic_time,
+    std::unique_ptr<cc::MutatorInputState> state) {
   TRACE_EVENT0("compositor-worker", "CompositorMutatorClient::Mutate");
   double monotonic_time_now = (monotonic_time - base::TimeTicks()).InSecondsF();
-  bool should_reinvoke = mutator_->Mutate(monotonic_time_now);
-  return should_reinvoke;
+  mutator_->Mutate(monotonic_time_now, std::move(state));
 }
 
 void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
@@ -54,6 +55,13 @@ base::Closure CompositorMutatorClient::TakeMutations() {
   return base::Bind(&CompositorMutationsTarget::ApplyMutations,
                     base::Unretained(mutations_target_),
                     base::Owned(mutations_.release()));
+}
+
+void CompositorMutatorClient::SetMutationUpdate(
+    std::unique_ptr<cc::MutatorOutputState> output_state) {
+  TRACE_EVENT0("compositor-worker",
+               "CompositorMutatorClient::SetMutationUpdate");
+  client_->SetMutationUpdate(std::move(output_state));
 }
 
 void CompositorMutatorClient::SetNeedsMutate() {
