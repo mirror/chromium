@@ -851,7 +851,8 @@ void MetricsService::RecordCurrentHistograms() {
   // persistent storage.
   base::StatisticsRecorder::PrepareDeltas(
       true, base::Histogram::kNoFlags,
-      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_);
+      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_,
+      reporting_service_.GetUploadReductionPercent());
   delegating_provider_.RecordHistogramSnapshots(&histogram_snapshot_manager_);
 }
 
