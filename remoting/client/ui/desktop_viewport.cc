@@ -58,6 +58,16 @@ void DesktopViewport::SetSurfaceSize(int surface_width, int surface_height) {
   UpdateViewport();
 }
 
+void DesktopViewport::SetSurfaceOffset(int dx, int dy) {
+  if (dx == surface_offset_.x && dy == surface_offset_.y) {
+    return;
+  }
+
+  surface_offset_ = {dx, dy};
+  desktop_to_surface_transform_.PostTranslate(surface_offset_);
+  UpdateViewport();
+}
+
 void DesktopViewport::MoveDesktop(float dx, float dy) {
   desktop_to_surface_transform_.PostTranslate({dx, dy});
   UpdateViewport();
@@ -84,7 +94,8 @@ ViewMatrix::Point DesktopViewport::GetViewportCenter() const {
     return {0.f, 0.f};
   }
   return desktop_to_surface_transform_.Invert().MapPoint(
-      {surface_size_.x / 2.f, surface_size_.y / 2.f});
+      {surface_size_.x / 2.f + surface_offset_.x,
+       surface_size_.y / 2.f + surface_offset_.y});
 }
 
 bool DesktopViewport::IsPointWithinDesktopBounds(
@@ -147,7 +158,7 @@ void DesktopViewport::ResizeToFit() {
   float scale = std::max(surface_size_.x / desktop_size_.x,
                          surface_size_.y / desktop_size_.y);
   desktop_to_surface_transform_.SetScale(scale);
-  desktop_to_surface_transform_.SetOffset({0.f, 0.f});
+  desktop_to_surface_transform_.SetOffset(surface_offset_);
   UpdateViewport();
 }
 
