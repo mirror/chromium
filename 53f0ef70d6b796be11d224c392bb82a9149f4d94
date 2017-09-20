@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f026fc9a_8c51d8c4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-20T09:19:43Z",
+      "side": 1,
+      "message": "You can use base::TimeDelta for expressing amount of time.",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 16
+      },
+      "revId": "53f0ef70d6b796be11d224c392bb82a9149f4d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739de341_3a89821e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2349,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-20T09:19:43Z",
+      "side": 1,
+      "message": "You can write this as follows:\n\nconst bool is_transient_blur \u003d\n  (ui::EventTimeForNow() - text_field_blur_timestamp_) \u003c kTransientBlurToleranceSeconds;",
+      "range": {
+        "startLine": 2347,
+        "startChar": 0,
+        "endLine": 2349,
+        "endChar": 62
+      },
+      "revId": "53f0ef70d6b796be11d224c392bb82a9149f4d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b92bb20_2b9b138d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-20T09:19:43Z",
+      "side": 1,
+      "message": "Cant\u0027 we do this logic in KeyboardController? KeyboardController::OnTextInputTypeChanged() is called via InputMethod::OnTextInputTypeChanged(), so we can track blur/focus events in KeyboardController, I think.\n\nIf we do this in KeyboardController, we can avoid code duplicate among TextInputClients (e.g. this calls, TextField...)",
+      "range": {
+        "startLine": 2330,
+        "startChar": 0,
+        "endLine": 2353,
+        "endChar": 5
+      },
+      "revId": "53f0ef70d6b796be11d224c392bb82a9149f4d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
