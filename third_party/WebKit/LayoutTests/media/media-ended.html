@@ -21,9 +21,10 @@ async_test(function(t) {
                 audio.playbackRate = 0;
                 assert_true(audio.ended);
 
-                // Verify "backward" playback causes ended to become false.
+                // Verify "backward" playback does not change |ended| since
+                // it is not in the supported range, 
                 audio.playbackRate = -0.1;
-                assert_false(audio.ended);
+                assert_true(audio.ended);
 
                 // Change src but don't seek so that internal state isn't reset.
                 audio.src = findMediaFile("audio", "content/silence");
