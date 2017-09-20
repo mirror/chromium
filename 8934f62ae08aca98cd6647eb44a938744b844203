@@ -70,6 +70,30 @@
       "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d5e099_fe7bd946",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T15:26:54Z",
+      "side": 1,
+      "message": "That sounds like a good approach to me!",
+      "parentUuid": "4b1615f4_9b2181f0",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 51
+      },
+      "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

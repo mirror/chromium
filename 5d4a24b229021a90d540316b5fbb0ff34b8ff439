@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b98e2c_38dd6445",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T15:26:54Z",
+      "side": 1,
+      "message": "nit: add @Nullable here and indicate in the JavaDoc that content can be null, e.g.\n\n@param content The {@link BottomSheetContent} to show or null if no content should be shown.\n\n\nAnd perhaps also annotate BottomSheetObserver#onSheetContentChanged() and BottomSheet#getCurrentSheetContent().",
+      "range": {
+        "startLine": 979,
+        "startChar": 28,
+        "endLine": 979,
+        "endChar": 60
+      },
+      "revId": "5d4a24b229021a90d540316b5fbb0ff34b8ff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

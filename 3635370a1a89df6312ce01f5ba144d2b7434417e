@@ -142,6 +142,30 @@
       "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82003321_deebd3fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T15:26:54Z",
+      "side": 1,
+      "message": "Perhaps attaching Placeholder then detaching Placeholder and attaching Suggestions causes at least one frame of Placeholder to be visible.",
+      "parentUuid": "b54470c9_8e7621d6",
+      "range": {
+        "startLine": 986,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 9
+      },
+      "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
