@@ -34,6 +34,24 @@
       "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b92fac_f4d97860",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T22:41:49Z",
+      "side": 1,
+      "message": "Let\u0027s just keep the original cache expression (i.e. without adding this line).",
+      "parentUuid": "97d2b676_3db21e3b",
+      "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
