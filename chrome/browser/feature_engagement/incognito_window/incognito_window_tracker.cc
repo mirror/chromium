@@ -6,6 +6,7 @@
 
 #include "base/time/time.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
+#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -51,10 +52,7 @@ void IncognitoWindowTracker::OnSessionTimeMet() {
 }
 
 void IncognitoWindowTracker::ShowPromo() {
-  // TODO: Call the promo.
-
-  // Clears the flag for whether there is any in-product help being displayed.
-  GetTracker()->Dismissed(kIPHIncognitoWindowFeature);
+  AppMenuButton::ShowPromoForLastActiveBrowser();
 }
 
 }  // namespace feature_engagement
