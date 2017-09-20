@@ -50,6 +50,29 @@
       "revId": "008a6d09a82febf5770f8bcf94d8df4767ef1f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6418d3c1_a47b54e6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-20T18:06:28Z",
+      "side": 1,
+      "message": "Can you look into merging this with the metric Brandon is adding to record the method of discovery that causes a sink to be added / re-added? https://chromium-review.googlesource.com/c/chromium/src/+/666050",
+      "range": {
+        "startLine": 427,
+        "startChar": 41,
+        "endLine": 427,
+        "endChar": 0
+      },
+      "revId": "008a6d09a82febf5770f8bcf94d8df4767ef1f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
