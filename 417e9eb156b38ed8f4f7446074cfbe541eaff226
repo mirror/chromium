@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1e04481_e6cb350b",
+        "filename": "third_party/s2cellid/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-20T16:26:11Z",
+      "side": 1,
+      "message": "This isn\u0027t quite formatted correctly. Can you run this file through \"gn format\" before checkin?",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b85d624d_6c1ccd21",
         "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
         "patchSetId": 5
