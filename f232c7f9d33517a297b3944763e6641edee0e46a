@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5729f17_ff331954",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b4dc71_9e59237d",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a057eb77_bcc74f22",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 2
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "05e2c0f0_a52fc527",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12fa3d3a_c88ab2e7",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fdc5ada_cc9e4995",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 2
@@ -79,6 +121,24 @@
       "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf303f2f_bdfa7fdd",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4680,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdc5ada_cc9e4995",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "9c1cf576_8dd9afdc",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58507e01_22aaebb3",
+      "range": {
+        "startLine": 4681,
+        "startChar": 28,
+        "endLine": 4681,
+        "endChar": 46
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4157a739_c11b5beb",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 2
@@ -116,6 +200,24 @@
       "writtenOn": "2017-09-15T03:35:04Z",
       "side": 1,
       "message": "TLDR; don\u0027t do this early return\n\nSo, thinking about this some more, I\u0027m not sure this (early exit from LoadCreditCards()) is a good idea.\n\nAborting LoadCreditCards() is likely to interact poorly with chrome sync. which will still want to get and propagate card info and updates to/from other devices. I don\u0027t think the early exit will result in the user not having any cards in their DB. It will instead result in chrome syncing down the data again... possibly getting confused when it sees that it\u0027s already in the DB but not in RAM.\n\nGiven the changes to GetCreditCards() and ImportFormData(), the user won\u0027t get any card suggestions and won\u0027t save additional card information, which would seem to satisfy the intent of disabling the pref.",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a411829_60be588c",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "That makes sense. Should I just leave this method as is then?",
+      "parentUuid": "4157a739_c11b5beb",
       "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +261,30 @@
       "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f87d501_df7eff02",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3022,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-09-20T17:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b12f5bcb_dce8526f",
+      "range": {
+        "startLine": 3022,
+        "startChar": 12,
+        "endLine": 3022,
+        "endChar": 13
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
