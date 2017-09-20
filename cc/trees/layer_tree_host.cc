@@ -145,11 +145,13 @@ void LayerTreeHost::InitializeForTesting(
 void LayerTreeHost::SetTaskRunnerProviderForTesting(
     std::unique_ptr<TaskRunnerProvider> task_runner_provider) {
   DCHECK(!task_runner_provider_);
+  BlockIfInsideCommit();
   task_runner_provider_ = std::move(task_runner_provider);
 }
 
 void LayerTreeHost::SetUIResourceManagerForTesting(
     std::unique_ptr<UIResourceManager> ui_resource_manager) {
+  BlockIfInsideCommit();
   ui_resource_manager_ = std::move(ui_resource_manager);
 }
 
@@ -166,6 +168,8 @@ void LayerTreeHost::InitializeProxy(std::unique_ptr<Proxy> proxy) {
 }
 
 LayerTreeHost::~LayerTreeHost() {
+  BlockIfInsideCommit();
+
   // Track when we're inside a main frame to see if compositor is being
   // destroyed midway which causes a crash. crbug.com/654672
   DCHECK(!inside_main_frame_);
@@ -220,11 +224,13 @@ const LayerTreeSettings& LayerTreeHost::GetSettings() const {
 }
 
 void LayerTreeHost::SetFrameSinkId(const viz::FrameSinkId& frame_sink_id) {
+  BlockIfInsideCommit();
   surface_sequence_generator_.set_frame_sink_id(frame_sink_id);
 }
 
 void LayerTreeHost::QueueSwapPromise(
     std::unique_ptr<SwapPromise> swap_promise) {
+  BlockIfInsideCommit();
   swap_promise_manager_.QueueSwapPromise(std::move(swap_promise));
 
   // Request a main frame if one is not already in progress. This might either
@@ -265,6 +271,7 @@ void LayerTreeHost::BeginMainFrame(const viz::BeginFrameArgs& args) {
 }
 
 void LayerTreeHost::DidStopFlinging() {
+  BlockIfInsideCommit();
   proxy_->MainThreadHasStoppedFlinging();
 }
 
@@ -283,6 +290,7 @@ void LayerTreeHost::RequestMainFrameUpdate() {
 // will run after the commit, but on the main thread.
 void LayerTreeHost::FinishCommitOnImplThread(
     LayerTreeHostImpl* host_impl) {
+  CHECK(in_commit_);
   DCHECK(task_runner_provider_->IsImplThread());
 
   bool is_new_trace;
@@ -375,6 +383,7 @@ void LayerTreeHost::FinishCommitOnImplThread(
 }
 
 void LayerTreeHost::PushPropertyTreesTo(LayerTreeImpl* tree_impl) {
+  CHECK(in_commit_);
   bool property_trees_changed_on_active_tree =
       tree_impl->IsActiveTree() && tree_impl->property_trees()->changed;
   // Property trees may store damage status. We preserve the sync tree damage
@@ -392,12 +401,41 @@ void LayerTreeHost::PushPropertyTreesTo(LayerTreeImpl* tree_impl) {
 }
 
 void LayerTreeHost::WillCommit() {
+  CHECK(!in_commit_);
   swap_promise_manager_.WillCommit();
   client_->WillCommit();
+  in_commit_ = true;
 }
 
+void LayerTreeHost::CommitOnImplThreadComplete() {
+  CHECK(in_commit_);
+  in_commit_ = false;
+}
+
+void LayerTreeHost::BlockIfInsideCommit() {
+  if (!in_commit_) {
+    CHECK(task_runner_provider_->IsMainThread());
+    return;
+  }
+  // Inside commit and on impl thread.
+  if (task_runner_provider_->IsImplThread())
+    return;
+
+  DLOG(ERROR) << "Blocking for commit\n"
+              << base::debug::StackTrace().ToString();
+  // Won't return until CommitOnImplThreadComplete is called.
+  static_cast<ProxyMain*>(proxy_.get())->WaitForImplCommit();
+  CHECK(!in_commit_);
+  AfterImplCommit();
+}
+
+void LayerTreeHost::AfterImplCommit() {
+  source_frame_number_++;
+  did_complete_scale_animation_ = false;
+}
 
 void LayerTreeHost::UpdateDeferCommitsInternal() {
+  BlockIfInsideCommit();
   proxy_->SetDeferCommits(defer_commits_ ||
                           (settings_.enable_surface_synchronization &&
                            !local_surface_id_.is_valid()));
@@ -408,16 +446,20 @@ bool LayerTreeHost::IsUsingLayerLists() const {
 }
 
 void LayerTreeHost::CommitComplete() {
-  source_frame_number_++;
+  bool did_complete = did_complete_scale_animation_;
+  if (!in_commit_) {
+    AfterImplCommit();
+  }
+
   client_->DidCommit();
-  if (did_complete_scale_animation_) {
+  if (did_complete) {
     client_->DidCompletePageScaleAnimation();
-    did_complete_scale_animation_ = false;
   }
 }
 
 void LayerTreeHost::SetLayerTreeFrameSink(
     std::unique_ptr<LayerTreeFrameSink> surface) {
+  BlockIfInsideCommit();
   TRACE_EVENT0("cc", "LayerTreeHostInProcess::SetLayerTreeFrameSink");
   DCHECK(surface);
 
@@ -427,6 +469,7 @@ void LayerTreeHost::SetLayerTreeFrameSink(
 }
 
 std::unique_ptr<LayerTreeFrameSink> LayerTreeHost::ReleaseLayerTreeFrameSink() {
+  BlockIfInsideCommit();
   DCHECK(!visible_);
 
   DidLoseLayerTreeFrameSink();
@@ -484,6 +527,7 @@ void LayerTreeHost::DidLoseLayerTreeFrameSink() {
 void LayerTreeHost::SetDeferCommits(bool defer_commits) {
   if (defer_commits_ == defer_commits)
     return;
+  BlockIfInsideCommit();
   defer_commits_ = defer_commits;
   UpdateDeferCommitsInternal();
 }
@@ -506,11 +550,13 @@ void LayerTreeHost::SetNeedsCommit() {
 }
 
 void LayerTreeHost::SetNeedsRecalculateRasterScales() {
+  BlockIfInsideCommit();
   next_commit_forces_recalculate_raster_scales_ = true;
   proxy_->SetNeedsCommit();
 }
 
 void LayerTreeHost::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
+  BlockIfInsideCommit();
   proxy_->SetNeedsRedraw(damage_rect);
 }
 
@@ -519,16 +565,19 @@ bool LayerTreeHost::CommitRequested() const {
 }
 
 void LayerTreeHost::SetNextCommitWaitsForActivation() {
+  BlockIfInsideCommit();
   proxy_->SetNextCommitWaitsForActivation();
 }
 
 void LayerTreeHost::SetNeedsCommitWithForcedRedraw() {
+  BlockIfInsideCommit();
   next_commit_forces_redraw_ = true;
   proxy_->SetNeedsCommit();
 }
 
 void LayerTreeHost::SetAnimationEvents(
     std::unique_ptr<MutatorEvents> events) {
+  BlockIfInsideCommit();
   DCHECK(task_runner_provider_->IsMainThread());
   mutator_host_->SetAnimationEvents(std::move(events));
 }
@@ -541,6 +590,7 @@ void LayerTreeHost::SetDebugState(
   if (LayerTreeDebugState::Equal(debug_state_, new_debug_state))
     return;
 
+  BlockIfInsideCommit();
   debug_state_ = new_debug_state;
 
   rendering_stats_instrumentation_->set_record_rendering_stats(
@@ -550,6 +600,7 @@ void LayerTreeHost::SetDebugState(
 }
 
 void LayerTreeHost::ResetGpuRasterizationTracking() {
+  BlockIfInsideCommit();
   content_has_slow_paths_ = false;
   content_has_non_aa_paint_ = false;
   gpu_rasterization_histogram_recorded_ = false;
@@ -559,6 +610,7 @@ void LayerTreeHost::SetHasGpuRasterizationTrigger(bool has_trigger) {
   if (has_trigger == has_gpu_rasterization_trigger_)
     return;
 
+  BlockIfInsideCommit();
   has_gpu_rasterization_trigger_ = has_trigger;
   TRACE_EVENT_INSTANT1(
       "cc", "LayerTreeHostInProcess::SetHasGpuRasterizationTrigger",
@@ -577,6 +629,7 @@ void LayerTreeHost::ApplyPageScaleDeltaFromImplSide(
 void LayerTreeHost::SetVisible(bool visible) {
   if (visible_ == visible)
     return;
+  BlockIfInsideCommit();
   visible_ = visible;
   proxy_->SetVisible(visible);
 }
@@ -586,6 +639,7 @@ bool LayerTreeHost::IsVisible() const {
 }
 
 void LayerTreeHost::NotifyInputThrottledUntilCommit() {
+  BlockIfInsideCommit();
   proxy_->NotifyInputThrottledUntilCommit();
 }
 
@@ -621,6 +675,7 @@ static int GetLayersUpdateTimeHistogramBucket(size_t numLayers) {
 }
 
 bool LayerTreeHost::UpdateLayers() {
+  CHECK(!in_commit_);
   if (!root_layer()) {
     property_trees_.clear();
     return false;
@@ -858,6 +913,7 @@ void LayerTreeHost::UpdateBrowserControlsState(
     BrowserControlsState constraints,
     BrowserControlsState current,
     bool animate) {
+  BlockIfInsideCommit();
   // Browser controls are only used in threaded mode.
   DCHECK(IsThreaded());
   proxy_->UpdateBrowserControlsState(constraints, current, animate);
@@ -889,6 +945,7 @@ bool LayerTreeHost::SendMessageToMicroBenchmark(
 
 void LayerTreeHost::SetLayerTreeMutator(
     std::unique_ptr<LayerTreeMutator> mutator) {
+  BlockIfInsideCommit();
   proxy_->SetMutator(std::move(mutator));
 }
 
@@ -908,6 +965,7 @@ void LayerTreeHost::SetRootLayer(scoped_refptr<Layer> root_layer) {
   if (root_layer_.get() == root_layer.get())
     return;
 
+  BlockIfInsideCommit();
   if (root_layer_.get())
     root_layer_->SetLayerTreeHost(nullptr);
   root_layer_ = root_layer;
@@ -931,6 +989,16 @@ LayerTreeHost::ViewportLayers::ViewportLayers() {}
 LayerTreeHost::ViewportLayers::~ViewportLayers() {}
 
 void LayerTreeHost::RegisterViewportLayers(const ViewportLayers& layers) {
+  if (layers.overscroll_elasticity == viewport_layers_.overscroll_elasticity &&
+      layers.page_scale == viewport_layers_.page_scale &&
+      layers.inner_viewport_container ==
+          viewport_layers_.inner_viewport_container &&
+      layers.outer_viewport_container ==
+          viewport_layers_.outer_viewport_container &&
+      layers.inner_viewport_scroll == viewport_layers_.inner_viewport_scroll &&
+      layers.outer_viewport_scroll == viewport_layers_.outer_viewport_scroll)
+    return;
+  BlockIfInsideCommit();
   DCHECK(!layers.inner_viewport_scroll ||
          layers.inner_viewport_scroll != layers.outer_viewport_scroll);
   // The page scale layer only affects the innter viewport scroll layer. The
@@ -957,6 +1025,7 @@ void LayerTreeHost::RegisterSelection(const LayerSelection& selection) {
   if (selection_ == selection)
     return;
 
+  BlockIfInsideCommit();
   selection_ = selection;
   SetNeedsCommit();
 }
@@ -965,6 +1034,7 @@ void LayerTreeHost::SetHaveScrollEventHandlers(bool have_event_handlers) {
   if (have_scroll_event_handlers_ == have_event_handlers)
     return;
 
+  BlockIfInsideCommit();
   have_scroll_event_handlers_ = have_event_handlers;
   SetNeedsCommit();
 }
@@ -976,6 +1046,7 @@ void LayerTreeHost::SetEventListenerProperties(
   if (event_listener_properties_[index] == properties)
     return;
 
+  BlockIfInsideCommit();
   event_listener_properties_[index] = properties;
   SetNeedsCommit();
 }
@@ -988,6 +1059,7 @@ void LayerTreeHost::SetViewportSize(
   if (device_viewport_size_ == device_viewport_size)
     return;
 
+  BlockIfInsideCommit();
   device_viewport_size_ = device_viewport_size;
 
   SetPropertyTreesNeedRebuild();
@@ -1002,6 +1074,7 @@ void LayerTreeHost::SetBrowserControlsHeight(float top_height,
       browser_controls_shrink_blink_size_ == shrink)
     return;
 
+  BlockIfInsideCommit();
   top_controls_height_ = top_height;
   bottom_controls_height_ = bottom_height;
   browser_controls_shrink_blink_size_ = shrink;
@@ -1012,6 +1085,7 @@ void LayerTreeHost::SetBrowserControlsShownRatio(float ratio) {
   if (top_controls_shown_ratio_ == ratio)
     return;
 
+  BlockIfInsideCommit();
   top_controls_shown_ratio_ = ratio;
   SetNeedsCommit();
 }
@@ -1020,6 +1094,7 @@ void LayerTreeHost::SetScrollBoundaryBehavior(
     const ScrollBoundaryBehavior& behavior) {
   if (scroll_boundary_behavior_ == behavior)
     return;
+  BlockIfInsideCommit();
   scroll_boundary_behavior_ = behavior;
   SetNeedsCommit();
 }
@@ -1032,6 +1107,7 @@ void LayerTreeHost::SetPageScaleFactorAndLimits(float page_scale_factor,
       max_page_scale_factor_ == max_page_scale_factor)
     return;
 
+  BlockIfInsideCommit();
   page_scale_factor_ = page_scale_factor;
   min_page_scale_factor_ = min_page_scale_factor;
   max_page_scale_factor_ = max_page_scale_factor;
@@ -1043,6 +1119,7 @@ void LayerTreeHost::StartPageScaleAnimation(const gfx::Vector2d& target_offset,
                                             bool use_anchor,
                                             float scale,
                                             base::TimeDelta duration) {
+  BlockIfInsideCommit();
   pending_page_scale_animation_.reset(new PendingPageScaleAnimation(
       target_offset, use_anchor, scale, duration));
 
@@ -1056,6 +1133,7 @@ bool LayerTreeHost::HasPendingPageScaleAnimation() const {
 void LayerTreeHost::SetDeviceScaleFactor(float device_scale_factor) {
   if (device_scale_factor_ == device_scale_factor)
     return;
+  BlockIfInsideCommit();
   device_scale_factor_ = device_scale_factor;
 
   property_trees_.needs_rebuild = true;
@@ -1065,6 +1143,7 @@ void LayerTreeHost::SetDeviceScaleFactor(float device_scale_factor) {
 void LayerTreeHost::SetRecordingScaleFactor(float recording_scale_factor) {
   if (recording_scale_factor_ == recording_scale_factor)
     return;
+  BlockIfInsideCommit();
   recording_scale_factor_ = recording_scale_factor;
 }
 
@@ -1072,6 +1151,7 @@ void LayerTreeHost::SetPaintedDeviceScaleFactor(
     float painted_device_scale_factor) {
   if (painted_device_scale_factor_ == painted_device_scale_factor)
     return;
+  BlockIfInsideCommit();
   painted_device_scale_factor_ = painted_device_scale_factor;
 
   SetNeedsCommit();
@@ -1081,6 +1161,7 @@ void LayerTreeHost::SetRasterColorSpace(
     const gfx::ColorSpace& raster_color_space) {
   if (raster_color_space_ == raster_color_space)
     return;
+  BlockIfInsideCommit();
   raster_color_space_ = raster_color_space;
   LayerTreeHostCommon::CallFunctionForEveryLayer(
       this, [](Layer* layer) { layer->SetNeedsDisplay(); });
@@ -1089,6 +1170,7 @@ void LayerTreeHost::SetRasterColorSpace(
 void LayerTreeHost::SetContentSourceId(uint32_t id) {
   if (content_source_id_ == id)
     return;
+  BlockIfInsideCommit();
   content_source_id_ = id;
   SetNeedsCommit();
 }
@@ -1097,12 +1179,14 @@ void LayerTreeHost::SetLocalSurfaceId(
     const viz::LocalSurfaceId& local_surface_id) {
   if (local_surface_id_ == local_surface_id)
     return;
+  BlockIfInsideCommit();
   local_surface_id_ = local_surface_id;
   UpdateDeferCommitsInternal();
   SetNeedsCommit();
 }
 
 void LayerTreeHost::RegisterLayer(Layer* layer) {
+  BlockIfInsideCommit();
   DCHECK(!LayerById(layer->id()));
   DCHECK(!in_paint_layer_contents_);
   layer_id_map_[layer->id()] = layer;
@@ -1113,6 +1197,7 @@ void LayerTreeHost::RegisterLayer(Layer* layer) {
 }
 
 void LayerTreeHost::UnregisterLayer(Layer* layer) {
+  BlockIfInsideCommit();
   DCHECK(LayerById(layer->id()));
   DCHECK(!in_paint_layer_contents_);
   if (!IsUsingLayerLists() && layer->element_id()) {
@@ -1135,6 +1220,7 @@ size_t LayerTreeHost::NumLayers() const {
 bool LayerTreeHost::PaintContent(const LayerList& update_layer_list,
                                  bool* content_has_slow_paths,
                                  bool* content_has_non_aa_paint) {
+  CHECK(!in_commit_);
   base::AutoReset<bool> painting(&in_paint_layer_contents_, true);
   bool did_paint_content = false;
   for (const auto& layer : update_layer_list) {
@@ -1146,11 +1232,13 @@ bool LayerTreeHost::PaintContent(const LayerList& update_layer_list,
 }
 
 void LayerTreeHost::AddSurfaceLayerId(const viz::SurfaceId& surface_id) {
+  BlockIfInsideCommit();
   if (++surface_layer_ids_[surface_id] == 1)
     needs_surface_ids_sync_ = true;
 }
 
 void LayerTreeHost::RemoveSurfaceLayerId(const viz::SurfaceId& surface_id) {
+  BlockIfInsideCommit();
   auto iter = surface_layer_ids_.find(surface_id);
   if (iter == surface_layer_ids_.end())
     return;
@@ -1169,6 +1257,7 @@ base::flat_set<viz::SurfaceId> LayerTreeHost::SurfaceLayerIds() const {
 }
 
 void LayerTreeHost::AddLayerShouldPushProperties(Layer* layer) {
+  BlockIfInsideCommit();
   layers_that_should_push_properties_.insert(layer);
 }
 
@@ -1186,6 +1275,7 @@ bool LayerTreeHost::LayerNeedsPushPropertiesForTesting(Layer* layer) const {
 }
 
 void LayerTreeHost::SetPageScaleFromImplSide(float page_scale) {
+  CHECK(in_commit_);
   DCHECK(CommitRequested());
   page_scale_factor_ = page_scale;
   SetPropertyTreesNeedRebuild();
@@ -1193,11 +1283,13 @@ void LayerTreeHost::SetPageScaleFromImplSide(float page_scale) {
 
 void LayerTreeHost::SetElasticOverscrollFromImplSide(
     gfx::Vector2dF elastic_overscroll) {
+  CHECK(in_commit_);
   DCHECK(CommitRequested());
   elastic_overscroll_ = elastic_overscroll;
 }
 
 void LayerTreeHost::UpdateHudLayer(bool show_hud_info) {
+  CHECK(!in_commit_);
   if (show_hud_info) {
     if (!hud_layer_.get()) {
       hud_layer_ = HeadsUpDisplayLayer::Create();
@@ -1212,17 +1304,20 @@ void LayerTreeHost::UpdateHudLayer(bool show_hud_info) {
 }
 
 void LayerTreeHost::SetNeedsFullTreeSync() {
+  BlockIfInsideCommit();
   needs_full_tree_sync_ = true;
   property_trees_.needs_rebuild = true;
   SetNeedsCommit();
 }
 
 void LayerTreeHost::SetPropertyTreesNeedRebuild() {
+  BlockIfInsideCommit();
   property_trees_.needs_rebuild = true;
   SetNeedsUpdateLayers();
 }
 
 void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
+  CHECK(in_commit_);
   tree_impl->set_needs_full_tree_sync(needs_full_tree_sync_);
   needs_full_tree_sync_ = false;
 
@@ -1301,6 +1396,7 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
 }
 
 void LayerTreeHost::PushSurfaceIdsTo(LayerTreeImpl* tree_impl) {
+  CHECK(in_commit_);
   if (needs_surface_ids_sync()) {
     tree_impl->ClearSurfaceLayerIds();
     tree_impl->SetSurfaceLayerIds(SurfaceLayerIds());
@@ -1311,6 +1407,7 @@ void LayerTreeHost::PushSurfaceIdsTo(LayerTreeImpl* tree_impl) {
 
 void LayerTreeHost::PushLayerTreeHostPropertiesTo(
     LayerTreeHostImpl* host_impl) {
+  CHECK(in_commit_);
   host_impl->SetHasGpuRasterizationTrigger(has_gpu_rasterization_trigger_);
   host_impl->SetContentHasSlowPaths(content_has_slow_paths_);
   host_impl->SetContentHasNonAAPaint(content_has_non_aa_paint_);
@@ -1343,10 +1440,12 @@ static void SetElementIdForTesting(Layer* layer) {
 }
 
 void LayerTreeHost::SetElementIdsForTesting() {
+  BlockIfInsideCommit();
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, SetElementIdForTesting);
 }
 
 void LayerTreeHost::BuildPropertyTreesForTesting() {
+  BlockIfInsideCommit();
   gfx::Transform identity_transform;
   PropertyTreeBuilder::BuildPropertyTrees(
       root_layer(), page_scale_layer(), inner_viewport_scroll_layer(),
@@ -1361,16 +1460,19 @@ bool LayerTreeHost::IsElementInList(ElementId element_id,
 }
 
 void LayerTreeHost::SetMutatorsNeedCommit() {
+  BlockIfInsideCommit();
   SetNeedsCommit();
 }
 
 void LayerTreeHost::SetMutatorsNeedRebuildPropertyTrees() {
+  BlockIfInsideCommit();
   property_trees_.needs_rebuild = true;
 }
 
 void LayerTreeHost::SetElementFilterMutated(ElementId element_id,
                                             ElementListType list_type,
                                             const FilterOperations& filters) {
+  BlockIfInsideCommit();
   if (IsUsingLayerLists()) {
     // In SPv2 we always have property trees and can set the filter
     // directly on the effect node.
@@ -1386,6 +1488,7 @@ void LayerTreeHost::SetElementFilterMutated(ElementId element_id,
 void LayerTreeHost::SetElementOpacityMutated(ElementId element_id,
                                              ElementListType list_type,
                                              float opacity) {
+  BlockIfInsideCommit();
   DCHECK_GE(opacity, 0.f);
   DCHECK_LE(opacity, 1.f);
 
@@ -1415,6 +1518,7 @@ void LayerTreeHost::SetElementTransformMutated(
     ElementId element_id,
     ElementListType list_type,
     const gfx::Transform& transform) {
+  BlockIfInsideCommit();
   if (IsUsingLayerLists()) {
     property_trees_.transform_tree.OnTransformAnimated(element_id, transform);
     return;
@@ -1441,6 +1545,7 @@ void LayerTreeHost::SetElementScrollOffsetMutated(
     ElementId element_id,
     ElementListType list_type,
     const gfx::ScrollOffset& scroll_offset) {
+  BlockIfInsideCommit();
   // Do nothing. Scroll deltas will be sent from the compositor thread back
   // to the main thread in the same manner as during non-animated
   // compositor-driven scrolling.
@@ -1451,6 +1556,7 @@ void LayerTreeHost::ElementIsAnimatingChanged(
     ElementListType list_type,
     const PropertyAnimationState& mask,
     const PropertyAnimationState& state) {
+  BlockIfInsideCommit();
   DCHECK_EQ(ElementListType::ACTIVE, list_type);
   property_trees()->ElementIsAnimatingChanged(mutator_host(), element_id,
                                               list_type, mask, state, true);
@@ -1464,6 +1570,7 @@ gfx::ScrollOffset LayerTreeHost::GetScrollOffsetForAnimation(
 void LayerTreeHost::QueueImageDecode(
     const PaintImage& image,
     const base::Callback<void(bool)>& callback) {
+  BlockIfInsideCommit();
   TRACE_EVENT0("cc", "LayerTreeHost::QueueImageDecode");
   queued_image_decodes_.emplace_back(image, callback);
   SetNeedsCommit();
@@ -1486,15 +1593,18 @@ LayerListReverseIterator<Layer> LayerTreeHost::rend() {
 }
 
 void LayerTreeHost::SetNeedsDisplayOnAllLayers() {
+  BlockIfInsideCommit();
   for (auto* layer : *this)
     layer->SetNeedsDisplay();
 }
 
 void LayerTreeHost::SetHasCopyRequest(bool has_copy_request) {
+  CHECK(!in_commit_);
   has_copy_request_ = has_copy_request;
 }
 
 void LayerTreeHost::RequestBeginMainFrameNotExpected(bool new_state) {
+  // BlockIfInsideCommit();
   proxy_->RequestBeginMainFrameNotExpected(new_state);
 }
 

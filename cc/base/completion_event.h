@@ -57,7 +57,14 @@ class CompletionEvent {
     return false;
   }
 
-  bool IsSignaled() { return event_.IsSignaled(); }
+  bool IsSignaled() {
+    bool b = event_.IsSignaled();
+#if DCHECK_IS_ON()
+    if (b)
+      waited_ = true;
+#endif
+    return b;
+  }
 
   void Signal() {
 #if DCHECK_IS_ON()
