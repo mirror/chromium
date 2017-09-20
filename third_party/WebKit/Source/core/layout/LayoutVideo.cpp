@@ -233,9 +233,14 @@ LayoutUnit LayoutVideo::OffsetHeight() const {
 }
 
 CompositingReasons LayoutVideo::AdditionalCompositingReasons() const {
-  HTMLMediaElement* element = ToHTMLMediaElement(GetNode());
-  if (element->IsFullscreen() && element->UsesOverlayFullscreenVideo())
+  HTMLVideoElement* video = VideoElement();
+  WebMediaPlayer::DisplayType display_type = video->DisplayType();
+
+  if (video->UsesOverlayFullscreenVideo() &&
+      (display_type == WebMediaPlayer::DisplayType::kFullscreen ||
+       display_type == WebMediaPlayer::DisplayType::kPictureInPicture)) {
     return kCompositingReasonVideo;
+  }
 
   if (ShouldDisplayVideo() && SupportsAcceleratedRendering())
     return kCompositingReasonVideo;
