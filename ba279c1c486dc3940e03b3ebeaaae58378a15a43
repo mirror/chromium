@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78305b96_4a92006d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/a-ping.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-20T04:56:48Z",
+      "side": 1,
+      "message": "1. The `URL` bit is unnecessary. I thought I needed it, but it turned out that I needed to enable `WebKitHyperlinkAuditingEnabled` instead. I\u0027ll remove it.\n\n2. Yes, it could be hoisted up. The structure here is based on tests that actually do assertions, but since we\u0027re just recording ping callbacks, I guess we can just stick them all into the same block.",
+      "parentUuid": "0a8b4b31_bf3c5b8d",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "ba279c1c486dc3940e03b3ebeaaae58378a15a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0567478_af3ccf0a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/a-ping.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T20:30:54Z",
       "side": 1,
       "message": "Copy/paste error? Or is this somehow related to prefetch rather than a ping?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 14
+      },
+      "revId": "ba279c1c486dc3940e03b3ebeaaae58378a15a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfde42b_8c097949",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/a-ping.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-20T04:56:48Z",
+      "side": 1,
+      "message": "Yeah, I copied this from a prefetch test. :/",
+      "parentUuid": "f0567478_af3ccf0a",
       "range": {
         "startLine": 57,
         "startChar": 6,
