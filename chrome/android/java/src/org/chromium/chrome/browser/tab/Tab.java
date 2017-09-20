@@ -3178,6 +3178,12 @@ public class Tab
         nativeMediaDownloadInProductHelpDismissed(mNativeTabAndroid);
     }
 
+    @CalledByNative
+    private void onNavigationEntriesPruned() {
+        setIsTabStateDirty(true);
+        for (TabObserver observer : mObservers) observer.onNavigationEntriesPruned(this);
+    }
+
     private native void nativeInit();
     private native void nativeDestroy(long nativeTabAndroid);
     private native void nativeInitWebContents(long nativeTabAndroid, boolean incognito,

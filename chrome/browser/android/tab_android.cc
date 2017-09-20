@@ -948,6 +948,14 @@ void TabAndroid::SetDevToolsAgentHost(
   devtools_host_ = std::move(host);
 }
 
+void TabAndroid::PruneNavigationEntries() {
+  if (web_contents_->GetController().CanPruneAllButLastCommitted()) {
+    web_contents_->GetController().PruneAllButLastCommitted();
+    JNIEnv* env = base::android::AttachCurrentThread();
+    Java_Tab_onNavigationEntriesPruned(env, weak_java_tab_.get(env));
+  }
+}
+
 static void Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TRACE_EVENT0("native", "TabAndroid::Init");
   // This will automatically bind to the Java object and pass ownership there.

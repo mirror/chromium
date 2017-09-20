@@ -146,6 +146,8 @@ class TabAndroid : public CoreTabHelperDelegate,
   // might change over the lifetime of the tab.
   bool IsCurrentlyACustomTab();
 
+  void PruneNavigationEntries();
+
   // Methods called from Java via JNI -----------------------------------------
 
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
