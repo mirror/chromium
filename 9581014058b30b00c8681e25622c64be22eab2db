@@ -22,6 +22,29 @@
       "revId": "9581014058b30b00c8681e25622c64be22eab2db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84083a88_d82c28c3",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-20T01:06:16Z",
+      "side": 1,
+      "message": "aside: Per offline chat this evening, I\u0027m choosing in next CL to try to stick with TEST_P. (Going to TYPED_TEST and a templatized SourceBufferStreamTest *requires* *every* *access* of a fixture member from a test case to be prefixed by \"this-\u003e\". TYPED_TEST is therefore not the right/ideal tool for this job. Instead, I\u0027ll try out a simpler \"STREAM\" macro that produces the correct reference (either stream_dts_ or in future CLs stream_pts_). Similar idiom may be required in FrameProcessorTests and ChunkDemuxerTests if I need to templatize ChunkDemuxerStream\u003c\u003e similar to that done in this CL.",
+      "range": {
+        "startLine": 79,
+        "startChar": 62,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "9581014058b30b00c8681e25622c64be22eab2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
