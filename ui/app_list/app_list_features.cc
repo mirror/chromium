@@ -6,12 +6,15 @@
 
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/sys_info.h"
 
 namespace app_list {
 namespace features {
 
 const base::Feature kEnableAnswerCard{"EnableAnswerCard",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kEnableAnswerCardEve{"EnableAnswerCardEve",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kEnableAnswerCardDarkRun{"EnableAnswerCardDarkRun",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kEnableBackgroundBlur{"EnableBackgroundBlur",
@@ -20,9 +23,24 @@ const base::Feature kEnableFullscreenAppList{"EnableFullscreenAppList",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kEnablePlayStoreAppSearch{
     "EnablePlayStoreAppSearch", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kEnablePlayStoreAppSearchEve{
+    "EnablePlayStoreAppSearchEve", base::FEATURE_ENABLED_BY_DEFAULT};
+
+namespace {
+
+bool IsDeviceEve() {
+#if defined(OS_CHROMEOS)
+  static bool is_device_eve = base::SysInfo::GetLsbReleaseBoard() == "eve";
+  return is_device_eve;
+#endif  // OS_CHROMEOS
+  return false;
+}
+
+}  // namespace
 
 bool IsAnswerCardEnabled() {
-  static const bool enabled = base::FeatureList::IsEnabled(kEnableAnswerCard);
+  static const bool enabled = base::FeatureList::IsEnabled(
+      IsDeviceEve() ? kEnableAnswerCardEve : kEnableAnswerCard);
   return enabled;
 }
 
@@ -50,7 +68,8 @@ bool IsTouchFriendlySearchResultsPageEnabled() {
 
 bool IsPlayStoreAppSearchEnabled() {
   // Not using local static variable to allow tests to change this value.
-  return base::FeatureList::IsEnabled(kEnablePlayStoreAppSearch);
+  return base::FeatureList::IsEnabled(
+      IsDeviceEve() ? kEnablePlayStoreAppSearchEve : kEnablePlayStoreAppSearch);
 }
 
 std::string AnswerServerUrl() {
