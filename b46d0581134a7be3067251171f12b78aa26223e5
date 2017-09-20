@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "757e661e_9316ba2d",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-09-20T00:03:52Z",
+      "side": 1,
+      "message": "Can you add a comment here to say that this is preventing double-triggering of autocomplete controller when OnOmniboxFocused is called twice in quick succession? I just want to be clear we\u0027re not expecting autocomplete controller to be doing a non-zero-suggest call at this point. I also wish we had a way of asserting that, but don\u0027t think that\u0027s possible.",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "b46d0581134a7be3067251171f12b78aa26223e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
