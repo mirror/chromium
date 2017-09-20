@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e903c999_39f4a35b",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "can these be removed before landing?",
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf249ea_a9f97f9e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "why do we do this? i propose getting rid of this leak. i guess we did it before to avoid finding another function to free the string, but that\u0027s a non-issue now.",
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1439d67a_b05dab1e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "shouldn\u0027t this use the base::win:: variant?",
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932202af_0f97063d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "this is taking the size of the char array but isn\u0027t using it. you could construct the StringPiece16 explicitly to avoid the strlen:\n  ScopedHString ref_class_name \u003d\n      ScopedHString::Create(base::StringPiece16(class_name, size - 1));",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d03a23_0dc9066a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "omit .c_str() so that the implicit StringPiece16 from base::string16 ctor is used.",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 57
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4ff188_64d60256",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "base::win:: not needed due to \"using\" declaration at top of file",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 17
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec34dd4_ca296480",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "omit .c_str()",
+      "range": {
+        "startLine": 147,
+        "startChar": 44,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3c0cef_a8bbecf9",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "this fixes HSTRING leaks in the old code! sweet!",
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd46bf71_1ba17755",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "omit .c_str()",
+      "range": {
+        "startLine": 484,
+        "startChar": 54,
+        "endLine": 484,
+        "endChar": 62
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41754cb3_f872bcc5",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T13:03:21Z",
+      "side": 1,
+      "message": "base::win:: not needed here, either.",
+      "range": {
+        "startLine": 853,
+        "startChar": 6,
+        "endLine": 853,
+        "endChar": 17
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
