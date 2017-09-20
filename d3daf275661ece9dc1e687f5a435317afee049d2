@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "4334c987_d181adf6",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-20T23:33:13Z",
+      "side": 1,
+      "message": "\u003e Windows should display some content even when occluded, ...\n\nThat will not be the case for web-pages, right? See [1] for example. From earlier discussions [2], when we tell a web-page is hidden, we can free up the resources. So we would end up where the window does not have any content for a few frames. If we can live with that, then there are alternative solutions that will probably be better (see this discussion on that doc [3]).\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_aura.cc?l\u003d702\n[2] https://docs.google.com/a/chromium.org/document/d/1USXrTpwzk-5A9ds3FkTmFCzJGVJJtCM4VLPw2UdpGS0/edit?disco\u003dAAAABT5E3-Q\n[3] https://docs.google.com/a/chromium.org/document/d/1USXrTpwzk-5A9ds3FkTmFCzJGVJJtCM4VLPw2UdpGS0/edit?disco\u003dAAAABT5m2Kw",
+      "parentUuid": "0fb81d2a_707f4c3b",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2fc6278_7a6e98da",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
