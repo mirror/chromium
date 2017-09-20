@@ -281,6 +281,14 @@ Response StorageHandler::UntrackCacheStorageForOrigin(
   return Response::OK();
 }
 
+Response StorageHandler::TrackIndexedDBForOrigin(const std::string& origin) {
+  return Response::OK();
+}
+
+Response StorageHandler::UntrackIndexedDBForOrigin(const std::string& origin) {
+  return Response::OK();
+}
+
 StorageHandler::CacheStorageObserver*
 StorageHandler::GetCacheStorageObserver() {
   if (cache_storage_observer_ == nullptr) {
