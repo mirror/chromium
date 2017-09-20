@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "4bb3669a_d3bc01ac",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-20T21:57:55Z",
+      "side": 1,
+      "message": "\u003e Is there some road plan to removing image_scale?\n\nThere\u0027s some thoughts in a doc, nothing very formal. I don\u0027t think I\u0027m asking for something more difficult or time consuming from you though?\n\n\u003e If other people start calling it that would support the idea that it\u0027s useful.\n\nNot if it\u0027s for single method calls like this is.\n\n\u003e  The fact that we have gfx::Canvas::Save/Restore implies that state is changing in gfx::Canvas.\n\nI think it is there because gfx::Canvas was originally meant to encapsulate the underlying canvas but it has stopped doing that long ago.\n\n\u003e It doesn\u0027t make sense to me to pass two different image scales into PaintVectorIcon (the one in canvas and the hypothetical new parameter), so it seems like we\u0027re at an impasse.\n\nI guess so. I think it is better to pass things that only that function needs directly. That\u0027s my feedback still.",
+      "parentUuid": "7aaad4e3_448cadba",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
