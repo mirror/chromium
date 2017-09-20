@@ -22,6 +22,30 @@
       "revId": "b5fb6944f8eb91f563d2118d91444948e62d337d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11217d77_85a99438",
+        "filename": "components/signin/core/browser/android/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-20T13:01:26Z",
+      "side": 1,
+      "message": "IUUC, there\u0027s a project to add COMPONENT (and/or TEAM) tags in every OWNERS file: https://docs.google.com/document/d/1jty6UsFMW9-SYgpQC-ztEc3lltziOQBBArMkROCSTh0/edit. Don\u0027t know the current status of the project, though.\nAnyway, I think that adding COMPONENT here won\u0027t hurt, so I\u0027ll leave it here if you don\u0027t mind.",
+      "parentUuid": "c4e54bc4_35564870",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "b5fb6944f8eb91f563d2118d91444948e62d337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
