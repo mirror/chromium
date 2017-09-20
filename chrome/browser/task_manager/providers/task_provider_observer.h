@@ -24,9 +24,19 @@ class TaskProviderObserver {
   // the observer and references to it must not be kept.
   virtual void TaskRemoved(Task* task) = 0;
 
+  // Notifies of a simultaneous Add & Remove event. Both |old_task| and
+  // |new_task| are valid during this call. After the observer returns from this
+  // call, |old_task| may never be used again by the observer; references to it
+  // must not be kept.
+  //
+  // Overriding this method is optional. If an observer implementation chooses
+  // not to override this method, they'll just see TaskAdded(new_task), followed
+  // by TaskReplaced(old_task).
+  virtual void TaskReplaced(Task* old_task, Task* new_task);
+
   // This notifies of the event that |task| has become unresponsive. This event
   // is only for tasks representing renderer processes.
-  virtual void TaskUnresponsive(Task* task) {}
+  virtual void TaskUnresponsive(Task* task);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TaskProviderObserver);

@@ -271,7 +271,7 @@ void SharedSampler::RegisterCallbacks(
     const OnCpuTimeCallback& on_cpu_time) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  if (process_id == 0)
+  if (process_id == base::kNullProcessId)
     return;
 
   Callbacks callbacks;
