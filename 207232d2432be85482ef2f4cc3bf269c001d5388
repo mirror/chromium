@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e51546_b471af47",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T17:34:10Z",
+      "side": 1,
+      "message": "nit: don\u0027t include a default case, then the compiler will fail if a new reschedule type is added without updating this code.",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9fe8a8_cb43dee0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T17:34:10Z",
+      "side": 1,
+      "message": "!suspended_ \u0026\u0026",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85f1d76_ba464b29",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T17:34:10Z",
+      "side": 1,
+      "message": "I think that historically we haven\u0027t gone this far when getting an error code.  If those requests don\u0027t return SUSPEND then should they be cancelled?",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646b7fe2_9e5ee24a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T17:34:10Z",
+      "side": 1,
+      "message": "This could cause pending DB operations to fail when Android kills Chrome, I wonder if that\u0027s a bad thing.",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa55ab3_3f8451b2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T17:34:10Z",
+      "side": 1,
+      "message": "We should reset |suspended_| when we get a new background task scheduled, so that long-running instances of Chrome don\u0027t get stuck in this state.",
+      "revId": "207232d2432be85482ef2f4cc3bf269c001d5388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
