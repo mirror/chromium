@@ -16,6 +16,29 @@
       "revId": "433a8d9560f2dd4f82bc683c2fdbdd1a1f6a14dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7df33c9_7a2b5e83",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestBaseTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-20T17:26:19Z",
+      "side": 1,
+      "message": "CronetTestBase was deleted, so this is out of date. Should the class be renamed to CronetTestRuleTest or something?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "433a8d9560f2dd4f82bc683c2fdbdd1a1f6a14dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
