@@ -337,11 +337,14 @@ void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
 
 void ArcVoiceInteractionFrameworkService::ShowMetalayer() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  ignore_next_hide_metalayer_ = false;
   NotifyMetalayerStatusChanged(true);
 }
 
 void ArcVoiceInteractionFrameworkService::HideMetalayer() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (ignore_next_hide_metalayer_)
+    return;
   NotifyMetalayerStatusChanged(false);
 }
 
@@ -494,6 +497,12 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
             StartVoiceInteractionSessionForRegion);
     DCHECK(framework_instance);
     framework_instance->StartVoiceInteractionSessionForRegion(rect);
+
+    // The metalayer selection has completed, and the voice interaction UI
+    // will be displayed soon (in <1 sec). Do not send SetMetalayerVisibility
+    // and avoid flashing a prompt which is redundant in this case.
+    // TODO(kaznacheev) Move this logic to ash when fixing b/761120.
+    ignore_next_hide_metalayer_ = true;
   }
   VLOG(1) << "Sent voice interaction request.";
 }

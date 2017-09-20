@@ -155,6 +155,9 @@ class ArcVoiceInteractionFrameworkService
   // something malicious is going on.
   int32_t context_request_remaining_count_ = 0;
 
+  // When true, the next HideMetalayer call will not notify the container.
+  bool ignore_next_hide_metalayer_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(ArcVoiceInteractionFrameworkService);
 };
 
