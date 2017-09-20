@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca3c402_5e23f93f",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 4562,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "Hmm... ExtensionServiceTestBase is really only intended for unittests, so I\u0027d prefer we don\u0027t include it with browsertests to avoid conflating the two.\n\nIf we only need this for PackCRX(), let\u0027s just do that in the test itself.  In fact, PackCRX() does a lot of stuff we don\u0027t even need - I think we\u0027d just need to do:\n\nASSERT_TRUE(ExtensionCreator().Run(dir_path, crx_path,\n                                   pem_path, pem_output_path,\n                                   ExtensionCreator::kOverwriteCRX));\nASSERT_TRUE(base::PathExists(crx_path));\n\nWill that work?",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fee343_ec342571",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "Oof, this is subtle.\n\nHonestly, I think I might prefer to just expose a \"set_first_run_for_testing\" type thing in extension service/prefs.  It would be a lot less subtle, and we should probably be using it more places.",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b74748_691aeb45",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "nit: maybe use a lambda here, rather than defining IsGlobalErrorWithBubble separately?",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6df727a_c4f4e18e",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "Why this extension?  If it\u0027s just because we assume it will always be installed, I\u0027d actually prefer we add our own extension.",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6ac210_5702182a",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "nit: remove blank line (here and line 117, 144, 171, 176, etc)",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc1681a_737f852e",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "hmm... if we use a RunUntilIdle(), do we need to call OnBlacklistUpdated?  It looks like SetBlacklistState() should indirectly trigger the call to service.",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04f18b4_694a7ca9",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-20T13:31:05Z",
+      "side": 1,
+      "message": "Heh, fun trick.  Is this better than RunAllBlockingPoolTasksUntilIdle()?",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
