@@ -22,6 +22,30 @@
       "revId": "7cff88b8474a98c7a193ed285aac1a25a9ec4708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1591d79c_fba4b3b6",
+        "filename": "ui/events/x/events_x_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-09-20T18:04:06Z",
+      "side": 1,
+      "message": "\u003e 1. We\u0027re getting state out-of-sync.\n\nWindows is doing it this way, but I agree it is not ideal.\n\n\u003e 2. This is a blocking call on the UI thread. \n\nEspecially for this reason.\n\nAs discussed offline, passing the event from the accelerator to the launch menu process requires a lot of plumbing, so I\u0027ll look for a different way. Sadrul\u0027s suggestion looks the simplest.",
+      "parentUuid": "48ca9201_693f5fea",
+      "range": {
+        "startLine": 818,
+        "startChar": 4,
+        "endLine": 818,
+        "endChar": 16
+      },
+      "revId": "7cff88b8474a98c7a193ed285aac1a25a9ec4708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
