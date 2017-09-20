@@ -245,8 +245,9 @@ void TestTask(std::vector<base::TimeTicks>* run_times,
       RoundTimeToMilliseconds(clock->GetNowTicksWithoutAdvancing()));
 }
 
-void ExpensiveTestTask(std::vector<base::TimeTicks>* run_times,
-                       AutoAdvancingTestClock* clock) {
+void ExpensiveTestTaskForTaskQueueThrottler(
+    std::vector<base::TimeTicks>* run_times,
+    AutoAdvancingTestClock* clock) {
   run_times->push_back(
       RoundTimeToMilliseconds(clock->GetNowTicksWithoutAdvancing()));
   clock->Advance(base::TimeDelta::FromMilliseconds(250));
@@ -598,10 +599,14 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, TimeBasedThrottling) {
   // Submit two tasks. They should be aligned, and second one should be
   // throttled.
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -616,10 +621,14 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, TimeBasedThrottling) {
   // Queue was removed from CPUTimeBudgetPool, only timer alignment should be
   // active now.
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -648,7 +657,9 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
 
   // Post an expensive task. Pool is now throttled.
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -663,7 +674,9 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
 
   // Pool should not be throttled now.
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -679,7 +692,9 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   // Because time pool was disabled, time budget level did not replenish
   // and queue is throttled.
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -709,9 +724,11 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   // Submit two tasks. They should be aligned, and second one should be
   // throttled.
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
 
   mock_task_runner_->RunUntilIdle();
 
@@ -725,9 +742,11 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   // Queue was removed from CPUTimeBudgetPool, only timer alignment should be
   // active now.
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
 
   mock_task_runner_->RunUntilIdle();
 
@@ -758,9 +777,11 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   task_queue_throttler_->IncreaseThrottleRefCount(second_queue.get());
 
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   second_queue->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
 
   mock_task_runner_->RunUntilIdle();
 
@@ -792,10 +813,14 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   task_queue_throttler_->IncreaseThrottleRefCount(timer_queue_.get());
 
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(100));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(100));
 
   mock_task_runner_->RunUntilIdle();
@@ -820,10 +845,14 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   pool->AddQueue(clock_->GetNowTicksWithoutAdvancing(), timer_queue_.get());
 
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(100));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(100));
 
   mock_task_runner_->RunUntilIdle();
@@ -850,7 +879,9 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, MaxThrottlingDelay) {
 
   for (int i = 0; i < 5; ++i) {
     timer_queue_->PostDelayedTask(
-        FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+        FROM_HERE,
+        base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                   clock_.get()),
         base::TimeDelta::FromMilliseconds(200));
   }
 
@@ -947,10 +978,14 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, ReportThrottling) {
                                 base::Bind(&TestTask, &run_times, clock_.get()),
                                 base::TimeDelta::FromMilliseconds(200));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
   timer_queue_->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+      FROM_HERE,
+      base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                 clock_.get()),
       base::TimeDelta::FromMilliseconds(200));
 
   mock_task_runner_->RunUntilIdle();
@@ -986,7 +1021,9 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, GrantAdditionalBudget) {
   // budget to run.
   for (int i = 0; i < 5; ++i) {
     timer_queue_->PostDelayedTask(
-        FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()),
+        FROM_HERE,
+        base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                   clock_.get()),
         base::TimeDelta::FromMilliseconds(200));
   }
 
@@ -1124,13 +1161,17 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, TwoBudgetPools) {
   task_queue_throttler_->IncreaseThrottleRefCount(second_queue.get());
 
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   second_queue->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   timer_queue_->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
   second_queue->PostTask(
-      FROM_HERE, base::Bind(&ExpensiveTestTask, &run_times, clock_.get()));
+      FROM_HERE, base::Bind(&ExpensiveTestTaskForTaskQueueThrottler, &run_times,
+                            clock_.get()));
 
   mock_task_runner_->RunUntilIdle();
 

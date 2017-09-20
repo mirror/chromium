@@ -1169,9 +1169,10 @@ TEST_F(TaskQueueManagerTest, HasPendingImmediateWork_DelayedTasks) {
   EXPECT_FALSE(runners_[0]->HasTaskToRunImmediately());
 }
 
-void ExpensiveTestTask(int value,
-                       base::SimpleTestTickClock* clock,
-                       std::vector<EnqueueOrder>* out_result) {
+void ExpensiveTestTaskForTaskQueueManager(
+    int value,
+    base::SimpleTestTickClock* clock,
+    std::vector<EnqueueOrder>* out_result) {
   out_result->push_back(value);
   clock->Advance(base::TimeDelta::FromMilliseconds(1));
 }
@@ -1184,14 +1185,17 @@ TEST_F(TaskQueueManagerTest, ImmediateAndDelayedTaskInterleaving) {
   for (int i = 10; i < 19; i++) {
     runners_[0]->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&ExpensiveTestTask, i, now_src_.get(), &run_order), delay);
+        base::Bind(&ExpensiveTestTaskForTaskQueueManager, i, now_src_.get(),
+                   &run_order),
+        delay);
   }
 
   test_task_runner_->RunForPeriod(delay);
 
   for (int i = 0; i < 9; i++) {
-    runners_[0]->PostTask(FROM_HERE, base::Bind(&ExpensiveTestTask, i,
-                                                now_src_.get(), &run_order));
+    runners_[0]->PostTask(FROM_HERE,
+                          base::Bind(&ExpensiveTestTaskForTaskQueueManager, i,
+                                     now_src_.get(), &run_order));
   }
 
   test_task_runner_->SetAutoAdvanceNowToPendingTasks(true);
