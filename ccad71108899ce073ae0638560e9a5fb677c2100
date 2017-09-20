@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "24f91de0_6f876429",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-20T15:02:31Z",
+      "side": 1,
+      "message": "I\u0027m still unable to get the \"。\" in chrome simulator after copying this folder input_tools over with extra flags is_official_build and is_chrome_branded. The candidate popup list is still able to display as expected with this build though as you showed me before. My current gn args are\n\nis_official_build \u003d true\nis_chrome_branded \u003d true\nis_debug \u003d false\nuse_goma \u003d true\nis_asan \u003d false\ndcheck_always_on \u003d true\ntarget_os \u003d \"chromeos\"\nuse_ozone \u003d true\nozone_auto_platforms \u003d false\nozone_platform_x11 \u003d true\nenable_nacl\u003dtrue #assert for cros",
+      "parentUuid": "29fd2e62_32990125",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1566c44_b890ee05",
         "filename": "ui/base/ime/input_method_chromeos.h",
         "patchSetId": 7
