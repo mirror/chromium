@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3914ffec_7eee69b1",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-20T18:08:59Z",
+      "side": 1,
+      "message": "Can we move this to a util file instead of duplicating it from site_per_process_browsertest.cc?",
+      "revId": "a84f9a11691aefe016459eab943f220baf550f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ff302d_6d8f083a",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_child_frame.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-20T18:08:59Z",
+      "side": 1,
+      "message": "nit: 2 words",
+      "range": {
+        "startLine": 76,
+        "startChar": 40,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "a84f9a11691aefe016459eab943f220baf550f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1d5b6c_a4c8e535",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_child_frame.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-20T18:08:59Z",
+      "side": 1,
+      "message": "It seems confusing to have separate functions names UpdateSelectionBoundsIfNeeded() and UpdateSelectionBoundsIfNecessary(). Is there any reason not to make this name more specific and call it, for e.g. DidScroll()?",
+      "revId": "a84f9a11691aefe016459eab943f220baf550f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf066c70_ac117ecb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-20T18:08:59Z",
+      "side": 1,
+      "message": "Is there a reason we would need anything here? This already works fine for main frames.",
+      "revId": "a84f9a11691aefe016459eab943f220baf550f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
