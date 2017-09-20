@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "988216e1_1b2678b5",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T18:03:49Z",
+      "side": 1,
+      "message": "Sorry, was overly verbose here.\n\nTLDR; deprecated isn\u0027t the right way to describe this field (IMO).",
+      "parentUuid": "22b31ab6_3d95e8eb",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d27bcf8_82015061",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 7
@@ -83,6 +101,30 @@
     },
     {
       "key": {
+        "uuid": "78a1d2fc_d92a9e71",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T18:03:49Z",
+      "side": 1,
+      "message": "If we\u0027re saying not-present means default to 0, fair enough.\n\nIt seems like the kind of thing easily missed as the feature evolves, otherwise. So, yeah... maybe remove it for now.\n\nOh, another intersting thing to consider adding (in the future) would be the prediction source, which would be very handy to know for metrics given multiple prediction backends on the server.",
+      "parentUuid": "63d5c2c5_e4e8b627",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "647f3919_0f9886d8",
         "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
         "patchSetId": 7
@@ -112,6 +154,24 @@
       "side": 1,
       "message": "\u003e Is that a statement of policy going forward or of how things currently work?\n\u003e \n\u003e The way I think this feature should work is that the server should give it\u0027s best guess as to what the field is, and put it in server_type_, with all of the possibilities in server_predictions_. The client should then be able to offer multiple suggestion types, ranked by the confidence values.\nWell, the client can work like you described. At this point, we are interested just in having password predictions somewhere in |server_predictions_|, say, with confidence\u003d0. Looks ok?\n\n\u003e \n\u003e I\u0027m curious to know how often we currently get conflicts server side, is there a dashboard for this somewhere?\nUsername classifier outputs about 1700 predictions, 700 of them are suppressed.",
       "parentUuid": "647f3919_0f9886d8",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7049d85e_1cd98212",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T18:03:49Z",
+      "side": 1,
+      "message": "Interesting.\n\nDo we have any insight as to the nature/breakdown of the suppressions? (i.e., username gets overridden to email vs something else?).",
+      "parentUuid": "61c0eafb_1c8508dc",
       "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
