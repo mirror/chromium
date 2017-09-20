@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "2ef305e7_d0752967",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-20T02:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f097b1ae_0c408237",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f205113_2961d0f4",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 5
@@ -193,6 +211,24 @@
       "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f428e23_4c627f82",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-20T02:21:58Z",
+      "side": 1,
+      "message": "Done. I added last_num_frames_skipped_ to use for tests.\n\nAlso writing the test uncovered a bug in the logic here. So I have moved out the test and the fix in a separate patch: https://chromium-review.googlesource.com/c/chromium/src/+/674056.",
+      "parentUuid": "90bb97e9_63a2a416",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
