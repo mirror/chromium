@@ -479,6 +479,9 @@ bool BitmapImage::ShouldAnimate() {
 }
 
 void BitmapImage::StartAnimation(CatchUpAnimation catch_up_if_necessary) {
+  // If the |frame_timer_| is set, it indicates that a task is already pending
+  // to advance the current frame of the animation. We don't need to schedule
+  // a task to advance the animation in that case.
   if (frame_timer_ || !ShouldAnimate() || FrameCount() <= 1)
     return;
 
@@ -544,6 +547,17 @@ void BitmapImage::StartAnimation(CatchUpAnimation catch_up_if_necessary) {
     // See if we've also passed the time for frames after that to start, in
     // case we need to skip some frames entirely.  Remember not to advance
     // to an incomplete frame.
+    // Skip the next frame by advancing the animation forward one frame.
+    if (!InternalAdvanceAnimation(kSkipFramesToCatchUp)) {
+      DCHECK(animation_finished_);
+      return;
+    }
+
+    // We have already realized that we need to skip the |next_frame| since
+    // |desired_frame_start_time_| is when |next_frame| should have been
+    // displayed, which is in the past. The rest of the loop determines if more
+    // frames need to be skipped to catch up.
+    last_num_frames_skipped_ = 1u;
     for (size_t frame_after_next = (next_frame + 1) % FrameCount();
          FrameIsReceivedAtIndex(frame_after_next);
          frame_after_next = (next_frame + 1) % FrameCount()) {
@@ -561,6 +575,7 @@ void BitmapImage::StartAnimation(CatchUpAnimation catch_up_if_necessary) {
         DCHECK(animation_finished_);
         return;
       }
+      last_num_frames_skipped_++;
       desired_frame_start_time_ = frame_after_next_start_time;
       next_frame = frame_after_next;
     }
