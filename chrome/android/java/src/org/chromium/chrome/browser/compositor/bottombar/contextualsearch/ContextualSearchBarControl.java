@@ -4,32 +4,27 @@
 
 package org.chromium.chrome.browser.compositor.bottombar.contextualsearch;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.compositor.animation.CompositorAnimator;
+import org.chromium.chrome.browser.compositor.animation.CompositorAnimator.AnimatorUpdateListener;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelAnimation;
-import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 import org.chromium.ui.base.LocalizationUtils;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 
 /**
  * Controls the Search Bar in the Contextual Search Panel.
  */
-public class ContextualSearchBarControl
-        implements ChromeAnimation.Animatable<ContextualSearchBarControl.AnimationType> {
-
-    /**
-     * Animation properties.
-     */
-    protected enum AnimationType {
-        TEXT_OPACITY,
-        DIVIDER_LINE_VISIBILITY,
-        TOUCH_HIGHLIGHT_VISIBILITY
-    }
+public class ContextualSearchBarControl {
+    /** The current context. */
+    private final Context mContext;
 
     /**
      * The panel used to get information about the panel layout.
@@ -117,6 +112,15 @@ public class ContextualSearchBarControl
      */
     private final boolean mCanPromoteToNewTab;
 
+    /** The animator that controls the text opacity. */
+    private CompositorAnimator mTextOpacityAnimation;
+
+    /** The animator that controls the divider line visibility. */
+    private CompositorAnimator mDividerLineVisibilityAnimation;
+
+    /** The animator that controls touch highlighting. */
+    private CompositorAnimator mTouchHighlightAnimation;
+
     /**
      * Constructs a new bottom bar control container by inflating views from XML.
      *
@@ -130,8 +134,9 @@ public class ContextualSearchBarControl
                                       ViewGroup container,
                                       DynamicResourceLoader loader) {
         mOverlayPanel = panel;
+        mContext = context;
         mCanPromoteToNewTab = panel.canPromoteToNewTab();
-        mImageControl = new ContextualSearchImageControl(panel, context);
+        mImageControl = new ContextualSearchImageControl(panel);
         mContextControl = new ContextualSearchContextControl(panel, context, container, loader);
         mSearchTermControl = new ContextualSearchTermControl(panel, context, container, loader);
         mCaptionControl = new ContextualSearchCaptionControl(panel, context, container, loader,
@@ -419,9 +424,16 @@ public class ContextualSearchBarControl
     private void animateDividerLine(boolean visible) {
         float endValue = visible ? 1.f : 0.f;
         if (mDividerLineVisibilityPercentage == endValue) return;
-        mOverlayPanel.addToAnimation(this, AnimationType.DIVIDER_LINE_VISIBILITY,
-                mDividerLineVisibilityPercentage, endValue,
-                OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, 0);
+        AnimatorUpdateListener listener = new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(CompositorAnimator animator) {
+                mDividerLineVisibilityPercentage = animator.getAnimatedValue();
+            }
+        };
+        mDividerLineVisibilityAnimation = CompositorAnimator.ofFloat(
+                mOverlayPanel.getAnimationHandler(), mDividerLineVisibilityPercentage, endValue,
+                OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, listener);
+        mDividerLineVisibilityAnimation.start();
     }
 
     // ============================================================================================
@@ -522,8 +534,18 @@ public class ContextualSearchBarControl
         // The touch highlight animation is used to ensure the touch highlight is visible for at
         // least OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS.
         // TODO(twellington): Add a material ripple to this animation.
-        mOverlayPanel.addToAnimation(this, AnimationType.TOUCH_HIGHLIGHT_VISIBILITY, 0.f, 1.f,
-                OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, 0);
+        if (mTouchHighlightAnimation == null) {
+            mTouchHighlightAnimation = new CompositorAnimator(mOverlayPanel.getAnimationHandler());
+            mTouchHighlightAnimation.setDuration(OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS);
+            mTouchHighlightAnimation.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mTouchHighlightVisible = false;
+                }
+            });
+        }
+        mTouchHighlightAnimation.cancel();
+        mTouchHighlightAnimation.start();
     }
 
     /**
@@ -546,17 +568,25 @@ public class ContextualSearchBarControl
      * Animates the search term resolution.
      */
     public void animateSearchTermResolution() {
-        mOverlayPanel.addToAnimation(this, AnimationType.TEXT_OPACITY, 0.f, 1.f,
-                OverlayPanelAnimation.MAXIMUM_ANIMATION_DURATION_MS, 0);
+        if (mTextOpacityAnimation == null) {
+            mTextOpacityAnimation = CompositorAnimator.ofFloat(mOverlayPanel.getAnimationHandler(),
+                    0, 1, OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, null);
+            mTextOpacityAnimation.addUpdateListener(new AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(CompositorAnimator animator) {
+                    updateSearchBarTextOpacity(animator.getAnimatedValue());
+                }
+            });
+        }
+        mTextOpacityAnimation.cancel();
+        mTextOpacityAnimation.start();
     }
 
     /**
      * Cancels the search term resolution animation if it is in progress.
      */
     public void cancelSearchTermResolutionAnimation() {
-        if (mOverlayPanel.animationIsRunning()) {
-            mOverlayPanel.cancelAnimation(this, AnimationType.TEXT_OPACITY);
-        }
+        if (mTextOpacityAnimation != null) mTextOpacityAnimation.cancel();
     }
 
     /**
@@ -575,25 +605,5 @@ public class ContextualSearchBarControl
 
         mSearchBarContextOpacity = fadingOutPercentage;
         mSearchBarTermOpacity = fadingInPercentage;
-    }
-
-    // ============================================================================================
-    // ChromeAnimation.Animatable Implementation
-    // ============================================================================================
-
-    @Override
-    public void setProperty(AnimationType type, float value) {
-        if (type == AnimationType.TEXT_OPACITY) {
-            updateSearchBarTextOpacity(value);
-        } else if (type == AnimationType.DIVIDER_LINE_VISIBILITY) {
-            mDividerLineVisibilityPercentage = value;
-        }
-    }
-
-    @Override
-    public void onPropertyAnimationFinished(AnimationType prop) {
-        if (prop == AnimationType.TOUCH_HIGHLIGHT_VISIBILITY) {
-            mTouchHighlightVisible = false;
-        }
     }
 }
