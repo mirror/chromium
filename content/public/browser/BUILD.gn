@@ -170,6 +170,8 @@ source_set("browser_sources") {
     "navigation_throttle.h",
     "navigation_type.h",
     "navigation_ui_data.h",
+    "network_change_manager_client_impl.cc",
+    "network_change_manager_client_impl.h",
     "network_quality_observer_factory.h",
     "network_service_instance.cc",
     "network_service_instance.h",
