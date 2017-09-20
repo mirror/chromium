@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "712064cd_1f720b06",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "Since ArchiveManager needs to get both temporary and persistent directories, I prefer both paths are acquired together.\nMaking AM depend on PathService is possible but then some extra changes need to be made:\n1. copy kOfflinePageMetadataDirname into components/offline_pages \n2. change the ctor of ArchiveManager to only take a path (context-\u003eGetPath()) in order to construct persistent dir.\nAnd in this way I think the construction of temp/persistent dirs is messier.\n\nWhat\u0027s the advantage you see there to make AM depend on PathService directly? I can make changes in future patches.",
+      "parentUuid": "ef41c4d3_ff84756e",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c290df_2c35408c",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd00b066_f8e38d50",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c290df_2c35408c",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "330036d0_45cd3597",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "The best way is to check if they are on the same volume. But turns out there\u0027s no easy way to do it? So I\u0027m checking free disk space to be the same instead, but this might introduce an error rate...",
+      "parentUuid": "27cf4cb0_56a07028",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea52e79_78095e8e",
         "filename": "components/offline_pages/core/archive_manager.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f157e62_5f12d738",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "Done.\nDoes the new one make any sense?",
+      "parentUuid": "bea52e79_78095e8e",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9af89df9_ef38285a",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "temporary sizes are included in the StorageStats, i\u0027m not sure what you mean by \u0027reflect\u0027 here. Are you suggesting to separate \u0027total_archive_size\u0027 into temporary and persistent ones?",
+      "parentUuid": "7b60a9f5_df1c4534",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef882e81_9d7cc7f2",
         "filename": "components/offline_pages/core/offline_page_model_impl.h",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-19T20:41:33Z",
       "side": 1,
       "message": "This means that the next release of Chrome will certainly delete all the temporary pages immediately. Is this what you want?",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0610d7_2d2c33d4",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-20T22:33:26Z",
+      "side": 1,
+      "message": "yes this is what i want and it seems to be the easiest solution. but i\u0027m still open to other options",
+      "parentUuid": "ef882e81_9d7cc7f2",
       "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
