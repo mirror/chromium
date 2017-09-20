@@ -22,8 +22,18 @@ cr.define('settings', function() {
     }
   }
 
+  var instance = null;
+
+  function getDirectionDelegate() {
+    if (instance === null)
+      instance = new settings.DirectionDelegateImpl();
+
+    return instance;
+  }
+
   return {
     DirectionDelegate: DirectionDelegate,
     DirectionDelegateImpl: DirectionDelegateImpl,
+    getDirectionDelegate: getDirectionDelegate,
   };
 });
