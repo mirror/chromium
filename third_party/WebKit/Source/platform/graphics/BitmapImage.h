@@ -101,6 +101,13 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   void SetDecoderForTesting(std::unique_ptr<DeferredImageDecoder> decoder) {
     decoder_ = std::move(decoder);
   }
+  void SetTaskRunnerForTesting(RefPtr<WebTaskRunner> task_runner) {
+    task_runner_ = task_runner;
+  }
+
+  size_t last_num_frames_skipped_for_testing() const {
+    return last_num_frames_skipped_;
+  }
 
  private:
   enum RepetitionCountStatus : uint8_t {
@@ -214,6 +221,8 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   double desired_frame_start_time_;  // The system time at which we hope to see
                                      // the next call to startAnimation().
+
+  size_t last_num_frames_skipped_ = 0u;
 
   size_t frame_count_;
 
