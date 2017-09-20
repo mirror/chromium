@@ -16,6 +16,24 @@
       "revId": "cff3a227e8d438390369931c42110bdf60f11b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58111d99_e7e1d4a8",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T20:30:47Z",
+      "side": 1,
+      "message": "Good point. Thanks for the suggestion :)",
+      "parentUuid": "8cc8bc06_6772d92f",
+      "revId": "cff3a227e8d438390369931c42110bdf60f11b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

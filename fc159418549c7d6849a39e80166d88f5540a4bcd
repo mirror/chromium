@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "66c6a20d_defb2f87",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T20:30:47Z",
+      "side": 1,
+      "message": "Thanks for clarifying :)",
+      "parentUuid": "3bb62c79_b642ad5e",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a962ba61_e9297284",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 6
@@ -174,6 +192,24 @@
       "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae641a6a_4cacdf14",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T20:30:47Z",
+      "side": 1,
+      "message": "Yes! Should have deleted it. Thanks! :)",
+      "parentUuid": "6872e9f0_f4398e90",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
