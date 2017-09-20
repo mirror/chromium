@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da86882f_12457df2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1901,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T03:20:13Z",
+      "side": 1,
+      "message": "Is folder edit page same as bookmark edit page so that we don\u0027t need to test it separately?",
+      "revId": "4f4f9e0ffc4f4082dda1d83e5b7aae8b27cee022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13898cad_63bf61a5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T03:20:13Z",
+      "side": 1,
+      "message": "do we need TODOs for new folder and promo signin a11y tests?",
+      "revId": "4f4f9e0ffc4f4082dda1d83e5b7aae8b27cee022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
