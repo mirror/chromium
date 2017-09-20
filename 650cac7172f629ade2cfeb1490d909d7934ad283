@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8638e9_9de929f6",
+        "filename": "ash/accessibility/accessibility_cursor_ring_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-20T16:21:55Z",
+      "side": 1,
+      "message": "Not sure that would really make things much cleaner.\nThe values are passed into SkColorSetARGBMacro where\nthe alpha is a variable, so if we had an SkColor we\u0027d\njust have to unpack it first and then pack it again?",
+      "revId": "650cac7172f629ade2cfeb1490d909d7934ad283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72ca70c_eb0174a5",
+        "filename": "ash/accessibility/accessibility_focus_ring.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-20T16:21:55Z",
+      "side": 1,
+      "message": "Does this need to be exported? This is a more low-level struct,\nit should be used only within this module and not part of the\npublic API.",
+      "revId": "650cac7172f629ade2cfeb1490d909d7934ad283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
