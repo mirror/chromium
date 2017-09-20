@@ -182,6 +182,30 @@
       "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415b3c19_50d18651",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T22:31:21Z",
+      "side": 1,
+      "message": "\u003e Okay now I think I got your point. My line of thought was, \u0027if there\u0027s something WebContents cannot hold a strong ref to, let it be created by the embedder and pass it to WebContents\u0027 but yours is the other way around \u0027let WebContents create it and pass it to embedder upon request via API\u0027.\n\nYeah, something like that.\n\nLosing static type checking though :( :( :( maybe one day I\u0027ll decide that\u0027s worse than null checks and just revert to weak jni ref",
+      "parentUuid": "d1ed3913_c5b13c69",
+      "range": {
+        "startLine": 480,
+        "startChar": 25,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
