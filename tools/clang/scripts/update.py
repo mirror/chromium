@@ -676,7 +676,9 @@ def UpdateClang(args):
   if sys.platform != 'win32':
     compiler_rt_args += ['-DLLVM_CONFIG_PATH=' +
                          os.path.join(LLVM_BUILD_DIR, 'bin', 'llvm-config'),
-                        '-DSANITIZER_MIN_OSX_VERSION="10.7"']
+                        '-DSANITIZER_MIN_OSX_VERSION="10.7"',
+                        '-DLIBFUZZER_ENABLE=YES',
+                        '-DLIBFUZZER_ENABLE_TESTS=ON']
   # compiler-rt is part of the llvm checkout on Windows but a stand-alone
   # directory elsewhere, see the TODO above COMPILER_RT_DIR.
   RmCmakeCache('.')
