@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e0e446f9_e6b9bbf3",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-20T22:58:08Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clearer.\n\nI was thinking you would change pre_june_2016.pem and post_june_2016.pem to contain the chain (either the full chain or \u0027pseudo\u0027 chain here). The existing uses of the test are fine (use ImportCertFromFile, so grabs the first cert), while your test here could use CreateCertificateChainFromFile (which grabs the full chain).\n\nThat would hopefully make it easier to keep each file fully hermetic, while also meeting the test data dir needs.\n\nIf you add a new file, then in order for that to work, you also need to update net/BUILD.gn. This would avoid that :)",
+      "parentUuid": "76b4d879_429fa049",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ef692d_da2bc88d",
         "filename": "content/browser/ssl/ssl_manager.cc",
         "patchSetId": 3
