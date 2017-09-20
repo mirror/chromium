@@ -38,7 +38,7 @@ class SharedWorkerInstance;
 //
 class SharedWorkerHost : public mojom::SharedWorkerHost {
  public:
-  SharedWorkerHost(SharedWorkerInstance* instance,
+  SharedWorkerHost(std::unique_ptr<SharedWorkerInstance> instance,
                    int process_id,
                    int route_id);
   ~SharedWorkerHost() override;

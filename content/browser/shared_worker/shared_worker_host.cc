@@ -23,51 +23,36 @@ namespace content {
 namespace {
 
 void NotifyWorkerReadyForInspection(int process_id, int route_id) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(NotifyWorkerReadyForInspection, process_id, route_id));
-    return;
-  }
   SharedWorkerDevToolsManager::GetInstance()->WorkerReadyForInspection(
       process_id, route_id);
 }
 
 void NotifyWorkerDestroyed(int process_id, int route_id) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(NotifyWorkerDestroyed, process_id, route_id));
-    return;
-  }
   SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(process_id,
                                                               route_id);
 }
 
 }  // namespace
 
-SharedWorkerHost::SharedWorkerHost(SharedWorkerInstance* instance,
-                                   int process_id,
-                                   int route_id)
+SharedWorkerHost::SharedWorkerHost(
+    std::unique_ptr<SharedWorkerInstance> instance,
+    int process_id,
+    int route_id)
     : binding_(this),
-      instance_(instance),
+      instance_(std::move(instance)),
       process_id_(process_id),
       route_id_(route_id),
       next_connection_request_id_(1),
       creation_time_(base::TimeTicks::Now()),
       weak_factory_(this) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(instance_);
 }
 
 SharedWorkerHost::~SharedWorkerHost() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   UMA_HISTOGRAM_LONG_TIMES("SharedWorker.TimeToDeleted",
                            base::TimeTicks::Now() - creation_time_);
   if (!closed_ && !termination_message_sent_)
     NotifyWorkerDestroyed(process_id_, route_id_);
-  SharedWorkerServiceImpl::GetInstance()->NotifyWorkerDestroyed(process_id_,
-                                                                route_id_);
 }
 
 void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
@@ -96,23 +81,33 @@ void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
 void SharedWorkerHost::AllowFileSystem(
     const GURL& url,
     base::OnceCallback<void(bool)> callback) {
-  GetContentClient()->browser()->AllowWorkerFileSystem(
-      url, instance_->resource_context(), GetRenderFrameIDsForWorker(),
-      base::Bind(&SharedWorkerHost::AllowFileSystemResponse,
-                 weak_factory_.GetWeakPtr(), base::Passed(&callback)));
+  // XXX route through IO thread
+  std::move(callback).Run(true);
+  /*
+    GetContentClient()->browser()->AllowWorkerFileSystem(
+        url, instance_->resource_context(), GetRenderFrameIDsForWorker(),
+        base::Bind(&SharedWorkerHost::AllowFileSystemResponse,
+                   weak_factory_.GetWeakPtr(), base::Passed(&callback)));
+  */
 }
 
 void SharedWorkerHost::AllowFileSystemResponse(
     base::OnceCallback<void(bool)> callback,
     bool allowed) {
+#if 0
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::move(callback).Run(allowed);
+#endif
 }
 
 bool SharedWorkerHost::AllowIndexedDB(const GURL& url,
                                       const base::string16& name) {
+// XXX route through IO thread
+#if 0
   return GetContentClient()->browser()->AllowWorkerIndexedDB(
       url, name, instance_->resource_context(), GetRenderFrameIDsForWorker());
+#endif
+  return true;
 }
 
 void SharedWorkerHost::TerminateWorker() {
@@ -196,6 +191,10 @@ void SharedWorkerHost::AddClient(mojom::SharedWorkerClientPtr client,
                                  int process_id,
                                  int frame_id,
                                  const MessagePort& port) {
+  // Pass the actual creation context type, so the client can understand if
+  // there is a mismatch between security levels.
+  client->OnCreated(instance_->creation_context_type());
+
   clients_.emplace_back(std::move(client), next_connection_request_id_++,
                         process_id, frame_id);
   ClientInfo& info = clients_.back();
