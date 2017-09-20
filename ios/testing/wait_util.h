@@ -14,6 +14,9 @@ namespace testing {
 // Constant for UI wait loop in seconds.
 extern const NSTimeInterval kSpinDelaySeconds;
 
+// Constant for timeout in seconds while waiting for snapshot.
+extern const NSTimeInterval kWaitForSnapshotCompletionTimeout;
+
 // Constant for timeout in seconds while waiting for UI element.
 extern const NSTimeInterval kWaitForUIElementTimeout;
 

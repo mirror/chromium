@@ -64,3 +64,17 @@ void GetSnapshotsPaths(std::vector<base::FilePath>* snapshotsPaths) {
     snapshotsPaths->push_back(snapshotPath);
   }
 }
+
+UIImage* TakeSnapshotOfView(UIView* view, const CGSize target_size) {
+  DCHECK(!CGRectIsEmpty(view.bounds));
+  UIImage* snapshot = nil;
+  CGFloat scaled_height =
+      view.bounds.size.height * target_size.width / view.bounds.size.width;
+  CGRect scaled_rect = CGRectMake(0, 0, target_size.width, scaled_height);
+  UIGraphicsBeginImageContextWithOptions(target_size, YES /* opaque */,
+                                         0 /* default scale factor */);
+  [view drawViewHierarchyInRect:scaled_rect afterScreenUpdates:NO];
+  snapshot = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return snapshot;
+}
