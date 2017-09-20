@@ -34,6 +34,8 @@
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 
+#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -101,21 +103,21 @@ const int kStackButtonHighlightedColors[] = {
 
 // UI frames.  iPhone values followed by iPad values.
 // Full-width frames that don't change for RTL languages.
-const CGRect kBackgroundViewFrame[INTERFACE_IDIOM_COUNT] = FRAME_PAIR(56);
+//const CGRect kBackgroundViewFrame[INTERFACE_IDIOM_COUNT] = FRAME_PAIR(56);
 const CGRect kShadowViewFrame[INTERFACE_IDIOM_COUNT] = FRAME_PAIR(2);
 // Full bleed shadow frame is iPhone-only
-const CGRect kFullBleedShadowViewFrame = IPHONE_FRAME(10);
+//const CGRect kFullBleedShadowViewFrame = IPHONE_FRAME(10);
 
 // Frames that change for RTL.
 // clang-format off
-const LayoutRect kStackButtonFrame =
-  {kPortraitWidth[IPHONE_IDIOM], {230, 4}, {48, 48}};
-const LayoutRect kShareMenuButtonFrame =
-  {kPortraitWidth[IPAD_IDIOM], {680, 4}, {46, 48}};
-const LayoutRect kToolsMenuButtonFrame[INTERFACE_IDIOM_COUNT] = {
-  {kPortraitWidth[IPHONE_IDIOM], {276, 4}, {44, 48}},
-  {kPortraitWidth[IPAD_IDIOM], {723, 4}, {46, 48}}
-};
+//const LayoutRect kStackButtonFrame =
+//  {kPortraitWidth[IPHONE_IDIOM], {230, 4}, {48, 48}};
+//const LayoutRect kShareMenuButtonFrame =
+//  {kPortraitWidth[IPAD_IDIOM], {680, 4}, {46, 48}};
+//const LayoutRect kToolsMenuButtonFrame[INTERFACE_IDIOM_COUNT] = {
+//  {kPortraitWidth[IPHONE_IDIOM], {276, 4}, {44, 48}},
+//  {kPortraitWidth[IPAD_IDIOM], {723, 4}, {46, 48}}
+//};
 // clang-format on
 
 // Distance to shift buttons when fading out.
@@ -269,45 +271,42 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     dispatcher_ = dispatcher;
     DCHECK_LT(style_, ToolbarControllerStyleMaxStyles);
 
+
     InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
+
+
     CGRect viewFrame = kToolbarFrame[idiom];
-    CGRect backgroundFrame = kBackgroundViewFrame[idiom];
+    /*   CGRect backgroundFrame = kBackgroundViewFrame[idiom];
     CGRect stackButtonFrame = LayoutRectGetRect(kStackButtonFrame);
     CGRect toolsMenuButtonFrame =
         LayoutRectGetRect(kToolsMenuButtonFrame[idiom]);
-
+*/
     if (idiom == IPHONE_IDIOM) {
       CGFloat statusBarOffset = [self statusBarOffset];
       viewFrame.size.height += statusBarOffset;
-      backgroundFrame.size.height += statusBarOffset;
-      stackButtonFrame.origin.y += statusBarOffset;
-      toolsMenuButtonFrame.origin.y += statusBarOffset;
+//      backgroundFrame.size.height += statusBarOffset;
+//      stackButtonFrame.origin.y += statusBarOffset;
+//      toolsMenuButtonFrame.origin.y += statusBarOffset;
     }
 
+
     view_ = [[ToolbarView alloc] initWithFrame:viewFrame];
-    backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
+    backgroundView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [backgroundView_ setTranslatesAutoresizingMaskIntoConstraints:NO];
     toolsMenuButton_ =
-        [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
+        [[ToolbarToolsMenuButton alloc] initWithFrame:CGRectZero
                                                 style:style_];
+    [toolsMenuButton_ setTranslatesAutoresizingMaskIntoConstraints:NO];
     [toolsMenuButton_ addTarget:self.dispatcher
                          action:@selector(showToolsMenu)
                forControlEvents:UIControlEventTouchUpInside];
-    [toolsMenuButton_
-        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
 
     [view_ addSubview:backgroundView_];
     [view_ addSubview:toolsMenuButton_];
-    [view_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                         UIViewAutoresizingFlexibleHeight];
 
     if (idiom == IPAD_IDIOM) {
-      CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
-      shareButton_ = [[UIButton alloc] initWithFrame:shareButtonFrame];
-      [shareButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+      shareButton_ = [[UIButton alloc] initWithFrame:CGRectZero];
+      [shareButton_ setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self setUpButton:shareButton_
              withImageEnum:ToolbarButtonNameShare
            forInitialState:UIControlStateNormal
@@ -321,28 +320,25 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
       [view_ addSubview:shareButton_];
     }
 
-    CGRect shadowFrame = kShadowViewFrame[idiom];
-    shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
-    shadowView_ = [[UIImageView alloc] initWithFrame:shadowFrame];
-    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    shadowView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
     [shadowView_ setUserInteractionEnabled:NO];
     [view_ addSubview:shadowView_];
     [shadowView_ setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW)];
 
-    if (idiom == IPHONE_IDIOM) {
-      // iPad omnibox does not expand to full bleed.
-      CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
-      fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
-      fullBleedShadowView_ =
-          [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
-      [fullBleedShadowView_
-          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-      [fullBleedShadowView_ setUserInteractionEnabled:NO];
-      [fullBleedShadowView_ setAlpha:0];
-      [view_ addSubview:fullBleedShadowView_];
-      [fullBleedShadowView_
-          setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
-    }
+//    if (idiom == IPHONE_IDIOM) {
+//      // iPad omnibox does not expand to full bleed.
+//      CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
+//      fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
+//      fullBleedShadowView_ =
+//          [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
+//      [fullBleedShadowView_
+//          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+//      [fullBleedShadowView_ setUserInteractionEnabled:NO];
+//      [fullBleedShadowView_ setAlpha:0];
+//      [view_ addSubview:fullBleedShadowView_];
+//      [fullBleedShadowView_
+//          setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
+//    }
 
     transitionLayers_ =
         [[NSMutableArray alloc] initWithCapacity:kTransitionLayerCapacity];
@@ -357,7 +353,8 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 
     if (idiom == IPHONE_IDIOM) {
       stackButton_ =
-          [[ToolbarCenteredButton alloc] initWithFrame:stackButtonFrame];
+          [[ToolbarCenteredButton alloc] initWithFrame:CGRectZero];
+      [stackButton_ setTranslatesAutoresizingMaskIntoConstraints:NO];
       [[stackButton_ titleLabel]
           setFont:[self fontForSize:kFontSizeFewerThanTenTabs]];
       [stackButton_
@@ -369,9 +366,9 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
       [stackButton_ setTitleColor:highlightColor
                          forState:UIControlStateHighlighted];
 
-      [stackButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+//      [stackButton_
+//          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
+//                              UIViewAutoresizingFlexibleBottomMargin];
 
       [self setUpButton:stackButton_
              withImageEnum:ToolbarButtonNameStack
@@ -397,6 +394,32 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
                       selector:@selector(applicationDidEnterBackground:)
                           name:UIApplicationDidEnterBackgroundNotification
                         object:nil];
+
+
+
+
+    NSDictionary* viewsDictionary = @{
+                                      @"backgroundView" : backgroundView_,
+                                      @"toolsmenubutton" : toolsMenuButton_,
+//                                      @"sharebutton" : shareButton_,
+                                      @"shadowview" : shadowView_,
+                                      @"stackButton" : stackButton_,
+                                      @"safearea" : SafeAreaLayoutGuideForView(view_),
+                                      };
+    NSArray* constraints = @[@"V:|-0-[backgroundView]-0-|",
+                             @"H:|-0-[backgroundView]-0-|",
+                             @"H:[stackButton(==48)]-8-[toolsmenubutton(==48)]-8-|",
+
+                             @"V:[stackButton(==48)]-8-|",
+                             @"V:[toolsmenubutton(==48)]-8-|",
+
+//                             @"H:|-0-[shadowview]-0-|",
+
+                             ];
+    ApplyVisualConstraintsWithOptions(constraints, viewsDictionary,
+                                      LayoutOptionForRTLSupport(), view_);
+
+
   }
   return self;
 }
@@ -405,6 +428,35 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   NOTREACHED();
   return nil;
 }
+/*
+- (void)layoutSubviews {
+  if (IsIPhoneX()) {
+    CGFloat statusBarOffset = [self statusBarOffset];
+    CGRect viewFrame = [view_ frame];
+    viewFrame.size.height = CGRectGetHeight(kToolbarFrame[IPHONE_IDIOM]) +  statusBarOffset;
+    [view_ setFrame:viewFrame];
+
+    CGRect backgroundFrame = [backgroundView_ frame];
+    backgroundFrame.size.height = CGRectGetHeight(kBackgroundViewFrame[IPHONE_IDIOM]) + statusBarOffset;
+    [backgroundView_ setFrame:backgroundFrame];
+
+    CGRect shadowFrame = [shadowView_ frame];
+    shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
+    [shadowView_ setFrame:shadowFrame];
+
+    CGRect stackButtonFrame = [stackButton_ frame];
+    stackButtonFrame.origin.y = LayoutRectGetRect(kStackButtonFrame).origin.y + statusBarOffset;
+    [stackButton_ setFrame:stackButtonFrame];
+
+    CGRect toolsMenuButtonFrame = [toolsMenuButton_ frame];
+    toolsMenuButtonFrame.origin.y = LayoutRectGetRect(kToolsMenuButtonFrame[IPHONE_IDIOM]).origin.y + statusBarOffset;
+    [toolsMenuButton_ setFrame:toolsMenuButtonFrame];
+
+    CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
+    fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
+    [fullBleedShadowView_ setFrame:fullBleedShadowFrame];
+  }
+}*/
 
 - (UIFont*)fontForSize:(NSInteger)size {
   return [[MDCTypography fontLoader] boldFontOfSize:size];

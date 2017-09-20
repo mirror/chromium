@@ -103,7 +103,7 @@ const CGFloat kNTPBackgroundColorBrightnessIncognito = 34.0 / 255.0;
 const CGFloat kiPadOmniboxPopupVerticalOffset = 3;
 
 // Padding to place on the sides of the omnibox when expanded.
-const CGFloat kExpandedOmniboxPadding = 6;
+//const CGFloat kExpandedOmniboxPadding = 6;
 
 // Padding between the back button and the omnibox when the forward button isn't
 // displayed.
@@ -114,7 +114,7 @@ const CGFloat kReloadButtonTrailingPadding = 4.0;
 // Cancel button sizing.
 const CGFloat kCancelButtonBottomMargin = 4.0;
 const CGFloat kCancelButtonTopMargin = 4.0;
-const CGFloat kCancelButtonLeadingMargin = 7.0;
+//const CGFloat kCancelButtonLeadingMargin = 7.0;
 const CGFloat kCancelButtonWidth = 40.0;
 
 // Additional offset to adjust the y coordinate of the determinate progress bar
@@ -162,15 +162,15 @@ const LayoutRect kWebToolbarFrame[INTERFACE_IDIOM_COUNT] = {
     { kWebToolbarWidths[IPAD_IDIOM], {L, Y}, {H, W} }
 
 // Layouts inside the WebToolbar frame
-const LayoutRect kOmniboxFrame[INTERFACE_IDIOM_COUNT] = {
-    IPHONE_LAYOUT(55, 7, 169, 43), IPAD_LAYOUT(152, 7, 568, 43),
-};
+//const LayoutRect kOmniboxFrame[INTERFACE_IDIOM_COUNT] = {
+//    IPHONE_LAYOUT(55, 7, 169, 43), IPAD_LAYOUT(152, 7, 568, 43),
+//};
 const LayoutRect kBackButtonFrame[INTERFACE_IDIOM_COUNT] = {
     IPHONE_LAYOUT(0, 4, 48, 48), IPAD_LAYOUT(4, 4, 48, 48),
 };
-const LayoutRect kForwardButtonFrame[INTERFACE_IDIOM_COUNT] = {
-    IPHONE_LAYOUT(48, 4, 48, 48), IPAD_LAYOUT(52, 4, 48, 48),
-};
+//const LayoutRect kForwardButtonFrame[INTERFACE_IDIOM_COUNT] = {
+//    IPHONE_LAYOUT(48, 4, 48, 48), IPAD_LAYOUT(52, 4, 48, 48),
+//};
 // clang-format on
 
 // iPad-only layouts
@@ -212,12 +212,12 @@ CGRect RectShiftedUpAndResizedForStatusBar(CGRect rect) {
   return RectShiftedUpForStatusBar(rect);
 }
 
-CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
-  if (IsIPadIdiom())
-    return rect;
-  rect.size.height -= StatusBarHeight();
-  return RectShiftedDownForStatusBar(rect);
-}
+//CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
+//  if (IsIPadIdiom())
+//    return rect;
+//  rect.size.height -= StatusBarHeight();
+//  return RectShiftedDownForStatusBar(rect);
+//}
 
 }  // namespace
 
@@ -329,7 +329,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)preloadVoiceSearch:(id)sender;
 // Calculates the CGRect to use for the omnibox's frame. Also sets the frames
 // of some buttons and |_webToolbar|.
-- (CGRect)newOmniboxFrame;
+//- (CGRect)newOmniboxFrame;
 - (void)animateMaterialOmnibox;
 - (void)fadeInOmniboxTrailingView;
 - (void)fadeInOmniboxLeadingView;
@@ -347,6 +347,9 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)updateSnapshotWithWidth:(CGFloat)width forced:(BOOL)force;
 // Insert 'com' without the period if cursor is directly after a period.
 - (NSString*)updateTextForDotCom:(NSString*)text;
+
+
+- (void)setConstraintsOnOmnibox:(OmniboxLayoutStyle)style;
 @end
 
 @implementation WebToolbarController
@@ -387,12 +390,13 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
           ? [UIColor whiteColor]
           : [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
   UIColor* tintColor = _incognito ? textColor : nil;
-  CGRect omniboxRect = LayoutRectGetRect(kOmniboxFrame[idiom]);
+//  CGRect omniboxRect = LayoutRectGetRect(kOmniboxFrame[idiom]);
   _omniBox =
-      [[OmniboxTextFieldIOS alloc] initWithFrame:omniboxRect
+      [[OmniboxTextFieldIOS alloc] initWithFrame:CGRectZero
                                             font:[MDCTypography subheadFont]
                                        textColor:textColor
                                        tintColor:tintColor];
+  [_omniBox setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
@@ -420,27 +424,41 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     [_omniBox setPlaceholderTextColor:placeholderTextColor];
   }
   _backButton = [[UIButton alloc]
-      initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
-  [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                                   UIViewAutoresizingFlexibleTopMargin |
-                                   UIViewAutoresizingFlexibleBottomMargin];
+      initWithFrame:CGRectZero];
+  [_backButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+
   // Note that the forward button gets repositioned when -layoutOmnibox is
   // called.
-  _forwardButton = [[UIButton alloc]
-      initWithFrame:LayoutRectGetRect(kForwardButtonFrame[idiom])];
-  [_forwardButton
-      setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                          UIViewAutoresizingFlexibleBottomMargin];
+  _forwardButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  [_forwardButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   [_webToolbar addSubview:_backButton];
   [_webToolbar addSubview:_forwardButton];
 
+
+//  NSLayoutConstraint* backButtonWidthConstraint =
+  [NSLayoutConstraint constraintWithItem:_backButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:50].active = YES;
+
+//  NSLayoutConstraint* forwardButtonWidthConstraint =
+  [NSLayoutConstraint constraintWithItem:_forwardButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:50].active = YES;
+
+
+  [NSLayoutConstraint activateConstraints:@[
+    [_backButton.leadingAnchor constraintEqualToAnchor:_webToolbar.leadingAnchor constant:10],
+    [_backButton.bottomAnchor constraintEqualToAnchor:_webToolbar.bottomAnchor],
+    [_forwardButton.leadingAnchor constraintEqualToAnchor:_backButton.trailingAnchor constant:10],
+    [_forwardButton.bottomAnchor constraintEqualToAnchor:_webToolbar.bottomAnchor],
+    ]];
+
+
+
+
   // _omniboxBackground needs to be added under _omniBox so as not to cover up
   // _omniBox.
-  _omniboxBackground = [[UIImageView alloc] initWithFrame:omniboxRect];
-  [_omniboxBackground
-      setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleBottomMargin];
+  _omniboxBackground = [[UIImageView alloc] initWithFrame:CGRectZero];
+//  [_omniboxBackground
+//      setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+//                          UIViewAutoresizingFlexibleBottomMargin];
 
   if (idiom == IPAD_IDIOM) {
     [_webToolbar addSubview:_omniboxBackground];
@@ -459,7 +477,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     CGRect omniboxBackgroundFrame =
         RectShiftedDownForStatusBar([_omniboxBackground frame]);
     [_omniboxBackground setFrame:omniboxBackgroundFrame];
-    [_clippingView addSubview:_omniboxBackground];
+//    [_clippingView addSubview:_omniboxBackground];
     [self.view
         setBackgroundColor:[UIColor colorWithWhite:kNTPBackgroundColorBrightness
                                              alpha:1.0]];
@@ -588,8 +606,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   NSString* imageName =
       _incognito ? @"omnibox_transparent_background" : @"omnibox_background";
   [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
-  [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleBottomMargin];
+//  [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+//                                UIViewAutoresizingFlexibleBottomMargin];
   [_reloadButton addTarget:self
                     action:@selector(cancelOmniboxEdit)
           forControlEvents:UIControlEventTouchUpInside];
@@ -687,6 +705,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     }
   }
 #endif
+
+  [self setConstraintsOnOmnibox:BACK_BUTTON_TO_STACK_BUTTON];
 
   return self;
 }
@@ -1346,6 +1366,21 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return frame;
 }
 
+//- (void)layoutSubviews {
+////  [super layoutSubviews];
+//  if (IsIPhoneX()) {
+//    CGRect omniboxBackgroundFrame = [_omniboxBackground frame];
+//    omniboxBackgroundFrame.origin.y = LayoutRectGetRect(kOmniboxFrame[IPHONE_IDIOM]).origin.y + StatusBarHeight();
+//    [_omniboxBackground setFrame:omniboxBackgroundFrame];
+//
+//    CGRect clippingViewFrame = [_clippingView frame];
+//    clippingViewFrame.size.height = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).size.height;
+//    clippingViewFrame.origin.y = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).origin.y;
+//    [_clippingView setFrame:clippingViewFrame];
+//    [self layoutOmnibox];
+//  }
+//}
+
 #pragma mark -
 #pragma mark ToolbarFrameDelegate methods.
 
@@ -1354,7 +1389,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     return;
   [self updateToolbarAlphaForFrame:newFrame];
 }
-
+// Omniboxtextfieldios
 - (void)windowDidChange {
   if (![_lastKnownTraitCollection
           containsTraitsInCollection:self.view.traitCollection]) {
@@ -1522,25 +1557,42 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 }
 
 - (void)layoutOmnibox {
-  // Position the forward and reload buttons trailing the back button in that
-  // order.
-  LayoutRect leadingControlLayout = LayoutRectForRectInBoundingRect(
-      [_backButton frame], [_webToolbar bounds]);
-  LayoutRect forwardButtonLayout =
-      LayoutRectGetTrailingLayout(leadingControlLayout);
-  forwardButtonLayout.position.originY = [_forwardButton frame].origin.y;
-  forwardButtonLayout.size = [_forwardButton frame].size;
 
-  LayoutRect reloadButtonLayout =
-      LayoutRectGetTrailingLayout(forwardButtonLayout);
-  reloadButtonLayout.position.originY = [_reloadButton frame].origin.y;
-  reloadButtonLayout.size = [_reloadButton frame].size;
-
-  CGRect newForwardButtonFrame = LayoutRectGetRect(forwardButtonLayout);
-  CGRect newReloadButtonFrame = LayoutRectGetRect(reloadButtonLayout);
-  CGRect newOmniboxFrame = [self newOmniboxFrame];
   BOOL isPad = IsIPadIdiom();
   BOOL growOmnibox = [_omniBox isFirstResponder];
+
+
+
+//  if (forwardButtonAlpha)
+//
+//  else {
+//
+//
+//
+//    [self setConstraintsOnOmnibox:FORWARD_BUTTON_TO_SHARE_BUTTON];
+//  }
+
+
+
+  // Position the forward and reload buttons trailing the back button in that
+  // order.
+//  LayoutRect leadingControlLayout = LayoutRectForRectInBoundingRect(
+//      [_backButton frame], [_webToolbar bounds]);
+//  LayoutRect forwardButtonLayout =
+//      LayoutRectGetTrailingLayout(leadingControlLayout);
+//  forwardButtonLayout.position.originY = [_forwardButton frame].origin.y;
+//  forwardButtonLayout.size = [_forwardButton frame].size;
+
+//  LayoutRect reloadButtonLayout =
+//      LayoutRectGetTrailingLayout(forwardButtonLayout);
+//  reloadButtonLayout.position.originY = [_reloadButton frame].origin.y;
+//  reloadButtonLayout.size = [_reloadButton frame].size;
+
+//  CGRect newForwardButtonFrame = LayoutRectGetRect(forwardButtonLayout);
+//  CGRect newReloadButtonFrame = LayoutRectGetRect(reloadButtonLayout);
+////  CGRect newOmniboxFrame = [self newOmniboxFrame];
+//  BOOL isPad = IsIPadIdiom();
+//  BOOL growOmnibox = [_omniBox isFirstResponder];
 
   // Animate buttons. Hide most of the buttons (standard set, back, forward)
   // for extended omnibox layout. Also show an extra cancel button so the
@@ -1560,32 +1612,32 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                       options:UIViewAnimationOptionAllowUserInteraction |
                               UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     if (!isPad)
-                       [self setStandardControlsVisible:!growOmnibox];
-                     if (!(isPad && growOmnibox)) {
+//                     if (!isPad)
+//                       [self setStandardControlsVisible:!growOmnibox];
+//                     if (!(isPad && growOmnibox)) {
                        [_backButton setAlpha:backButtonAlpha];
                        [_forwardButton setAlpha:forwardButtonAlpha];
-                       [_forwardButton setFrame:newForwardButtonFrame];
+//                       [_forwardButton setFrame:newForwardButtonFrame];
                        [_cancelButton setAlpha:alphaForGrownOmniboxButton];
-                       [_reloadButton setFrame:newReloadButtonFrame];
-                       [_stopButton setFrame:newReloadButtonFrame];
-                     }
+//                       [_reloadButton setFrame:newReloadButtonFrame];
+//                       [_stopButton setFrame:newReloadButtonFrame];
+//                     }
                    }
                    completion:nil];
 
-  if (CGRectEqualToRect([_omniBox frame], newOmniboxFrame))
-    return;
+//  if (CGRectEqualToRect([_omniBox frame], newOmniboxFrame))
+//    return;
 
   // Hide the clear and voice search buttons during omniBox frame animations.
   [_omniBox setRightViewMode:UITextFieldViewModeNever];
 
   // Make sure the accessory images are in the correct positions so they do not
   // move during the animation.
-  [_omniBox rightView].frame =
-      [_omniBox rightViewRectForBounds:newOmniboxFrame];
-  [_omniBox leftView].frame = [_omniBox leftViewRectForBounds:newOmniboxFrame];
+//  [_omniBox rightView].frame =
+//      [_omniBox rightViewRectForBounds:newOmniboxFrame];
+//  [_omniBox leftView].frame = [_omniBox leftViewRectForBounds:newOmniboxFrame];
 
-  CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
+//  CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
 
   // Extreme jank happens during initial layout if an animation is invoked. Not
   // certain why. o_O
@@ -1595,12 +1647,29 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       delay:0.0
       options:UIViewAnimationOptionAllowUserInteraction
       animations:^{
-        [_omniBox setFrame:newOmniboxFrame];
-        [_omniboxBackground setFrame:materialBackgroundFrame];
+//        [_omniBox setFrame:newOmniboxFrame];
+//        [_omniboxBackground setFrame:materialBackgroundFrame];
       }
       completion:^(BOOL finished) {
         [_omniBox setRightViewMode:UITextFieldViewModeAlways];
       }];
+
+
+  if (IsIPadIdiom()) {
+    [self setConstraintsOnOmnibox:FORWARD_BUTTON_TO_SHARE_BUTTON];
+  } else {
+    if ([_omniBox isFirstResponder]) {
+      [self setConstraintsOnOmnibox:FULL_BLEED];
+    } else {
+      if ([_forwardButton isEnabled]) {
+        [self setConstraintsOnOmnibox:FORWARD_BUTTON_TO_STACK_BUTTON];
+      } else {
+        [self setConstraintsOnOmnibox:BACK_BUTTON_TO_STACK_BUTTON];
+      }
+    }
+  }
+
+
 }
 
 - (void)setBackButtonEnabled:(BOOL)enabled {
@@ -1865,6 +1934,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 // TODO(crbug.com/525943): refactor this method and related code to not resize
 // |_webToolbar| and buttons as a side effect.
+/*
 - (CGRect)newOmniboxFrame {
   InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
   LayoutRect newOmniboxLayout;
@@ -1926,14 +1996,19 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
   return newOmniboxFrame;
 }
+ */
 
 - (void)animateMaterialOmnibox {
   // The iPad omnibox does not animate.
-  if (IsIPadIdiom())
-    return [self layoutOmnibox];
 
-  CGRect newOmniboxFrame = [self newOmniboxFrame];
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  [self layoutOmnibox];
+
+  /*
+//  if (IsIPadIdiom())
+//    return [self layoutOmnibox];
+
+//  CGRect newOmniboxFrame = [self newOmniboxFrame];
+//  BOOL growOmnibox = [_omniBox isFirstResponder];
 
   // Determine the starting and ending bounds and position for |_omniBox|.
   // Increasing the height of _omniBox results in the text inside it jumping
@@ -2078,6 +2153,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   [[_omniboxBackground layer] addAnimation:backgroundPositionAnimation
                                     forKey:@"movePosition"];
   [CATransaction commit];
+   */
 }
 
 - (void)fadeInOmniboxTrailingView {
@@ -2371,6 +2447,68 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       return [kDotComTLD substringFromIndex:1];
   }
   return text;
+}
+
+
+- (void)setConstraintsOnOmnibox:(OmniboxLayoutStyle)style {
+
+//  [_omniBox removeConstraints:_omniBox.constraints];
+  for (NSLayoutConstraint c in _omniBox.constraints) {
+    c.active = NO;
+  }
+
+  NSLayoutConstraint* topConstraint;
+  NSLayoutConstraint* bottomConstraint;
+  NSLayoutConstraint* leadingConstraint;
+  NSLayoutConstraint* trailingConstraint;
+
+  // Init vertical constraints:
+  switch (style) {
+    case FULL_BLEED:
+      topConstraint =
+      [_omniBox.topAnchor constraintEqualToAnchor:_webToolbar.topAnchor];
+      bottomConstraint =
+      [_omniBox.bottomAnchor constraintEqualToAnchor:_webToolbar.bottomAnchor];
+      break;
+    case BACK_BUTTON_TO_STACK_BUTTON:
+    case FORWARD_BUTTON_TO_STACK_BUTTON:
+//    case BACK_BUTTON_TO_SHARE_BUTTON:
+    case FORWARD_BUTTON_TO_SHARE_BUTTON:
+      topConstraint =
+      [_omniBox.topAnchor constraintEqualToAnchor:_webToolbar.topAnchor];
+      bottomConstraint =
+      [_omniBox.bottomAnchor constraintEqualToAnchor:_webToolbar.bottomAnchor];
+      break;
+  }
+
+  // Init horizontal constraints:
+  switch (style) {
+    case FULL_BLEED:
+      leadingConstraint =
+      [_omniBox.leadingAnchor constraintEqualToAnchor:_webToolbar.leadingAnchor];
+      trailingConstraint =
+      [_omniBox.trailingAnchor constraintEqualToAnchor:_webToolbar.trailingAnchor];
+      break;
+    case BACK_BUTTON_TO_STACK_BUTTON:
+      leadingConstraint =
+      [_omniBox.leadingAnchor constraintEqualToAnchor:_backButton.trailingAnchor constant:1.75];
+      trailingConstraint =
+      [_omniBox.trailingAnchor constraintEqualToAnchor:[self stackButton].leadingAnchor constant:2.65];
+      break;
+
+    case FORWARD_BUTTON_TO_STACK_BUTTON:
+//    case BACK_BUTTON_TO_SHARE_BUTTON:
+    case FORWARD_BUTTON_TO_SHARE_BUTTON:
+      leadingConstraint =
+      [_omniBox.leadingAnchor constraintEqualToAnchor:_forwardButton.trailingAnchor constant:3.55];
+      trailingConstraint =
+      [_omniBox.trailingAnchor constraintEqualToAnchor:[self stackButton].leadingAnchor constant:4.45];
+      break;
+  }
+
+
+  [NSLayoutConstraint activateConstraints:@[topConstraint, bottomConstraint, leadingConstraint, trailingConstraint]];
+  assert(![_omniBox hasAmbiguousLayout]);
 }
 
 @end
