@@ -15,25 +15,25 @@ namespace content {
 
 namespace {
 
-blink::WebServiceWorkerState
-GetWebServiceWorkerState(ServiceWorkerVersion* version) {
+blink::mojom::ServiceWorkerState GetWebServiceWorkerState(
+    ServiceWorkerVersion* version) {
   DCHECK(version);
   switch (version->status()) {
     case ServiceWorkerVersion::NEW:
-      return blink::kWebServiceWorkerStateUnknown;
+      return blink::mojom::ServiceWorkerState::kUnknown;
     case ServiceWorkerVersion::INSTALLING:
-      return blink::kWebServiceWorkerStateInstalling;
+      return blink::mojom::ServiceWorkerState::kInstalling;
     case ServiceWorkerVersion::INSTALLED:
-      return blink::kWebServiceWorkerStateInstalled;
+      return blink::mojom::ServiceWorkerState::kInstalled;
     case ServiceWorkerVersion::ACTIVATING:
-      return blink::kWebServiceWorkerStateActivating;
+      return blink::mojom::ServiceWorkerState::kActivating;
     case ServiceWorkerVersion::ACTIVATED:
-      return blink::kWebServiceWorkerStateActivated;
+      return blink::mojom::ServiceWorkerState::kActivated;
     case ServiceWorkerVersion::REDUNDANT:
-      return blink::kWebServiceWorkerStateRedundant;
+      return blink::mojom::ServiceWorkerState::kRedundant;
   }
   NOTREACHED() << version->status();
-  return blink::kWebServiceWorkerStateUnknown;
+  return blink::mojom::ServiceWorkerState::kUnknown;
 }
 
 }  // namespace
