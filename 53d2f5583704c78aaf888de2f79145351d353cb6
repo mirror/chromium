@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bd718ef_f25d2afa",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T20:41:46Z",
+      "side": 1,
+      "message": "In review question: shall we remove this, and instead directly observe powerd\u0027 BrightnessChanged?\nPowerEventObserver firstly casts the level from int to double. I don\u0027t know the reason for it.",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
