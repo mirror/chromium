@@ -70,6 +70,24 @@
       "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81db22a_e0282e8f",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-20T23:01:15Z",
+      "side": 1,
+      "message": "Thanks for investigating! That\u0027s a tough situation, but it\u0027s still possible to do scoped metrics like this and keep something equivalent to the do {} while structure for safety. See the SCOPED_HISTOGRAM_TIMER I wrote here:\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros_internal.h?l\u003d166\n\nI\u0027m not sure that is applicable for the trace macros, but might be worth investigating.",
+      "parentUuid": "9ca30f79_f823bf01",
+      "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
