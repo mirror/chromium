@@ -622,6 +622,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   [self updateButtonPositions];
   [self updateButtonOpacity];
   [[containerView_ window] invalidateCursorRectsForView:containerView_];
+  [self redraw];
 }
 
 - (void)containerDragStart:(NSNotification*)notification {
