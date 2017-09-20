@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5606e38d_19adc1f1",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T12:27:48Z",
+      "side": 1,
+      "message": "Yup that\u0027s right. The actual processing code in upcoming CLs will need to update the weak value of this edge.",
+      "parentUuid": "de1db994_59f48b43",
+      "revId": "8087f709b01b90212b31bebb8043eae7979540a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e8c40c_57e30860",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8087f709b01b90212b31bebb8043eae7979540a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455201fd_432554ad",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T12:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e8c40c_57e30860",
+      "revId": "8087f709b01b90212b31bebb8043eae7979540a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
