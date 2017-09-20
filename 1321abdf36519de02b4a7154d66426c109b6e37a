@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f51836_578b41a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-20T08:34:47Z",
+      "side": 1,
+      "message": "destroyed",
+      "range": {
+        "startLine": 14,
+        "startChar": 56,
+        "endLine": 14,
+        "endChar": 65
+      },
+      "revId": "1321abdf36519de02b4a7154d66426c109b6e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a39de3_7980884a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-20T08:34:47Z",
+      "side": 1,
+      "message": "send",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "1321abdf36519de02b4a7154d66426c109b6e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff548e06_c378c705",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-20T08:34:47Z",
+      "side": 1,
+      "message": "destroyed",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "1321abdf36519de02b4a7154d66426c109b6e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255c1f5b_edc1e326",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-20T08:34:47Z",
+      "side": 1,
+      "message": "it\u0027s",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "1321abdf36519de02b4a7154d66426c109b6e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
