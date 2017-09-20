@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f85e67c7_e1b27942",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T22:17:55Z",
+      "side": 1,
+      "message": "Consider adding a todo() about needing to pass the actual policy type rather than a generic Object or string.",
+      "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de55353_1e87cfab",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 3
