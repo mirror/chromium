@@ -164,9 +164,11 @@ class SystemTrayTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(SystemTrayTest);
 };
 
+// Swiping the status area tray or associated bubble in tablet mode has been
+// disabled currently, it may be added back in the future.
 // Swiping on the overlap area of shelf and system tray bubble during the
 // animation should close the bubble.
-TEST_F(SystemTrayTest, SwipingOnShelfDuringAnimation) {
+TEST_F(SystemTrayTest, DISABLED_SwipingOnShelfDuringAnimation) {
   Shelf* shelf = GetPrimaryShelf();
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
@@ -218,8 +220,10 @@ TEST_F(SystemTrayTest, SwipingOnShelfDuringAnimation) {
   }
 }
 
+// Swiping the status area tray or associated bubble in tablet mode has been
+// disabled currently, it may be added back in the future.
 // Swiping on the system tray ends with fling event.
-TEST_F(SystemTrayTest, FlingOnSystemTray) {
+TEST_F(SystemTrayTest, DISABLED_FlingOnSystemTray) {
   Shelf* shelf = GetPrimaryShelf();
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
@@ -288,8 +292,10 @@ TEST_F(SystemTrayTest, FlingOnSystemTray) {
   EXPECT_FALSE(system_tray->HasSystemBubble());
 }
 
+// Swiping the status area tray or associated bubble in tablet mode has been
+// disabled currently, it may be added back in the future.
 // Touch outside the system tray bubble during swiping should close the bubble.
-TEST_F(SystemTrayTest, TapOutsideCloseBubble) {
+TEST_F(SystemTrayTest, DISABLED_TapOutsideCloseBubble) {
   Shelf* shelf = GetPrimaryShelf();
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
@@ -308,8 +314,10 @@ TEST_F(SystemTrayTest, TapOutsideCloseBubble) {
   EXPECT_FALSE(system_tray->HasSystemBubble());
 }
 
+// Swiping the status area tray or associated bubble in tablet mode has been
+// disabled currently, it may be added back in the future.
 // Swiping on the system tray ends with scroll event.
-TEST_F(SystemTrayTest, SwipingOnSystemTray) {
+TEST_F(SystemTrayTest, DISABLED_SwipingOnSystemTray) {
   Shelf* shelf = GetPrimaryShelf();
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
@@ -362,9 +370,11 @@ TEST_F(SystemTrayTest, SwipingOnSystemTray) {
   EXPECT_FALSE(system_tray->HasSystemBubble());
 }
 
+// Swiping the status area tray or associated bubble in tablet mode has been
+// disabled currently, it may be added back in the future.
 // Tests for swiping down on an open system tray bubble in order to
 // close it.
-TEST_F(SystemTrayTest, SwipingOnSystemTrayBubble) {
+TEST_F(SystemTrayTest, DISABLED_SwipingOnSystemTrayBubble) {
   Shelf* shelf = GetPrimaryShelf();
   SystemTray* system_tray = GetPrimarySystemTray();
   EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, shelf->alignment());
