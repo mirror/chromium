@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0872116d_44a7314d",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T15:47:44Z",
+      "side": 1,
+      "message": "Ahh you are right. \nI think the proper way to do this is flip it a bit and do:\n{\n  const AllocatorDispatch* const next \u003d self-\u003enext;\n  void* new_addr \u003d next-\u003erealloc_function(next, address, size, context);\n\n  if (size \u003d\u003d 0 || new_addr !\u003d address)\n   FreedObjectTracker::GetInstance()-\u003eRemoveAllocation(address);\n  return new_addr; \n}\n\nI am saying this because I saw way more reallocs than what I was expecting in chrome (some libraries use that systematically just to malloc()).\nSo I fear that if you always assume this is a free you might end u w/ lot of false positives",
+      "parentUuid": "0ab06576_44f7b765",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7034d31b_54931945",
         "filename": "base/trace_event/freed_object_tracker.cc",
         "patchSetId": 7
