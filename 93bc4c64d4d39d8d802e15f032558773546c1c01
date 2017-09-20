@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7087bd_0022a64b",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-20T22:11:11Z",
+      "side": 1,
+      "message": "Similarly, maybe just IsMetricsConsentGiven()",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 44
+      },
+      "revId": "93bc4c64d4d39d8d802e15f032558773546c1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913dac81_91e52c69",
+        "filename": "components/metrics_services_manager/metrics_services_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-20T22:11:11Z",
+      "side": 1,
+      "message": "Maybe this should just be metrics_consent?",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "93bc4c64d4d39d8d802e15f032558773546c1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
