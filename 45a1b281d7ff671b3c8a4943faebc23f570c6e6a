@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b75aee39_15290847",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T21:26:18Z",
+      "side": 1,
+      "message": "\u003e I meant to keep this instance on the side of callsite, not passing it WebContents using object holder. The only data that WebContents needs to manage JavaBridgetHostDispatcher is retained object. In this CL WebView also keeps track of the injected objects so that it can migrate them from one to another by itself, rather than getting them back from WebContents.getJavascriptInterfaces() which I removed in this CL.\n\nThat was my original comment. mJavascriptInterfaces is an implementation detail of js interface, so it should not cross the content api boundary. Either you are moving js interface from CVC to WC, in which case this should be in WC, or you can consider moving the entire js interface implementation to webview, although I\u0027m not sure if all the native hooks are there",
+      "parentUuid": "5a0e944a_1b133431",
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2cbd643_484a29f5",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 21
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "In this CL, object holder is just a vehicle of the objects it holds. WebContents doesn\u0027t keep a reference to the holder itself. Only the entries, once pulled out, are kept and referenced weakly. My intention is to have embedder responsible for the ownership of them to guarantee they are not garbage-collected, and dispose once they\u0027re out of use.",
       "parentUuid": "69d3abc3_3d0e171b",
+      "range": {
+        "startLine": 480,
+        "startChar": 25,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f693079_3b3911a0",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T21:26:18Z",
+      "side": 1,
+      "message": "\u003e In this CL, object holder is just a vehicle of the objects it holds. WebContents doesn\u0027t keep a reference to the holder itself. Only the entries, once pulled out, are kept and referenced weakly. My intention is to have embedder responsible for the ownership of them to guarantee they are not garbage-collected, and dispose once they\u0027re out of use.\n\nEmbedder can own the map, but it should not know what\u0027s in that map.\n\nAnd when WebContents wants to insert something into the map, it needs to update embedder for the map again, which doesn\u0027t work with a setter",
+      "parentUuid": "a42f3ae6_ce95ad4c",
       "range": {
         "startLine": 480,
         "startChar": 25,
