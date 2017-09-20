@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3b17028_15cc474a",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T23:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b55abe4_65c45b9c",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89320959_f3949dbf",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T22:08:06Z",
       "side": 1,
       "message": "Nit(optional): It is common to name the 1st param of the reduce() callback |soFar| as an indication that it is the accumulated value so far in the iteration.\n\nAlso (optional too): \n.reduce((soFar, dests) \u003d\u003e soFar.concat(dests));",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad8659a_981d1b2c",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T23:37:42Z",
+      "side": 1,
+      "message": "See comment below.",
+      "parentUuid": "89320959_f3949dbf",
       "revId": "2553993366993fe9a6298409d4293650636cab5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a9d18b2_6a677286",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T23:37:42Z",
+      "side": 1,
+      "message": "Changed the parser to return either an array or a single destination, and modified insertDestinations_ to take either. This should prevent the process of making an array of arrays and then reducing it in cases where it is not needed - let me know if you think it looks better. I can revert back to this (with suggested modifications) if not.",
+      "parentUuid": "e32a5a12_03589e86",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5962726f_086ea21d",
         "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "2553993366993fe9a6298409d4293650636cab5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4004cf1c_edff1db2",
+        "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T23:37:42Z",
+      "side": 1,
+      "message": "Done.\n\nYes, we use them for the capabilities functions. Plan to stop exporting them in a future CL that refactors these capabilities functions.",
+      "parentUuid": "5962726f_086ea21d",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
