@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab8b1fc_dcc3cebf",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-20T21:26:04Z",
+      "side": 1,
+      "message": "I don\u0027t think Canary is public, maybe we should recommend dev or beta. Or is there anything else we could also suggest trying?",
+      "revId": "e7c766717cc1099dadb7f318522e0f78dd4a1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
