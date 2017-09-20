@@ -1,0 +1,238 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "516c6cd5_d7daa2a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Link to design doc.",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7064fb_ec5c226e",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Move this last (the important bit is that people most likely forgot MayBlock()). I would even consider dropping this sentence altogether (should be rare and people can figure it out and mentioning it probably will add confusion for most devs as to what to do).\n\nHow about something like:\n\n         \"Function marked as blocking was called from a scope that disallows \"\n         \"blocking! If this task is running inside the \"\n         \"TaskScheduler, it needs to have MayBlock() in its TaskTraits. Otherwise, \"\n         \"consider making this blocking work asynchronous or, as a last resort, you may use \"\n         \"ScopedAllowBlocking in a narrow scope.\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61eae539_60036f24",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Doesn\u0027t blocking follow the same pattern as waiting in that threads that don\u0027t want it never want it (until shutdown say where they can have a ScopedAllow in the scope where shutdown does synchronous writes on main thread?)\n\nIn other words, do we need ScopedDisallowBlocking() or merely DisallowBlocking()?",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6a933b_0be6b37a",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "was_disallowed? (here and below)",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b6acec_3f764651",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "// This can only be instantiated by friends. Use ScopedAllowBlockingForTesting in unit tests instead to avoid the friend requirement.",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a8d92b_cbbc3e48",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "nit: I prefer \"\u003d default;\" when possible",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3d3534_8de59ec4",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "double-space indentation (here and below)",
+      "range": {
+        "startLine": 212,
+        "startChar": 3,
+        "endLine": 212,
+        "endChar": 4
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453cc77e_b396c42c",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Add presubmit against ThreadRestrictions usage",
+      "range": {
+        "startLine": 311,
+        "startChar": 18,
+        "endLine": 311,
+        "endChar": 36
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ffe4dd_9985f862",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "nit: I prefer to have the paragraphs the other way around, i.e.\n\n// Constructing a ScopedAllowIO...\n// ...\n//\n// DEPRECATED. ...\n\nThat way the DEPRECATED comment is as close as possible to the method decl.",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b71acc_c271666a",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Instead of a separate thread in each test, how about a fixture that calls base::ResetThreadRestrictionsForTesting() at the end of each test?",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b67097_c2c6e44f",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this should be allowed outside scope of ScopedAllowBSP?",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c7a65c_f7608a9d",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:00:19Z",
+      "side": 1,
+      "message": "Put EXPECT_DCHECK_DEATH() on specific statement that should DCHECK instead of wrapping all calls.",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
