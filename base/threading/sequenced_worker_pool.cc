@@ -742,8 +742,11 @@ bool SequencedWorkerPool::Inner::PostTask(
       sequenced.sequence_token_id = LockedGetNamedTokenID(*optional_token_name);
 
     if (g_all_pools_state == AllPoolsState::REDIRECTED_TO_TASK_SCHEDULER) {
-      if (!PostTaskToTaskScheduler(std::move(sequenced), delay))
+      LOG(ERROR) << "in REDIRECTED case";
+      if (!PostTaskToTaskScheduler(std::move(sequenced), delay)) {
+        LOG(ERROR) << "PostTaskToTaskScheduler failed";
         return false;
+      }
     } else {
       SequencedWorkerPool::WorkerShutdown shutdown_behavior =
           sequenced.shutdown_behavior;
@@ -755,6 +758,10 @@ bool SequencedWorkerPool::Inner::PostTask(
       create_thread_id = PrepareToStartAdditionalThreadIfHelpful();
     }
   }
+
+  LOG(ERROR) << "in PostTask here:"
+             << (optional_token_name ? *optional_token_name : "<no token name>")
+             << ", thread_name_prefix_=" << thread_name_prefix_;
 
   // Use != REDIRECTED_TO_TASK_SCHEDULER instead of == USE_WORKER_POOL to ensure
   // correct behavior if a task is posted to a SequencedWorkerPool before
@@ -848,6 +855,8 @@ SequencedWorkerPool::Inner::GetTaskSchedulerTaskRunner(
   // same shutdown behavior.
 
   if (!task_runner) {
+    LOG(ERROR) << "GetTaskSchedulerTaskRunner creating a task runner, "
+               << sequence_token_id;
     task_runner = sequence_token_id
                       ? CreateSequencedTaskRunnerWithTraits(traits)
                       : CreateTaskRunnerWithTraits(traits);
@@ -893,10 +902,14 @@ void SequencedWorkerPool::Inner::CleanupForTesting() {
   DCHECK_NE(g_all_pools_state, AllPoolsState::REDIRECTED_TO_TASK_SCHEDULER);
   AutoLock lock(lock_);
   CHECK_EQ(CLEANUP_DONE, cleanup_state_);
-  if (shutdown_called_)
+  if (shutdown_called_) {
+    LOG(ERROR) << "CleanupForTesting exited because shutdown_called_, " << this;
     return;
-  if (pending_tasks_.empty() && waiting_thread_count_ == threads_.size())
+  }
+  if (pending_tasks_.empty() && waiting_thread_count_ == threads_.size()) {
+    LOG(ERROR) << "CleanupForTesting exited because second thing, " << this;
     return;
+  }
   cleanup_state_ = CLEANUP_REQUESTED;
   cleanup_idlers_ = 0;
   has_work_cv_.Signal();
@@ -1582,6 +1595,7 @@ void SequencedWorkerPool::FlushForTesting() {
   base::ThreadRestrictions::ScopedAllowWait allow_wait;
   if (g_all_pools_state == AllPoolsState::REDIRECTED_TO_TASK_SCHEDULER) {
     // TODO(gab): Remove this if http://crbug.com/622400 fails.
+    LOG(ERROR) << "Redirected to task scheduler flush";
     TaskScheduler::GetInstance()->FlushForTesting();
   } else {
     inner_->CleanupForTesting();
