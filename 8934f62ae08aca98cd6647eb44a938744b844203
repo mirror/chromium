@@ -22,6 +22,30 @@
       "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea3871b_cd702f8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T00:31:06Z",
+      "side": 1,
+      "message": "In looking at the test failures, I suspect this is causing issues. There are instances where we set the sheet content prior to opening Chrome Home e.g. when tapping \"show full history\" on the recent tabs page.\n\nWith mDefaultContentInitialized \u003d false, I think the content is being set to history (for example) then reset to suggestions in #onSheetOpen()\u0027s call to initializeDefaultContent().\n\nThe concept of mDefaultContentInitialized needs to be rethought a bit in this model where suggestions is destroyed every time the sheet is closed.",
+      "parentUuid": "0c6aad84_85187b0e",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 51
+      },
+      "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
