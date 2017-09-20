@@ -11,28 +11,27 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import org.chromium.base.CommandLine;
 import org.junit.Before;
 import org.robolectric.shadows.ShadowLog;
+
+import org.chromium.base.CommandLine;
 
 /**
  * Robolectric test base class for ChromeMediaRouter.
  */
 public class ChromeMediaRouterTestBase {
     protected static final String SOURCE_ID1 = new StringBuilder()
-            .append("https://google.com/cast#")
-            .append("__castAppId__=CCCCCCCC/")
-            .append("__castClientId__=11111111111111111/")
-            .append("__castAutoJoinPolicy__=origin_scoped/")
-            .append("__castLaunchTimeout__=10000")
-            .toString();
+                                                       .append("cast:CCCCCCCC?")
+                                                       .append("clientId=11111111111111111&")
+                                                       .append("autoJoinPolicy=origin_scoped&")
+                                                       .append("launchTimeout=10000")
+                                                       .toString();
     protected static final String SOURCE_ID2 = new StringBuilder()
-            .append("https://google.com/cast#")
-            .append("__castAppId__=CCCCCCCC/")
-            .append("__castClientId__=222222222222222222/")
-            .append("__castAutoJoinPolicy__=origin_scoped/")
-            .append("__castLaunchTimeout__=10000")
-            .toString();
+                                                       .append("cast:CCCCCCCC?")
+                                                       .append("clientId=222222222222222222&")
+                                                       .append("autoJoinPolicy=origin_scoped&")
+                                                       .append("castLaunchTimeout=10000")
+                                                       .toString();
     protected static final String SINK_ID1 = new StringBuilder()
             .append("com.google.android.gms/")
             .append(".cast.media.MediaRouteProviderService:cccccccccccccccccccccccccccccccc")
