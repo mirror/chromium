@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fecac3_8b7949ef",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-20T14:43:07Z",
+      "side": 1,
+      "message": "the big open question in my mind is this device.  Can we create a bug for getting this up on the fyi waterfall and link it to this CL?",
+      "revId": "2591a2dac6ea742d162d8b176dcd872e9df11037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb9b3d3_06ce605f",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-20T14:43:07Z",
+      "side": 1,
+      "message": "update this to the new \"run_multiple_telemetry_benchmarks_as_googletest.py\"",
+      "revId": "2591a2dac6ea742d162d8b176dcd872e9df11037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ab4ad0_cf6f331f",
+        "filename": "testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-20T14:43:07Z",
+      "side": 1,
+      "message": "is there a way to do a diff here with the original test file as its base?",
+      "revId": "2591a2dac6ea742d162d8b176dcd872e9df11037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbe5014_3ae03334",
+        "filename": "testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-20T14:43:07Z",
+      "side": 1,
+      "message": "I would actually note in the comments that this file is derived from run_telemetry_benchmark_as_googletest.py.",
+      "revId": "2591a2dac6ea742d162d8b176dcd872e9df11037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adaf264c_eb39aeae",
+        "filename": "testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-20T14:43:07Z",
+      "side": 1,
+      "message": "Please add a comment here that notes two things, just in case people miss this in the code: \n\n1) We aren\u0027t doing anything in this script to deal with type of output -- ie chratjson, legacy or histogram.  This is just a pass through\n\n2) Note what the output on the swarming bot will look like, ie two files per benchmark that is run with the file path /path/on/sawrming/bot/benchmark_name/perf_results.json and ....../test_results.json.  I just want to be explicit that we are relying on that file path in swarming to be able to grep these files and I don\u0027t want someone to accidentally change the structure without realizing the api that we are assuming.",
+      "revId": "2591a2dac6ea742d162d8b176dcd872e9df11037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
