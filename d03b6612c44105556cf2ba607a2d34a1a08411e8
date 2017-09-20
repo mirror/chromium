@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c361902_be99e075",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6093,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-20T08:07:10Z",
+      "side": 1,
+      "message": "Err this was actually totally unnecessary, might have been a copy/paste fail. Removed.",
+      "parentUuid": "7835be45_780fd103",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2be30cc2_d101308e",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T07:17:01Z",
       "side": 1,
       "message": "Can we use a file for this? Alternatively, can/should we update the files so we can use CreateCertificateChainFromFile() instead and store these certs in the file?",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b4d879_429fa049",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-20T08:07:10Z",
+      "side": 1,
+      "message": "I moved it to a file in net/data/ssl/certificates. Is there a nice way to use it directly from net/data/ssl/symantec/roots without having to copy it into net/data/ssl/certificates?",
+      "parentUuid": "2be30cc2_d101308e",
       "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470afc42_2c165329",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-20T08:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ef692d_da2bc88d",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
