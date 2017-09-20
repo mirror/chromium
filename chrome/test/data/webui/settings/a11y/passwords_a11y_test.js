@@ -32,20 +32,8 @@ AccessibilityTest.define('SettingsA11yManagePasswords', {
   passwordManager: null,
   /** @type {PasswordsSectionElement}*/
   passwordsSection: null,
-  // TODO(hcarmona): Create function that overrides defaults to simplify this.
-  axeOptions: Object.assign({}, SettingsAccessibilityTest.axeOptions, {
-    'rules': Object.assign({}, SettingsAccessibilityTest.axeOptions.rules, {
-      // TODO(hcarmona): Investigate flakyness and enable these tests.
-      // Disable rules flaky for CFI build.
-      'meta-viewport': {enabled: false},
-      'list': {enabled: false},
-      'frame-title': {enabled: false},
-      'label': {enabled: false},
-      'hidden-content': {enabled: false},
-      'aria-valid-attr-value': {enabled: false},
-      'button-name': {enabled: false},
-    }),
-  }),
+  /** @override */
+  axeOptions: SettingsAccessibilityTest.axeOptions,
   /** @override */
   setup: function() {
     return new Promise((resolve) => {
