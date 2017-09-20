@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33259ade_be12017b",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-20T22:24:17Z",
+      "side": 1,
+      "message": "I think this is not quite what you want.  This will store one GpuVideoAcceleratorFactories instance in the callback, which as soon as you lose the context will continue returning null for the context provider.\n\nI think that inside the callback you need to ask for a new factory every time and then return its media context provider.  If the context hasn\u0027t been lost, it should give you the same factory and the same context provider.",
+      "revId": "20f781f972a5803b181ebe9a1cec05205d972278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7621ff_c9feac85",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-20T22:24:17Z",
+      "side": 1,
+      "message": "For simplicity, could use a lambda here (and elsewhere) that returns nullptr instead of creating separate functions.",
+      "revId": "20f781f972a5803b181ebe9a1cec05205d972278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
