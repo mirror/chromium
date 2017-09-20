@@ -76,7 +76,8 @@ class ASH_EXPORT TabletPowerButtonController
   // Ignore button-up events occurring within this many milliseconds of the
   // previous button-up event. This prevents us from falling behind if the power
   // button is pressed repeatedly.
-  static constexpr int kIgnoreRepeatedButtonUpMs = 500;
+  static constexpr base::TimeDelta kIgnoreRepeatedButtonUpDelay =
+      base::TimeDelta::FromMilliseconds(500);
 
   TabletPowerButtonController(PowerButtonDisplayController* display_controller,
                               base::TickClock* tick_clock);
