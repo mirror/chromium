@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d977524c_26e113a8",
+        "filename": "third_party/WebKit/Source/core/frame/Intervention.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-09-20T01:55:18Z",
+      "side": 1,
+      "message": "Right, that was a draft for something later. Removed.",
+      "parentUuid": "6e9984cd_2cd40756",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2cd8088_35639de6",
         "filename": "third_party/WebKit/Source/core/frame/Intervention.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dbbaa37c_050084a6",
+        "filename": "third_party/WebKit/Source/core/frame/Intervention.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-09-20T01:55:18Z",
+      "side": 1,
+      "message": "I don\u0027t think they need to be, looking at how Deprecation.h is laid out.",
+      "parentUuid": "a2cd8088_35639de6",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c3baeeb_9de8e834",
         "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T21:23:44Z",
       "side": 1,
       "message": "This class looks identical to DeprecationReport, can we merge or at least share some logic between them?",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e4c9af_6d678201",
+        "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-09-20T01:55:18Z",
+      "side": 1,
+      "message": "So... yeah, they are identical as of this patch, but Deprecation is going to have have at least one more field added, and Intervention could change in the future as well. I will look into a refactor of the common fields and functions in a future patch, but there is also the matter of crash reports, which have nothing in common with Deprecation/Intervention (which is the reason that the common fields are not in ReportBody currently).",
+      "parentUuid": "5c3baeeb_9de8e834",
       "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
