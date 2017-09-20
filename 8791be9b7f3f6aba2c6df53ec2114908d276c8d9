@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331fae4b_d5ab640f",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T23:20:39Z",
+      "side": 1,
+      "message": "(This block of code was moved; shouldn\u0027t otherwise be changed)",
+      "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
