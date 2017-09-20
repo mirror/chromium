@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b4a7f8_96b3ed30",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T22:53:55Z",
+      "side": 1,
+      "message": "It looks like (other than testing) this function is called with a statically defined value to choose between three function bodies. Would it be reasonable to have three functions instead?\n\nOr if this is really better as a const arg and a switch, please tell me more about that.",
+      "revId": "c8d46238e6cd9e87537ea3a686daf8dd1b14e48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
