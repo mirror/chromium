@@ -101,6 +101,30 @@
     },
     {
       "key": {
+        "uuid": "27b82b50_e746505a",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T20:46:37Z",
+      "side": 1,
+      "message": "This (theoretical) situation is not racy:\n\nCreate pool A\nPost task to pool A\nCreate pool B\nStart pool A\nStart pool B",
+      "parentUuid": "76b2e4ef_bb9b817c",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71c3ea83_e540078e",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 24
