@@ -22,6 +22,30 @@
       "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8051a3_cfd12d0b",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_deviceconnect.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-20T22:22:11Z",
+      "side": 1,
+      "message": "I think they\u0027re a noop if not wrapped in a test step...",
+      "parentUuid": "44b587f7_bff87431",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
