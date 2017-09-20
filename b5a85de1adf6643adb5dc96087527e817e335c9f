@@ -16,6 +16,24 @@
       "revId": "b5a85de1adf6643adb5dc96087527e817e335c9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9603098a_d8394be7",
+        "filename": "third_party/WebKit/Source/core/page/DragControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-20T23:54:15Z",
+      "side": 1,
+      "message": "Yeah, the height does decrease from 20 to 15.\n\nIn the first test (212-213), the selection rect is moving around inside the viewport so no clipping occurs. In this test, the selection rect is moved enough that it starts to get occluded by the viewport. The selection rect doesn\u0027t change position but the top 5px gets chopped off so the new y positiion moves from 5 to 10px, and the height shrinks from 20 to 15px.",
+      "parentUuid": "b796c5ee_bb88d7e6",
+      "revId": "b5a85de1adf6643adb5dc96087527e817e335c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
