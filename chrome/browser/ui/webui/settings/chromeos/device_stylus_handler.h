@@ -46,6 +46,7 @@ class StylusHandler : public ::settings::SettingsPageUIHandler,
   void OnDeviceListsComplete() override;
 
  private:
+  void RegisterObservers();
   void UpdateNoteTakingApps();
   void RequestApps(const base::ListValue* unused_args);
   void SetPreferredNoteTakingApp(const base::ListValue* args);

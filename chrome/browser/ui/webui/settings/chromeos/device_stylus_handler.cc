@@ -28,7 +28,9 @@ constexpr char kAppLockScreenSupportKey[] = "lockScreenSupport";
 
 }  // namespace
 
-StylusHandler::StylusHandler() : note_observer_(this), input_observer_(this) {}
+StylusHandler::StylusHandler() : note_observer_(this), input_observer_(this) {
+  RegisterObservers();
+}
 
 StylusHandler::~StylusHandler() = default;
 
@@ -55,13 +57,20 @@ void StylusHandler::RegisterMessages() {
 }
 
 void StylusHandler::OnJavascriptAllowed() {
-  note_observer_.Add(NoteTakingHelper::Get());
-  input_observer_.Add(ui::InputDeviceManager::GetInstance());
+  if (!note_observer_.IsObservingSources() &&
+      !input_observer_.IsObservingSources()) {
+    RegisterObservers();
+  }
 }
 
 void StylusHandler::OnJavascriptDisallowed() {
   note_observer_.RemoveAll();
   input_observer_.RemoveAll();
+}
+
+void StylusHandler::RegisterObservers() {
+  note_observer_.Add(NoteTakingHelper::Get());
+  input_observer_.Add(ui::InputDeviceManager::GetInstance());
 }
 
 void StylusHandler::OnAvailableNoteTakingAppsUpdated() {
