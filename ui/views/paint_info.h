@@ -34,9 +34,15 @@ class VIEWS_EXPORT PaintInfo {
   };
 
   // Instantiates a root PaintInfo. This should only be initialized at the Paint
-  // root, ie., a layer or the root of a widget.
+  // root, the root of a widget.
   static PaintInfo CreateRootPaintInfo(const ui::PaintContext& root_context,
                                        const gfx::Size& size);
+
+  // Instantiates a layer PaintInfo. This should only be initialized
+  // at the View::::OnPaintLayer when necessary. |child_bounds| is the
+  // mirrored bounds of the view that owns the layer.
+  static PaintInfo CreateLayerPaintInfo(const ui::PaintContext& root_context,
+                                        const gfx::Rect& child_bounds);
 
   // Instantiate a child PaintInfo instance. All bounds for this object are
   // relative to its root PaintInfo.
@@ -83,6 +89,7 @@ class VIEWS_EXPORT PaintInfo {
   friend class PaintInfoTest;
 
   PaintInfo(const ui::PaintContext& root_context, const gfx::Size& size);
+  PaintInfo(const ui::PaintContext& root_context, const gfx::Rect& bounds);
   PaintInfo(const PaintInfo& parent_paint_info,
             const gfx::Rect& bounds,
             const gfx::Size& parent_size,
