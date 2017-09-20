@@ -11,6 +11,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/test/fake_arc_session.h"
 #include "components/arc/test/fake_voice_interaction_framework_instance.h"
