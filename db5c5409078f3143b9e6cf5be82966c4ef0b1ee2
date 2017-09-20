@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c135288_082c8056",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca667034_c5769491",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee14e729_76d5d44c",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c0172d04_00895ada",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee14e729_76d5d44c",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03244cc1_49c538bd",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T16:01:28Z",
       "side": 1,
       "message": "Is this path used for display-allocated resources?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441147c3_c498ac39",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Currently not. Will remove it.\n\nIn ResourceProvider::CreateResource, it will create different ResourceType based on settings_.default_resource_type. ResourceType can be RESOURCE_TYPE_GPU_MEMORY_BUFFER or RESOURCE_TYPE_GL_TEXTURE or CreateBitmapResource\n\nBut default_resource_type is always false on DisplayResourceProvider ( resource_settings.use_gpu_memory_buffer_resources is always false).  So here no RESOURCE_TYPE_GPU_MEMORY_BUFFER.",
+      "parentUuid": "03244cc1_49c538bd",
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a0555ff2_b3dbbe4d",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04dd01b_ad57c6e6",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae1d5a34_068959c0",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d7ac83b6_dce789f8",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1d5a34_068959c0",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ef3416_01111f17",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-19T16:01:28Z",
       "side": 1,
       "message": "Is this hint used by display-allocated resources?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8aa5e2_e16e4713",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "No, only TEXTURE_HINT_DEFAULT is used by local Resource in Display. Will remove it.",
+      "parentUuid": "77ef3416_01111f17",
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b7aa8a19_ba4d13ca",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27a46f0_4a96d741",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68579912_574b828e",
         "filename": "cc/resources/display_resource_provider.h",
         "patchSetId": 21
@@ -135,6 +261,24 @@
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467f88be_39d3c391",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68579912_574b828e",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fa2ef089_23f97335",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b72fa421_2c053767",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a72121ce_064d780e",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 21
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-19T16:01:28Z",
       "side": 1,
       "message": "no const on a bool argument (this repeats)\n\nwhat calls this with local\u003dtrue?",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11d4c8a_17fc6c95",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "The call stack for local true:\nResourceProvider::CreateGpuResource\nResourceProvider::CreateResource\nScopedResource::Allocate\nGLRenderer::GetBackdropTexture",
+      "parentUuid": "a72121ce_064d780e",
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "0612457e_3eb8ec59",
+        "filename": "cc/resources/scoped_resource.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3e21a0_b985e0fc",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bee9a90_6f10f649",
         "filename": "cc/resources/scoped_resource.cc",
         "patchSetId": 21
@@ -217,6 +415,24 @@
       "writtenOn": "2017-09-19T16:01:28Z",
       "side": 1,
       "message": "I\u0027m not sure what problem storing local on the ScopedResource is solving. Like you said, maybe we don\u0027t need it on the ResourceProvider::Resource at all. But why do we need it here either? I don\u0027t see it being used.",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e53648_168aa4d5",
+        "filename": "cc/resources/scoped_resource.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "It is used here: https://chromium-review.googlesource.com/c/chromium/src/+/664483/21/components/viz/service/display/gl_renderer.cc#1276.\n\nIn GLRenderer::UpdateRPDQWithSkiaFilters, it will handle both local resource and remote resource. I use this flag to distinguish them.",
+      "parentUuid": "2bee9a90_6f10f649",
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "064bd6c9_59851b3c",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "So that both local and remote can be wrapped.",
+      "parentUuid": "683a3add_69bb9851",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa732408_dd77855d",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 21
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "a262fd4a_4d35f6e6",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "For \"make local resources look just like non-local resources but ...\":\nAre you suggesting create a new type of cc::ResourceProivder::LocalResource? So that local resource and remote have different read/write api? \n\nI agree there is refine opportunity here. \nAnd if you look into GLRenderer::DrawRenderPassQuad, it did the similar things: \nFirst, make remote resource and local source as cc::Resource\n1), TileDrawQuad \u003d\u003d\u003e cc::Resource\n2), render_pass_textures_ \u003d\u003d\u003e cc::ScopedResource\nSecond, handle the above two cc::Resource with the same GLRenderer::DrawRenderPassQuadInternal\n\n\nFor LazyAllocate: yes, LazyAllocate seems not helpful, removed it.",
+      "parentUuid": "fa732408_dd77855d",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ed39aa8_5894ff94",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 21
@@ -268,6 +520,24 @@
       "writtenOn": "2017-09-19T16:01:28Z",
       "side": 1,
       "message": "How would a RenderPass texture not be local? This points at the non-type-safety we\u0027re introducing where it\u0027s very easy to use the wrong thing and it\u0027s hard to tell what you\u0027ve got..",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606988d5_b03757b2",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T11:50:02Z",
+      "side": 1,
+      "message": "params.contents_texture has two sources: render_pass_bypass_quads_ and render_pass_textures_.\n\nFor render_pass_textures_, all are local. For render_pass_bypass_quads_, no.",
+      "parentUuid": "4ed39aa8_5894ff94",
       "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
