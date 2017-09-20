@@ -43,7 +43,7 @@ public class AccountManagerFacadeTest {
         mDelegate = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.ENABLE_PROFILE_DATA_SOURCE);
         Assert.assertFalse(mDelegate.isRegisterObserversCalled());
-        AccountManagerFacade.overrideAccountManagerFacadeForTests(context, mDelegate);
+        AccountManagerFacade.overrideAccountManagerFacadeForTests(mDelegate);
         Assert.assertTrue(mDelegate.isRegisterObserversCalled());
         mHelper = AccountManagerFacade.get();
     }

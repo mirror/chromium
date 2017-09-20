@@ -69,7 +69,7 @@ public class PasswordViewingTypeTest {
     private void setupTestAccount(Context context) {
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
-        AccountManagerFacade.overrideAccountManagerFacadeForTests(context, mAccountManager);
+        AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
         mAccount = AccountManagerFacade.createAccountFromName("account@example.com");
         AccountHolder.Builder accountHolder =
                 AccountHolder.builder(mAccount).password("password").alwaysAccept(true);
