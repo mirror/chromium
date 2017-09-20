@@ -17,6 +17,10 @@ public class SiteSuggestion {
     /** The path to the icon image file for whitelisted tile, empty string otherwise. */
     public final String whitelistIconPath;
 
+    /** The generated tile's name originated from this {@code TileNameSource}. */
+    @TileNameSource
+    public final int nameSource;
+
     /** the {@code TileSource} that generated the tile. */
     @TileSource
     public final int source;
@@ -25,12 +29,13 @@ public class SiteSuggestion {
     @TileSectionType
     public final int sectionType;
 
-    public SiteSuggestion(
-            String title, String url, String whitelistIconPath, int source, int sectionType) {
+    public SiteSuggestion(String title, String url, String whitelistIconPath, int nameSource,
+            int source, int sectionType) {
         this.title = title;
         this.url = url;
         this.whitelistIconPath = whitelistIconPath;
         this.source = source;
+        this.nameSource = nameSource;
         this.sectionType = sectionType;
     }
 
@@ -42,6 +47,7 @@ public class SiteSuggestion {
         SiteSuggestion that = (SiteSuggestion) o;
 
         if (source != that.source) return false;
+        if (nameSource != that.nameSource) return false;
         if (!title.equals(that.title)) return false;
         if (!url.equals(that.url)) return false;
         return whitelistIconPath.equals(that.whitelistIconPath);
@@ -53,6 +59,7 @@ public class SiteSuggestion {
         result = 31 * result + url.hashCode();
         result = 31 * result + whitelistIconPath.hashCode();
         result = 31 * result + source;
+        result = 31 * result + nameSource;
         return result;
     }
 }

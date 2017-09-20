@@ -134,8 +134,8 @@ public class TileGridLayoutTest {
         }
 
         siteSuggestions.add(homePagePosition,
-                new SiteSuggestion("HOMEPAGE", HOME_PAGE_URL, "", TileSource.HOMEPAGE,
-                        TileSectionType.PERSONALIZED));
+                new SiteSuggestion("HOMEPAGE", HOME_PAGE_URL, "", TileNameSource.TITLE,
+                        TileSource.HOMEPAGE, TileSectionType.PERSONALIZED));
 
         FakeMostVisitedSites mMostVisitedSites = new FakeMostVisitedSites();
         mMostVisitedSites.setTileSuggestions(siteSuggestions);
