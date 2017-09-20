@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "82457ace_60d3ede8",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-20T09:14:17Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "28d3a94300352208bf1dce3c359ec9d96b21d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6767ab8a_8389aaa8",
         "filename": "ios/chrome/browser/ui/util/named_guide.h",
         "patchSetId": 1
