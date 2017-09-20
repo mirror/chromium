@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3764b3_daf7c52d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutMedia.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-20T22:57:22Z",
+      "side": 1,
+      "message": "WDYM? Is it because of the checks above or is your new code making this assumption?",
+      "revId": "0c4c7e5a43fafbad903c8e95ef156135e7c49882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
