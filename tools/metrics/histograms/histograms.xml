@@ -85471,6 +85471,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="UMA.StatisticsRecorder.PrepareDeltas.Omit" units="%">
+  <owner>asvitkine@chromium.org</owner>
+  <owner>bcwhite@chromium.org</owner>
+  <summary>
+    Records what percentage of histograms were omitted from an upload in order
+    to try not to exceed bandwitdth limitations, typically on cellular networks.
+  </summary>
+</histogram>
+
 <histogram name="UMA.StoreLogsTime" units="ms">
   <obsolete>
     Deprecated as of August 2015. The histograms showed no unexpected slowness,

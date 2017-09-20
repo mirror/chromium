@@ -176,28 +176,42 @@ TEST(DataUseTrackerTest, CheckComputeTotalDataUse) {
   EXPECT_EQ(4 * 50, uma_data_use);
 }
 
-TEST(DataUseTrackerTest, CheckShouldUploadLogOnCellular) {
+TEST(DataUseTrackerTest, GetUploadReductionPercent) {
   TestDataUsePrefService local_state;
   FakeDataUseTracker data_use_tracker(&local_state);
   local_state.ClearDataUsePrefs();
   SetPrefTestValuesOverRatio(&local_state);
 
-  bool can_upload = data_use_tracker.ShouldUploadLogOnCellular(50);
-  EXPECT_TRUE(can_upload);
-  can_upload = data_use_tracker.ShouldUploadLogOnCellular(100);
-  EXPECT_TRUE(can_upload);
-  can_upload = data_use_tracker.ShouldUploadLogOnCellular(150);
-  EXPECT_FALSE(can_upload);
+  // Test values are at 100 of 200 weekly quota.
+  EXPECT_EQ(0, data_use_tracker.GetUploadReductionPercent());
 
-  local_state.ClearDataUsePrefs();
-  SetPrefTestValuesValidRatio(&local_state);
-  can_upload = data_use_tracker.ShouldUploadLogOnCellular(100);
-  EXPECT_TRUE(can_upload);
-  // this is about 0.49%
-  can_upload = data_use_tracker.ShouldUploadLogOnCellular(200);
-  EXPECT_TRUE(can_upload);
-  can_upload = data_use_tracker.ShouldUploadLogOnCellular(300);
-  EXPECT_FALSE(can_upload);
+  // Another 100 brings to the edge of weekly quota.
+  data_use_tracker.UpdateMetricsUsagePrefs("UMA", 100, true);
+  EXPECT_EQ(0, data_use_tracker.GetUploadReductionPercent());
+
+  // Well over the ratio (40% vs 5%) so full reduction.
+  data_use_tracker.UpdateMetricsUsagePrefs("UKM", 1, true);
+  EXPECT_EQ(90, data_use_tracker.GetUploadReductionPercent());
+
+  // Record other data so about 4% (30% between 2.5% to 7.5%).
+  data_use_tracker.UpdateMetricsUsagePrefs("foo", 4500, true);
+  EXPECT_EQ(30, data_use_tracker.GetUploadReductionPercent());
+
+  // Record other data so about 2%.
+  data_use_tracker.UpdateMetricsUsagePrefs("foo", 5000, true);
+  EXPECT_EQ(0, data_use_tracker.GetUploadReductionPercent());
+
+  // Bring UMA data up to 2.5%.
+  data_use_tracker.UpdateMetricsUsagePrefs("UMA", 51, true);
+  EXPECT_EQ(0, data_use_tracker.GetUploadReductionPercent());
+
+  // Bring UMA data up to 6.5% (80% between 2.5% to 7.5%).
+  data_use_tracker.UpdateMetricsUsagePrefs("UKM", 430, true);
+  EXPECT_EQ(80, data_use_tracker.GetUploadReductionPercent());
+
+  // cellular=false, no limits.
+  data_use_tracker.UpdateMetricsUsagePrefs("UMA", 1, false);
+  EXPECT_EQ(0, data_use_tracker.GetUploadReductionPercent());
 }
 
 }  // namespace metrics

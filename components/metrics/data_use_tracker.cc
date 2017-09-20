@@ -50,6 +50,7 @@ void DataUseTracker::UpdateMetricsUsagePrefs(const std::string& service_name,
                                              bool is_cellular) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  last_is_cellular_ = is_cellular;
   if (!is_cellular)
     return;
 
@@ -59,32 +60,40 @@ void DataUseTracker::UpdateMetricsUsagePrefs(const std::string& service_name,
     UpdateUsagePref(prefs::kUmaCellDataUse, message_size);
 }
 
-bool DataUseTracker::ShouldUploadLogOnCellular(int log_bytes) {
+int DataUseTracker::GetUploadReductionPercent() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   RemoveExpiredEntries();
 
+  if (!last_is_cellular_)
+    return 0;
+
   int uma_weekly_quota_bytes;
   if (!GetUmaWeeklyQuota(&uma_weekly_quota_bytes))
-    return true;
+    return 0;
 
   int uma_total_data_use = ComputeTotalDataUse(prefs::kUmaCellDataUse);
-  int new_uma_total_data_use = log_bytes + uma_total_data_use;
-  // If the new log doesn't increase the total UMA traffic to be above the
-  // allowed quota then the log should be uploaded.
-  if (new_uma_total_data_use <= uma_weekly_quota_bytes)
-    return true;
+  if (uma_total_data_use <= uma_weekly_quota_bytes)
+    return 0;
 
   double uma_ratio;
   if (!GetUmaRatio(&uma_ratio))
-    return true;
+    return 0;
 
   int user_total_data_use = ComputeTotalDataUse(prefs::kUserCellDataUse);
-  // If after adding the new log the uma ratio is still under the allowed ratio
-  // then the log should be uploaded and vice versa.
-  return new_uma_total_data_use /
-             static_cast<double>(log_bytes + user_total_data_use) <=
-         uma_ratio;
+  double used_ratio =
+      uma_total_data_use / static_cast<double>(user_total_data_use);
+
+  // No reductions if not passed the 50% mark of usage ratio.
+  if (used_ratio <= uma_ratio / 2.0)
+    return 0;
+
+  // This makes a rough estimate at how much to omit to keep the usage between
+  // 1/2 and 3/2 of the desired ratio. Maximum reduction is 90%.
+  double omit_ratio = 1.0 - (1.5 * uma_ratio - used_ratio) / uma_ratio;
+  if (omit_ratio >= 0.9)
+    return 90;
+  return static_cast<int>(100 * omit_ratio);
 }
 
 void DataUseTracker::UpdateUsagePref(const std::string& pref_name,

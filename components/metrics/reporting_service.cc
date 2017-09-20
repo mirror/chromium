@@ -91,6 +91,13 @@ void ReportingService::UpdateMetricsUsagePrefs(const std::string& service_name,
   }
 }
 
+int ReportingService::GetUploadReductionPercent() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (data_use_tracker_)
+    return data_use_tracker_->GetUploadReductionPercent();
+  return 0;
+}
+
 //------------------------------------------------------------------------------
 // private methods
 //------------------------------------------------------------------------------
@@ -116,21 +123,7 @@ void ReportingService::SendNextLog() {
   if (!log_store()->has_staged_log())
     log_store()->StageNextLog();
 
-  // Proceed to stage the log for upload if log size satisfies cellular log
-  // upload constrains.
-  bool upload_canceled = false;
-  bool is_cellular_logic = client_->IsUMACellularUploadLogicEnabled();
-  if (is_cellular_logic && data_use_tracker_ &&
-      !data_use_tracker_->ShouldUploadLogOnCellular(
-          log_store()->staged_log_hash().size())) {
-    upload_scheduler_->UploadOverDataUsageCap();
-    upload_canceled = true;
-  } else {
-    SendStagedLog();
-  }
-  if (is_cellular_logic) {
-    LogCellularConstraint(upload_canceled);
-  }
+  SendStagedLog();
 }
 
 void ReportingService::SendStagedLog() {
