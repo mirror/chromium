@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0db07b6e_b7a41a4a",
+        "filename": "content/browser/renderer_host/clipboard_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1185219
+      },
+      "writtenOn": "2017-09-20T21:13:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7cd3820_4aebd7da",
+      "revId": "62ce0d859d17227f109b9a29499d13937bee1f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e29424_c50e8cbc",
         "filename": "content/browser/renderer_host/clipboard_message_filter.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-20T18:25:57Z",
       "side": 1,
       "message": "Hmm, unrelated to this change, but staring at SkBitmap.h it seems getSafeSize() can be smaller than getSize().  What if the former fits in 32 bit, but the latter overflows?\n\nThe safe thing to do is check and then reuse the same value.  Then again, there\u0027s a small semantic difference between the two - Mike, which one is safe to pass installPixels()?",
+      "range": {
+        "startLine": 298,
+        "startChar": 26,
+        "endLine": 298,
+        "endChar": 42
+      },
+      "revId": "62ce0d859d17227f109b9a29499d13937bee1f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81f8a3c_bdd54114",
+        "filename": "content/browser/renderer_host/clipboard_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1185219
+      },
+      "writtenOn": "2017-09-20T21:13:08Z",
+      "side": 1,
+      "message": "Using the same getSafeSize in both places covers the problem.",
+      "parentUuid": "e0e29424_c50e8cbc",
       "range": {
         "startLine": 298,
         "startChar": 26,
