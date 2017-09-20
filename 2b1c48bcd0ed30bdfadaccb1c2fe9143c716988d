@@ -34,6 +34,24 @@
       "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff2c3f7_f4d30929",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T22:17:06Z",
+      "side": 1,
+      "message": "Thanks. Hey let\u0027s update the @param then. Maybe:\n@param {!Object|string}\nThat says it must be either a non-null Object or a string.",
+      "parentUuid": "174e336f_52f4f180",
+      "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
