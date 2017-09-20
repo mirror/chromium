@@ -495,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "edff4496_6504b5e7",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-20T09:01:37Z",
+      "side": 1,
+      "message": "Help functions from anonymous namespace are used by this function and by function from the class. I would be happy to think about it in the next CL.",
+      "parentUuid": "cf406b0a_7767c8fa",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "932baf6c_ffed2919",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 28
