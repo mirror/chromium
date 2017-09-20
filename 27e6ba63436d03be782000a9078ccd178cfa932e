@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43445d33_6e3c8b4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T15:19:13Z",
+      "side": 1,
+      "message": "Thanks for the advice.\nDescription edited with clearer explanation. :)",
+      "parentUuid": "b3dfa643_acaa5cee",
+      "revId": "27e6ba63436d03be782000a9078ccd178cfa932e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e69d5c_b7683b80",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "27e6ba63436d03be782000a9078ccd178cfa932e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222c13d9_9a9a4821",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T15:19:13Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "21e69d5c_b7683b80",
+      "revId": "27e6ba63436d03be782000a9078ccd178cfa932e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
