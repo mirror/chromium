@@ -350,8 +350,26 @@ PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link,
 
 PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
                                                   LinkTarget* target) const {
-  if (target)
-    target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  if (!target)
+    return DOCLINK_AREA;
+
+  target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+
+  FPDF_BOOL hasXCoord;
+  FPDF_BOOL hasYCoord;
+  FPDF_BOOL hasZoom;
+  FS_FLOAT x;
+  FS_FLOAT y;
+  FS_FLOAT zoom;
+  FPDFDest_GetLocationInPage(destination, &hasXCoord, &hasYCoord, &hasZoom, &x,
+                             &y, &zoom);
+
+  if (hasYCoord) {
+    pp::FloatRect page_rect(x, y, 0, 0);
+    pp::FloatRect pixel_rect(FloatPageRectToPixelRect(page_, page_rect));
+    target->y_in_pixels = pixel_rect.y();
+  }
+
   return DOCLINK_AREA;
 }
 
