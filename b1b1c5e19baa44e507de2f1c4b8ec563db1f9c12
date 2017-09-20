@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "779a7f94_fbd97a88",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/offset-position-001.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-20T05:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f97aa9c_afeb4fe9",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969fd013_dca82103",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/offset-position-001.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16371a04_8e40d0e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/offset-position-001.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-20T05:35:09Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "969fd013_dca82103",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
