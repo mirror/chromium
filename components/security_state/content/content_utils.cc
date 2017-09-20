@@ -93,12 +93,24 @@ void ExplainCertificateSecurity(
     const security_state::SecurityInfo& security_info,
     content::SecurityStyleExplanations* security_style_explanations) {
   if (security_info.sha1_in_chain) {
-    security_style_explanations->insecure_explanations.push_back(
-        content::SecurityStyleExplanation(
-            l10n_util::GetStringUTF8(IDS_SHA1),
-            l10n_util::GetStringUTF8(IDS_SHA1_DESCRIPTION),
-            security_info.certificate,
-            blink::WebMixedContentContextType::kNotMixedContent));
+    if (security_info.cert_status & net::CERT_STATUS_WEAK_SIGNATURE_ALGORITHM) {
+      security_style_explanations->insecure_explanations.push_back(
+          content::SecurityStyleExplanation(
+              l10n_util::GetStringUTF8(IDS_SHA1),
+              l10n_util::GetStringUTF8(IDS_SHA1_DESCRIPTION),
+              security_info.certificate,
+              blink::WebMixedContentContextType::kNotMixedContent));
+    } else {
+      // This is the case where a user is on page signed with a SHA1
+      // certificate, but the enablesha1forlocalanchors group policy is set, so
+      // the explanation is set as neutral.
+      security_style_explanations->neutral_explanations.push_back(
+          content::SecurityStyleExplanation(
+              l10n_util::GetStringUTF8(IDS_SHA1),
+              l10n_util::GetStringUTF8(IDS_SHA1_DESCRIPTION),
+              security_info.certificate,
+              blink::WebMixedContentContextType::kNotMixedContent));
+    }
   }
 
   if (security_info.cert_missing_subject_alt_name) {
