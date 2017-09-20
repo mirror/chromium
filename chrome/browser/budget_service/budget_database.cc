@@ -15,6 +15,8 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/leveldb_proto/proto_database_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -57,7 +59,8 @@ BudgetDatabase::BudgetDatabase(Profile* profile,
                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN}))),
       clock_(base::WrapUnique(new base::DefaultClock)),
       weak_ptr_factory_(this) {
-  db_->InitWithOptions(kDatabaseUMAName, database_dir, leveldb_env::Options(),
+  db_->InitWithOptions(kDatabaseUMAName, database_dir,
+                       leveldb_chrome::Options(),
                        base::BindOnce(&BudgetDatabase::OnDatabaseInit,
                                       weak_ptr_factory_.GetWeakPtr()));
 }

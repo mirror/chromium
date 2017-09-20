@@ -110,14 +110,14 @@ leveldb::Status OpenDB(
     std::unique_ptr<leveldb::DB>* db,
     std::unique_ptr<const leveldb::FilterPolicy>* filter_policy) {
   filter_policy->reset(leveldb::NewBloomFilterPolicy(10));
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.comparator = comparator;
   options.create_if_missing = true;
   options.paranoid_checks = true;
   options.filter_policy = filter_policy->get();
   options.compression = leveldb::kSnappyCompression;
-  options.write_buffer_size =
-      leveldb_env::WriteBufferSize(base::SysInfo::AmountOfTotalDiskSpace(path));
+  options.write_buffer_size = leveldb_chrome::WriteBufferSize(
+      base::SysInfo::AmountOfTotalDiskSpace(path));
 
   // For info about the troubles we've run into with this parameter, see:
   // https://code.google.com/p/chromium/issues/detail?id=227313#c11
@@ -126,7 +126,7 @@ leveldb::Status OpenDB(
   options.block_cache = leveldb_chrome::GetSharedWebBlockCache();
 
   // ChromiumEnv assumes UTF8, converts back to FilePath before using.
-  return leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), db);
+  return leveldb_chrome::OpenDB(options, path.AsUTF8Unsafe(), db);
 }
 
 int CheckFreeSpace(const char* const type, const base::FilePath& file_name) {
@@ -272,7 +272,7 @@ void LevelDBDatabase::CloseDatabase() {
 
 // static
 leveldb::Status LevelDBDatabase::Destroy(const base::FilePath& file_name) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.env = LevelDBEnv::Get();
   // ChromiumEnv assumes UTF8, converts back to FilePath before using.
   return leveldb::DestroyDB(file_name.AsUTF8Unsafe(), options);
@@ -495,10 +495,10 @@ bool LevelDBDatabase::OnMemoryDump(
 
   dump->AddString("file_name", "", file_name_for_tracing);
 
-  // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
+  // All leveldb databases are already dumped by leveldb_chrome::DBTracker. Add
   // an edge to avoid double counting.
   auto* tracker_dump =
-      leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
+      leveldb_chrome::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
   if (tracker_dump)
     pmd->AddOwnershipEdge(dump->guid(), tracker_dump->guid());
 

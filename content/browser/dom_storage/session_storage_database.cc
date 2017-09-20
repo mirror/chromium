@@ -90,7 +90,7 @@ class SessionStorageDatabase::DBOperation {
       // No other operations are ongoing and the data is bad -> delete it now.
       session_storage_database_->db_.reset();
       leveldb::DestroyDB(session_storage_database_->file_path_.AsUTF8Unsafe(),
-                         leveldb_env::Options());
+                         leveldb_chrome::Options());
       session_storage_database_->invalid_db_deleted_ = true;
     }
   }
@@ -381,10 +381,10 @@ void SessionStorageDatabase::OnMemoryDump(
   mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                  base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
 
-  // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
+  // All leveldb databases are already dumped by leveldb_chrome::DBTracker. Add
   // an edge to avoid double counting.
   auto* tracker_dump =
-      leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
+      leveldb_chrome::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
   if (tracker_dump)
     pmd->AddOwnershipEdge(mad->guid(), tracker_dump->guid());
 }
@@ -458,7 +458,7 @@ bool SessionStorageDatabase::LazyOpen(bool create_if_needed) {
 
 leveldb::Status SessionStorageDatabase::TryToOpen(
     std::unique_ptr<leveldb::DB>* db) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   // The directory exists but a valid leveldb database might not exist inside it
   // (e.g., a subset of the needed files might be missing). Handle this
   // situation gracefully by creating the database now.
@@ -468,7 +468,7 @@ leveldb::Status SessionStorageDatabase::TryToOpen(
   // memory allocation in RAM from a log file recovery.
   options.write_buffer_size = 64 * 1024;
   options.block_cache = leveldb_chrome::GetSharedWebBlockCache();
-  return leveldb_env::OpenDB(options, file_path_.AsUTF8Unsafe(), db);
+  return leveldb_chrome::OpenDB(options, file_path_.AsUTF8Unsafe(), db);
 }
 
 bool SessionStorageDatabase::IsOpen() const {

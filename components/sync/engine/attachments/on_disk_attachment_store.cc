@@ -16,8 +16,7 @@
 #include "components/sync/engine/attachments/attachment_util.h"
 #include "components/sync/engine_impl/attachments/proto/attachment_store.pb.h"
 #include "components/sync/protocol/attachments.pb.h"
-#include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/include/leveldb/db.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
@@ -359,12 +358,12 @@ AttachmentStore::Result OnDiskAttachmentStore::OpenOrCreate(
   base::FilePath leveldb_path = path.Append(kLeveldbDirectory);
 
   std::unique_ptr<leveldb::DB> db;
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   // TODO(pavely): crbug/424287 Consider adding info_log, block_cache and
   // filter_policy to options.
   leveldb::Status status =
-      leveldb_env::OpenDB(options, leveldb_path.AsUTF8Unsafe(), &db);
+      leveldb_chrome::OpenDB(options, leveldb_path.AsUTF8Unsafe(), &db);
   if (!status.ok()) {
     DVLOG(1) << "OpenDB failed: status=" << status.ToString()
              << ", path=" << path.AsUTF8Unsafe();

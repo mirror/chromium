@@ -12,7 +12,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/android/history_report/delta_file_commons.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/comparator.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
@@ -91,16 +91,16 @@ DeltaFileBackend::DeltaFileBackend(const base::FilePath& dir)
 DeltaFileBackend::~DeltaFileBackend() {}
 
 bool DeltaFileBackend::Init() {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.max_open_files = 0;  // Use minimum number of files.
   options.comparator = leveldb_cmp_.get();
   std::string path = path_.value();
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_chrome::OpenDB(options, path, &db_);
   if (status.IsCorruption()) {
     LOG(WARNING) << "Deleting possibly-corrupt database";
     base::DeleteFile(path_, true);
-    status = leveldb_env::OpenDB(options, path, &db_);
+    status = leveldb_chrome::OpenDB(options, path, &db_);
   }
   if (status.ok()) {
     CHECK(db_);

@@ -21,6 +21,7 @@
 #include "base/strings/stringprintf.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
@@ -81,12 +82,12 @@ bool SandboxOriginDatabase::Init(InitOption init_option,
     return false;
 
   std::string path = FilePathToString(db_path);
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = true;
   if (env_override_)
     options.env = env_override_;
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_chrome::OpenDB(options, path, &db_);
   ReportInitStatus(status);
   if (status.ok()) {
     return true;
@@ -127,7 +128,7 @@ bool SandboxOriginDatabase::Init(InitOption init_option,
 
 bool SandboxOriginDatabase::RepairDatabase(const std::string& db_path) {
   DCHECK(!db_.get());
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.reuse_logs = false;
   options.max_open_files = 0;  // Use minimum.
   if (env_override_)

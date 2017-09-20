@@ -11,10 +11,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/data_reduction_proxy/proto/data_store.pb.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
-#include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
@@ -114,7 +112,7 @@ DataStore::Status DataStoreImpl::Delete(base::StringPiece key) {
 DataStore::Status DataStoreImpl::OpenDB() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.paranoid_checks = true;
   // Deletes to buckets not found are stored in the log. Use a new log so that
@@ -123,7 +121,7 @@ DataStore::Status DataStoreImpl::OpenDB() {
   std::string db_name = profile_path_.Append(kDBName).AsUTF8Unsafe();
   db_.reset();
   Status status =
-      LevelDbToDRPStoreStatus(leveldb_env::OpenDB(options, db_name, &db_));
+      LevelDbToDRPStoreStatus(leveldb_chrome::OpenDB(options, db_name, &db_));
   UMA_HISTOGRAM_ENUMERATION("DataReductionProxy.LevelDBOpenStatus", status,
                             STATUS_MAX);
 

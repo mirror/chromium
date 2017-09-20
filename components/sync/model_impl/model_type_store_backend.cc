@@ -12,12 +12,11 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/lock.h"
 #include "components/sync/protocol/model_type_store_schema_descriptor.pb.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
-#include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
@@ -178,18 +177,18 @@ ModelTypeStore::Result ModelTypeStoreBackend::Init(
 
 leveldb::Status ModelTypeStoreBackend::OpenDatabase(const std::string& path,
                                                     leveldb::Env* env) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.paranoid_checks = true;
   if (env)
     options.env = env;
 
-  return leveldb_env::OpenDB(options, path, &db_);
+  return leveldb_chrome::OpenDB(options, path, &db_);
 }
 
 leveldb::Status ModelTypeStoreBackend::DestroyDatabase(const std::string& path,
                                                        leveldb::Env* env) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   if (env)
     options.env = env;
   return leveldb::DestroyDB(path, options);

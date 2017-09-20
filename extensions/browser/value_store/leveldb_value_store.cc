@@ -259,10 +259,10 @@ bool LeveldbValueStore::OnMemoryDump(
   dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                   base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
 
-  // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
+  // All leveldb databases are already dumped by leveldb_chrome::DBTracker. Add
   // an edge to avoid double counting.
   auto* tracker_db =
-      leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db());
+      leveldb_chrome::DBTracker::GetOrCreateAllocatorDump(pmd, db());
   if (tracker_db)
     pmd->AddOwnershipEdge(dump->guid(), tracker_db->guid());
 

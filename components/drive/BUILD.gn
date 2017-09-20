@@ -61,6 +61,7 @@ static_library("drive") {
     "//services/device/public/interfaces",
     "//third_party/cacheinvalidation",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//third_party/re2",
   ]
   public_deps = [

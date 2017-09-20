@@ -12,7 +12,6 @@
 #include "components/leveldb_proto/proto_database_impl.h"
 #include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
 
-using leveldb_env::SharedReadCache;
 using leveldb_proto::ProtoDatabaseImpl;
 
 namespace {
@@ -45,7 +44,7 @@ RemoteSuggestionsDatabase::RemoteSuggestionsDatabase(
       base::MakeUnique<ProtoDatabaseImpl<SnippetImageProto>>(file_task_runner);
 
   base::FilePath snippet_dir = database_dir.AppendASCII(kSnippetDatabaseFolder);
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.write_buffer_size = kDatabaseWriteBufferSizeBytes;
   database_->InitWithOptions(
       kDatabaseUMAClientName, snippet_dir, options,

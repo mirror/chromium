@@ -984,11 +984,12 @@ TEST_F(LocalStorageContextMojoTestWithService, MAYBE_InvalidVersionOnDisk) {
     // Mess up version number in database.
     leveldb_env::ChromiumEnv env;
     std::unique_ptr<leveldb::DB> db;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.env = &env;
     base::FilePath db_path =
         temp_path().Append(test_path).Append(FILE_PATH_LITERAL("leveldb"));
-    ASSERT_TRUE(leveldb_env::OpenDB(options, db_path.AsUTF8Unsafe(), &db).ok());
+    ASSERT_TRUE(
+        leveldb_chrome::OpenDB(options, db_path.AsUTF8Unsafe(), &db).ok());
     ASSERT_TRUE(db->Put(leveldb::WriteOptions(), "VERSION", "argh").ok());
   }
 
@@ -1084,7 +1085,7 @@ class MockLevelDBService : public leveldb::mojom::LevelDBService {
   }
 
   void OpenWithOptions(
-      const leveldb_env::Options& options,
+      const leveldb_chrome::Options& options,
       filesystem::mojom::DirectoryPtr,
       const std::string& dbname,
       const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&

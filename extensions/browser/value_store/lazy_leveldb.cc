@@ -63,7 +63,7 @@ leveldb::Status DeleteValue(leveldb::DB* db, const std::string& key) {
 
 LazyLevelDb::LazyLevelDb(const std::string& uma_client_name,
                          const base::FilePath& path)
-    : db_path_(path), open_options_(leveldb_env::Options()) {
+    : db_path_(path), open_options_(leveldb_chrome::Options()) {
   open_options_.create_if_missing = true;
   open_options_.paranoid_checks = true;
 
@@ -173,7 +173,7 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
   ValueStore::BackingStoreRestoreStatus restore_status =
       ValueStore::RESTORE_NONE;
 
-  leveldb_env::Options repair_options;
+  leveldb_chrome::Options repair_options;
   repair_options.reuse_logs = false;
   repair_options.create_if_missing = true;
   repair_options.paranoid_checks = true;
@@ -183,13 +183,13 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
 
   if (s.ok()) {
     restore_status = ValueStore::DB_RESTORE_REPAIR_SUCCESS;
-    s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+    s = leveldb_chrome::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
   }
 
   if (!s.ok()) {
     if (DeleteDbFile()) {
       restore_status = ValueStore::DB_RESTORE_DELETE_SUCCESS;
-      s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+      s = leveldb_chrome::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
     } else {
       restore_status = ValueStore::DB_RESTORE_DELETE_FAILURE;
     }
@@ -231,7 +231,7 @@ ValueStore::Status LazyLevelDb::EnsureDbIsOpen() {
   }
 
   leveldb::Status ldb_status =
-      leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+      leveldb_chrome::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
   open_histogram_->Add(leveldb_env::GetLevelDBStatusUMAValue(ldb_status));
   ValueStore::Status status = ToValueStoreError(ldb_status);
   if (ldb_status.IsCorruption()) {
@@ -266,7 +266,7 @@ bool LazyLevelDb::DeleteDbFile() {
   db_.reset();  // Close the database.
 
   leveldb::Status s =
-      leveldb::DestroyDB(db_path_.AsUTF8Unsafe(), leveldb_env::Options());
+      leveldb::DestroyDB(db_path_.AsUTF8Unsafe(), leveldb_chrome::Options());
   if (!s.ok()) {
     LOG(WARNING) << "Failed to destroy leveldb database at "
                  << db_path_.value();
