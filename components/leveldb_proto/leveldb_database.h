@@ -13,7 +13,7 @@
 #include "base/macros.h"
 #include "base/strings/string_split.h"
 #include "base/threading/thread_collision_warner.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 
 namespace base {
 class FilePath;
@@ -24,7 +24,6 @@ namespace leveldb {
 class Cache;
 class DB;
 class Env;
-struct Options;
 }  // namespace leveldb
 
 namespace leveldb_proto {
@@ -44,7 +43,7 @@ class LevelDB {
   // Initializes a leveldb with the given options. If |database_dir| is
   // empty, this opens an in-memory db.
   virtual bool Init(const base::FilePath& database_dir,
-                    const leveldb_env::Options& options);
+                    const leveldb_chrome::Options& options);
 
   virtual bool Save(const base::StringPairs& pairs_to_save,
                     const std::vector<std::string>& keys_to_remove);
@@ -56,7 +55,7 @@ class LevelDB {
 
  protected:
   virtual bool InitWithOptions(const base::FilePath& database_dir,
-                               const leveldb_env::Options& options);
+                               const leveldb_chrome::Options& options);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ProtoDatabaseImplLevelDBTest, TestDBInitFail);
