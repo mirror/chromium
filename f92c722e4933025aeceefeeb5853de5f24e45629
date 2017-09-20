@@ -16,6 +16,24 @@
       "revId": "f92c722e4933025aeceefeeb5853de5f24e45629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfad3d98_9dffa78d",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-20T16:53:32Z",
+      "side": 1,
+      "message": "I tried it and it actually looks fine - screenshot on the bug.",
+      "parentUuid": "f236eefb_eac5197d",
+      "revId": "f92c722e4933025aeceefeeb5853de5f24e45629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
