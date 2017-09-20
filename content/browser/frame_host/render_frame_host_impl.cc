@@ -2191,13 +2191,21 @@ void RenderFrameHostImpl::OnDidChangeOpener(int32_t opener_routing_id) {
 
 void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
                                           const std::string& unique_name) {
+  TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidChangeName",
+               "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
+               "name length", name.length());
+
   if (GetParent() != nullptr) {
     // TODO(lukasza): Call ReceivedBadMessage when |unique_name| is empty.
     DCHECK(!unique_name.empty());
   }
-  TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidChangeName",
-               "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
-               "name length", name.length());
+
+  if (frame_tree_node_->navigator()->GetController()->GetEntryCount() > 0) {
+    // The renderer should ensure that once a navigation has committed, the
+    // unique name must no longer change to avoid breaking back/forward
+    // navigations: https://crbug.com/607205
+    DCHECK_EQ(unique_name, frame_tree_node()->unique_name());
+  }
 
   std::string old_name = frame_tree_node()->frame_name();
   frame_tree_node()->SetFrameName(name, unique_name);
