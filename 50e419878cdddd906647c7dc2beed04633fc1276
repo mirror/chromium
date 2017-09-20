@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "baf9e8d9_4288b262",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-20T01:07:52Z",
+      "side": 1,
+      "message": "Cool, this sounds pretty good. Could you please show me any code/link that I can start from? Thanks!",
+      "parentUuid": "a95f2f1f_07e346b0",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
