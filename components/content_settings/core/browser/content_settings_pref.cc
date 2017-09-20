@@ -54,7 +54,7 @@ bool IsValueAllowedForType(const base::Value* value, ContentSettingsType type) {
 
   // TODO(raymes): We should permit different types of base::Value for
   // website settings.
-  return value->GetType() == base::Value::Type::DICTIONARY;
+  return value->is_dict();
 }
 
 // Extract a timestamp from |dictionary[kLastModifiedPath]|.

@@ -476,7 +476,7 @@ void PreferenceAPIBase::SetExtensionControlledPref(
       extension_prefs()->pref_service()->FindPreference(pref_key);
   DCHECK(pref) << "Extension controlled preference key " << pref_key
                << " not registered.";
-  DCHECK_EQ(pref->GetType(), value->GetType())
+  DCHECK_EQ(pref->GetType(), value->type())
       << "Extension controlled preference " << pref_key << " has wrong type.";
 #endif
 
@@ -765,7 +765,7 @@ ExtensionFunction::ResponseAction SetPreferenceFunction::Run() {
     EXTENSION_FUNCTION_VALIDATE(!bad_message);
     return RespondNow(Error(error));
   }
-  EXTENSION_FUNCTION_VALIDATE(browser_pref_value->GetType() == pref->GetType());
+  EXTENSION_FUNCTION_VALIDATE(browser_pref_value->type() == pref->GetType());
 
   // Validate also that the stored value can be converted back by the
   // transformer.

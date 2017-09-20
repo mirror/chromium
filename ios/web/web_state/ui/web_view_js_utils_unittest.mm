@@ -25,7 +25,7 @@ TEST(WebViewJsUtilsTest, ValueResultFromUndefinedWKResult) {
 TEST(WebViewJsUtilsTest, ValueResultFromStringWKResult) {
   std::unique_ptr<base::Value> value(web::ValueResultFromWKResult(@"test"));
   EXPECT_TRUE(value);
-  EXPECT_EQ(base::Value::Type::STRING, value->GetType());
+  EXPECT_EQ(base::Value::Type::STRING, value->type());
   std::string converted_result;
   value->GetAsString(&converted_result);
   EXPECT_EQ("test", converted_result);
@@ -37,7 +37,7 @@ TEST(WebViewJsUtilsTest, ValueResultFromStringWKResult) {
 TEST(WebViewJsUtilsTest, ValueResultFromIntegerWKResult) {
   std::unique_ptr<base::Value> value(web::ValueResultFromWKResult(@1));
   EXPECT_TRUE(value);
-  EXPECT_EQ(base::Value::Type::DOUBLE, value->GetType());
+  EXPECT_EQ(base::Value::Type::DOUBLE, value->type());
   double converted_result = 0;
   value->GetAsDouble(&converted_result);
   EXPECT_EQ(1, converted_result);
@@ -47,7 +47,7 @@ TEST(WebViewJsUtilsTest, ValueResultFromIntegerWKResult) {
 TEST(WebViewJsUtilsTest, ValueResultFromDoubleWKResult) {
   std::unique_ptr<base::Value> value(web::ValueResultFromWKResult(@3.14));
   EXPECT_TRUE(value);
-  EXPECT_EQ(base::Value::Type::DOUBLE, value->GetType());
+  EXPECT_EQ(base::Value::Type::DOUBLE, value->type());
   double converted_result = 0;
   value->GetAsDouble(&converted_result);
   EXPECT_EQ(3.14, converted_result);
@@ -57,7 +57,7 @@ TEST(WebViewJsUtilsTest, ValueResultFromDoubleWKResult) {
 TEST(WebViewJsUtilsTest, ValueResultFromBoolWKResult) {
   std::unique_ptr<base::Value> value(web::ValueResultFromWKResult(@YES));
   EXPECT_TRUE(value);
-  EXPECT_EQ(base::Value::Type::BOOLEAN, value->GetType());
+  EXPECT_EQ(base::Value::Type::BOOLEAN, value->type());
   bool converted_result = false;
   value->GetAsBoolean(&converted_result);
   EXPECT_TRUE(converted_result);
@@ -68,7 +68,7 @@ TEST(WebViewJsUtilsTest, ValueResultFromNullWKResult) {
   std::unique_ptr<base::Value> value(
       web::ValueResultFromWKResult([NSNull null]));
   EXPECT_TRUE(value);
-  EXPECT_EQ(base::Value::Type::NONE, value->GetType());
+  EXPECT_EQ(base::Value::Type::NONE, value->type());
 }
 
 // Tests that ValueResultFromWKResult converts NSDictionaries to properly
