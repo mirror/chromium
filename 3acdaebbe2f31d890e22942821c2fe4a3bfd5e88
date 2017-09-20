@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81476a59_b61be908",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T15:09:24Z",
+      "side": 1,
+      "message": "This timeout shouldn\u0027t matter for Android as you\u0027ll Maximize and Commit right after as client controls state.\n\nIf you\u0027re worried about when Chrome initiates maximize then the solution as we discussed is that chrome should be able to. Chrome should send a request to the client for this and never maximize a window on its own.\n\n100ms is already pushing it it terms of locking the UI. 2500ms is definitely not something I think we can allow for a state change like maximize. anyhow, shouldn\u0027t matter in the android case when implemented as discussed.",
+      "parentUuid": "5f7d16cc_3461a484",
+      "range": {
+        "startLine": 63,
+        "startChar": 60,
+        "endLine": 63,
+        "endChar": 63
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe69284_b1938c6d",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6bbf290f_e603cb91",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T15:09:24Z",
+      "side": 1,
+      "message": "Yes, that\u0027s how chrome handle tabs today too and they get less of a timeout in that case. If the client can\u0027t produce a frame in 100ms then animations and transitions are not going to be ideal. That\u0027s fine imo. We still draw valid contents. Just not what is perfect for the window state.",
+      "parentUuid": "bfe69284_b1938c6d",
+      "range": {
+        "startLine": 1050,
+        "startChar": 6,
+        "endLine": 1050,
+        "endChar": 77
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc660b40_6fa9105e",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-20T07:21:51Z",
       "side": 1,
       "message": "I tried it for ARC windows, but the frames would be still rendered even though the compositor lock is held (when maximized using Alt+). Can it be because of the layer being recreated just after OnPreWindowStateTypeChange leaves?",
+      "range": {
+        "startLine": 1054,
+        "startChar": 6,
+        "endLine": 1054,
+        "endChar": 32
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c8e73c2_9a8ba2c6",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T15:09:24Z",
+      "side": 1,
+      "message": "That sounds like a general compositor lock problem. Can you repro this by creating a unit test?",
+      "parentUuid": "fc660b40_6fa9105e",
       "range": {
         "startLine": 1054,
         "startChar": 6,
