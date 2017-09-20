@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbb463e3_3bd4d497",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-20T19:59:03Z",
+      "side": 1,
+      "message": "Is the \"2 * 16\" here really trying to compute GetInsetsMetric(INSETS_DIALOG).width()?\n\nIf so I think we should probably compute at least that much of this at runtime rather than as a constexpr, since the actual dialog margins will vary at runtime (based on whether Harmony is on or not).\n\nThe counterargument is that under non-Harmony we don\u0027t care whether the dialog is 320 vs. 314 DIP wide, which is probably true... but that change would also make it clearer where this value comes from, and automatically work correctly if we change the Harmony dialog insets in the future.",
+      "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc13aac5_5a81cfaa",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-20T19:59:03Z",
+      "side": 1,
+      "message": "Nit: I found this comment slightly more confusing than helpful because I wasn\u0027t sure what question I would have had as a reader without it, that it would be aiming to answer.\n\n\"Why is the UMA named \u0027later\u0027?\" -\u003e it\u0027s not that weird of a name, I\u0027d hope we explain this in the UMA/histograms files.\n\n\"Why are we implementing a Close() method at all?\" -\u003e from inspection, so we can record some UMA stat on close; that\u0027s a common thing to do\n\nMaybe it\u0027s the bit about \"override Close() to intercept other forms of dismissal (and not Auto-accept)\" that\u0027s throwing me.  Is this saying there are many ways to dismiss the bubble (more than just the close button?) and providing this method catches them, but we wouldn\u0027t catch them if we didn\u0027t provide it?  Is it also saying that if we didn\u0027t override this, we\u0027d auto-accept on clicking the close X?  It reads like both of those to me, and I didn\u0027t think either one was true.",
+      "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cf73dd7_646e2ff5",
         "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.h",
         "patchSetId": 10
