@@ -79,7 +79,6 @@ Sources.SourcesPanel = class extends UI.Panel {
 
     this._sourcesView = new Sources.SourcesView();
     this._sourcesView.addEventListener(Sources.SourcesView.Events.EditorSelected, this._editorSelected.bind(this));
-    this._sourcesView.registerShortcuts(this.registerShortcuts.bind(this));
 
     this._toggleNavigatorSidebarButton = this.editorView.createShowHideSidebarButton('navigator');
     this._toggleDebuggerSidebarButton = this._splitWidget.createShowHideSidebarButton('debugger');
@@ -88,7 +87,6 @@ Sources.SourcesPanel = class extends UI.Panel {
     this._threadsSidebarPane = null;
     this._watchSidebarPane = /** @type {!UI.View} */ (UI.viewManager.view('sources.watch'));
     this._callstackPane = self.runtime.sharedInstance(Sources.CallStackSidebarPane);
-    this._callstackPane.registerShortcuts(this.registerShortcuts.bind(this));
 
     Common.moduleSetting('sidebarPosition').addChangeListener(this._updateSidebarPosition.bind(this));
     this._updateSidebarPosition();
