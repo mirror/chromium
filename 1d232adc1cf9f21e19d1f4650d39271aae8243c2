@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dfdebf8_50c5a340",
+        "filename": "services/shape_detection/face_detection_impl_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-09-20T00:56:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cf4d9d_b09611ad",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "1d232adc1cf9f21e19d1f4650d39271aae8243c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f83c1c_a030cdd4",
         "filename": "services/shape_detection/face_detection_impl_mac_unittest.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1d232adc1cf9f21e19d1f4650d39271aae8243c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d044c6_39a249cd",
+        "filename": "services/shape_detection/face_detection_impl_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-09-20T00:56:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f83c1c_a030cdd4",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "1d232adc1cf9f21e19d1f4650d39271aae8243c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
