@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d597c325_7d30334f",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T16:31:53Z",
+      "side": 1,
+      "message": "This is Mac code. I don\u0027t touch it in this CL. I only need it to compile.",
+      "parentUuid": "19fa0faa_3a03861e",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "9402e4f792e0bac85735a8839193c9b9bc1bd102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f183247_95063517",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9402e4f792e0bac85735a8839193c9b9bc1bd102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f9058c_80fdad5d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T16:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f183247_95063517",
+      "range": {
+        "startLine": 429,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 47
+      },
+      "revId": "9402e4f792e0bac85735a8839193c9b9bc1bd102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
