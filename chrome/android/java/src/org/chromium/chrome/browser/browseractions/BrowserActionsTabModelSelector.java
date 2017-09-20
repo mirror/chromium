@@ -193,4 +193,12 @@ public class BrowserActionsTabModelSelector
     public void restoreTabs(boolean setActiveTab) {
         mTabSaver.restoreTabs(setActiveTab);
     }
+
+    @Override
+    public void destroy() {
+        mTabSaver.destroy();
+        sActiveState = false;
+        sInstance = null;
+        super.destroy();
+    }
 }

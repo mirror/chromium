@@ -27,6 +27,8 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabModelSelector;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabPersistencePolicy;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.Tab;
@@ -159,6 +161,7 @@ public class TabPersistentStore extends TabPersister {
     }
 
     private final TabPersistencePolicy mPersistencePolicy;
+    private final BrowserActionsTabPersistencePolicy mBrowserActionspersistencePolicy;
     private final TabModelSelector mTabModelSelector;
     private final TabCreatorManager mTabCreatorManager;
     private TabPersistentStoreObserver mObserver;
@@ -182,6 +185,7 @@ public class TabPersistentStore extends TabPersister {
     private SharedPreferences mPreferences;
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListTask;
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListToMergeTask;
+    private AsyncTask<Void, Void, DataInputStream> mPrefetchBrowserActionsTabListTask;
     private byte[] mLastSavedMetadata;
 
     // Tracks whether this TabPersistentStore's tabs are being loaded.
@@ -204,6 +208,7 @@ public class TabPersistentStore extends TabPersister {
     public TabPersistentStore(TabPersistencePolicy policy, TabModelSelector modelSelector,
             TabCreatorManager tabCreatorManager, TabPersistentStoreObserver observer) {
         mPersistencePolicy = policy;
+        mBrowserActionspersistencePolicy = new BrowserActionsTabPersistencePolicy();
         mTabModelSelector = modelSelector;
         mTabCreatorManager = tabCreatorManager;
         mTabsToSave = new ArrayDeque<>();
@@ -229,6 +234,11 @@ public class TabPersistentStore extends TabPersister {
             assert mPersistencePolicy.getStateToBeMergedFileName() != null;
             mPrefetchTabListToMergeTask = startFetchTabListTask(
                     executor, mPersistencePolicy.getStateToBeMergedFileName());
+        }
+
+        if (BrowserActionsTabModelSelector.getSelector() == null) {
+            mPrefetchBrowserActionsTabListTask = startFetchTabListTask(
+                    executor, mBrowserActionspersistencePolicy.getStateFileName());
         }
     }
 
@@ -363,12 +373,10 @@ public class TabPersistentStore extends TabPersister {
                 if (stream != null) {
                     logExecutionTime("LoadStateInternalPrefetchTime", timeWaitingForPrefetch);
                     mLoadInProgress = true;
-                    readSavedStateFile(
-                            stream,
-                            createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(),
-                                    false),
-                            null,
-                            false);
+                    readSavedStateFile(stream,
+                            createOnTabStateReadCallback(
+                                    mTabModelSelector.isIncognitoSelected(), false, false),
+                            null, false);
                     logExecutionTime("LoadStateInternalTime", timeLoadingState);
                 }
             }
@@ -381,14 +389,32 @@ public class TabPersistentStore extends TabPersister {
                 if (stream != null) {
                     logExecutionTime("MergeStateInternalFetchTime", timeMergingState);
                     mPersistencePolicy.setMergeInProgress(true);
-                    readSavedStateFile(
-                            stream,
+                    readSavedStateFile(stream,
                             createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(),
-                                    mTabsToRestore.size() == 0 ? false : true),
-                            null,
-                            true);
+                                    mTabsToRestore.size() == 0 ? false : true, false),
+                            null, true);
                     logExecutionTime("MergeStateInternalTime", timeMergingState);
                     RecordUserAction.record("Android.MergeState.ColdStart");
+                }
+            }
+
+            if (mPrefetchBrowserActionsTabListTask != null) {
+                long timeBrowserActionsMergingState = SystemClock.uptimeMillis();
+                // Read the tab state metadata file.
+                stream = mPrefetchBrowserActionsTabListTask.get();
+
+                // Restore the Browser Actions tabs if the tab metadata file exists.
+                if (stream != null) {
+                    logExecutionTime("MergeBrowserActionsStateInternalFetchTime",
+                            timeBrowserActionsMergingState);
+                    readSavedStateFile(stream,
+                            createOnTabStateReadCallback(
+                                    mTabModelSelector.isIncognitoSelected(), false, true),
+                            null, false);
+
+                    deleteFileAsync(mBrowserActionspersistencePolicy.getStateFileName());
+                    logExecutionTime(
+                            "MergeBrowserActionsStateInternalTime", timeBrowserActionsMergingState);
                 }
             }
         } catch (Exception e) {
@@ -432,9 +458,9 @@ public class TabPersistentStore extends TabPersister {
             logExecutionTime("MergeStateInternalFetchTime", time);
             mPersistencePolicy.setMergeInProgress(true);
             readSavedStateFile(stream,
-                    createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(), true),
-                    null,
-                    true);
+                    createOnTabStateReadCallback(
+                            mTabModelSelector.isIncognitoSelected(), true, false),
+                    null, true);
             logExecutionTime("MergeStateInternalTime", time);
         } catch (Exception e) {
             // Catch generic exception to prevent a corrupted state from crashing app.
@@ -577,7 +603,7 @@ public class TabPersistentStore extends TabPersister {
         TabModel model = mTabModelSelector.getModel(isIncognito);
         SparseIntArray restoredTabs = isIncognito ? mIncognitoTabsRestored : mNormalTabsRestored;
         int restoredIndex = 0;
-        if (tabToRestore.fromMerge) {
+        if (tabToRestore.fromMerge || tabToRestore.fromBrowserActions) {
             // Put any tabs being merged into this list at the end.
             restoredIndex = mTabModelSelector.getModel(isIncognito).getCount();
         } else if (restoredTabs.size() > 0
@@ -924,7 +950,7 @@ public class TabPersistentStore extends TabPersister {
      * @return A callback for reading data from tab models.
      */
     private OnTabStateReadCallback createOnTabStateReadCallback(final boolean isIncognitoSelected,
-            final boolean fromMerge) {
+            final boolean fromMerge, final boolean fromBrowserActions) {
         return new OnTabStateReadCallback() {
             @Override
             public void onDetailsRead(int index, int id, String url, Boolean isIncognito,
@@ -944,11 +970,12 @@ public class TabPersistentStore extends TabPersister {
                 // Note that incognito tab may not load properly so we may need to use
                 // the current tab from the standard model.
                 // This logic only works because we store the incognito indices first.
-                TabRestoreDetails details =
-                        new TabRestoreDetails(id, index, isIncognito, url, fromMerge);
+                TabRestoreDetails details = new TabRestoreDetails(
+                        id, index, isIncognito, url, fromMerge, fromBrowserActions);
 
-                if (!fromMerge && ((isIncognitoActiveIndex && isIncognitoSelected)
-                        || (isStandardActiveIndex && !isIncognitoSelected))) {
+                if (!fromMerge && !fromBrowserActions
+                        && ((isIncognitoActiveIndex && isIncognitoSelected)
+                                   || (isStandardActiveIndex && !isIncognitoSelected))) {
                     // Active tab gets loaded first
                     mTabsToRestore.addFirst(details);
                 } else {
@@ -1300,14 +1327,16 @@ public class TabPersistentStore extends TabPersister {
         public final String url;
         public final Boolean isIncognito;
         public final Boolean fromMerge;
+        public final Boolean fromBrowserActions;
 
         public TabRestoreDetails(int id, int originalIndex, Boolean isIncognito, String url,
-                Boolean fromMerge) {
+                Boolean fromMerge, Boolean fromBrowserActions) {
             this.id = id;
             this.originalIndex = originalIndex;
             this.url = url;
             this.isIncognito = isIncognito;
             this.fromMerge = fromMerge;
+            this.fromBrowserActions = fromBrowserActions;
         }
     }
 
