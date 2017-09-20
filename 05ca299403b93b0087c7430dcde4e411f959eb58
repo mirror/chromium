@@ -33,6 +33,24 @@
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc43b37b_99c8d2f1",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T22:56:26Z",
+      "side": 1,
+      "message": "I completely understand your concern. The reason I had to do it that way is because the prod\u0027s getPreviewsEnabled is called when the website is done loading.\n\nIs there a way to do customize the proload stage so that we can use\n  window.testPageHandler.setPreviewsEnabled(enabled);\nfor each test?",
+      "parentUuid": "1fe606b6_5cb22195",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
