@@ -796,6 +796,15 @@ void InvokeCallbackOnThread(
 }
 #endif
 
+// Gets the URL request context getter for the browser process.
+// Must be called on the UI thread.
+scoped_refptr<net::URLRequestContextGetter>
+GetSystemRequestContextGetterFromBrowserProcess() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  return scoped_refptr<net::URLRequestContextGetter>(
+      g_browser_process->system_request_context());
+}
+
 }  // namespace
 
 ChromeContentBrowserClient::ChromeContentBrowserClient()
@@ -2101,6 +2110,15 @@ ChromeContentBrowserClient::OverrideRequestContextForURL(
 #endif
 
   return NULL;
+}
+
+void ChromeContentBrowserClient::GetGeolocationRequestContextGetter(
+    base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
+        callback) {
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetSystemRequestContextGetterFromBrowserProcess),
+      std::move(callback));
 }
 
 std::string ChromeContentBrowserClient::GetGeolocationApiKey() {

@@ -342,9 +342,12 @@ ServiceManagerContext::ServiceManagerContext() {
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
 
-  // Pipe embedder-supplied API key through to GeolocationProvider.
+  // Pipe embedder-supplied geolocation params through to GeolocationProvider.
   // TODO(crbug.com/709301): Once GeolocationProvider hangs off DeviceService,
-  // pass this via CreateDeviceService above instead.
+  // pass these via CreateDeviceService above instead.
+  device::GeolocationProvider::SetRequestContextProducer(base::BindRepeating(
+      &ContentBrowserClient::GetGeolocationRequestContextGetter,
+      base::Unretained(GetContentClient()->browser())));
   device::GeolocationProvider::SetApiKey(
       GetContentClient()->browser()->GetGeolocationApiKey());
 
