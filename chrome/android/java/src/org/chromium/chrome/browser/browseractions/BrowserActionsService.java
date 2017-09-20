@@ -10,7 +10,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 
@@ -106,18 +105,12 @@ public class BrowserActionsService extends Service {
             if (tabId != Tab.INVALID_TAB_ID) {
                 updateTabIdForNotification(tabId);
                 sLoadingTabSet.add(tabId);
-                Toast.makeText(context, R.string.browser_actions_open_in_background_toast_message,
-                             Toast.LENGTH_SHORT)
-                        .show();
             } else {
                 finishTabCreation(Tab.INVALID_TAB_ID);
-                Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
-                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchIntent.setClass(context, ChromeLauncherActivity.class);
-                launchIntent.putExtra(
-                        ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
-                IntentUtils.safeStartActivity(context, launchIntent);
             }
+            Toast.makeText(context, R.string.browser_actions_open_in_background_toast_message,
+                         Toast.LENGTH_SHORT)
+                    .show();
 
             NotificationUmaTracker.getInstance().onNotificationShown(
                     NotificationUmaTracker.BROWSER_ACTIONS, ChannelDefinitions.CHANNEL_ID_BROWSER);
@@ -168,6 +161,24 @@ public class BrowserActionsService extends Service {
                 });
                 return tab.getId();
             }
+        }
+        BrowserActionsTabModelSelector selector = BrowserActionsTabModelSelector.getInstance();
+        if (!selector.isActiveState()) {
+            selector.initializeSelector();
+            selector.loadState(true);
+            selector.restoreTabs(false);
+        }
+        Tab tab =
+                selector.openNewTab(loadUrlParams, TabLaunchType.FROM_BROWSER_ACTIONS, null, false);
+        if (tab != null) {
+            tab.addObserver(new EmptyTabObserver() {
+                @Override
+                public void onPageLoadFinished(Tab tab) {
+                    finishTabCreation(tab.getId());
+                    tab.removeObserver(this);
+                }
+            });
+            return tab.getId();
         }
         return Tab.INVALID_TAB_ID;
     }
