@@ -325,7 +325,7 @@ speech.init = function(
   // Initialize event handlers.
   fakeboxMicrophoneElem.hidden = false;
   fakeboxMicrophoneElem.title = translatedStrings.fakeboxMicrophoneTooltip;
-  fakeboxMicrophoneElem.onmouseup = function(event) {
+  fakeboxMicrophoneElem.onclick = function(event) {
     // If propagated, closes the overlay (click on the background).
     speech.logEvent(LOG_TYPE.ACTION_ACTIVATE_FAKEBOX);
     event.stopPropagation();
