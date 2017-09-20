@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f1649afb_478e6b7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-09-20T03:28:05Z",
+      "side": 1,
+      "message": "I just wondering, could you just on protocol client side after some timeout call Debugger.pause and if any JavaScript is running right now you will get Debugger,paused notification and we can expose something like Debugger.terminate to kill current JavaScript task on pause. I think it\u0027s better since on pause we at least now that we\u0027re currently running some kind of JavaScript and V8 is in valid state - it would be much easier to implement proper terminate from this point.",
+      "parentUuid": "2aebd51f_e61df7be",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20dc8f1a_e889d046",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
         "patchSetId": 2
