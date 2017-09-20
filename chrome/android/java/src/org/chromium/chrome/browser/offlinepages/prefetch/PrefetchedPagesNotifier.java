@@ -75,10 +75,13 @@ public class PrefetchedPagesNotifier {
     /**
      * Shows the prefetching notification.
      *
+     * This requires the native library to have already been loaded. Depending on the invocation,
+     * this can be called from Java or Native.
+     *
      * @param origin A string representing the origin of a relevant prefetched page.
      */
     @CalledByNative
-    private static void showNotification(String origin) {
+    static void showNotification(String origin) {
         Context context = ContextUtils.getApplicationContext();
 
         // TODO(dewittj): Use unique notification IDs, allowing multiple to appear in the
