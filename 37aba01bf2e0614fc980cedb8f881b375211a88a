@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99e7f63b_09e11e75",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3774,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-20T21:42:52Z",
+      "side": 1,
+      "message": "\u003e + confidence? here and below.\n\nNow that we removed confidence field, we don\u0027t have to set it anymore.",
+      "parentUuid": "144583e5_a986fd4e",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22b31ab6_3d95e8eb",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 7
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Sorry, was overly verbose here.\n\nTLDR; deprecated isn\u0027t the right way to describe this field (IMO).",
       "parentUuid": "22b31ab6_3d95e8eb",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5bf502_b0963931",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-20T21:42:52Z",
+      "side": 1,
+      "message": "\u003e Sorry, was overly verbose here.\n\u003e \n\u003e TLDR; deprecated isn\u0027t the right way to describe this field (IMO).\n\nI removed the comment. Maybe there should not be any comment at all, because the name of the fields are descriptive enough.",
+      "parentUuid": "988216e1_1b2678b5",
       "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "f251307a_21358236",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-20T21:42:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a1d2fc_d92a9e71",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "647f3919_0f9886d8",
         "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
         "patchSetId": 7
@@ -172,6 +232,24 @@
       "side": 1,
       "message": "Interesting.\n\nDo we have any insight as to the nature/breakdown of the suppressions? (i.e., username gets overridden to email vs something else?).",
       "parentUuid": "61c0eafb_1c8508dc",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682ecd56_cb2074a9",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-20T21:42:52Z",
+      "side": 1,
+      "message": "\u003e Interesting.\n\u003e \n\u003e Do we have any insight as to the nature/breakdown of the suppressions? (i.e., username gets overridden to email vs something else?).\n\nMostly, I think username gets overridden to email. And the second might be phone number.",
+      "parentUuid": "7049d85e_1cd98212",
       "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
