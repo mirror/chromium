@@ -5,7 +5,6 @@
 #ifndef CC_OUTPUT_LAYER_TREE_FRAME_SINK_H_
 #define CC_OUTPUT_LAYER_TREE_FRAME_SINK_H_
 
-#include <deque>
 #include <memory>
 
 #include "base/macros.h"
