@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9e29786_43e22e66",
+        "filename": "third_party/WebKit/Source/modules/media_controls/DEPS",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-20T13:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbddd7c7_45143328",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1294d2e6_8ea32295",
         "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
         "patchSetId": 21
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "76a35cc4_4e28740c",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-20T13:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c427b3_2f56d0cd",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0adf687_cc372ce0",
         "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
         "patchSetId": 21
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-20T11:05:26Z",
       "side": 1,
       "message": "Where is this used?",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85337d9_b954f823",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-20T13:18:22Z",
+      "side": 1,
+      "message": "It\u0027s used in another CL.",
+      "parentUuid": "c0adf687_cc372ce0",
       "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +138,24 @@
       "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4ebc15_afb5c656",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-20T13:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f7890a_ffbb0d6a",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
