@@ -16,6 +16,24 @@
       "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37fd50b_3608cec0",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-20T21:46:00Z",
+      "side": 1,
+      "message": "I renamed FramesDropped to VideoFramesDropped.\n\nTRACE_EVENT1 is a macro that expands into multiple statements, so {} is necessary.\n\nIn current (non-TBMv2) benchmark we report dropped frame count as an integer, and increases to it is a regression. For this we don\u0027t need VideoFramesDecoded. An alternative would be reporting frames dropped as a percentage of frames decoded. Please let me know if you think that would be more useful.",
+      "parentUuid": "48613440_23161f7e",
+      "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
