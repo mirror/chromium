@@ -309,6 +309,24 @@
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6265568_5c21a384",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_focus_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:45:47Z",
+      "side": 1,
+      "message": "Okay. Done.",
+      "parentUuid": "80be3e31_fdb6a7de",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
