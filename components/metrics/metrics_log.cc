@@ -37,6 +37,10 @@
 #include "base/android/build_info.h"
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "base/linux_util.h"
+#endif
+
 #if defined(OS_WIN)
 #include "base/win/current_module.h"
 #endif
@@ -174,6 +178,9 @@ void MetricsLog::RecordCoreSystemProfile(MetricsServiceClient* client,
   metrics::SystemProfileProto::OS* os = system_profile->mutable_os();
   os->set_name(base::SysInfo::OperatingSystemName());
   os->set_version(base::SysInfo::OperatingSystemVersion());
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  os->set_distro(base::GetLinuxDistro());
+#endif
 #if defined(OS_ANDROID)
   os->set_build_fingerprint(
       base::android::BuildInfo::GetInstance()->android_build_fp());

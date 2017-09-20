@@ -75,6 +75,7 @@ message SystemProfileProto {
   // e.g. "en-US".
   optional string application_locale = 4;
 
+  // Next tag for OS: 6
   // Information on the user's operating system.
   message OS {
     // The user's operating system. This should be one of:
@@ -96,6 +97,9 @@ message SystemProfileProto {
     // DynamicLibraries/ directory. It's a necessary but insufficient indicator
     // of whether the operating system has been jailbroken.
     optional bool is_jailbroken = 4;
+
+    // The distribution of the OS. This field is used only on Linux.
+    optional string distro = 5;
   }
   optional OS os = 5;
 
