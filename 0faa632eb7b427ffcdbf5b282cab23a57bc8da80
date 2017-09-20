@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60ff05d3_26acaec3",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-20T22:20:28Z",
+      "side": 1,
+      "message": "Can you add a base::Timer to hide it if ShowMetalayer() has not been called within the next 2s?",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 11
+      },
+      "revId": "0faa632eb7b427ffcdbf5b282cab23a57bc8da80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
