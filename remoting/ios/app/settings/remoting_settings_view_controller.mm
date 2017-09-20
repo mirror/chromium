@@ -301,6 +301,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
     if ([weakSelf.delegate respondsToSelector:@selector(sendCtrAltDel)]) {
       [weakSelf.delegate sendCtrAltDel];
     }
+    [weakSelf dismissViewControllerAnimated:YES completion:nil];
   };
 
   SettingOption* printScreenOption = [[SettingOption alloc] init];
@@ -310,6 +311,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
     if ([weakSelf.delegate respondsToSelector:@selector(sendPrintScreen)]) {
       [weakSelf.delegate sendPrintScreen];
     }
+    [weakSelf dismissViewControllerAnimated:YES completion:nil];
   };
 
   [_content addObject:@[ ctrlAltDelOption, printScreenOption ]];
