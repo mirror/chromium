@@ -229,7 +229,9 @@ void MediaInterfaceProxy::ConnectToCdmService(const std::string& key_system) {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   // LoadCdm() should always be called before CreateInterfaceFactory().
-  media_service->LoadCdm(cdm_path);
+  base::ThreadRestrictions::SetIOAllowed(true);
+  base::File cdm_file(cdm_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  media_service->LoadCdm(std::move(cdm_file));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
   media_service->CreateInterfaceFactory(

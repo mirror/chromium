@@ -149,6 +149,7 @@ void RunSandboxSanityChecks(SandboxType sandbox_type) {
 
 // Run most of the sanity checks only in DEBUG mode to avoid a perf.
 // impact.
+/*
 #if !defined(NDEBUG)
       // open() must be restricted.
       syscall_ret = open("/etc/passwd", O_RDONLY);
@@ -160,6 +161,7 @@ void RunSandboxSanityChecks(SandboxType sandbox_type) {
       CHECK_EQ(-1, syscall_ret);
       CHECK_EQ(EPERM, errno);
 #endif  // !defined(NDEBUG)
+*/
     } break;
     default:
       // Otherwise, no checks required.
