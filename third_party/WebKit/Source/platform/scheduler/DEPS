@@ -20,6 +20,7 @@ include_rules = [
   "+base/optional.h",
   "+base/pending_task.h",
   "+base/run_loop.h",
+  "+base/simple_test_tick_clock.h",
   "+base/single_thread_task_runner.h",
   "+base/strings/string_number_conversions.h",
   "+base/synchronization/lock.h",

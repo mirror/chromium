@@ -24,6 +24,7 @@
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
+#include "platform/scheduler/test/idle_test_task.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -74,42 +75,16 @@ void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
   }
 }
 
-void IdleTestTask(int* run_count,
-                  base::TimeTicks* deadline_out,
-                  base::TimeTicks deadline) {
-  (*run_count)++;
-  *deadline_out = deadline;
-}
-
-int g_max_idle_task_reposts = 2;
-
-void RepostingIdleTestTask(SingleThreadIdleTaskRunner* idle_task_runner,
-                           int* run_count,
-                           base::TimeTicks deadline) {
-  if ((*run_count + 1) < g_max_idle_task_reposts) {
-    idle_task_runner->PostIdleTask(
-        FROM_HERE, base::Bind(&RepostingIdleTestTask,
-                              base::Unretained(idle_task_runner), run_count));
-  }
-  (*run_count)++;
-}
-
-void RepostingUpdateClockIdleTestTask(
+void RepostingIdleTestTaskForRendererScheduler(
     SingleThreadIdleTaskRunner* idle_task_runner,
     int* run_count,
-    base::SimpleTestTickClock* clock,
-    base::TimeDelta advance_time,
-    std::vector<base::TimeTicks>* deadlines,
     base::TimeTicks deadline) {
   if ((*run_count + 1) < g_max_idle_task_reposts) {
     idle_task_runner->PostIdleTask(
-        FROM_HERE, base::Bind(&RepostingUpdateClockIdleTestTask,
-                              base::Unretained(idle_task_runner), run_count,
-                              clock, advance_time, deadlines));
+        FROM_HERE, base::Bind(&RepostingIdleTestTaskForRendererScheduler,
+                              base::Unretained(idle_task_runner), run_count));
   }
-  deadlines->push_back(deadline);
   (*run_count)++;
-  clock->Advance(advance_time);
 }
 
 void WillBeginFrameIdleTask(RendererScheduler* scheduler,
@@ -120,13 +95,6 @@ void WillBeginFrameIdleTask(RendererScheduler* scheduler,
       BEGINFRAME_FROM_HERE, 0, sequence_number, clock->NowTicks(),
       base::TimeTicks(), base::TimeDelta::FromMilliseconds(1000),
       viz::BeginFrameArgs::NORMAL));
-}
-
-void UpdateClockToDeadlineIdleTestTask(base::SimpleTestTickClock* clock,
-                                       int* run_count,
-                                       base::TimeTicks deadline) {
-  clock->Advance(deadline - clock->NowTicks());
-  (*run_count)++;
 }
 
 void PostingYieldingTestTask(RendererSchedulerImpl* scheduler,
@@ -801,7 +769,7 @@ TEST_F(RendererSchedulerImplTest, TestRepostingIdleTask) {
 
   g_max_idle_task_reposts = 2;
   idle_task_runner_->PostIdleTask(
-      FROM_HERE, base::Bind(&RepostingIdleTestTask,
+      FROM_HERE, base::Bind(&RepostingIdleTestTaskForRendererScheduler,
                             base::RetainedRef(idle_task_runner_), &run_count));
   EnableIdleTasks();
   RunUntilIdle();
@@ -2286,10 +2254,11 @@ TEST_F(RendererSchedulerImplTest, TestLongIdlePeriodInTouchStartPolicy) {
   EXPECT_EQ(1, run_count);
 }
 
-void TestCanExceedIdleDeadlineIfRequiredTask(RendererScheduler* scheduler,
-                                             bool* can_exceed_idle_deadline_out,
-                                             int* run_count,
-                                             base::TimeTicks deadline) {
+void TestCanExceedIdleDeadlineIfRequiredTaskForRendererScheduler(
+    RendererScheduler* scheduler,
+    bool* can_exceed_idle_deadline_out,
+    int* run_count,
+    base::TimeTicks deadline) {
   *can_exceed_idle_deadline_out = scheduler->CanExceedIdleDeadlineIfRequired();
   (*run_count)++;
 }
@@ -2304,8 +2273,8 @@ TEST_F(RendererSchedulerImplTest, CanExceedIdleDeadlineIfRequired) {
   // Should return false for short idle periods.
   idle_task_runner_->PostIdleTask(
       FROM_HERE,
-      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTask, scheduler_.get(),
-                 &can_exceed_idle_deadline, &run_count));
+      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTaskForRendererScheduler,
+                 scheduler_.get(), &can_exceed_idle_deadline, &run_count));
   EnableIdleTasks();
   RunUntilIdle();
   EXPECT_EQ(1, run_count);
@@ -2317,8 +2286,8 @@ TEST_F(RendererSchedulerImplTest, CanExceedIdleDeadlineIfRequired) {
                                         base::TimeDelta::FromMilliseconds(10));
   idle_task_runner_->PostIdleTask(
       FROM_HERE,
-      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTask, scheduler_.get(),
-                 &can_exceed_idle_deadline, &run_count));
+      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTaskForRendererScheduler,
+                 scheduler_.get(), &can_exceed_idle_deadline, &run_count));
   scheduler_->BeginFrameNotExpectedSoon();
   RunUntilIdle();
   EXPECT_EQ(2, run_count);
@@ -2329,8 +2298,8 @@ TEST_F(RendererSchedulerImplTest, CanExceedIdleDeadlineIfRequired) {
   clock_->Advance(maximum_idle_period_duration());
   idle_task_runner_->PostIdleTask(
       FROM_HERE,
-      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTask, scheduler_.get(),
-                 &can_exceed_idle_deadline, &run_count));
+      base::Bind(&TestCanExceedIdleDeadlineIfRequiredTaskForRendererScheduler,
+                 scheduler_.get(), &can_exceed_idle_deadline, &run_count));
   RunUntilIdle();
   EXPECT_EQ(3, run_count);
   EXPECT_TRUE(can_exceed_idle_deadline);
@@ -2351,7 +2320,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererHiddenIdlePeriod) {
 
   g_max_idle_task_reposts = 2;
   idle_task_runner_->PostIdleTask(
-      FROM_HERE, base::Bind(&RepostingIdleTestTask,
+      FROM_HERE, base::Bind(&RepostingIdleTestTaskForRendererScheduler,
                             base::RetainedRef(idle_task_runner_), &run_count));
 
   // Renderer should start in visible state.
@@ -2369,7 +2338,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererHiddenIdlePeriod) {
   // idle tasks when hidden (plus some slack) - idle period should have ended.
   g_max_idle_task_reposts = 3;
   idle_task_runner_->PostIdleTask(
-      FROM_HERE, base::Bind(&RepostingIdleTestTask,
+      FROM_HERE, base::Bind(&RepostingIdleTestTaskForRendererScheduler,
                             base::RetainedRef(idle_task_runner_), &run_count));
   clock_->Advance(end_idle_when_hidden_delay() +
                   base::TimeDelta::FromMilliseconds(10));
