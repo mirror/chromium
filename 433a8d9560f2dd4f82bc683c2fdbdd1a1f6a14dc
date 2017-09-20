@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dec566_d37412ed",
+        "filename": "components/cronet/android/test/cronet_test_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-20T14:11:22Z",
+      "side": 1,
+      "message": "FYI: this change was necessary to ensure that CleanupNetworkThreadOnNetworkThread() ran *after* other tasks that might have been posted to the network thread but were delayed until after the Context was initialized, e.g. ~UrlInterceptorJobFactoryHandle().",
+      "revId": "433a8d9560f2dd4f82bc683c2fdbdd1a1f6a14dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
