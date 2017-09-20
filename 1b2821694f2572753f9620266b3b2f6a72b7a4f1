@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46dcff3_fac0b21d",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T01:51:38Z",
+      "side": 1,
+      "message": "Maybe the LocationBar should instead expose something like:\n\nstd::unique_ptr\u003cOmniboxPopupViewIOS\u003e CreatePopupView();",
+      "revId": "1b2821694f2572753f9620266b3b2f6a72b7a4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
