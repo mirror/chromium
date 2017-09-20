@@ -16,7 +16,6 @@ component("ipc") {
 
   public_deps = [
     "//base",
-    "//ipc",
     "//ui/gfx:memory_buffer",
     "//ui/gfx:selection_bound",
     "//ui/gfx/ipc/geometry",
