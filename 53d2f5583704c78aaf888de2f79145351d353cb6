@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9ec4c27_e033d146",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T22:28:13Z",
+      "side": 1,
+      "message": "done, thanks!",
+      "parentUuid": "f3f34212_6ba9c6b9",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a4e5958_30876d9e",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T20:55:07Z",
       "side": 1,
       "message": "would it be a bit cleaner to move this if condition immediately after the other kIgnorePowerButtonAfterResumeDelay condition that also unsets force_off_on_button_up_?",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62772162_ad2625c5",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T22:28:13Z",
+      "side": 1,
+      "message": "yes, done.",
+      "parentUuid": "9a4e5958_30876d9e",
       "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "aa954ff5_68c84fa7",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T22:28:13Z",
+      "side": 1,
+      "message": "Done. Actually this 600ms did two things (1) ignore forcing off (2) avoid ignore repeated power button releases.\n\nI made the update about this.",
+      "parentUuid": "0cba69a7_a9e6fa35",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd718ef_f25d2afa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 5
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2e9499c0_7b6ce0af",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T22:28:13Z",
+      "side": 1,
+      "message": "done by removing.",
+      "parentUuid": "4086b61c_9fb19f25",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f39480da_0815d7ab",
         "filename": "ash/wm/power_button_controller.h",
         "patchSetId": 5
@@ -116,6 +188,24 @@
       "writtenOn": "2017-09-20T20:55:07Z",
       "side": 1,
       "message": "how about making SetTickClockForTesting do this automatically? it seems like we always want that behavior, right?",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dadd494_66ae965c",
+        "filename": "ash/wm/power_button_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T22:28:13Z",
+      "side": 1,
+      "message": "agree. done.",
+      "parentUuid": "f39480da_0815d7ab",
       "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
