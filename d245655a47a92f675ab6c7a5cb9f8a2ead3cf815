@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8176261a_a456362a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-20T14:54:59Z",
+      "side": 1,
+      "message": "nit: DeviceSettingsService",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "d245655a47a92f675ab6c7a5cb9f8a2ead3cf815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
