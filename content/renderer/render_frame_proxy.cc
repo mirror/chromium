@@ -26,6 +26,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/renderer/child_frame_compositing_helper.h"
 #include "content/renderer/frame_owner_properties.h"
+#include "content/renderer/mash_util.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_view_impl.h"
@@ -39,6 +40,10 @@
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "third_party/WebKit/public/web/WebView.h"
+
+#if defined(USE_AURA)
+#include "content/renderer/mus/renderer_window_tree_client.h"
+#endif
 
 namespace content {
 
@@ -282,6 +287,22 @@ void RenderFrameProxy::OnDidUpdateFramePolicy(
                                   FeaturePolicyHeaderToWeb(container_policy));
 }
 
+void RenderFrameProxy::MaybeUpdateCompositingHelper() {
+  if (!frame_sink_id_.is_valid() || !local_surface_id_.is_valid())
+    return;
+
+  float device_scale_factor = render_widget_->GetOriginalDeviceScaleFactor();
+  viz::SurfaceInfo surface_info(
+      viz::SurfaceId(frame_sink_id_, local_surface_id_), device_scale_factor,
+      gfx::ScaleToCeiledSize(frame_rect_.size(), device_scale_factor));
+
+  if (IsRunningInMash() && !compositing_helper_)
+    OnSetChildFrameSurface(surface_info, viz::SurfaceSequence());
+
+  if (compositing_helper_ && enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+}
+
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
   // Forward Page IPCs to the RenderView.
   if ((IPC_MESSAGE_CLASS(msg) == PageMsgStart)) {
@@ -318,6 +339,9 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_WillEnterFullscreen, OnWillEnterFullscreen)
     IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
+#if defined(USE_AURA)
+    IPC_MESSAGE_HANDLER(FrameMsg_EmbedWindowTreeClient, OnEmbedWindowTreeClient)
+#endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -383,6 +407,11 @@ void RenderFrameProxy::OnDidStartLoading() {
 }
 
 void RenderFrameProxy::OnViewChanged(const viz::FrameSinkId& frame_sink_id) {
+  if (IsRunningInMash()) {
+    // In mash the FrameSinkId comes from RendererWindowTreeClient.
+    return;
+  }
+
   frame_sink_id_ = frame_sink_id;
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
@@ -457,7 +486,22 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
   web_frame_->SetHasReceivedUserGesture();
 }
 
+#if defined(USE_AURA)
+void RenderFrameProxy::OnMusFrameSinkIdAllocated(
+    const viz::FrameSinkId& frame_sink_id) {
+  frame_sink_id_ = frame_sink_id;
+  MaybeUpdateCompositingHelper();
+  // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
+  // changes.
+  ResendFrameRects();
+}
+#endif
+
 void RenderFrameProxy::FrameDetached(DetachType type) {
+#if defined(USE_AURA)
+  mus_embedded_frame_.reset();
+#endif
+
   if (type == DetachType::kRemove && web_frame_->Parent()) {
     // Let the browser process know this subframe is removed, so that it is
     // destroyed in its current process.
@@ -542,21 +586,22 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
-  if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid()) {
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (compositing_helper_ && enable_surface_synchronization_ &&
-        frame_sink_id_.is_valid()) {
-      float device_scale_factor =
-          render_widget()->GetOriginalDeviceScaleFactor();
-      viz::SurfaceInfo surface_info(
-          viz::SurfaceId(frame_sink_id_, local_surface_id_),
-          device_scale_factor,
-          gfx::ScaleToCeiledSize(rect.size(), device_scale_factor));
-      compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-    }
-  }
+  const bool did_size_change = frame_rect_.size() != rect.size();
+#if defined(USE_AURA)
+  const bool did_rect_change = did_size_change || frame_rect_ != rect;
+#endif
 
   frame_rect_ = rect;
+
+  if (did_size_change || !local_surface_id_.is_valid()) {
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    MaybeUpdateCompositingHelper();
+  }
+
+#if defined(USE_AURA)
+  if (did_rect_change && mus_embedded_frame_)
+    mus_embedded_frame_->SetWindowBounds(local_surface_id_, rect);
+#endif
 
   if (IsUseZoomForDSFEnabled()) {
     rect = gfx::ScaleToEnclosingRect(
@@ -605,5 +650,21 @@ void RenderFrameProxy::AdvanceFocus(blink::WebFocusType type,
 void RenderFrameProxy::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
 }
+
+#if defined(USE_AURA)
+void RenderFrameProxy::OnEmbedWindowTreeClient(
+    mojo::MessagePipeHandle window_tree_client_handle) {
+  ui::mojom::WindowTreeClientPtr window_tree_client;
+  mojo::ScopedMessagePipeHandle pipe_handle;
+  pipe_handle.reset(window_tree_client_handle);
+  window_tree_client.Bind(
+      ui::mojom::WindowTreeClientPtrInfo(std::move(pipe_handle), 0));
+  RendererWindowTreeClient* renderer_window_tree_client =
+      RendererWindowTreeClient::Get(render_widget_->routing_id());
+  DCHECK(renderer_window_tree_client);
+  mus_embedded_frame_ =
+      renderer_window_tree_client->Embed(this, std::move(window_tree_client));
+}
+#endif
 
 }  // namespace

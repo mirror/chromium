@@ -18,6 +18,10 @@
 #include "third_party/WebKit/public/web/WebRemoteFrameClient.h"
 #include "url/origin.h"
 
+#if defined(USE_AURA)
+#include "services/ui/public/interfaces/window_tree.mojom.h"
+#endif
+
 namespace blink {
 struct WebRect;
 }
@@ -36,6 +40,10 @@ class RenderWidget;
 struct ContentSecurityPolicyHeader;
 struct FrameOwnerProperties;
 struct FrameReplicationState;
+
+#if defined(USE_AURA)
+class MusEmbeddedFrame;
+#endif
 
 // When a page's frames are rendered by multiple processes, each renderer has a
 // full copy of the frame tree. It has full RenderFrames for the frames it is
@@ -129,6 +137,11 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // Returns the widget used for the local frame root.
   RenderWidget* render_widget() { return render_widget_; }
 
+#if defined(USE_AURA)
+  // Called when mus determines the FrameSinkId.
+  void OnMusFrameSinkIdAllocated(const viz::FrameSinkId& frame_sink_id);
+#endif
+
   // blink::WebRemoteFrameClient implementation:
   void FrameDetached(DetachType type) override;
   void ForwardPostMessage(blink::WebLocalFrame* sourceFrame,
@@ -159,6 +172,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void ResendFrameRects();
 
+  void MaybeUpdateCompositingHelper();
+
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
 
@@ -188,6 +203,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
+#if defined(USE_AURA)
+  void OnEmbedWindowTreeClient(
+      mojo::MessagePipeHandle window_tree_client_handle);
+#endif
 
   // The routing ID by which this RenderFrameProxy is known.
   const int routing_id_;
@@ -210,6 +229,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   bool enable_surface_synchronization_ = false;
+
+#if defined(USE_AURA)
+  std::unique_ptr<MusEmbeddedFrame> mus_embedded_frame_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };

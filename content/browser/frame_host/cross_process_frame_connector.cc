@@ -391,6 +391,18 @@ bool CrossProcessFrameConnector::IsHidden() const {
   return is_hidden_;
 }
 
+#if defined(USE_AURA)
+void CrossProcessFrameConnector::EmbedWindowTreeClientInParent(
+    ui::mojom::WindowTreeClientPtr window_tree_client) {
+  if (!frame_proxy_in_parent_renderer_)
+    return;
+
+  frame_proxy_in_parent_renderer_->Send(new FrameMsg_EmbedWindowTreeClient(
+      frame_proxy_in_parent_renderer_->GetRoutingID(),
+      std::move(window_tree_client.PassInterface().PassHandle().release())));
+}
+#endif
+
 void CrossProcessFrameConnector::SetVisibilityForChildViews(
     bool visible) const {
   frame_proxy_in_parent_renderer_->frame_tree_node()

@@ -1078,6 +1078,11 @@ IPC_MESSAGE_ROUTED1(FrameMsg_BlinkFeatureUsageReport,
 IPC_MESSAGE_ROUTED1(FrameMsg_MixedContentFound,
                     FrameMsg_MixedContentFound_Params)
 
+#if defined(USE_AURA)
+IPC_MESSAGE_ROUTED1(FrameMsg_EmbedWindowTreeClient,
+                    mojo::MessagePipeHandle /* window_tree_client */)
+#endif
+
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.
 

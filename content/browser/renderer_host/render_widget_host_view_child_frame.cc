@@ -45,6 +45,8 @@
 #include "ui/touch_selection/touch_selection_controller.h"
 
 #if defined(USE_AURA)
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "ui/aura/env.h"
 #endif
 
@@ -175,6 +177,17 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
         manager->AddObserver(this);
       }
     }
+
+#if defined(USE_AURA)
+    if (IsUsingMus() && frame_connector_->GetParentRenderWidgetHostView()) {
+      ui::mojom::WindowTreeClientPtr window_tree_client;
+      host_->Send(new ViewMsg_GetWindowTreeClient(
+          host_->GetRoutingID(),
+          MakeRequest(&window_tree_client).PassMessagePipe().release()));
+      frame_connector_->EmbedWindowTreeClientInParent(
+          std::move(window_tree_client));
+    }
+#endif
   }
 }
 
