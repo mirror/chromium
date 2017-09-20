@@ -51,10 +51,10 @@ extern const char kOptionPageRange[] = "page_range";
 extern const char kOptionReverse[] = "reverse_order";
 extern const char kOptionPwgRasterConfig[] = "pwg_raster_config";
 
-const char kMargineBottom[] = "bottom_microns";
-const char kMargineLeft[] = "left_microns";
-const char kMargineRight[] = "right_microns";
-const char kMargineTop[] = "top_microns";
+const char kMarginBottom[] = "bottom_microns";
+const char kMarginLeft[] = "left_microns";
+const char kMarginRight[] = "right_microns";
+const char kMarginTop[] = "top_microns";
 
 const char kDpiHorizontal[] = "horizontal_dpi";
 const char kDpiVertical[] = "vertical_dpi";
@@ -67,6 +67,7 @@ const char kPageRangeInterval[] = "interval";
 const char kPageRangeEnd[] = "end";
 const char kPageRangeStart[] = "start";
 
+const char kPwgRasterDocumentTypeSupported[] = "document_type_supported";
 const char kPwgRasterDocumentSheetBack[] = "document_sheet_back";
 const char kPwgRasterReverseOrderStreaming[] = "reverse_order_streaming";
 const char kPwgRasterRotateAllPages[] = "rotate_all_pages";
@@ -94,6 +95,9 @@ const char kTypeOrientationAuto[] = "AUTO";
 
 const char kTypeOrientationLandscape[] = "LANDSCAPE";
 const char kTypeOrientationPortrait[] = "PORTRAIT";
+
+const char kTypeDocumentSupportedTypeSRGB8[] = "SRGB_8";
+const char kTypeDocumentSupportedTypeSGRAY8[] = "SGRAY_8";
 
 const char kTypeDocumentSheetBackNormal[] = "NORMAL";
 const char kTypeDocumentSheetBackRotated[] = "ROTATED";
@@ -391,6 +395,8 @@ PwgRasterConfig::PwgRasterConfig()
       rotate_all_pages(false) {
 }
 
+PwgRasterConfig::~PwgRasterConfig() {}
+
 Color::Color() : type(AUTO_COLOR) {
 }
 
@@ -564,6 +570,24 @@ class PwgRasterConfigTraits : public NoValueValidation,
       }
     }
 
+    const base::Value* document_types_supported =
+        dict.FindKey(kPwgRasterDocumentTypeSupported);
+    if (document_types_supported) {
+      if (!document_types_supported->is_list())
+        return false;
+
+      for (const auto& type : document_types_supported->GetList()) {
+        if (!type.is_string())
+          return false;
+
+        std::string type_str = type.GetString();
+        if (type_str == kTypeDocumentSupportedTypeSRGB8)
+          option_out.document_types_supported.push_back(SRGB_8);
+        else if (type_str == kTypeDocumentSupportedTypeSGRAY8)
+          option_out.document_types_supported.push_back(SGRAY_8);
+      }
+    }
+
     dict.GetBoolean(kPwgRasterReverseOrderStreaming,
                     &option_out.reverse_order_streaming);
     dict.GetBoolean(kPwgRasterRotateAllPages, &option_out.rotate_all_pages);
@@ -575,9 +599,29 @@ class PwgRasterConfigTraits : public NoValueValidation,
     dict->SetString(
         kPwgRasterDocumentSheetBack,
         TypeToString(kDocumentSheetBackNames, option.document_sheet_back));
-    if (option.reverse_order_streaming)
+
+    if (!option.document_types_supported.empty()) {
+      base::Value::ListStorage supported_list;
+      for (const auto& type : option.document_types_supported) {
+        switch (type) {
+          case SRGB_8:
+            supported_list.push_back(
+                base::Value(kTypeDocumentSupportedTypeSRGB8));
+            break;
+          case SGRAY_8:
+            supported_list.push_back(
+                base::Value(kTypeDocumentSupportedTypeSGRAY8));
+            break;
+        }
+      }
+      dict->SetKey(kPwgRasterDocumentTypeSupported,
+                   base::Value(supported_list));
+    }
+
+    if (option.reverse_order_streaming) {
       dict->SetBoolean(kPwgRasterReverseOrderStreaming,
                        option.reverse_order_streaming);
+    }
 
     if (option.rotate_all_pages)
       dict->SetBoolean(kPwgRasterRotateAllPages, option.rotate_all_pages);
@@ -658,18 +702,18 @@ class MarginsTraits : public NoValueValidation,
       return false;
     if (!TypeFromString(kMarginsNames, type_str, &option->type))
       return false;
-    return dict.GetInteger(kMargineTop, &option->top_um) &&
-           dict.GetInteger(kMargineRight, &option->right_um) &&
-           dict.GetInteger(kMargineBottom, &option->bottom_um) &&
-           dict.GetInteger(kMargineLeft, &option->left_um);
+    return dict.GetInteger(kMarginTop, &option->top_um) &&
+           dict.GetInteger(kMarginRight, &option->right_um) &&
+           dict.GetInteger(kMarginBottom, &option->bottom_um) &&
+           dict.GetInteger(kMarginLeft, &option->left_um);
   }
 
   static void Save(const Margins& option, base::DictionaryValue* dict) {
     dict->SetString(kKeyType, TypeToString(kMarginsNames, option.type));
-    dict->SetInteger(kMargineTop, option.top_um);
-    dict->SetInteger(kMargineRight, option.right_um);
-    dict->SetInteger(kMargineBottom, option.bottom_um);
-    dict->SetInteger(kMargineLeft, option.left_um);
+    dict->SetInteger(kMarginTop, option.top_um);
+    dict->SetInteger(kMarginRight, option.right_um);
+    dict->SetInteger(kMarginBottom, option.bottom_um);
+    dict->SetInteger(kMarginLeft, option.left_um);
   }
 };
 

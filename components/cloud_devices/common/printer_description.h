@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <vector>
 
 #include "base/logging.h"
 #include "components/cloud_devices/common/description_items.h"
@@ -23,9 +24,16 @@ typedef std::string ContentType;
 
 enum DocumentSheetBack { NORMAL, ROTATED, MANUAL_TUMBLE, FLIPPED };
 
+enum PwgDocumentTypeSupported {
+  SGRAY_8 = 22,
+  SRGB_8 = 23,
+};
+
 struct PwgRasterConfig {
   PwgRasterConfig();
+  ~PwgRasterConfig();
 
+  std::vector<PwgDocumentTypeSupported> document_types_supported;
   DocumentSheetBack document_sheet_back;
   bool reverse_order_streaming;
   bool rotate_all_pages;
