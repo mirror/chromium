@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9c54e452_69e01554",
+        "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "I realize that, but that doesn\u0027t explain why we would need to have a public constructor instead of using a private one and calling CreateInstance().",
+      "parentUuid": "651fcaa6_731bfe53",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 80
+      },
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed76ef5a_2bb43c25",
         "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.h",
         "patchSetId": 9
@@ -1682,6 +1706,24 @@
     },
     {
       "key": {
+        "uuid": "5a85f5e0_d5fa9425",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Ah, I see. Okay, leave as-is then. I\u0027ll take another look at this when I implement the rest of the APIs after you leave.",
+      "parentUuid": "67b882ea_108b3e4d",
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98af25a8_448867ca",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 9
@@ -1717,6 +1759,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "98af25a8_448867ca",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 68
+      },
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b57d297_e5424885",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Looks like this is still here.",
+      "parentUuid": "f022037f_f90a001f",
       "range": {
         "startLine": 365,
         "startChar": 0,

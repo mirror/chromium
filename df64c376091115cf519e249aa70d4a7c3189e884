@@ -1,0 +1,694 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb9c715_04b4d416",
+        "filename": "components/cryptauth/remote_device_test_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Never use randomly-generated values in your tests. This can cause your tests to fail sometimes and fail others (a.k.a. \"flaky\" tests). Just use i % 2 here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef92ef95_108950c3",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "You\u0027re creating a Factory instance and calling NewInstance() on it, which is not the correct thing to do since NewInstance() is a static function. Static functions aren\u0027t associated with any object in particular. Instead, use the static function like this:\n\ncryptauth::RemoteDeviceProviderImpl::Factory::NewInstance()",
+      "range": {
+        "startLine": 260,
+        "startChar": 43,
+        "endLine": 260,
+        "endChar": 53
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe026a05_7f4feb72",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "nit: \"Stores invocation...\"\n\nNot necessary to say \"This class...\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 3,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed19b91_3c3a9eea",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "The observer functions take a boolean which says whether the last enrollment attempt was successful, not whether enrollment is valid.\n\nImagine this:\n(1) Class starts up, enrollment is valid.\n(2) Class tries to re-enroll, but fails.\n(3) Class should notify observers that re-enrollment failed, but enrollment is still valid since there is an older enrollment present still.\n\nInstead, make this function take a bool parameter and pass that value to observers.",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689873d2_75ceba26",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "set_expected_sync_result()",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 28
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce5949c_cf110234",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "set_expected_device_change_result()",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fa51e3_e135c147",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "// cryptauth::CryptAuthDeviceManager:",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374bfe05_03f17908",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Please remove the setters and just have this function take parameters instead. AFAICT, there\u0027s no reason you need to store those as instance fields. Fewer fields --\u003e lower probability of becoming out of sync.",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1005affd_948e9eb1",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "How about InvokeAccountAvailableCallback()",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d431c48_880aef8a",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "DCHECK() that the callback has been set.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f66b861_b7660731",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 182,
+        "startChar": 37,
+        "endLine": 182,
+        "endChar": 38
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032d908e_79205984",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "nit: Newline before this. Also before last_instance().",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d8a5ae_23a3abdb",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Initialize to nullptr.",
+      "range": {
+        "startLine": 197,
+        "startChar": 39,
+        "endLine": 197,
+        "endChar": 53
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37b5923_22f15df2",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Reset()",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdb1751_0259c3a9",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Please use separate lines for these. Shortening does no good if it makes it harder for someone to read.",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 55
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd8ff68_4b0e9462",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "VerifySyncedDevices()",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 297,
+        "endChar": 31
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9869ac4a_99caaf4d",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "EXPECT_EQ(expected_synced_devices, actual_synced_devices);",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 5
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b39d27_b68b6fc5",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "nit: num_expected_error_callbacks",
+      "range": {
+        "startLine": 320,
+        "startChar": 36,
+        "endLine": 320,
+        "endChar": 66
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294d293a_d0564ee9",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "if (action_type \u003d\u003d FORCE_ENROLLMENT_NOW) {\n  // do stuff.\n  return\n}\n\n// sync stuff.",
+      "range": {
+        "startLine": 327,
+        "startChar": 6,
+        "endLine": 327,
+        "endChar": 7
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9e8ab0_f163d082",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "How about ForceManagerAction()?",
+      "range": {
+        "startLine": 342,
+        "startChar": 7,
+        "endLine": 342,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3c89fa_4c185792",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "This is a bit difficult to read since you have to know that INVOCATION_REASON_UNKNOWN is the default value to understand that this means that it wasn\u0027t changed.\n\nPlease add a helper function VerifyNoEnrollmentSinceLastCheck() (and same for device sync) and call that from here instead.",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 57
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d545bd_740ed315",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Your test should test further than this - please let enrollment complete and verify that the sync occurs.",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b32c14_ac7c16e9",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Does this actually fail? If so, how? If not, please remove this comment.",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 8
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0e6429_69caec6b",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Please add a more descriptive name. Same anywhere else you use a name like this.",
+      "range": {
+        "startLine": 434,
+        "startChar": 27,
+        "endLine": 434,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b03eaa_5963db50",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "/* num_expected_success_callbacks */\n\nSame with error callbacks.",
+      "range": {
+        "startLine": 440,
+        "startChar": 71,
+        "endLine": 440,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e5f321_a08e486b",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Why are you clearing the counts mid-test?",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 39
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ab1085_4786635d",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this test is testing - can you explain?",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9fbae1_8f26ca89",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "At the end, test a success and changed case.",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b752e42c_f55ef684",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "Change the devices after and test that the synced devices can change. Also, test that observers are notified when the synced device list changes.",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50de4fe0_6daf910c",
+        "filename": "components/multidevice/service/fake_device_sync.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-20T20:50:20Z",
+      "side": 1,
+      "message": "You can\u0027t statically declare non-primitives. Please move this to the initializer list of your constructor, and also use GenerateTestRemoteDevices().",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
