@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86bada7c_205edf5a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-20T05:30:12Z",
+      "side": 1,
+      "message": "yosin@: I don\u0027t think this is going to be a burden, since DocumentShutdownObservers are notified only once.\n\nWDYT?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "64c921efd4361fea0dbc722f43a952fd6297a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094e7775_05f72b51",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-20T05:30:12Z",
+      "side": 1,
+      "message": "The meaning of \"available\" is unclear here.\n\nWe might want another name, say, IsDocumentActive().",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "64c921efd4361fea0dbc722f43a952fd6297a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01016b78_eacbc518",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-20T05:30:12Z",
+      "side": 1,
+      "message": "I did some layout test consolidation.\n\nPlease check the editing/inserting/webkitBeforeTextInserted-*.html tests and update the test names here.\n\nDitto below.",
+      "revId": "64c921efd4361fea0dbc722f43a952fd6297a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb13b1a1_c885e4c9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-20T05:30:12Z",
+      "side": 1,
+      "message": "There\u0027s no need to store |selection| and check it after event handler. Checking |EndingSelection()| is enough.",
+      "range": {
+        "startLine": 659,
+        "startChar": 7,
+        "endLine": 659,
+        "endChar": 16
+      },
+      "revId": "64c921efd4361fea0dbc722f43a952fd6297a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0eb1cb6_fc22613e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-20T05:30:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 681,
+        "startChar": 7,
+        "endLine": 681,
+        "endChar": 16
+      },
+      "revId": "64c921efd4361fea0dbc722f43a952fd6297a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
