@@ -16,6 +16,24 @@
       "revId": "2902b1faa3b728906fca695986d811291aed0ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4808a5d2_7787c304",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-20T21:25:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60e957db_85246171",
+      "revId": "2902b1faa3b728906fca695986d811291aed0ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
