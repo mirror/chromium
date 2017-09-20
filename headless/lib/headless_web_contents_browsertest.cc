@@ -994,7 +994,7 @@ class ResourceSchedulerTest : public HeadlessAsyncDevTooledBrowserTest,
   TestInMemoryProtocolHandler* http_handler_;  // NOT OWNED
 };
 
-class DisableResourceSchedulerTest : public ResourceSchedulerTest {
+class DISABLED_DisableResourceSchedulerTest : public ResourceSchedulerTest {
  public:
   bool GetEnableResourceScheduler() override { return false; }
 
@@ -1005,7 +1005,7 @@ class DisableResourceSchedulerTest : public ResourceSchedulerTest {
   }
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(DisableResourceSchedulerTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(DISABLED_DisableResourceSchedulerTest);
 
 class EnableResourceSchedulerTest : public ResourceSchedulerTest {
  public:
