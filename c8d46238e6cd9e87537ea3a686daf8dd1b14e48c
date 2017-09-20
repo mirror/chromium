@@ -16,6 +16,24 @@
       "revId": "c8d46238e6cd9e87537ea3a686daf8dd1b14e48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bbaf2f_d4ea5a36",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T23:41:51Z",
+      "side": 1,
+      "message": "ACK.\nThanks for the suggestion! \nI actually prefer to have all the user action handling centralized in one place. But if you\u0027re strongly against it, I can do a small refactoring after this CL landed.  Separating this function into 3 means touching additional code/files, i.e. more reviewers (there\u0027re already 6 reviewer in this CL), additional rounds of review. \n\nWe need to be code complete by M63 feature freeze (next week). And this CL is blocking a couple of other CLs.",
+      "parentUuid": "59b4a7f8_96b3ed30",
+      "revId": "c8d46238e6cd9e87537ea3a686daf8dd1b14e48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
