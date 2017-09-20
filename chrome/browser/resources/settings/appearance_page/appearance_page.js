@@ -27,6 +27,20 @@ Polymer({
      */
     pageVisibility: Object,
 
+    /* Default value of pageVisibility */
+    defaultPageVisibility_: {
+      type: Object,
+      value: function() {
+        return {
+          setWallpaper: true,
+          setTheme: true,
+          homeButton: true,
+          bookmarksBar: true,
+          pageZoom: true,
+        };
+      },
+    },
+
     prefs: {
       type: Object,
       notify: true,
@@ -34,6 +48,9 @@ Polymer({
 
     /** @private */
     defaultZoom_: Number,
+
+    /** @private */
+    isWallpaperPolicyControlled_: {type: Boolean, value: true},
 
     /**
      * List of options for the font size drop-down menu.
@@ -135,6 +152,18 @@ Polymer({
     this.browserProxy_.getDefaultZoom().then(zoom => {
       this.defaultZoom_ = zoom;
     });
+    // <if expr="chromeos">
+    this.browserProxy_.isWallpaperSettingVisible().then(
+        isWallpaperSettingVisible => {
+          this.pageVisibility =
+              this.pageVisibility || this.defaultPageVisibility_;
+          this.pageVisibility.setWallpaper = isWallpaperSettingVisible;
+        });
+    this.browserProxy_.isWallpaperPolicyControlled().then(
+        isPolicyControlled => {
+          this.isWallpaperPolicyControlled_ = isPolicyControlled;
+        });
+    // </if>
   },
 
   /**
