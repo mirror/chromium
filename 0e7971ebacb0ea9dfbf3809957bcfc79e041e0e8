@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "392b1dab_3c6d2a74",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T19:21:53Z",
+      "side": 1,
+      "message": "Optional suggestion:\nWould this read well without the nested switch (it just seems to be more lines of code (11 vs. 5 lines), and I find shorter generally more readable):\n\nDCHECK(action \u003d\u003d PasswordProtectionService::CHANGE_PASSWORD);\n// Opens https://account.google.com for user to change password.\nOpenUrlInNewTab(GetChangePasswordURL(), web_contents);\nfor (auto\u0026 observer : observer_list_)\n  observer.OnStartingGaiaPasswordChange();",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5741eca8_0f8ea2a1",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T19:21:53Z",
+      "side": 1,
+      "message": "In some urls we specify a language/locale, is that needed here or does this page adjust for language preference by some other means? i.e. If you\u0027re language is French, will this show the page in English or French?",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785b3654_7dd311e0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T19:21:53Z",
+      "side": 1,
+      "message": "Is GetObserverType also only used by tests (browser test is the reference I see).",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a42594_ebe02d5f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T19:21:53Z",
+      "side": 1,
+      "message": "Does git cl format put this all on one line? I\u0027m hoping it will wrap the line (if so pease do so). Whatever git cl format does is okay (even if it\u0027s not my preference :) ).",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae8c1fa_390abde5",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T19:21:53Z",
+      "side": 1,
+      "message": "Could the above 10 lines be (The DCHECK could be a CHECK if desired):\n\nDCHECK(action \u003d\u003d ChromePasswordProtectionService::CHANGE_PASSWORD);\nbase::ListValue value;\nHandleChangePassword(\u0026value);",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
