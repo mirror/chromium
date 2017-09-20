@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "29fd2e62_32990125",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-09-20T02:41:28Z",
+      "side": 1,
+      "message": "Chrome simulator should work. Please make sure you\u0027ve copied the extension contents to /usr/share/chromeos-assets/input_methods/input_tools/.\nWhat\u0027s more, please build your chrome binary with:\n  is_official_build \u003d true\n  is_chrome_branded \u003d true",
+      "parentUuid": "76cf7fad_0ad209e5",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1566c44_b890ee05",
         "filename": "ui/base/ime/input_method_chromeos.h",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I move this method to InputMethodBase::DispatchKeyEventPostIME() so no need to override it here.",
       "parentUuid": "e1566c44_b890ee05",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b262109e_a9803806",
+        "filename": "ui/base/ime/input_method_chromeos.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-09-20T02:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "789341ac_f72cd59e",
       "range": {
         "startLine": 60,
         "startChar": 27,
