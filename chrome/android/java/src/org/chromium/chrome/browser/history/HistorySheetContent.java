@@ -54,6 +54,11 @@ public class HistorySheetContent implements BottomSheetContent {
     }
 
     @Override
+    public View getViewForPadding() {
+        return mHistoryManager.getRecyclerView();
+    }
+
+    @Override
     public View getToolbarView() {
         return mToolbarView;
     }
