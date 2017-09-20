@@ -22,6 +22,30 @@
       "revId": "2115b16ac7aa20076234f4c33b0a2cb0f581cbee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ac4b08_b7131002",
+        "filename": "components/cloud_devices/common/printer_description_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T18:29:53Z",
+      "side": 0,
+      "message": "Yes, I ran into that. The entire unit test suite fails either way. It\u0027s just a matter of crashing with a DCHECK or without.",
+      "parentUuid": "9c66be60_5e3840d4",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "2115b16ac7aa20076234f4c33b0a2cb0f581cbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
