@@ -42,7 +42,7 @@ class Thread;
 // Contains the response body.
 - (NSString*)responseBody;
 
-/// Waits for request to complete.
+/// Waits for a single request to complete.
 
 /// @return  |NO| if the request didn't complete and the method timed-out.
 - (BOOL)waitForDone;

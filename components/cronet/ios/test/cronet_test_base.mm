@@ -54,9 +54,10 @@ NSMutableArray<NSData*>* _responseData;
 }
 
 - (BOOL)waitForDone {
-  int64_t deadline_ns = 20 * NSEC_PER_SEC;
-  return dispatch_semaphore_wait(
-             _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+  // int64_t deadline_ns = 20 * NSEC_PER_SEC;
+  // return dispatch_semaphore_wait(
+  //           _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+  return dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER) == 0;
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -66,7 +67,8 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
                     task:(NSURLSessionTask*)task
     didCompleteWithError:(NSError*)error {
-  [self setError:error];
+  if (error)
+    [self setError:error];
   dispatch_semaphore_signal(_semaphore);
 }
 
