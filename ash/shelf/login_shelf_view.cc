@@ -5,18 +5,24 @@
 #include "ash/shelf/login_shelf_view.h"
 
 #include "ash/ash_constants.h"
+#include "ash/focus_cycler.h"
 #include "ash/login/lock_screen_controller.h"
+#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shutdown_controller.h"
+#include "ash/system/status_area_widget.h"
+#include "ash/system/status_area_widget_delegate.h"
+#include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
 
 using session_manager::SessionState;
@@ -25,6 +31,7 @@ namespace ash {
 
 LoginShelfView::LoginShelfView()
     : tray_action_observer_(this), shutdown_controller_observer_(this) {
+  SetFocusBehavior(FocusBehavior::ALWAYS);
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
 
   // TODO(wzang): Add the correct text and image for each type.
@@ -70,6 +77,19 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
       Shell::Get()->lock_screen_controller()->CancelAddUser();
       break;
   }
+}
+
+void LoginShelfView::AboutToRequestFocusFromTabTraversal(bool reverse) {
+  if (reverse) {
+    // Focus goes to login/lock screen.
+    Shell::Get()->system_tray_notifier()->NotifyFocusOut(reverse);
+    return;
+  }
+  // Focus goes to status area.
+  StatusAreaWidgetDelegate::GetPrimaryInstance()
+      ->set_default_last_focusable_child(reverse);
+  Shell::Get()->focus_cycler()->FocusWidget(
+      Shell::Get()->GetPrimaryRootWindowController()->GetStatusAreaWidget());
 }
 
 void LoginShelfView::OnLockScreenNoteStateChanged(

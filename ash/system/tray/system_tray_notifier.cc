@@ -13,7 +13,7 @@
 #include "ash/system/network/network_portal_detector_observer.h"
 #include "ash/system/screen_security/screen_capture_observer.h"
 #include "ash/system/screen_security/screen_share_observer.h"
-#include "ash/system/status_area_focus_observer.h"
+#include "ash/system/status_area_and_shelf_focus_observer.h"
 #include "ash/system/tray_tracing.h"
 #include "ash/system/virtual_keyboard/virtual_keyboard_observer.h"
 
@@ -190,19 +190,23 @@ void SystemTrayNotifier::NotifyScreenShareStop() {
     observer.OnScreenShareStop();
 }
 
-void SystemTrayNotifier::AddStatusAreaFocusObserver(
-    StatusAreaFocusObserver* observer) {
-  status_area_focus_observers_.AddObserver(observer);
+void SystemTrayNotifier::AddStatusAreaAndShelfFocusObserver(
+    StatusAreaAndShelfFocusObserver* observer) {
+  status_area_and_shelf_focus_observers_.AddObserver(observer);
 }
 
-void SystemTrayNotifier::RemoveStatusAreaFocusObserver(
-    StatusAreaFocusObserver* observer) {
-  status_area_focus_observers_.RemoveObserver(observer);
+void SystemTrayNotifier::RemoveStatusAreaAndShelfFocusObserver(
+    StatusAreaAndShelfFocusObserver* observer) {
+  status_area_and_shelf_focus_observers_.RemoveObserver(observer);
 }
 
 void SystemTrayNotifier::NotifyFocusOut(bool reverse) {
-  for (auto& observer : status_area_focus_observers_)
-    observer.OnFocusOut(reverse);
+  for (auto& observer : status_area_and_shelf_focus_observers_) {
+    if (reverse)
+      observer.OnFocusAboutToLeaveShelf();
+    else
+      observer.OnFocusAboutToLeaveStatusArea();
+  }
 }
 
 void SystemTrayNotifier::AddTracingObserver(TracingObserver* observer) {

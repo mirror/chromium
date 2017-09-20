@@ -48,6 +48,9 @@ class ASH_EXPORT LoginShelfView : public views::View,
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
+  // views::View:
+  void AboutToRequestFocusFromTabTraversal(bool reverse) override;
+
  protected:
   // TrayActionObserver:
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
