@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ad7512_f1ee43c4",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-20T23:44:27Z",
+      "side": 1,
+      "message": "Separate out a LocationDataPtrFrom(ui::LocatedEvent*)?",
+      "revId": "4d88526c63ccdeb67a6cb89d42091156a906fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a099b1d1_43e6111f",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-20T23:44:27Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "revId": "4d88526c63ccdeb67a6cb89d42091156a906fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
