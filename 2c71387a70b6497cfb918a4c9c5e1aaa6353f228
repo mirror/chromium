@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66fb0ee_0b32f610",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-20T00:15:45Z",
+      "side": 1,
+      "message": "Add Bug: XXXX",
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbf9595_a773e6b1",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-20T00:15:45Z",
+      "side": 1,
+      "message": "My preference would be that you have a constructor:\n\nexplicit MockLanguageModel(std::vector\u003cLanguageDetails\u003e details): details_(details) {}\n\nand then make details_ private.",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344f7e08_6bed16e7",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-20T00:15:45Z",
+      "side": 1,
+      "message": "And then my preference would be that these are separately named tests. They seem independent, right?",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 80
+      },
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
