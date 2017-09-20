@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "0d5b6fcb_e16829cf",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T15:24:20Z",
+      "side": 1,
+      "message": "\u003e Hey, and you even fixed the bug in my code! :)\n\nOnly after it threw a strobe-light rave on the NTP.",
+      "parentUuid": "b7cf825c_db52acbb",
+      "range": {
+        "startLine": 721,
+        "startChar": 17,
+        "endLine": 721,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a020c95_dbee1c51",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
