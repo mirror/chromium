@@ -32,16 +32,16 @@ class ExtensionServiceTestWithInstall : public ExtensionServiceTestBase,
   ExtensionServiceTestWithInstall();
   ~ExtensionServiceTestWithInstall() override;
 
- protected:
   void InitializeExtensionService(
       const ExtensionServiceInitParams& params) override;
 
   static std::vector<base::string16> GetErrors();
 
-  void PackCRX(const base::FilePath& dir_path,
-               const base::FilePath& pem_path,
-               const base::FilePath& crx_path);
+  static void PackCRX(const base::FilePath& dir_path,
+                      const base::FilePath& pem_path,
+                      const base::FilePath& crx_path);
 
+ protected:
   enum InstallState {
     INSTALL_FAILED,
     INSTALL_UPDATED,
