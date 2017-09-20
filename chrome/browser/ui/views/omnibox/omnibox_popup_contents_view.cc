@@ -65,7 +65,10 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
     OmniboxView* omnibox_view,
     OmniboxEditModel* edit_model,
     LocationBarView* location_bar_view)
-    : model_(new OmniboxPopupModel(this, edit_model)),
+    : model_(new OmniboxPopupModel(this,
+                                   edit_model,
+                                   edit_model->client(),
+                                   edit_model->autocomplete_controller())),
       omnibox_view_(omnibox_view),
       location_bar_view_(location_bar_view),
       font_list_(font_list),
