@@ -371,6 +371,7 @@ bool ScopedStyleResolver::HaveSameStyles(const ScopedStyleResolver* first,
         second->author_style_sheets_[first_count]->Contents())
       return false;
   }
+
   return true;
 }
 
