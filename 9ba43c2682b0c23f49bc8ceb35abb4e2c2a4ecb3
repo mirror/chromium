@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a29feea_121acd53",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-20T17:01:50Z",
+      "side": 1,
+      "message": "I think this is better than the previous code (if it makes all bots happy ;)):\n- more consistent logic;\n- the previous code doesn\u0027t cancel |peer_closed_handle_watcher_| but directly closes the body pipe. That will cause OnResponseBodyStreamClosed() to be called asynchronously with CANCELLED. It is a waste to process an extra async task.",
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

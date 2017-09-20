@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8e07d603_f881ae0b",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-20T17:01:50Z",
+      "side": 1,
+      "message": "Yeah, I think calling OnResponseBodyStreamClosed() here makes sense.\nPlease help me to understand: how \"we just send the last chunk of the body\" will cause us to get to OnResponseBodyStreamReady() with a failure? I think when we finish sending the body, we cancel |writable_handle_watcher_|, which guarantees that OnResponseBodyStreamReady won\u0027t be called.\n\nI am also thinking to use OnResponseBodyStreamClosed() wherever we need to reset the data pipe (including successful completion). Please see my latest patch and let me know whether that makes sense.",
+      "parentUuid": "d35948d2_447eedf2",
+      "range": {
+        "startLine": 459,
+        "startChar": 13,
+        "endLine": 459,
+        "endChar": 0
+      },
+      "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff675691_fb210fde",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48d333d_0bace6bb",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-20T17:01:50Z",
+      "side": 1,
+      "message": "Now they both go to OnStreamBodyStreamClosed() for cleanup, so I think a comment is not needed anymore.",
+      "parentUuid": "ff675691_fb210fde",
+      "range": {
+        "startLine": 500,
+        "startChar": 26,
+        "endLine": 500,
+        "endChar": 65
+      },
+      "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
