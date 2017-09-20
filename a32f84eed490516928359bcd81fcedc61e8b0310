@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d143416c_1de1742f",
+        "filename": "chrome/browser/resources/download/download_internals.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-20T21:49:17Z",
+      "side": 1,
+      "message": "Sure happy to move it thanks!",
+      "parentUuid": "9e209921_46d7a693",
+      "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bc7d071_d3d45276",
         "filename": "chrome/browser/resources/download/download_internals.js",
         "patchSetId": 8
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Agh, I noticed this too but forgot to comment on it and ultimately let it slip -- sorry!",
       "parentUuid": "2bc7d071_d3d45276",
+      "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39de71a5_629ea0a1",
+        "filename": "chrome/browser/resources/download/download_internals.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-20T21:49:17Z",
+      "side": 1,
+      "message": "Ok I added something similar to what was in offline_pages.  Let me know if this is incorrect.  Does it just pull the JS files to test based on the directory?  Can\u0027t find them explicitly listed anywhere.",
+      "parentUuid": "a5c98f7e_63ab48ed",
       "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

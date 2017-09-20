@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "7e06d243_22921d13",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-20T21:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ba40f6_4fa9f045",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f2f435_b59612fe",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui.cc",
         "patchSetId": 5
