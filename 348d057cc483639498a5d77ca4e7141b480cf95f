@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a51b7f5a_0ecafabf",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-20T21:03:55Z",
+      "side": 1,
+      "message": "super nit: const? (to be consistent with your code in ASR)",
+      "revId": "348d057cc483639498a5d77ca4e7141b480cf95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
