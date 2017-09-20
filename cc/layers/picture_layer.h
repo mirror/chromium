@@ -10,6 +10,7 @@
 #include "cc/base/invalidation_region.h"
 #include "cc/benchmarks/micro_benchmark_controller.h"
 #include "cc/layers/layer.h"
+#include "cc/layers/squashing_recording_source.h"
 
 namespace cc {
 
@@ -44,6 +45,10 @@ class CC_EXPORT PictureLayer : public Layer {
 
   bool HasSlowPaths() const override;
   bool HasNonAAPaint() const override;
+  bool HasSquashingRecordingSource() {
+    return squashing_recording_source_ != nullptr;
+  }
+  bool IsPictureLayer() override;
 
   void RunMicroBenchmark(MicroBenchmark* benchmark) override;
 
@@ -54,6 +59,9 @@ class CC_EXPORT PictureLayer : public Layer {
   }
 
   const DisplayItemList* GetDisplayItemList();
+  size_t GetPainterReportedMemoryUsage() {
+    return picture_layer_inputs_.painter_reported_memory_usage;
+  }
 
  protected:
   // Encapsulates all data, callbacks or interfaces received from the embedder.
@@ -89,10 +97,12 @@ class CC_EXPORT PictureLayer : public Layer {
   bool ShouldUseTransformedRasterization() const;
 
   std::unique_ptr<RecordingSource> recording_source_;
+  std::unique_ptr<SquashingRecordingSource> squashing_recording_source_;
   devtools_instrumentation::
       ScopedLayerObjectTracker instrumentation_object_tracker_;
 
   Region last_updated_invalidation_;
+  Region last_updated_squashing_invalidation_;
 
   int update_source_frame_number_;
   LayerMaskType mask_type_;
