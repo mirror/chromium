@@ -28,6 +28,9 @@ class PasswordReuseWarningDialogCocoa
   void OnStartingGaiaPasswordChange() override;
   void OnGaiaPasswordChanged() override;
   void OnMarkingSiteAsLegitimate(const GURL& url) override;
+  void InvokeActionForTesting(
+      ChromePasswordProtectionService::WarningAction action) override;
+  ChromePasswordProtectionService::WarningUIType GetObserverType() override;
 
   // Called by |controller_| when a dialog button is selected.
   void OnChangePassword();
