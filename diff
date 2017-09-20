@@ -1,0 +1,932 @@
+diff --git a/chrome/browser/printing/print_job.cc b/chrome/browser/printing/print_job.cc
+index 4fc7d84e20c2..a4e7492cc1ad 100644
+--- a/chrome/browser/printing/print_job.cc
++++ b/chrome/browser/printing/print_job.cc
+@@ -278,9 +278,11 @@ void PrintJob::StartPdfToEmfConversion(
+   DCHECK(!pdf_conversion_state_);
+   pdf_conversion_state_ =
+       base::MakeUnique<PdfConversionState>(page_size, content_area);
+-  const int kPrinterDpi = settings().dpi();
++  const int kPrinterDpiX = settings().dpi_horizontal();
++  const int kPrinterDpiY = settings().dpi_vertical();
+   PdfRenderSettings settings(
+-      content_area, gfx::Point(0, 0), kPrinterDpi, /*autorotate=*/true,
++      content_area, gfx::Point(0, 0), gfx::Size(kPrinterDpiX, kPrinterDpiY),
++      /*autorotate=*/true,
+       print_text_with_gdi ? PdfRenderSettings::Mode::GDI_TEXT
+                           : PdfRenderSettings::Mode::NORMAL);
+   pdf_conversion_state_->Start(
+@@ -324,11 +326,12 @@ void PrintJob::StartPdfToTextConversion(
+   DCHECK(!pdf_conversion_state_);
+   pdf_conversion_state_ =
+       base::MakeUnique<PdfConversionState>(gfx::Size(), gfx::Rect());
+-  const int kPrinterDpi = settings().dpi();
++  const int kPrinterDpiX = settings().dpi_horizontal();
++  const int kPrinterDpiY = settings().dpi_vertical();
+   gfx::Rect page_area = gfx::Rect(0, 0, page_size.width(), page_size.height());
+-  PdfRenderSettings settings(page_area, gfx::Point(0, 0), kPrinterDpi,
+-                             /*autorotate=*/true,
+-                             PdfRenderSettings::Mode::TEXTONLY);
++  PdfRenderSettings settings(
++      page_area, gfx::Point(0, 0), gfx::Size(kPrinterDpiX, kPrinterDpiY),
++      /*autorotate=*/true, PdfRenderSettings::Mode::TEXTONLY);
+   pdf_conversion_state_->Start(
+       bytes, settings, base::Bind(&PrintJob::OnPdfConversionStarted, this));
+ }
+@@ -341,9 +344,11 @@ void PrintJob::StartPdfToPostScriptConversion(
+   DCHECK(!pdf_conversion_state_);
+   pdf_conversion_state_ = base::MakeUnique<PdfConversionState>(
+       gfx::Size(), gfx::Rect());
+-  const int kPrinterDpi = settings().dpi();
++  const int kPrinterDpiX = settings().dpi_horizontal();
++  const int kPrinterDpiY = settings().dpi_vertical();
+   PdfRenderSettings settings(
+-      content_area, physical_offsets, kPrinterDpi, /*autorotate=*/true,
++      content_area, physical_offsets, gfx::Size(kPrinterDpiX, kPrinterDpiY),
++      /*autorotate=*/true,
+       ps_level2 ? PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2
+                 : PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3);
+   pdf_conversion_state_->Start(
+diff --git a/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc b/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc
+index 3a47bb1a1a1d..eb056ecfab70 100644
+--- a/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc
++++ b/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc
+@@ -369,8 +369,8 @@ class PrintPreviewPdfGeneratedBrowserTest : public InProcessBrowserTest {
+ 
+       total_height_in_pixels += height_in_pixels;
+       gfx::Rect rect(width_in_pixels, height_in_pixels);
+-      PdfRenderSettings settings(rect, gfx::Point(0, 0), kDpi, true,
+-                                 PdfRenderSettings::Mode::NORMAL);
++      PdfRenderSettings settings(rect, gfx::Point(0, 0), gfx::Size(kDpi, kDpi),
++                                 true, PdfRenderSettings::Mode::NORMAL);
+ 
+       int int_max = std::numeric_limits<int>::max();
+       if (settings.area.width() > int_max / kColorChannels ||
+@@ -386,7 +386,7 @@ class PrintPreviewPdfGeneratedBrowserTest : public InProcessBrowserTest {
+       ASSERT_TRUE(chrome_pdf::RenderPDFPageToBitmap(
+           pdf_data.data(), pdf_data.size(), i, page_bitmap_data.data(),
+           settings.area.size().width(), settings.area.size().height(),
+-          settings.dpi, settings.autorotate));
++          settings.dpi.width(), settings.dpi.height(), settings.autorotate));
+       FillPng(&page_bitmap_data, width_in_pixels, max_width_in_pixels,
+               settings.area.size().height());
+       bitmap_data.insert(bitmap_data.end(),
+diff --git a/chrome/browser/printing/printing_message_filter.cc b/chrome/browser/printing/printing_message_filter.cc
+index ad72c5fe12d3..e7e6062fbcc4 100644
+--- a/chrome/browser/printing/printing_message_filter.cc
++++ b/chrome/browser/printing/printing_message_filter.cc
+@@ -267,7 +267,7 @@ void PrintingMessageFilter::OnScriptedPrintReply(
+   }
+   PrintHostMsg_ScriptedPrint::WriteReplyParams(reply_msg, params);
+   Send(reply_msg);
+-  if (params.params.dpi && params.params.document_cookie) {
++  if (!params.params.dpi.IsEmpty() && params.params.document_cookie) {
+ #if defined(OS_ANDROID)
+     int file_descriptor;
+     const base::string16& device_name = printer_query->settings().device_name();
+diff --git a/chrome/browser/printing/pwg_raster_converter.cc b/chrome/browser/printing/pwg_raster_converter.cc
+index 10843be3c2c9..406e3a9f4f35 100644
+--- a/chrome/browser/printing/pwg_raster_converter.cc
++++ b/chrome/browser/printing/pwg_raster_converter.cc
+@@ -309,7 +309,8 @@ PdfRenderSettings PWGRasterConverter::GetConversionSettings(
+   // by autorotate.
+   gfx::Rect area(std::min(page_size.width(), page_size.height()) * scale,
+                  std::max(page_size.width(), page_size.height()) * scale);
+-  return PdfRenderSettings(area, gfx::Point(0, 0), dpi, /*autorotate=*/true,
++  return PdfRenderSettings(area, gfx::Point(0, 0), gfx::Size(dpi, dpi),
++                           /*autorotate=*/true,
+                            PdfRenderSettings::Mode::NORMAL);
+ }
+ 
+diff --git a/chrome/browser/resources/print_preview/native_layer.js b/chrome/browser/resources/print_preview/native_layer.js
+index fed5c0201c9c..b9790faa4381 100644
+--- a/chrome/browser/resources/print_preview/native_layer.js
++++ b/chrome/browser/resources/print_preview/native_layer.js
+@@ -342,7 +342,6 @@ cr.define('print_preview', function() {
+           'marginLeft': customMargins.get(orientationEnum.LEFT)
+         };
+       }
+-
+       return cr.sendWithPromise(
+           'getPreview', JSON.stringify(ticket),
+           requestId > 0 ? documentInfo.pageCount : -1);
+diff --git a/chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc b/chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc
+index 0e3f9794f639..07f8b7869146 100644
+--- a/chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc
++++ b/chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc
+@@ -794,7 +794,7 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg) {
+   EXPECT_FALSE(pwg_raster_converter_->bitmap_settings().rotate_all_pages);
+   EXPECT_FALSE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
+ 
+-  EXPECT_EQ(printing::kDefaultPdfDpi,
++  EXPECT_EQ(gfx::Size(printing::kDefaultPdfDpi, printing::kDefaultPdfDpi),
+             pwg_raster_converter_->conversion_settings().dpi);
+   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
+   EXPECT_EQ("0,0 208x416",  // vertically_oriented_size  * dpi / points_per_inch
+@@ -847,8 +847,10 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg_NonDefaultSettings) {
+   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().rotate_all_pages);
+   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
+ 
+-  EXPECT_EQ(200,  // max(vertical_dpi, horizontal_dpi)
+-            pwg_raster_converter_->conversion_settings().dpi);
++  EXPECT_EQ(
++      200,  // max(vertical_dpi, horizontal_dpi)
++      std::max(pwg_raster_converter_->conversion_settings().dpi.width(),
++               pwg_raster_converter_->conversion_settings().dpi.height()));
+   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
+   EXPECT_EQ("0,0 138x277",  // vertically_oriented_size  * dpi / points_per_inch
+             pwg_raster_converter_->conversion_settings().area.ToString());
+diff --git a/chrome/service/cloud_print/print_system_win.cc b/chrome/service/cloud_print/print_system_win.cc
+index a5cd7155a3b6..16c1dd83cf0c 100644
+--- a/chrome/service/cloud_print/print_system_win.cc
++++ b/chrome/service/cloud_print/print_system_win.cc
+@@ -420,7 +420,9 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
+     }
+ 
+     void RenderPDFPages(const base::FilePath& pdf_path) {
+-      int printer_dpi = ::GetDeviceCaps(printer_dc_.Get(), LOGPIXELSX);
++      gfx::Size printer_dpi =
++          gfx::Size(::GetDeviceCaps(printer_dc_.Get(), LOGPIXELSX),
++                    ::GetDeviceCaps(printer_dc_.Get(), LOGPIXELSY));
+       int dc_width = GetDeviceCaps(printer_dc_.Get(), PHYSICALWIDTH);
+       int dc_height = GetDeviceCaps(printer_dc_.Get(), PHYSICALHEIGHT);
+       gfx::Rect render_area(0, 0, dc_width, dc_height);
+@@ -433,7 +435,7 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
+     void RenderPDFPagesInSandbox(
+         const base::FilePath& pdf_path,
+         const gfx::Rect& render_area,
+-        int render_dpi,
++        const gfx::Size& render_dpi,
+         const scoped_refptr<base::SingleThreadTaskRunner>& client_task_runner) {
+       DCHECK(CurrentlyOnServiceIOThread());
+       std::unique_ptr<ServiceUtilityProcessHost> utility_host(
+diff --git a/chrome/utility/printing_handler.cc b/chrome/utility/printing_handler.cc
+index 42b343c4361a..942586fe0c67 100644
+--- a/chrome/utility/printing_handler.cc
++++ b/chrome/utility/printing_handler.cc
+@@ -207,7 +207,8 @@ bool PrintingHandler::RenderPdfPageToMetafile(int page_number,
+ 
+   if (!chrome_pdf::RenderPDFPageToDC(
+           &pdf_data_.front(), pdf_data_.size(), page_number, metafile.context(),
+-          pdf_rendering_settings_.dpi,
++          pdf_rendering_settings_.dpi.width(),
++          pdf_rendering_settings_.dpi.height(),
+           pdf_rendering_settings_.area.x() - offset_x,
+           pdf_rendering_settings_.area.y() - offset_y,
+           pdf_rendering_settings_.area.width(),
+@@ -262,13 +263,13 @@ bool PrintingHandler::RenderPDFPagesToPWGRaster(
+ 
+     if (!chrome_pdf::RenderPDFPageToBitmap(
+             data.data(), data_size, page_number, image.pixel_data(),
+-            image.size().width(), image.size().height(), settings.dpi,
+-            settings.autorotate)) {
++            image.size().width(), image.size().height(), settings.dpi.width(),
++            settings.dpi.height(), settings.autorotate)) {
+       return false;
+     }
+ 
+     cloud_print::PwgHeaderInfo header_info;
+-    header_info.dpi = settings.dpi;
++    header_info.dpi = std::min(settings.dpi.width(), settings.dpi.height());
+     header_info.total_pages = total_page_count;
+ 
+     // Transform odd pages.
+diff --git a/components/printing/browser/print_manager_utils.cc b/components/printing/browser/print_manager_utils.cc
+index 3d71a985f6b8..6e0ae9ddf876 100644
+--- a/components/printing/browser/print_manager_utils.cc
++++ b/components/printing/browser/print_manager_utils.cc
+@@ -21,7 +21,7 @@ void RenderParamsFromPrintSettings(const PrintSettings& settings,
+       settings.page_setup_device_units().printable_area().height());
+   params->margin_top = settings.page_setup_device_units().content_area().y();
+   params->margin_left = settings.page_setup_device_units().content_area().x();
+-  params->dpi = settings.dpi();
++  params->dpi.SetSize(settings.dpi_horizontal(), settings.dpi_vertical());
+   params->scale_factor = settings.scale_factor();
+   params->rasterize_pdf = settings.rasterize_pdf();
+   // Always use an invalid cookie.
+diff --git a/components/printing/common/print_messages.cc b/components/printing/common/print_messages.cc
+index 6767c4af66ab..e39377304383 100644
+--- a/components/printing/common/print_messages.cc
++++ b/components/printing/common/print_messages.cc
+@@ -41,7 +41,7 @@ PrintMsg_Print_Params::PrintMsg_Print_Params()
+       printable_area(),
+       margin_top(0),
+       margin_left(0),
+-      dpi(0),
++      dpi(),
+       scale_factor(1.0f),
+       rasterize_pdf(false),
+       document_cookie(0),
+@@ -69,7 +69,7 @@ void PrintMsg_Print_Params::Reset() {
+   printable_area = gfx::Rect();
+   margin_top = 0;
+   margin_left = 0;
+-  dpi = 0;
++  dpi = gfx::Size();
+   scale_factor = 1.0f;
+   rasterize_pdf = false;
+   document_cookie = 0;
+diff --git a/components/printing/common/print_messages.h b/components/printing/common/print_messages.h
+index f9b1daf905f2..d78e42ccdf8f 100644
+--- a/components/printing/common/print_messages.h
++++ b/components/printing/common/print_messages.h
+@@ -46,7 +46,7 @@ struct PrintMsg_Print_Params {
+   gfx::Rect printable_area;
+   int margin_top;
+   int margin_left;
+-  double dpi;
++  gfx::Size dpi;
+   double scale_factor;
+   bool rasterize_pdf;
+   int document_cookie;
+@@ -112,7 +112,7 @@ IPC_STRUCT_TRAITS_BEGIN(PrintMsg_Print_Params)
+   // in pixels according to dpi.
+   IPC_STRUCT_TRAITS_MEMBER(page_size)
+ 
+-  // In pixels according to dpi_x and dpi_y.
++  // In pixels according to dpi.
+   IPC_STRUCT_TRAITS_MEMBER(content_size)
+ 
+   // Physical printable area of the page in pixels according to dpi.
+@@ -124,7 +124,7 @@ IPC_STRUCT_TRAITS_BEGIN(PrintMsg_Print_Params)
+   // The x-offset of the printable area, in pixels according to dpi.
+   IPC_STRUCT_TRAITS_MEMBER(margin_left)
+ 
+-  // Specifies dots per inch.
++  // Specifies dots per inch in the x and y direction.
+   IPC_STRUCT_TRAITS_MEMBER(dpi)
+ 
+   // Specifies the scale factor in percent
+diff --git a/components/printing/renderer/print_render_frame_helper.cc b/components/printing/renderer/print_render_frame_helper.cc
+index b030aafdfb58..f6c0f62b16c1 100644
+--- a/components/printing/renderer/print_render_frame_helper.cc
++++ b/components/printing/renderer/print_render_frame_helper.cc
+@@ -115,15 +115,17 @@ int GetDPI(const PrintMsg_Print_Params* print_params) {
+   // on dpi.
+   return kPointsPerInch;
+ #else
+-  return static_cast<int>(print_params->dpi);
++  return static_cast<int>(
++      std::min(print_params->dpi.width(), print_params->dpi.height()));
+ #endif  // defined(OS_MACOSX)
+ }
+ 
+ bool PrintMsg_Print_Params_IsValid(const PrintMsg_Print_Params& params) {
+   return !params.content_size.IsEmpty() && !params.page_size.IsEmpty() &&
+          !params.printable_area.IsEmpty() && params.document_cookie &&
+-         params.dpi && params.margin_top >= 0 && params.margin_left >= 0 &&
+-         params.dpi > kMinDpi && params.document_cookie != 0;
++         !params.dpi.IsEmpty() && params.margin_top >= 0 &&
++         params.margin_left >= 0 && params.dpi.width() > kMinDpi &&
++         params.dpi.height() > kMinDpi && params.document_cookie != 0;
+ }
+ 
+ // Helper function to check for fit to page
+@@ -282,7 +284,7 @@ void ComputeWebKitPrintParamsInDesiredDpi(
+     const PrintMsg_Print_Params& print_params,
+     blink::WebPrintParams* webkit_print_params) {
+   int dpi = GetDPI(&print_params);
+-  webkit_print_params->printer_dpi = dpi;
++  webkit_print_params->printer_dpi = print_params.dpi;
+   webkit_print_params->rasterize_pdf = print_params.rasterize_pdf;
+   webkit_print_params->print_scaling_option = print_params.print_scaling_option;
+ 
+@@ -636,7 +638,7 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
+   ExecuteScript(frame, kPageSetupScriptFormat, *options);
+ 
+   blink::WebPrintParams webkit_params(page_size);
+-  webkit_params.printer_dpi = GetDPI(&params);
++  webkit_params.printer_dpi = params.dpi;
+ 
+   frame->PrintBegin(webkit_params);
+   frame->PrintPage(0, canvas);
+@@ -1331,9 +1333,11 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
+     if (source_frame->GetPrintPresetOptionsForPlugin(source_node,
+                                                      &preset_options)) {
+       if (preset_options.is_page_size_uniform) {
+-        // Figure out if the sizes have the same orientation
+-        bool is_printable_area_landscape = printable_area_in_points.width() >
+-                                           printable_area_in_points.height();
++        // Figure out if the sizes have the same orientation. Needs to be done
++        // using printer DPI.
++        bool is_printable_area_landscape =
++            printable_area_in_points.width() * print_params.dpi.width() / dpi >
++            printable_area_in_points.height() * print_params.dpi.height() / dpi;
+         bool is_preset_landscape = preset_options.uniform_page_size.width >
+                                    preset_options.uniform_page_size.height;
+         bool rotate = is_printable_area_landscape != is_preset_landscape;
+@@ -1577,7 +1581,8 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
+ 
+     print_settings.params.print_scaling_option = scaling_option;
+     SetPrintPagesParams(print_settings);
+-    if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
++    if (!!print_settings.params.dpi.IsEmpty() ||
++        !print_settings.params.document_cookie) {
+       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
+       return;
+     }
+diff --git a/components/printing/renderer/print_render_frame_helper_pdf_win.cc b/components/printing/renderer/print_render_frame_helper_pdf_win.cc
+index a746fd9e97f6..1480d9e64512 100644
+--- a/components/printing/renderer/print_render_frame_helper_pdf_win.cc
++++ b/components/printing/renderer/print_render_frame_helper_pdf_win.cc
+@@ -29,10 +29,33 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+   PdfMetafileSkia metafile(params.params.printed_doc_type);
+   CHECK(metafile.Init());
+ 
++  PrintMsg_PrintPages_Params page_params;
++  page_params.params = params.params;
++
++  int dpi_x = params.params.dpi.width();
++  int dpi_y = params.params.dpi.height();
++  int dpi = std::min(dpi_x, dpi_y);
+   for (size_t i = 0; i < printed_pages.size(); ++i) {
+-    PrintPageInternal(params.params, printed_pages[i], page_count, frame,
+-                      &metafile, &page_size_in_dpi[i], &content_area_in_dpi[i],
+-                      &printable_area_in_dpi[i]);
++    PrintPageInternal(params.params, printed_pages[i], printed_pages.size(),
++                      frame, &metafile, &page_size_in_dpi[i],
++                      &content_area_in_dpi[i], &printable_area_in_dpi[i]);
++    // Scale the page size back to the size in DPI. Because Blink cannot scale
++    // differently in different dimensions, we pass in the page size based on
++    // the minimum dpi for in printing/print_settings_initializer_win.cc. Need
++    // to now scale it back for the printer. Note: if dpi_x == dpi_y (true for
++    // most printers), this has no effect.
++    page_size_in_dpi[i] = gfx::Size(page_size_in_dpi[i].width() * dpi_x / dpi,
++                                    page_size_in_dpi[i].height() * dpi_y / dpi);
++    content_area_in_dpi[i] =
++        gfx::Rect(content_area_in_dpi[i].x() * dpi_x / dpi,
++                  content_area_in_dpi[i].y() * dpi_y / dpi,
++                  content_area_in_dpi[i].width() * dpi_x / dpi,
++                  content_area_in_dpi[i].height() * dpi_y / dpi);
++    printable_area_in_dpi[i] =
++        gfx::Rect(printable_area_in_dpi[i].x() * dpi_x / dpi,
++                  printable_area_in_dpi[i].y() * dpi_y / dpi,
++                  printable_area_in_dpi[i].width() * dpi_x / dpi,
++                  printable_area_in_dpi[i].height() * dpi_y / dpi);
+   }
+ 
+   // blink::printEnd() for PDF should be called before metafile is closed.
+diff --git a/components/printing/test/mock_printer.cc b/components/printing/test/mock_printer.cc
+index 15d4a333066d..415e3eb41b33 100644
+--- a/components/printing/test/mock_printer.cc
++++ b/components/printing/test/mock_printer.cc
+@@ -21,22 +21,24 @@
+ 
+ namespace {
+ 
+-void UpdateMargins(int margins_type, int dpi, PrintMsg_Print_Params* params) {
++void UpdateMargins(int margins_type,
++                   const gfx::Size& dpi,
++                   PrintMsg_Print_Params* params) {
+   if (margins_type == printing::NO_MARGINS) {
+-    params->content_size.SetSize(static_cast<int>((8.5 * dpi)),
+-                                 static_cast<int>((11.0 * dpi)));
++    params->content_size.SetSize(static_cast<int>((8.5 * dpi.width())),
++                                 static_cast<int>((11.0 * dpi.height())));
+     params->margin_left = 0;
+     params->margin_top = 0;
+   } else if (margins_type == printing::PRINTABLE_AREA_MARGINS) {
+-    params->content_size.SetSize(static_cast<int>((8.0 * dpi)),
+-                                 static_cast<int>((10.5 * dpi)));
+-    params->margin_left = static_cast<int>(0.25 * dpi);
+-    params->margin_top = static_cast<int>(0.25 * dpi);
++    params->content_size.SetSize(static_cast<int>((8.0 * dpi.width())),
++                                 static_cast<int>((10.5 * dpi.height())));
++    params->margin_left = static_cast<int>(0.25 * dpi.width());
++    params->margin_top = static_cast<int>(0.25 * dpi.height());
+   } else if (margins_type == printing::CUSTOM_MARGINS) {
+-    params->content_size.SetSize(static_cast<int>((7.9 * dpi)),
+-                                 static_cast<int>((10.4 * dpi)));
+-    params->margin_left = static_cast<int>(0.30 * dpi);
+-    params->margin_top = static_cast<int>(0.30 * dpi);
++    params->content_size.SetSize(static_cast<int>((7.9 * dpi.width())),
++                                 static_cast<int>((10.4 * dpi.height())));
++    params->margin_left = static_cast<int>(0.30 * dpi.width());
++    params->margin_top = static_cast<int>(0.30 * dpi.height());
+   }
+ }
+ 
+@@ -63,7 +65,7 @@ MockPrinterPage::~MockPrinterPage() {
+ }
+ 
+ MockPrinter::MockPrinter()
+-    : dpi_(printing::kPointsPerInch),
++    : dpi_(printing::kPointsPerInch, printing::kPointsPerInch),
+       selection_only_(false),
+       should_print_backgrounds_(false),
+       document_cookie_(-1),
+@@ -79,14 +81,15 @@ MockPrinter::MockPrinter()
+       title_(base::ASCIIToUTF16("title")),
+       url_(base::ASCIIToUTF16("url")),
+       use_invalid_settings_(false) {
+-  page_size_.SetSize(static_cast<int>(8.5 * dpi_),
+-                     static_cast<int>(11.0 * dpi_));
+-  content_size_.SetSize(static_cast<int>((7.5 * dpi_)),
+-                        static_cast<int>((10.0 * dpi_)));
+-  margin_left_ = margin_top_ = static_cast<int>(0.5 * dpi_);
+-  printable_area_.SetRect(
+-      static_cast<int>(0.25 * dpi_), static_cast<int>(0.25 * dpi_),
+-      static_cast<int>(8 * dpi_), static_cast<int>(10.5 * dpi_));
++  page_size_.SetSize(static_cast<int>(8.5 * dpi_.width()),
++                     static_cast<int>(11.0 * dpi_.height()));
++  content_size_.SetSize(static_cast<int>((7.5 * dpi_.width())),
++                        static_cast<int>((10.0 * dpi_.height())));
++  margin_left_ = margin_top_ = static_cast<int>(0.5 * dpi_.width());
++  printable_area_.SetRect(static_cast<int>(0.25 * dpi_.width()),
++                          static_cast<int>(0.25 * dpi_.height()),
++                          static_cast<int>(8 * dpi_.width()),
++                          static_cast<int>(10.5 * dpi_.height()));
+ }
+ 
+ MockPrinter::~MockPrinter() {
+diff --git a/components/printing/test/mock_printer.h b/components/printing/test/mock_printer.h
+index 0adb9af0b817..71629ce1d28f 100644
+--- a/components/printing/test/mock_printer.h
++++ b/components/printing/test/mock_printer.h
+@@ -114,15 +114,15 @@ class MockPrinter {
+   // Helper function to fill the fields in |params|.
+   void SetPrintParams(PrintMsg_Print_Params* params);
+ 
+-  // In pixels according to dpi_x and dpi_y.
++  // In pixels according to dpi_
+   gfx::Size page_size_;
+   gfx::Size content_size_;
+   int margin_left_;
+   int margin_top_;
+   gfx::Rect printable_area_;
+ 
+-  // Specifies dots per inch.
+-  double dpi_;
++  // Specifies dots per inch in x and y.
++  gfx::Size dpi_;
+ 
+   // Print selection.
+   bool selection_only_;
+diff --git a/content/browser/renderer_host/pepper/pepper_print_settings_manager.cc b/content/browser/renderer_host/pepper/pepper_print_settings_manager.cc
+index f18aa82ececa..82b96c32781c 100644
+--- a/content/browser/renderer_host/pepper/pepper_print_settings_manager.cc
++++ b/content/browser/renderer_host/pepper/pepper_print_settings_manager.cc
+@@ -85,7 +85,8 @@ PepperPrintSettingsManager::Result ComputeDefaultPrintSettings() {
+       PrintAreaToPPPrintArea(page_setup.content_area(), device_units_per_inch);
+   settings.paper_size =
+       PrintSizeToPPPrintSize(page_setup.physical_size(), device_units_per_inch);
+-  settings.dpi = print_settings.dpi();
++  settings.dpi.width = print_settings.dpi_horizontal();
++  settings.dpi.height = print_settings.dpi_vertical();
+ 
+   // The remainder of the attributes are hard-coded to the defaults as set
+   // elsewhere.
+diff --git a/content/browser/renderer_host/pepper/pepper_printing_host_unittest.cc b/content/browser/renderer_host/pepper/pepper_printing_host_unittest.cc
+index 3ae9075a5cb6..83551ce3e9e2 100644
+--- a/content/browser/renderer_host/pepper/pepper_printing_host_unittest.cc
++++ b/content/browser/renderer_host/pepper/pepper_printing_host_unittest.cc
+@@ -75,7 +75,7 @@ TEST_F(PepperPrintingHostTest, GetDefaultPrintSettings) {
+   PP_PrintSettings_Dev expected_settings = {{{0, 0}, {500, 515}},
+                                             {{25, 35}, {300, 720}},
+                                             {600, 700},
+-                                            200,
++                                            {200, 200},
+                                             PP_PRINTORIENTATION_NORMAL,
+                                             PP_PRINTSCALINGOPTION_NONE,
+                                             PP_FALSE,
+@@ -117,7 +117,7 @@ TEST_F(PepperPrintingHostTest, GetDefaultPrintSettings) {
+                            actual_settings.content_area));
+   EXPECT_TRUE(
+       PP_SizeEqual(expected_settings.paper_size, actual_settings.paper_size));
+-  EXPECT_EQ(expected_settings.dpi, actual_settings.dpi);
++  EXPECT_TRUE(PP_SizeEqual(expected_settings.dpi, actual_settings.dpi));
+   EXPECT_EQ(expected_settings.orientation, actual_settings.orientation);
+   EXPECT_EQ(expected_settings.print_scaling_option,
+             actual_settings.print_scaling_option);
+diff --git a/content/renderer/gpu/gpu_benchmarking_extension.cc b/content/renderer/gpu/gpu_benchmarking_extension.cc
+index 26e9ee407b4d..30f8b1111789 100644
+--- a/content/renderer/gpu/gpu_benchmarking_extension.cc
++++ b/content/renderer/gpu/gpu_benchmarking_extension.cc
+@@ -469,7 +469,7 @@ static void PrintDocument(blink::WebLocalFrame* frame, SkDocument* doc) {
+   const int kContentWidth = 555;     // 7.71 inch
+   const int kContentHeight = 735;    // 10.21 inch
+   blink::WebPrintParams params(blink::WebSize(kContentWidth, kContentHeight));
+-  params.printer_dpi = 300;
++  params.printer_dpi = blink::WebSize(300, 300);
+   int page_count = frame->PrintBegin(params);
+   for (int i = 0; i < page_count; ++i) {
+     SkCanvas* sk_canvas = doc->beginPage(kPageWidth, kPageHeight);
+diff --git a/content/renderer/pepper/pepper_plugin_instance_impl.cc b/content/renderer/pepper/pepper_plugin_instance_impl.cc
+index 7486abc505a2..6b6345762526 100644
+--- a/content/renderer/pepper/pepper_plugin_instance_impl.cc
++++ b/content/renderer/pepper/pepper_plugin_instance_impl.cc
+@@ -1878,7 +1878,7 @@ int PepperPluginInstanceImpl::PrintBegin(const WebPrintParams& print_params) {
+   print_settings.printable_area = PP_FromGfxRect(print_params.printable_area);
+   print_settings.content_area = PP_FromGfxRect(print_params.print_content_area);
+   print_settings.paper_size = PP_FromGfxSize(print_params.paper_size);
+-  print_settings.dpi = print_params.printer_dpi;
++  print_settings.dpi = PP_FromGfxSize(print_params.printer_dpi);
+   print_settings.orientation = PP_PRINTORIENTATION_NORMAL;
+   print_settings.grayscale = PP_FALSE;
+   print_settings.print_scaling_option =
+diff --git a/pdf/pdf.cc b/pdf/pdf.cc
+index 8d3a2d5b3dd5..b52ec0b18fb1 100644
+--- a/pdf/pdf.cc
++++ b/pdf/pdf.cc
+@@ -85,6 +85,7 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+                        int page_number,
+                        HDC dc,
+                        int dpi,
++                       int dpi_y,
+                        int bounds_origin_x,
+                        int bounds_origin_y,
+                        int bounds_width,
+@@ -101,7 +102,7 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+   }
+   PDFEngineExports* engine_exports = PDFEngineExports::Get();
+   PDFEngineExports::RenderingSettings settings(
+-      dpi, dpi,
++      dpi, dpi_y,
+       pp::Rect(bounds_origin_x, bounds_origin_y, bounds_width, bounds_height),
+       fit_to_bounds, stretch_to_bounds, keep_aspect_ratio, center_in_bounds,
+       autorotate);
+@@ -169,6 +170,7 @@ bool RenderPDFPageToBitmap(const void* pdf_buffer,
+                            int bitmap_width,
+                            int bitmap_height,
+                            int dpi,
++                           int dpi_y,
+                            bool autorotate) {
+   if (!g_sdk_initialized_via_pepper) {
+     if (!InitializeSDK())
+@@ -176,8 +178,8 @@ bool RenderPDFPageToBitmap(const void* pdf_buffer,
+   }
+   PDFEngineExports* engine_exports = PDFEngineExports::Get();
+   PDFEngineExports::RenderingSettings settings(
+-      dpi, dpi, pp::Rect(bitmap_width, bitmap_height), true, false, true, true,
+-      autorotate);
++      dpi, dpi_y, pp::Rect(bitmap_width, bitmap_height), true, false, true,
++      true, autorotate);
+   bool ret = engine_exports->RenderPDFPageToBitmap(
+       pdf_buffer, pdf_buffer_size, page_number, settings, bitmap_buffer);
+   if (!g_sdk_initialized_via_pepper)
+diff --git a/pdf/pdf.h b/pdf/pdf.h
+index 6f69bdb3d66d..658a86b53bbc 100644
+--- a/pdf/pdf.h
++++ b/pdf/pdf.h
+@@ -76,6 +76,7 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+                        int page_number,
+                        HDC dc,
+                        int dpi,
++                       int dpi_y,
+                        int bounds_origin_x,
+                        int bounds_origin_y,
+                        int bounds_width,
+@@ -124,7 +125,8 @@ bool GetPDFPageSizeByIndex(const void* pdf_buffer,
+ // |bitmap_buffer| is the output buffer for bitmap.
+ // |bitmap_width| is the width of the output bitmap.
+ // |bitmap_height| is the height of the output bitmap.
+-// |dpi| is the resolutions.
++// |dpi| and |dpi_y| is the resolution. If the value is -1, the dpi from the DC
++//     will be used.
+ // |autorotate| specifies whether the final image should be rotated to match
+ //     the output bound.
+ // Returns false if the document or the page number are not valid.
+@@ -135,6 +137,7 @@ bool RenderPDFPageToBitmap(const void* pdf_buffer,
+                            int bitmap_width,
+                            int bitmap_height,
+                            int dpi,
++                           int dpi_y,
+                            bool autorotate);
+ 
+ }  // namespace chrome_pdf
+diff --git a/pdf/pdfium/pdfium_engine.cc b/pdf/pdfium/pdfium_engine.cc
+index 2d51ad9b37fd..c362f7cb2f90 100644
+--- a/pdf/pdfium/pdfium_engine.cc
++++ b/pdf/pdfium/pdfium_engine.cc
+@@ -437,10 +437,10 @@ UNSUPPORT_INFO g_unsupported_info = {1, Unsupported_Handler};
+ // |page_size| has the actual destination page size in points.
+ // |content_rect| has the actual destination page printable area values in
+ // points.
+-void SetPageSizeAndContentRect(bool rotated,
+-                               bool is_src_page_landscape,
+-                               pp::Size* page_size,
+-                               pp::Rect* content_rect) {
++int SetPageSizeAndContentRect(bool rotated,
++                              bool is_src_page_landscape,
++                              pp::Size* page_size,
++                              pp::Rect* content_rect) {
+   bool is_dst_page_landscape = page_size->width() > page_size->height();
+   bool page_orientation_mismatched =
+       is_src_page_landscape != is_dst_page_landscape;
+@@ -450,6 +450,14 @@ void SetPageSizeAndContentRect(bool rotated,
+     content_rect->SetRect(content_rect->y(), content_rect->x(),
+                           content_rect->height(), content_rect->width());
+   }
++  if (page_orientation_mismatched) {
++#if defined(OS_WIN) || defined(OS_MACOSX)
++    return 3;
++#else
++    return 1;
++#endif
++  }
++  return 0;
+ }
+ 
+ // This formats a string with special 0xfffe end-of-line hyphens the same way
+@@ -1503,10 +1511,9 @@ FPDF_DOCUMENT PDFiumEngine::CreateSinglePageRasterPdf(
+ 
+   unsigned char* bitmap_data =
+       static_cast<unsigned char*>(FPDFBitmap_GetBuffer(bitmap));
+-  double ratio_x = ConvertUnitDouble(bitmap_size.width(), print_settings.dpi,
+-                                     kPointsPerInch);
+-  double ratio_y = ConvertUnitDouble(bitmap_size.height(), print_settings.dpi,
+-                                     kPointsPerInch);
++  int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
++  double ratio_x = ConvertUnitDouble(bitmap_size.width(), dpi, kPointsPerInch);
++  double ratio_y = ConvertUnitDouble(bitmap_size.height(), dpi, kPointsPerInch);
+ 
+   // Add the bitmap to an image object and add the image object to the output
+   // page.
+@@ -1577,11 +1584,9 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
+     double source_page_height = FPDF_GetPageHeight(pdf_page);
+     source_page_sizes.push_back(
+         std::make_pair(source_page_width, source_page_height));
+-
+-    int width_in_pixels =
+-        ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
+-    int height_in_pixels =
+-        ConvertUnit(source_page_height, kPointsPerInch, print_settings.dpi);
++    int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
++    int width_in_pixels = ConvertUnit(source_page_width, kPointsPerInch, dpi);
++    int height_in_pixels = ConvertUnit(source_page_height, kPointsPerInch, dpi);
+ 
+     pp::Rect rect(width_in_pixels, height_in_pixels);
+     pages_to_print.push_back(PDFiumPage(this, page_number, rect, true));
+@@ -3691,9 +3696,13 @@ void PDFiumEngine::TransformPDFPageForPrinting(
+ 
+   pp::Size page_size(print_settings.paper_size);
+   pp::Rect content_rect(print_settings.printable_area);
++
+   const bool rotated = (src_page_rotation % 2 == 1);
+-  SetPageSizeAndContentRect(rotated, src_page_width > src_page_height,
+-                            &page_size, &content_rect);
++  int rotate =
++      SetPageSizeAndContentRect(rotated, src_page_width > src_page_height,
++                                &page_size, &content_rect);
++  if (rotate)
++    FPDFPage_SetRotation(page, rotate + src_page_rotation);
+ 
+   // Compute the screen page width and height in points.
+   const int actual_page_width =
+@@ -4324,7 +4333,7 @@ int CalculatePosition(FPDF_PAGE page,
+   if (settings.autorotate &&
+       (dest->width() > dest->height()) != (page_width > page_height)) {
+     rotate = 3;  // 90 degrees counter-clockwise.
+-    std::swap(page_width, page_height);
++    std::swap(page_height, page_width);
+   }
+ 
+   // See if we need to scale the output
+diff --git a/ppapi/api/dev/pp_print_settings_dev.idl b/ppapi/api/dev/pp_print_settings_dev.idl
+index fafcc08b28bc..8abd5159fbd7 100644
+--- a/ppapi/api/dev/pp_print_settings_dev.idl
++++ b/ppapi/api/dev/pp_print_settings_dev.idl
+@@ -30,13 +30,13 @@ enum PP_PrintScalingOption_Dev {
+   PP_PRINTSCALINGOPTION_SOURCE_SIZE = 2
+ };
+ 
+-[assert_size(60)]
++[assert_size(64)]
+ struct PP_PrintSettings_Dev {
+   /** This is the size of the printable area in points (1/72 of an inch). */
+   PP_Rect printable_area;
+   PP_Rect content_area;
+   PP_Size paper_size;
+-  int32_t dpi;
++  PP_Size dpi;
+   PP_PrintOrientation_Dev orientation;
+   PP_PrintScalingOption_Dev print_scaling_option;
+   PP_Bool grayscale;
+diff --git a/ppapi/c/dev/pp_print_settings_dev.h b/ppapi/c/dev/pp_print_settings_dev.h
+index 12531902b9d3..df30632d1c71 100644
+--- a/ppapi/c/dev/pp_print_settings_dev.h
++++ b/ppapi/c/dev/pp_print_settings_dev.h
+@@ -60,14 +60,14 @@ struct PP_PrintSettings_Dev {
+   struct PP_Rect printable_area;
+   struct PP_Rect content_area;
+   struct PP_Size paper_size;
+-  int32_t dpi;
++  struct PP_Size dpi;
+   PP_PrintOrientation_Dev orientation;
+   PP_PrintScalingOption_Dev print_scaling_option;
+   PP_Bool grayscale;
+   /** Note that Chrome currently only supports PDF printing. */
+   PP_PrintOutputFormat_Dev format;
+ };
+-PP_COMPILE_ASSERT_STRUCT_SIZE_IN_BYTES(PP_PrintSettings_Dev, 60);
++PP_COMPILE_ASSERT_STRUCT_SIZE_IN_BYTES(PP_PrintSettings_Dev, 64);
+ /**
+  * @}
+  */
+diff --git a/ppapi/proxy/printing_resource_unittest.cc b/ppapi/proxy/printing_resource_unittest.cc
+index 09589c34f6d3..9e0b0f1253ed 100644
+--- a/ppapi/proxy/printing_resource_unittest.cc
++++ b/ppapi/proxy/printing_resource_unittest.cc
+@@ -69,16 +69,14 @@ TEST_F(PrintingResourceTest, GetDefaultPrintSettings) {
+                                           params.sequence());
+   reply_params.set_result(PP_OK);
+ 
+-  PP_PrintSettings_Dev reply_settings = {
+-    { { 0, 0 }, { 500, 515 } },
+-    { { 25, 35 }, { 300, 720 } },
+-    { 600, 700 },
+-    200,
+-    PP_PRINTORIENTATION_NORMAL,
+-    PP_PRINTSCALINGOPTION_NONE,
+-    PP_FALSE,
+-    PP_PRINTOUTPUTFORMAT_PDF
+-  };
++  PP_PrintSettings_Dev reply_settings = {{{0, 0}, {500, 515}},
++                                         {{25, 35}, {300, 720}},
++                                         {600, 700},
++                                         {200, 200},
++                                         PP_PRINTORIENTATION_NORMAL,
++                                         PP_PRINTSCALINGOPTION_NONE,
++                                         PP_FALSE,
++                                         PP_PRINTOUTPUTFORMAT_PDF};
+   PluginMessageFilter::DispatchResourceReplyForTest(
+       reply_params,
+       PpapiPluginMsg_Printing_GetDefaultPrintSettingsReply(
+@@ -90,7 +88,7 @@ TEST_F(PrintingResourceTest, GetDefaultPrintSettings) {
+                            output_settings.content_area));
+   EXPECT_TRUE(PP_SizeEqual(reply_settings.paper_size,
+                            output_settings.paper_size));
+-  EXPECT_EQ(reply_settings.dpi, output_settings.dpi);
++  EXPECT_TRUE(PP_SizeEqual(reply_settings.dpi, output_settings.dpi));
+   EXPECT_EQ(reply_settings.orientation, output_settings.orientation);
+   EXPECT_EQ(reply_settings.print_scaling_option,
+             output_settings.print_scaling_option);
+diff --git a/printing/pdf_render_settings.h b/printing/pdf_render_settings.h
+index 1bb205d9bccc..aabb1714234a 100644
+--- a/printing/pdf_render_settings.h
++++ b/printing/pdf_render_settings.h
+@@ -8,6 +8,7 @@
+ #include "build/build_config.h"
+ #include "ui/gfx/geometry/point.h"
+ #include "ui/gfx/geometry/rect.h"
++#include "ui/gfx/geometry/size.h"
+ 
+ namespace printing {
+ 
+@@ -26,10 +27,10 @@ struct PdfRenderSettings {
+ #endif
+   };
+ 
+-  PdfRenderSettings() : dpi(0), autorotate(false), mode(Mode::NORMAL) {}
++  PdfRenderSettings() : dpi(0, 0), autorotate(false), mode(Mode::NORMAL) {}
+   PdfRenderSettings(const gfx::Rect& area,
+                     const gfx::Point& offsets,
+-                    int dpi,
++                    const gfx::Size& dpi,
+                     bool autorotate,
+                     Mode mode)
+       : area(area),
+@@ -41,7 +42,7 @@ struct PdfRenderSettings {
+ 
+   gfx::Rect area;
+   gfx::Point offsets;
+-  int dpi;
++  gfx::Size dpi;
+   bool autorotate;
+   Mode mode;
+ };
+diff --git a/printing/print_settings.cc b/printing/print_settings.cc
+index 41e2dc16e453..33b5add9cce0 100644
+--- a/printing/print_settings.cc
++++ b/printing/print_settings.cc
+@@ -172,8 +172,7 @@ void PrintSettings::Clear() {
+   device_name_.clear();
+   requested_media_ = RequestedMedia();
+   page_setup_device_units_.Clear();
+-  dpi_[0] = 0;
+-  dpi_[1] = 0;
++  dpi_ = gfx::Size();
+   scale_factor_ = 1.0f;
+   rasterize_pdf_ = false;
+   landscape_ = false;
+diff --git a/printing/print_settings.h b/printing/print_settings.h
+index 98f2e092f680..faad68065c21 100644
+--- a/printing/print_settings.h
++++ b/printing/print_settings.h
+@@ -14,6 +14,7 @@
+ #include "printing/print_job_constants.h"
+ #include "printing/printing_export.h"
+ #include "ui/gfx/geometry/rect.h"
++#include "ui/gfx/geometry/size.h"
+ 
+ namespace printing {
+ 
+@@ -100,17 +101,14 @@ class PRINTING_EXPORT PrintSettings {
+   }
+   const base::string16& device_name() const { return device_name_; }
+ 
+-  void set_dpi(int dpi) {
+-    dpi_[0] = dpi;
+-    dpi_[1] = dpi;
+-  }
++  void set_dpi(int dpi) { dpi_ = gfx::Size(dpi, dpi); }
+   void set_dpi_xy(int dpi_horizontal, int dpi_vertical) {
+-    dpi_[0] = dpi_horizontal;
+-    dpi_[1] = dpi_vertical;
++    dpi_ = gfx::Size(dpi_horizontal, dpi_vertical);
+   }
+-  int dpi() const { return std::max(dpi_[0], dpi_[1]); }
+-  int dpi_horizontal() const { return dpi_[0]; }
+-  int dpi_vertical() const { return dpi_[1]; }
++
++  int dpi() const { return std::min(dpi_.width(), dpi_.height()); }
++  int dpi_horizontal() const { return dpi_.width(); }
++  int dpi_vertical() const { return dpi_.height(); }
+ 
+   void set_scale_factor(double scale_factor) { scale_factor_ = scale_factor; }
+   double scale_factor() const { return scale_factor_; }
+@@ -234,7 +232,7 @@ class PRINTING_EXPORT PrintSettings {
+   // Printer's device effective dots per inch in both axes. The two values will
+   // generally be identical. However, on Windows, there are a few rare printers
+   // that support resolutions with different DPI in different dimensions.
+-  int dpi_[2];
++  gfx::Size dpi_;
+ 
+   // Scale factor
+   double scale_factor_;
+diff --git a/printing/print_settings_initializer_win.cc b/printing/print_settings_initializer_win.cc
+index fd243fe6109b..da24953d1211 100644
+--- a/printing/print_settings_initializer_win.cc
++++ b/printing/print_settings_initializer_win.cc
+@@ -129,7 +129,6 @@ void PrintSettingsInitializerWin::InitPrintSettings(
+       GetDeviceCaps(hdc, PHYSICALOFFSETY) * dpi / dpi_y,
+       GetDeviceCaps(hdc, HORZRES) * dpi / dpi_x,
+       GetDeviceCaps(hdc, VERTRES) * dpi / dpi_y);
+-
+   // Sanity check the printable_area: we've seen crashes caused by a printable
+   // area rect of 0, 0, 0, 0, so it seems some drivers don't set it.
+   if (printable_area_device_units.IsEmpty() ||
+diff --git a/printing/printing_context_win.cc b/printing/printing_context_win.cc
+index cc48c782634c..ac95a6070047 100644
+--- a/printing/printing_context_win.cc
++++ b/printing/printing_context_win.cc
+@@ -204,7 +204,8 @@ PrintingContext::Result PrintingContextWin::UpdatePrinterSettings(
+     int width = requested_media.size_microns.width() / kFromUm;
+     int height = requested_media.size_microns.height() / kFromUm;
+     unsigned id = 0;
+-    if (base::StringToUint(requested_media.vendor_id, &id) && id) {
++    if (base::StringToUint(requested_media.vendor_id, &id) && id &&
++        id < DMPAPER_USER) {
+       dev_mode->dmFields |= DM_PAPERSIZE;
+       dev_mode->dmPaperSize = static_cast<short>(id);
+     } else if (width > 0 && height > 0) {
+@@ -271,8 +272,8 @@ PrintingContext::Result PrintingContextWin::NewDocument(
+     di.lpszOutput = debug_dump_path.c_str();
+ 
+   // No message loop running in unit tests.
+-  DCHECK(!base::MessageLoop::current() ||
+-         !base::MessageLoop::current()->NestableTasksAllowed());
++  // DCHECK(!base::MessageLoop::current() ||
++  //        !base::MessageLoop::current()->NestableTasksAllowed());
+ 
+   // Begin a print job by calling the StartDoc function.
+   // NOTE: StartDoc() starts a message loop. That causes a lot of problems with
+diff --git a/third_party/WebKit/public/web/WebPrintParams.h b/third_party/WebKit/public/web/WebPrintParams.h
+index b1dfc372ce8e..d9442c0d9621 100644
+--- a/third_party/WebKit/public/web/WebPrintParams.h
++++ b/third_party/WebKit/public/web/WebPrintParams.h
+@@ -49,7 +49,7 @@ struct WebPrintParams {
+   WebSize paper_size;
+ 
+   // Specifies user selected DPI for printing.
+-  int printer_dpi;
++  WebSize printer_dpi;
+ 
+   // Specifies whether to print PDFs as image.
+   bool rasterize_pdf = false;
+@@ -59,14 +59,14 @@ struct WebPrintParams {
+   WebPrintScalingOption print_scaling_option;
+ 
+   WebPrintParams()
+-      : printer_dpi(72),
++      : printer_dpi(72, 72),
+         print_scaling_option(kWebPrintScalingOptionFitToPrintableArea) {}
+ 
+   WebPrintParams(const WebSize& paper_size)
+       : print_content_area(WebRect(0, 0, paper_size.width, paper_size.height)),
+         printable_area(WebRect(0, 0, paper_size.width, paper_size.height)),
+         paper_size(paper_size),
+-        printer_dpi(72),
++        printer_dpi(72, 72),
+         print_scaling_option(kWebPrintScalingOptionSourceSize) {}
+ 
+   WebPrintParams(const WebRect& print_content_area,
+@@ -77,7 +77,7 @@ struct WebPrintParams {
+       : print_content_area(print_content_area),
+         printable_area(printable_area),
+         paper_size(paper_size),
+-        printer_dpi(printer_dpi),
++        printer_dpi(printer_dpi, printer_dpi),
+         print_scaling_option(print_scaling_option) {}
+ };
+ 

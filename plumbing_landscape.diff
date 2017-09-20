@@ -1,0 +1,627 @@
+diff --git a/chrome/browser/printing/pdf_to_emf_converter.cc b/chrome/browser/printing/pdf_to_emf_converter.cc
+index 49ca8f907d29..f2101a6f7677 100644
+--- a/chrome/browser/printing/pdf_to_emf_converter.cc
++++ b/chrome/browser/printing/pdf_to_emf_converter.cc
+@@ -455,6 +455,8 @@ void PdfConverterUtilityProcessHostClient::OnTempPdfReady(ScopedTempFile pdf) {
+   if (!utility_process_host_ || !pdf)
+     return OnFailed();
+   // Should reply with OnPageCount().
++  LOG(ERROR) << "OnTempPDFReady, Send start message. Settings.rotation = " <<
++    settings_.rotated;
+   SendStartMessage(
+       IPC::GetPlatformFileForTransit(pdf->file().GetPlatformFile(), false));
+ }
+diff --git a/chrome/browser/printing/print_job.cc b/chrome/browser/printing/print_job.cc
+index faa46d1e4f26..14a41e96fba5 100644
+--- a/chrome/browser/printing/print_job.cc
++++ b/chrome/browser/printing/print_job.cc
+@@ -274,15 +274,17 @@ void PrintJob::StartPdfToEmfConversion(
+     const scoped_refptr<base::RefCountedMemory>& bytes,
+     const gfx::Size& page_size,
+     const gfx::Rect& content_area,
++    bool rotated,
+     bool print_text_with_gdi) {
+   DCHECK(!pdf_conversion_state_);
+   pdf_conversion_state_ =
+       base::MakeUnique<PdfConversionState>(page_size, content_area);
+   const int kPrinterDpiX = settings().dpi_horizontal();
+   const int kPrinterDpiY = settings().dpi_vertical();
++  LOG(ERROR) << "PrintJob::StartPdfToEmfConversion, rotated = " << rotated;
+   PdfRenderSettings settings(
+       content_area, gfx::Point(0, 0), gfx::Size(kPrinterDpiX, kPrinterDpiY),
+-      /*autorotate=*/true,
++      /*autorotate=*/true, rotated,
+       print_text_with_gdi ? PdfRenderSettings::Mode::GDI_TEXT
+                           : PdfRenderSettings::Mode::NORMAL);
+   pdf_conversion_state_->Start(
+@@ -339,6 +341,7 @@ void PrintJob::StartPdfToPostScriptConversion(
+     const scoped_refptr<base::RefCountedMemory>& bytes,
+     const gfx::Rect& content_area,
+     const gfx::Point& physical_offsets,
++    bool rotated,
+     bool ps_level2) {
+   DCHECK(!pdf_conversion_state_);
+   pdf_conversion_state_ = base::MakeUnique<PdfConversionState>(
+@@ -347,7 +350,7 @@ void PrintJob::StartPdfToPostScriptConversion(
+   const int kPrinterDpiY = settings().dpi_vertical();
+   PdfRenderSettings settings(
+       content_area, physical_offsets, gfx::Size(kPrinterDpiX, kPrinterDpiY),
+-      /*autorotate=*/true,
++      /*autorotate=*/true, rotated,
+       ps_level2 ? PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2
+                 : PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3);
+   pdf_conversion_state_->Start(
+diff --git a/chrome/browser/printing/print_job.h b/chrome/browser/printing/print_job.h
+index 6a189d6d5692..e6edd44acfb6 100644
+--- a/chrome/browser/printing/print_job.h
++++ b/chrome/browser/printing/print_job.h
+@@ -98,12 +98,14 @@ class PrintJob : public PrintJobWorkerOwner,
+       const scoped_refptr<base::RefCountedMemory>& bytes,
+       const gfx::Size& page_size,
+       const gfx::Rect& content_area,
++      bool rotated,
+       bool print_text_with_gdi);
+ 
+   void StartPdfToPostScriptConversion(
+       const scoped_refptr<base::RefCountedMemory>& bytes,
+       const gfx::Rect& content_area,
+       const gfx::Point& physical_offset,
++      bool rotated,
+       bool ps_level2);
+ 
+   void StartPdfToTextConversion(
+diff --git a/chrome/browser/printing/print_view_manager_base.cc b/chrome/browser/printing/print_view_manager_base.cc
+index 88cecc9cbd2e..d89b009eaadd 100644
+--- a/chrome/browser/printing/print_view_manager_base.cc
++++ b/chrome/browser/printing/print_view_manager_base.cc
+@@ -129,6 +129,7 @@ void PrintViewManagerBase::OnDidGetPrintedPagesCount(int cookie,
+ 
+ void PrintViewManagerBase::OnDidPrintPage(
+   const PrintHostMsg_DidPrintPage_Params& params) {
++  LOG(ERROR) << "DidPrintPage, rotated = " << params.rotated;
+   if (!OpportunisticallyCreatePrintJob(params.document_cookie))
+     return;
+ 
+@@ -196,6 +197,7 @@ void PrintViewManagerBase::OnDidPrintPage(
+                    features::kDisablePostScriptPrinting)) {
+       print_job_->StartPdfToPostScriptConversion(bytes, params.content_area,
+                                                  params.physical_offsets,
++                                                 params.rotated,
+                                                  settings.printer_is_ps2());
+     } else {
+       // TODO(thestig): Figure out why rendering text with GDI results in random
+@@ -208,7 +210,8 @@ void PrintViewManagerBase::OnDidPrintPage(
+                                  base::FeatureList::IsEnabled(
+                                      features::kGdiTextPrinting);
+       print_job_->StartPdfToEmfConversion(
+-          bytes, params.page_size, params.content_area, print_text_with_gdi);
++          bytes, params.page_size, params.content_area, params.rotated,
++          print_text_with_gdi);
+     }
+   }
+ #else
+diff --git a/chrome/browser/printing/pwg_raster_converter.cc b/chrome/browser/printing/pwg_raster_converter.cc
+index 406e3a9f4f35..4e8222ca90a2 100644
+--- a/chrome/browser/printing/pwg_raster_converter.cc
++++ b/chrome/browser/printing/pwg_raster_converter.cc
+@@ -310,7 +310,7 @@ PdfRenderSettings PWGRasterConverter::GetConversionSettings(
+   gfx::Rect area(std::min(page_size.width(), page_size.height()) * scale,
+                  std::max(page_size.width(), page_size.height()) * scale);
+   return PdfRenderSettings(area, gfx::Point(0, 0), gfx::Size(dpi, dpi),
+-                           /*autorotate=*/true,
++                           /*autorotate=*/true, false,
+                            PdfRenderSettings::Mode::NORMAL);
+ }
+ 
+diff --git a/chrome/browser/resources/print_preview/native_layer.js b/chrome/browser/resources/print_preview/native_layer.js
+index 53e7c0105a24..7631508a2945 100644
+--- a/chrome/browser/resources/print_preview/native_layer.js
++++ b/chrome/browser/resources/print_preview/native_layer.js
+@@ -285,9 +285,6 @@ cr.define('print_preview', function() {
+       assert(
+           printTicketStore.isTicketValidForPreview(),
+           'Trying to generate preview when ticket is not valid');
+-      console.error('landscape value from preview = ' +
+-          printTicketStore.landscape.getValue() + ' and media size = ' +
+-          printTicketStore.mediaSize.getValue());
+       var ticket = {
+         'pageRange': printTicketStore.pageRange.getDocumentPageRanges(),
+         'mediaSize': printTicketStore.mediaSize.getValue(),
+diff --git a/chrome/common/chrome_utility_printing_messages.h b/chrome/common/chrome_utility_printing_messages.h
+index f5712a7a5bb8..695c7740941b 100644
+--- a/chrome/common/chrome_utility_printing_messages.h
++++ b/chrome/common/chrome_utility_printing_messages.h
+@@ -35,6 +35,7 @@ IPC_STRUCT_TRAITS_BEGIN(printing::PdfRenderSettings)
+   IPC_STRUCT_TRAITS_MEMBER(offsets)
+   IPC_STRUCT_TRAITS_MEMBER(dpi)
+   IPC_STRUCT_TRAITS_MEMBER(autorotate)
++  IPC_STRUCT_TRAITS_MEMBER(rotated)
+   IPC_STRUCT_TRAITS_MEMBER(mode)
+ IPC_STRUCT_TRAITS_END()
+ 
+diff --git a/chrome/service/cloud_print/print_system_win.cc b/chrome/service/cloud_print/print_system_win.cc
+index 16c1dd83cf0c..3de50b233e42 100644
+--- a/chrome/service/cloud_print/print_system_win.cc
++++ b/chrome/service/cloud_print/print_system_win.cc
+@@ -448,7 +448,7 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
+       if (utility_host->StartRenderPDFPagesToMetafile(
+               pdf_path, printing::PdfRenderSettings(
+                             render_area, gfx::Point(0, 0), render_dpi,
+-                            /*autorotate=*/false,
++                            /*autorotate=*/false, false,
+                             printing::PdfRenderSettings::Mode::NORMAL))) {
+         // The object will self-destruct when the child process dies.
+         ignore_result(utility_host.release());
+diff --git a/chrome/utility/printing_handler.cc b/chrome/utility/printing_handler.cc
+index 304d7b3de055..ad8d59e79496 100644
+--- a/chrome/utility/printing_handler.cc
++++ b/chrome/utility/printing_handler.cc
+@@ -88,6 +88,8 @@ bool PrintingHandler::OnMessageReceived(const IPC::Message& message) {
+ void PrintingHandler::OnRenderPDFPagesToMetafile(
+     IPC::PlatformFileForTransit pdf_transit,
+     const PdfRenderSettings& settings) {
++  LOG(ERROR) << "OnRenderPDFPagesToMetafile, rotation = " <<
++    settings.rotated;
+   pdf_rendering_settings_ = settings;
+   chrome_pdf::SetPDFUseGDIPrinting(pdf_rendering_settings_.mode ==
+                                    PdfRenderSettings::Mode::GDI_TEXT);
+@@ -211,6 +213,7 @@ bool PrintingHandler::RenderPdfPageToMetafile(int page_number,
+     pdf_rendering_settings_.area.y() << " with size = " <<
+     pdf_rendering_settings_.area.width() << " x " <<
+     pdf_rendering_settings_.area.height();
++  LOG(ERROR) << "Rotation = " << pdf_rendering_settings_.rotated;
+ 
+   if (!chrome_pdf::RenderPDFPageToDC(
+           &pdf_data_.front(), pdf_data_.size(), page_number, metafile.context(),
+@@ -220,7 +223,8 @@ bool PrintingHandler::RenderPdfPageToMetafile(int page_number,
+           pdf_rendering_settings_.area.y() - offset_y,
+           pdf_rendering_settings_.area.width(),
+           pdf_rendering_settings_.area.height(), true, false, true, true,
+-          pdf_rendering_settings_.autorotate)) {
++          pdf_rendering_settings_.autorotate,
++          pdf_rendering_settings_.rotated)) {
+     return false;
+   }
+   metafile.FinishPage();
+diff --git a/components/printing/common/print_messages.h b/components/printing/common/print_messages.h
+index d78e42ccdf8f..fcb6cc84f037 100644
+--- a/components/printing/common/print_messages.h
++++ b/components/printing/common/print_messages.h
+@@ -298,6 +298,9 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPrintPage_Params)
+   // The physical offsets of the printer in DPI. Used for PS printing.
+   IPC_STRUCT_MEMBER(gfx::Point, physical_offsets)
+ 
++  // Whether the PDF was rotated for preview
++  IPC_STRUCT_MEMBER(bool, rotated)
++
+ IPC_STRUCT_END()
+ 
+ // TODO(dgn) Rename *ScriptedPrint messages because they are not called only
+diff --git a/components/printing/renderer/print_render_frame_helper.cc b/components/printing/renderer/print_render_frame_helper.cc
+index 7533426bc71d..66b50df4dbbd 100644
+--- a/components/printing/renderer/print_render_frame_helper.cc
++++ b/components/printing/renderer/print_render_frame_helper.cc
+@@ -63,7 +63,6 @@
+ using content::WebPreferences;
+ 
+ namespace printing {
+-
+ namespace {
+ 
+ #define STATIC_ASSERT_ENUM(a, b)                            \
+@@ -134,62 +133,6 @@ bool IsWebPrintScalingOptionFitToPage(const PrintMsg_Print_Params& params) {
+          blink::kWebPrintScalingOptionFitToPrintableArea;
+ }
+ 
+-PrintMsg_Print_Params GetCssPrintParams(
+-    blink::WebLocalFrame* frame,
+-    int page_index,
+-    const PrintMsg_Print_Params& page_params) {
+-  PrintMsg_Print_Params page_css_params = page_params;
+-  int dpi = GetDPI(&page_params);
+-
+-  blink::WebDoubleSize page_size_in_pixels(
+-      ConvertUnitDouble(page_params.page_size.width(), dpi, kPixelsPerInch),
+-      ConvertUnitDouble(page_params.page_size.height(), dpi, kPixelsPerInch));
+-  int margin_top_in_pixels =
+-      ConvertUnit(page_params.margin_top, dpi, kPixelsPerInch);
+-  int margin_right_in_pixels = ConvertUnit(
+-      page_params.page_size.width() -
+-      page_params.content_size.width() - page_params.margin_left,
+-      dpi, kPixelsPerInch);
+-  int margin_bottom_in_pixels = ConvertUnit(
+-      page_params.page_size.height() -
+-      page_params.content_size.height() - page_params.margin_top,
+-      dpi, kPixelsPerInch);
+-  int margin_left_in_pixels = ConvertUnit(
+-      page_params.margin_left,
+-      dpi, kPixelsPerInch);
+-
+-  if (frame) {
+-    frame->PageSizeAndMarginsInPixels(
+-        page_index, page_size_in_pixels, margin_top_in_pixels,
+-        margin_right_in_pixels, margin_bottom_in_pixels, margin_left_in_pixels);
+-  }
+-
+-  double new_content_width = page_size_in_pixels.Width() -
+-                             margin_left_in_pixels - margin_right_in_pixels;
+-  double new_content_height = page_size_in_pixels.Height() -
+-                              margin_top_in_pixels - margin_bottom_in_pixels;
+-
+-  // Invalid page size and/or margins. We just use the default setting.
+-  if (new_content_width < 1 || new_content_height < 1) {
+-    CHECK(frame != NULL);
+-    page_css_params = GetCssPrintParams(NULL, page_index, page_params);
+-    return page_css_params;
+-  }
+-
+-  page_css_params.page_size =
+-      gfx::Size(ConvertUnit(page_size_in_pixels.Width(), kPixelsPerInch, dpi),
+-                ConvertUnit(page_size_in_pixels.Height(), kPixelsPerInch, dpi));
+-  page_css_params.content_size =
+-      gfx::Size(ConvertUnit(new_content_width, kPixelsPerInch, dpi),
+-              ConvertUnit(new_content_height, kPixelsPerInch, dpi));
+-
+-  page_css_params.margin_top =
+-      ConvertUnit(margin_top_in_pixels, kPixelsPerInch, dpi);
+-  page_css_params.margin_left =
+-      ConvertUnit(margin_left_in_pixels, kPixelsPerInch, dpi);
+-  return page_css_params;
+-}
+-
+ double FitPrintParamsToPage(const PrintMsg_Print_Params& page_params,
+                             PrintMsg_Print_Params* params_to_fit) {
+   double content_width =
+@@ -269,31 +212,6 @@ void CalculatePageLayoutFromPrintParams(
+     page_layout_in_points->content_height;
+ }
+ 
+-bool EnsureOrientationMatches(const PrintMsg_Print_Params& css_params,
+-                              PrintMsg_Print_Params* page_params) {
+-  int dpi = GetDPI(page_params);
+-  LOG(ERROR) << "Original page size is " << page_params->page_size.width() <<
+-    " x " << page_params->page_size.height();
+-
+-  if ((page_params->page_size.width() * page_params->dpi.width() / dpi >
+-       page_params->page_size.height() * page_params->dpi.height() /dpi ) ==
+-      (css_params.page_size.width() > css_params.page_size.height())) {
+-    return false;
+-  }
+-  LOG(ERROR) << "Rotate";
+-  // Swap the |width| and |height| values.
+-  page_params->page_size.SetSize(page_params->page_size.height(),
+-                                 page_params->page_size.width());
+-  page_params->content_size.SetSize(page_params->content_size.height(),
+-                                    page_params->content_size.width());
+-  page_params->printable_area.set_size(
+-      gfx::Size(page_params->printable_area.height(),
+-                page_params->printable_area.width()));
+-  LOG(ERROR) << " New page size is " << page_params->page_size.width() <<
+-    " x " << page_params->page_size.height();
+-  return true;
+-}
+-
+ void ComputeWebKitPrintParamsInDesiredDpi(
+     const PrintMsg_Print_Params& print_params,
+     blink::WebPrintParams* webkit_print_params) {
+@@ -479,10 +397,11 @@ PrintMsg_Print_Params CalculatePrintParamsForCss(
+     bool fit_to_page,
+     double* scale_factor) {
+   PrintMsg_Print_Params css_params =
+-      GetCssPrintParams(frame, page_index, page_params);
++      PrintWebFrameHelper::GetCssPrintParams(frame, page_index, page_params);
+ 
+   PrintMsg_Print_Params params = page_params;
+-  bool flipped = EnsureOrientationMatches(css_params, &params);
++  bool flipped =
++      PrintWebViewHelper::EnsureOrientationMatches(css_params, &params);
+ 
+   params.content_size = ScaleAndRoundSize(params.content_size, *scale_factor);
+   if (ignore_css_margins && fit_to_page)
+@@ -1375,11 +1294,12 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
+             printable_area_in_points.height() * print_params.dpi.height() / dpi;
+         bool is_preset_landscape = preset_options.uniform_page_size.width >
+                                    preset_options.uniform_page_size.height;
+-        bool rotate = is_printable_area_landscape != is_preset_landscape;
++        rotated_ = is_printable_area_landscape != is_preset_landscape;
++        LOG(ERROR) << "Rotated = " << rotated_;
+         // Match orientation for computing scaling
+-        double printable_width = rotate ? printable_area_in_points.height()
++        double printable_width = rotated_ ? printable_area_in_points.height()
+                                         : printable_area_in_points.width();
+-        double printable_height = rotate ? printable_area_in_points.width()
++        double printable_height = rotated_ ? printable_area_in_points.width()
+                                          : printable_area_in_points.height();
+         double scale_width =
+             printable_width /
+@@ -1684,7 +1604,6 @@ void PrintRenderFrameHelper::OnFramePreparedForPrintPages() {
+ void PrintRenderFrameHelper::PrintPages() {
+   if (!prep_frame_view_)  // Printing is already canceled or failed.
+     return;
+-
+   prep_frame_view_->StartPrinting();
+ 
+   int page_count = prep_frame_view_->GetExpectedPageCount();
+@@ -1720,7 +1639,6 @@ void PrintRenderFrameHelper::FinishFramePrinting() {
+ }
+ #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
+ 
+-<<<<<<< HEAD:components/printing/renderer/print_render_frame_helper.cc
+ bool PrintWebViewHelper::EnsureOrientationMatches(
+     const PrintMsg_Print_Params& css_params,
+     PrintMsg_Print_Params* page_params) {
+@@ -1808,8 +1726,6 @@ PrintMsg_Print_Params PrintWebFrameHelper::GetCssPrintParams(
+   return page_css_params;
+ }
+ 
+-=======
+->>>>>>> Revert some complex parameter plumbing, rotation should fix issue.:components/printing/renderer/print_web_view_helper.cc
+ // static - Not anonymous so that platform implementations can use it.
+ void PrintRenderFrameHelper::ComputePageLayoutInPointsForCss(
+     blink::WebLocalFrame* frame,
+@@ -2039,6 +1955,7 @@ bool PrintRenderFrameHelper::RenderPagesForPrint(blink::WebLocalFrame* frame,
+   const PrintMsg_Print_Params& print_params = params.params;
+   prep_frame_view_ = base::MakeUnique<PrepareFrameAndViewForPrint>(
+       print_params, frame, node, ignore_css_margins_);
++
+   DCHECK(!print_pages_params_->params.selection_only ||
+          print_pages_params_->pages.empty());
+   prep_frame_view_->CopySelectionIfNeeded(
+diff --git a/components/printing/renderer/print_render_frame_helper.h b/components/printing/renderer/print_render_frame_helper.h
+index 6a52cd8bb78e..493f73ec0c6b 100644
+--- a/components/printing/renderer/print_render_frame_helper.h
++++ b/components/printing/renderer/print_render_frame_helper.h
+@@ -137,6 +137,15 @@ class PrintRenderFrameHelper
+   bool IsPrintingEnabled() const;
+ 
+   void PrintNode(const blink::WebNode& node);
++  
++  static PrintMsg_Print_Params PrintWebViewHelper::GetCssPrintParams(
++      blink::WebLocalFrame* frame,
++      int page_index,
++      const PrintMsg_Print_Params& page_params);
++
++  static bool PrintWebViewHelper::EnsureOrientationMatches(
++      const PrintMsg_Print_Params& css_params,
++      PrintMsg_Print_Params* page_params);
+ 
+  private:
+   friend class PrintRenderFrameHelperTestBase;
+@@ -337,7 +346,6 @@ class PrintRenderFrameHelper
+ 
+   bool CopyMetafileDataToSharedMem(const PdfMetafileSkia& metafile,
+                                    base::SharedMemoryHandle* shared_mem_handle);
+-
+   // Helper method to get page layout in points and fit to page if needed.
+   static void ComputePageLayoutInPointsForCss(
+       blink::WebLocalFrame* frame,
+@@ -414,6 +422,9 @@ class PrintRenderFrameHelper
+   // True, when printing from print preview.
+   bool print_for_preview_;
+ 
++  // True, if the preview has rotated the page.
++  bool rotated_ = false;
++
+   // Used to check the prerendering status.
+   const std::unique_ptr<Delegate> delegate_;
+ 
+diff --git a/components/printing/renderer/print_render_frame_helper_pdf_win.cc b/components/printing/renderer/print_render_frame_helper_pdf_win.cc
+index ce7d600721c9..209ee92b6081 100644
+--- a/components/printing/renderer/print_render_frame_helper_pdf_win.cc
++++ b/components/printing/renderer/print_render_frame_helper_pdf_win.cc
+@@ -36,6 +36,12 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+   int dpi_y = params.params.dpi.height();
+   int dpi = std::min(dpi_x, dpi_y);
+   for (size_t i = 0; i < printed_pages.size(); ++i) {
++    const PrintMsg_Print_Params print_params = params.params;
++    PrintMsg_Print_Params css_params =
++        GetCssPrintParams(frame, printed_pages[i], print_params);
++    PrintMsg_Print_Params new_params = print_params;
++    rotated_ = EnsureOrientationMatches(css_params, &new_params);
++
+     PrintPageInternal(params.params, printed_pages[i], frame, &metafile,
+                       &page_size_in_dpi[i], &content_area_in_dpi[i],
+                       &printable_area_in_dpi[i]);
+@@ -73,6 +79,8 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+   printed_page_params.data_size = metafile.GetDataSize();
+   printed_page_params.document_cookie = params.params.document_cookie;
+   printed_page_params.page_size = params.params.page_size;
++  printed_page_params.rotated = rotated_;
++  LOG(ERROR) << "Rotated, PdfHelperWin = " << rotated_;
+ 
+   for (size_t i = 0; i < printed_pages.size(); ++i) {
+     printed_page_params.page_number = printed_pages[i];
+diff --git a/pdf/pdf.cc b/pdf/pdf.cc
+index b52ec0b18fb1..9168c929e5d2 100644
+--- a/pdf/pdf.cc
++++ b/pdf/pdf.cc
+@@ -94,7 +94,8 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+                        bool stretch_to_bounds,
+                        bool keep_aspect_ratio,
+                        bool center_in_bounds,
+-                       bool autorotate) {
++                       bool autorotate,
++                       bool rotated) {
+   if (!g_sdk_initialized_via_pepper) {
+     if (!InitializeSDK()) {
+       return false;
+@@ -105,7 +106,7 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+       dpi, dpi_y,
+       pp::Rect(bounds_origin_x, bounds_origin_y, bounds_width, bounds_height),
+       fit_to_bounds, stretch_to_bounds, keep_aspect_ratio, center_in_bounds,
+-      autorotate);
++      autorotate, rotated);
+   bool ret = engine_exports->RenderPDFPageToDC(pdf_buffer, buffer_size,
+                                                page_number, settings, dc);
+   if (!g_sdk_initialized_via_pepper)
+@@ -179,7 +180,7 @@ bool RenderPDFPageToBitmap(const void* pdf_buffer,
+   PDFEngineExports* engine_exports = PDFEngineExports::Get();
+   PDFEngineExports::RenderingSettings settings(
+       dpi, dpi_y, pp::Rect(bitmap_width, bitmap_height), true, false, true,
+-      true, autorotate);
++      true, autorotate, false);
+   bool ret = engine_exports->RenderPDFPageToBitmap(
+       pdf_buffer, pdf_buffer_size, page_number, settings, bitmap_buffer);
+   if (!g_sdk_initialized_via_pepper)
+diff --git a/pdf/pdf.h b/pdf/pdf.h
+index 658a86b53bbc..eb63b23a0887 100644
+--- a/pdf/pdf.h
++++ b/pdf/pdf.h
+@@ -85,7 +85,8 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
+                        bool stretch_to_bounds,
+                        bool keep_aspect_ratio,
+                        bool center_in_bounds,
+-                       bool autorotate);
++                       bool autorotate,
++                       bool rotated);
+ 
+ void SetPDFEnsureTypefaceCharactersAccessible(
+     PDFEnsureTypefaceCharactersAccessible func);
+diff --git a/pdf/pdf_engine.h b/pdf/pdf_engine.h
+index 742ad89242b4..dc435059e4ae 100644
+--- a/pdf/pdf_engine.h
++++ b/pdf/pdf_engine.h
+@@ -334,7 +334,8 @@ class PDFEngineExports {
+                       bool stretch_to_bounds,
+                       bool keep_aspect_ratio,
+                       bool center_in_bounds,
+-                      bool autorotate);
++                      bool autorotate,
++                      bool rotated);
+     RenderingSettings(const RenderingSettings& that);
+ 
+     int dpi_x;
+@@ -345,6 +346,7 @@ class PDFEngineExports {
+     bool keep_aspect_ratio;
+     bool center_in_bounds;
+     bool autorotate;
++    bool rotated;
+   };
+ 
+   PDFEngineExports() {}
+diff --git a/pdf/pdfium/pdfium_engine.cc b/pdf/pdfium/pdfium_engine.cc
+index 9cb4ffb3e49b..88f49725834b 100644
+--- a/pdf/pdfium/pdfium_engine.cc
++++ b/pdf/pdfium/pdfium_engine.cc
+@@ -437,7 +437,7 @@ UNSUPPORT_INFO g_unsupported_info = {1, Unsupported_Handler};
+ // |page_size| has the actual destination page size in points.
+ // |content_rect| has the actual destination page printable area values in
+ // points.
+-void SetPageSizeAndContentRect(bool rotated,
++int SetPageSizeAndContentRect(bool rotated,
+                                bool is_src_page_landscape,
+                                pp::Size* page_size,
+                                pp::Rect* content_rect,
+@@ -454,10 +454,12 @@ void SetPageSizeAndContentRect(bool rotated,
+   LOG(ERROR) << "Rotated = " << rotated;
+   bool rotate_dst_page = rotated ^ page_orientation_mismatched;
+   if (rotate_dst_page) {
+-    page_size->SetSize(page_size->height(), page_size->width());
++   /* page_size->SetSize(page_size->height(), page_size->width());
+     content_rect->SetRect(content_rect->y(), content_rect->x(),
+-                          content_rect->height(), content_rect->width());
++                          content_rect->height(), content_rect->width());*/
++    return 1;
+   }
++  return 0;
+ }
+ 
+ // This formats a string with special 0xfffe end-of-line hyphens the same way
+@@ -3763,6 +3765,10 @@ void PDFiumEngine::TransformPDFPageForPrinting(
+   // document of multiple page sizes. To give better user experience, we
+   // decided to have same crop box and media box values. Hence, the user will
+   // see a list of uniform pages.
++  if (rotate) {
++   FPDFPage_SetRotation(page, rotate + src_page_rotation);
++  } 
++
+   FPDFPage_SetMediaBox(page, 0, 0, page_size.width(), page_size.height());
+   FPDFPage_SetCropBox(page, 0, 0, page_size.width(), page_size.height());
+ 
+@@ -4331,20 +4337,20 @@ base::LazyInstance<PDFiumEngineExports>::Leaky g_pdf_engine_exports =
+ int CalculatePosition(FPDF_PAGE page,
+                       const PDFiumEngineExports::RenderingSettings& settings,
+                       pp::Rect* dest) {
+-  bool paper_is_landscape = dest->width() > dest->height();
+-  bool original_is_landscape = true;
++  bool original_is_rotated = settings.rotated;
++  LOG(ERROR) << "Rotated = " << original_is_rotated;
+   int page_width = 0;
+   int page_height = 0;
+-  if (paper_is_landscape != original_is_landscape) {
++  if (original_is_rotated) {//paper_is_landscape != original_is_landscape) {
+     page_width = static_cast<int>(ConvertUnitDouble(
+         FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_y));
+     page_height = static_cast<int>(ConvertUnitDouble(
+         FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_x));
+   } else {
+     page_width = static_cast<int>(ConvertUnitDouble(
+-        FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_y));
++        FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_x));
+     page_height = static_cast<int>(ConvertUnitDouble(
+-        FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_x));
++        FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_y));
+   }
+ 
+   // Start by assuming that we will draw exactly to the bounds rect
+@@ -4418,7 +4424,8 @@ PDFEngineExports::RenderingSettings::RenderingSettings(int dpi_x,
+                                                        bool stretch_to_bounds,
+                                                        bool keep_aspect_ratio,
+                                                        bool center_in_bounds,
+-                                                       bool autorotate)
++                                                       bool autorotate,
++                                                       bool rotated)
+     : dpi_x(dpi_x),
+       dpi_y(dpi_y),
+       bounds(bounds),
+@@ -4426,7 +4433,8 @@ PDFEngineExports::RenderingSettings::RenderingSettings(int dpi_x,
+       stretch_to_bounds(stretch_to_bounds),
+       keep_aspect_ratio(keep_aspect_ratio),
+       center_in_bounds(center_in_bounds),
+-      autorotate(autorotate) {}
++      autorotate(autorotate),
++      rotated(rotated) {}
+ 
+ PDFEngineExports::RenderingSettings::RenderingSettings(
+     const RenderingSettings& that) = default;
+@@ -4441,6 +4449,7 @@ bool PDFiumEngineExports::RenderPDFPageToDC(const void* pdf_buffer,
+                                             int page_number,
+                                             const RenderingSettings& settings,
+                                             HDC dc) {
++  LOG(ERROR) << "RenderPDFPageToDC, rotated = " << settings.rotated;
+   FPDF_DOCUMENT doc = FPDF_LoadMemDocument(pdf_buffer, buffer_size, nullptr);
+   if (!doc)
+     return false;
+diff --git a/printing/pdf_render_settings.h b/printing/pdf_render_settings.h
+index aabb1714234a..b9e81fab95a5 100644
+--- a/printing/pdf_render_settings.h
++++ b/printing/pdf_render_settings.h
+@@ -27,16 +27,19 @@ struct PdfRenderSettings {
+ #endif
+   };
+ 
+-  PdfRenderSettings() : dpi(0, 0), autorotate(false), mode(Mode::NORMAL) {}
++  PdfRenderSettings() : dpi(0, 0), autorotate(false), rotated(false),
++                        mode(Mode::NORMAL) {}
+   PdfRenderSettings(const gfx::Rect& area,
+                     const gfx::Point& offsets,
+                     const gfx::Size& dpi,
+                     bool autorotate,
++                    bool rotated,
+                     Mode mode)
+       : area(area),
+         offsets(offsets),
+         dpi(dpi),
+         autorotate(autorotate),
++        rotated(rotated),
+         mode(mode) {}
+   ~PdfRenderSettings() {}
+ 
+@@ -44,6 +47,7 @@ struct PdfRenderSettings {
+   gfx::Point offsets;
+   gfx::Size dpi;
+   bool autorotate;
++  bool rotated;
+   Mode mode;
+ };
+ 

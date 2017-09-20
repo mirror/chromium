@@ -495,7 +495,7 @@ class HeadlessWebContentsPDFTest : public HeadlessAsyncDevTooledBrowserTest {
 
       gfx::Rect rect(kPaperWidth * kDpi, kPaperHeight * kDpi);
       printing::PdfRenderSettings settings(
-          rect, gfx::Point(0, 0), kDpi, true,
+          rect, gfx::Point(0, 0), gfx::Size(kDpi, kDpi), true,
           printing::PdfRenderSettings::Mode::NORMAL);
       std::vector<uint8_t> page_bitmap_data(kColorChannels *
                                             settings.area.size().GetArea());

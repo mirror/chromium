@@ -1503,10 +1503,9 @@ FPDF_DOCUMENT PDFiumEngine::CreateSinglePageRasterPdf(
 
   unsigned char* bitmap_data =
       static_cast<unsigned char*>(FPDFBitmap_GetBuffer(bitmap));
-  double ratio_x = ConvertUnitDouble(bitmap_size.width(), print_settings.dpi,
-                                     kPointsPerInch);
-  double ratio_y = ConvertUnitDouble(bitmap_size.height(), print_settings.dpi,
-                                     kPointsPerInch);
+  int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+  double ratio_x = ConvertUnitDouble(bitmap_size.width(), dpi, kPointsPerInch);
+  double ratio_y = ConvertUnitDouble(bitmap_size.height(), dpi, kPointsPerInch);
 
   // Add the bitmap to an image object and add the image object to the output
   // page.
@@ -1577,11 +1576,11 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
     double source_page_height = FPDF_GetPageHeight(pdf_page);
     source_page_sizes.push_back(
         std::make_pair(source_page_width, source_page_height));
-
-    int width_in_pixels =
-        ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
-    int height_in_pixels =
-        ConvertUnit(source_page_height, kPointsPerInch, print_settings.dpi);
+    // For computing size in pixels, use a square dpi since the source PDF page
+    // has square DPI.
+    int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+    int width_in_pixels = ConvertUnit(source_page_width, kPointsPerInch, dpi);
+    int height_in_pixels = ConvertUnit(source_page_height, kPointsPerInch, dpi);
 
     pp::Rect rect(width_in_pixels, height_in_pixels);
     pages_to_print.push_back(PDFiumPage(this, page_number, rect, true));
@@ -4309,15 +4308,19 @@ base::LazyInstance<PDFiumEngineExports>::Leaky g_pdf_engine_exports =
 int CalculatePosition(FPDF_PAGE page,
                       const PDFiumEngineExports::RenderingSettings& settings,
                       pp::Rect* dest) {
-  int page_width = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_x));
-  int page_height = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_y));
+  // Convert everything to square DPI for computations.
+  int dpi = std::min(settings.dpi_x, settings.dpi_y);
+  int page_width = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageWidth(page), kPointsPerInch, dpi));
+  int page_height = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageHeight(page), kPointsPerInch, dpi));
 
   // Start by assuming that we will draw exactly to the bounds rect
-  // specified.
+  // specified. settings.bounds is in device DPI, scale to square DPI for
+  // computations.
   *dest = settings.bounds;
-
+  dest->set_width(dest->width() * dpi / settings.dpi_x);
+  dest->set_height(dest->height() * dpi / settings.dpi_y);
   int rotate = 0;  // normal orientation.
 
   // Auto-rotate landscape pages to print correctly.
@@ -4345,18 +4348,21 @@ int CalculatePosition(FPDF_PAGE page,
       scale_factor_x /= dest->width();
       double scale_factor_y = page_height;
       scale_factor_y /= dest->height();
+      // Scale back to device DPI for setting the final bounds.
       if (scale_factor_x > scale_factor_y) {
-        dest->set_height(page_height / scale_factor_x);
+        dest->set_height(page_height * settings.dpi_y / dpi / scale_factor_x);
+        dest->set_width(page_width * settings.dpi_x / dpi);
       } else {
-        dest->set_width(page_width / scale_factor_y);
+        dest->set_height(page_height * settings.dpi_y / dpi);
+        dest->set_width(page_width * settings.dpi_x / dpi / scale_factor_y);
       }
     }
   } else {
     // We are not scaling to bounds. Draw in the actual page size. If the
     // actual page size is larger than the bounds, the output will be
-    // clipped.
-    dest->set_width(page_width);
-    dest->set_height(page_height);
+    // clipped. Scale back to device DPI for setting the final bounds.
+    dest->set_width(page_width * settings.dpi_x / dpi);
+    dest->set_height(page_height * settings.dpi_y / dpi);
   }
 
   if (settings.center_in_bounds) {
