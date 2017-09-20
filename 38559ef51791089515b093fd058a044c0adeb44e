@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c30abc_c54f2c9c",
+        "filename": "chrome/app/vector_icons/remove.1x.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-20T19:51:58Z",
+      "side": 0,
+      "message": "can you post before and after screenshots at 1x? Are you sure we don\u0027t need the 1x any more, or has the new designer only considered retina screens (I only see mocks at 2x)?\n\ncan we just add CAP_SQUARE to these icons?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "38559ef51791089515b093fd058a044c0adeb44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
