@@ -52004,6 +52004,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Omnibox.URLNavigationScheme" enum="NavigationScheme">
+  <owner>mpearson@chromium.org</owner>
+  <summary>
+    The scheme of the URL for each omnibox URL navigation.  Excludes search
+    queries.
+  </summary>
+</histogram>
+
 <histogram name="Omnibox.UserTextCleared" enum="OmniboxUserTextCleared">
   <owner>kenjibaheux@chromium.org</owner>
   <owner>mpearson@chromium.org</owner>
