@@ -14,6 +14,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/browser_child_process_host_delegate.h"
 #include "content/public/browser/utility_process_host.h"
+#include "sandbox/policy/sandbox_type.h"
 
 namespace base {
 class FilePath;
@@ -44,7 +45,7 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   base::WeakPtr<UtilityProcessHost> AsWeakPtr() override;
   bool Send(IPC::Message* message) override;
   void SetExposedDir(const base::FilePath& dir) override;
-  void SetSandboxType(SandboxType sandbox_type) override;
+  void SetSandboxType(sandbox::SandboxType sandbox_type) override;
 #if defined(OS_WIN)
   void ElevatePrivileges() override;
 #endif
@@ -86,7 +87,7 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   base::FilePath exposed_dir_;
 
   // Launch the child process with switches that will setup this sandbox type.
-  SandboxType sandbox_type_;
+  sandbox::SandboxType sandbox_type_;
 
   // Whether to launch the child process with elevated privileges.
   bool run_elevated_;
