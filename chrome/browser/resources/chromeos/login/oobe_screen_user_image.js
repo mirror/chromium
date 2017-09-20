@@ -11,6 +11,7 @@ login.createScreen('UserImageScreen', 'user-image', function() {
   var CONTEXT_KEY_SELECTED_IMAGE_INDEX = 'selectedImageIndex';
   var CONTEXT_KEY_SELECTED_IMAGE_URL = 'selectedImageURL';
   var CONTEXT_KEY_PROFILE_PICTURE_DATA_URL = 'profilePictureDataURL';
+  var CONTEXT_KEY_REMOVE_PROFILE_PICTURE = 'removeProfilePicture';
 
   return {
     EXTERNAL_API: ['setDefaultImages', 'hideCurtain'],
@@ -31,6 +32,12 @@ login.createScreen('UserImageScreen', 'user-image', function() {
             self.profileImageLoading = false;
             if (url)
               $('changePicture').setProfileImageUrl(url, false /* selected */);
+          });
+      this.context.addObserver(
+          CONTEXT_KEY_REMOVE_PROFILE_PICTURE, function(remove) {
+            self.profileImageLoading = false;
+            if (remove)
+              $('changePicture').setProfileImageUrl('', false /* selected */);
           });
 
       this.profileImageLoading = true;
