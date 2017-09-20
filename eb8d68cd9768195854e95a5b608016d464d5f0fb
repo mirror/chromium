@@ -22,6 +22,30 @@
       "revId": "eb8d68cd9768195854e95a5b608016d464d5f0fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e924533_5db4edb7",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1224759
+      },
+      "writtenOn": "2017-09-20T23:41:41Z",
+      "side": 1,
+      "message": "it might be cleanest to modify the internal one then use a script we have to copy it across. I\u0027ll contact you off-review. Thanks!",
+      "parentUuid": "812e0b5d_4895adf0",
+      "range": {
+        "startLine": 102,
+        "startChar": 31,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "eb8d68cd9768195854e95a5b608016d464d5f0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
