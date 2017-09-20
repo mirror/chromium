@@ -1,0 +1,25 @@
+<!--
+@WAIT-FOR:oranges
+@BLINK-DENY:nameFrom*
+@BLINK-DENY:descriptionFrom*
+-->
+<!DOCTYPE html>
+<html>
+<body>
+  <div role="main" id="main">
+  </div>
+  <p id="title" aria-hidden="true"><span><span>apples</span></span></p>
+</div>
+
+<script>
+  const main = document.getElementById('main').accessibleNode;
+  main.describedBy = new AccessibleNodeList();
+  main.describedBy.add(document.getElementById('title').accessibleNode);
+
+  setTimeout(() => {
+    const label = document.getElementById('title');
+    label.firstElementChild.firstElementChild.innerText = 'oranges';
+  }, 100);
+</script>
+</body>
+</html>
