@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be84694_6dcc43eb",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-20T08:36:32Z",
+      "side": 1,
+      "message": "immediately",
+      "range": {
+        "startLine": 2155,
+        "startChar": 36,
+        "endLine": 2155,
+        "endChar": 46
+      },
+      "revId": "5972a4faf73049f9496f0660ddee51120a31eb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69755318_209892ec",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2161,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-20T08:36:32Z",
+      "side": 1,
+      "message": "style: C style cast are forbidden, use static_cast\u003c\u003e instead, or even remove it, the parameter is declared as int64_t and thus int promotion rule will ensure it is converted from whatever type it had to int64_t (which should happen without any error).",
+      "range": {
+        "startLine": 2161,
+        "startChar": 47,
+        "endLine": 2161,
+        "endChar": 56
+      },
+      "revId": "5972a4faf73049f9496f0660ddee51120a31eb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
