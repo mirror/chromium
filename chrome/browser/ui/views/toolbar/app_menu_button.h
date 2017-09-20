@@ -20,6 +20,7 @@
 
 class AppMenu;
 class AppMenuModel;
+class IncognitoWindowPromoBubbleView;
 
 namespace views {
 class LabelButtonBorder;
@@ -83,9 +84,17 @@ class AppMenuButton : public views::MenuButton,
   // level is none, |animation_| is nullptr or |should_use_new_icon_| is false.
   void AnimateIconIfPossible();
 
+  // Retrieves the last active BrowserView instance to display the
+  // IncognitoWindowPromo.
+  static void ShowPromoForLastActiveBrowser();
+
   // Shows the IncognitoWindowPromo when the
   // IncognitoWindowFeatureEngagementTracker calls for it.
   void ShowPromo();
+
+  IncognitoWindowPromoBubbleView* incognito_window_promo() {
+    return incognito_window_promo_;
+  }
 
   // Opens the app menu immediately during a drag-and-drop operation.
   // Used only in testing.
@@ -138,10 +147,14 @@ class AppMenuButton : public views::MenuButton,
   // a maximized state to extend to the full window width.
   int margin_trailing_ = 0;
 
+  // Promotional UI that appears next to the AppMenuButton and encourages its
+  // use. Owned by its NativeWidget.
+  IncognitoWindowPromoBubbleView* incognito_window_promo_;
+
   // Observes the IncognitoWindowPromo's Widget.  Used to tell whether the promo
   // is open and get called back when it closes.
   ScopedObserver<views::Widget, WidgetObserver>
-      incognito_window_promo_observer_{this};
+      incognito_window_promo_observer_;
 
   // Used to spawn weak pointers for delayed tasks to open the overflow menu.
   base::WeakPtrFactory<AppMenuButton> weak_factory_{this};

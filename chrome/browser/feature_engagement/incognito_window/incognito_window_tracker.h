@@ -34,7 +34,6 @@ class IncognitoWindowTracker : public FeatureTracker {
   void OnBrowsingDataCleared();
   // Clears the flag for whether there is any in-product help being displayed.
   void OnPromoClosed();
-
  protected:
   // Alternate constructor to support unit testing.
   explicit IncognitoWindowTracker(
@@ -46,6 +45,7 @@ class IncognitoWindowTracker : public FeatureTracker {
                            TestOnSessionTimeMet);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldShowPromo);
+  FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerBrowserTest, TestShowPromo);
 
   // FeatureTracker:
   void OnSessionTimeMet() override;

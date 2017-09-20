@@ -1,5 +1,6 @@
 include_rules = [
   "+chrome/browser/ui/views/tabs/new_tab_button.h",
+  "+chrome/browser/ui/views/toolbar/app_menu_button.h",
   "+components/feature_engagement",
   "+components/keyed_service",
 ]
