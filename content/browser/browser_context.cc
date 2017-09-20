@@ -368,6 +368,7 @@ void BrowserContext::NotifyWillBeDestroyed(BrowserContext* browser_context) {
   // return ref counts to 0 after documents close. However, shared worker
   // bookkeeping is done on the IO thread and we want to ensure the hosts are
   // destructed now, so forcibly release their ref counts here.
+  // XXX
   for (RenderProcessHost::iterator host_iterator =
            RenderProcessHost::AllHostsIterator();
        !host_iterator.IsAtEnd(); host_iterator.Advance()) {
