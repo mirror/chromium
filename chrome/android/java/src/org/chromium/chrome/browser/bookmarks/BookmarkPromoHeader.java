@@ -196,11 +196,6 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
         }
         mSigninPromoController.setProfileData(profileData);
 
-        if (!mWasPersonalizedSigninPromoDisplayed) {
-            mWasPersonalizedSigninPromoDisplayed = true;
-            mSigninPromoController.recordSigninPromoImpression();
-        }
-
         SigninPromoController.OnDismissListener listener = this::setPersonalizedSigninPromoDeclined;
         mSigninPromoController.setupPromoView(mContext, view, listener);
     }
