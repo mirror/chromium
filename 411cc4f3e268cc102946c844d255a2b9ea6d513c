@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "d963e174_de3e7fb1",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/tree_change_indirect.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-20T22:50:04Z",
+      "side": 1,
+      "message": "You\u0027d have to handle this in\nchrome/renderer/resources/automation/automation_node.js:AutomationNodeImpl:findInternal\n\nor just write your own DFS search here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "411cc4f3e268cc102946c844d255a2b9ea6d513c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b279cddf_ec0b7747",
         "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/tree_change_indirect.js",
         "patchSetId": 11
