@@ -11,6 +11,8 @@ import android.util.Log;
 import dalvik.system.DexClassLoader;
 import dalvik.system.DexFile;
 
+import org.chromium.base.StrictModeContext;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -64,11 +66,11 @@ public class DexOptimizer {
             }
         }
 
-        new DexClassLoader(
-                dexFile.getAbsolutePath(),
-                generatedDexDir.getAbsolutePath(),
-                null,
-                ClassLoader.getSystemClassLoader());
+        // Disable VM detectLeakedClosableObjects due to Android SDK bug: https://crbug.com/750196
+        try (StrictModeContext unused = StrictModeContext.allowAllVmPolicies()) {
+            new DexClassLoader(dexFile.getAbsolutePath(), generatedDexDir.getAbsolutePath(), null,
+                    ClassLoader.getSystemClassLoader());
+        }
         File optimizedFile = new File(generatedDexDir, dexFile.getName());
         if (!optimizedFile.exists()) {
             Log.e(TAG, "Failed to create dex.");
