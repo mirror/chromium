@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9305941a_f6e392c8",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-20T20:50:19Z",
+      "side": 1,
+      "message": "I need the duration to calculate buffering time (which is measured play time minus duration), and this seems to be the easiest way to get it. Or I can add a different trace for it, e.g., from OnDurationChange. The legacy benchmark uses the duration property of the media elements, but that\u0027s not possible in TBMv2.",
+      "parentUuid": "43cfaa5e_5144208b",
+      "revId": "8d771ead1b476f08fe951b7d54c818608154373c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0608b4e_7585bd6b",
         "filename": "media/renderers/video_renderer_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8d771ead1b476f08fe951b7d54c818608154373c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb414aaa_3c5a9a40",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-20T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0608b4e_7585bd6b",
+      "revId": "8d771ead1b476f08fe951b7d54c818608154373c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
