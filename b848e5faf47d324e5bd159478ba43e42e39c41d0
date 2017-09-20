@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94824fad_2dbbd6f0",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T00:04:22Z",
+      "side": 1,
+      "message": "This code is subtle and not at all clear why you need rounding in one direction vs the other. Please document this.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 47
+      },
+      "revId": "b848e5faf47d324e5bd159478ba43e42e39c41d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
