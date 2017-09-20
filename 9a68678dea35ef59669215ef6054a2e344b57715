@@ -2,6 +2,244 @@
   "comments": [
     {
       "key": {
+        "uuid": "f31afe94_242c92e8",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "\"UI thread\"",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeafb1c_a8e16c54",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "OnCacheListChanged and OnCacheContentChanged are public in CacheStorageContextImpl::Observer.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d11ca33_d68fdafc",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "You never use |found| so you can combine these two lines.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4624ed2f_f85b8820",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "either \"thread contention\" or \"mutex requirement\".",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0da6b8f_1da0ad46",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "UI thread",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89aa761e_a05c0bbb",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "It looks like DevToolsSession::~DevToolsSession() does indeed disable it\u0027s handlers before deleting them. We should probably have two DCHECKs here to catch future errors if that contract is inadvertently broken.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fafb54b_760333d3",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "I\u0027m a little worried that these functions are called from another module, and they call a non thread-safe method. Can you add a DCHECK_CURRENTLY_ON to catch any misuse?",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3087789c_593a8a2b",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "There isn\u0027t a caller of this method yet, but why can\u0027t change the |origin| parameter from a std::string to a url::Origin and avoid work in this method?",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63c4372_2eed80a2",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "Can you add a comment to header to say that this method is not thread safe?",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cb2383_1d4cefbf",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "if (indexed_db_observer_)\n  return indexed_db_observer_.get();\n\nIs preferred style.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374ff0c7_da22d0c0",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "std::make_unique is now ok to use.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab11d243_01317864",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "add a \"// content::protocol::DevToolsDomainHandler:\" comment above Wire .. Disable.",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2ebdc8_cabaee9f",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "Add a \"// content::protocol::storage::Backend:\" comment above this section",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091153ad_56fd8b49",
+        "filename": "content/browser/indexed_db/indexed_db_context_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "The IDB thread is now gone. Maybe \"IDB task runner\".",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ff344f7_9cea2723",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 8
@@ -13,6 +251,23 @@
       "writtenOn": "2017-09-19T23:45:11Z",
       "side": 1,
       "message": "Names (databases, stores, indexes) can be arbitrary 16-bit code unit sequences supplied by script. It\u0027s valid to have a name like \"abc\\uDC00\\uFFFF\\u0100\\u1234\\uD800\\uDC00\\uFFFD\" as the name of a store.\n\nThe docs for UTF16ToASCII say: \"Converts to 7-bit ASCII by truncating. The result must be known to be ASCII beforehand.\" so this isn\u0027t supported use of this function. Also, by converting to ASCII (truncating) you\u0027ll either get incorrect matches (e.g. if \"\\u0141\" and \"\\u0041\" compare the same) or miss updates (if they are converted differently on the renderer and browser side).",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db9d937_01d6d714",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-20T16:50:05Z",
+      "side": 1,
+      "message": "parameter names should be unix_style: ie object_store_name.\n\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
       "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
