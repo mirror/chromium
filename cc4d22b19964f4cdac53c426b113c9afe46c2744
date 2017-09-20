@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8f85337_3634f050",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d8b617_5ed240c5",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4ced72_b821611f",
         "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c8fe6c_d4142bab",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4ced72_b821611f",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f7913819_401826cc",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1093d72e_7fc22147",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51c977e_fe32eaff",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd2046e_dec8b24d",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51c977e_fe32eaff",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "bbe51315_18752ad8",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd83a39_ac73e695",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f1bafe_8d24ac67",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d2af32_54ce5f33",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f1bafe_8d24ac67",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "d41aaccb_510accd9",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9609f914_ee6aa1f9",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35e8f7b_9156258f",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "patchSetId": 2
@@ -138,6 +270,24 @@
       "writtenOn": "2017-09-20T04:18:29Z",
       "side": 1,
       "message": "can this be a value member? Nothing resets it and it\u0027s only ever default constructed.\n\n(i.e. remove \u003cmemory\u003e and the ViewTracker forward dec, and just #include \"ui/views/view_tracker.h\")",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d73f487_a27a069e",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_focus_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T07:19:08Z",
+      "side": 1,
+      "message": "It may work. But ViewTracker is used as unique_ptr in every other places, so I think it\u0027s better not change this. May be to use forward decl instead of #include?",
+      "parentUuid": "e35e8f7b_9156258f",
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
