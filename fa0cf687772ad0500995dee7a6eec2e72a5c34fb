@@ -16,6 +16,24 @@
       "revId": "fa0cf687772ad0500995dee7a6eec2e72a5c34fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fae08cb_d7438dc3",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-20T14:35:35Z",
+      "side": 1,
+      "message": "Adding links.\n\nIsvalidMethodFormat() function here is only for throwing the RangeError in constructor in case of invalid formats. For valid formats that Chrome happens to not support, we should be rejecting PaymentRequest.show() promise with NotSupportedError. Therefore, let\u0027s not hard-code \"basic-card\" in the renderer. (This also gives other Blink-based browsers more freedom in which payment methods they can support.)",
+      "parentUuid": "46136e75_1dbbaaf0",
+      "revId": "fa0cf687772ad0500995dee7a6eec2e72a5c34fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
