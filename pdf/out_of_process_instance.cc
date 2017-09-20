@@ -1194,10 +1194,14 @@ void OutOfProcessInstance::ScrollToX(int x) {
   PostMessage(position);
 }
 
-void OutOfProcessInstance::ScrollToY(int y) {
+void OutOfProcessInstance::ScrollToY(int y, bool compensate_for_toolbar) {
   pp::VarDictionary position;
   position.Set(kType, kJSSetScrollPositionType);
-  position.Set(kJSPositionY, pp::Var(y / device_scale_));
+  float new_y = y / device_scale_;
+  if (compensate_for_toolbar) {
+    new_y -= top_toolbar_height_;
+  }
+  position.Set(kJSPositionY, pp::Var(new_y));
   PostMessage(position);
 }
 
