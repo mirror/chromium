@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b3fe235_fd34423d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T15:09:03Z",
+      "side": 1,
+      "message": "here and below you can just name it password_manager_porter() and web_contents().\nAlso make them const.",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "90f51523c026ad4d4efa55a6f8dde911957a4c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
