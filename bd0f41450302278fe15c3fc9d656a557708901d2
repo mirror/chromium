@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110a3279_f04f2b1a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "This is kinda subtle, but I can consistently hit a DCHECK without this line. In my initial understanding this is caused by CTRL+Z already being a shortcut for undoing a search operation on the password settings page, e.g. if you filter your passwords, hitting CTRL+Z will undo this search and show all passwords. However, we now overload CTRL+Z for our Undo mechanism (which modifies the DOM), causing an inconsistent state and hitting this DCHECK: https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/SelectionTemplate.cpp?l\u003d116\u0026rcl\u003d14288c62ece3db798e3d9f3be756a59e3c2f464e\n\nI was able to consistently reproduce this with and without password store basic. preventDefault fixes the situation, but disables the undo mechanism for filtering. I think undoing a delete is much more important, so this should be fine, but I would definitely appreciate your input here. Maybe there is another option to resolve this?",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 27
+      },
+      "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

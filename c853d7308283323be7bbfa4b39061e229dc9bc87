@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf4d08f_92774438",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5fbb3e7_671c7d39",
+      "range": {
+        "startLine": 123,
+        "startChar": 28,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb344da_f62472f3",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae3c99d_0c71387c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb344da_f62472f3",
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "32fe500c_1adbcb62",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b36b5f26_ddae46f8",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd78f8b_5fa74d12",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 8
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "362d9c1c_9aa1b072",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "Not fired anymore, leftover from one of the previous patch sets. Removing now.",
+      "parentUuid": "2cd78f8b_5fa74d12",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 58
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a052f487_62200e7c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 8
@@ -108,6 +198,30 @@
       "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7082ef6_77abfb3f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-20T09:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a052f487_62200e7c",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 55
+      },
+      "revId": "c853d7308283323be7bbfa4b39061e229dc9bc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
