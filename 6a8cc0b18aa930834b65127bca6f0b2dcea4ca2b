@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "757be879_58e067fa",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2328,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ab9ad2d_f77b5895",
+      "range": {
+        "startLine": 2328,
+        "startChar": 18,
+        "endLine": 2328,
+        "endChar": 22
+      },
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6136b6c1_15f0c926",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 37
@@ -39,6 +63,24 @@
       "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae014917_a9ca7598",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6136b6c1_15f0c926",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "291a0f9e_a8dbf287",
+        "filename": "chrome/test/data/chromeos/app_mode/webstore/downloads/fmmbbdiapbcicajbpkpkdbcgidgppada.crx",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "I just followed the convention in kiosk_browsertest.cc, so I\u0027m reluctant to change the way of testing only in this test.\nAlso, KioskBrowserTest uses FakeCWS and it assumes .crx file is under chrome/test/data/chromeos/app_mode/webstore/downloads/ directory. So it\u0027s difficult to (for example) use a temporary directory and have .crx in the directory only while testing.\n\ntbarzic@, do you have any thoughts?",
+      "parentUuid": "c637e9ff_239aaac2",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37122d26_b74600da",
         "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
         "patchSetId": 37
@@ -109,6 +169,24 @@
       "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d2ad14_d077ff75",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37122d26_b74600da",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9902777c_7a3992cb",
+        "filename": "extensions/common/api/virtual_keyboard.idl",
+        "patchSetId": 37
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2763628_4a10d6a5",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44fd96e7_48035532",
         "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
         "patchSetId": 37
@@ -152,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "fe22d692_b06948ee",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 37
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44fd96e7_48035532",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e70324_8e627511",
         "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
         "patchSetId": 37
@@ -166,6 +286,24 @@
       "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360e0f29_cdf8b7ee",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-20T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e70324_8e627511",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
