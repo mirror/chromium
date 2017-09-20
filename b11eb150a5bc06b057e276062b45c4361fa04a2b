@@ -81,6 +81,24 @@
       "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba143a26_74b14b70",
+        "filename": "net/cert/internal/ocsp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-20T17:35:38Z",
+      "side": 1,
+      "message": "I don\u0027t currently have a script to generate them, though have fragments of things left over in the trawler. I\u0027ll see about getting it fixed up and working.",
+      "parentUuid": "497e6a4b_e8b0bf1a",
+      "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
