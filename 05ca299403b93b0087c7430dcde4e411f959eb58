@@ -51,6 +51,24 @@
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c95414_5577f14e",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T23:11:26Z",
+      "side": 1,
+      "message": "I think there is. It\u0027s not super pretty though. So first let me give you some examples from code that has now been deleted, from chrome://plugins which also used Mojo, see [1] and [2]. Specifically sethe window.setupFn in [1] and the comment. [2] was fixing some race condition that was not addressed by [1].\n\n[1] https://codereview.chromium.org/1726153002/diff/100001/chrome/browser/resources/plugins.js\n[2] https://codereview.chromium.org/2563743002/\n\nThe overall idea is the following:\n - Define a dummy window.setupFn function that in prod code simply does nothing (return immediately resolved promise), but make prod code wait for that Promise to resolve before doing anything.\n - Within the  test\u0027s preLoad() method you will override window.setupFn to return a Promise that you control with a PromiseResolver. Once the Mocha lifecycle methods start being called, you will setup any fake data/proxies, then you will resolve the Promise via the PromiseResolver. Effectively you create a time window where the loaded page simply waits without doing anything, so that the test has time to setup fake stuff.\n\nI hope this makes sense. There might be an easier way I have not thought of (it\u0027s been a while since I tested a Mojo-based page).",
+      "parentUuid": "dc43b37b_99c8d2f1",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
