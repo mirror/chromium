@@ -867,6 +867,7 @@ TEST_P(PrivetLocalPrintTest, SuccessfulPWGLocalPrint) {
             pwg_converter_->bitmap_settings().odd_page_transform);
   EXPECT_FALSE(pwg_converter_->bitmap_settings().rotate_all_pages);
   EXPECT_FALSE(pwg_converter_->bitmap_settings().reverse_page_order);
+  EXPECT_TRUE(pwg_converter_->bitmap_settings().color);
 }
 
 TEST_P(PrivetLocalPrintTest, SuccessfulPWGLocalPrintDuplex) {
@@ -902,6 +903,7 @@ TEST_P(PrivetLocalPrintTest, SuccessfulPWGLocalPrintDuplex) {
             pwg_converter_->bitmap_settings().odd_page_transform);
   EXPECT_FALSE(pwg_converter_->bitmap_settings().rotate_all_pages);
   EXPECT_TRUE(pwg_converter_->bitmap_settings().reverse_page_order);
+  EXPECT_TRUE(pwg_converter_->bitmap_settings().color);
 }
 
 TEST_P(PrivetLocalPrintTest, SuccessfulLocalPrintWithCreatejob) {

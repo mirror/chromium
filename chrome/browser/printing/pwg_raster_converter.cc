@@ -280,6 +280,30 @@ PwgRasterSettings PWGRasterConverter::GetBitmapSettings(
   if (duplex_item.LoadFrom(ticket))
     duplex_value = duplex_item.value();
 
+  cloud_devices::printer::ColorTicketItem color_item;
+  cloud_devices::printer::Color color_value;
+  if (color_item.LoadFrom(ticket) && color_item.IsValid())
+    color_value = color_item.value();
+  DCHECK(color_value.IsValid());
+  bool color;
+  switch (color_value.type) {
+    case cloud_devices::printer::STANDARD_MONOCHROME:
+    case cloud_devices::printer::CUSTOM_MONOCHROME:
+      color = false;
+      break;
+
+    case cloud_devices::printer::STANDARD_COLOR:
+    case cloud_devices::printer::CUSTOM_COLOR:
+    case cloud_devices::printer::AUTO_COLOR:
+      color = true;
+      break;
+
+    default:
+      NOTREACHED();
+      color = true;  // Still need to initialized |color| or MSVC will warn.
+      break;
+  }
+
   cloud_devices::printer::PwgRasterConfigCapability raster_capability;
   // If the raster capability fails to load, |raster_capability| will contain
   // the default value.
@@ -308,6 +332,11 @@ PwgRasterSettings PWGRasterConverter::GetBitmapSettings(
 
   result.rotate_all_pages = raster_capability.value().rotate_all_pages;
   result.reverse_page_order = raster_capability.value().reverse_order_streaming;
+
+  const auto& types = raster_capability.value().document_types_supported;
+  result.color =
+      color || !base::ContainsValue(types, cloud_devices::printer::SGRAY_8);
+
   return result;
 }
 
