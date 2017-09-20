@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a0e944a_1b133431",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-20T06:06:12Z",
+      "side": 1,
+      "message": "I meant to keep this instance on the side of callsite, not passing it WebContents using object holder. The only data that WebContents needs to manage JavaBridgetHostDispatcher is retained object. In this CL WebView also keeps track of the injected objects so that it can migrate them from one to another by itself, rather than getting them back from WebContents.getJavascriptInterfaces() which I removed in this CL.",
+      "parentUuid": "e4fce81e_beeeb26f",
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2cbd643_484a29f5",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f9e850fe_520eb136",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-20T06:06:12Z",
+      "side": 1,
+      "message": "WebView uses it to populate a map (object holder), then WebContents pulls each entry out to do the appropriate task. So it should be visible to embedder. What is the structure you have in mind that doesn\u0027t need this to be public?",
+      "parentUuid": "f2cbd643_484a29f5",
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69d3abc3_3d0e171b",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 21
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-20T04:19:13Z",
       "side": 1,
       "message": "hmm, \"setObjectHolder\" doesn\u0027t quite work, because obviously WebContentsImpl can\u0027t strongly hold the object holder either. It\u0027s going to need java delegate or something that returns the object holder on request, and might be null if underlying thing has gone away. or WebContentsImpl only holds a weakreference to the object holder.\n\nalso maybe use a sparse array instead?",
+      "range": {
+        "startLine": 480,
+        "startChar": 25,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42f3ae6_ce95ad4c",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-20T06:06:12Z",
+      "side": 1,
+      "message": "In this CL, object holder is just a vehicle of the objects it holds. WebContents doesn\u0027t keep a reference to the holder itself. Only the entries, once pulled out, are kept and referenced weakly. My intention is to have embedder responsible for the ownership of them to guarantee they are not garbage-collected, and dispose once they\u0027re out of use.",
+      "parentUuid": "69d3abc3_3d0e171b",
       "range": {
         "startLine": 480,
         "startChar": 25,
