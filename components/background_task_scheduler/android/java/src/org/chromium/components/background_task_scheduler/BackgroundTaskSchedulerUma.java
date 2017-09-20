@@ -28,6 +28,7 @@ class BackgroundTaskSchedulerUma {
     static final int BACKGROUND_TASK_DOWNLOAD_SERVICE = 8;
     static final int BACKGROUND_TASK_DOWNLOAD_CLEANUP = 9;
     static final int BACKGROUND_TASK_WEBVIEW_VARIATIONS = 10;
+    static final int BACKGROUND_TASK_OFFLINE_PREFETCH_NETWORK = 11;
     // Keep this one at the end and increment appropriately when adding new tasks.
     static final int BACKGROUND_TASK_COUNT = 11;
 
@@ -225,6 +226,8 @@ class BackgroundTaskSchedulerUma {
                 return BACKGROUND_TASK_OFFLINE_PAGES;
             case TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID:
                 return BACKGROUND_TASK_OFFLINE_PREFETCH;
+            case TaskIds.OFFLINE_PAGES_PREFETCH_NETWORK_JOB_ID:
+                return BACKGROUND_TASK_OFFLINE_PREFETCH_NETWORK;
             case TaskIds.DOWNLOAD_SERVICE_JOB_ID:
                 return BACKGROUND_TASK_DOWNLOAD_SERVICE;
             case TaskIds.DOWNLOAD_CLEANUP_JOB_ID:
