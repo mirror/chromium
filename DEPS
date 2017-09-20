@@ -136,7 +136,7 @@ deps = {
   },
 
   'src/breakpad/src':
-    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '252d20c849115ccee2611bfbdcded21dbefacb2a',
+    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + 'ea8a17cbf52e5347c36952160788e3c799532b88',
 
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' +  Var('buildtools_revision'),
