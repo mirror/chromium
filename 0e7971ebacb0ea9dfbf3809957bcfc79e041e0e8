@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f54973e6_83afd1a0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T20:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392b1dab_3c6d2a74",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5741eca8_0f8ea2a1",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "10a8885b_d864447a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T20:18:50Z",
+      "side": 1,
+      "message": "Yes. Locale is appended at the end of this function. See line 576-577.",
+      "parentUuid": "5741eca8_0f8ea2a1",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "785b3654_7dd311e0",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254f730a_e637b029",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T20:18:50Z",
+      "side": 1,
+      "message": "Yes. Comment added to say it is only used by tests.",
+      "parentUuid": "785b3654_7dd311e0",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -84,6 +138,24 @@
       "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6f72a0_37da0c5d",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T20:18:50Z",
+      "side": 1,
+      "message": "Done.\nThat looks much better. Thanks!",
+      "parentUuid": "4ae8c1fa_390abde5",
+      "revId": "0e7971ebacb0ea9dfbf3809957bcfc79e041e0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
