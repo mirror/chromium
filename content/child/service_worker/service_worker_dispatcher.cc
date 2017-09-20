@@ -463,11 +463,10 @@ void ServiceWorkerDispatcher::OnSetNavigationPreloadHeaderError(
 void ServiceWorkerDispatcher::OnServiceWorkerStateChanged(
     int thread_id,
     int handle_id,
-    blink::WebServiceWorkerState state) {
+    blink::mojom::ServiceWorkerState state) {
   TRACE_EVENT2("ServiceWorker",
                "ServiceWorkerDispatcher::OnServiceWorkerStateChanged",
-               "Thread ID", thread_id,
-               "State", state);
+               "Thread ID", thread_id, "State", static_cast<int>(state));
   WorkerObjectMap::iterator worker = service_workers_.find(handle_id);
   if (worker != service_workers_.end())
     worker->second->OnStateChanged(state);
