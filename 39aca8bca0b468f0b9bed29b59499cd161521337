@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc21344_8d8955a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T23:05:18Z",
+      "side": 1,
+      "message": "BTW, Chromium CLs don\u0027t need the chromium: prefix because all the tools already assume that\u0027s the case by default.",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "39aca8bca0b468f0b9bed29b59499cd161521337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecf80e7_b1880881",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T23:05:18Z",
+      "side": 1,
+      "message": "If it\u0027s fresh in your head, can you document what units / coordinate space |position| is in? This is a problem in the PDF Viewer code in general. There\u0027s lots of coordinates, and it\u0027s never obvious how to use them exactly.",
+      "revId": "39aca8bca0b468f0b9bed29b59499cd161521337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8da012c_6b987f67",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T23:05:18Z",
+      "side": 1,
+      "message": "Maybe changed this to (verbatim):\n\n/*compensate_for_toolbar\u003d*/true);",
+      "revId": "39aca8bca0b468f0b9bed29b59499cd161521337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcfc9c5_8309b68f",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T23:05:18Z",
+      "side": 1,
+      "message": "Change to chromium_style_names.",
+      "revId": "39aca8bca0b468f0b9bed29b59499cd161521337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852fcef8_369b5adf",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T23:05:18Z",
+      "side": 1,
+      "message": "From the top of the page?",
+      "revId": "39aca8bca0b468f0b9bed29b59499cd161521337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
