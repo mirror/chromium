@@ -50,6 +50,24 @@
       "revId": "369527820b4e0f9e0b50ab661c2a770890e0a639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492f4688_0b2ebb99",
+        "filename": "android_webview/browser/net/aw_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-20T00:46:03Z",
+      "side": 1,
+      "message": "unfortunately as Webview is a view, we have no good signals here. I guess we have to live with truncation and I think it can be ok since it can only be used by devs anyway.",
+      "parentUuid": "b28fb983_b1ac79a2",
+      "revId": "369527820b4e0f9e0b50ab661c2a770890e0a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
