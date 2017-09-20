@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "7301d239_4d6f1b07",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "Using GetTargetOpacity via a helper method in this class.",
+      "parentUuid": "51da8e74_01bb369c",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ed610_6081c115",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -262,6 +280,24 @@
     },
     {
       "key": {
+        "uuid": "65c40ea5_88239fcc",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "By base\u0027s opacity, do you mean do mean directly setting opacity here? Then we won\u0027t actually animate out right?\n\nWhy do you think super:: is dangerous? I just had it because in case we change the Type of the parent of TransientElement, we just have to change one place. Pretty minor though.",
+      "parentUuid": "d75ef677_dcc1e143",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32798ffc_7acff6cc",
         "filename": "chrome/browser/vr/elements/transient_element.h",
         "patchSetId": 2
@@ -276,6 +312,24 @@
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dce02de_79a1910d",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32798ffc_7acff6cc",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -296,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "601062f4_f3314951",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "See below :)",
+      "parentUuid": "336b786a_1618a1fc",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06e323c8_fb768b71",
         "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
         "patchSetId": 2
@@ -310,6 +382,24 @@
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e43d2d_03a136d8",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e323c8_fb768b71",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -336,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "05047232_87effa61",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b52068_c5146834",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6cd4f01_9e1e8640",
         "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
         "patchSetId": 2
@@ -350,6 +464,24 @@
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc073485_9c66d613",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6cd4f01_9e1e8640",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +556,24 @@
     },
     {
       "key": {
+        "uuid": "3ba7a62e_57acae05",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "N/A in the latest patch.",
+      "parentUuid": "5ebfc25d_cf8ef080",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71fa092e_2f0c088f",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
@@ -441,6 +591,24 @@
     },
     {
       "key": {
+        "uuid": "8bfead57_886a1a21",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "N/A in the latest patch.",
+      "parentUuid": "71fa092e_2f0c088f",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13363b04_8a9f02f0",
         "filename": "chrome/browser/vr/ui_scene_manager.h",
         "patchSetId": 2
@@ -455,6 +623,24 @@
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb618dc6_3212ac8b",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T00:39:16Z",
+      "side": 1,
+      "message": "ui_transient_manager.h was adding this implicitly and its needed to bind callbacks. Moved to source.",
+      "parentUuid": "13363b04_8a9f02f0",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
