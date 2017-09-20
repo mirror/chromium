@@ -16,6 +16,24 @@
       "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f18b344_ae108ae3",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-09-20T18:40:33Z",
+      "side": 1,
+      "message": "Sorry, this becomes a bit confusing. The answer is no.\ndoc_type is the doc type regular html content should be printed in.\nprinted_doc_type is the actual printed out doc type.\n\ndoc_type is controlled by our feature flags, so it actually passes this feature to renderer.\nOnce oopif support is default, this field can go away.\n\nprinted_doc_type is returned by renderer. It is useful only for OOPIF support. For example, for regular web page, we return skia picture (or equivalent). For PDF file in a pdf plugin, we still return in pdf format. Browser doesn\u0027t always know about this if the content is in an iframe. So I am going to use this field to see whether the returned content needs to be sent for compositing/conversion.",
+      "parentUuid": "554b6d7b_d0b3c5cd",
+      "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
