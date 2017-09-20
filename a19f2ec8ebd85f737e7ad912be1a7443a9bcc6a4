@@ -67,6 +67,24 @@
       "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61adde45_6e6a03b6",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-20T20:42:27Z",
+      "side": 1,
+      "message": "IIUR, the new API needs to fulfill the following two requirements at the same time:\n1. In deferring paint, any calls of SchedulePaint(invalid_rect) will accumulate all invalid_rect and postpone painting the damage. Let\u0027s say the two time points are: paint_deferred_start and paint_deferred_end. And we need one variable to remember the accumulated damage, which is deferred_paint_region_ in the cl.\n\n2. \"All UI changes to the layer needs to work as usual. We just want to defer paint\". SchedulePaint(invalid_rect) is the only place to change damaged_region_. damaged_region_ will be used in SendDamagedRects() to mark cc_layer_-\u003einputs_-\u003eupdate_rect. SendDamagedRects() is called for every BeginMainFrame. If at this time damaged_region is empty, the layer will not be added to the layers_that_should_push_properties_ so that there is no damage to be pushed through property trees. If we want UI changes work, such as ui::Layer::SetBoundsFromAnimation, we need another variable to remember the accumulated damage between two SendDamagedRects() or two BeginMainFrame. This is the variable damaged_region_since_last_send_ in this cl.\n\n3. Other UI effects such as SetTransform will call other path to add the layer to layers_that_should_push_properties_ through Layer::SetSubtreePropertyChanged. So it is not affected by this cl.",
+      "parentUuid": "7fc00b14_b88215bf",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
