@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d9c8fb_3f829e48",
+        "filename": "content/public/browser/appcache_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-20T01:22:46Z",
+      "side": 1,
+      "message": "the CL description says you\u0027d create net::OnceCompletionCallback, but it\u0027s created in content::\n\nI\u0027m not sure whether putting this in the content public API via the appcache header is the right way to go here. Maybe scope it to the class?",
+      "revId": "176b0f3a277f51157e6e8d693c9fcf2eab501118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
