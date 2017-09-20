@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e31c87e2_89bc2767",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "If this case should not happen, I\u0027d suggest to use DCHECK_NE(pending_.end(), pending_.find(url));",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01449f0f_e1af5a80",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "hmm.... I think this comment belongs RemoveAllPending(..) function.",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eadcea2_2915582f",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "Optional, but worth thinking about. \nSo the threat_type is FCFS, right. Is it possible to keep the most severe threat type?\nFor example, malware\u003ephishing\u003eUwS?\nLet\u0027s say user visits http://testsafebrowsing.appspot.com/s/malware.html and then http://testsafebrowsing.appspot.com/s/phishing.html. Shall we keep the malware threat type instead of phishing?",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb83fe9_6c79d900",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "nit: // would be re-added to and removed from the whitelist...",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0302410e_7aaef858",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "nit: You don\u0027t have to cite bug number in comment.",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f33951_673cf20e",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-20T21:07:50Z",
+      "side": 1,
+      "message": "No function should be after DISALLOW_COPY_AND_ASSIGN(..) line. \nI\u0027d suggest your put it in the protected section.",
+      "revId": "bb5a8d219cd066c0d567bc79257593be2659eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
