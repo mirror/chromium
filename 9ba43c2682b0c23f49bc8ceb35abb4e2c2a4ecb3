@@ -141,6 +141,30 @@
       "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d64eb37_d982e01f",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-20T20:09:44Z",
+      "side": 1,
+      "message": "Yeah, thinking about it some more. The URLLoaderClient will be disconnected at the same time as URLLoader. So the client could know whether it is a completion/failure by observing the URLLoaderClient\u0027s disconnection: if it receives NotifyCompletion before URLLoaderClient disconnection, then it is not a failure.\n\nThis SGTM. IMO, it probabably belongs to a separate CL, WDYT?",
+      "parentUuid": "ac295fae_7125bfd4",
+      "range": {
+        "startLine": 460,
+        "startChar": 22,
+        "endLine": 460,
+        "endChar": 35
+      },
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
