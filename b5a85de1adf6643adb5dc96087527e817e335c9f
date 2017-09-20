@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b796c5ee_bb88d7e6",
+        "filename": "third_party/WebKit/Source/core/page/DragControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-20T00:56:37Z",
+      "side": 1,
+      "message": "If it\u0027s being clipped, won\u0027t the width and height decrease, because scroll\noffset is not included (per comment on line 212-213)?",
+      "revId": "b5a85de1adf6643adb5dc96087527e817e335c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
