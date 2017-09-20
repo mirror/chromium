@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1106f765_b1605952",
+        "filename": "content/network/network_change_manager_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Ack. The dependency has been removed per offline discussion",
+      "parentUuid": "81452274_e4148dcd",
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb0779cc_e1fd74a5",
         "filename": "content/network/network_change_manager_client_impl.h",
         "patchSetId": 2
@@ -75,6 +93,30 @@
       "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b4c554_e2f59e4e",
+        "filename": "content/network/network_change_manager_client_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb0779cc_e1fd74a5",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "03334d8d_8b5b2b46",
+        "filename": "content/network/network_change_manager_client_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Ack. This is no longer applicable after making NCMCI a non-global.",
+      "parentUuid": "8109881b_1a703251",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e437ec7a_9998cc89",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 2
@@ -112,6 +178,30 @@
       "writtenOn": "2017-09-12T20:25:41Z",
       "side": 1,
       "message": "optional:  Could just use std::set and pass in an iterator here.  Admittedly, this shouldn\u0027t be common, but we\u0027ll often see multiple deletions at once, and that gets us O(log n) insertion and deletion with minimal additional complexity (Or could use std::set and take a pointer here, which has the same complexity, if slightly worse performance, since it does a search + rebalance).",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91e1e8e_2337f8b2",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "If we bind an iterator in the arg list, won\u0027t an iterator be invalid whenever we removed an element from the set?",
+      "parentUuid": "e437ec7a_9998cc89",
       "range": {
         "startLine": 39,
         "startChar": 37,
@@ -147,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e58a028e_6674fe78",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9777f7f6_5f190942",
+      "range": {
+        "startLine": 54,
+        "startChar": 54,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3827f414_3be042a3",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 2
@@ -170,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "84577481_ee5a802f",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Ack. It seems that InterfacePtrSet has ways to remove all elements, but doesn\u0027t have a way to remove a particular element. We need to remove a particular client when mojo pipe is broken.\nI don\u0027t see how InterfacePtrSet would work in this case.",
+      "parentUuid": "3827f414_3be042a3",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b474f56b_e7ccfd50",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -187,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "00911b9a_b57510fc",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b474f56b_e7ccfd50",
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64ef354a_f9c80b9a",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 2
@@ -198,6 +354,30 @@
       "writtenOn": "2017-08-31T17:21:51Z",
       "side": 1,
       "message": "Why?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01513ec2_170827ce",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Not related to this CL.\n\"git cl lint\" complains that we need \u003cset\u003e and \u003cstring\u003e here, so I added them.",
+      "parentUuid": "64ef354a_f9c80b9a",
       "range": {
         "startLine": 10,
         "startChar": 10,
@@ -257,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "38f64f5e_b9c9114a",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b42c9c2_95d263e1",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25b9053_a989ef80",
         "filename": "content/public/common/network_change_manager.mojom",
         "patchSetId": 2
@@ -280,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "f16d648a_6e1bd253",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25b9053_a989ef80",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 1
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790b4584_64ac84f1",
         "filename": "content/public/common/network_change_notifier.typemap",
         "patchSetId": 2
@@ -300,6 +528,30 @@
       "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161e11dc_e2353678",
+        "filename": "content/public/common/network_change_notifier.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-20T20:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790b4584_64ac84f1",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
