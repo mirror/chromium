@@ -16,6 +16,24 @@
       "revId": "92a222ab2aff296727349e00e5e5dcde4d980418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca43366_a89452bd",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-20T06:28:13Z",
+      "side": 1,
+      "message": "Done. Right, the expect size is very small, usually one.\n\nTo be consistent, and to avoid type conversions in FaviconHandler (which uses the same member field to call both APIs), I\u0027ve updated UpdateFaviconMappingsAndFetch() too, with std::set--\u003ebase::flat_set.",
+      "parentUuid": "82be00cb_3d409263",
+      "revId": "92a222ab2aff296727349e00e5e5dcde4d980418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
