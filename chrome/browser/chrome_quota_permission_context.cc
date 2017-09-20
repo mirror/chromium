@@ -92,7 +92,7 @@ PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
 #if defined(OS_ANDROID)
   return IDR_ANDROID_INFOBAR_WARNING;
 #else
-  return vector_icons::kWarningIcon;
+  return vector_icons::kFolderIcon;
 #endif
 }
 
