@@ -8,6 +8,7 @@
 #ifndef UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 #define UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 
+#include "build/build_config.h"
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -43,6 +44,8 @@ IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferHandle)
   IPC_STRUCT_TRAITS_MEMBER(native_pixmap_handle)
 #elif defined(OS_MACOSX)
   IPC_STRUCT_TRAITS_MEMBER(mach_port)
+#elif defined(OS_WIN)
+  IPC_STRUCT_TRAITS_MEMBER(dxgi_handle)
 #endif
 IPC_STRUCT_TRAITS_END()
 

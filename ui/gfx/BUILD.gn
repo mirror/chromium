@@ -237,6 +237,7 @@ component("gfx") {
     ":native_widget_types",
     ":selection_bound_sources",
     "//base",
+    "//ipc",
     "//skia",
     "//third_party/icu",
     "//ui/gfx/animation",

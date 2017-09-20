@@ -4,6 +4,7 @@
 
 #include "ui/gfx/gpu_memory_buffer.h"
 
+#include "base/process/process_handle.h"
 #include "ui/gfx/generic_shared_memory_id.h"
 
 namespace gfx {
@@ -45,6 +46,20 @@ GpuMemoryBufferHandle CloneHandleForIPC(
     }
     case gfx::IO_SURFACE_BUFFER:
       return source_handle;
+    case gfx::DXGI_SHARED_HANDLE:
+      gfx::GpuMemoryBufferHandle handle;
+      handle.type = gfx::DXGI_SHARED_HANDLE;
+      handle.id = source_handle.id;
+#if defined(OS_WIN)
+      base::ProcessHandle process = GetCurrentProcess();
+      HANDLE duplicated_handle;
+      if (DuplicateHandle(process, source_handle.dxgi_handle.get_handle(),
+                          process, &duplicated_handle, 0, FALSE,
+                          DUPLICATE_SAME_ACCESS)) {
+        handle.dxgi_handle.set_handle(duplicated_handle);
+      }
+#endif
+      return handle;
   }
   return gfx::GpuMemoryBufferHandle();
 }
