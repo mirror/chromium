@@ -16,6 +16,7 @@ include_rules = [
   "+components/cdm/browser",
   "+components/crash/content/browser",
   "+components/navigation_interception",
+  "+components/net_log",
   "+components/policy/core/browser",
   "+components/policy/core/common",
   "+components/pref_registry",

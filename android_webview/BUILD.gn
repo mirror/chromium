@@ -691,6 +691,7 @@ source_set("common") {
     "//components/metrics:net",
     "//components/metrics:ui",
     "//components/navigation_interception",
+    "//components/net_log",
     "//components/network_session_configurator/common",
     "//components/policy:generated",
     "//components/policy/core/browser",
