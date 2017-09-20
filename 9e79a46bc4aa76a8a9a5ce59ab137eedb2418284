@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de0b6913_b00e09d2",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-20T21:04:23Z",
+      "side": 1,
+      "message": "Kostya, is it still relevant? I cannot find reference to that other than in the docs: http://llvm.org/docs/LibFuzzer.html#developing-libfuzzer",
+      "range": {
+        "startLine": 680,
+        "startChar": 27,
+        "endLine": 680,
+        "endChar": 43
+      },
+      "revId": "9e79a46bc4aa76a8a9a5ce59ab137eedb2418284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
