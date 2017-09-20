@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdad9dca_07ec197a",
+        "filename": "ui/aura/client/aura_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-20T15:40:23Z",
+      "side": 1,
+      "message": "Note that the type is ui::AXRole\n\nCan you make it WindowProperty\u003cui::AXRole\u003e? Not necessary, but\nat least comment it.",
+      "revId": "7c1cb716a7b740d45d386ed60a17e2d677da3b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
