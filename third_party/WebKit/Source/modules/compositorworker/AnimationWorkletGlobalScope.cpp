@@ -198,7 +198,6 @@ void AnimationWorkletGlobalScope::registerAnimator(
 void AnimationWorkletGlobalScope::createAnimatorForTest(int player_id,
                                                         const String& name) {
   // Immediately instantiate an animator for the registered definition.
-  // TODO(majidvp): Remove this once you add alternative way to instantiate
   if (Animator* animator = CreateInstance(name))
     animators_.Set(player_id, animator);
 }

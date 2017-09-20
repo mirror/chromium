@@ -186,6 +186,8 @@ source_set("modules_testing") {
     "$bindings_modules_v8_output_dir/V8WorkerInternalsPartial.h",
     "accessibility/testing/InternalsAccessibility.cpp",
     "accessibility/testing/InternalsAccessibility.h",
+    "compositorworker/testing/InternalsAnimationWorklet.cpp",
+    "compositorworker/testing/InternalsAnimationWorklet.h",
     "fetch/testing/InternalsFetch.cpp",
     "fetch/testing/InternalsFetch.h",
     "fetch/testing/WorkerInternalsFetch.cpp",
