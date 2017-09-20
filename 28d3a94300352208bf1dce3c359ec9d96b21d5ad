@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7b33883_0ef12ac4",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T11:54:48Z",
+      "side": 1,
+      "message": "Stole that from Mark\u0027s CL.  It makes it a little harder to use a plain old NSString as a name, instead of one of the constants below.",
+      "parentUuid": "82457ace_60d3ede8",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "28d3a94300352208bf1dce3c359ec9d96b21d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6767ab8a_8389aaa8",
         "filename": "ios/chrome/browser/ui/util/named_guide.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "28d3a94300352208bf1dce3c359ec9d96b21d5ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af648d6_f5fbd752",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T11:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6767ab8a_8389aaa8",
+      "range": {
+        "startLine": 27,
+        "startChar": 74,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "28d3a94300352208bf1dce3c359ec9d96b21d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
