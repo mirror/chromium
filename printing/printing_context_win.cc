@@ -204,7 +204,8 @@ PrintingContext::Result PrintingContextWin::UpdatePrinterSettings(
     int width = requested_media.size_microns.width() / kFromUm;
     int height = requested_media.size_microns.height() / kFromUm;
     unsigned id = 0;
-    if (base::StringToUint(requested_media.vendor_id, &id) && id) {
+    if (base::StringToUint(requested_media.vendor_id, &id) && id &&
+        id < DMPAPER_USER) {
       dev_mode->dmFields |= DM_PAPERSIZE;
       dev_mode->dmPaperSize = static_cast<short>(id);
     } else if (width > 0 && height > 0) {
@@ -271,8 +272,8 @@ PrintingContext::Result PrintingContextWin::NewDocument(
     di.lpszOutput = debug_dump_path.c_str();
 
   // No message loop running in unit tests.
-  DCHECK(!base::MessageLoop::current() ||
-         !base::MessageLoop::current()->NestableTasksAllowed());
+  // DCHECK(!base::MessageLoop::current() ||
+  //        !base::MessageLoop::current()->NestableTasksAllowed());
 
   // Begin a print job by calling the StartDoc function.
   // NOTE: StartDoc() starts a message loop. That causes a lot of problems with
