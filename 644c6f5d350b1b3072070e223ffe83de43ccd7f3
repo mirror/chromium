@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "11ba6af1_6b08cdee",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T15:41:51Z",
+      "side": 1,
+      "message": "I\u0027ve checked that OnContentSettingChanged does get called for the canonical origin, so we do need the GetCanonicalOrigin call here. (Haven\u0027t found a way to test that, though.)",
+      "parentUuid": "258ca1f3_9f1f8fc4",
+      "range": {
+        "startLine": 529,
+        "startChar": 48,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c1b79d_d93acebc",
         "filename": "chrome/browser/permissions/permission_manager.h",
         "patchSetId": 1
