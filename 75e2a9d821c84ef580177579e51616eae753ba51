@@ -22,6 +22,30 @@
       "revId": "75e2a9d821c84ef580177579e51616eae753ba51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad0c5f7_cf297c53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-20T18:16:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f05f032_3d1abf52",
+      "range": {
+        "startLine": 2265,
+        "startChar": 12,
+        "endLine": 2265,
+        "endChar": 37
+      },
+      "revId": "75e2a9d821c84ef580177579e51616eae753ba51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
