@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36a56367_27c23d36",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T17:40:51Z",
+      "side": 1,
+      "message": "Lutz, this is moved from \"before data removal\" to \"after data removal\".\nI believe, this small change is ok for you, but if not please let me know.\n\nBTW, this looks not referred from anywhere, so can we remove it?",
+      "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
