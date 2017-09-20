@@ -35,8 +35,19 @@ LoadingPredictor::~LoadingPredictor() {
   DCHECK(shutdown_);
 }
 
-void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
-  if (shutdown_ || active_hints_.find(url) != active_hints_.end())
+void LoadingPredictor::PrepareForPageLoad(const GURL& url,
+                                          HintOrigin origin,
+                                          bool preconnectable) {
+  if (shutdown_)
+    return;
+
+  if (origin == HintOrigin::OMNIBOX) {
+    // Omnibox hints are lightweight and need a special treatment.
+    MaybePreconnectOmniboxUrl(url, preconnectable);
+    return;
+  }
+
+  if (active_hints_.find(url) != active_hints_.end())
     return;
 
   bool has_prefetch_prediction = false;
@@ -312,6 +323,39 @@ void LoadingPredictor::MaybeRemovePreconnect(const GURL& url) {
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&PreconnectManager::Stop,
                      base::Unretained(preconnect_manager_.get()), url));
+}
+
+void LoadingPredictor::MaybePreconnectOmniboxUrl(const GURL& url,
+                                                 bool preconnectable) {
+  if (!url.is_valid() || !url.has_host() ||
+      !config_.IsPreconnectEnabledForOrigin(profile_, HintOrigin::OMNIBOX)) {
+    return;
+  }
+
+  GURL origin = url.GetOrigin();
+  bool is_new_origin = origin != last_omnibox_origin_;
+  last_omnibox_origin_ = origin;
+  base::TimeTicks now = base::TimeTicks::Now();
+  if (preconnectable) {
+    if (is_new_origin ||
+        (now - last_omnibox_preconnect_time_).InSeconds() >= 10) {
+      last_omnibox_preconnect_time_ = now;
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&PreconnectManager::StartPreconnectUrl,
+                         base::Unretained(preconnect_manager()), url, true));
+    }
+    return;
+  }
+
+  if (is_new_origin ||
+      (now - last_omnibox_preresolve_time_).InSeconds() >= 60) {
+    last_omnibox_preresolve_time_ = now;
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&PreconnectManager::StartPreresolveHost,
+                       base::Unretained(preconnect_manager()), url));
+  }
 }
 
 void LoadingPredictor::PreconnectFinished(

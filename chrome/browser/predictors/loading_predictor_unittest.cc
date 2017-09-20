@@ -208,4 +208,11 @@ TEST_F(LoadingPredictorTest, TestDontTrackNonPrefetchableUrls) {
   EXPECT_TRUE(predictor_->active_hints_.empty());
 }
 
+TEST_F(LoadingPredictorTest, TestDontPredictOmniboxHints) {
+  const GURL omnibox_suggestion = GURL("http://search.com/kittens");
+  // We expect that no prediction will be requested.
+  predictor_->PrepareForPageLoad(omnibox_suggestion, HintOrigin::OMNIBOX);
+  EXPECT_TRUE(predictor_->active_hints_.empty());
+}
+
 }  // namespace predictors
