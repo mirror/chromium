@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "d6762388_1686cceb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-20T16:00:57Z",
+      "side": 1,
+      "message": "I didn\u0027t suggest adding a null-check as you haev. I think it\u0027s unnecessary",
+      "parentUuid": "2ac702fe_fbfd18f7",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c964ef_d2e6b145",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
         "patchSetId": 2
