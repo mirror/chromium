@@ -6,9 +6,12 @@
 #define CONTENT_NETWORK_NETWORK_SERVICE_IMPL_H_
 
 #include <memory>
+#include <set>
+#include <string>
 
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "content/network/network_change_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -51,6 +54,9 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void DisableQuic() override;
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
 
+  void GetNetworkChangeManager(
+      mojom::NetworkChangeManagerRequest request) override;
+
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
 
@@ -78,6 +84,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   // destroyed first.
   std::set<NetworkContext*> network_contexts_;
   std::set<uint32_t> processes_with_raw_headers_access_;
+
+  std::unique_ptr<NetworkChangeManagerImpl> network_change_manager_;
 
   bool quic_disabled_ = false;
 
