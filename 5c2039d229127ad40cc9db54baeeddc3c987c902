@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a632d5c_90c12d3f",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-20T20:18:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and the one below\n\nAnd if a const is used only in one place, prefer to declare it close to where it is used.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "5c2039d229127ad40cc9db54baeeddc3c987c902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
