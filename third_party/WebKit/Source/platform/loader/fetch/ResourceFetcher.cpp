@@ -270,13 +270,12 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
   return WebURLRequest::kRequestContextSubresource;
 }
 
-ResourceFetcher::ResourceFetcher(FetchContext* new_context,
-                                 RefPtr<WebTaskRunner> task_runner)
+ResourceFetcher::ResourceFetcher(FetchContext* new_context)
     : context_(new_context),
       scheduler_(ResourceLoadScheduler::Create(&Context())),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
-          std::move(task_runner),
+          std::move(Context().GetLoadingTaskRunner()),
           this,
           &ResourceFetcher::ResourceTimingReportTimerFired),
       // keepalive_loaders_timer_ shouldn't use a frame associated timer because
@@ -939,7 +938,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
       !resource->CanReuse(params))
     return nullptr;
 
-  if (!resource->MatchPreload(params))
+  if (!resource->MatchPreload(params, Context().GetLoadingTaskRunner()))
     return nullptr;
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
