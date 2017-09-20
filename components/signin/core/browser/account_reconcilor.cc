@@ -411,19 +411,34 @@ void AccountReconcilor::OnReceivedManageAccountsResponse(
 }
 
 std::string AccountReconcilor::GetFirstGaiaAccountForReconcile() const {
-  // The first account in the cookie should be the primary account if there is
-  // one.
-  if (!primary_account_.empty())
-    return primary_account_;
-
   if (chrome_accounts_.empty())
     return std::string();  // No Chrome account, log out.
 
-  // Use the current first Gaia account, if we have a token for it.
-  if (!gaia_accounts_.empty() &&
-      base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id)) {
-    return gaia_accounts_[0].id;
+  if (!signin::IsAccountConsistencyDiceEnabled()) {
+    // Mirror only uses the primary account, and it is never empty.
+    DCHECK(!primary_account_.empty());
+    return primary_account_;
   }
+
+  DCHECK(signin::IsAccountConsistencyDiceEnabled());
+  // Dice can only change the first Gaia account on the first execution.
+  if (first_execution_) {
+    if (!primary_account_.empty())
+      return primary_account_;
+    if (!gaia_accounts_.empty()) {
+      return base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id)
+                 ? gaia_accounts_[0].id
+                 : std::string();  // Main token lost: log out.
+    }
+  }
+
+  if (!gaia_accounts_.empty()) {
+    return base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id)
+               ? gaia_accounts_[0].id
+               : std::string();  // Main token lost: log out.
+  }
+  if (!primary_account_.empty())
+    return primary_account_;
 
   // If Sync is disabled, and there is no Gaia cookie, try the last known
   // account. This happens when the cookies are cleared while Sync is disabled.
@@ -438,12 +453,12 @@ std::string AccountReconcilor::GetFirstGaiaAccountForReconcile() const {
 void AccountReconcilor::FinishReconcile() {
   VLOG(1) << "AccountReconcilor::FinishReconcile";
   DCHECK(add_to_cookie_.empty());
-  int number_gaia_accounts = gaia_accounts_.size();
   std::string first_account = GetFirstGaiaAccountForReconcile();
   // |first_account| is either empty or an element of |chrome_accounts_|.
   DCHECK(first_account.empty() ||
          (std::find(chrome_accounts_.begin(), chrome_accounts_.end(),
                     first_account) != chrome_accounts_.end()));
+  int number_gaia_accounts = gaia_accounts_.size();
   bool primary_account_mismatch =
       (number_gaia_accounts > 0) && (first_account != gaia_accounts_[0].id);
 

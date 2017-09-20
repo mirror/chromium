@@ -188,6 +188,8 @@ class AccountReconcilor : public KeyedService,
   bool IsTokenServiceReady();
 
   // Returns the first account to add in the Gaia cookie.
+  // If this returns an empty string, the user must be logged out of all
+  // accounts.
   std::string GetFirstGaiaAccountForReconcile() const;
 
   // Overriden from content_settings::Observer.
