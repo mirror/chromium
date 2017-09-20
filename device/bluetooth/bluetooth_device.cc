@@ -441,9 +441,9 @@ void BluetoothDevice::ClearAdvertisementData() {
 
 std::vector<BluetoothRemoteGattService*> BluetoothDevice::GetPrimaryServices() {
   std::vector<BluetoothRemoteGattService*> services;
-  VLOG(2) << "Looking for services.";
+  DVLOG(2) << "Looking for services.";
   for (BluetoothRemoteGattService* service : GetGattServices()) {
-    VLOG(2) << "Service in cache: " << service->GetUUID().canonical_value();
+    DVLOG(2) << "Service in cache: " << service->GetUUID().canonical_value();
     if (service->IsPrimary()) {
       services.push_back(service);
     }
@@ -454,9 +454,9 @@ std::vector<BluetoothRemoteGattService*> BluetoothDevice::GetPrimaryServices() {
 std::vector<BluetoothRemoteGattService*>
 BluetoothDevice::GetPrimaryServicesByUUID(const BluetoothUUID& service_uuid) {
   std::vector<BluetoothRemoteGattService*> services;
-  VLOG(2) << "Looking for service: " << service_uuid.canonical_value();
+  DVLOG(2) << "Looking for service: " << service_uuid.canonical_value();
   for (BluetoothRemoteGattService* service : GetGattServices()) {
-    VLOG(2) << "Service in cache: " << service->GetUUID().canonical_value();
+    DVLOG(2) << "Service in cache: " << service->GetUUID().canonical_value();
     if (service->GetUUID() == service_uuid && service->IsPrimary()) {
       services.push_back(service);
     }

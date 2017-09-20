@@ -293,7 +293,7 @@ BluetoothAdapter::~BluetoothAdapter() {
 void BluetoothAdapter::OnStartDiscoverySession(
     std::unique_ptr<BluetoothDiscoveryFilter> discovery_filter,
     const DiscoverySessionCallback& callback) {
-  VLOG(1) << "BluetoothAdapter::OnStartDiscoverySession";
+  DVLOG(1) << "BluetoothAdapter::OnStartDiscoverySession";
   RecordBluetoothDiscoverySessionStartOutcome(
       UMABluetoothDiscoverySessionOutcome::SUCCESS);
 
@@ -307,7 +307,7 @@ void BluetoothAdapter::OnStartDiscoverySession(
 void BluetoothAdapter::OnStartDiscoverySessionError(
     const ErrorCallback& callback,
     UMABluetoothDiscoverySessionOutcome outcome) {
-  VLOG(1) << "OnStartDiscoverySessionError: " << static_cast<int>(outcome);
+  DVLOG(1) << "OnStartDiscoverySessionError: " << static_cast<int>(outcome);
   RecordBluetoothDiscoverySessionStartOutcome(outcome);
   callback.Run();
 }
@@ -385,16 +385,16 @@ void BluetoothAdapter::RemoveTimedOutDevices() {
 
     bool device_expired =
         (base::Time::NowFromSystemTime() - last_update_time) > timeoutSec;
-    VLOG(3) << "device: " << device->GetAddress()
-            << ", last_update: " << last_update_time
-            << ", exp: " << device_expired;
+    DVLOG(3) << "device: " << device->GetAddress()
+             << ", last_update: " << last_update_time
+             << ", exp: " << device_expired;
 
     if (!device_expired) {
       ++it;
       continue;
     }
 
-    VLOG(1) << "Removing device: " << device->GetAddress();
+    DVLOG(1) << "Removing device: " << device->GetAddress();
     auto next = it;
     next++;
     std::unique_ptr<BluetoothDevice> removed_device = std::move(it->second);

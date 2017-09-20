@@ -267,13 +267,13 @@ void BluetoothAdapterAndroid::AddDiscoverySession(
           base::TimeDelta::FromMilliseconds(kPurgeDelay));
     }
   } else {
-    VLOG(1) << "AddDiscoverySession: Fails: !isPowered";
+    DVLOG(1) << "AddDiscoverySession: Fails: !isPowered";
   }
 
   if (session_added) {
     num_discovery_sessions_++;
-    VLOG(1) << "AddDiscoverySession: Now " << unsigned(num_discovery_sessions_)
-            << " sessions.";
+    DVLOG(1) << "AddDiscoverySession: Now " << unsigned(num_discovery_sessions_)
+             << " sessions.";
     callback.Run();
   } else {
     // TODO(scheib): Eventually wire the SCAN_FAILED result through to here.
@@ -287,21 +287,21 @@ void BluetoothAdapterAndroid::RemoveDiscoverySession(
     const DiscoverySessionErrorCallback& error_callback) {
   bool session_removed = false;
   if (num_discovery_sessions_ == 0) {
-    VLOG(1) << "RemoveDiscoverySession: No scan in progress.";
+    DVLOG(1) << "RemoveDiscoverySession: No scan in progress.";
     NOTREACHED();
   } else {
     --num_discovery_sessions_;
     session_removed = true;
     if (num_discovery_sessions_ == 0) {
-      VLOG(1) << "RemoveDiscoverySession: Now 0 sessions. Stopping scan.";
+      DVLOG(1) << "RemoveDiscoverySession: Now 0 sessions. Stopping scan.";
       session_removed = Java_ChromeBluetoothAdapter_stopScan(
           AttachCurrentThread(), j_adapter_);
       for (const auto& device_id_object_pair : devices_) {
         device_id_object_pair.second->ClearAdvertisementData();
       }
     } else {
-      VLOG(1) << "RemoveDiscoverySession: Now "
-              << unsigned(num_discovery_sessions_) << " sessions.";
+      DVLOG(1) << "RemoveDiscoverySession: Now "
+               << unsigned(num_discovery_sessions_) << " sessions.";
     }
   }
 

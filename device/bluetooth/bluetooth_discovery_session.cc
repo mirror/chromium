@@ -42,7 +42,7 @@ void BluetoothDiscoverySession::Stop(const base::Closure& success_callback,
     error_callback.Run();
     return;
   }
-  VLOG(1) << "Stopping device discovery session.";
+  DVLOG(1) << "Stopping device discovery session.";
   base::Closure deactive_discovery_session =
       base::Bind(&BluetoothDiscoverySession::DeactivateDiscoverySession,
                  weak_ptr_factory_.GetWeakPtr());
