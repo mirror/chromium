@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf80727_47494188",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "Set this flag here to indicate that user style sheets were added or removed.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c22a742_28111290",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "Call UpdateActiveUserStyleSheets only if user_style_sheets_ was modified.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62209e80_a61b0fad",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "The implementation of this method is what I\u0027m really not sure about. I copied ApplyRuleSetChanges and then removed stuff that I thought didn\u0027t apply here.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32460fcb_2f1c5c51",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this check belongs here or what it means for that matter.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcee99de_417b238e",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "Pass follow_shadow\u003dtrue to ScheduleInvalidationForRuleSets for user style sheets.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33dc75d_97afbce6",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "The implementation of CollectMatchingUserRules is simplified now since active user style sheets are maintained separately.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c51186_6ae743ec",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "Now there\u0027s a separate ApplyUserRuleSetChanges for user style sheets.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da3e6e1_d8d989b8",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-20T13:42:57Z",
+      "side": 1,
+      "message": "Keeping active user style sheets here for now, but I can move it to a separate class if the changes look good so far.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
