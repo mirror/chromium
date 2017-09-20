@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "89871a23_20e155db",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:05:41Z",
+      "side": 1,
+      "message": "Can we change this to use index only?",
+      "range": {
+        "startLine": 138,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "d49c2eb15bac47109c1fd7b94c347901ab16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a2433d_57cefb19",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-20T01:05:41Z",
+      "side": 1,
+      "message": "This would become:\n\nif (reply.index \u003d\u003d index) {",
+      "range": {
+        "startLine": 141,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 56
+      },
+      "revId": "d49c2eb15bac47109c1fd7b94c347901ab16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ff9639_e0738f03",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 8
