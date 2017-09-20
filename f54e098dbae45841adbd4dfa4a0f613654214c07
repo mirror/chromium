@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7a29b0_a92ea399",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-20T05:42:21Z",
+      "side": 1,
+      "message": "Since `set{Inn,Out}erHTML`\u0027s String variant is only used internally, can it become private? That\u0027d make that fact clearer, as well as provide some guards against a future change accidentally web-exposing them.",
+      "range": {
+        "startLine": 611,
+        "startChar": 2,
+        "endLine": 611,
+        "endChar": 6
+      },
+      "revId": "f54e098dbae45841adbd4dfa4a0f613654214c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3496ca_0f873172",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-20T05:42:21Z",
+      "side": 1,
+      "message": "friendly ping :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "f54e098dbae45841adbd4dfa4a0f613654214c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
