@@ -13,7 +13,7 @@
 #include "net/socket/ssl_client_socket_impl.h"
 #include "net/socket/tcp_client_socket.h"
 #include "net/socket/udp_client_socket.h"
-
+// #include <base/debug/stack_trace.h>
 namespace net {
 
 class X509Certificate;
@@ -52,6 +52,8 @@ class DefaultClientSocketFactory : public ClientSocketFactory,
       std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
       NetLog* net_log,
       const NetLogSource& source) override {
+    // base::debug::StackTrace st;
+    // st.Print();
     return std::unique_ptr<StreamSocket>(new TCPClientSocket(
         addresses, std::move(socket_performance_watcher), net_log, source));
   }

@@ -33,6 +33,7 @@ class DevToolsNetworkTransactionFactory : public net::HttpTransactionFactory {
 
  private:
   std::unique_ptr<net::HttpTransactionFactory> network_layer_;
+  net::HttpNetworkSession session_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsNetworkTransactionFactory);
 };

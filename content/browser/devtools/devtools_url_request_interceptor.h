@@ -5,6 +5,8 @@
 #ifndef CONTENT_BROWSER_DEVTOOLS_DEVTOOLS_URL_REQUEST_INTERCEPTOR_H_
 #define CONTENT_BROWSER_DEVTOOLS_DEVTOOLS_URL_REQUEST_INTERCEPTOR_H_
 
+#include <map>
+
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
@@ -15,6 +17,11 @@
 #include "content/public/browser/browser_thread.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/url_request_interceptor.h"
+#include "content/common/devtools/devtools_network_conditions.h"
+
+namespace net {
+class URLRequestContext;
+}  // namespace net
 
 namespace content {
 namespace protocol {
@@ -25,6 +32,7 @@ class BrowserContext;
 class DevToolsURLInterceptorRequestJob;
 class WebContents;
 class RenderFrameHost;
+class DevtoolsURLRequestContext;
 
 // An interceptor that creates DevToolsURLInterceptorRequestJobs for requests
 // from pages where interception has been enabled via
@@ -129,6 +137,9 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     // Must be called on the IO thread.
     void JobFinished(const std::string& interception_id);
 
+    DevtoolsURLRequestContext* URLRequestContext(
+        const net::URLRequestContext* baseURLRequestContext);
+
    private:
     class InterceptedWebContentsObserver;
 
@@ -205,6 +216,13 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
    private:
     friend class base::RefCountedThreadSafe<State>;
     ~State();
+
+    std::map<const net::URLRequestContext*,
+             std::unique_ptr<DevtoolsURLRequestContext>>
+        url_request_context_map_;
+
+    // std::set<net::Socket*> sockets_;
+
     DISALLOW_COPY_AND_ASSIGN(State);
   };
 

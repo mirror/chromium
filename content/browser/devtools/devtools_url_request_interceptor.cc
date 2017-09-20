@@ -10,6 +10,7 @@
 #include "base/supports_user_data.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/devtools_url_interceptor_request_job.h"
+#include "content/browser/devtools/devtools_url_request_context.h"
 #include "content/browser/devtools/protocol/network_handler.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -21,6 +22,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 
 namespace content {
 
@@ -85,6 +87,17 @@ net::URLRequestJob* DevToolsURLRequestInterceptor::MaybeInterceptResponse(
 DevToolsURLRequestInterceptor::State::State() : next_id_(0) {}
 
 DevToolsURLRequestInterceptor::State::~State() {}
+
+DevtoolsURLRequestContext*
+DevToolsURLRequestInterceptor::State::URLRequestContext(
+    const net::URLRequestContext* baseRequestContext) {
+  if (!url_request_context_map_.count(baseRequestContext)) {
+    url_request_context_map_.emplace(
+        baseRequestContext,
+        new DevtoolsURLRequestContext(baseRequestContext, this));
+  }
+  return url_request_context_map_[baseRequestContext].get();
+}
 
 DevToolsURLRequestInterceptor::State::RenderFrameHostInfo::RenderFrameHostInfo(
     RenderFrameHost* host)

@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "content/browser/devtools/devtools_url_request_context.h"
 #include "content/browser/devtools/protocol/network_handler.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/loader/resource_request_info_impl.h"
@@ -766,9 +767,15 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
             }
           }
         })");
-  request_ = request_details.url_request_context->CreateRequest(
-      request_details.url, request_details.priority,
-      devtools_interceptor_request_job_, traffic_annotation);
+
+  request_ = devtools_url_request_interceptor_state
+                 ->URLRequestContext(request_details.url_request_context)
+                 ->CreateRequest(request_details.url, request_details.priority,
+                                 devtools_interceptor_request_job_,
+                                 traffic_annotation);
+  // request_ = request_details.url_request_context->CreateRequest(
+  //     request_details.url, request_details.priority,
+  //     devtools_interceptor_request_job_, traffic_annotation),
   request_->set_method(request_details.method);
   request_->SetExtraRequestHeaders(request_details.extra_request_headers);
 

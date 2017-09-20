@@ -810,16 +810,40 @@ Response NetworkHandler::EmulateNetworkConditions(
     double download_throughput,
     double upload_throughput,
     Maybe<protocol::Network::ConnectionType>) {
-  std::unique_ptr<DevToolsNetworkConditions> conditions(
-      new DevToolsNetworkConditions(offline, std::max(latency, 0.0),
-                                    std::max(download_throughput, 0.0),
-                                    std::max(upload_throughput, 0.0)));
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
-                     std::move(conditions)));
 
-  return Response::FallThrough();
+  // WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
+  // if (!web_contents)
+  //   return Response::InternalError();
+
+  // DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
+  //     DevToolsURLRequestInterceptor::FromBrowserContext(
+  //         web_contents->GetBrowserContext());
+  // if (!devtools_url_request_interceptor)
+  //   return Response::Error("Interception not supported");
+
+  // std::vector<std::string> new_patterns;
+  // if (enabled) {
+  //   if (patterns.isJust()) {
+  //     for (size_t i = 0; i < patterns.fromJust()->length(); i++)
+  //       new_patterns.push_back(patterns.fromJust()->get(i));
+  //   } else {
+  //     new_patterns.push_back("*");
+  //   }
+  // }
+  // interception_enabled_ = new_patterns.size();
+
+  // if (interception_enabled_) {
+  //   std::unique_ptr<DevToolsNetworkConditions> conditions(
+  //       new DevToolsNetworkConditions(offline, std::max(latency, 0.0),
+  //                                     std::max(download_throughput, 0.0),
+  //                                     std::max(upload_throughput, 0.0)));
+  //   devtools_url_request_interceptor->state()->StartEmulatingNetworkConditions(
+  //       web_contents, weak_factory_.GetWeakPtr(), std::move(conditions));
+  // } else {
+  //   devtools_url_request_interceptor->state()->StopEmulatingNetworkConditions(
+  //       web_contents);
+  // }
+  return Response::OK();
 }
 
 void NetworkHandler::NavigationPreloadRequestSent(

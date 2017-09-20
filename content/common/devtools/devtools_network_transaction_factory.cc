@@ -16,9 +16,26 @@
 
 namespace content {
 
+net::HttpNetworkSession::Params copyParams(
+    const net::HttpNetworkSession::Params& params) {
+  return net::HttpNetworkSession::Params(params);
+}
+
+net::HttpNetworkSession::Context copyContextForThrottling(
+    const net::HttpNetworkSession::Context& context,
+    scoped_refptr<DevToolsURLRequestInterceptor::State> state) {
+  auto copiedContext = net::HttpNetworkSession::Context(context);
+  copiedContext.client_socket_factory = new DevtoolsClientSocketFactory(
+    state, net::ClientSocketFactory::GetDefaultFactory());
+  return copiedContext;
+}
+
 DevToolsNetworkTransactionFactory::DevToolsNetworkTransactionFactory(
     net::HttpNetworkSession* session)
-    : network_layer_(new net::HttpNetworkLayer(session)) {}
+    : session_(copyParams(base_transaction_factory->GetSession()->params()),
+      copyContextForThrottling(
+        base_transaction_factory->GetSession()->context(), state))
+    , network_layer_(new net::HttpNetworkLayer(session_)) {}
 
 DevToolsNetworkTransactionFactory::~DevToolsNetworkTransactionFactory() {}
 
@@ -39,7 +56,7 @@ net::HttpCache* DevToolsNetworkTransactionFactory::GetCache() {
 }
 
 net::HttpNetworkSession* DevToolsNetworkTransactionFactory::GetSession() {
-  return network_layer_->GetSession();
+  return &session_;
 }
 
 }  // namespace content
