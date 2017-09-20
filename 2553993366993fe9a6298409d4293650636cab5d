@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b55abe4_65c45b9c",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:08:06Z",
+      "side": 1,
+      "message": "Nit: Always use {} when the search condition spans 1+ lines (per combination of Google + Chromium styleguide rules).",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89320959_f3949dbf",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:08:06Z",
+      "side": 1,
+      "message": "Nit(optional): It is common to name the 1st param of the reduce() callback |soFar| as an indication that it is the accumulated value so far in the iteration.\n\nAlso (optional too): \n.reduce((soFar, dests) \u003d\u003e soFar.concat(dests));",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32a5a12_03589e86",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:08:06Z",
+      "side": 1,
+      "message": "Array#concat() joins two arrays and returns a new array. This can be unnecessarily costly when done in a loop, since each loop creates a new array (always larger than the previous loop).\n\nIf you think that\u0027s worth it, it can be improved as follows: Grow the original array in place instead of using concat(), using Array#push as follows:\n\nvar a \u003d [1];\na.push.apply(a, [2,3,4]); // equivalent of a.push(2,3,4);\nconsole.log(a); // [ 1, 2, 3, 4 ]",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5962726f_086ea21d",
+        "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:08:06Z",
+      "side": 1,
+      "message": "No need to declare DestinationParser as a function, since it only serves as a namespace (and not as a constructor). Similar for other *Parser namespaces in this file.\n \nvar DestinationParser \u003d {};\nDestinationParser.parse \u003d ...\n\nAlternatively (optional) you could remove those namespaces completely I think, as follows:\n\nreturn {\n  parse: parse,\n  parseLocal: parseLocal,\n  parsePrivet: parsePrivet,\n  parseExtension: parseExtension,\n};\n\nHaving said that, do we still call the last 3 parsers outside of this file? If not, we could stop exporting them completely.",
+      "revId": "2553993366993fe9a6298409d4293650636cab5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

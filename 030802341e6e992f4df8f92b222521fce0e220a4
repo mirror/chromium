@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "1ec0ea2d_ccf45358",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:08:06Z",
+      "side": 1,
+      "message": "I think (not 100% sure), that you can change the type to !Promise\u003cvoid\u003e to indicate that nothing is returned (based on https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System).",
+      "parentUuid": "6750700d_123f25ce",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a1e27c6_dbc7a5d4",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
         "patchSetId": 6
