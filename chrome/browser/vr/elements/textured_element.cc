@@ -64,6 +64,12 @@ void TexturedElement::Render(UiElementRenderer* renderer,
   gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();
   gfx::RectF copy_rect(0, 0, drawn_size.width() / texture_size_.width(),
                        drawn_size.height() / texture_size_.height());
+  // LOG(INFO) << "Rendering URL bar " << texture_handle_;
+  // LOG(INFO) << "  Matrix:";
+  // LOG(INFO) << view_proj_matrix.ToString();
+  // LOG(INFO) << copy_rect.ToString();
+  // LOG(INFO) << "Opacity: " << computed_opacity();
+  // LOG(INFO) << "Size: " << size().ToString();
   renderer->DrawTexturedQuad(
       texture_handle_, UiElementRenderer::kTextureLocationLocal,
       view_proj_matrix, copy_rect, computed_opacity(), size(), corner_radius());

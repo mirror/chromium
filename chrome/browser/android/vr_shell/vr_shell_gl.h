@@ -18,9 +18,9 @@
 #include "chrome/browser/android/vr_shell/android_vsync_helper.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 #include "chrome/browser/vr/content_input_delegate.h"
-#include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/vr_controller_model.h"
+#include "chrome/browser/vr/vr_gl.h"
 #include "device/vr/vr_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -30,6 +30,8 @@
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/native_widget_types.h"
+
+#if 1
 
 namespace blink {
 class WebMouseEvent;
@@ -56,10 +58,10 @@ class VrShellRenderer;
 
 namespace vr_shell {
 
-class MailboxToSurfaceBridge;
-class GlBrowserInterface;
-class VrController;
-class VrShell;
+// class MailboxToSurfaceBridge;
+// class GlBrowserInterface;
+// class VrController;
+// class VrShell;
 
 struct WebVrBounds {
   WebVrBounds(const gfx::RectF& left,
@@ -71,18 +73,38 @@ struct WebVrBounds {
   gfx::Size source_size;
 };
 
+}  // namespace vr_shell
+
+#endif
+
+namespace vr {
+// class FPSMeter;
+// class SlidingAverage;
+class UiScene;
+// class VrShellRenderer;
+}  // namespace vr
+
+namespace vr_shell {
+
+class MailboxToSurfaceBridge;
+class GlBrowserInterface;
+class VrController;
+class VrShell;
+
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
-class VrShellGl : public device::mojom::VRPresentationProvider,
+class VrShellGl : public vr::VrGl,
+                  public device::mojom::VRPresentationProvider,
                   public vr::ContentInputDelegate {
  public:
   VrShellGl(GlBrowserInterface* browser,
             gvr_context* gvr_api,
             bool initially_web_vr,
             bool reprojected_rendering,
-            bool daydream_support,
-            vr::UiScene* scene);
+            bool daydream_support);
   ~VrShellGl() override;
+
+#if 1
 
   void Initialize();
   void InitializeGl(gfx::AcceleratedWidget window);
@@ -112,16 +134,17 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
       device::mojom::VRDisplayInfoPtr display_info);
 
   void set_is_exiting(bool exiting) { is_exiting_ = exiting; }
+#endif
 
  private:
   void GvrInit(gvr_context* gvr_api);
+
   void InitializeRenderer();
-  void DrawFrame(int16_t frame_index);
+  void DrawFrame(int16_t frame_index) override;
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 gvr_frame* frame_ptr,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
-  bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
@@ -183,8 +206,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
-  void closePresentationBindings();
+  void ClosePresentationBindings();
 
+#if 1
   // samplerExternalOES texture data for main content image.
   int content_texture_id_ = 0;
   // samplerExternalOES texture data for WebVR content image.
@@ -211,13 +235,13 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   std::queue<std::pair<uint8_t, WebVrBounds>> pending_bounds_;
   int premature_received_frames_ = 0;
   std::queue<uint16_t> pending_frames_;
+#endif
   std::unique_ptr<MailboxToSurfaceBridge> mailbox_bridge_;
+#if 1
 
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
-
-  std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
 
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
@@ -232,7 +256,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   std::vector<bool> webvr_frame_oustanding_;
   std::vector<gfx::Transform> webvr_head_pose_;
 
-  bool web_vr_mode_;
   bool ready_to_draw_ = false;
   bool paused_ = true;
   bool surfaceless_rendering_;
@@ -243,6 +266,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+#endif
   base::TimeTicks pending_time_;
   bool pending_vsync_ = false;
   GetVSyncCallback callback_;
@@ -250,6 +274,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   device::mojom::VRSubmitFrameClientPtr submit_client_;
 
   GlBrowserInterface* browser_;
+#if 1
 
   vr::UiScene* scene_ = nullptr;
 
@@ -269,18 +294,18 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   gfx::Point3F pointer_start_;
 
-  std::unique_ptr<vr::UiInputManager> input_manager_;
-  std::unique_ptr<vr::UiRenderer> ui_renderer_;
+  // std::unique_ptr<vr::UiInputManager> input_manager_;
+  // std::unique_ptr<vr::UiRenderer> ui_renderer_;
 
   vr::ControllerInfo controller_info_;
   vr::RenderInfo render_info_primary_;
-  vr::RenderInfo render_info_webvr_browser_ui_;
 
   AndroidVSyncHelper vsync_helper_;
 
   base::CancelableCallback<void()> webvr_frame_timeout_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(VrShellGl);
 };

@@ -235,8 +235,8 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateScreenDimmer();
   CreateExitPrompt();
   CreateToasts();
-  CreateSplashScreen();
-  CreateUnderDevelopmentNotice();
+  // CreateSplashScreen();
+  // CreateUnderDevelopmentNotice();
 
   ConfigureScene();
 }
@@ -452,7 +452,7 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
   text->SetRotate(1, 0, 0, kUnderDevelopmentNoticeRotationRad);
   text->SetVisible(true);
   text->set_y_anchoring(YAnchoring::YBOTTOM);
-  control_elements_.push_back(text.get());
+  // control_elements_.push_back(text.get());
   scene_->AddUiElement(kUrlBar, std::move(text));
 }
 
@@ -751,7 +751,7 @@ void UiSceneManager::ConfigureScene() {
   bool showing_web_vr_content = web_vr_mode_ && !showing_web_vr_splash_screen_;
   scene_->set_web_vr_rendering_enabled(showing_web_vr_content);
   // Splash screen.
-  splash_screen_text_->SetVisible(showing_web_vr_splash_screen_);
+  // splash_screen_text_->SetVisible(showing_web_vr_splash_screen_);
 
   // Exit warning.
   exit_warning_->SetVisible(exiting_);

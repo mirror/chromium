@@ -192,8 +192,15 @@ float ComputePhysicalPixelWidth(const gfx::Transform& view_proj_matrix,
   return 0.5 * physical_width * surface_texture_size.width();
 }
 
+#if defined(OS_ANDROID)
 #define SHADER(Src) #Src
 #define OEIE_SHADER(Src) "#extension GL_OES_EGL_image_external : require\n" #Src
+#else
+#define SHADER(Src) "#version 150 core\n" #Src
+#define OEIE_SHADER(Src) \
+  "#version 300 es\n#extension GL_OES_EGL_image_external : require\n" #Src
+#endif
+
 #define VOID_OFFSET(x) reinterpret_cast<void*>(x)
 
 /* clang-format off */
@@ -427,6 +434,7 @@ static constexpr char const* kTexturedQuadVertexShader = SHADER(
     "gl_FragColor = color * u_Opacity * mask;"                        \
   "}"
 
+// failing!!!
 static constexpr char const* kTexturedQuadFragmentShader = SHADER(
   precision highp float;
   uniform sampler2D u_Texture;)

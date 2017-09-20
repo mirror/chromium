@@ -43,9 +43,9 @@ VrGLThread::~VrGLThread() {
 
 void VrGLThread::Init() {
   scene_ = base::MakeUnique<vr::UiScene>();
-  vr_shell_gl_ = base::MakeUnique<VrShellGl>(this, gvr_api_, initially_web_vr_,
-                                             reprojected_rendering_,
-                                             daydream_support_, scene_.get());
+  vr_shell_gl_ =
+      base::MakeUnique<VrShellGl>(this, gvr_api_, initially_web_vr_,
+                                  reprojected_rendering_, daydream_support_);
   scene_manager_ = base::MakeUnique<vr::UiSceneManager>(
       this, scene_.get(), vr_shell_gl_.get(), in_cct_, initially_web_vr_,
       web_vr_autopresentation_expected_);

@@ -21,6 +21,10 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/render_text.h"
 
+#include "chrome/browser/vr/elements/exit_prompt_texture.h"
+#include "chrome/browser/vr/elements/text.h"
+#include "chrome/browser/vr/elements/webvr_url_toast_texture.h"
+
 using security_state::SecurityLevel;
 
 namespace vr {
@@ -336,6 +340,31 @@ TEST(UrlBarTexture, OfflinePage) {
   EXPECT_EQ(texture.url_rect(), online_url_rect);
   EXPECT_TRUE(texture.security_text().empty());
   EXPECT_EQ(texture.url_text(), base::UTF8ToUTF16("https://host.com/page"));
+}
+
+TEST(UrlBarTexture, Visualize) {
+  // UrlBarTexture texture(base::Bind([](UiUnsupportedMode mode) {}));
+  // ToolbarState state(
+  // GURL("https://something.com/"),
+  // SecurityLevel::HTTP_SHOW_WARNING,
+  //&toolbar::kOfflinePinIcon,
+  // base::UTF8ToUTF16("Offline"), true, true);
+  // texture.SetToolbarState(state);
+
+  // WebVrUrlToastTexture texture (base::Bind([](UiUnsupportedMode mode) {}));
+  ExitPromptTexture texture;
+
+  auto size = texture.GetPreferredTextureSize(1024);
+  // gfx::Size size(500, 500);
+  // auto size = 1024;
+  SkBitmap bitmap;
+  CHECK(bitmap.tryAllocN32Pixels(size.width(), size.height(), false));
+  SkCanvas canvas(bitmap);
+  canvas.drawColor(0xFF888888);
+  texture.DrawAndLayout(&canvas, size);
+
+  SkFILEWStream stream("texture.png");
+  SkEncodeImage(&stream, bitmap, SkEncodedImageFormat::kPNG, 100);
 }
 
 }  // namespace vr

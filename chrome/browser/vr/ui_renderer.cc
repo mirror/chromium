@@ -87,6 +87,8 @@ void UiRenderer::DrawWorldElements(const RenderInfo& render_info,
     glClear(GL_DEPTH_BUFFER_BIT);
   }
   std::vector<const UiElement*> elements = scene_->GetWorldElements();
+  // std::vector<const UiElement*> elements;
+  // elements.push_back(scene_->GetUiElementByName(kScreenDimmer));
   DrawUiView(render_info, controller_info, elements,
              scene_->reticle_rendering_enabled());
 }
@@ -116,6 +118,8 @@ void UiRenderer::DrawUiView(const RenderInfo& render_info,
 
   for (auto& eye_info :
        {render_info.left_eye_info, render_info.right_eye_info}) {
+    if (eye_info.viewport.IsEmpty())
+      continue;
     glViewport(eye_info.viewport.x(), eye_info.viewport.y(),
                eye_info.viewport.width(), eye_info.viewport.height());
 
@@ -136,6 +140,7 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
   if (elements.empty()) {
     return;
   }
+  DCHECK(vr_shell_renderer_);
   vr_shell_renderer_->set_surface_texture_size(
       render_info.surface_texture_size);
   bool drawn_reticle = false;

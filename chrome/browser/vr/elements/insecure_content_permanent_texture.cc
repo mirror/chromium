@@ -6,6 +6,7 @@
 
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -41,8 +42,7 @@ void InsecureContentPermanentTexture::Draw(SkCanvas* sk_canvas,
   size_.set_height(texture_size.height());
   SkPaint paint;
   paint.setColor(color_scheme().permanent_warning_background);
-  auto text =
-      l10n_util::GetStringUTF16(IDS_PAGE_INFO_INSECURE_WEBVR_CONTENT_PERMANENT);
+  auto text = GetStringResource(IDS_PAGE_INFO_INSECURE_WEBVR_CONTENT_PERMANENT);
   gfx::FontList fonts;
   GetFontList(size_.height() * kFontSizeFactor, text, &fonts);
   gfx::Rect text_size(0, kTextHeightFactor * size_.height());

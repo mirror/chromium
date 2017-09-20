@@ -76,6 +76,9 @@ std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
     UiTexture::TextAlignment text_alignment,
     UiTexture::WrappingBehavior wrapping_behavior) {
   DCHECK(bounds);
+  LOG(INFO) << "Bounds: " << bounds->x() << " " << bounds->y() << " "
+            << bounds->width() << " " << bounds->height();
+  LOG(INFO) << "Text: " << text;
 
   std::vector<std::unique_ptr<gfx::RenderText>> lines;
   gfx::Rect rect(*bounds);

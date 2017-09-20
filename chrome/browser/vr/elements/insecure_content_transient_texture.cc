@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/elements/insecure_content_transient_texture.h"
 
 #include "cc/paint/skia_paint_canvas.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -39,8 +40,7 @@ void InsecureContentTransientTexture::Draw(SkCanvas* sk_canvas,
   size_.set_width(texture_size.width());
   SkPaint paint;
   paint.setColor(color_scheme().transient_warning_background);
-  auto text =
-      l10n_util::GetStringUTF16(IDS_PAGE_INFO_INSECURE_WEBVR_CONTENT_TRANSIENT);
+  auto text = GetStringResource(IDS_PAGE_INFO_INSECURE_WEBVR_CONTENT_TRANSIENT);
   gfx::FontList fonts;
   GetFontList(size_.width() * kFontSizeFactor, text, &fonts);
   gfx::Rect text_size(size_.width() * kTextWidthFactor, 0);
