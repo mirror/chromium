@@ -16,6 +16,23 @@
       "revId": "78ef1a8b31c6a7f93f07af6b74da9e26c3606cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d67993a_82f4f0de",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-20T11:30:08Z",
+      "side": 1,
+      "message": "This would likely read easier if it was \n\nif (browser_controls_adjustment \u003d\u003d adjustment)\n  return;\n\n// blah",
+      "revId": "78ef1a8b31c6a7f93f07af6b74da9e26c3606cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
