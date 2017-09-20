@@ -107,6 +107,15 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
   if (!generator)
     return PaintImage();
 
+  // Invalidate the uniqueID if the alpha type changes. Skia
+  // expects all generators with the same ID to have a constant
+  // alpha type.
+  if (generator->GetSkImageInfo().alphaType() != frames_[index].alpha_type_) {
+    frames_[index].sk_image_unique_id_ =
+        SkiaPaintImageGenerator::kNeedNewImageUniqueID;
+  }
+  frames_[index].alpha_type_ = generator->GetSkImageInfo().alphaType();
+
   size_t num_frames = FrameCount();
   if (frames_.size() < num_frames)
     frames_.Grow(num_frames);
