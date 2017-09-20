@@ -75,8 +75,6 @@ class DeviceService : public service_manager::Service {
 
   void BindFingerprintRequest(mojom::FingerprintRequest request);
 
-  void BindHidManagerRequest(mojom::HidManagerRequest request);
-
   void BindOrientationSensorRequest(mojom::OrientationSensorRequest request);
 
   void BindOrientationAbsoluteSensorRequest(
@@ -84,6 +82,7 @@ class DeviceService : public service_manager::Service {
 
 #if !defined(OS_ANDROID)
   void BindBatteryMonitorRequest(mojom::BatteryMonitorRequest request);
+  void BindHidManagerRequest(mojom::HidManagerRequest request);
   void BindNFCProviderRequest(mojom::NFCProviderRequest request);
   void BindVibrationManagerRequest(mojom::VibrationManagerRequest request);
 #endif
@@ -104,7 +103,6 @@ class DeviceService : public service_manager::Service {
 
   void BindSerialIoHandlerRequest(mojom::SerialIoHandlerRequest request);
 
-  std::unique_ptr<HidManagerImpl> hid_manager_;
   std::unique_ptr<PowerMonitorMessageBroadcaster>
       power_monitor_message_broadcaster_;
   std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
@@ -124,6 +122,8 @@ class DeviceService : public service_manager::Service {
   bool java_interface_provider_initialized_;
 
   base::android::ScopedJavaGlobalRef<jobject> java_nfc_delegate_;
+#else
+  std::unique_ptr<HidManagerImpl> hid_manager_;
 #endif
 
   service_manager::BinderRegistry registry_;
