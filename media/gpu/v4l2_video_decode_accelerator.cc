@@ -14,6 +14,8 @@
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 
+#include <algorithm>
+
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
@@ -347,9 +349,10 @@ void V4L2VideoDecodeAccelerator::AssignPictureBuffersTask(
   DCHECK(decoder_thread_.task_runner()->BelongsToCurrentThread());
   DCHECK_EQ(decoder_state_, kAwaitingPictureBuffers);
 
-  uint32_t req_buffer_count = output_dpb_size_ + kDpbOutputBufferExtraCount;
+  int needed_buffers = kDpbOutputBufferExtraCount;
   if (image_processor_device_)
-    req_buffer_count += kDpbOutputBufferExtraCountForImageProcessor;
+    needed_buffers += kDpbOutputBufferExtraCountForImageProcessor;
+  uint32_t req_buffer_count = std::max(output_dpb_size_, needed_buffers);
 
   if (buffers.size() < req_buffer_count) {
     LOGF(ERROR) << "Failed to provide requested picture buffers. (Got "
@@ -2449,9 +2452,10 @@ bool V4L2VideoDecodeAccelerator::CreateOutputBuffers() {
 
   // Output format setup in Initialize().
 
-  uint32_t buffer_count = output_dpb_size_ + kDpbOutputBufferExtraCount;
+  int needed_buffers = kDpbOutputBufferExtraCount;
   if (image_processor_device_)
-    buffer_count += kDpbOutputBufferExtraCountForImageProcessor;
+    needed_buffers += kDpbOutputBufferExtraCountForImageProcessor;
+  uint32_t buffer_count = std::max(output_dpb_size_, needed_buffers);
 
   DVLOGF(3) << "buffer_count=" << buffer_count
             << ", coded_size=" << egl_image_size_.ToString();
