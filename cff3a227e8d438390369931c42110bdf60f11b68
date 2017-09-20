@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc8bc06_6772d92f",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:10:15Z",
+      "side": 1,
+      "message": "Assigning functions directly to an Object, as a way of mocking the page handler, is not so great. Can you create a proper TestPageHandler class and use it?\n\nIn general the proposed approach is more readable, and also more scaleable (as more methods get added to the page handler).\n\n\nclass TestPageHandler {\n  constructor() {\n    this.previewsEnabled_ \u003d false;\n  }\n\n  setPreviewsEnabled(enabled) {\n     this.previewsEnabled_ \u003d enabled;\n  }\n\n  /** @override */\n  getPreviewsEnabled() {\n    return Promise.resolve({enabled: this.previewsEnabled_});\n  }\n}\n\n...\npreLoad: function() {\n  window.testPageHandler \u003d new TestPageHandler();\n}\n\n...\ntest(\u0027EnabledStatusTest\u0027, function() {\n  window.testPageHandler.setPreviewsEnabled(true);\n  return ....;\n});",
+      "revId": "cff3a227e8d438390369931c42110bdf60f11b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

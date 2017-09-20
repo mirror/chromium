@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3bb62c79_b642ad5e",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:10:15Z",
+      "side": 1,
+      "message": "The IIFE (see [1]) makes sense when you are trying to hide a variable from the outside world (global scope).\n\n(function() {\nvar foo \u003d \u0027bar\u0027;\n...\n})();\n\nBut that is not happening in this case, there is no variable to be hidden. Instead what this code looked like is\n\n(function() {\nfoo();\n}}();\n\nwhere foo() is basically cr.define(). Therefore the IIFE here does not contribute anything.\n\n[1] https://en.wikipedia.org/wiki/Immediately-invoked_function_expression",
+      "parentUuid": "394a7193_9eefdf96",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a962ba61_e9297284",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 6
@@ -142,6 +160,23 @@
     },
     {
       "key": {
+        "uuid": "6872e9f0_f4398e90",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:10:15Z",
+      "side": 1,
+      "message": "Is this obsolete now that you use Mojo?",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac83ee0b_e85ee6bf",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 6
@@ -171,6 +206,24 @@
       "side": 1,
       "message": "Thanks for the suggestion. I have switched to mocha, but is there an easy way to have each test() in a different function without having to separate them into 2 files?",
       "parentUuid": "ac83ee0b_e85ee6bf",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a0193a1_8ff00475",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:10:15Z",
+      "side": 1,
+      "message": "Looking at the latest patch, it seems that you already figured that out.",
+      "parentUuid": "b223116d_194a153c",
       "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
