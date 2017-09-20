@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "736dabc2_44ee45f3",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:31:53Z",
+      "side": 1,
+      "message": "This would include the next dump providers run time, the Setup call is included in this event.",
+      "range": {
+        "startLine": 685,
+        "startChar": 2,
+        "endLine": 685,
+        "endChar": 14
+      },
+      "revId": "96ee4c3a24da4ab3b963d472f47c9466957909b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
