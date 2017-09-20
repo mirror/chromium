@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #import "ios/net/cookies/cookie_store_ios_test_util.h"
 #include "net/cookies/cookie_store_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -56,9 +57,13 @@ class CookieStoreIOSPersistentTest : public testing::Test {
  public:
   CookieStoreIOSPersistentTest()
       : kTestCookieURL("http://foo.google.com/bar"),
+        scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
         backend_(new net::TestPersistentCookieStore),
         store_(
             base::MakeUnique<net::CookieStoreIOSPersistent>(backend_.get())) {
+    net::SetCookieStoreIOSClient(new TestCookieStoreIOSClient());
+
     cookie_changed_callback_ = store_->AddCallbackForCookie(
         kTestCookieURL, "abc",
         base::Bind(&net::RecordCookieChanges, &cookies_changed_,
@@ -84,7 +89,8 @@ class CookieStoreIOSPersistentTest : public testing::Test {
   const GURL kTestCookieURL;
 
  protected:
-  base::MessageLoop loop_;
+  // base::MessageLoop loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   scoped_refptr<net::TestPersistentCookieStore> backend_;
   std::unique_ptr<net::CookieStoreIOS> store_;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription>

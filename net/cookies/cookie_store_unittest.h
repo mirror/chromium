@@ -347,6 +347,7 @@ class CookieStoreTest : public testing::Test {
   const CookieURLHelper http_baz_com_;
   const CookieURLHelper http_bar_com_;
 
+  std::unique_ptr<base::test::ScopedTaskEnvironment> scoped_task_environment_;
   std::unique_ptr<base::WeakPtrFactory<base::MessageLoop>> weak_factory_;
   std::unique_ptr<base::MessageLoop> message_loop_;
 

@@ -9,11 +9,15 @@
 #include <memory>
 
 #include "base/bind_helpers.h"
+#import "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
+
+#include "ios/net/cookies/cookie_store_ios_client.h"
 #import "ios/net/cookies/cookie_store_ios_test_util.h"
 #import "ios/net/cookies/ns_http_system_cookie_store.h"
 #import "net/base/mac/url_conversions.h"
@@ -91,6 +95,9 @@ class CookieStoreIOSTest : public testing::Test {
         kTestCookieURL2("http://foo.google.com/baz"),
         kTestCookieURL3("http://foo.google.com"),
         kTestCookieURL4("http://bar.google.com/bar"),
+        scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
+
         backend_(new TestPersistentCookieStore) {
     std::unique_ptr<NSHTTPSystemCookieStore> system_store(
         base::MakeUnique<NSHTTPSystemCookieStore>());
@@ -102,9 +109,10 @@ class CookieStoreIOSTest : public testing::Test {
     cookie_changed_callback_ = store_->AddCallbackForCookie(
         kTestCookieURL, "abc",
         base::Bind(&RecordCookieChanges, &cookies_changed_, &cookies_removed_));
+    net::SetCookieStoreIOSClient(new TestCookieStoreIOSClient());
   }
 
-  ~CookieStoreIOSTest() override {}
+  ~CookieStoreIOSTest() override { net::SetCookieStoreIOSClient(nullptr); }
 
   // Gets the cookies. |callback| will be called on completion.
   void GetCookies(net::CookieStore::GetCookiesCallback callback) {
@@ -122,24 +130,28 @@ class CookieStoreIOSTest : public testing::Test {
   void SetSystemCookie(const GURL& url,
                        const std::string& name,
                        const std::string& value) {
-    system_store_->SetCookie([NSHTTPCookie cookieWithProperties:@{
-      NSHTTPCookiePath : base::SysUTF8ToNSString(url.path()),
-      NSHTTPCookieName : base::SysUTF8ToNSString(name),
-      NSHTTPCookieValue : base::SysUTF8ToNSString(value),
-      NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
-    }]);
+    system_store_->SetCookieAsync(
+        [NSHTTPCookie cookieWithProperties:@{
+          NSHTTPCookiePath : base::SysUTF8ToNSString(url.path()),
+          NSHTTPCookieName : base::SysUTF8ToNSString(name),
+          NSHTTPCookieValue : base::SysUTF8ToNSString(value),
+          NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
+        }],
+        SystemCookieStore::SystemCookieCallback());
     net::CookieStoreIOS::NotifySystemCookiesChanged();
     base::RunLoop().RunUntilIdle();
   }
 
   void DeleteSystemCookie(const GURL& gurl, const std::string& name) {
-    NSArray* cookies = system_store_->GetCookiesForURL(gurl);
-    for (NSHTTPCookie* cookie in cookies) {
-      if (cookie.name.UTF8String == name) {
-        system_store_->DeleteCookie(cookie);
-        break;
-      }
-    }
+    system_store_->GetCookiesForURLAsync(
+        gurl, base::BindBlockArc(^(NSArray<NSHTTPCookie*>* cookies) {
+          for (NSHTTPCookie* cookie in cookies) {
+            if ([[cookie name] isEqualToString:base::SysUTF8ToNSString(name)]) {
+              system_store_->DeleteCookieAsync(
+                  cookie, SystemCookieStore::SystemCookieCallback());
+            }
+          }
+        }));
     net::CookieStoreIOS::NotifySystemCookiesChanged();
     base::RunLoop().RunUntilIdle();
   }
@@ -150,7 +162,9 @@ class CookieStoreIOSTest : public testing::Test {
   const GURL kTestCookieURL3;
   const GURL kTestCookieURL4;
 
-  base::MessageLoop loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+
+  //  base::MessageLoop loop_;
   scoped_refptr<TestPersistentCookieStore> backend_;
   // |system_store_| will point to the NSHTTPSystemCookieStore object owned by
   // |store_|. Once the store_ object is deleted the NSHTTPSystemCookieStore

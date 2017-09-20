@@ -15,17 +15,48 @@ namespace net {
 // uses NSHTTPCookieStorage as the underlying system cookie store.
 class NSHTTPSystemCookieStore : public net::SystemCookieStore {
  public:
+  // Returns all cookies for a specific |url| from the internal cookie store.
+  // Cookies are sorted, as per RFC6265.
+  NSArray* GetCookiesForURL(const GURL& url);
+
+  // Returns all cookies from the internal http cookie store.
+  // Cookies are sorted, as per RFC6265.
+  NSArray* GetAllCookies();
+
+  // Delete a specific cookie from the internal http cookie store.
+  void DeleteCookie(NSHTTPCookie* cookie);
+
+  // Set a specific cookie to the internal http cookie store.
+  // if the |optional_creation_time| is nullptr, uses Time::Now() as the
+  // creation time.
+  void SetCookie(NSHTTPCookie* cookie,
+                 const base::Time* optional_creation_time);
+
+  // Clear all cookies from the internal cookie store.
+  void ClearStore();
+
   // By default the underlying cookiestore is
   // |NSHTTPCookieStorage sharedHTTPCookieStorage|
   NSHTTPSystemCookieStore();
+
   explicit NSHTTPSystemCookieStore(NSHTTPCookieStorage* cookie_store);
+
   ~NSHTTPSystemCookieStore() override;
-  NSArray* GetCookiesForURL(const GURL& url,
-                            CookieCreationTimeManager* manager) override;
-  NSArray* GetAllCookies(CookieCreationTimeManager* manager) override;
-  void DeleteCookie(NSHTTPCookie* cookie) override;
-  void SetCookie(NSHTTPCookie* cookie) override;
-  void ClearStore() override;
+
+  void GetCookiesForURLAsync(const GURL& url,
+                             SystemCookieCallbackForCookies callback) override;
+
+  void GetAllCookiesAsync(SystemCookieCallbackForCookies callback) override;
+
+  void DeleteCookieAsync(NSHTTPCookie* cookie,
+                         SystemCookieCallback callback) override;
+
+  void SetCookieAsync(NSHTTPCookie* cookie,
+                      const base::Time* optional_creation_time,
+                      SystemCookieCallback callback) override;
+
+  void ClearStoreAsync(SystemCookieCallback callback) override;
+
   NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() override;
 
  private:

@@ -113,6 +113,19 @@ void GetCookieCallback::Run(const std::string& cookie_line) {
   cookie_line_ = cookie_line;
 }
 
+#pragma mark -
+#pragma mark TestCookieStoreIOSClient
+
+TestCookieStoreIOSClient::TestCookieStoreIOSClient(){};
+#pragma mark -
+#pragma mark TestCookieStoreIOSClient methods
+
+scoped_refptr<base::SequencedTaskRunner>
+TestCookieStoreIOSClient::GetTaskRunner() const {
+  return base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskPriority::BACKGROUND});
+}
+
 //------------------------------------------------------------------------------
 
 void RecordCookieChanges(std::vector<net::CanonicalCookie>* out_cookies,
