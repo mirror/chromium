@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d35948d2_447eedf2",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T15:07:19Z",
+      "side": 1,
+      "message": "Oh, and the reason for this is:  What if we just send the last chunk of the body?  We\u0027ll think it was sent successfully (It may have been, or may not have).  Then we\u0027ll send the request complete method...Sure, it is, as always, up to the other side to figure out if it got anything, but I think we should be consistent between the two messages we can get when the stream is closed.",
+      "parentUuid": "5707a7b5_e01922b1",
+      "range": {
+        "startLine": 459,
+        "startChar": 13,
+        "endLine": 459,
+        "endChar": 0
+      },
+      "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff675691_fb210fde",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 2
