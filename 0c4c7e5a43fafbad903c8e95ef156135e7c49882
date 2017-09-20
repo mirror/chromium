@@ -16,6 +16,24 @@
       "revId": "0c4c7e5a43fafbad903c8e95ef156135e7c49882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26881e6e_947eae9b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutMedia.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-20T23:02:04Z",
+      "side": 1,
+      "message": "Both.\n\nAbove, when we do the horizontal scrollbar check, we\u0027re doing it on the whole page, and not the iframe. Which actually can be seen as a problem on the site that is listed on the bug, since the video is in an iframe that has a horizontal scrollbar, and it passes that check.\n\nBelow, when we check the visible width, we\u0027re checking the visible width of the page\u0027s viewport, which is different from the iframe\u0027s visible width. The old code was also making this assumption",
+      "parentUuid": "3b3764b3_daf7c52d",
+      "revId": "0c4c7e5a43fafbad903c8e95ef156135e7c49882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
