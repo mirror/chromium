@@ -909,7 +909,7 @@
         "test": "net_unittests"
       },
       {
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "test": "sql_unittests"
@@ -1005,7 +1005,7 @@
         "test": "net_unittests"
       },
       {
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "test": "sql_unittests"
@@ -1379,7 +1379,7 @@
           ],
           "expiration": 14400
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -2251,7 +2251,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -2641,7 +2641,7 @@
         "swarming": {
           "can_use_on_swarming_builders": false
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -2829,7 +2829,7 @@
         "swarming": {
           "can_use_on_swarming_builders": false
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -3333,7 +3333,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -3803,7 +3803,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
