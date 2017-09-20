@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e158dd2_ed0648df",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "Maybe use {@code ...}?",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 7
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c40745_d5eb5132",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "Could you clean the line break up a bit here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 3
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe99b79c_e11fe431",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "s/are //",
+      "range": {
+        "startLine": 57,
+        "startChar": 40,
+        "endLine": 57,
+        "endChar": 44
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb64c0c1_847c2d86",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "Nit: \"nevertheless\"",
+      "range": {
+        "startLine": 58,
+        "startChar": 68,
+        "endLine": 58,
+        "endChar": 82
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681df52b_f5753129",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "Can we do this in a way that avoids e.g. adding a new default tag and forgetting to update the list? For example, make the default tags static and extract the put() calls below to a helper method that also checks that we only try to set default tags.",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 85
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60085e81_0eb057be",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "Small semantic nit: The way that your check is currently written, I think you are asserting properties of |defaultTags|, but |defaultTags| is not the value under test, |tag| is. Does it work to rewrite this as `assertThat(..., tag, not(isIn(defaultTags)))`? If not, it\u0027s probably not worth doing something significantly more complicated, but otherwise it would be nice to get the semantics right, in particular as IIRC that has an effect on the error message.",
+      "range": {
+        "startLine": 173,
+        "startChar": 76,
+        "endLine": 173,
+        "endChar": 87
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334df950_639cb5da",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T14:00:03Z",
+      "side": 1,
+      "message": "You could manually throw a new AssertionError, where you can pass a cause to the constructor. That might make it a bit easier to get at things like the original stack trace.",
+      "range": {
+        "startLine": 220,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 16
+      },
+      "revId": "cc8505aa60fc69ed712bc990b752fffcbb1ec272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
