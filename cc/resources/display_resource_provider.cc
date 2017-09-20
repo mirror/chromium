@@ -8,6 +8,7 @@
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 
 using gpu::gles2::GLES2Interface;
@@ -512,6 +513,50 @@ DisplayResourceProvider::ScopedReadLockSoftware::ScopedReadLockSoftware(
 
 DisplayResourceProvider::ScopedReadLockSoftware::~ScopedReadLockSoftware() {
   resource_provider_->UnlockForRead(resource_id_);
+}
+
+DisplayResourceProvider::ScopedLocalReadGL::ScopedLocalReadGL(
+    DisplayResourceProvider* resource_provider,
+    viz::ResourceId resource_id) {
+  resource_ = resource_provider->GetResource(resource_id);
+  DCHECK(resource_);
+  DCHECK(resource_->allocated);
+}
+
+DisplayResourceProvider::ScopedLocalReadGL::~ScopedLocalReadGL() = default;
+
+DisplayResourceProvider::ScopedLocalWriteGL::ScopedLocalWriteGL(
+    DisplayResourceProvider* resource_provider,
+    viz::ResourceId resource_id)
+    : resource_provider_(resource_provider) {
+  resource_ = resource_provider->GetResource(resource_id);
+  DCHECK(resource_);
+  DCHECK(IsGpuResourceType(resource_->type));
+  resource_provider->CreateTexture(resource_);
+
+  if (resource_->allocated)
+    return;
+  resource_->allocated = true;
+  AllocateTexture(resource_provider_->ContextGL(), resource_->gl_id);
+}
+
+DisplayResourceProvider::ScopedLocalWriteGL::~ScopedLocalWriteGL() {
+  DCHECK(resource_);
+  if (generate_mipmap_)
+    resource_->SetGenerateMipmap();
+}
+
+void DisplayResourceProvider::ScopedLocalWriteGL::AllocateTexture(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(gl);
+  DCHECK(resource_);
+  DCHECK(resource_->format != viz::ETC1);
+  gl->BindTexture(resource_->target, texture_id);
+  gl->TexImage2D(resource_->target, 0, GLInternalFormat(resource_->format),
+                 resource_->size.width(), resource_->size.height(), 0,
+                 GLDataFormat(resource_->format), GLDataType(resource_->format),
+                 nullptr);
 }
 
 }  // namespace cc
