@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4fce81e_beeeb26f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T04:19:13Z",
+      "side": 1,
+      "message": "this should be in WebContentsImpl. like I said, embedder should not know what\u0027s in the object holder",
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cbd643_484a29f5",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T04:19:13Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be public",
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d3abc3_3d0e171b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-20T04:19:13Z",
+      "side": 1,
+      "message": "hmm, \"setObjectHolder\" doesn\u0027t quite work, because obviously WebContentsImpl can\u0027t strongly hold the object holder either. It\u0027s going to need java delegate or something that returns the object holder on request, and might be null if underlying thing has gone away. or WebContentsImpl only holds a weakreference to the object holder.\n\nalso maybe use a sparse array instead?",
+      "range": {
+        "startLine": 480,
+        "startChar": 25,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
