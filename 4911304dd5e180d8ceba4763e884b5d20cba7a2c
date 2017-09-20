@@ -104,6 +104,24 @@
       "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ac83c7_527f1701",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:36:14Z",
+      "side": 1,
+      "message": "FWIW, I now renamed to Mutator{Input, Output}State which\nhave a internal type of AnimationState that represents the\nstate for a single worklet animation. I think this is better.",
+      "parentUuid": "21a07e26_4fe29f00",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
