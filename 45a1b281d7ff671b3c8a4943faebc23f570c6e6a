@@ -206,6 +206,30 @@
       "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b04c14_3b981d6e",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-20T23:10:19Z",
+      "side": 1,
+      "message": "\u003e And when WebContents wants to insert something into the map, it needs to update embedder for the map again, which doesn\u0027t work with a setter\n\nOne more question for clarification - for WebContents to \u0027update embedder for the map again\u0027, it sounds like then the WebContents should keep the callable (or whatever is passed from the embedder via setObjectHolder), and use it later. Wouldn\u0027t it create another reference back to WebView, which will keep gc from doing its job? \n\nThe callable I think better be for one-time use, and make sure that WebContentsImpl should be ready with all the objects inside the holder when the API is invoked so that it can(should) be called only once. Then callable might not be necessary in the first place.",
+      "parentUuid": "415b3c19_50d18651",
+      "range": {
+        "startLine": 480,
+        "startChar": 25,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "45a1b281d7ff671b3c8a4943faebc23f570c6e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
