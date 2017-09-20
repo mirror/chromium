@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "61a0ac14_d5954a51",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T14:49:29Z",
+      "side": 1,
+      "message": "i\u0027m okay with trying this approach out, but i\u0027m curious about whether the code would feel safer if the screen-on delay lived inside of TabletPowerButtonController instead of in PowerButtonDisplayController. to do that, i think that you could make PowerButtonDisplayController have a base::TimeTicks screen_state_last_changed_ member and accessor, and then check that from TPBC when deciding what to do. does that sound reasonable?\n\ni think that the general principle i\u0027m applying here is that i prefer to push hacks like this (i.e. we don\u0027t know how long the screen *really* takes to turn on) to an outer layer of the code instead of putting them in a more-core class like this, where they can have unintended effects on other users of the class.",
+      "revId": "85626aaf473805aa4cbac29a9a7013522de55041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af811403_f35a9aba",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
