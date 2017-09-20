@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c1ede8_54c14e05",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T18:51:49Z",
+      "side": 1,
+      "message": "should we return true here? we\u0027re not ignoring the paint request, just deferring it",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa18264_4b7150d6",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T18:51:49Z",
+      "side": 1,
+      "message": "why not \"paint_region_.Union(deferred_paint_region_);\" here? or maybe better \"damage_region_.Union(deferred_damage_region_)\" ?",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e9025a_fa47158b",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T18:51:49Z",
+      "side": 1,
+      "message": "Can we remove this in favor of using SetPaintDeferred? SetPaintDeferred provides the same functionality just more advanced..",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc00b14_b88215bf",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-20T18:51:49Z",
+      "side": 1,
+      "message": "can you explain why we need this? if we need to store the damage region in addition to paint_region then why is this not \"deferred_damaged_region_\"? and why is deferred_damaged_region_ not enough but we need deferred_paint_region_ too?",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
