@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a7cfb0_f9515a31",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-20T17:27:01Z",
+      "side": 1,
+      "message": "You should use Destroying. You probably can\u0027t access compositor in Destroyed.",
+      "revId": "cf16b02d87b63936a9d0107e1ae3438ee663c42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
