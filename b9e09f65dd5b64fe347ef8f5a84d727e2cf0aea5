@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "be1379c6_1c05b6bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T00:21:11Z",
+      "side": 1,
+      "message": "Yes, you are absolutely correct.",
+      "parentUuid": "cb3e0350_77c71a1e",
+      "range": {
+        "startLine": 989,
+        "startChar": 60,
+        "endLine": 989,
+        "endChar": 70
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d569100a_fa2b5c39",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 5
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "\u003e We shouldn\u0027t re-use PLACEHOLDER_ID for mSelectedItemId if we\u0027re not actually showing the placeholder content.\n\nOK, sure.\n\n\u003e Perhaps we could use something like \"AUXILIARY_CONTENT_ID\" to match Matt\u0027s in-flight change to introduce TYPE_AUXILIARY_CONTENT and use that when the content is set to something the sheet doesn\u0027t know about.\n\nHow about we use a new constant NO_CONTENT with the value 0 (which also is the default)? That way we don\u0027t have to add a new state for this case.",
       "parentUuid": "e6a2a783_3816d1f6",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce508fc_a3f770e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T00:21:11Z",
+      "side": 1,
+      "message": "That sounds good to me.",
+      "parentUuid": "9fb6c428_5ef769f2",
       "range": {
         "startLine": 126,
         "startChar": 16,
