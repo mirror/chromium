@@ -32,6 +32,11 @@ class RemoteSuggestionsProvider : public ContentSuggestionsProvider {
   // of the fetch (unless nullptr).
   virtual void RefetchInTheBackground(FetchStatusCallback callback) = 0;
 
+  // Same as RefetchInTheBackground, on with the additional hint that the
+  // current suggestions are stale.
+  virtual void RefetchInTheBackgroundDueToStaleness(
+      FetchStatusCallback callback) = 0;
+
   virtual const RemoteSuggestionsFetcher* suggestions_fetcher_for_debugging()
       const = 0;
 

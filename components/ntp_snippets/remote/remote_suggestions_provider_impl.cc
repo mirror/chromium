@@ -21,6 +21,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "base/values.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/image_fetcher/core/image_fetcher.h"
@@ -77,8 +78,7 @@ const int kDefaultMaxAdditionalPrefetchedSuggestions = 5;
 const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
     "max_age_for_additional_prefetched_suggestion_minutes";
 
-const base::TimeDelta kDefaultMaxAgeForAdditionalPrefetchedSuggestion =
-    base::TimeDelta::FromHours(36);
+const int kDefaultMaxAgeForAdditionalPrefetchedSuggestionMinutes = 2160;  // 36h
 
 bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
   // TODO(vitaliii): Use GetFieldTrialParamByFeature(As.*)? from
@@ -133,7 +133,7 @@ base::TimeDelta GetMaxAgeForAdditionalPrefetchedSuggestion() {
   return base::TimeDelta::FromMinutes(base::GetFieldTrialParamByFeatureAsInt(
       kKeepPrefetchedContentSuggestions,
       kMaxAgeForAdditionalPrefetchedSuggestionParamName,
-      kDefaultMaxAgeForAdditionalPrefetchedSuggestion.InMinutes()));
+      kDefaultMaxAgeForAdditionalPrefetchedSuggestionMinutes));
 }
 
 // Whether notifications for fetched suggestions are enabled. Note that this
@@ -200,6 +200,23 @@ bool ShouldForceFetchedSuggestionsNotifications() {
       ntp_snippets::kNotificationsFeature,
       kForceFetchedSuggestionsNotificationsParamName,
       kForceFetchedSuggestionsNotificationsDefault);
+}
+
+// Variation parameter for the timeout when fetching new suggestions when the
+// existing ones are "stale". If the fetch takes too long and the timeout is
+// over, the category status is forced back to AVAILABLE and the existing
+// (stale) suggestions are notified.
+const char kTimeoutForFetchWithStaleSuggestionParamName[] =
+    "timeout_for_fetch_with_stale_suggestions_milliseconds";
+
+const int kDefaultTimeoutForFetchWithStaleSuggestionMilliseconds = 5000;
+
+base::TimeDelta GetTimeoutForFetchWithStaleSuggestion() {
+  return base::TimeDelta::FromMilliseconds(
+      base::GetFieldTrialParamByFeatureAsInt(
+          ntp_snippets::kArticleSuggestionsFeature,
+          kTimeoutForFetchWithStaleSuggestionParamName,
+          kDefaultTimeoutForFetchWithStaleSuggestionMilliseconds));
 }
 
 template <typename SuggestionPtrContainer>
@@ -359,7 +376,8 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       prefetched_pages_tracker_(std::move(prefetched_pages_tracker)),
       breaking_news_raw_data_provider_(
           std::move(breaking_news_raw_data_provider)),
-      debug_logger_(debug_logger) {
+      debug_logger_(debug_logger),
+      weak_ptr_factory_(this) {
   DCHECK(debug_logger_);
   RestoreCategoriesFromPrefs();
   // The articles category always exists. Add it if we didn't get it from prefs.
@@ -423,6 +441,44 @@ void RemoteSuggestionsProviderImpl::RefetchInTheBackground(
   FetchSuggestions(/*interactive_request=*/false, std::move(callback));
 }
 
+void RemoteSuggestionsProviderImpl::RefetchInTheBackgroundDueToStaleness(
+    FetchStatusCallback callback) {
+  MarkAvailableCategoriesAsLoading();
+  // If the fetch takes too long, we need to notify the UI that the current
+  // (stale) resuts are still available. It does not cancel the pending request,
+  // if later results come, they are notified as usual (and the UI may ignore it
+  // as usual and only use it for the next impression).
+  // TODO(jkrcal): Inject a TickClock for testing.
+  auto timeout = std::make_unique<base::OneShotTimer>();
+  timeout->Start(
+      FROM_HERE, GetTimeoutForFetchWithStaleSuggestion(),
+      base::Bind(
+          &RemoteSuggestionsProviderImpl::MarkLoadingCategoriesAsAvailable,
+          weak_ptr_factory_.GetWeakPtr()));
+
+  // If the fetch is fast enough, we need to cleanup when it is over:
+  //  - |timeout| gets cancelled automatically by getting out-of-scope;
+  //  - if the fetch fails, we need to notify that the current (stale) results
+  //  are still available;
+  //  - if the fetch succeeds, it already notified new results (and switched to
+  //  AVAILABLE status).
+  FetchStatusCallback callback_wrapped = base::BindOnce(
+      [](RemoteSuggestionsProviderImpl* provider,
+         std::unique_ptr<base::OneShotTimer> timeout,
+         FetchStatusCallback callback, Status status) {
+        if (!status.IsSuccess()) {
+          DLOG(WARNING) << "fetch failed";
+          provider->MarkLoadingCategoriesAsAvailable();
+        }
+        if (callback) {
+          std::move(callback).Run(status);
+        }
+      },
+      base::Unretained(this), std::move(timeout), std::move(callback));
+
+  FetchSuggestions(/*interactive_request=*/false, std::move(callback_wrapped));
+}
+
 const RemoteSuggestionsFetcher*
 RemoteSuggestionsProviderImpl::suggestions_fetcher_for_debugging() const {
   return suggestions_fetcher_.get();
@@ -456,6 +512,8 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     fetch_when_ready_callback_ = std::move(callback);
     return;
   }
+
+  DLOG(WARNING) << "fetch initiated";
 
   MarkEmptyCategoriesAsLoading();
 
@@ -537,6 +595,29 @@ void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
     const CategoryContent& content = item.second;
     if (content.suggestions.empty()) {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+    }
+  }
+}
+
+void RemoteSuggestionsProviderImpl::MarkAvailableCategoriesAsLoading() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    if (content.status == CategoryStatus::AVAILABLE) {
+      DLOG(WARNING) << "fetch category stale " << category.id();
+      UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+    }
+  }
+}
+
+void RemoteSuggestionsProviderImpl::MarkLoadingCategoriesAsAvailable() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    if (content.status == CategoryStatus::AVAILABLE_LOADING) {
+      DLOG(WARNING) << "fetch category not stale any more " << category.id();
+      UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+      continue;
     }
   }
 }
@@ -900,6 +981,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+    DLOG(WARNING) << "fetch category available " << category.id();
     // TODO(sfiera): notify only when a category changed above.
     NotifyNewSuggestions(category, item.second.suggestions);
 

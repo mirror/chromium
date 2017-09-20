@@ -19,6 +19,9 @@ extern const char kRemoteSuggestionCategories[];
 // The pref name for the last time when a background fetch was attempted.
 extern const char kSnippetLastFetchAttempt[];
 
+// The pref name for the last time when a background fetch was successfull.
+extern const char kSnippetLastSuccessfulFetch[];
+
 // Pref names for minimal intervals between two successive background fetches.
 //
 // The prefs store *currently applied* minimal intervals. For each trigger type
