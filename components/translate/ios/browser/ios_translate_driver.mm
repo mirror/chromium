@@ -133,11 +133,13 @@ void IOSTranslateDriver::NavigationItemCommitted(
 
 // TranslateDriver methods
 
-bool IOSTranslateDriver::IsLinkNavigation() {
+bool IOSTranslateDriver::IsAutoTranslateNavigation() {
   return navigation_manager_->GetVisibleItem() &&
-         ui::PageTransitionCoreTypeIs(
-             navigation_manager_->GetVisibleItem()->GetTransitionType(),
-             ui::PAGE_TRANSITION_LINK);
+         (ui::PageTransitionCoreTypeIs(
+              navigation_manager_->GetVisibleItem()->GetTransitionType(),
+              ui::PAGE_TRANSITION_LINK) ||
+          (navigation_manager_->GetVisibleItem()->GetTransitionType() &
+           ui::PAGE_TRANSITION_FORWARD_BACK) != 0);
 }
 
 void IOSTranslateDriver::OnTranslateEnabledChanged() {

@@ -16,8 +16,9 @@ namespace translate {
 // implementation must be provided by the driver.
 class TranslateDriver {
  public:
-  // Returns true if the current page was navigated through a link.
-  virtual bool IsLinkNavigation() = 0;
+  // Returns true if the current page was navigated to in a manner that should
+  // trigger auto translation (e.g. forward following a link, or back).
+  virtual bool IsAutoTranslateNavigation() = 0;
 
   // Called when Translate is enabled or disabled.
   virtual void OnTranslateEnabledChanged() = 0;
