@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7212110f_7a9b31b3",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/ChromeHome.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T13:22:59Z",
+      "side": 1,
+      "message": "You could even split this up into an AnnotationProcessor and a core class that can be used independently... up to you.",
+      "range": {
+        "startLine": 47,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "4ba80b49fbeed18fd463cea1675f509165e0a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
