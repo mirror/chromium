@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc6c2e6_3f95a4be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 32
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "this comment about DropdownBarHost might be obsolete now?",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913df6a4_19f445e8",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "make_unique? -- see https://groups.google.com/a/chromium.org/d/topic/chromium-dev/evQtLFgfmyM/discussion \"Prefer MakeUnique to bare new\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab0ec1d_4cb4fae6",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf89511d_074d2e33",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77acce5_1ae9db6d",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "CloseNow()  (Close() posts a task)",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a04c1a_29db2f48",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "gfx::Rect isn\u0027t normally initialized this way -- it makes it look like a struct, but this is actually using C++11 uniform initialization to call gfx::Rect(0, 0, 640, 480) - current convention is\n\nconst gfx::Rect bounds \u003d gfx::Rect(0, 0, 640, 480);\nor\nconst gfx::Rect bounds(0, 0, 640, 480);\n\npopup_-\u003eShow(gfx::Rect(0, 0, 640, 480)); is ok too",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f89a106_9d153dc7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "order args: expected, actual  -- the error output is clearer this way",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b995546e_9ba0c785",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 32
+      },
+      "lineNbr": 4912,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "you can add the file down here if we don\u0027t want it to run on mac Cocoa browsers yet",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

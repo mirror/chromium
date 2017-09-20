@@ -366,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "53280f03_f481c086",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T01:17:53Z",
+      "side": 1,
+      "message": "it\u0027s rare for blocks containing only forward declarations. in other cases, I think `git cl format` forces you to have blank lines",
+      "parentUuid": "1da4f883_d4e9e77d",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bffd9b4_98790ed1",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
         "patchSetId": 26
