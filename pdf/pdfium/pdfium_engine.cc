@@ -1503,10 +1503,9 @@ FPDF_DOCUMENT PDFiumEngine::CreateSinglePageRasterPdf(
 
   unsigned char* bitmap_data =
       static_cast<unsigned char*>(FPDFBitmap_GetBuffer(bitmap));
-  double ratio_x = ConvertUnitDouble(bitmap_size.width(), print_settings.dpi,
-                                     kPointsPerInch);
-  double ratio_y = ConvertUnitDouble(bitmap_size.height(), print_settings.dpi,
-                                     kPointsPerInch);
+  int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+  double ratio_x = ConvertUnitDouble(bitmap_size.width(), dpi, kPointsPerInch);
+  double ratio_y = ConvertUnitDouble(bitmap_size.height(), dpi, kPointsPerInch);
 
   // Add the bitmap to an image object and add the image object to the output
   // page.
@@ -1577,11 +1576,9 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
     double source_page_height = FPDF_GetPageHeight(pdf_page);
     source_page_sizes.push_back(
         std::make_pair(source_page_width, source_page_height));
-
-    int width_in_pixels =
-        ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
-    int height_in_pixels =
-        ConvertUnit(source_page_height, kPointsPerInch, print_settings.dpi);
+    int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+    int width_in_pixels = ConvertUnit(source_page_width, kPointsPerInch, dpi);
+    int height_in_pixels = ConvertUnit(source_page_height, kPointsPerInch, dpi);
 
     pp::Rect rect(width_in_pixels, height_in_pixels);
     pages_to_print.push_back(PDFiumPage(this, page_number, rect, true));
@@ -3691,6 +3688,7 @@ void PDFiumEngine::TransformPDFPageForPrinting(
 
   pp::Size page_size(print_settings.paper_size);
   pp::Rect content_rect(print_settings.printable_area);
+
   const bool rotated = (src_page_rotation % 2 == 1);
   SetPageSizeAndContentRect(rotated, src_page_width > src_page_height,
                             &page_size, &content_rect);
@@ -3734,7 +3732,6 @@ void PDFiumEngine::TransformPDFPageForPrinting(
         gfx_content_rect, src_page_rotation, actual_page_width,
         actual_page_height, source_clip_box, &offset_x, &offset_y);
   }
-
   // Reset the media box and crop box. When the page has crop box and media box,
   // the plugin will display the crop box contents and not the entire media box.
   // If the pages have different crop box values, the plugin will display a
@@ -4309,22 +4306,25 @@ base::LazyInstance<PDFiumEngineExports>::Leaky g_pdf_engine_exports =
 int CalculatePosition(FPDF_PAGE page,
                       const PDFiumEngineExports::RenderingSettings& settings,
                       pp::Rect* dest) {
-  int page_width = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_x));
-  int page_height = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_y));
+  // Get the DPI used for the PDF
+  int dpi = std::min(settings.dpi_x, settings.dpi_y);
+  int page_width = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageWidth(page), kPointsPerInch, dpi));
+  int page_height = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageHeight(page), kPointsPerInch, dpi));
 
   // Start by assuming that we will draw exactly to the bounds rect
-  // specified.
+  // specified. settings.bounds is in device DPI. Scale back to square DPI.
   *dest = settings.bounds;
-
+  dest->set_width(dest->width() * dpi / settings.dpi_x);
+  dest->set_height(dest->height() * dpi / settings.dpi_y);
   int rotate = 0;  // normal orientation.
 
   // Auto-rotate landscape pages to print correctly.
   if (settings.autorotate &&
       (dest->width() > dest->height()) != (page_width > page_height)) {
     rotate = 3;  // 90 degrees counter-clockwise.
-    std::swap(page_width, page_height);
+    std::swap(page_height, page_width);
   }
 
   // See if we need to scale the output
@@ -4345,18 +4345,21 @@ int CalculatePosition(FPDF_PAGE page,
       scale_factor_x /= dest->width();
       double scale_factor_y = page_height;
       scale_factor_y /= dest->height();
+      // Scale back to device DPI.
       if (scale_factor_x > scale_factor_y) {
-        dest->set_height(page_height / scale_factor_x);
+        dest->set_height(page_height * settings.dpi_y / dpi / scale_factor_x);
+        dest->set_width(page_width * settings.dpi_x / dpi);
       } else {
-        dest->set_width(page_width / scale_factor_y);
+        dest->set_height(page_height * settings.dpi_y / dpi);
+        dest->set_width(page_width * settings.dpi_x / dpi / scale_factor_y);
       }
     }
   } else {
     // We are not scaling to bounds. Draw in the actual page size. If the
     // actual page size is larger than the bounds, the output will be
-    // clipped.
-    dest->set_width(page_width);
-    dest->set_height(page_height);
+    // clipped. Scale back to device DPI.
+    dest->set_width(page_width * settings.dpi_x / dpi);
+    dest->set_height(page_height * settings.dpi_y / dpi);
   }
 
   if (settings.center_in_bounds) {

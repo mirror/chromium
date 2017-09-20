@@ -207,7 +207,8 @@ bool PrintingHandler::RenderPdfPageToMetafile(int page_number,
 
   if (!chrome_pdf::RenderPDFPageToDC(
           &pdf_data_.front(), pdf_data_.size(), page_number, metafile.context(),
-          pdf_rendering_settings_.dpi,
+          pdf_rendering_settings_.dpi.width(),
+          pdf_rendering_settings_.dpi.height(),
           pdf_rendering_settings_.area.x() - offset_x,
           pdf_rendering_settings_.area.y() - offset_y,
           pdf_rendering_settings_.area.width(),
@@ -262,13 +263,13 @@ bool PrintingHandler::RenderPDFPagesToPWGRaster(
 
     if (!chrome_pdf::RenderPDFPageToBitmap(
             data.data(), data_size, page_number, image.pixel_data(),
-            image.size().width(), image.size().height(), settings.dpi,
-            settings.autorotate)) {
+            image.size().width(), image.size().height(), settings.dpi.width(),
+            settings.dpi.height(), settings.autorotate)) {
       return false;
     }
 
     cloud_print::PwgHeaderInfo header_info;
-    header_info.dpi = settings.dpi;
+    header_info.dpi = std::min(settings.dpi.width(), settings.dpi.height());
     header_info.total_pages = total_page_count;
 
     // Transform odd pages.

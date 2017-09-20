@@ -301,7 +301,7 @@ PdfRenderSettings PWGRasterConverter::GetConversionSettings(
   int dpi = kDefaultPdfDpi;
   cloud_devices::printer::DpiCapability dpis;
   if (dpis.LoadFrom(printer_capabilities))
-    dpi = std::max(dpis.GetDefault().horizontal, dpis.GetDefault().vertical);
+    dpi = std::min(dpis.GetDefault().horizontal, dpis.GetDefault().vertical);
 
   const double scale = static_cast<double>(dpi) / kPointsPerInch;
 
@@ -309,7 +309,8 @@ PdfRenderSettings PWGRasterConverter::GetConversionSettings(
   // by autorotate.
   gfx::Rect area(std::min(page_size.width(), page_size.height()) * scale,
                  std::max(page_size.width(), page_size.height()) * scale);
-  return PdfRenderSettings(area, gfx::Point(0, 0), dpi, /*autorotate=*/true,
+  return PdfRenderSettings(area, gfx::Point(0, 0), gfx::Size(dpi, dpi),
+                           /*autorotate=*/true,
                            PdfRenderSettings::Mode::NORMAL);
 }
 

@@ -342,7 +342,6 @@ cr.define('print_preview', function() {
           'marginLeft': customMargins.get(orientationEnum.LEFT)
         };
       }
-
       return cr.sendWithPromise(
           'getPreview', JSON.stringify(ticket),
           requestId > 0 ? documentInfo.pageCount : -1);
