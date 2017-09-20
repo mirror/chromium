@@ -163,8 +163,11 @@ stage_install_common() {
   # sandbox
   # Rename sandbox binary with hyphen instead of underscore because that's what
   # the code looks for, but the build targets can't use hyphens (scons bug?)
-  install -m 4755 -s "${BUILDDIR}/${PROGNAME}_sandbox" \
-    "${STAGEDIR}/${INSTALLDIR}/${PROGNAME}-sandbox"
+  buildfile="${BUILDDIR}/${PROGNAME}_sandbox"
+  strippedfile="${buildfile}.stripped"
+  debugfile="${buildfile}.debug"
+  "${BUILDDIR}/installer/common/eu-strip" -o "${strippedfile}" -f "${debugfile}" "${buildfile}"
+  install -m 4755 "${strippedfile}" "${STAGEDIR}/${INSTALLDIR}/${PROGNAME}-sandbox"
 
   # l10n paks
   cp -a "${BUILDDIR}/locales" "${STAGEDIR}/${INSTALLDIR}/"
