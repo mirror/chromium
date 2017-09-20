@@ -16,6 +16,24 @@
       "revId": "5f49af1d8acdd5254a12ef4d95ff9607bf2b4146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5cc420_4fc9684c",
+        "filename": "components/arc/test/fake_bluetooth_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T17:15:12Z",
+      "side": 1,
+      "message": "Acknowledged. Checked offline with Luis and made sure it is :-).",
+      "parentUuid": "9700b2ed_f7a5a54a",
+      "revId": "5f49af1d8acdd5254a12ef4d95ff9607bf2b4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
