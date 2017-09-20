@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f8dd52_8002faca",
+        "filename": "google_apis/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T18:07:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure that adding this dependency is desirable, you might want to check with rogerta@ for this first.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "5783b48499ca30d90c7a5f98bd6ee5a1d3cdb50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
