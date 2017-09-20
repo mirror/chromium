@@ -24,9 +24,9 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/utility_process_host_client.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/process_type.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -51,7 +51,7 @@ class UtilitySandboxedProcessLauncherDelegate
  public:
   UtilitySandboxedProcessLauncherDelegate(const base::FilePath& exposed_dir,
                                           bool launch_elevated,
-                                          SandboxType sandbox_type,
+                                          sandbox::SandboxType sandbox_type,
                                           const base::EnvironmentMap& env)
       : exposed_dir_(exposed_dir),
 #if defined(OS_WIN)
@@ -60,11 +60,11 @@ class UtilitySandboxedProcessLauncherDelegate
         env_(env),
 #endif  // OS_WIN
         sandbox_type_(sandbox_type) {
-    DCHECK(sandbox_type_ == SANDBOX_TYPE_NO_SANDBOX ||
-           sandbox_type_ == SANDBOX_TYPE_UTILITY ||
-           sandbox_type_ == SANDBOX_TYPE_NETWORK ||
-           sandbox_type_ == SANDBOX_TYPE_WIDEVINE ||
-           sandbox_type_ == SANDBOX_TYPE_PPAPI);
+    DCHECK(sandbox_type_ == sandbox::SANDBOX_TYPE_NO_SANDBOX ||
+           sandbox_type_ == sandbox::SANDBOX_TYPE_UTILITY ||
+           sandbox_type_ == sandbox::SANDBOX_TYPE_NETWORK ||
+           sandbox_type_ == sandbox::SANDBOX_TYPE_WIDEVINE ||
+           sandbox_type_ == sandbox::SANDBOX_TYPE_PPAPI);
   }
 
   ~UtilitySandboxedProcessLauncherDelegate() override {}
@@ -102,7 +102,7 @@ class UtilitySandboxedProcessLauncherDelegate
   base::EnvironmentMap GetEnvironment() override { return env_; }
 #endif  // OS_WIN
 
-  SandboxType GetSandboxType() override { return sandbox_type_; }
+  sandbox::SandboxType GetSandboxType() override { return sandbox_type_; }
 
  private:
   base::FilePath exposed_dir_;
@@ -112,7 +112,7 @@ class UtilitySandboxedProcessLauncherDelegate
 #elif defined(OS_POSIX)
   base::EnvironmentMap env_;
 #endif  // OS_WIN
-  SandboxType sandbox_type_;
+  sandbox::SandboxType sandbox_type_;
 };
 
 UtilityMainThreadFactoryFunction g_utility_main_thread_factory = NULL;
@@ -133,7 +133,7 @@ UtilityProcessHostImpl::UtilityProcessHostImpl(
     const scoped_refptr<base::SequencedTaskRunner>& client_task_runner)
     : client_(client),
       client_task_runner_(client_task_runner),
-      sandbox_type_(SANDBOX_TYPE_UTILITY),
+      sandbox_type_(sandbox::SANDBOX_TYPE_UTILITY),
       run_elevated_(false),
 #if defined(OS_LINUX)
       child_flags_(ChildProcessHost::CHILD_ALLOW_SELF),
@@ -166,14 +166,14 @@ void UtilityProcessHostImpl::SetExposedDir(const base::FilePath& dir) {
   exposed_dir_ = dir;
 }
 
-void UtilityProcessHostImpl::SetSandboxType(SandboxType sandbox_type) {
-  DCHECK(sandbox_type != SANDBOX_TYPE_INVALID);
+void UtilityProcessHostImpl::SetSandboxType(sandbox::SandboxType sandbox_type) {
+  DCHECK(sandbox_type != sandbox::SANDBOX_TYPE_INVALID);
   sandbox_type_ = sandbox_type;
 }
 
 #if defined(OS_WIN)
 void UtilityProcessHostImpl::ElevatePrivileges() {
-  sandbox_type_ = SANDBOX_TYPE_NO_SANDBOX;
+  sandbox_type_ = sandbox::SANDBOX_TYPE_NO_SANDBOX;
   run_elevated_ = true;
 }
 #endif
