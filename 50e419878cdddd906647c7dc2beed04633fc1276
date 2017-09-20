@@ -205,6 +205,24 @@
       "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29690b7d_aa73c6af",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-20T06:56:00Z",
+      "side": 1,
+      "message": "I tried it and it fails due to some permission issue. Here\u0027s the CL (on top of this CL):\n\nhttps://chromium-review.googlesource.com/#/c/chromium/src/+/674708\n\nWhen I test it, I got some permission error:\n\n[1:1:0919/234456.177568:VERBOSE2:cdm_module.cc(59)] Initialize: cdm_path \u003d /proc/self/fd/283\n[1:1:0919/234456.178570:ERROR:cdm_module.cc(70)] CDM at /proc/self/fd/283 could not be loaded.\n[1:1:0919/234456.178733:ERROR:cdm_module.cc(71)] Error: /proc/self/fd/283: cannot open shared object file: Operation not permitted\n\nI also tried with --no-sandbox, and the test passes. So at least I am sure I opened the right file, and passed the fd correctly to the utility process.\n\nI am not familiar with linux sandbox so I don\u0027t have much clue here. Do we even have access to /proc/self/fd in the utility sandbox (forked from zygote)?",
+      "parentUuid": "2b21df4a_efb30477",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
