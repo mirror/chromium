@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/download/content/factory/download_service_factory.h"
+#include "components/download/content/factory/test_download_service_factory.h"
 
 #include "base/memory/ptr_util.h"
 #include "components/download/content/factory/navigation_monitor_factory.h"
@@ -19,34 +19,34 @@
 #include "components/leveldb_proto/proto_database_impl.h"
 
 namespace download {
-namespace {
-const base::FilePath::CharType kEntryDBStorageDir[] =
-    FILE_PATH_LITERAL("EntryDB");
-const base::FilePath::CharType kFilesStorageDir[] = FILE_PATH_LITERAL("Files");
-}  // namespace
+namespace test {
 
-DownloadService* CreateDownloadService(
+DownloadService* CreateDownloadServiceForTest(
     std::unique_ptr<DownloadClientMap> clients,
     content::BrowserContext* browser_context,
-    const base::FilePath& storage_dir,
+    const base::FilePath& files_storage_dir,
+    const base::FilePath& db_storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler) {
   auto client_set = base::MakeUnique<ClientSet>(std::move(clients));
   auto config = Configuration::CreateFromFinch();
-
-  auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
   auto driver = base::MakeUnique<DownloadDriverImpl>(
       content::BrowserContext::GetDownloadManager(browser_context));
 
-  auto entry_db_storage_dir = storage_dir.Append(kEntryDBStorageDir);
   auto entry_db =
       base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<protodb::Entry>>(
           background_task_runner);
-  auto store = base::MakeUnique<DownloadStore>(entry_db_storage_dir,
-                                               std::move(entry_db));
+  auto store =
+      base::MakeUnique<DownloadStore>(db_storage_dir, std::move(entry_db));
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
+
+  // TODO(xingliu): Bypass Android network status listener, which is implemented
+  // through JNI bridge.
   auto device_status_listener =
       base::MakeUnique<DeviceStatusListener>(config->network_change_delay);
+
+  // TODO(xingliu): Maybe use fake navigation monitor or spinning up render
+  // view host test harness.
   NavigationMonitor* navigation_monitor =
       NavigationMonitorFactory::GetForBrowserContext(browser_context);
   auto scheduler = base::MakeUnique<SchedulerImpl>(
@@ -61,4 +61,5 @@ DownloadService* CreateDownloadService(
   return new DownloadServiceImpl(std::move(config), std::move(controller));
 }
 
+}  // namespace test
 }  // namespace download

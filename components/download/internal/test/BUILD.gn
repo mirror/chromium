@@ -13,6 +13,8 @@ source_set("test_support") {
     "download_params_utils.h",
     "entry_utils.cc",
     "entry_utils.h",
+    "fake_device_status_listener.cc",
+    "fake_device_status_listener.h",
     "mock_controller.cc",
     "mock_controller.h",
     "mock_model_client.cc",

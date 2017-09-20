@@ -6,6 +6,7 @@ source_set("internal") {
   visibility = [
     ":*",
     "//components/download/content/factory",
+    "//components/download/content/factory:test_support",
   ]
 
   sources = [
