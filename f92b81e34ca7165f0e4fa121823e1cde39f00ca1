@@ -52,6 +52,24 @@
       "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca30f79_f823bf01",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-20T22:55:26Z",
+      "side": 1,
+      "message": "I looked into why TRACE_EVENT1 isn\u0027t enclosed in do{...}while(0), and found that it can\u0027t. In addition to recording the current timestamp, etc, TRACE_EVENT1 also records the amount of time spent in the enclosing scope, and thus the code can\u0027t be enclosed in its own {}. It\u0027s normally intended to be placed at the beginning of a function, so the amount of time spent in the function is recorded.\n\nThere is a similar macro, TRACE_EVENT_INSTANT1, which doesn\u0027t record duration and can be used safely inside if statement without {}. That seems to be more appropriate for VideoFramesDropped, so I changed the code to use that instead. The other media traces are collected at the beginning of a function, so TRACE_EVENT1 seems fine.",
+      "parentUuid": "ac55242a_7294ad07",
+      "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
