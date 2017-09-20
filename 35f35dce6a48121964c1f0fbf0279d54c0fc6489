@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae126662_692f2e18",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-20T15:17:51Z",
+      "side": 1,
+      "message": "Can you document the difference between an empty |params| and a null one? Same with all the other nullable arrays.",
+      "range": {
+        "startLine": 81,
+        "startChar": 32,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
