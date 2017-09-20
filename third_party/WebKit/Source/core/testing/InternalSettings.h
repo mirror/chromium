@@ -124,7 +124,6 @@ class InternalSettings final : public InternalSettingsGenerated,
   void setViewportEnabled(bool, ExceptionState&);
   void setViewportMetaEnabled(bool, ExceptionState&);
   void setViewportStyle(const String& preference, ExceptionState&);
-  void setCompositorWorkerEnabled(bool, ExceptionState&);
   void setPresentationReceiver(bool, ExceptionState&);
   void setAutoplayPolicy(const String&, ExceptionState&);
 
