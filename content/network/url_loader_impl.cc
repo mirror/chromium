@@ -322,9 +322,7 @@ void URLLoaderImpl::ReadMore() {
     if (result != MOJO_RESULT_OK && result != MOJO_RESULT_SHOULD_WAIT) {
       // The response body stream is in a bad state. Bail.
       // TODO: How should this be communicated to our client?
-      writable_handle_watcher_.Cancel();
-      response_body_stream_.reset();
-      DeleteIfNeeded();
+      OnResponseBodyStreamClosed(result);
       return;
     }
 
@@ -353,13 +351,10 @@ void URLLoaderImpl::ReadMore() {
   } else if (url_request_->status().is_success() && bytes_read > 0) {
     DidRead(static_cast<uint32_t>(bytes_read), true);
   } else {
-    writable_handle_watcher_.Cancel();
     CompletePendingWrite();
-
-    // Close body pipe.
-    response_body_stream_.reset();
-
     NotifyCompleted(url_request_->status().ToNetError());
+
+    OnResponseBodyStreamClosed(MOJO_RESULT_OK);
     // |this| may have been deleted.
     return;
   }
@@ -404,14 +399,10 @@ void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
   DCHECK(url_request == url_request_.get());
 
   if (!url_request->status().is_success()) {
-    writable_handle_watcher_.Cancel();
     CompletePendingWrite();
-
-    // This closes the data pipe.
-    // TODO(mmenke): Should NotifyCompleted close the data pipe itself instead?
-    response_body_stream_.reset();
-
     NotifyCompleted(url_request_->status().ToNetError());
+
+    OnResponseBodyStreamClosed(MOJO_RESULT_UNKNOWN);
     // |this| may have been deleted.
     return;
   }
@@ -448,14 +439,19 @@ void URLLoaderImpl::OnConnectionError() {
 
 void URLLoaderImpl::OnResponseBodyStreamClosed(MojoResult result) {
   url_request_.reset();
+  peer_closed_handle_watcher_.Cancel();
+  writable_handle_watcher_.Cancel();
   response_body_stream_.reset();
   pending_write_ = nullptr;
   DeleteIfNeeded();
 }
 
 void URLLoaderImpl::OnResponseBodyStreamReady(MojoResult result) {
-  // TODO: Handle a bad |result| value.
-  DCHECK_EQ(result, MOJO_RESULT_OK);
+  if (result != MOJO_RESULT_OK) {
+    OnResponseBodyStreamClosed(result);
+    return;
+  }
+
   ReadMore();
 }
 
