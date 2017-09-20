@@ -16,6 +16,24 @@
       "revId": "399865e1e965d19790b98e35e83a32db5a9f515c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df52e42_7f08ad78",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1224759
+      },
+      "writtenOn": "2017-09-20T09:37:26Z",
+      "side": 1,
+      "message": "Done; lmk if enum class is too verbose, but agree it\u0027s good to avoid the invalid state where we wouldn\u0027t have all the UI, as well as avoiding just flipping the items at some point.",
+      "parentUuid": "b66cea6a_bf0e14a6",
+      "revId": "399865e1e965d19790b98e35e83a32db5a9f515c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
