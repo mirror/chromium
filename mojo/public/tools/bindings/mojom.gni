@@ -405,6 +405,8 @@ template("mojom") {
         "{{source_gen_dir}}/{{source_name_part}}.mojom-shared-internal.h",
       ]
 
+      pool = "//build/toolchain:action_pool($default_toolchain)"
+
       if (defined(shared_component_export_macro)) {
         args += [
           "--export_attribute",
@@ -434,6 +436,8 @@ template("mojom") {
         "--relative_path",
         rebase_path(generated_shared_export_header, root_gen_dir),
       ]
+
+      pool = "//build/toolchain:action_pool($default_toolchain)"
     }
   }
 
@@ -594,6 +598,7 @@ template("mojom") {
             "--relative_path",
             rebase_path(generated_export_header, root_gen_dir),
           ]
+          pool = "//build/toolchain:action_pool($default_toolchain)"
         }
       }
 
@@ -612,6 +617,8 @@ template("mojom") {
         ]
         outputs = generator_cpp_outputs + generator_java_outputs
         args = common_generator_args
+
+        pool = "//build/toolchain:action_pool($default_toolchain)"
 
         if (cpp_only) {
           args += [
@@ -698,6 +705,8 @@ template("mojom") {
         "--output",
         rebase_path(type_mappings_path, root_build_dir),
       ]
+
+      pool = "//build/toolchain:action_pool($default_toolchain)"
 
       foreach(d, all_deps) {
         name = get_label_info(d, "label_no_toolchain")
@@ -879,6 +888,9 @@ template("mojom") {
           "--zip-inputs=$rebase_inputs",
           "--output=$rebase_output",
         ]
+
+        pool = "//build/toolchain:action_pool($default_toolchain)"
+
         deps = []
         if (enabled_sources != []) {
           deps = [
@@ -935,6 +947,8 @@ template("mojom") {
           "--js_bindings_mode",
           js_bindings_mode,
         ]
+
+        pool = "//build/toolchain:action_pool($default_toolchain)"
       }
     }
 
