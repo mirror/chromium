@@ -54,6 +54,7 @@
 #include "content/renderer/input/input_handler_manager.h"
 #include "content/renderer/input/main_thread_event_queue.h"
 #include "content/renderer/input/widget_input_handler_manager.h"
+#include "content/renderer/mash_util.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
@@ -388,6 +389,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
       weak_ptr_factory_(this) {
+
   DCHECK_NE(routing_id_, MSG_ROUTING_NONE);
   if (!swapped_out)
     RenderProcess::current()->AddRefProcess();
@@ -402,6 +404,8 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
   }
 #if defined(USE_AURA)
   RendererWindowTreeClient::CreateIfNecessary(routing_id_);
+  if (IsRunningInMash())
+    RendererWindowTreeClient::Get(routing_id_)->SetVisible(!is_hidden_);
 #endif
 }
 
@@ -660,6 +664,9 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(InputMsg_RequestTextInputStateUpdate,
                         OnRequestTextInputStateUpdate)
 #endif
+#if defined(USE_AURA)
+    IPC_MESSAGE_HANDLER(ViewMsg_GetWindowTreeClient, OnGetWindowTreeClient)
+#endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -751,8 +758,9 @@ void RenderWidget::OnClose() {
 }
 
 void RenderWidget::OnResize(const ResizeParams& params) {
-  if (resizing_mode_selector_->ShouldAbortOnResize(this, params))
+  if (resizing_mode_selector_->ShouldAbortOnResize(this, params)) {
     return;
+  }
 
   if (screen_metrics_emulator_) {
     screen_metrics_emulator_->OnResize(params);
@@ -1756,6 +1764,16 @@ void RenderWidget::OnDeviceScaleFactorChanged() {
     compositor_->SetDeviceScaleFactor(device_scale_factor_);
 }
 
+#if defined(USE_AURA)
+void RenderWidget::OnGetWindowTreeClient(
+    mojo::MessagePipeHandle window_tree_client_request) {
+  DCHECK(RendererWindowTreeClient::Get(routing_id_));
+  RendererWindowTreeClient::Get(routing_id_)
+      ->Bind(ui::mojom::WindowTreeClientRequest(
+          mojo::ScopedMessagePipeHandle(window_tree_client_request)));
+}
+#endif
+
 void RenderWidget::OnRepaint(gfx::Size size_to_paint) {
   // During shutdown we can just ignore this message.
   if (!GetWebWidget())
@@ -2028,6 +2046,11 @@ void RenderWidget::SetHidden(bool hidden) {
   // The status has changed.  Tell the RenderThread about it and ensure
   // throttled acks are released in case frame production ceases.
   is_hidden_ = hidden;
+
+#if defined(USE_AURA)
+  if (IsRunningInMash())
+    RendererWindowTreeClient::Get(routing_id_)->SetVisible(!hidden);
+#endif
 
   if (is_hidden_) {
     RenderThreadImpl::current()->WidgetHidden();

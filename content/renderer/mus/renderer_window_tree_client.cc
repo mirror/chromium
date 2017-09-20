@@ -12,13 +12,22 @@
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/client/hit_test_data_provider.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "content/renderer/mash_util.h"
+#include "content/renderer/render_frame_proxy.h"
 
 namespace content {
 
 namespace {
-typedef std::map<int, RendererWindowTreeClient*> ConnectionMap;
+
+using ConnectionMap = std::map<int, RendererWindowTreeClient*>;
 base::LazyInstance<ConnectionMap>::Leaky g_connections =
     LAZY_INSTANCE_INITIALIZER;
+
+// Callback from embedding a child frame.
+void OnEmbedAck(bool success) {
+  DCHECK(success);
+}
+
 }  // namespace
 
 // static
@@ -31,7 +40,7 @@ RendererWindowTreeClient* RendererWindowTreeClient::Get(int routing_id) {
 
 // static
 void RendererWindowTreeClient::CreateIfNecessary(int routing_id) {
-  if (Get(routing_id))
+  if (!IsRunningInMash() || Get(routing_id))
     return;
   RendererWindowTreeClient* connection =
       new RendererWindowTreeClient(routing_id);
@@ -48,6 +57,27 @@ void RendererWindowTreeClient::Destroy(int routing_id) {
 void RendererWindowTreeClient::Bind(
     ui::mojom::WindowTreeClientRequest request) {
   binding_.Bind(std::move(request));
+}
+
+std::unique_ptr<MusEmbeddedFrame> RendererWindowTreeClient::Embed(
+    RenderFrameProxy* render_frame_proxy,
+    ui::mojom::WindowTreeClientPtr window_tree_client) {
+  std::unique_ptr<MusEmbeddedFrame> frame = base::WrapUnique<MusEmbeddedFrame>(
+      new MusEmbeddedFrame(this, render_frame_proxy, ++next_window_id_,
+                           std::move(window_tree_client)));
+  embedded_frames_.insert(frame.get());
+  return frame;
+}
+
+void RendererWindowTreeClient::SetVisible(bool visible) {
+  if (visible_ == visible)
+    return;
+
+  visible_ = visible;
+  if (root_window_id_) {
+    tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
+                               visible);
+  }
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSink(
@@ -72,6 +102,7 @@ RendererWindowTreeClient::RendererWindowTreeClient(int routing_id)
 
 RendererWindowTreeClient::~RendererWindowTreeClient() {
   g_connections.Get().erase(routing_id_);
+  DCHECK(embedded_frames_.empty());
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSinkInternal(
@@ -101,6 +132,11 @@ void RendererWindowTreeClient::DestroySelf() {
   delete this;
 }
 
+void RendererWindowTreeClient::OnEmbeddedFrameDestroyed(
+    MusEmbeddedFrame* frame) {
+  embedded_frames_.erase(embedded_frames_.find(frame));
+}
+
 void RendererWindowTreeClient::OnEmbed(
     ui::mojom::WindowDataPtr root,
     ui::mojom::WindowTreePtr tree,
@@ -110,6 +146,11 @@ void RendererWindowTreeClient::OnEmbed(
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
   root_window_id_ = root->window_id;
   tree_ = std::move(tree);
+  tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
+                             visible_);
+  for (MusEmbeddedFrame* frame : embedded_frames_)
+    frame->OnTreeAvailable();
+
   if (!pending_layer_tree_frame_sink_callback_.is_null()) {
     RequestLayerTreeFrameSinkInternal(std::move(pending_context_provider_),
                                       pending_gpu_memory_buffer_manager_,
@@ -135,8 +176,13 @@ void RendererWindowTreeClient::OnCaptureChanged(ui::Id new_capture_window_id,
 void RendererWindowTreeClient::OnFrameSinkIdAllocated(
     ui::Id window_id,
     const viz::FrameSinkId& frame_sink_id) {
-  // TODO(fsamuel): OOPIF's |frame_sink_id| is ready. The OOPIF can now be
-  // embedded by the parent.
+  for (MusEmbeddedFrame* embedded_frame : embedded_frames_) {
+    if (embedded_frame->window_id_ == window_id) {
+      embedded_frame->render_frame_proxy_->OnMusFrameSinkIdAllocated(
+          frame_sink_id);
+      return;
+    }
+  }
 }
 
 void RendererWindowTreeClient::OnTopLevelCreated(
@@ -266,7 +312,9 @@ void RendererWindowTreeClient::OnPerformDragDropCompleted(
 void RendererWindowTreeClient::OnDragDropDone() {}
 
 void RendererWindowTreeClient::OnChangeCompleted(uint32_t change_id,
-                                                 bool success) {}
+                                                 bool success) {
+  DCHECK(success);
+}
 
 void RendererWindowTreeClient::RequestClose(uint32_t window_id) {}
 
@@ -274,5 +322,74 @@ void RendererWindowTreeClient::GetWindowManager(
     mojo::AssociatedInterfaceRequest<ui::mojom::WindowManager> internal) {
   NOTREACHED();
 }
+
+// MusEmbeddedFrame ------------------------------------------------------------
+
+MusEmbeddedFrame::~MusEmbeddedFrame() {
+  renderer_window_tree_client_->OnEmbeddedFrameDestroyed(this);
+  // If there is |pending_state_| it means we didn't actually create the window
+  // yet and there is nothing to do.
+  if (pending_state_)
+    return;
+
+  window_tree()->DeleteWindow(GetAndAdvanceNextChangeId(), window_id_);
+}
+
+void MusEmbeddedFrame::SetWindowBounds(
+    const viz::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& bounds) {
+  if (!window_tree()) {
+    DCHECK(pending_state_);
+    pending_state_->bounds = bounds;
+    pending_state_->local_surface_id = local_surface_id;
+    pending_state_->was_set_window_bounds_called = true;
+    return;
+  }
+
+  window_tree()->SetWindowBounds(GetAndAdvanceNextChangeId(), window_id_,
+                                 bounds, local_surface_id);
+}
+
+MusEmbeddedFrame::MusEmbeddedFrame(
+    RendererWindowTreeClient* renderer_window_tree_client,
+    RenderFrameProxy* proxy,
+    ui::ClientSpecificId window_id,
+    ui::mojom::WindowTreeClientPtr window_tree_client)
+    : renderer_window_tree_client_(renderer_window_tree_client),
+      render_frame_proxy_(proxy),
+      window_id_(window_id) {
+  if (!window_tree()) {
+    pending_state_ = base::MakeUnique<PendingState>();
+    pending_state_->window_tree_client = std::move(window_tree_client);
+    return;
+  }
+  CreateChildWindowAndEmbed(std::move(window_tree_client));
+}
+
+void MusEmbeddedFrame::CreateChildWindowAndEmbed(
+    ui::mojom::WindowTreeClientPtr window_tree_client) {
+  window_tree()->NewWindow(GetAndAdvanceNextChangeId(), window_id_,
+                           base::nullopt);
+  window_tree()->AddWindow(GetAndAdvanceNextChangeId(),
+                           renderer_window_tree_client_->root_window_id_,
+                           window_id_);
+  window_tree()->Embed(window_id_, std::move(window_tree_client), 0,
+                       base::Bind(&OnEmbedAck));
+}
+
+void MusEmbeddedFrame::OnTreeAvailable() {
+  std::unique_ptr<PendingState> pending_state = std::move(pending_state_);
+  CreateChildWindowAndEmbed(std::move(pending_state->window_tree_client));
+  if (pending_state->was_set_window_bounds_called)
+    SetWindowBounds(pending_state->local_surface_id, pending_state->bounds);
+}
+
+uint32_t MusEmbeddedFrame::GetAndAdvanceNextChangeId() {
+  return renderer_window_tree_client_->GetAndAdvanceNextChangeId();
+}
+
+MusEmbeddedFrame::PendingState::PendingState() = default;
+
+MusEmbeddedFrame::PendingState::~PendingState() = default;
 
 }  // namespace content
