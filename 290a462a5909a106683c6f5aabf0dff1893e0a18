@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a67750c9_2a9be954",
+        "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T18:19:05Z",
+      "side": 1,
+      "message": "Can you give a default value to |delay| if |delay| is not provided? Something like:\n\nthis.timer_ \u003d this.timerProxy_.setTimeout(this.boundTimerCallback_, delay || 0);",
+      "revId": "290a462a5909a106683c6f5aabf0dff1893e0a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6087e7f6_80d96695",
+        "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T18:19:05Z",
+      "side": 1,
+      "message": "!Promise",
+      "revId": "290a462a5909a106683c6f5aabf0dff1893e0a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255b2888_0849faa4",
+        "filename": "chrome/test/data/webui/md_bookmarks/test_timer_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T18:19:05Z",
+      "side": 1,
+      "message": "I don\u0027t think clearTimeout() should be called with undefined or no parameters. Can this just be as follows?\n \n@param {number}",
+      "revId": "290a462a5909a106683c6f5aabf0dff1893e0a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bfe463_eb238d79",
+        "filename": "chrome/test/data/webui/md_bookmarks/test_timer_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T18:19:05Z",
+      "side": 1,
+      "message": "Nit (optional)\n \n/**\n * @param {number} id\n * @return {boolean} Whether a given timeout id has not been run or cleared.\n */",
+      "revId": "290a462a5909a106683c6f5aabf0dff1893e0a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
