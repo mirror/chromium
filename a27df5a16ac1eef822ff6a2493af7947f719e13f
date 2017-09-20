@@ -16,6 +16,24 @@
       "revId": "a27df5a16ac1eef822ff6a2493af7947f719e13f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b7b5be_7b9f84cc",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-20T16:21:28Z",
+      "side": 1,
+      "message": "prefetched_pages_notifier.h is compiled when ENABLE_OFFLINE_PAGES is true, which is currently only Android.  If we enable a new platform, we will get a linker error and need to provide a platform-specific implementation of the (small) API in this file.  Our team uses this technique to avoid ugly #ifdefs that are a little more error prone when adding a new platform.",
+      "parentUuid": "5129edd9_2136832d",
+      "revId": "a27df5a16ac1eef822ff6a2493af7947f719e13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
