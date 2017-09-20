@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cdf53049_98707480",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T21:59:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7beb27b1_37c95281",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e79e85_a164bfce",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T01:46:43Z",
       "side": 1,
       "message": "This seems super subtle.  We need to know the inner logic of ExtensionRegistrar in order to know that RemoveExtension() deactivates the extension.",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28858b8_07fd9de4",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T21:59:05Z",
+      "side": 1,
+      "message": "I think it\u0027s reasonable to assume RemoveExtension would deactivate an extension, so I don\u0027t want RemoveExtension to CHECK that the extension is already deactivated. We could call DeactivateExtension first, but that changes the behavior (it would get added to the disabled registry, then removed, possibly triggering observers that weren\u0027t being triggered before).\n\nHow about renaming to DeactivateAndRemoveExtension, to remove any confusion without unnecessarily moving the extension to the disabled list before removing it?",
+      "parentUuid": "f3e79e85_a164bfce",
       "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e7c8a876_729aeecb",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T21:59:05Z",
+      "side": 1,
+      "message": "Some premature cleanup I shouldn\u0027t have kept -- reverting",
+      "parentUuid": "4ade6a05_65d1a4bb",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02797ee4_8b0e1836",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-19T01:46:43Z",
       "side": 1,
       "message": "I find it very confusing that we use totally different syntax than in the registry - how do we know what state extensions are expected to be in?  What\u0027s the motivation for the deviation?",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d02f945_422e47ff",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T21:59:05Z",
+      "side": 1,
+      "message": "LoadExtension is incredibly confusing -- we use it to mean:\n\n1. read an extension from somewhere on disk in one of several ways and create an inert Extension object\n2. mark an extension enabled and notify the rest of the system about it so the hooks are set up to actually \"run\" it\n\nThe registry uses \"load\" in the first sense, so let\u0027s not call the 2nd sense \"loading\" as well.\n\nWe could use EnableExtension/DisableExtension, but these functions do more work than just adding the extension to ExtensionRegistry\u0027s enabled/disabled lists. There are also cases where we deactivate an extension without disabling it at all (terminated extensions), right? So re-using these terms seems more confusing than helpful.\n\nActivate, Deactivate and Remove are the best I could come up with, but feel free to suggest others.",
+      "parentUuid": "02797ee4_8b0e1836",
       "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8676bd_9f35eecc",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T21:59:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e0b7a6_bddbff24",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
