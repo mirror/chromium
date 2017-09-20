@@ -1,4 +1,4 @@
-Tests that requestAnimationFrame is invoked with correct timestamp on CompositorWorker.
+Tests that requestAnimationFrame is invoked with correct timestamp.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 

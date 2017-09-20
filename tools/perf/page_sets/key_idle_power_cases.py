@@ -73,8 +73,6 @@ class KeyIdlePowerCasesPageSet(story.StorySet):
       'file://key_idle_power_cases/animated-gif.html',
       # Why: Ensure CSS animations aren't processed when Chrome is backgrounded.
       'file://key_idle_power_cases/css-animation.html',
-      # Why: Ensure rAF is suppressed when Chrome is backgrounded.
-      'file://key_idle_power_cases/request-animation-frame.html',
       # Why: Ensure setTimeout is throttled when Chrome is backgrounded.
       'file://key_idle_power_cases/set-timeout.html',
     ]
