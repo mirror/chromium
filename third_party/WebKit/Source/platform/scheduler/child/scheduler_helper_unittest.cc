@@ -16,6 +16,7 @@
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
+#include "platform/scheduler/test/append_to_vector.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -26,27 +27,6 @@ using ::testing::Return;
 
 namespace blink {
 namespace scheduler {
-
-namespace {
-void AppendToVectorTestTask(std::vector<std::string>* vector,
-                            std::string value) {
-  vector->push_back(value);
-}
-
-void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
-                                 std::vector<int>* vector,
-                                 int* reentrant_count,
-                                 int max_reentrant_count) {
-  vector->push_back((*reentrant_count)++);
-  if (*reentrant_count < max_reentrant_count) {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::Bind(AppendToVectorReentrantTask, base::Unretained(task_runner),
-                   vector, reentrant_count, max_reentrant_count));
-  }
-}
-
-};  // namespace
 
 class SchedulerHelperTest : public ::testing::Test {
  public:

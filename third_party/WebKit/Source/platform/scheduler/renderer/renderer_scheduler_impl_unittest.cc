@@ -24,6 +24,7 @@
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
+#include "platform/scheduler/test/append_to_vector.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -48,31 +49,7 @@ class FakeInputEvent : public blink::WebInputEvent {
                       WebInputEvent::kTimeStampForTesting) {}
 };
 
-void AppendToVectorTestTask(std::vector<std::string>* vector,
-                            std::string value) {
-  vector->push_back(value);
-}
-
-void AppendToVectorIdleTestTask(std::vector<std::string>* vector,
-                                std::string value,
-                                base::TimeTicks deadline) {
-  AppendToVectorTestTask(vector, value);
-}
-
 void NullTask() {}
-
-void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
-                                 std::vector<int>* vector,
-                                 int* reentrant_count,
-                                 int max_reentrant_count) {
-  vector->push_back((*reentrant_count)++);
-  if (*reentrant_count < max_reentrant_count) {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::Bind(AppendToVectorReentrantTask, base::Unretained(task_runner),
-                   vector, reentrant_count, max_reentrant_count));
-  }
-}
 
 void IdleTestTask(int* run_count,
                   base::TimeTicks* deadline_out,

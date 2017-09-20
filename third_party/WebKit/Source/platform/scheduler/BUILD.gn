@@ -146,6 +146,8 @@ source_set("test_support") {
     "base/test_time_source.h",
     "child/scheduler_tqm_delegate_for_test.cc",
     "child/scheduler_tqm_delegate_for_test.h",
+    "test/append_to_vector.cc",
+    "test/append_to_vector.h",
     "test/fake_renderer_scheduler.cc",
     "test/fake_web_task_runner.cc",
     "test/fake_web_task_runner.h",
