@@ -75,6 +75,10 @@ class APIEventHandler {
                           v8::Local<v8::Context> context,
                           const base::ListValue& arguments,
                           const EventFilteringInfo* filter);
+  void FireEventInContext(const std::string& event_name,
+                          v8::Local<v8::Context> context,
+                          std::vector<v8::Local<v8::Value>>* arguments,
+                          const EventFilteringInfo* filter);
 
   // Registers a |function| to serve as an "argument massager" for the given
   // |event_name|, mutating the original arguments.
@@ -102,6 +106,11 @@ class APIEventHandler {
                                         v8::Local<v8::Context> context);
 
  private:
+  void FireEventInContextImpl(EventEmitter* emitter,
+                              v8::Local<v8::Context> context,
+                              std::vector<v8::Local<v8::Value>> arguments,
+                              const EventFilteringInfo* filter);
+
   // Method to run a given v8::Function. Curried in for testing.
   binding::RunJSFunction call_js_;
   binding::RunJSFunctionSync call_js_sync_;
