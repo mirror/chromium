@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3abb0615_fc3cd7e3",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-20T19:45:08Z",
+      "side": 1,
+      "message": "This 64 DIP padding shouldn\u0027t be included in the label width; we should place it between label and button (probably as an empty \"spacer\" view if using BoxLayout).  Same with UNRELATED_CONTROL and the border insets; none of those should be part of what we consider the label.",
+      "revId": "2f2c7b52dc94dfeac6c1d8502a85b1cb809736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfce062_faa12bf3",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-20T19:45:08Z",
+      "side": 1,
+      "message": "You\u0027ll want to copy the approach used in find_bar_view.cc to use the TOAST vertical margin constants above controls and labels.  For horizontal margins, it looks to me as if the zoom bubble button spacing in the mock is not specified to match the find bar button spacing, but I think it should be (basically, we should probably have the UNRELATED_CONTROL spacing between the \"16 DIP inner glyph\" portions of the buttons, not including the VECTOR_IMAGE_BUTTON insets around them).  You can clarify with bettes@ (maybe loop in bsep@ so he\u0027s on top of it) which spacing method he wants, but that\u0027s the sensical and consistent thing to do AFAICT.",
+      "revId": "2f2c7b52dc94dfeac6c1d8502a85b1cb809736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
