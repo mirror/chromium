@@ -16,6 +16,24 @@
       "revId": "6b9c9001aea5fa13631f1935be81e509be9254ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d081e100_48294fdb",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-20T01:50:30Z",
+      "side": 1,
+      "message": "Thanks for advice. I named that shared class as ChromeWebContentsViewFocusHelper and could remove the #ifdefs in ChromeWebContentsViewDelegateViews.",
+      "parentUuid": "17f3fe25_1c673148",
+      "revId": "6b9c9001aea5fa13631f1935be81e509be9254ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
