@@ -16,6 +16,24 @@
       "revId": "4c1fbfebe1765a637d8b364dc7c6db4544cacac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75219d0f_2d45c419",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T15:31:35Z",
+      "side": 1,
+      "message": "I forgot about that. I\u0027ll remove it. \nThere\u0027s an asymmetry that trips me every time I look at this code. There\u0027s a bunch of coordinators that are started in the -start method but none stopped in the -stop method in this class.",
+      "parentUuid": "0045f901_7a35113a",
+      "revId": "4c1fbfebe1765a637d8b364dc7c6db4544cacac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
