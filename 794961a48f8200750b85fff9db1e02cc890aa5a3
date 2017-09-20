@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d96a1fa8_956f595b",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-20T00:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c50543ed_fbfcb687",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612c9f30_3af5e5f5",
         "filename": "components/download/internal/stats.cc",
         "patchSetId": 9
@@ -93,6 +117,30 @@
       "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e9a7a3_b23493db",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-20T00:38:24Z",
+      "side": 1,
+      "message": "As discussed, recording all the conditions.",
+      "parentUuid": "612c9f30_3af5e5f5",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 44
+      },
+      "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
