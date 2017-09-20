@@ -31,10 +31,8 @@ class CC_EXPORT PlaybackImageProvider : public ImageProvider {
   PlaybackImageProvider& operator=(PlaybackImageProvider&& other);
 
   // ImageProvider implementation.
-  ScopedDecodedDrawImage GetDecodedDrawImage(const PaintImage& paint_image,
-                                             const SkRect& src_rect,
-                                             SkFilterQuality filter_quality,
-                                             const SkMatrix& matrix) override;
+  ScopedDecodedDrawImage GetDecodedDrawImage(
+      const DrawImage& draw_image) override;
 
  private:
   bool skip_all_images_;

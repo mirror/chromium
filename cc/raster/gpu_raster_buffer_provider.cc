@@ -14,6 +14,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
 #include "cc/paint/display_item_list.h"
+#include "cc/paint/image_provider.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/raster/raster_source.h"
@@ -159,12 +160,13 @@ void GpuRasterBufferProvider::RasterBufferImpl::Playback(
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
     const gfx::AxisTransform2d& transform,
-    const RasterSource::PlaybackSettings& playback_settings) {
+    const RasterSource::PlaybackSettings& playback_settings,
+    const std::vector<DrawImage>& at_raster_images) {
   TRACE_EVENT0("cc", "GpuRasterBuffer::Playback");
-  client_->PlaybackOnWorkerThread(&lock_, sync_token_,
-                                  resource_has_previous_content_, raster_source,
-                                  raster_full_rect, raster_dirty_rect,
-                                  new_content_id, transform, playback_settings);
+  client_->PlaybackOnWorkerThread(
+      &lock_, sync_token_, resource_has_previous_content_, raster_source,
+      raster_full_rect, raster_dirty_rect, new_content_id, transform,
+      playback_settings, at_raster_images);
 }
 
 GpuRasterBufferProvider::GpuRasterBufferProvider(
@@ -304,7 +306,8 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
     const gfx::AxisTransform2d& transform,
-    const RasterSource::PlaybackSettings& playback_settings) {
+    const RasterSource::PlaybackSettings& playback_settings,
+    const std::vector<DrawImage>& at_raster_images) {
   viz::ContextProvider::ScopedContextLock scoped_context(
       worker_context_provider_);
   gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
@@ -312,6 +315,9 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
 
   // Synchronize with compositor. Nop if sync token is empty.
   gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
+
+  ImageProvider::ScopedImageDecoder decoder(playback_settings.image_provider,
+                                            at_raster_images);
 
   gfx::Rect playback_rect = raster_full_rect;
   if (resource_has_previous_content) {

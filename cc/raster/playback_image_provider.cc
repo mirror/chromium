@@ -9,12 +9,6 @@
 
 namespace cc {
 namespace {
-SkIRect RoundOutRect(const SkRect& rect) {
-  SkIRect result;
-  rect.roundOut(&result);
-  return result;
-}
-
 void UnrefImageFromCache(DrawImage draw_image,
                          ImageDecodeCache* cache,
                          DecodedDrawImage decoded_draw_image) {
@@ -44,14 +38,13 @@ PlaybackImageProvider& PlaybackImageProvider::operator=(
     PlaybackImageProvider&& other) = default;
 
 ImageProvider::ScopedDecodedDrawImage
-PlaybackImageProvider::GetDecodedDrawImage(const PaintImage& paint_image,
-                                           const SkRect& src_rect,
-                                           SkFilterQuality filter_quality,
-                                           const SkMatrix& matrix) {
+PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
   // Return an empty decoded images if we are skipping all images during this
   // raster.
   if (skip_all_images_)
     return ScopedDecodedDrawImage();
+
+  const PaintImage& paint_image = draw_image.paint_image();
 
   if (images_to_skip_.count(paint_image.stable_id()) != 0) {
     DCHECK(paint_image.GetSkImage()->isLazyGenerated());
@@ -61,15 +54,14 @@ PlaybackImageProvider::GetDecodedDrawImage(const PaintImage& paint_image,
   if (!paint_image.GetSkImage()->isLazyGenerated()) {
     return ScopedDecodedDrawImage(
         DecodedDrawImage(paint_image.GetSkImage(), SkSize::Make(0, 0),
-                         SkSize::Make(1.f, 1.f), filter_quality));
+                         SkSize::Make(1.f, 1.f), draw_image.filter_quality()));
   }
 
-  DrawImage draw_image = DrawImage(paint_image, RoundOutRect(src_rect),
-                                   filter_quality, matrix, target_color_space_);
-  auto decoded_draw_image = cache_->GetDecodedImageForDraw(draw_image);
+  DrawImage adjusted_image(draw_image, 1.f, target_color_space_);
+  auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
   return ScopedDecodedDrawImage(
       decoded_draw_image,
-      base::BindOnce(&UnrefImageFromCache, std::move(draw_image), cache_));
+      base::BindOnce(&UnrefImageFromCache, std::move(adjusted_image), cache_));
 }
 
 }  // namespace cc

@@ -92,6 +92,7 @@ class RasterTaskImpl : public TileTask {
                  uint64_t source_prepare_tiles_id,
                  std::unique_ptr<RasterBuffer> raster_buffer,
                  TileTask::Vector* dependencies,
+                 std::vector<DrawImage> at_raster_images,
                  bool is_gpu_rasterization,
                  base::Optional<PlaybackImageProvider> image_provider)
       : TileTask(!is_gpu_rasterization, dependencies),
@@ -99,6 +100,7 @@ class RasterTaskImpl : public TileTask {
         tile_id_(tile->id()),
         resource_(resource),
         raster_source_(std::move(raster_source)),
+        at_raster_images_(std::move(at_raster_images)),
         content_rect_(tile->content_rect()),
         invalid_content_rect_(invalidated_rect),
         raster_transform_(tile->raster_transform()),
@@ -135,7 +137,8 @@ class RasterTaskImpl : public TileTask {
 
     raster_buffer_->Playback(raster_source_.get(), content_rect_,
                              invalid_content_rect_, new_content_id_,
-                             raster_transform_, playback_settings_);
+                             raster_transform_, playback_settings_,
+                             at_raster_images_);
   }
 
   // Overridden from TileTask:
@@ -167,6 +170,7 @@ class RasterTaskImpl : public TileTask {
 
   // The following members should be used for running the task.
   scoped_refptr<RasterSource> raster_source_;
+  std::vector<DrawImage> at_raster_images_;
   gfx::Rect content_rect_;
   gfx::Rect invalid_content_rect_;
   gfx::AxisTransform2d raster_transform_;
@@ -1160,8 +1164,9 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   ImageDecodeCache::TracingInfo tracing_info(
       prepare_tiles_count_, prioritized_tile.priority().priority_bin,
       ImageDecodeCache::TaskType::kInRaster);
-  image_controller_.GetTasksForImagesAndRef(&sync_decoded_images, &decode_tasks,
-                                            tracing_info);
+  std::vector<DrawImage> at_raster_images;
+  image_controller_.GetTasksForImagesAndRef(
+      &sync_decoded_images, &at_raster_images, &decode_tasks, tracing_info);
 
   std::unique_ptr<RasterBuffer> raster_buffer =
       raster_buffer_provider_->AcquireBufferForRaster(
@@ -1169,7 +1174,9 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
 
   base::Optional<PlaybackImageProvider> image_provider;
   const bool has_predecoded_images = !sync_decoded_images.empty();
-  if (skip_images || has_checker_images || has_predecoded_images) {
+  const bool has_at_raster_images = !at_raster_images.empty();
+  if (skip_images || has_checker_images || has_predecoded_images ||
+      has_at_raster_images) {
     image_provider.emplace(skip_images, std::move(images_to_skip),
                            image_controller_.cache(), color_space);
   }
@@ -1178,7 +1185,8 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
       this, tile, resource, prioritized_tile.raster_source(), playback_settings,
       prioritized_tile.priority().resolution, invalidated_rect,
       prepare_tiles_count_, std::move(raster_buffer), &decode_tasks,
-      use_gpu_rasterization_, std::move(image_provider)));
+      std::move(at_raster_images), use_gpu_rasterization_,
+      std::move(image_provider)));
 }
 
 void TileManager::ResetSignalsForTesting() {

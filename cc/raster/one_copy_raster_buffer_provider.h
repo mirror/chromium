@@ -59,6 +59,7 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
       const gfx::Rect& raster_dirty_rect,
       const gfx::AxisTransform2d& transform,
       const RasterSource::PlaybackSettings& playback_settings,
+      const std::vector<DrawImage>& at_raster_images,
       uint64_t previous_content_id,
       uint64_t new_content_id);
 
@@ -72,13 +73,13 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
     ~RasterBufferImpl() override;
 
     // Overridden from RasterBuffer:
-    void Playback(
-        const RasterSource* raster_source,
-        const gfx::Rect& raster_full_rect,
-        const gfx::Rect& raster_dirty_rect,
-        uint64_t new_content_id,
-        const gfx::AxisTransform2d& transform,
-        const RasterSource::PlaybackSettings& playback_settings) override;
+    void Playback(const RasterSource* raster_source,
+                  const gfx::Rect& raster_full_rect,
+                  const gfx::Rect& raster_dirty_rect,
+                  uint64_t new_content_id,
+                  const gfx::AxisTransform2d& transform,
+                  const RasterSource::PlaybackSettings& playback_settings,
+                  const std::vector<DrawImage>& at_raster_images) override;
 
     void set_sync_token(const gpu::SyncToken& sync_token) {
       sync_token_ = sync_token;
