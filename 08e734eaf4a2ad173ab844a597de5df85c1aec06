@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a32ab14_bc4fad91",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T12:11:50Z",
+      "side": 1,
+      "message": "WithBaseSyncPrimitives() no longer used in this CL.",
+      "parentUuid": "02a8fdeb_7e435d09",
+      "revId": "08e734eaf4a2ad173ab844a597de5df85c1aec06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf923beb_f5ed8c47",
         "filename": "net/dns/host_resolver_impl.cc",
         "patchSetId": 13
