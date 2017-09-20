@@ -22,6 +22,30 @@
       "revId": "85865feded46ae7a2bab22c5fff537ca576e66f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703d7a67_6afefdb1",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-20T22:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a6061f_8afb9214",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "85865feded46ae7a2bab22c5fff537ca576e66f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
