@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c05683b_91092e6c",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-20T17:31:34Z",
+      "side": 1,
+      "message": "Is this ever false? If it is, we won\u0027t be able to hide the section.\n\nWe should either:\na) assert(his.pageVisibility)\nb) this.pageVisibility \u003d this.pageVisibility || {}\n\nExcept {} isn\u0027t correct, we would need to define a defaultPageVisibility_ member or method.",
+      "revId": "134c0e8f028171a1286b61593ed7c28640ae910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8befe175_71b5ea89",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-20T17:31:34Z",
+      "side": 1,
+      "message": "nit: test |user| before |user_type|s",
+      "revId": "134c0e8f028171a1286b61593ed7c28640ae910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
