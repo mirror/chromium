@@ -926,7 +926,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
       !resource->CanReuse(params))
     return nullptr;
 
-  if (!resource->MatchPreload(params))
+  if (!resource->MatchPreload(params, Context().GetLoadingTaskRunner()))
     return nullptr;
   preloads_.erase(it);
   matched_preloads_.push_back(resource);

@@ -267,8 +267,9 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
-  return GetFrame()->FrameScheduler()->LoadingTaskRunner();
+WebTaskRunner* FrameFetchContext::GetLoadingTaskRunner() {
+  return GetFrameScheduler() ? GetFrameScheduler()->LoadingTaskRunner().Get()
+                             : nullptr;
 }
 
 WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
@@ -1130,7 +1131,7 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     task_runner =
         Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
   } else {
-    task_runner = GetTaskRunner();
+    task_runner = GetLoadingTaskRunner();
   }
 
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
