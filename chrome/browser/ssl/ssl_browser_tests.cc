@@ -16,6 +16,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/pattern.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -6045,6 +6046,152 @@ IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitialDisabled) {
       l10n_util::GetStringUTF8(IDS_SSL_V2_HEADING);
   EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
       interstitial_page, expected_title));
+}
+
+// Allows tests to effectively turn off CT requirements. Used by
+// SymantecMessageSSLUITest below to test Symantec certificates issued after the
+// CT requirement date.
+class NoRequireCTDelegate
+    : public net::TransportSecurityState::RequireCTDelegate {
+ public:
+  NoRequireCTDelegate() {}
+  ~NoRequireCTDelegate() override = default;
+
+  CTRequirementLevel IsCTRequiredForHost(const std::string& hostname) override {
+    return CTRequirementLevel::NOT_REQUIRED;
+  }
+};
+
+void SetRequireCTDelegateOnIOThread(
+    scoped_refptr<net::URLRequestContextGetter> context_getter,
+    net::TransportSecurityState::RequireCTDelegate* delegate) {
+  net::TransportSecurityState* state =
+      context_getter->GetURLRequestContext()->transport_security_state();
+  state->SetRequireCTDelegate(delegate);
+}
+
+// A test fixture that mocks certificate verifications for legacy Symantec
+// certificates that are slated to be distrusted in future Chrome releases.
+class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
+ public:
+  SymantecMessageSSLUITest()
+      : CertVerifierBrowserTest(),
+        https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
+  ~SymantecMessageSSLUITest() override {}
+
+  void SetUpOnMainThread() override {
+    CertVerifierBrowserTest::SetUpOnMainThread();
+
+    require_ct_delegate_ = base::MakeUnique<NoRequireCTDelegate>();
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &SetRequireCTDelegateOnIOThread,
+            base::RetainedRef(browser()->profile()->GetRequestContext()),
+            require_ct_delegate_.get()));
+
+    host_resolver()->AddRule("*", "127.0.0.1");
+    ASSERT_TRUE(https_server_.Start());
+  }
+
+ protected:
+  void SetUpCertVerifier(bool use_chrome_66_date) {
+    net::CertVerifyResult verify_result;
+    verify_result.verified_cert = CreateSymantecChain(use_chrome_66_date);
+    ASSERT_TRUE(verify_result.verified_cert);
+    verify_result.cert_status = 0;
+
+    // Collect the hashes of the leaf and intermediates.
+    verify_result.public_key_hashes.push_back(
+        GetSPKIHash(verify_result.verified_cert.get()));
+    for (const net::X509Certificate::OSCertHandle& intermediate :
+         verify_result.verified_cert->GetIntermediateCertificates()) {
+      scoped_refptr<net::X509Certificate> intermediate_x509 =
+          net::X509Certificate::CreateFromHandle(
+              intermediate, net::X509Certificate::OSCertHandles());
+      ASSERT_TRUE(intermediate_x509);
+      verify_result.public_key_hashes.push_back(
+          GetSPKIHash(intermediate_x509.get()));
+    }
+
+    mock_cert_verifier()->AddResultForCert(https_server_.GetCertificate().get(),
+                                           verify_result, net::OK);
+  }
+
+  const net::EmbeddedTestServer& https_server() { return https_server_; }
+
+ private:
+  static scoped_refptr<net::X509Certificate> CreateSymantecChain(
+      bool use_chrome_66_date) {
+    // Use a legacy Symantec root certificate.
+    std::string root =
+        "MIIDIDCCAomgAwIBAgIENd70zzANBgkqhkiG9w0BAQUFADBOMQswCQYDVQQGEwJV"
+        "UzEQMA4GA1UEChMHRXF1aWZheDEtMCsGA1UECxMkRXF1aWZheCBTZWN1cmUgQ2Vy"
+        "dGlmaWNhdGUgQXV0aG9yaXR5MB4XDTk4MDgyMjE2NDE1MVoXDTE4MDgyMjE2NDE1"
+        "MVowTjELMAkGA1UEBhMCVVMxEDAOBgNVBAoTB0VxdWlmYXgxLTArBgNVBAsTJEVx"
+        "dWlmYXggU2VjdXJlIENlcnRpZmljYXRlIEF1dGhvcml0eTCBnzANBgkqhkiG9w0B"
+        "AQEFAAOBjQAwgYkCgYEAwV2xWGcIYu6gmi0fCG2RFGiYCh7+2gRvE4RiIcPRfM6f"
+        "BeC4AfBONOziipUEZKzxa1NfBbPLZ4C/QgKO/t0BCezhABRP/PvwDN1Dulsr4R+A"
+        "cJkVV5MW8Q+XarfCaCMczE1ZMKxRHjuvK9buY0V7xdlfUNLjUA86iOe/FP3gx7kC"
+        "AwEAAaOCAQkwggEFMHAGA1UdHwRpMGcwZaBjoGGkXzBdMQswCQYDVQQGEwJVUzEQ"
+        "MA4GA1UEChMHRXF1aWZheDEtMCsGA1UECxMkRXF1aWZheCBTZWN1cmUgQ2VydGlm"
+        "aWNhdGUgQXV0aG9yaXR5MQ0wCwYDVQQDEwRDUkwxMBoGA1UdEAQTMBGBDzIwMTgw"
+        "ODIyMTY0MTUxWjALBgNVHQ8EBAMCAQYwHwYDVR0jBBgwFoAUSOZo+SvSspXXR9gj"
+        "IBBPM5iQn9QwHQYDVR0OBBYEFEjmaPkr0rKV10fYIyAQTzOYkJ/UMAwGA1UdEwQF"
+        "MAMBAf8wGgYJKoZIhvZ9B0EABA0wCxsFVjMuMGMDAgbAMA0GCSqGSIb3DQEBBQUA"
+        "A4GBAFjOKer89961zgK5F7WF0bnj4JXMJTENAKaSbn+2kmOeUJXRmm/kEd5jhW6Y"
+        "7qj/WsjTVbJmcVfewCHrPSqnI0kBBIZCe/zuf6IWUrVnZ9NA2zsmWLIodz2uFHdh"
+        "1voqZiegDfqnc1zqcPGUIWVEX/r87yloqaKHee9570+sB3c4";
+
+    std::string der_root;
+    if (!base::Base64Decode(root, &der_root)) {
+      return nullptr;
+    }
+
+    scoped_refptr<net::X509Certificate> leaf = net::ImportCertFromFile(
+        net::GetTestCertsDirectory(),
+        use_chrome_66_date ? "pre_june_2016.pem" : "post_june_2016.pem");
+
+    std::string der_leaf;
+    if (!leaf || !leaf->GetDEREncoded(leaf->os_cert_handle(), &der_leaf))
+      return nullptr;
+
+    std::vector<base::StringPiece> decoded_pieces = {der_leaf, der_root};
+    return net::X509Certificate::CreateFromDERCertChain(decoded_pieces);
+  }
+
+  net::EmbeddedTestServer https_server_;
+  std::unique_ptr<NoRequireCTDelegate> require_ct_delegate_;
+};
+
+// Tests that the Symantec console message is properly overridden for pre-June
+// 2016 certificates.
+IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PreJune2016) {
+  SetUpCertVerifier(true /* use Chrome 66 distrust date */);
+  GURL url(https_server().GetURL("/ssl/google.html"));
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  content::ConsoleObserverDelegate console_observer(
+      tab, "*distrusted in Chrome 66*");
+  tab->SetDelegate(&console_observer);
+  ui_test_utils::NavigateToURL(browser(), url);
+  console_observer.Wait();
+  EXPECT_TRUE(base::MatchPattern(console_observer.message(),
+                                 "*The certificate used to load*"));
+}
+
+// Tests that the Symantec console message is properly overridden for post-June
+// 2016 certificates.
+IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
+  SetUpCertVerifier(false /* use Chrome 66 distrust date */);
+  GURL url(https_server().GetURL("/ssl/google.html"));
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  content::ConsoleObserverDelegate console_observer(
+      tab, "*distrusted in Chrome 66*");
+  tab->SetDelegate(&console_observer);
+  ui_test_utils::NavigateToURL(browser(), url);
+  console_observer.Wait();
+  EXPECT_TRUE(base::MatchPattern(console_observer.message(),
+                                 "*The certificate used to load*"));
 }
 
 // TODO(jcampan): more tests to do below.
