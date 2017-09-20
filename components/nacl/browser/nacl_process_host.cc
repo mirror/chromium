@@ -183,8 +183,8 @@ class NaClSandboxedProcessLauncherDelegate
     return content::GetGenericZygote();
   }
 #endif  // OS_WIN
-  content::SandboxType GetSandboxType() override {
-    return content::SANDBOX_TYPE_PPAPI;
+  sandbox::SandboxType GetSandboxType() override {
+    return sandbox::SANDBOX_TYPE_PPAPI;
   }
 };
 

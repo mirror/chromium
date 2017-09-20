@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//sandbox/features.gni")
+import("//testing/test.gni")
 
 # Several targets want to include this header file. We separate it out
 # here so multiple targets can depend on it.
@@ -13,8 +14,11 @@ source_set("sandbox_export") {
   ]
 }
 
-# Meta-target that forwards to the proper platform one.
-group("sandbox") {
+source_set("sandbox") {
+  sources = [
+    "policy/sandbox_type.cc",
+    "policy/sandbox_type.h",
+  ]
   if (is_win) {
     public_deps = [
       "//sandbox/win:sandbox",
@@ -27,6 +31,37 @@ group("sandbox") {
     public_deps = [
       "//sandbox/linux:sandbox",
     ]
+  }
+}
+
+test("sandbox_unittests") {
+  sources = [
+    "policy/sandbox_type_unittest.cc",
+  ]
+  deps = [
+    ":sandbox",
+  ]
+  if (is_mac) {
+    deps += [
+      "sandbox/mac:sandbox_unittests_sources",
+      "sandbox/mac:seatbelt",
+      "sandbox/mac:seatbelt_proto",
+      "//base",
+      "//base/test:run_all_unittests",
+      "//testing/gtest",
+    ]
+    libs = [
+      "CoreFoundation.framework",
+      "Foundation.framework",
+    ]
+  } else if (is_linux || is_android) {
+    deps += [
+      "//build/config:exe_and_shlib_deps",
+      "//sandbox/linux:sandbox_unittests_sources",
+    ]
+    if (is_android) {
+      use_raw_android_executable = true
+    }
   }
 }
 
