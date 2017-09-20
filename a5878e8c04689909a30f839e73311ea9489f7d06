@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0812443_7fb51bf6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-20T09:33:07Z",
+      "side": 1,
+      "message": "I love this :-) Complex problem, simple solution.",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 42
+      },
+      "revId": "a5878e8c04689909a30f839e73311ea9489f7d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
