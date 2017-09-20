@@ -22,6 +22,30 @@
       "revId": "8380f0e1821328728227ba7dc079397dbe11c31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f50138_cf507649",
+        "filename": "remoting/ios/app/pin_entry_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-20T18:14:58Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll do a UIColor cleanup.",
+      "parentUuid": "7f2b6d14_a7a9db62",
+      "range": {
+        "startLine": 82,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "8380f0e1821328728227ba7dc079397dbe11c31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
