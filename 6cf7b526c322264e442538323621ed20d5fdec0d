@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a06e6b8e_59b71f0d",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-20T22:49:48Z",
+      "side": 1,
+      "message": "Ah, it\u0027s due to PlzNavigate being enabled on trunk (which happened during the rebase).  The test works as expected without the fix when I run with --disable-browser-side-navigation.\n\nI\u0027ll continue to look to understand why, but it seems somewhat less pressing now, given that the attack targeted non-PlzNavigate mode.",
+      "parentUuid": "e48e84ca_f4ad124e",
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7b5d4c2_090d54dc",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 4
