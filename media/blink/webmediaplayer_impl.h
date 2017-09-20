@@ -41,6 +41,7 @@
 #include "media/filters/pipeline_controller.h"
 #include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
 #include "media/renderers/skcanvas_video_renderer.h"
+#include "media/video/gpu_video_accelerator_factories.h"
 #include "third_party/WebKit/public/platform/WebAudioSourceProvider.h"
 #include "third_party/WebKit/public/platform/WebContentDecryptionModuleResult.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
@@ -71,6 +72,10 @@ namespace gpu {
 namespace gles2 {
 class GLES2Interface;
 }
+}
+
+namespace viz {
+class ContextProvider;
 }
 
 namespace media {
@@ -104,6 +109,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       WebMediaPlayerDelegate* delegate,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
+      viz::ContextProvider* media_context_provider,
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 

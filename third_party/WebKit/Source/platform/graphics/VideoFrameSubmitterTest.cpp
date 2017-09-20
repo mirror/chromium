@@ -85,7 +85,8 @@ class VideoFrameSubmitterTest : public ::testing::Test {
   }
 
   void MakeSubmitter() {
-    submitter_ = base::MakeUnique<VideoFrameSubmitter>(provider_.get());
+    submitter_ =
+        base::MakeUnique<VideoFrameSubmitter>(provider_.get(), nullptr);
     viz::mojom::blink::CompositorFrameSinkPtr submitter_sink;
     viz::mojom::blink::CompositorFrameSinkRequest request =
         mojo::MakeRequest(&submitter_sink);

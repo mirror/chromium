@@ -51,6 +51,7 @@
 #include "media/blink/webmediasource_impl.h"
 #include "media/filters/chunk_demuxer.h"
 #include "media/filters/ffmpeg_demuxer.h"
+#include "media/video/gpu_video_accelerator_factories.h"
 #include "third_party/WebKit/public/platform/WebEncryptedMediaTypes.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerEncryptedMediaClient.h"
@@ -177,6 +178,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
     WebMediaPlayerDelegate* delegate,
     std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
     UrlIndex* url_index,
+    viz::ContextProvider* media_context_provider,
     std::unique_ptr<WebMediaPlayerParams> params)
     : frame_(frame),
       delegate_state_(DelegateState::GONE),
@@ -272,7 +274,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
                            : base::ThreadTaskRunnerHandle::Get();
   }
 
-  compositor_ = base::MakeUnique<VideoFrameCompositor>(vfc_task_runner_);
+  compositor_ = base::MakeUnique<VideoFrameCompositor>(vfc_task_runner_,
+                                                       media_context_provider);
 
   if (surface_layer_for_video_enabled_) {
     vfc_task_runner_->PostTask(

@@ -9,6 +9,7 @@
 #include "cc/layers/video_frame_provider.h"
 
 namespace viz {
+class ContextProvider;
 class FrameSinkId;
 }  // namespace viz
 
@@ -19,8 +20,8 @@ namespace blink {
 class BLINK_PLATFORM_EXPORT WebVideoFrameSubmitter
     : public cc::VideoFrameProvider::Client {
  public:
-  static std::unique_ptr<WebVideoFrameSubmitter> Create(
-      cc::VideoFrameProvider*);
+  static std::unique_ptr<WebVideoFrameSubmitter> Create(cc::VideoFrameProvider*,
+                                                        viz::ContextProvider*);
   virtual ~WebVideoFrameSubmitter() = default;
   virtual void StartSubmitting(const viz::FrameSinkId&) = 0;
 };

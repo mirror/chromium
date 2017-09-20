@@ -21,7 +21,8 @@ namespace media {
 const int kBackgroundRenderingTimeoutMs = 250;
 
 VideoFrameCompositor::VideoFrameCompositor(
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+    viz::ContextProvider* media_context_provider)
     : task_runner_(task_runner),
       tick_clock_(new base::DefaultTickClock()),
       background_rendering_enabled_(true),
@@ -45,7 +46,8 @@ VideoFrameCompositor::VideoFrameCompositor(
   background_rendering_timer_.SetTaskRunner(task_runner_);
 
   if (surface_layer_for_video_enabled_)
-    submitter_ = blink::WebVideoFrameSubmitter::Create(this);
+    submitter_ =
+        blink::WebVideoFrameSubmitter::Create(this, media_context_provider);
 }
 
 VideoFrameCompositor::~VideoFrameCompositor() {

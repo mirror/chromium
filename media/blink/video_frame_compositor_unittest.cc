@@ -55,8 +55,8 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
       // only a bare pointer.
     }
     submitter_ = client_.get();
-    compositor_ =
-        base::MakeUnique<VideoFrameCompositor>(message_loop.task_runner());
+    compositor_ = base::MakeUnique<VideoFrameCompositor>(
+        message_loop.task_runner(), nullptr);
 
     if (!IsSurfaceLayerForVideoEnabled()) {
       compositor_->SetVideoFrameProviderClient(client_.get());

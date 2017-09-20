@@ -5,7 +5,10 @@
 #ifndef VideoFrameResourceProvider_h
 #define VideoFrameResourceProvider_h
 
+#include "cc/resources/video_resource_updater.h"
+
 namespace viz {
+class ContextProvider;
 class RenderPass;
 }
 
@@ -16,9 +19,13 @@ namespace blink {
 // frame.
 class VideoFrameResourceProvider {
  public:
-  VideoFrameResourceProvider();
+  explicit VideoFrameResourceProvider(viz::ContextProvider*);
 
   void AppendQuads(viz::RenderPass&);
+
+ private:
+  viz::ContextProvider* context_provider_;
+  cc::VideoResourceUpdater resource_updater_;
 };
 
 }  // namespace blink

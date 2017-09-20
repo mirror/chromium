@@ -261,7 +261,7 @@ class WebMediaPlayerImplTest : public testing::Test {
 
     wmpi_ = base::MakeUnique<WebMediaPlayerImpl>(
         web_local_frame_, &client_, nullptr, &delegate_,
-        std::move(factory_selector), url_index_.get(),
+        std::move(factory_selector), url_index_.get(), nullptr,
         base::MakeUnique<WebMediaPlayerParams>(
             std::move(media_log), WebMediaPlayerParams::DeferLoadCB(),
             scoped_refptr<SwitchableAudioRendererSink>(),
@@ -271,8 +271,7 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(),
-            base::Bind(&CreateCapabilitiesRecorder),
+            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
                        base::Unretained(this))));
 }
