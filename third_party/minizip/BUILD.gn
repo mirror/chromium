@@ -14,16 +14,15 @@ config("minizip_include_dirs") {
 
 static_library("minizip") {
   sources = [
-    # TODO(yawano): AES part cannot be compiled in pnacl.
     # "src/aes/aes.h",
+    # "src/aes/aes_ni.c",
+    # "src/aes/aes_ni.h",
+    # "src/aes/aes_via_ace.h",
     # "src/aes/aescrypt.c",
     # "src/aes/aeskey.c",
     # "src/aes/aesopt.h",
     # "src/aes/aestab.c",
     # "src/aes/aestab.h",
-    # "src/aes/aes_ni.c",
-    # "src/aes/aes_ni.h",
-    # "src/aes/aes_via_ace.h",
     # "src/aes/brg_endian.h",
     # "src/aes/brg_types.h",
     # "src/aes/fileenc.c",
@@ -51,7 +50,7 @@ static_library("minizip") {
   ]
 
   defines = [
-    # "HAVE_AES"
+    #  "HAVE_AES"
   ]
 
   if (is_nacl) {
