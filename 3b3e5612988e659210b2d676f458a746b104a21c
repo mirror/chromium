@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0f1795a_327e1090",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T18:22:19Z",
+      "side": 1,
+      "message": "Oh yeah, much better that way.",
+      "parentUuid": "8a06e6bf_183c1a49",
+      "revId": "3b3e5612988e659210b2d676f458a746b104a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2512ceac_0968ea9f",
         "filename": "chrome/utility/BUILD.gn",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T18:09:17Z",
       "side": 1,
       "message": "Should this be guarded by \"if (enable_print_preview)\" as well? i.e. Keep it off Android.",
+      "revId": "3b3e5612988e659210b2d676f458a746b104a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caebbf9_b6d49d13",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T18:22:19Z",
+      "side": 1,
+      "message": "Yep, done.",
+      "parentUuid": "2512ceac_0968ea9f",
       "revId": "3b3e5612988e659210b2d676f458a746b104a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3b3e5612988e659210b2d676f458a746b104a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30622b7e_d48f64e7",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T18:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b8a0d4_b7476e14",
+      "revId": "3b3e5612988e659210b2d676f458a746b104a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
