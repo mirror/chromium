@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43cfaa5e_5144208b",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-20T18:26:40Z",
+      "side": 1,
+      "message": "Why is duration() included here?",
+      "revId": "8d771ead1b476f08fe951b7d54c818608154373c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0608b4e_7585bd6b",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-20T18:26:40Z",
+      "side": 1,
+      "message": "This should be in UpdateStats_Locked() not here.",
+      "revId": "8d771ead1b476f08fe951b7d54c818608154373c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
