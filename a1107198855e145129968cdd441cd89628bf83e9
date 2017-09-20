@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b2b265_d4df70e9",
+        "filename": "components/safe_browsing/base_ui_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-20T12:24:33Z",
+      "side": 1,
+      "message": "Looks like this is only called from Insert(), so you could make this a private method.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "a1107198855e145129968cdd441cd89628bf83e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
