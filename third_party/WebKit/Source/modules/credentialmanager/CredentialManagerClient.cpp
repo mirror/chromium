@@ -90,4 +90,13 @@ void CredentialManagerClient::DispatchMakeCredential(
     authentication_client_ = new WebAuthenticationClient(frame);
   authentication_client_->DispatchMakeCredential(options, std::move(callbacks));
 }
+
+void CredentialManagerClient::DispatchGetAssertion(
+    LocalFrame& frame,
+    const PublicKeyCredentialRequestOptions& options,
+    std::unique_ptr<WebAuthenticationClient::PublicKeyCallbacks> callbacks) {
+  if (!authentication_client_)
+    authentication_client_ = new WebAuthenticationClient(frame);
+  authentication_client_->DispatchGetAssertion(options, std::move(callbacks));
+}
 }  // namespace blink

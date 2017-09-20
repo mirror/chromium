@@ -18,9 +18,12 @@ namespace device {
 // transport agnostic, so that BLE devices could take part in requests as well.
 class U2fRequest : HidService::Observer {
  public:
+  // Response and key_handle are optional, depending on the status and
+  // the type of request being served.
   using ResponseCallback =
       base::Callback<void(U2fReturnCode status_code,
-                          const std::vector<uint8_t>& response)>;
+                          const std::vector<uint8_t>& response,
+                          const std::vector<uint8_t>& key_handle)>;
 
   U2fRequest(const ResponseCallback& callback);
   virtual ~U2fRequest();
