@@ -295,6 +295,13 @@
             </settings-section>
           </template>
 </if>
+<if expr="is_win">
+        <template is="dom-if" if="[[!showChromeCleanup]]" restamp>
+          <settings-section page-title="Chrome Cleanup" section="chromeCleanup">
+            <settings-chrome-cleanup-page></settings-chrome-cleanup-page>
+          </settings-section>
+        </template>
+</if>
           <template is="dom-if" if="[[showPage_(pageVisibility.reset)]]"
               restamp>
             <settings-section page-title="$i18n{resetPageTitle}"
