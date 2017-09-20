@@ -16,6 +16,24 @@
       "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4a1616_56fe6ddb",
+        "filename": "device/u2f/u2f_ble_frames_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-20T15:53:31Z",
+      "side": 1,
+      "message": "Not sure I understand that proposal. Do you mean creating a static method which would serialize the fragment?\n\nReserializing done.",
+      "parentUuid": "75d61ff4_cbb0713d",
+      "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
