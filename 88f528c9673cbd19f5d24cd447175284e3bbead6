@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "7aaad4e3_448cadba",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-20T21:41:24Z",
+      "side": 1,
+      "message": "\u003e \u003e What dependency are we adding?\n\u003e \n\u003e A dependency on this function from image_scale, which will now have to be replaced/replicated if we move/remove image_scale. Basically it makes it harder to delete the gfx::Canvas class.\n\nIs there some road plan to removing image_scale?\n\n\u003e \n\u003e \u003e What kind of interactions are you envisioning? \n\u003e \n\u003e Other people will call it, for other calls to gfx::Canvas, forcing future developers to do more work. Object state is adds complexity and maintainance burden. State on the stack is easy to reason about and change. I don\u0027t see any reason why this needs to be object state.\n\nIf other people start calling it that would support the idea that it\u0027s useful.\n\n\u003e \n\u003e \u003e there are lots of times we want to change canvas state temporarily, i.e. for one operation, and this is why we have save and restore.\n\u003e \n\u003e Not on gfx::Canvas, you\u0027re talking about PaintCanvas. And we don\u0027t change object state for things that can easily be an argument and won\u0027t commonly need to span multiple function calls. The object state is an optimization for avoiding passing/applying state over and over. Since this applies to only a single function call, it doesn\u0027t seem related here.\n\nArguably changing state in PaintCanvas is changing state in gfx::Canvas --- gfx::Canvas only has two members and PaintCanvas is one of them. The fact that we have gfx::Canvas::Save/Restore implies that state is changing in gfx::Canvas.\n\nIt doesn\u0027t make sense to me to pass two different image scales into PaintVectorIcon (the one in canvas and the hypothetical new parameter), so it seems like we\u0027re at an impasse.",
+      "parentUuid": "c276f4d8_e624f97a",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
