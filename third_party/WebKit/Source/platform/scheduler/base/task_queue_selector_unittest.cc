@@ -25,16 +25,16 @@ namespace blink {
 namespace scheduler {
 namespace internal {
 
-class MockObserver : public TaskQueueSelector::Observer {
+class MockObserverForTaskQueueSelector : public TaskQueueSelector::Observer {
  public:
-  MockObserver() {}
-  virtual ~MockObserver() {}
+  MockObserverForTaskQueueSelector() {}
+  virtual ~MockObserverForTaskQueueSelector() {}
 
   MOCK_METHOD1(OnTaskQueueEnabled, void(internal::TaskQueueImpl*));
   MOCK_METHOD1(OnTriedToSelectBlockedWorkQueue, void(internal::WorkQueue*));
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(MockObserver);
+  DISALLOW_COPY_AND_ASSIGN(MockObserverForTaskQueueSelector);
 };
 
 class TaskQueueSelectorForTest : public TaskQueueSelector {
@@ -186,7 +186,7 @@ TEST_F(TaskQueueSelectorTest, TestControlPriority) {
 TEST_F(TaskQueueSelectorTest, TestObserverWithEnabledQueue) {
   task_queues_[1]->SetQueueEnabledForTest(false);
   selector_.DisableQueue(task_queues_[1].get());
-  MockObserver mock_observer;
+  MockObserverForTaskQueueSelector mock_observer;
   selector_.SetTaskQueueSelectorObserver(&mock_observer);
   EXPECT_CALL(mock_observer, OnTaskQueueEnabled(_)).Times(1);
   task_queues_[1]->SetQueueEnabledForTest(true);
@@ -196,14 +196,14 @@ TEST_F(TaskQueueSelectorTest, TestObserverWithEnabledQueue) {
 TEST_F(TaskQueueSelectorTest,
        TestObserverWithSetQueuePriorityAndQueueAlreadyEnabled) {
   selector_.SetQueuePriority(task_queues_[1].get(), TaskQueue::HIGH_PRIORITY);
-  MockObserver mock_observer;
+  MockObserverForTaskQueueSelector mock_observer;
   selector_.SetTaskQueueSelectorObserver(&mock_observer);
   EXPECT_CALL(mock_observer, OnTaskQueueEnabled(_)).Times(0);
   selector_.SetQueuePriority(task_queues_[1].get(), TaskQueue::NORMAL_PRIORITY);
 }
 
 TEST_F(TaskQueueSelectorTest, TestDisableEnable) {
-  MockObserver mock_observer;
+  MockObserverForTaskQueueSelector mock_observer;
   selector_.SetTaskQueueSelectorObserver(&mock_observer);
 
   size_t queue_order[] = {0, 1, 2, 3, 4};
@@ -433,7 +433,7 @@ TEST_F(TaskQueueSelectorTest, ChooseOldestWithPriority_OnlyImmediate) {
 
 TEST_F(TaskQueueSelectorTest, TestObserverWithOneBlockedQueue) {
   TaskQueueSelectorForTest selector;
-  MockObserver mock_observer;
+  MockObserverForTaskQueueSelector mock_observer;
   selector.SetTaskQueueSelectorObserver(&mock_observer);
 
   EXPECT_CALL(mock_observer, OnTaskQueueEnabled(_)).Times(1);
@@ -462,7 +462,7 @@ TEST_F(TaskQueueSelectorTest, TestObserverWithOneBlockedQueue) {
 
 TEST_F(TaskQueueSelectorTest, TestObserverWithTwoBlockedQueues) {
   TaskQueueSelectorForTest selector;
-  MockObserver mock_observer;
+  MockObserverForTaskQueueSelector mock_observer;
   selector.SetTaskQueueSelectorObserver(&mock_observer);
 
   std::unique_ptr<TaskQueueImpl> task_queue(NewTaskQueueWithBlockReporting());
