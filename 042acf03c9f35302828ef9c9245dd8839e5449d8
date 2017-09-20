@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "feac768d_b1a37cdb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8746974_eebe9eae",
+      "range": {
+        "startLine": 83,
+        "startChar": 27,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c06a667_d98b4eb1",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840bf38e_bf1a5b76",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c06a667_d98b4eb1",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4362ce89_4345bffc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ef3761_6f7e8521",
+      "range": {
+        "startLine": 93,
+        "startChar": 69,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d93a2c_e9067240",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec2e2ef_0028cc26",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "What matters is the last fetch, now dealt with in the scheduler.",
+      "parentUuid": "34d93a2c_e9067240",
+      "range": {
+        "startLine": 364,
+        "startChar": 41,
+        "endLine": 364,
+        "endChar": 51
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "bff9d3c5_294cfbf8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "As discussed offline:\n - the most desired option - doing it in the URLFetcher - does not seem easily doable;\n - the second most desired option is to keep it here as we communicate it to the UI by changing the status and there would be too many back-and-forth with the scheduler.",
+      "parentUuid": "03bdc863_6d65840a",
+      "range": {
+        "startLine": 510,
+        "startChar": 41,
+        "endLine": 510,
+        "endChar": 56
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f24c0d41_8837f14b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -185,6 +305,30 @@
       "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571ca459_c3a0ff79",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "The function that is called is idempotent but this is too brittle a guarantee. I employed the OneShotTimer to do simple cancelling.\n\nNot cancelling the fetch is a desired feature, the results then come silently back (the next notification is treated by the UI as any other later notification, it is ignored if the suggestions already have been impressed) and can be used upon the next surface impression. It is worth a comment, though.",
+      "parentUuid": "f24c0d41_8837f14b",
+      "range": {
+        "startLine": 513,
+        "startChar": 44,
+        "endLine": 513,
+        "endChar": 74
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "1758c7b3_5a70a1dc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Yep, a bug. Done.\n(I am curious how come this never crashed for me)",
+      "parentUuid": "922e6abb_d0d138dd",
+      "range": {
+        "startLine": 519,
+        "startChar": 4,
+        "endLine": 519,
+        "endChar": 20
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e961ee65_0b0223db",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "b289a623_c1b34ca4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Now the logic is changed - no concept of staleness here. Just flipping all categories to LOADING and back.",
+      "parentUuid": "e961ee65_0b0223db",
+      "range": {
+        "startLine": 650,
+        "startChar": 4,
+        "endLine": 650,
+        "endChar": 7
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc0a309_54854d62",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -254,6 +446,30 @@
       "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db4722b_d8e6a74f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc0a309_54854d62",
+      "range": {
+        "startLine": 651,
+        "startChar": 7,
+        "endLine": 651,
+        "endChar": 36
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

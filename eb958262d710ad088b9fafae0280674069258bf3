@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb2ec18_4cd6b758",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-20T06:37:40Z",
+      "side": 1,
+      "message": "An independent fix, done on behalf of Vitalii.",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "eb958262d710ad088b9fafae0280674069258bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
