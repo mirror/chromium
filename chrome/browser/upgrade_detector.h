@@ -29,14 +29,20 @@ class UpgradeObserver;
 class UpgradeDetector {
  public:
   // The Homeland Security Upgrade Advisory System.
+  // These values are logged in a histogram and shouldn't be renumbered or
+  // removed.
   enum UpgradeNotificationAnnoyanceLevel {
     UPGRADE_ANNOYANCE_NONE = 0,  // What? Me worry?
     UPGRADE_ANNOYANCE_LOW,       // Green.
     UPGRADE_ANNOYANCE_ELEVATED,  // Yellow.
     UPGRADE_ANNOYANCE_HIGH,      // Red.
     UPGRADE_ANNOYANCE_SEVERE,    // Orange.
-    UPGRADE_ANNOYANCE_CRITICAL,  // Red exclamation mark.
+    UPGRADE_ANNOYANCE_CRITICAL   // Red exclamation mark.
   };
+
+  // The number of UpgradeNotificationAnnoyanceLevel enum values.
+  static const int kUpgradeNotificationAnnoyanceLevelCount =
+      UPGRADE_ANNOYANCE_CRITICAL + 1;
 
   // Returns the singleton implementation instance.
   static UpgradeDetector* GetInstance();
@@ -166,6 +172,7 @@ class UpgradeDetector {
  private:
   FRIEND_TEST_ALL_PREFIXES(AppMenuModelTest, Basics);
   FRIEND_TEST_ALL_PREFIXES(SystemTrayClientTest, UpdateTrayIcon);
+  friend class UpgradeMetricsProviderTest;
 
   // Initiates an Idle check. See IdleCallback below.
   void CheckIdle();
