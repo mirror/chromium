@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641a5295_eeacfda5",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T11:37:43Z",
+      "side": 1,
+      "message": "What happens if you initialize this view with CGRectZero here, and have |presentPageInfoView:| call setFrame to set the final frame instead?  If that worked, then we could get rid of |frameForPresentation|.",
+      "revId": "21c23b2b8ffb780be7a4d8d87afe406983b059e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
