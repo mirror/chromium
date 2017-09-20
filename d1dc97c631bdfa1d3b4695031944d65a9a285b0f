@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3691693a_9566463d",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-09-20T17:15:45Z",
+      "side": 1,
+      "message": "Maybe instead of closing the file, just \u0027flush\u0027 it?\n\nIt should be possible to reuse the FD later on and avoid open/close calls.\n\nThe log can be watched live with \u0027tail -f /tmp/zlib-test\u0027.",
+      "revId": "d1dc97c631bdfa1d3b4695031944d65a9a285b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
