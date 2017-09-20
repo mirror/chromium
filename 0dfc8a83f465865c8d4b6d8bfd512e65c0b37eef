@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f72935_4aa86dc5",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12020,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-20T03:22:52Z",
+      "side": 1,
+      "message": "This doesn\u0027t really seem like a user action.  Did you consider adding these metrics as a boolean histogram instead?",
+      "range": {
+        "startLine": 12020,
+        "startChar": 60,
+        "endLine": 12020,
+        "endChar": 0
+      },
+      "revId": "0dfc8a83f465865c8d4b6d8bfd512e65c0b37eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
