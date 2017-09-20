@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "776be900_46b49dbe",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T04:15:51Z",
+      "side": 1,
+      "message": "yeah you are right. I was hoping not to include the wait for lock in the time, but doesn\u0027t matter.",
+      "parentUuid": "a443f11f_01a8241d",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5df099da_58f11ad6",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
         "patchSetId": 3
