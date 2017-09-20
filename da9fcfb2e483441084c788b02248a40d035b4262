@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d6cbc89_66009af9",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T14:33:32Z",
+      "side": 1,
+      "message": "maybe .reserve() some emprical value large enough to avoid expansions and internal copies (for the expansion)",
+      "range": {
+        "startLine": 591,
+        "startChar": 14,
+        "endLine": 591,
+        "endChar": 26
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda7945f_9c31ddbe",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T14:33:32Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t want here  (address \u0026\u0026 size \u003d\u003d 0).\nrealloc with size\u003d\u003d0 has the same effect of free semantic.\nwith an actual size it will just expand the old allocation, so not sure if you should count that as removed in that case",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7034d31b_54931945",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T14:33:32Z",
+      "side": 1,
+      "message": "LeakyInstance (see other comment)",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc795f8_4b9aaf40",
+        "filename": "base/trace_event/freed_object_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T14:33:32Z",
+      "side": 1,
+      "message": "use LazyInstance::Leaky, it is slightly more performance.\nLazyInstance includes the storage for the object (FreedObjectTracker) in the global, so it gets linker initialized and can be dereferenced directly.\nsingleton instead will do a new() heap allocation to initialize the instance, and each access will require one extra dereferencing.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
