@@ -34,6 +34,24 @@
       "revId": "d25609ef22dcef6121adf3f7d5d5eb1aa9b330d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff248ea2_4e367e50",
+        "filename": "ui/base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T01:05:39Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/674131 will delete the left over android-aura bits.",
+      "parentUuid": "6205e507_4bcf55a6",
+      "revId": "d25609ef22dcef6121adf3f7d5d5eb1aa9b330d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
