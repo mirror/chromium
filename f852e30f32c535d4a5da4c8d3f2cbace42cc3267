@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "12a9221a_2a6a816e",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-20T17:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11fd9ab7_cd00b814",
+      "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9725a79_d98d97d8",
         "filename": "content/public/browser/media_session.h",
         "patchSetId": 2
