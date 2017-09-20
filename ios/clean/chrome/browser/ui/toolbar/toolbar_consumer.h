@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_style.h"
+
 // ToolbarConsumer sets the current appearance of the Toolbar.
 @protocol ToolbarConsumer
 // Updates the toolbar with the current forward navigation state.
@@ -21,6 +23,8 @@
 - (void)setTabStripVisible:(BOOL)visible;
 // Updates the toolbar with the current number of total tabs.
 - (void)setTabCount:(int)tabCount;
+// Updates the toolbar appearance to |style|.
+- (void)updateToolbarAppearanceWithStyle:(ToolbarStyle)style;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_CONSUMER_H_

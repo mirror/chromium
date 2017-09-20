@@ -78,6 +78,13 @@
 
   ToolbarStyle style =
       self.browser->browser_state()->IsOffTheRecord() ? INCOGNITO : NORMAL;
+  // Incognito NTP uses the same style as "regular" INCOGNITO, no need to check
+  // for NTP if in INCOGNITO.
+  style = ((self.webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL)) &&
+           style != INCOGNITO)
+              ? NTP
+              : style;
+
   ToolbarButtonFactory* factory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
 

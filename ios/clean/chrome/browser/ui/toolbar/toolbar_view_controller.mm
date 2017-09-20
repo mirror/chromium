@@ -36,6 +36,10 @@
 @property(nonatomic, strong) ToolbarButton* reloadButton;
 @property(nonatomic, strong) ToolbarButton* stopButton;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+// PLACEHOLDER: Just for temporal UI layout purposes. It increases the stackview
+// leading constraint when in NTP. That way the omnibox is not right next to the
+// margin. Delete once Fullscreen and FakeLocationBar are working.
+@property(nonatomic, strong) NSLayoutConstraint* stackViewLeadingConstraint;
 @end
 
 @implementation ToolbarViewController
@@ -54,6 +58,7 @@
 @synthesize stopButton = _stopButton;
 @synthesize progressBar = _progressBar;
 @synthesize usesTabStrip = _usesTabStrip;
+@synthesize stackViewLeadingConstraint = _stackViewLeadingConstraint;
 
 - (instancetype)initWithDispatcher:(id<NavigationCommands,
                                        TabGridCommands,
@@ -103,14 +108,18 @@
 - (void)setConstraints {
   [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                  UIViewAutoresizingFlexibleHeight];
+  self.stackViewLeadingConstraint = [self.stackView.leadingAnchor
+      constraintEqualToAnchor:self.view.leadingAnchor
+                     constant:kHorizontalMargin];
+  if (self.buttonFactory.toolbarConfiguration.style == NTP) {
+    self.stackViewLeadingConstraint.constant = kToolbarButtonWidth;
+  }
   NSArray* constraints = @[
     [self.stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor
                                              constant:kVerticalMargin],
     [self.stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
                                                 constant:-kVerticalMargin],
-    [self.stackView.leadingAnchor
-        constraintEqualToAnchor:self.view.leadingAnchor
-                       constant:kHorizontalMargin],
+    self.stackViewLeadingConstraint,
     [self.stackView.trailingAnchor
         constraintEqualToAnchor:self.view.trailingAnchor
                        constant:-kHorizontalMargin],
@@ -260,20 +269,23 @@
 
 - (void)setUpLocationBarContainer {
   UIView* locationBarContainer = [[UIView alloc] initWithFrame:CGRectZero];
-  locationBarContainer.translatesAutoresizingMaskIntoConstraints = NO;
-  locationBarContainer.backgroundColor =
-      [self.buttonFactory.toolbarConfiguration omniboxBackgroundColor];
-  locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
-  locationBarContainer.layer.borderColor =
-      [self.buttonFactory.toolbarConfiguration omniboxBorderColor].CGColor;
-  locationBarContainer.layer.shadowRadius = kLocationBarShadowRadius;
-  locationBarContainer.layer.shadowOpacity = kLocationBarShadowOpacity;
-  locationBarContainer.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
-
-  [locationBarContainer
+  self.locationBarContainer = locationBarContainer;
+  self.locationBarContainer.translatesAutoresizingMaskIntoConstraints = NO;
+  [self updateLocationBarContainerAppearance];
+  [self.locationBarContainer
       setContentHuggingPriority:UILayoutPriorityDefaultLow
                         forAxis:UILayoutConstraintAxisHorizontal];
-  self.locationBarContainer = locationBarContainer;
+}
+
+- (void)updateLocationBarContainerAppearance {
+  self.locationBarContainer.backgroundColor =
+      [self.buttonFactory.toolbarConfiguration omniboxBackgroundColor];
+  self.locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
+  self.locationBarContainer.layer.borderColor =
+      [self.buttonFactory.toolbarConfiguration omniboxBorderColor].CGColor;
+  self.locationBarContainer.layer.shadowRadius = kLocationBarShadowRadius;
+  self.locationBarContainer.layer.shadowOpacity = kLocationBarShadowOpacity;
+  self.locationBarContainer.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
 }
 
 - (void)setUpProgressBar {
@@ -358,6 +370,18 @@
 
 - (void)setCanGoBack:(BOOL)canGoBack {
   self.backButton.enabled = canGoBack;
+  // Update the visibility since the Back button will be hidden on
+  // NTP when both |self.backButton| and |self.forwardButton| buttons are
+  // disabled.
+  if (self.buttonFactory.toolbarConfiguration.style == NTP &&
+      !self.forwardButton.isEnabled) {
+    self.backButton.hiddenInCurrentState = YES;
+    self.stackViewLeadingConstraint.constant = kToolbarButtonWidth;
+  } else {
+    self.backButton.hiddenInCurrentState = NO;
+    self.stackViewLeadingConstraint.constant = kHorizontalMargin;
+  }
+  [self.backButton setHiddenForCurrentStateAndSizeClass];
 }
 
 - (void)setIsLoading:(BOOL)isLoading {
@@ -409,6 +433,17 @@
   [self.tabSwitchStripButton setTitle:tabStripButtonTitle
                              forState:UIControlStateNormal];
   [self.tabSwitchStripButton setAccessibilityValue:tabStripButtonValue];
+}
+
+- (void)updateToolbarAppearanceWithStyle:(ToolbarStyle)style {
+  if (style != self.buttonFactory.toolbarConfiguration.style) {
+    // Update the toolbar configuration object.
+    self.buttonFactory.toolbarConfiguration.style = style;
+    // Update the VC appearance.
+    [self updateLocationBarContainerAppearance];
+    self.view.backgroundColor =
+        [self.buttonFactory.toolbarConfiguration backgroundColor];
+  }
 }
 
 #pragma mark - ZoomTransitionDelegate

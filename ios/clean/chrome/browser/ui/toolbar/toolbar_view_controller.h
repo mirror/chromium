@@ -32,6 +32,8 @@
                                                     ToolbarConsumer,
                                                     ZoomTransitionDelegate>
 
+// Designated initializer. |buttonFactory| provides stylized buttons and a
+// toolbarConfiguration object used by this VC to set its appearance.
 - (instancetype)initWithDispatcher:(id<NavigationCommands,
                                        TabGridCommands,
                                        TabHistoryPopupCommands,

@@ -7,9 +7,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/sys_string_conversions.h"
+#include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_consumer.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_style.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
@@ -51,6 +53,10 @@
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
+  // Navigating away from NTP.
+  if (webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL)) {
+    [self.consumer updateToolbarAppearanceWithStyle:NORMAL];
+  }
   [self updateNavigationBackAndForwardState];
 }
 
@@ -70,6 +76,14 @@
 - (void)webState:(web::WebState*)webState
     didChangeLoadingProgress:(double)progress {
   [self.consumer setLoadingProgressFraction:progress];
+}
+
+- (void)webState:(web::WebState*)webState
+    didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
+  // Navigating into NTP.
+  if (webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL)) {
+    [self.consumer updateToolbarAppearanceWithStyle:NTP];
+  }
 }
 
 #pragma mark - ChromeBroadcastObserver

@@ -32,16 +32,26 @@ typedef NS_ENUM(NSInteger, ToolbarButtonState) {
 const int styleCount = 2;
 }  // namespace
 
+@interface ToolbarButtonFactory ()
+// Convenience property for using toolbar_resource_macros. In some cases a
+// toolbar Style will use the same buttons as another toolbar Style, in those
+// cases we will translate the style into a common style the ToolbarButtons
+// resources macro use.
+@property(nonatomic, assign, readonly) ToolbarStyle buttonStyle;
+@end
+
 @implementation ToolbarButtonFactory
 
+@synthesize buttonStyle = _buttonStyle;
 @synthesize toolbarConfiguration = _toolbarConfiguration;
-@synthesize style = _style;
 
 - (instancetype)initWithStyle:(ToolbarStyle)style {
   self = [super init];
   if (self) {
-    _style = style;
     _toolbarConfiguration = [[ToolbarConfiguration alloc] initWithStyle:style];
+    // Buttons for NTP style are the same as for NORMAL style.
+    style = style == NTP ? NORMAL : style;
+    _buttonStyle = style;
   }
   return self;
 }
@@ -50,18 +60,16 @@ const int styleCount = 2;
   int backButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(BACK);
   ToolbarButton* backButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeReversableImage(
-                                               backButtonImages[self.style]
-                                                               [DEFAULT],
-                                               YES)
-                  imageForHighlightedState:NativeReversableImage(
-                                               backButtonImages[self.style]
-                                                               [PRESSED],
-                                               YES)
-                     imageForDisabledState:NativeReversableImage(
-                                               backButtonImages[self.style]
-                                                               [DISABLED],
-                                               YES)];
+      toolbarButtonWithImageForNormalState:
+          NativeReversableImage(backButtonImages[self.buttonStyle][DEFAULT],
+                                YES)
+                  imageForHighlightedState:
+                      NativeReversableImage(
+                          backButtonImages[self.buttonStyle][PRESSED], YES)
+                     imageForDisabledState:
+                         NativeReversableImage(
+                             backButtonImages[self.buttonStyle][DISABLED],
+                             YES)];
   backButton.accessibilityLabel = l10n_util::GetNSString(IDS_ACCNAME_BACK);
   return backButton;
 }
@@ -70,18 +78,16 @@ const int styleCount = 2;
   int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(FORWARD);
   ToolbarButton* forwardButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DEFAULT],
-                                               YES)
-                  imageForHighlightedState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [PRESSED],
-                                               YES)
-                     imageForDisabledState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DISABLED],
-                                               YES)];
+      toolbarButtonWithImageForNormalState:
+          NativeReversableImage(forwardButtonImages[self.buttonStyle][DEFAULT],
+                                YES)
+                  imageForHighlightedState:
+                      NativeReversableImage(
+                          forwardButtonImages[self.buttonStyle][PRESSED], YES)
+                     imageForDisabledState:
+                         NativeReversableImage(
+                             forwardButtonImages[self.buttonStyle][DISABLED],
+                             YES)];
   forwardButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
   return forwardButton;
@@ -92,12 +98,13 @@ const int styleCount = 2;
       TOOLBAR_IDR_THREE_STATE(OVERVIEW);
   ToolbarButton* tabSwitcherStripButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:
-          NativeImage(tabSwitcherButtonImages[self.style][DEFAULT])
+          NativeImage(tabSwitcherButtonImages[self.buttonStyle][DEFAULT])
                   imageForHighlightedState:
-                      NativeImage(tabSwitcherButtonImages[self.style][PRESSED])
+                      NativeImage(
+                          tabSwitcherButtonImages[self.buttonStyle][PRESSED])
                      imageForDisabledState:
-                         NativeImage(
-                             tabSwitcherButtonImages[self.style][DISABLED])];
+                         NativeImage(tabSwitcherButtonImages[self.buttonStyle]
+                                                            [DISABLED])];
   tabSwitcherStripButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_SHOW_TABS);
   [tabSwitcherStripButton
@@ -124,12 +131,11 @@ const int styleCount = 2;
   int toolsMenuButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_TWO_STATE(TOOLS);
   ToolbarButton* toolsMenuButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               toolsMenuButtonImages[self.style]
-                                                                    [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               toolsMenuButtonImages[self.style]
-                                                                    [PRESSED])
+      toolbarButtonWithImageForNormalState:
+          NativeImage(toolsMenuButtonImages[self.buttonStyle][DEFAULT])
+                  imageForHighlightedState:
+                      NativeImage(
+                          toolsMenuButtonImages[self.buttonStyle][PRESSED])
                      imageForDisabledState:nil];
   [toolsMenuButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -3, 0, 0)];
   toolsMenuButton.accessibilityLabel =
@@ -141,15 +147,13 @@ const int styleCount = 2;
   int shareButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(SHARE);
   ToolbarButton* shareButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               shareButtonImages[self.style]
-                                                                [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               shareButtonImages[self.style]
-                                                                [PRESSED])
-                     imageForDisabledState:NativeImage(
-                                               shareButtonImages[self.style]
-                                                                [DISABLED])];
+      toolbarButtonWithImageForNormalState:
+          NativeImage(shareButtonImages[self.buttonStyle][DEFAULT])
+                  imageForHighlightedState:
+                      NativeImage(shareButtonImages[self.buttonStyle][PRESSED])
+                     imageForDisabledState:
+                         NativeImage(
+                             shareButtonImages[self.buttonStyle][DISABLED])];
   shareButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLS_MENU_SHARE);
   return shareButton;
@@ -159,18 +163,16 @@ const int styleCount = 2;
   int reloadButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(RELOAD);
   ToolbarButton* reloadButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeReversableImage(
-                                               reloadButtonImages[self.style]
-                                                                 [DEFAULT],
-                                               YES)
-                  imageForHighlightedState:NativeReversableImage(
-                                               reloadButtonImages[self.style]
-                                                                 [PRESSED],
-                                               YES)
-                     imageForDisabledState:NativeReversableImage(
-                                               reloadButtonImages[self.style]
-                                                                 [DISABLED],
-                                               YES)];
+      toolbarButtonWithImageForNormalState:
+          NativeReversableImage(reloadButtonImages[self.buttonStyle][DEFAULT],
+                                YES)
+                  imageForHighlightedState:
+                      NativeReversableImage(
+                          reloadButtonImages[self.buttonStyle][PRESSED], YES)
+                     imageForDisabledState:
+                         NativeReversableImage(
+                             reloadButtonImages[self.buttonStyle][DISABLED],
+                             YES)];
   reloadButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_ACCNAME_RELOAD);
   return reloadButton;
@@ -180,15 +182,13 @@ const int styleCount = 2;
   int stopButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(STOP);
   ToolbarButton* stopButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               stopButtonImages[self.style]
-                                                               [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               stopButtonImages[self.style]
-                                                               [PRESSED])
-                     imageForDisabledState:NativeImage(
-                                               stopButtonImages[self.style]
-                                                               [DISABLED])];
+      toolbarButtonWithImageForNormalState:
+          NativeImage(stopButtonImages[self.buttonStyle][DEFAULT])
+                  imageForHighlightedState:
+                      NativeImage(stopButtonImages[self.buttonStyle][PRESSED])
+                     imageForDisabledState:
+                         NativeImage(
+                             stopButtonImages[self.buttonStyle][DISABLED])];
   stopButton.accessibilityLabel = l10n_util::GetNSString(IDS_IOS_ACCNAME_STOP);
   return stopButton;
 }
@@ -197,12 +197,10 @@ const int styleCount = 2;
   int starButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_TWO_STATE(STAR);
   ToolbarButton* starButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               starButtonImages[self.style]
-                                                               [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               starButtonImages[self.style]
-                                                               [PRESSED])
+      toolbarButtonWithImageForNormalState:
+          NativeImage(starButtonImages[self.buttonStyle][DEFAULT])
+                  imageForHighlightedState:
+                      NativeImage(starButtonImages[self.buttonStyle][PRESSED])
                      imageForDisabledState:nil];
   starButton.accessibilityLabel = l10n_util::GetNSString(IDS_TOOLTIP_STAR);
   return starButton;

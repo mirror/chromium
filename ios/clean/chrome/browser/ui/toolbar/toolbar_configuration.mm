@@ -29,6 +29,8 @@
       return UIColorFromRGB(kToolbarBackgroundColor);
     case INCOGNITO:
       return UIColorFromRGB(kIncognitoToolbarBackgroundColor);
+    case NTP:
+      return [UIColor whiteColor];
   }
 }
 
@@ -38,6 +40,8 @@
       return [UIColor whiteColor];
     case INCOGNITO:
       return UIColorFromRGB(kIcongnitoLocationBackgroundColor);
+    case NTP:
+      return [UIColor clearColor];
   }
 }
 
@@ -47,6 +51,8 @@
       return UIColorFromRGB(kLocationBarBorderColor);
     case INCOGNITO:
       return UIColorFromRGB(kIncognitoLocationBarBorderColor);
+    case NTP:
+      return UIColorFromRGB(kLocationBarBorderColor);
   }
 }
 
@@ -56,6 +62,8 @@
       return UIColorFromRGB(kToolbarButtonTitleNormalColor);
     case INCOGNITO:
       return UIColorFromRGB(kIncognitoToolbarButtonTitleNormalColor);
+    case NTP:
+      return UIColorFromRGB(kToolbarButtonTitleNormalColor);
   }
 }
 
@@ -65,6 +73,8 @@
       return UIColorFromRGB(kToolbarButtonTitleHighlightedColor);
     case INCOGNITO:
       return UIColorFromRGB(kIncognitoToolbarButtonTitleHighlightedColor);
+    case NTP:
+      return UIColorFromRGB(kToolbarButtonTitleHighlightedColor);
   }
 }
 

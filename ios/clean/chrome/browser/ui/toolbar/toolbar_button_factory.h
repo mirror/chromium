@@ -16,12 +16,13 @@
 // style and configuration, depending of the implementation.
 @interface ToolbarButtonFactory : NSObject
 
+// Designated initializer. |style| will be used for setting up the
+// toolbarConfiguration property and the buttons appearance.
 - (instancetype)initWithStyle:(ToolbarStyle)style NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
-@property(nonatomic, assign, readonly) ToolbarStyle style;
 // Configuration object for styling. It is used by the factory to set the style
-// of the buttons title.
+// of the buttons title. It also contains general toolbar styling information.
 @property(nonatomic, strong, readonly)
     ToolbarConfiguration* toolbarConfiguration;
 
