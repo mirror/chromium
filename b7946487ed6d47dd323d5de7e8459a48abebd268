@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da919932_c67c0e8b",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-20T22:25:54Z",
+      "side": 1,
+      "message": "nit: try to keep this in rough abc order. (and cite crbug.com/766363 here too?)",
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de68d84e_91a73052",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-20T22:25:54Z",
+      "side": 1,
+      "message": "Should this new directory have an OWNERS file (+# COMPONENT: UI\u003eBrowser\u003eDownloads)? Has chrome/browser/ui/webui undergone review from a valid OWNER? (my browser_navigator.cc stamp shouldn\u0027t cover that too)",
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
