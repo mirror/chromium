@@ -367,6 +367,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6bf806_1469a30b",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-20T07:38:23Z",
+      "side": 1,
+      "message": "That\u0027s ok! Thanks for pointing it out anyway, I just wasn\u0027t sure if that was what you meant.",
+      "parentUuid": "93e62da2_62906e01",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

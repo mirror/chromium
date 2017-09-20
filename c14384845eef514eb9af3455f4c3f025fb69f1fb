@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11ea129b_bc65da5d",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-20T07:38:23Z",
+      "side": 1,
+      "message": "Done - thank you for the explanation and the link! I don\u0027t remember why I had this here but I think it works without.",
+      "parentUuid": "a155f443_92b3529f",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635ebda6_7ea6167a",
         "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T01:07:54Z",
       "side": 1,
       "message": "nit: indent comment",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3500ada_f9c2992f",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-20T07:38:23Z",
+      "side": 1,
+      "message": "git cl format doesn\u0027t like it if I have this indented :/ I think it\u0027s weird too, but thought I should go with that as the correct behaviour?",
+      "parentUuid": "635ebda6_7ea6167a",
       "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7782f04b_82cbac84",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-20T07:38:23Z",
+      "side": 1,
+      "message": "No worries, I don\u0027t have a preference either way, so fixed. It was named this way because the origin/embeddingOrigin was foo.com. Switched to createExceptionForTest() :)",
+      "parentUuid": "8203fa70_b707aa82",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
