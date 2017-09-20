@@ -22,6 +22,30 @@
       "revId": "25c4478fd5349d05ae0353b14cb3c8e9e7e406d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c311a1_45f18249",
+        "filename": "chrome/browser/ui/views/frame/top_container_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-20T18:02:52Z",
+      "side": 1,
+      "message": "Yes, it is because TopContainerView is not responsible for drawing the browser view\u0027s frame view. They are siblings, and siblings should not be responsible for painting each other.\n\nI am sorry, I could not follow the second part of your statement. Who exactly should ensure the right arguments are passed?",
+      "parentUuid": "94ddf0dc_54f71ae6",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 66
+      },
+      "revId": "25c4478fd5349d05ae0353b14cb3c8e9e7e406d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
