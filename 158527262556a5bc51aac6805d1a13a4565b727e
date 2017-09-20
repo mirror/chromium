@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50455865_33a2cc0f",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-20T23:39:58Z",
+      "side": 1,
+      "message": "Would it work to tile masks if there are filters or background filters,\nbut not both?",
+      "revId": "158527262556a5bc51aac6805d1a13a4565b727e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
