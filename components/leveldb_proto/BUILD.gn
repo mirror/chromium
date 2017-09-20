@@ -13,6 +13,7 @@ static_library("leveldb_proto") {
   public_deps = [
     "//base",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 }
 

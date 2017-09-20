@@ -16,7 +16,7 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "components/leveldb/env_mojo.h"
 #include "components/leveldb/public/cpp/util.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
@@ -290,7 +290,8 @@ void LevelDBDatabaseImpl::IteratorPrev(const base::UnguessableToken& iterator,
 bool LevelDBDatabaseImpl::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  auto* dump = leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
+  auto* dump =
+      leveldb_chrome::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
   if (!dump)
     return true;
   auto* global_dump = pmd->CreateSharedGlobalAllocatorDump(*memory_dump_id_);

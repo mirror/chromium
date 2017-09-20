@@ -17,6 +17,7 @@
 #include "base/test/test_suite.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 #define FPL FILE_PATH_LITERAL
@@ -28,12 +29,12 @@ using leveldb::Slice;
 using leveldb::Status;
 using leveldb::WritableFile;
 using leveldb::WriteOptions;
+using leveldb_chrome::DBTracker;
 using leveldb_env::ChromiumEnv;
-using leveldb_env::DBTracker;
 using leveldb_env::MethodID;
-using leveldb_env::Options;
+using leveldb_chrome::Options;
 
-namespace leveldb_env {
+namespace leveldb_chrome {
 
 static const int kReadOnlyFileLimit = 4;
 
@@ -183,22 +184,22 @@ TEST(ChromiumEnv, GetChildrenPriorResults) {
 TEST(ChromiumEnv, TestWriteBufferSize) {
   // If can't get disk size, use leveldb defaults.
   const int64_t MB = 1024 * 1024;
-  EXPECT_EQ(size_t(4 * MB), leveldb_env::WriteBufferSize(-1));
+  EXPECT_EQ(size_t(4 * MB), leveldb_chrome::WriteBufferSize(-1));
 
   // A very small disk (check lower clamp value).
-  EXPECT_EQ(size_t(1 * MB), leveldb_env::WriteBufferSize(1 * MB));
+  EXPECT_EQ(size_t(1 * MB), leveldb_chrome::WriteBufferSize(1 * MB));
 
   // Some value on the linear equation between min and max.
-  EXPECT_EQ(size_t(2.5 * MB), leveldb_env::WriteBufferSize(25 * MB));
+  EXPECT_EQ(size_t(2.5 * MB), leveldb_chrome::WriteBufferSize(25 * MB));
 
   // The disk size equating to the max buffer size
-  EXPECT_EQ(size_t(4 * MB), leveldb_env::WriteBufferSize(40 * MB));
+  EXPECT_EQ(size_t(4 * MB), leveldb_chrome::WriteBufferSize(40 * MB));
 
   // Make sure sizes larger than 40MB are clamped to max buffer size.
-  EXPECT_EQ(size_t(4 * MB), leveldb_env::WriteBufferSize(80 * MB));
+  EXPECT_EQ(size_t(4 * MB), leveldb_chrome::WriteBufferSize(80 * MB));
 
   // Check for very large disk size (catch overflow).
-  EXPECT_EQ(size_t(4 * MB), leveldb_env::WriteBufferSize(100 * MB * MB));
+  EXPECT_EQ(size_t(4 * MB), leveldb_chrome::WriteBufferSize(100 * MB * MB));
 }
 
 TEST(ChromiumEnv, LockFile) {
@@ -373,7 +374,8 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
   Options options;
   options.create_if_missing = true;
   std::unique_ptr<leveldb::DB> db;
-  auto status = leveldb_env::OpenDB(options, temp_path().AsUTF8Unsafe(), &db);
+  auto status =
+      leveldb_chrome::OpenDB(options, temp_path().AsUTF8Unsafe(), &db);
   ASSERT_TRUE(status.ok()) << status.ToString();
 
   auto visited_dbs = VisitDatabases();
@@ -384,7 +386,7 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
 }
 
 TEST_F(ChromiumEnvDBTrackerTest, IsTrackedDB) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   leveldb::DB* untracked_db;
   base::ScopedTempDir untracked_temp_dir;
@@ -398,14 +400,14 @@ TEST_F(ChromiumEnvDBTrackerTest, IsTrackedDB) {
   std::unique_ptr<leveldb::DB> tracked_db;
   base::ScopedTempDir tracked_temp_dir;
   ASSERT_TRUE(tracked_temp_dir.CreateUniqueTempDir());
-  s = leveldb_env::OpenDB(options, tracked_temp_dir.GetPath().AsUTF8Unsafe(),
-                          &tracked_db);
+  s = leveldb_chrome::OpenDB(options, tracked_temp_dir.GetPath().AsUTF8Unsafe(),
+                             &tracked_db);
   ASSERT_TRUE(s.ok());
   EXPECT_TRUE(DBTracker::GetInstance()->IsTrackedDB(tracked_db.get()));
 
   delete untracked_db;
 }
 
-}  // namespace leveldb_env
+}  // namespace leveldb_chrome
 
 int main(int argc, char** argv) { return base::TestSuite(argc, argv).Run(); }

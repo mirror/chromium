@@ -606,7 +606,7 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   filesystem::mojom::DirectoryPtr directory_clone;
   directory_->Clone(MakeRequest(&directory_clone));
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.max_open_files = 0;  // use minimum
   // Default write_buffer_size is 4 MB but that might leave a 3.999
