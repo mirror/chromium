@@ -363,6 +363,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Suppresses painting the content by disconnecting |delegate_|.
   void SuppressPaint();
 
+  // Defer painting.
+  void SetPaintDeferred(bool deferred);
+  bool paint_deferred() const { return paint_deferred_; }
+
   // Notifies the layer that the device scale factor has changed.
   void OnDeviceScaleFactorChanged(float device_scale_factor);
 
@@ -417,6 +421,14 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   const cc::Region& damaged_region_for_testing() const {
     return damaged_region_;
+  }
+
+  const cc::Region& damaged_region_since_last_send_for_testing() const {
+    return damaged_region_since_last_send_;
+  }
+
+  const cc::Region& deferred_paint_region_for_testing() const {
+    return deferred_paint_region_;
   }
 
   const gfx::Size& frame_size_in_dip_for_testing() const {
@@ -528,6 +540,14 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // to paint the content.
   cc::Region paint_region_;
 
+  // Union of damaged rects during the request of deferring paint, in layer
+  // space, to be used when the deferred request is removed.
+  cc::Region deferred_paint_region_;
+
+  // Union of damaged rects during the request of deferring paint, in layer
+  // space, since the last call to SendDamagedRects().
+  cc::Region damaged_region_since_last_send_;
+
   float background_blur_sigma_;
 
   // Several variables which will change the visible representation of
@@ -605,6 +625,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // the value > 0, means we need to cache the render surface. If the value
   // == 0, means we should not cache the render surface.
   unsigned cache_render_surface_requests_;
+
+  // True if we want to defer painting. This could be used in animation to
+  // prevent raster and animation at the same time.
+  bool paint_deferred_;
 
   DISALLOW_COPY_AND_ASSIGN(Layer);
 };

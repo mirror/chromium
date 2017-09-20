@@ -113,7 +113,8 @@ Layer::Layer()
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      paint_deferred_(false) {
   CreateCcLayer();
 }
 
@@ -141,7 +142,8 @@ Layer::Layer(LayerType type)
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      paint_deferred_(false) {
   CreateCcLayer();
 }
 
@@ -838,8 +840,19 @@ SkColor Layer::background_color() const {
 
 bool Layer::SchedulePaint(const gfx::Rect& invalid_rect) {
   if ((type_ == LAYER_SOLID_COLOR && !texture_layer_.get()) ||
-      type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid()))
+      type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid())) {
     return false;
+  }
+
+  if (paint_deferred_ && content_layer_) {
+    deferred_paint_region_.Union(invalid_rect);
+    damaged_region_since_last_send_.Union(invalid_rect);
+    if (layer_mask_) {
+      layer_mask_->deferred_paint_region_.Union(invalid_rect);
+      layer_mask_->damaged_region_since_last_send_.Union(invalid_rect);
+    }
+    return false;
+  }
 
   damaged_region_.Union(invalid_rect);
   ScheduleDraw();
@@ -858,6 +871,11 @@ void Layer::ScheduleDraw() {
 }
 
 void Layer::SendDamagedRects() {
+  if (!damaged_region_since_last_send_.IsEmpty()) {
+    damaged_region_.Union(damaged_region_since_last_send_);
+    damaged_region_since_last_send_.Clear();
+  }
+
   if (damaged_region_.IsEmpty())
     return;
   if (!delegate_ && !mailbox_.IsValid())
@@ -868,7 +886,7 @@ void Layer::SendDamagedRects() {
   if (layer_mask_)
     layer_mask_->SendDamagedRects();
 
-  if (content_layer_)
+  if (!paint_deferred_ && content_layer_)
     paint_region_.Union(damaged_region_);
   damaged_region_.Clear();
 }
@@ -890,6 +908,17 @@ void Layer::SuppressPaint() {
   delegate_ = NULL;
   for (size_t i = 0; i < children_.size(); ++i)
     children_[i]->SuppressPaint();
+}
+
+void Layer::SetPaintDeferred(bool deferred) {
+  if (paint_deferred_ == deferred)
+    return;
+  paint_deferred_ = deferred;
+  if (!paint_deferred_ && !deferred_paint_region_.IsEmpty()) {
+    ScheduleDraw();
+    if (layer_mask_)
+      layer_mask_->ScheduleDraw();
+  }
 }
 
 void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
@@ -964,6 +993,11 @@ gfx::Rect Layer::PaintableRegion() {
 scoped_refptr<cc::DisplayItemList> Layer::PaintContentsToDisplayList(
     ContentLayerClient::PaintingControlSetting painting_control) {
   TRACE_EVENT1("ui", "Layer::PaintContentsToDisplayList", "name", name_);
+  if (!paint_deferred_ && !deferred_paint_region_.IsEmpty()) {
+    paint_region_.Union(deferred_paint_region_);
+    deferred_paint_region_.Clear();
+  }
+
   gfx::Rect local_bounds(bounds().size());
   gfx::Rect invalidation(
       gfx::IntersectRects(paint_region_.bounds(), local_bounds));
