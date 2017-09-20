@@ -124,6 +124,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af309603_8842d077",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-20T21:40:11Z",
+      "side": 1,
+      "message": "views::View and aura::Window are LayerOwners, and having these be their own delegate seems unnecessary. Having both delegate and observer seems overkill. Having a list of observers also seem unnecessary.\n\nI prefer doing this in LayerOwner itself, but a DCHECK() when setting the delegate to make sure it is set only once would also work. (the concern about chaining applies too all non-final overrides/non-empty virtual functions in views::View and many other places though, right?)",
+      "parentUuid": "a8430795_b7a0e9b3",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
