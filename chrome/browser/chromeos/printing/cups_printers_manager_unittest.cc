@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <utility>
 
+#include "url/gurl.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/memory/ptr_util.h"
@@ -472,6 +473,16 @@ TEST_F(CupsPrintersManagerTest, GetPrinter) {
 
   std::unique_ptr<Printer> printer = manager_->GetPrinter("Nope");
   EXPECT_EQ(printer, nullptr);
+}
+
+TEST_F(CupsPrintersManagerTest, GURLFail) {
+  std::string ipp_url = "ipp://192.168.1.1:80/printers/awesome_printer";
+  GURL gurl(ipp_url);
+  EXPECT_TRUE(gurl.is_valid());
+  EXPECT_EQ(gurl.scheme(), "ipp");
+  EXPECT_EQ(gurl.host(), "192.168.1.1");
+  EXPECT_EQ(gurl.IntPort(), 80);
+  EXPECT_EQ(gurl.path(), "printers/awesome_printer");
 }
 
 }  // namespace
