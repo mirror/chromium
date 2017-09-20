@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21666cd5_63fa18a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-20T16:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8f78ce_cf090de1",
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b5dba84_8a815f20",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e1fe67a0_1db2eb8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-20T16:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5dba84_8a815f20",
+      "range": {
+        "startLine": 234,
+        "startChar": 32,
+        "endLine": 234,
+        "endChar": 49
+      },
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6082e4d6_fcb691ee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
         "patchSetId": 6
@@ -62,6 +104,30 @@
       "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b15f10_142114b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-20T16:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6082e4d6_fcb691ee",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 40
+      },
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
