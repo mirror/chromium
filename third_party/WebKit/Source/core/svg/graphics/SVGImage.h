@@ -226,6 +226,7 @@ class CORE_EXPORT SVGImage final : public Image {
 
   LoadState load_state_ = kDataChangedNotStarted;
 
+  bool all_data_received_ = false;
   Persistent<SVGImageLocalFrameClient> frame_client_;
   FRIEND_TEST_ALL_PREFIXES(SVGImageTest, SupportsSubsequenceCaching);
 };

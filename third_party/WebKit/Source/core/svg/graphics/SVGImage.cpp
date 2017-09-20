@@ -720,6 +720,7 @@ Image::SizeAvailability SVGImage::DataChanged(bool all_data_received) {
 
   if (!all_data_received)
     return page_ ? kSizeAvailable : kSizeUnavailable;
+  all_data_received_ = true;
 
   CHECK(!page_);
 
