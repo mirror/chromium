@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a61a4d38_64b1d55a",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T08:39:34Z",
+      "side": 1,
+      "message": "Can we write the Send() portion only once, and flip the #define?\n\n// On Windows ...\n//\n// On non-Windows ...\n#if defined(OS_WIN)\n  bool send_message \u003d true;\n#else\n  bool send_message \u003d !is_switching_to_system_dialog_;\n#endif\n  if (send_message) {\n    print_preview_rfh_-\u003eSend(new PrintMsg_ClosePrintPreviewDialog(\n        print_preview_rfh_-\u003eGetRoutingID()));\n  }\n  is_switching_to_system_dialog_ \u003d false;",
+      "revId": "b1a9e6831382a70eb174e7801fdb7cee9c79e74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
