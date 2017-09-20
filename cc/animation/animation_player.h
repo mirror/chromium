@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include <memory>
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -37,7 +38,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
     : public base::RefCounted<AnimationPlayer> {
  public:
   static scoped_refptr<AnimationPlayer> Create(int id);
-  scoped_refptr<AnimationPlayer> CreateImplInstance() const;
+  virtual scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
   int id() const { return id_; }
   ElementId element_id() const { return element_id_; }
@@ -113,7 +114,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   static void TickAnimation(base::TimeTicks monotonic_time,
                             Animation* animation,
                             AnimationTarget* target);
-  void TickAnimations(base::TimeTicks monotonic_time);
+
+  virtual void TickAnimations(base::TimeTicks monotonic_time);
 
   void MarkFinishedAnimations(base::TimeTicks monotonic_time);
 
@@ -176,11 +178,10 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   std::string ToString() const;
 
+  virtual bool IsWorkletAnimationPlayer() const;
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
-
-  explicit AnimationPlayer(int id);
-  ~AnimationPlayer();
 
   void SetNeedsCommit();
 
@@ -199,7 +200,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
       AnimationPlayer* animation_player_impl) const;
   void RemoveAnimationsCompletedOnMainThread(
       AnimationPlayer* animation_player_impl) const;
-  void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
 
   std::string AnimationsToString() const;
 
@@ -225,6 +225,18 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+ protected:
+  explicit AnimationPlayer(int id);
+  virtual ~AnimationPlayer();
+
+  virtual void PushPropertiesToImplThread(
+      AnimationPlayer* animation_player_impl);
+
+  // Return time that should be used for ticking the given animation.
+  virtual base::TimeTicks GetTickTimeForAnimation(
+      base::TimeTicks monotonic_time,
+      Animation* animation);
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };

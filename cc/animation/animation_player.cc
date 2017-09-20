@@ -6,6 +6,8 @@
 
 #include <inttypes.h>
 #include <algorithm>
+#include <memory>
+#include <utility>
 
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
@@ -42,7 +44,7 @@ AnimationPlayer::~AnimationPlayer() {
 }
 
 scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
-  scoped_refptr<AnimationPlayer> player = AnimationPlayer::Create(id());
+  scoped_refptr<AnimationPlayer> player = new AnimationPlayer(id());
   return player;
 }
 
@@ -152,6 +154,9 @@ void AnimationPlayer::PauseAnimation(int animation_id, double time_offset) {
 
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->id() == animation_id) {
+      // TODO(majidvp): Hmmm, shouln't this do a minus time_offset? given that
+      // monotonic_time = active_time + start_time - time_offset
+      // see |Animation::ConvertToActiveTime()|
       animations_[i]->SetRunState(Animation::PAUSED,
                                   time_delta + animations_[i]->start_time() +
                                       animations_[i]->time_offset());
@@ -779,9 +784,20 @@ void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
 
 void AnimationPlayer::TickAnimations(base::TimeTicks monotonic_time) {
   DCHECK(element_animations_);
-  for (auto& animation : animations_)
-    TickAnimation(monotonic_time, animation.get(), element_animations_.get());
+
+  for (auto& animation : animations_) {
+    base::TimeTicks tick_time =
+        GetTickTimeForAnimation(monotonic_time, animation.get());
+    TickAnimation(tick_time, animation.get(), element_animations_.get());
+  }
+
   last_tick_time_ = monotonic_time;
+}
+
+base::TimeTicks AnimationPlayer::GetTickTimeForAnimation(
+    base::TimeTicks monotonic_time,
+    Animation* animation) {
+  return monotonic_time;
 }
 
 void AnimationPlayer::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
@@ -1204,6 +1220,10 @@ std::string AnimationPlayer::AnimationsToString() const {
     str.append(animations_[i]->ToString());
   }
   return str;
+}
+
+bool AnimationPlayer::IsWorkletAnimationPlayer() const {
+  return false;
 }
 
 }  // namespace cc
