@@ -33,4 +33,7 @@ specific_include_rules = {
     "+base/metrics/field_trial_param_associator.h",
     "+testing",
   ],
+  "scoped_auto_advance_now_enabler.*": [
+    "+components/viz/test/ordered_simple_task_runner.h",
+  ],
 }
