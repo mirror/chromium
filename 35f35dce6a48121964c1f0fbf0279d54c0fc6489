@@ -2,6 +2,529 @@
   "comments": [
     {
       "key": {
+        "uuid": "853705d1_497da25a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: \"mojom::CertStoreHost\"? (or \"CertStoreHost mojo interface\"?)",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160b9128_50d89c37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: This CL is not only adding an implementation, but also adding the CertStoreHost mojo definition itself. Could you please include some generic information about that into the commit description?",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14179cf_af58e253",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Maybe \"LooksLikeAndroidPackageName\" (like in [1])?\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/note_taking_helper.cc?l\u003d62\u0026rcl\u003d26f67cb30ef5640a792c455b5883bc40dd6d07f3",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e29568_05f7955c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7941192_c1d6e79f",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Add a space.",
+      "range": {
+        "startLine": 60,
+        "startChar": 59,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ab1e65_4469a86c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "I\u0027m not quite understanding how this works - isn\u0027t IsCorporateKey() expecting the first parameter to be Base64-encoded?",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b45601f_f18a2d0c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Add a space.",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346219fd_9a441d72",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: s/Init/ArcCertStoreBridge/?",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 39
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8abfbae_a4ea23be",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: s/Destroy/~ArcCertStoreBridge/?",
+      "range": {
+        "startLine": 90,
+        "startChar": 35,
+        "endLine": 90,
+        "endChar": 42
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56ff0c0_af5890cb",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "Is the lazy initialization really required - can\u0027t this be done in the constructor?",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba59abf_fb387f09",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: #include \"components/policy/core/common/policy_namespace.h\"",
+      "range": {
+        "startLine": 105,
+        "startChar": 39,
+        "endLine": 105,
+        "endChar": 59
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf77247_3c057cc0",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Maybe name the method \"UpdateFromKeyPermissionsPolicy\"? It will be then more natural to see it being called in additional cases like this.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5daf554_470e7493",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "I don\u0027t know how often ARC may request to list the certificates, but if it may occur at a high rate, then DVLOG may be needed in this case too.\n(Same concern about similar messages in other methods.)",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 16
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cf1c2f_0ca4da18",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "Could you use net::NSSCertDatabase here instead of going to NSS directly? Some arguments: 1) it\u0027s a well-tested and Chromium-friendly code; 2) it\u0027s using a background thread for the actual NSS lookup (as NSS can take some internal locks); 3) it\u0027ll be easy to iterate only over certs for a needed user and in the needed slot (without messing up with anything rest, and without leaving all security being based on the KeyPermissions::IsCorporateKey() method).\n\nOtherwise, at least #2 has to be addressed here - it\u0027s not good to block the UI thread on NSS operations.",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee53abb_e29ab438",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Could you use chromeos::platform_keys::GetSubjectPublicKeyInfo() for that? This would require obtaining a net::Certificate for it. But the benefit would be allowing to avoid these nasty type and data conversions.\n(same applies for IsCertificateAllowed() above)",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6ba9c7_d5974931",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Would net::X509Certificate::GetPEMEncoded() work here? It will be nice to reuse it here, instead of these tricky transformations.",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 153,
+        "endChar": 44
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8b23e1_81e1db0f",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: I feel it\u0027s confusing to receive the ERROR_UNIMPLEMENTED error when the actual error is that the permissions are denied for all ARC apps.\nShould ERROR_UNKNOWN_ERROR or, probably better, some dedicated error code be returned? (same applies to the other methods)",
+      "range": {
+        "startLine": 170,
+        "startChar": 17,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6dc4f9b_5ff8e2a2",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "Should we optimize this a little bit, so that only the changes of kKeyPermissions result in the recalculation? It\u0027s a bit concerning to trigger the whole round-trip (that will likely involve a certificates listing request) whenever any of the hundreds of policies gets changed.",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 3
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d4cc53_1502ed69",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Should this actually be a warning? This happens unconditionally for all managed users, and the majority of them won\u0027t have the KeyPermissions policy.",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 55
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa11af09_20d05873",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "Currently, all parsing of the key permissions policy happens solely in src/chrome/browser/chromeos/platform_keys/key_permissions.cc. So I think it\u0027s a better place for a code like that - e.g. GetCorporateKeyUsageAllowedAppIds(). It will also allow avoiding the duplication of kPolicyAllowCorporateKeyUsage.\n\n(I\u0027m also not sure which word to use best for describing \"either extension ID or Android app name\"...)",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 54
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6312fe1_b14c4fe7",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Please mention which policy is meant here.",
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45c16aa_b71f9396",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: \"\u0026\"? (const-ref)",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f3f896_362d7bb5",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: Could you please add a short explanatory comment for this flag?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "780f924f_1730a50c",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 12
@@ -30,6 +553,98 @@
       "writtenOn": "2017-09-20T17:34:26Z",
       "side": 1,
       "message": "std::vector\u003cmojom::CertificatePtr\u003e expected_certs \u003d {\n    std::move(mojom_cert1)\n};",
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76964af_f20ea3e3",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: This clashes with the name of the non-static method with a different signature. Maybe add \"ForProfile\" here, or change the private method name somehow else...",
+      "range": {
+        "startLine": 179,
+        "startChar": 14,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede6da0d_65532ebe",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "It\u0027s not used outside this .cc file - is there a reason to make it a public method?",
+      "range": {
+        "startLine": 184,
+        "startChar": 14,
+        "endLine": 184,
+        "endChar": 43
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5630623_46b3be6c",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: \"Nickname\"?",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcaff6c_ace53972",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: This is, to be more precise, the \"PEM\" encoding, IIUC.",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 11
+      },
       "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +697,29 @@
     },
     {
       "key": {
+        "uuid": "ea7daa3e_3803b740",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "nit: It\u0027s called \"operation_handle\" in the keymaster headers (and it\u0027s anyway better to avoid abbreviations in variable names).",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 89,
+        "endChar": 48
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af5b5777_09d1e66d",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 12
@@ -93,6 +731,29 @@
       "writtenOn": "2017-09-20T17:34:26Z",
       "side": 1,
       "message": "nit: Finalizes",
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2067f77f_d7999398",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T17:48:34Z",
+      "side": 1,
+      "message": "Should we put some details on which exactly is the format of the parameters?",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 45
+      },
       "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
