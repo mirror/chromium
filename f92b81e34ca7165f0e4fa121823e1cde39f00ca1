@@ -34,6 +34,24 @@
       "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac55242a_7294ad07",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-20T22:17:43Z",
+      "side": 1,
+      "message": "Oh wow, that seems like a bug. Multi-line macros need to be enclosed in do { .. } while(0) blocks for this reason. Do you get a compile error w/o the {} ?",
+      "parentUuid": "c37fd50b_3608cec0",
+      "revId": "f92b81e34ca7165f0e4fa121823e1cde39f00ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
