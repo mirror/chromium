@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d9910657_4366a202",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T19:51:03Z",
+      "side": 1,
+      "message": "The new names SGTM.",
+      "parentUuid": "c42f5f01_50d7de29",
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c83ed57_c6a7e0b3",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 3
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "\"Should NotifyComplete itself set connected_ to false and destroy both pipes?\"\n\nBecause URLLoader and URLLoaderClient are two different pipes (FIFOs), the other side may observe URLLoader disconnection before receiving NotifyComplete on the URLLoaderClient. In that case, it is not clear whether the URLLoader is disconnected because of completion or failure.\n\nBased on this, I think the current behavior makes sense. WDYT?",
       "parentUuid": "8c83ed57_c6a7e0b3",
+      "range": {
+        "startLine": 460,
+        "startChar": 22,
+        "endLine": 460,
+        "endChar": 35
+      },
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac295fae_7125bfd4",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T19:51:03Z",
+      "side": 1,
+      "message": "We\u0027ve already told it that the URLLoader completed - once we\u0027ve done that, I don\u0027t see why we should need to keep either URLLoader pipe open.  Moreover, it\u0027s possible for a sloppy client to keep around its URLLoader interface after completion, wasting memory space in the network process.  This behavior also more closely mirrors that of ResourceLoader/MojoAsyncResourceHandler.",
+      "parentUuid": "830de302_b6f18094",
       "range": {
         "startLine": 460,
         "startChar": 22,
