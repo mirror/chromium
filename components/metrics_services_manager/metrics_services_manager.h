@@ -79,7 +79,9 @@ class MetricsServicesManager {
 
   // Update the managed services when permissions for recording/uploading
   // metrics change.
-  void UpdatePermissions(bool current_may_record, bool current_may_upload);
+  void UpdatePermissions(bool current_may_record,
+                         bool current_may_record_ignoring_feature,
+                         bool current_may_upload);
 
   // Update the managed services when permissions for uploading metrics change.
   void UpdateUploadPermissions(bool may_upload);
@@ -112,6 +114,9 @@ class MetricsServicesManager {
 
   // The current metrics recording setting.
   bool may_record_;
+
+  // The current metrics recording setting, ignoring MetricsReporting feature.
+  bool may_record_ignoring_feature_;
 
   // The MetricsServiceClient. Owns the MetricsService.
   std::unique_ptr<metrics::MetricsServiceClient> metrics_service_client_;
