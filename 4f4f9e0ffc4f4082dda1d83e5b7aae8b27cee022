@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a40a1a6c_38e4b428",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1901,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-20T10:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da86882f_12457df2",
+      "revId": "4f4f9e0ffc4f4082dda1d83e5b7aae8b27cee022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13898cad_63bf61a5",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4f4f9e0ffc4f4082dda1d83e5b7aae8b27cee022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50b0911_0026fce5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-20T10:52:06Z",
+      "side": 1,
+      "message": "I don\u0027t think so. a11y tests views and not workflows, and these views are covered in existing test cases.",
+      "parentUuid": "13898cad_63bf61a5",
+      "revId": "4f4f9e0ffc4f4082dda1d83e5b7aae8b27cee022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
