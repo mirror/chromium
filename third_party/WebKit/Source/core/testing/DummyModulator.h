@@ -53,6 +53,9 @@ class DummyModulator : public Modulator {
                             ModuleGraphLevel,
                             ModuleScriptLoaderClient*) override;
   bool HasValidContext() override;
+  void ResolveDynamically(const String& specifier,
+                          const ReferrerScriptInfo&,
+                          ScriptPromiseResolver*) override;
   ScriptModule CompileModule(const String& script,
                              const String& url_str,
                              AccessControlStatus,
