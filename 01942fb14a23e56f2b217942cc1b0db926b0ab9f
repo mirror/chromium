@@ -16,6 +16,24 @@
       "revId": "01942fb14a23e56f2b217942cc1b0db926b0ab9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40295907_1548f172",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1235784
+      },
+      "writtenOn": "2017-09-20T17:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec5624a_888ba28d",
+      "revId": "01942fb14a23e56f2b217942cc1b0db926b0ab9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
