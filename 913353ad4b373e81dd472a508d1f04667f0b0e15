@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "9dfe0029_19082364",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-20T03:11:20Z",
+      "side": 1,
+      "message": "implemented.",
+      "parentUuid": "a7b63039_ccec83a8",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6463752_081f662e",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 7
@@ -188,6 +206,24 @@
       "writtenOn": "2017-08-22T07:32:44Z",
       "side": 1,
       "message": "ditto.",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e50f74c_1349207d",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-20T03:11:20Z",
+      "side": 1,
+      "message": "implemented.",
+      "parentUuid": "d6463752_081f662e",
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +262,24 @@
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2db1a1_91c22376",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-20T03:11:20Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED() now addressed via ReferrerScriptInfo",
+      "parentUuid": "4ca6d22d_fe3c885f",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
