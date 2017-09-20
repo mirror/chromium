@@ -4,6 +4,8 @@
 
 #include "content/network/network_service_impl.h"
 
+#include <utility>
+
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -56,7 +58,10 @@ class NetworkServiceImpl::MojoNetLog : public net::NetLog {
 
 NetworkServiceImpl::NetworkServiceImpl(
     std::unique_ptr<service_manager::BinderRegistry> registry)
-    : net_log_(new MojoNetLog), registry_(std::move(registry)), binding_(this) {
+    : net_log_(new MojoNetLog),
+      registry_(std::move(registry)),
+      binding_(this),
+      network_change_manager_(base::MakeUnique<NetworkChangeManagerImpl>()) {
   // |registry_| is nullptr when an in-process NetworkService is
   // created directly. The latter is done in concert with using
   // CreateNetworkContextWithBuilder to ease the transition to using the network
@@ -140,6 +145,11 @@ bool NetworkServiceImpl::HasRawHeadersAccess(uint32_t process_id) const {
     return true;
   return processes_with_raw_headers_access_.find(process_id) !=
          processes_with_raw_headers_access_.end();
+}
+
+void NetworkServiceImpl::GetNetworkChangeManager(
+    mojom::NetworkChangeManagerRequest request) {
+  network_change_manager_->AddRequest(std::move(request));
 }
 
 void NetworkServiceImpl::OnBindInterface(
