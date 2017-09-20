@@ -162,10 +162,10 @@ def cpp_type(idl_type, extended_attributes=None, raw_type=False, used_as_rvalue_
         # annoteted types. (crbug.com/714866)
         # It is because at that time 'TreatNullAs' will only appear in
         # type_extended_attributes, not in extended_attributes.
-        if extended_attributes.get('TreatNullAs') == 'EmptyString':
-            return 'kTreatNullAsEmptyString'
-        if extended_attributes.get('TreatNullAs') == 'NullString':
-            return 'kTreatNullAsNullString'
+        # if extended_attributes.get('TreatNullAs') == 'EmptyString':
+        #     return 'kTreatNullAsEmptyString'
+        # if extended_attributes.get('TreatNullAs') == 'NullString':
+        #     return 'kTreatNullAsNullString'
         type_extended_attributes = idl_type.extended_attributes or {}
         if type_extended_attributes.get('TreatNullAs') == 'EmptyString':
             return 'kTreatNullAsEmptyString'
