@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db47cd95_b5c473bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-004.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243873
+      },
+      "writtenOn": "2017-09-20T08:57:21Z",
+      "side": 1,
+      "message": "Is this absolute positioning intended?\nIf it\u0027s not, I guess this part could be omitted.",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64b98b4_292da8c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-001-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243873
+      },
+      "writtenOn": "2017-09-20T08:57:21Z",
+      "side": 1,
+      "message": "How about specifying the value like:\noffset-distance: calc (100% + 70px);\n here?\n\nIt shows the difference between \"sides\" and \"farthest-side\" more clearly.",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0242f0cb_9992bb07",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-002-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243873
+      },
+      "writtenOn": "2017-09-20T08:57:21Z",
+      "side": 1,
+      "message": "How about using \"offset-distance: calc(100% + 90px);\" here?",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a16bbc_2f30adb4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-003-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243873
+      },
+      "writtenOn": "2017-09-20T08:57:21Z",
+      "side": 1,
+      "message": "How about specifying the value as \"calc(100% + 110px)\" here?\nThat will show the difference between sides and farthest-side more clearly.",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0425bd49_824e2f23",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-004-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243873
+      },
+      "writtenOn": "2017-09-20T08:57:21Z",
+      "side": 1,
+      "message": "How about specifying the value as \"calc(100% + 130px)\" here?",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
