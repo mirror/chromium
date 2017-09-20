@@ -12,6 +12,7 @@
 #include "ash/ash_export.h"
 #include "ash/system/toast/toast_data.h"
 #include "ash/system/toast/toast_overlay.h"
+#include "base/containers/circular_deque.h"
 #include "base/memory/weak_ptr.h"
 
 namespace ash {
@@ -45,7 +46,7 @@ class ASH_EXPORT ToastManager : public ToastOverlay::Delegate {
   std::string current_toast_id_;
 
   int serial_ = 0;
-  std::deque<ToastData> queue_;
+  base::circular_deque<ToastData> queue_;
   std::unique_ptr<ToastOverlay> overlay_;
 
   base::WeakPtrFactory<ToastManager> weak_ptr_factory_;
