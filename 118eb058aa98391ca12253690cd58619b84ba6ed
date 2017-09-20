@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "90d869b1_fed3866a",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-20T21:22:36Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "c1f8ef0b_90805691",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d61763a_c377cf19",
         "filename": "ui/base/ime/input_method_base.h",
         "patchSetId": 9
@@ -129,6 +153,30 @@
       "writtenOn": "2017-09-20T19:56:24Z",
       "side": 1,
       "message": "Style guide says members of classes should always be private (I realize sending_key_event_ is in the protected section too, but it shouldn\u0027t be).",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d635a2da_76fc7873",
+        "filename": "ui/base/ime/input_method_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-20T21:22:36Z",
+      "side": 1,
+      "message": "Done, thanks! I moved |sending_key_event_| and |delegate_| to private section.",
+      "parentUuid": "6d61763a_c377cf19",
       "range": {
         "startLine": 119,
         "startChar": 2,
