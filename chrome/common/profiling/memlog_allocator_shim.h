@@ -40,6 +40,10 @@ void AllocatorShimLogAlloc(AllocatorType type,
 
 void AllocatorShimLogFree(void* address);
 
+// Ensures all send buffers are flushed. The given barrier ID is sent to the
+// logging process so it knows when this operation is complete.
+void AllocatorShimFlushPipe(uint32_t barrier_id);
+
 }  // namespace profiling
 
 #endif  // CHROME_COMMON_PROFILING_MEMLOG_ALLOCATOR_SHIM_H_

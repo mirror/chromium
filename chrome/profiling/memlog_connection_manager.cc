@@ -10,6 +10,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
+#include "chrome/common/profiling/memlog_client.h"
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/json_exporter.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
@@ -32,9 +33,11 @@ struct MemlogConnectionManager::Connection {
   Connection(AllocationTracker::CompleteCallback complete_cb,
              BacktraceStorage* backtrace_storage,
              base::ProcessId pid,
+             mojom::MemlogClientPtr client,
              scoped_refptr<MemlogReceiverPipe> p)
       : thread(base::StringPrintf("Sender %lld thread",
                                   static_cast<long long>(pid))),
+        client(std::move(client)),
         pipe(p),
         tracker(std::move(complete_cb), backtrace_storage) {}
 
@@ -46,6 +49,7 @@ struct MemlogConnectionManager::Connection {
 
   base::Thread thread;
 
+  mojom::MemlogClientPtr client;
   scoped_refptr<MemlogReceiverPipe> pipe;
   scoped_refptr<MemlogStreamParser> parser;
   AllocationTracker tracker;
@@ -54,21 +58,24 @@ struct MemlogConnectionManager::Connection {
 MemlogConnectionManager::MemlogConnectionManager() : weak_factory_(this) {}
 MemlogConnectionManager::~MemlogConnectionManager() = default;
 
-void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
-                                              base::ProcessId pid) {
+void MemlogConnectionManager::OnNewConnection(
+    base::ProcessId pid,
+    mojom::MemlogClientPtr client,
+    mojo::edk::ScopedPlatformHandle handle) {
   base::AutoLock lock(connections_lock_);
   DCHECK(connections_.find(pid) == connections_.end());
 
   scoped_refptr<MemlogReceiverPipe> new_pipe =
-      new MemlogReceiverPipe(std::move(file));
+      new MemlogReceiverPipe(std::move(handle));
   // Task to post to clean up the connection. Don't need to retain |this| since
   // it will be called by objects owned by the MemlogConnectionManager.
   AllocationTracker::CompleteCallback complete_cb = base::BindOnce(
       &MemlogConnectionManager::OnConnectionCompleteThunk,
       base::Unretained(this), base::MessageLoop::current()->task_runner(), pid);
 
-  std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
-      std::move(complete_cb), &backtrace_storage_, pid, new_pipe);
+  std::unique_ptr<Connection> connection =
+      base::MakeUnique<Connection>(std::move(complete_cb), &backtrace_storage_,
+                                   pid, std::move(client), new_pipe);
   connection->thread.Start();
 
   connection->parser = new MemlogStreamParser(&connection->tracker);

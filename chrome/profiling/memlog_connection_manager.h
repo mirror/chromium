@@ -9,8 +9,6 @@
 #include <vector>
 
 #include "base/containers/flat_map.h"
-#include "base/files/file.h"
-#include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/process/process_handle.h"
@@ -19,6 +17,7 @@
 #include "build/build_config.h"
 #include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/profiling/backtrace_storage.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace base {
@@ -55,7 +54,9 @@ class MemlogConnectionManager {
       mojom::Memlog::DumpProcessForTracingCallback callback,
       const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps);
 
-  void OnNewConnection(base::ScopedPlatformFile file, base::ProcessId pid);
+  void OnNewConnection(base::ProcessId pid,
+                       mojom::MemlogClientPtr client,
+                       mojo::edk::ScopedPlatformHandle handle);
 
  private:
   struct Connection;

@@ -4,6 +4,7 @@
 
 #include "chrome/profiling/memlog_impl.h"
 
+#include "base/files/platform_file.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "content/public/common/service_names.mojom.h"
@@ -18,14 +19,17 @@ MemlogImpl::MemlogImpl()
 MemlogImpl::~MemlogImpl() {}
 
 void MemlogImpl::AddSender(base::ProcessId pid,
+                           mojom::MemlogClientPtr client,
                            mojo::ScopedHandle sender_pipe,
                            AddSenderCallback callback) {
   base::PlatformFile platform_file;
   CHECK_EQ(MOJO_RESULT_OK,
            mojo::UnwrapPlatformFile(std::move(sender_pipe), &platform_file));
 
-  connection_manager_->OnNewConnection(base::ScopedPlatformFile(platform_file),
-                                       pid);
+  connection_manager_->OnNewConnection(
+      pid, std::move(client),
+      mojo::edk::ScopedPlatformHandle(
+          mojo::edk::PlatformHandle(platform_file)));
 
   std::move(callback).Run();
 }
