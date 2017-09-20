@@ -28,6 +28,7 @@ class AutoOpenCloseEvent;
 }
 
 namespace viz {
+class ContextProvider;
 class FrameSinkId;
 }
 
@@ -68,7 +69,9 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // |task_runner| is the task runner on which this class will live,
   // though it may be constructed on any thread.
   explicit VideoFrameCompositor(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      const base::Callback<viz::ContextProvider*()>&
+          media_context_provider_callback);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.

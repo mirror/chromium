@@ -271,9 +271,10 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(),
-            base::Bind(&CreateCapabilitiesRecorder),
+            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
+                       base::Unretained(this)),
+            base::Bind(&WebMediaPlayerImplTest::ReturnNullContextProvider,
                        base::Unretained(this))));
 }
 
@@ -296,6 +297,8 @@ class WebMediaPlayerImplTest : public testing::Test {
     return base::WrapUnique<blink::WebSurfaceLayerBridge>(
         surface_layer_bridge_);
   }
+
+  viz::ContextProvider* ReturnNullContextProvider() { return nullptr; }
 
   void SetNetworkState(blink::WebMediaPlayer::NetworkState state) {
     wmpi_->SetNetworkState(state);

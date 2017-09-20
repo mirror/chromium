@@ -85,7 +85,10 @@ class VideoFrameSubmitterTest : public ::testing::Test {
   }
 
   void MakeSubmitter() {
-    submitter_ = base::MakeUnique<VideoFrameSubmitter>(provider_.get());
+    submitter_ = base::MakeUnique<VideoFrameSubmitter>(
+        provider_.get(),
+        base::Bind(&VideoFrameSubmitterTest::ReturnNullContextProvider,
+                   base::Unretained(this)));
     viz::mojom::blink::CompositorFrameSinkPtr submitter_sink;
     viz::mojom::blink::CompositorFrameSinkRequest request =
         mojo::MakeRequest(&submitter_sink);
@@ -94,6 +97,8 @@ class VideoFrameSubmitterTest : public ::testing::Test {
   }
 
  protected:
+  viz::ContextProvider* ReturnNullContextProvider() { return nullptr; }
+
   base::Thread thread_;
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
   std::unique_ptr<viz::FakeExternalBeginFrameSource> begin_frame_source_;

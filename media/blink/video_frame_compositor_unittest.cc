@@ -55,8 +55,10 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
       // only a bare pointer.
     }
     submitter_ = client_.get();
-    compositor_ =
-        base::MakeUnique<VideoFrameCompositor>(message_loop.task_runner());
+    compositor_ = base::MakeUnique<VideoFrameCompositor>(
+        message_loop.task_runner(),
+        base::Bind(&VideoFrameCompositorTest::ReturnNullContextForTest,
+                   base::Unretained(this)));
 
     if (!IsSurfaceLayerForVideoEnabled()) {
       compositor_->SetVideoFrameProviderClient(client_.get());
@@ -75,6 +77,8 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
   ~VideoFrameCompositorTest() override {
     compositor_->SetVideoFrameProviderClient(nullptr);
   }
+
+  viz::ContextProvider* ReturnNullContextForTest() { return nullptr; }
 
   scoped_refptr<VideoFrame> CreateOpaqueFrame() {
     gfx::Size size(8, 8);

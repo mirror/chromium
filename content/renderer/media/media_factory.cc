@@ -31,6 +31,7 @@
 #include "media/filters/context_3d.h"
 #include "media/media_features.h"
 #include "media/renderers/default_renderer_factory.h"
+#include "media/video/gpu_video_accelerator_factories.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "services/service_manager/public/cpp/connect.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -288,7 +289,11 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           watch_time_recorder_provider_.get(),
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
-          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view)));
+          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+          base::Bind(
+              &media::GpuVideoAcceleratorFactories::GetMediaContextProvider,
+              base::Unretained(
+                  RenderThreadImpl::current()->GetGpuFactories()))));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),

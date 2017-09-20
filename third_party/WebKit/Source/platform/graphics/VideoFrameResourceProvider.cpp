@@ -9,7 +9,10 @@
 
 namespace blink {
 
-VideoFrameResourceProvider::VideoFrameResourceProvider() = default;
+VideoFrameResourceProvider::VideoFrameResourceProvider(
+    const base::Callback<viz::ContextProvider*()>& context_provider_callback)
+    : context_provider_callback_(context_provider_callback),
+      resource_updater_(context_provider_callback_.Run(), nullptr, false) {}
 
 void VideoFrameResourceProvider::AppendQuads(viz::RenderPass& render_pass) {
   gfx::Rect rect(0, 0, 10000, 10000);
