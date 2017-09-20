@@ -143,6 +143,57 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
     DISALLOW_COPY_AND_ASSIGN(ScopedBatchReturnResources);
   };
 
+  // The following scoped classes are part of the DisplayResourceProvider API
+  // and are needed to read the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalReadGL {
+   public:
+    ScopedLocalReadGL(DisplayResourceProvider* resource_provider,
+                      viz::ResourceId resource_id);
+    ~ScopedLocalReadGL();
+
+    GLuint texture_id() const { return resource_->gl_id; }
+    GLenum target() const { return resource_->target; }
+    const gfx::Size& size() const { return resource_->size; }
+    const gfx::ColorSpace& color_space() const {
+      return resource_->color_space;
+    }
+
+   private:
+    const Resource* resource_;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalReadGL);
+  };
+
+  // The following scoped classes are part of the DisplayResourceProvider API
+  // and are needed to write the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalWriteGL {
+   public:
+    ScopedLocalWriteGL(DisplayResourceProvider* resource_provider,
+                       viz::ResourceId resource_id);
+    ~ScopedLocalWriteGL();
+
+    GLenum target() const { return resource_->target; }
+    viz::ResourceFormat format() const { return resource_->format; }
+    const gfx::Size& size() const { return resource_->size; }
+
+    void set_generate_mipmap() { generate_mipmap_ = true; }
+
+    // Returns texture id on compositor context, allocating if necessary.
+    GLuint GetTexture() { return resource_->gl_id; }
+
+   private:
+    void AllocateGpuMemoryBuffer(gpu::gles2::GLES2Interface* gl,
+                                 GLuint texture_id);
+
+    void AllocateTexture(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
+    DisplayResourceProvider* const resource_provider_;
+    Resource* resource_;
+    bool generate_mipmap_ = false;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalWriteGL);
+  };
+
   // Sets the current read fence. If a resource is locked for read
   // and has read fences enabled, the resource will not allow writes
   // until this fence has passed.

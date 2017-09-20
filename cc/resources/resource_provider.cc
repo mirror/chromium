@@ -89,50 +89,6 @@ class TextureIdAllocator {
 
 namespace {
 
-GLenum TextureToStorageFormat(viz::ResourceFormat format) {
-  GLenum storage_format = GL_RGBA8_OES;
-  switch (format) {
-    case viz::RGBA_8888:
-      break;
-    case viz::BGRA_8888:
-      storage_format = GL_BGRA8_EXT;
-      break;
-    case viz::RGBA_F16:
-      storage_format = GL_RGBA16F_EXT;
-      break;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-      NOTREACHED();
-      break;
-  }
-
-  return storage_format;
-}
-
-bool IsFormatSupportedForStorage(viz::ResourceFormat format, bool use_bgra) {
-  switch (format) {
-    case viz::RGBA_8888:
-    case viz::RGBA_F16:
-      return true;
-    case viz::BGRA_8888:
-      return use_bgra;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-      return false;
-  }
-  return false;
-}
-
 class ScopedSetActiveTexture {
  public:
   ScopedSetActiveTexture(GLES2Interface* gl, GLenum unit)
@@ -167,7 +123,8 @@ ResourceProvider::Resource::Resource(GLuint texture_id,
                                      GLenum filter,
                                      TextureHint hint,
                                      ResourceType type,
-                                     viz::ResourceFormat format)
+                                     viz::ResourceFormat format,
+                                     bool local)
     : child_id(0),
       gl_id(texture_id),
       pixels(nullptr),
@@ -181,6 +138,7 @@ ResourceProvider::Resource::Resource(GLuint texture_id,
       read_lock_fences_enabled(false),
       has_shared_bitmap_id(false),
       is_overlay_candidate(false),
+      local(local),
 #if defined(OS_ANDROID)
       is_backed_by_surface_texture(false),
       wants_promotion_hint(false),
@@ -204,7 +162,8 @@ ResourceProvider::Resource::Resource(uint8_t* pixels,
                                      viz::SharedBitmap* bitmap,
                                      const gfx::Size& size,
                                      Origin origin,
-                                     GLenum filter)
+                                     GLenum filter,
+                                     bool local)
     : child_id(0),
       gl_id(0),
       pixels(pixels),
@@ -218,6 +177,7 @@ ResourceProvider::Resource::Resource(uint8_t* pixels,
       read_lock_fences_enabled(false),
       has_shared_bitmap_id(!!bitmap),
       is_overlay_candidate(false),
+      local(local),
 #if defined(OS_ANDROID)
       is_backed_by_surface_texture(false),
       wants_promotion_hint(false),
@@ -533,7 +493,8 @@ viz::ResourceId ResourceProvider::CreateResource(
     const gfx::Size& size,
     TextureHint hint,
     viz::ResourceFormat format,
-    const gfx::ColorSpace& color_space) {
+    const gfx::ColorSpace& color_space,
+    bool local) {
   DCHECK(!size.IsEmpty());
   switch (settings_.default_resource_type) {
     case RESOURCE_TYPE_GPU_MEMORY_BUFFER:
@@ -541,17 +502,17 @@ viz::ResourceId ResourceProvider::CreateResource(
       if (format != viz::LUMINANCE_F16) {
         return CreateGpuResource(
             size, hint, RESOURCE_TYPE_GPU_MEMORY_BUFFER, format,
-            gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, color_space);
+            gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, color_space, local);
       }
     // Fall through and use a regular texture.
     case RESOURCE_TYPE_GL_TEXTURE:
       return CreateGpuResource(size, hint, RESOURCE_TYPE_GL_TEXTURE, format,
                                gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-                               color_space);
+                               color_space, local);
 
     case RESOURCE_TYPE_BITMAP:
       DCHECK_EQ(viz::RGBA_8888, format);
-      return CreateBitmapResource(size, color_space);
+      return CreateBitmapResource(size, color_space, local);
   }
 
   LOG(FATAL) << "Invalid default resource type.";
@@ -586,7 +547,8 @@ viz::ResourceId ResourceProvider::CreateGpuResource(
     ResourceType type,
     viz::ResourceFormat format,
     gfx::BufferUsage usage,
-    const gfx::ColorSpace& color_space) {
+    const gfx::ColorSpace& color_space,
+    bool local) {
   DCHECK_LE(size.width(), settings_.max_texture_size);
   DCHECK_LE(size.height(), settings_.max_texture_size);
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -601,7 +563,7 @@ viz::ResourceId ResourceProvider::CreateGpuResource(
   viz::ResourceId id = next_id_++;
   Resource* resource =
       InsertResource(id, Resource(0, size, Resource::INTERNAL, target,
-                                  GL_LINEAR, hint, type, format));
+                                  GL_LINEAR, hint, type, format, local));
   resource->usage = usage;
   resource->allocated = false;
   resource->color_space = color_space;
@@ -610,7 +572,8 @@ viz::ResourceId ResourceProvider::CreateGpuResource(
 
 viz::ResourceId ResourceProvider::CreateBitmapResource(
     const gfx::Size& size,
-    const gfx::ColorSpace& color_space) {
+    const gfx::ColorSpace& color_space,
+    bool local) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   std::unique_ptr<viz::SharedBitmap> bitmap =
@@ -619,9 +582,9 @@ viz::ResourceId ResourceProvider::CreateBitmapResource(
   DCHECK(pixels);
 
   viz::ResourceId id = next_id_++;
-  Resource* resource = InsertResource(
-      id,
-      Resource(pixels, bitmap.release(), size, Resource::INTERNAL, GL_LINEAR));
+  Resource* resource =
+      InsertResource(id, Resource(pixels, bitmap.release(), size,
+                                  Resource::INTERNAL, GL_LINEAR, local));
   resource->allocated = true;
   resource->color_space = color_space;
   return id;
