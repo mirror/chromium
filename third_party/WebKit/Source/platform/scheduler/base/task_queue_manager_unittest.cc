@@ -922,7 +922,8 @@ TEST_F(TaskQueueManagerTest, WorkBatching) {
   EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4));
 }
 
-class MockTaskObserver : public base::MessageLoop::TaskObserver {
+class MockTaskObserverForTaskQueueManager
+    : public base::MessageLoop::TaskObserver {
  public:
   MOCK_METHOD1(DidProcessTask, void(const base::PendingTask& task));
   MOCK_METHOD1(WillProcessTask, void(const base::PendingTask& task));
@@ -930,7 +931,7 @@ class MockTaskObserver : public base::MessageLoop::TaskObserver {
 
 TEST_F(TaskQueueManagerTest, TaskObserverAdding) {
   InitializeWithRealMessageLoop(1u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
 
   manager_->SetWorkBatchSize(2);
   manager_->AddTaskObserver(&observer);
@@ -946,7 +947,7 @@ TEST_F(TaskQueueManagerTest, TaskObserverAdding) {
 
 TEST_F(TaskQueueManagerTest, TaskObserverRemoving) {
   InitializeWithRealMessageLoop(1u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
   manager_->SetWorkBatchSize(2);
   manager_->AddTaskObserver(&observer);
   manager_->RemoveTaskObserver(&observer);
@@ -967,7 +968,7 @@ void RemoveObserverTask(TaskQueueManager* manager,
 
 TEST_F(TaskQueueManagerTest, TaskObserverRemovingInsideTask) {
   InitializeWithRealMessageLoop(1u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
   manager_->SetWorkBatchSize(3);
   manager_->AddTaskObserver(&observer);
 
@@ -981,7 +982,7 @@ TEST_F(TaskQueueManagerTest, TaskObserverRemovingInsideTask) {
 
 TEST_F(TaskQueueManagerTest, QueueTaskObserverAdding) {
   InitializeWithRealMessageLoop(2u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
 
   manager_->SetWorkBatchSize(2);
   runners_[0]->AddTaskObserver(&observer);
@@ -997,7 +998,7 @@ TEST_F(TaskQueueManagerTest, QueueTaskObserverAdding) {
 
 TEST_F(TaskQueueManagerTest, QueueTaskObserverRemoving) {
   InitializeWithRealMessageLoop(1u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
   manager_->SetWorkBatchSize(2);
   runners_[0]->AddTaskObserver(&observer);
   runners_[0]->RemoveTaskObserver(&observer);
@@ -1018,7 +1019,7 @@ void RemoveQueueObserverTask(scoped_refptr<TaskQueue> queue,
 
 TEST_F(TaskQueueManagerTest, QueueTaskObserverRemovingInsideTask) {
   InitializeWithRealMessageLoop(1u);
-  MockTaskObserver observer;
+  MockTaskObserverForTaskQueueManager observer;
   runners_[0]->AddTaskObserver(&observer);
 
   runners_[0]->PostTask(
@@ -1413,7 +1414,7 @@ TEST_F(TaskQueueManagerTest, UnregisterTaskQueue_InTasks) {
 
 namespace {
 
-class MockObserver : public TaskQueueManager::Observer {
+class MockObserverForTaskQueueManager : public TaskQueueManager::Observer {
  public:
   MOCK_METHOD0(OnTriedToExecuteBlockedTask, void());
   MOCK_METHOD0(OnBeginNestedRunLoop, void());
@@ -1424,7 +1425,7 @@ class MockObserver : public TaskQueueManager::Observer {
 TEST_F(TaskQueueManagerTest, OnTriedToExecuteBlockedTask) {
   Initialize(0u);
 
-  MockObserver observer;
+  MockObserverForTaskQueueManager observer;
   manager_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = CreateTaskQueueWithSpec(
@@ -1449,7 +1450,7 @@ TEST_F(TaskQueueManagerTest, OnTriedToExecuteBlockedTask) {
 TEST_F(TaskQueueManagerTest, ExecutedNonBlockedTask) {
   Initialize(0u);
 
-  MockObserver observer;
+  MockObserverForTaskQueueManager observer;
   manager_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = CreateTaskQueueWithSpec(
