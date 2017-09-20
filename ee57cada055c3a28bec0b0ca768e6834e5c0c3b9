@@ -116,6 +116,30 @@
       "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d898f22b_218da0f7",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T16:12:57Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this code but it\u0027s possible. Things that touch similar files/resources on the machine should generally use the same task runner (better be safe if in doubt).\n\nSee how //extensions dealt with this via a shared task runner for the entire component @ https://cs.chromium.org/chromium/src/extensions/browser/extension_file_task_runner.h (using base::LazySequencedTaskRunner).",
+      "parentUuid": "abe5624f_7a1edea0",
+      "range": {
+        "startLine": 538,
+        "startChar": 66,
+        "endLine": 539,
+        "endChar": 35
+      },
+      "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
