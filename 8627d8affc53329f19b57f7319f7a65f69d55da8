@@ -16,6 +16,24 @@
       "revId": "8627d8affc53329f19b57f7319f7a65f69d55da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55e1d98_dce07376",
+        "filename": "chrome/browser/resources/settings/device_page/power.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-20T20:00:51Z",
+      "side": 1,
+      "message": ":first-of-type doesn\u0027t care if the first element is hidden or not, so you\u0027d get the same result.\n\nit\u0027s unfortunate, but you can make the class for the next div dynamic:\n\n\u003cdiv class$\u003d\"settings-box [[getFirst_(batteryStatus_.present)]]\"\u003e",
+      "parentUuid": "935f98a8_691b0e97",
+      "revId": "8627d8affc53329f19b57f7319f7a65f69d55da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
