@@ -34243,6 +34243,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="SdchDictionaryFate">
+  <obsolete>
+    Deprecated 9/2017.
+  </obsolete>
   <summary>
     Fate of an Sdch dictionary, on load and eviction. See
     net/sdch/sdch_owner.cc.
@@ -34260,6 +34263,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="SdchPersistenceFailureReason">
+  <obsolete>
+    Deprecated 9/2017.
+  </obsolete>
   <summary>
     Errors that can occur when reading in or writing out persisted dictionary
     information. See enum in net/sdch/sdch_owner.h for more information.
@@ -34271,6 +34277,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="SdchProblemCode">
+  <obsolete>
+    Deprecated 9/2017.
+  </obsolete>
   <summary>
     SDCH problem codes, listed in net/base/sdch_problem_code_list.h
   </summary>
@@ -34366,6 +34375,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="SdchResponseCorruptionDetectionCauses">
+  <obsolete>
+    Deprecated 9/2017.
+  </obsolete>
   <summary>
     SDCH decode corruption detection cases, listed in net/filter/sdch_filter.cc.
     See also comments in SdchFilter::ReadFilteredData in the same file.
