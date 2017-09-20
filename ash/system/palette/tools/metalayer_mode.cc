@@ -78,6 +78,9 @@ views::View* MetalayerMode::CreateView() {
 }
 
 void MetalayerMode::OnTouchEvent(ui::TouchEvent* event) {
+  if (!palette_utils::IsInUserSession())
+    return;
+
   if (!feature_enabled())
     return;
 
