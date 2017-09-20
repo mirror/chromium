@@ -69,6 +69,9 @@ class CC_PAINT_EXPORT DisplayItemList
     in_painting_ = true;
   }
 
+  const PaintOpBuffer& GetPaintOpBuffer() const { return paint_op_buffer_; }
+  void Append(const DisplayItemList& other);
+
   // Push functions construct a new op on the paint op buffer, while maintaining
   // bookkeeping information. Must be called after invoking StartPaint().
   template <typename T, typename... Args>

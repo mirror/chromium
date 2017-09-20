@@ -38,6 +38,9 @@ PictureLayer::PictureLayer(ContentLayerClient* client,
                            std::unique_ptr<RecordingSource> source)
     : PictureLayer(client) {
   recording_source_ = std::move(source);
+  if (HasScrollNodeChild())
+    squashing_recording_source_ =
+        std::make_unique<SquashingRecordingSource>(recording_source_.get());
 }
 
 PictureLayer::~PictureLayer() {
@@ -62,7 +65,16 @@ void PictureLayer::PushPropertiesTo(LayerImpl* base_layer) {
       layer_tree_host()->device_viewport_size());
   layer_impl->UpdateRasterSource(recording_source_->CreateRasterSource(),
                                  &last_updated_invalidation_, nullptr);
+  if (squashing_recording_source_) {
+    layer_impl->UpdateRasterSource(
+        squashing_recording_source_->CreateRasterSource(),
+        &last_updated_squashing_invalidation_, nullptr);
+  }
   DCHECK(last_updated_invalidation_.IsEmpty());
+}
+
+bool PictureLayer::IsPictureLayer() {
+  return true;
 }
 
 void PictureLayer::SetLayerTreeHost(LayerTreeHost* host) {
@@ -89,6 +101,8 @@ void PictureLayer::SetNeedsDisplayRect(const gfx::Rect& layer_rect) {
   DCHECK(!layer_tree_host() || !layer_tree_host()->in_paint_layer_contents());
   if (recording_source_)
     recording_source_->SetNeedsDisplayRect(layer_rect);
+  if (squashing_recording_source_)
+    squashing_recording_source_->SetNeedsDisplayRect(layer_rect);
   Layer::SetNeedsDisplayRect(layer_rect);
 }
 
@@ -102,6 +116,14 @@ bool PictureLayer::Update() {
   recording_source_->SetRequiresClear(
       !contents_opaque() &&
       !picture_layer_inputs_.client->FillsBoundsCompletely());
+
+  if (squashing_recording_source_) {
+    squashing_recording_source_->SetBackgroundColor(
+        SafeOpaqueBackgroundColor());
+    squashing_recording_source_->SetRequiresClear(
+        !contents_opaque() &&
+        !picture_layer_inputs_.client->FillsBoundsCompletely());
+  }
 
   TRACE_EVENT1("cc", "PictureLayer::Update", "source_frame_number",
                layer_tree_host()->SourceFrameNumber());
@@ -132,6 +154,25 @@ bool PictureLayer::Update() {
         picture_layer_inputs_.painter_reported_memory_usage);
     recording_source_->SetRecordingScaleFactor(
         layer_tree_host()->recording_scale_factor());
+
+    if (squashing_recording_source_) {
+      DisplayItemList* concated_display_list = new DisplayItemList();
+      size_t total_painter_memory = 0;
+      for (auto child : children()) {
+        if (child->IsPictureLayer()) {
+          PictureLayer* child_layer = static_cast<PictureLayer*>(child.get());
+          if (child_layer->HasSquashingRecordingSource()) {
+            concated_display_list->Append(*(child_layer->GetDisplayItemList()));
+            total_painter_memory +=
+                child_layer->GetPainterReportedMemoryUsage();
+          }
+        }
+      }
+      squashing_recording_source_->UpdateDisplayItemList(concated_display_list,
+                                                         total_painter_memory);
+      squashing_recording_source_->SetRecordingScaleFactor(
+          layer_tree_host()->recording_scale_factor());
+    }
 
     SetNeedsPushProperties();
   } else {

@@ -213,6 +213,18 @@ sk_sp<SkPicture> Layer::GetPicture() const {
   return nullptr;
 }
 
+bool Layer::IsPictureLayer() {
+  return false;
+}
+
+bool Layer::HasScrollNodeChild() const {
+  for (auto& it : children()) {
+    if (it->scroll_parent())
+      return true;
+  }
+  return false;
+}
+
 void Layer::SetParent(Layer* layer) {
   DCHECK(!layer || !layer->HasAncestor(this));
 
