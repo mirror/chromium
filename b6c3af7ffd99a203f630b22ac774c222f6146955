@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32af9dfc_06a2fbe1",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-20T23:07:05Z",
+      "side": 1,
+      "message": "I guess this is somewhat entangled with ResourceProvider changes in the future, but seems fine for now.  I need to remember to think about the fact that whatever ResourceProvider type that VideoResourceUpdater uses, it needs to be able to be used from both the renderer in media/cc and also here in viz.",
+      "revId": "b6c3af7ffd99a203f630b22ac774c222f6146955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
