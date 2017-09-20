@@ -52,6 +52,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e7a524_6e217623",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-20T23:00:10Z",
+      "side": 1,
+      "message": "Sorry for the confusion. Disable extension side channel.open / channel.close mainly for retry logic. It becomes a little complicated and hard to debug when both browser side / extension side try to open / close channel (add / remove sinks) during retry.",
+      "parentUuid": "5e6721bd_04825c4b",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
