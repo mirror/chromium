@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2aebd51f_e61df7be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "There is no DD, the goal is stated in form of a problem to solve: \"In web rendering service if JS on the page goes nuts and infinite-loops we will get nothing instead of at least some screenshot. We need to force-stop JS after some timeout so we can get control on the renderer and do a best effor to extract at least some info from the page\". Virtual time doesn\u0027t work for that - it fast-forwards when JS is \"sleeping\", not when it\u0027s actually running.\n\nThis change is stage 1 - introduce some tracking and enforcing post-fact quotas. Future stage 2 implies a delayed task on another thread to terminate the isolate if it didn\u0027t return from JS by the deadline.",
+      "parentUuid": "efcbc9ac_2eb7fcb2",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20dc8f1a_e889d046",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eed8da_3ec54792",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "All methods in V8ScriptRunner seem to get it as an argument so I thought it would be safer to just pass it, then derive with some unclear implication that it will happen to be the right one.",
+      "parentUuid": "20dc8f1a_e889d046",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53d9626d_ce39e65c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "According to docs \"Terminate\" is allowed be called anytime from anywhere, so all code should be able to handle it. Testing uncovered some places that don\u0027t check the state of the isolate before trying to do work. I fixed wherever I\u0027ve found, if more places break - more places will need to be fixed.",
+      "parentUuid": "ce2c4e5e_1ddd7e1f",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61d49e2c_ecebfb3d",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-19T19:15:01Z",
       "side": 1,
       "message": "This is going to be inherently racy. Do you want to specify quota for the page load?",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504582b8_572e1ec5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "What race exactly do you mean? This API is a tool, it\u0027s up to the caller to make a decision how to use the tool taking the implications. For the \"last hope\" usecase I imagine I\u0027m fine with being unable to change it reliably many time on the same target.",
+      "parentUuid": "61d49e2c_ecebfb3d",
       "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1542439b_132ee3cc",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "It seems like the most suitable place: it already does the calculations anyway, this change just adds a callback to act on the outcome of those calculations.",
+      "parentUuid": "eb6c63d8_e8f847e6",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea27ed3_365722d3",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1feca6_d601a89f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T01:31:17Z",
+      "side": 1,
+      "message": "We are talking about time quota: how much time was spent running JS code. See first comment.",
+      "parentUuid": "bea27ed3_365722d3",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
