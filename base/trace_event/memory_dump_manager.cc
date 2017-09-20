@@ -466,6 +466,10 @@ void MemoryDumpManager::UnregisterDumpProviderInternal(
            (*mdp_iter)->task_runner->RunsTasksInCurrentSequence())
         << "MemoryDumpProvider \"" << (*mdp_iter)->name << "\" attempted to "
         << "unregister itself in a racy way. Please file a crbug.";
+
+    // Make races on MDP destruction easier to debug.
+    *const_cast<MemoryDumpProvider**>(&(*mdp_iter)->dump_provider) =
+        reinterpret_cast<MemoryDumpProvider*>(0x0000dead);
   }
 
   if ((*mdp_iter)->options.is_fast_polling_supported) {
@@ -678,6 +682,14 @@ void MemoryDumpManager::InvokeOnMemoryDump(
   DCHECK(!mdpinfo->task_runner ||
          mdpinfo->task_runner->RunsTasksInCurrentSequence());
 
+  TRACE_EVENT1(kTraceCategory, "MemoryDumpManager::InvokeOnMemoryDump",
+               "dump_provider.name", mdpinfo->name);
+
+  // Do not add any other TRACE_EVENT macro (or function that might have them)
+  // below this point. Under some rare circunstances, they can re-initialize and
+  // invalide the current ThreadLocalEventBuffer MDP, making the |should_dump|
+  // check below susceptible to TOCTTOU bugs (https://crbug.com/763365).
+
   bool should_dump;
   {
     // A locked access is required to R/W |disabled| (for the
@@ -696,8 +708,6 @@ void MemoryDumpManager::InvokeOnMemoryDump(
 
   if (should_dump) {
     // Invoke the dump provider.
-    TRACE_EVENT1(kTraceCategory, "MemoryDumpManager::InvokeOnMemoryDump",
-                 "dump_provider.name", mdpinfo->name);
 
     // A stack allocated string with dump provider name is useful to debug
     // crashes while invoking dump after a |dump_provider| is not unregistered
