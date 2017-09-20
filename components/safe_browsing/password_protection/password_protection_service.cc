@@ -432,6 +432,7 @@ void PasswordProtectionService::RequestFinished(
                  response.get(), base::Time::Now());
   }
 
+  ShowModalWarning(request->web_contents(), "token");
   // Finished processing this request. Remove it from pending list.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
     if (it->get() == request) {
