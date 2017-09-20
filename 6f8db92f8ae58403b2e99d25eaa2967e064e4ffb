@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1553a67_4aa82ee6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_options.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-20T22:39:59Z",
+      "side": 1,
+      "message": "A cleaner way to do this is using bind() instead of\nsomething like \"self\".\n\nwindow.speechSynthesis.onvoiceschanged \u003d (function() {\n  this.populateVoiceList_(\u0027voice\u0027);\n}.bind(this));",
+      "revId": "6f8db92f8ae58403b2e99d25eaa2967e064e4ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
