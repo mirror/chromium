@@ -135,6 +135,9 @@ policy.Policy.prototype.setStatus_ = function(value) {
  * @private
  */
 policy.Policy.prototype.setValue_ = function(value) {
+  if (typeof value == 'object') {
+    value = JSON.stringify(value);
+  }
   this.unset = !value;
   this.value = value;
   this.querySelector('.value').textContent = value || '';
