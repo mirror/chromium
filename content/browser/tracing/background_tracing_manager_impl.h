@@ -12,12 +12,14 @@
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted_memory.h"
-#include "base/memory/weak_ptr.h"
-#include "base/metrics/histogram.h"
+#include "base/timer/timer.h"
+#include "base/trace_event/trace_config.h"
 #include "content/browser/tracing/background_tracing_config_impl.h"
-#include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/public/browser/background_tracing_manager.h"
+
+namespace base {
+class RefCountedString;
+}  // namespace base
 
 namespace content {
 
@@ -97,14 +99,17 @@ class BackgroundTracingManagerImpl : public BackgroundTracingManager {
   void StartTracing(BackgroundTracingConfigImpl::CategoryPreset,
                     base::trace_event::TraceRecordMode);
   void StartTracingIfConfigNeedsIt();
-  void OnFinalizeStarted(std::unique_ptr<const base::DictionaryValue> metadata,
+  void OnFinalizeStarted(base::Closure started_finalizing_closure,
+                         std::unique_ptr<const base::DictionaryValue> metadata,
                          base::RefCountedString*);
   void OnFinalizeComplete();
   void BeginFinalizing(StartedFinalizingCallback);
   void ValidateStartupScenario();
 
-  void AddCustomMetadata();
+  void AddMetadataGeneratorFunction();
+  std::unique_ptr<base::DictionaryValue> GenerateMetadataDict();
 
+  bool IsAllowedFinalization() const;
   std::string GetTriggerNameFromHandle(TriggerHandle handle) const;
   bool IsTriggerHandleValid(TriggerHandle handle) const;
 

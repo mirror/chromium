@@ -4,11 +4,16 @@
 
 #include "components/feedback/tracing_manager.h"
 
+#include <map>
+#include <memory>
+#include <string>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/values.h"
 #include "components/feedback/feedback_util.h"
 #include "content/public/browser/tracing_controller.h"
 
@@ -44,7 +49,7 @@ int TracingManager::RequestTrace() {
   current_trace_id_ = g_next_trace_id;
   ++g_next_trace_id;
   content::TracingController::GetInstance()->StopTracing(
-      content::TracingController::CreateStringSink(
+      content::TracingController::CreateStringEndpoint(
           base::Bind(&TracingManager::OnTraceDataCollected,
                      weak_ptr_factory_.GetWeakPtr())));
   return current_trace_id_;
