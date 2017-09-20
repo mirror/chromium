@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e263bf_b9364af4",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-20T18:29:16Z",
+      "side": 1,
+      "message": "Seems we use a different code path for component extensions. Istiaque: do you have context into them? Skimming through the code it seems they are loaded from directories within the repo. Would we need to support them?",
+      "range": {
+        "startLine": 1589,
+        "startChar": 19,
+        "endLine": 1589,
+        "endChar": 22
+      },
+      "revId": "617af24dd45ef6dd754e3e3d3802c00298b5d83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
