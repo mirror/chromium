@@ -34,6 +34,24 @@
       "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad84376_5c44d963",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T22:56:20Z",
+      "side": 1,
+      "message": "Just to make sure we are in sync here, does this look correct?\n\nThe possible RenderFrame that we will printing are:\na) Webpage, no frames.\nb) Webpage, with sub-frames. (Some of the frames can even be PDFs.)\nc) PDF.\n\nThe end goal with OOPIF is:\na) Send SKP.\nb) Send multiple SKPs, one per frame. Sub-frame containing PDFs will send SKPs with an image of the viewable portion of the PDF in the frame. The print compositor can\u0027t mix SKPs with PDFs.\nc) Send PDF.",
+      "parentUuid": "1f18b344_ae108ae3",
+      "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
