@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35f4ccae_0e9af463",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-20T17:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650138a5_cf0213e6",
+      "revId": "b10a634714b0a80a9e82cd908adfb49e191f61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0924c704_4da8c674",
         "filename": "chrome/browser/resources/settings/page_visibility.js",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d3bcc8b1_2a82543a",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-20T17:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0924c704_4da8c674",
+      "revId": "b10a634714b0a80a9e82cd908adfb49e191f61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33e0397b_b4b61122",
         "filename": "chrome/browser/resources/settings/page_visibility.js",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T22:22:11Z",
       "side": 1,
       "message": "Could you add a comment here saying all other pages are visible by default?",
+      "revId": "b10a634714b0a80a9e82cd908adfb49e191f61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b78c78_4a902063",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-20T17:14:19Z",
+      "side": 1,
+      "message": "Updated the comment above. I guess it is enough?",
+      "parentUuid": "33e0397b_b4b61122",
       "revId": "b10a634714b0a80a9e82cd908adfb49e191f61c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
