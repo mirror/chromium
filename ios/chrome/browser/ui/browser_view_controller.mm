@@ -219,6 +219,8 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+#include "ios/chrome/browser/passwords/password_tab_helper.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -378,6 +380,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
+                                    PasswordControllerDelegate,
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
@@ -2401,6 +2404,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
   PrintTabHelper::CreateForWebState(tab.webState, self);
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
+  PasswordTabHelper* passwordTabHelper =
+      PasswordTabHelper::FromWebState(tab.webState);
+  if (passwordTabHelper) {
+    passwordTabHelper->SetPasswordControllerDelegate(self);
+  }
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -2674,6 +2682,14 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return (IsIPadIdiom() || _isOffTheRecord) ? UIStatusBarStyleLightContent
                                             : UIStatusBarStyleDefault;
+}
+
+#pragma mark - PasswordControllerDelegate methods
+
+- (void)displaySignInNotification:(UIViewController*)viewController {
+  [self addChildViewController:viewController];
+  [self.view addSubview:viewController.view];
+  [viewController didMoveToParentViewController:self];
 }
 
 #pragma mark - CRWWebStateDelegate methods.

@@ -18,6 +18,7 @@
 @protocol PasswordFormFiller;
 @class PasswordGenerationAgent;
 @protocol PasswordsUiDelegate;
+@class UIViewController;
 
 namespace password_manager {
 class PasswordGenerationManager;
@@ -25,10 +26,20 @@ class PasswordManagerClient;
 class PasswordManagerDriver;
 }  // namespace password_manager
 
+@protocol PasswordControllerDelegate
+
+// Adds |viewController| as child controller in order to display auto sing-in
+// notification.
+- (void)displaySignInNotification:(UIViewController*)viewController;
+
+@end
+
 // Per-tab password controller. Handles password autofill and saving.
 @interface PasswordController : NSObject<CRWWebStateObserver,
                                          PasswordManagerClientDelegate,
                                          PasswordManagerDriverDelegate>
+
+@property(assign, nonatomic) id<PasswordControllerDelegate> delegate;
 
 // An object that can provide suggestions from this PasswordController.
 @property(nonatomic, readonly) id<FormSuggestionProvider> suggestionProvider;
@@ -67,6 +78,9 @@ class PasswordManagerDriver;
 passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate
              client:(std::unique_ptr<password_manager::PasswordManagerClient>)
                         passwordManagerClient NS_DESIGNATED_INITIALIZER;
+
+// TODO(crbug.com/435048): Add WasHidden to WebStateObserverBridge instead.
+- (void)wasHidden;
 
 - (instancetype)init NS_UNAVAILABLE;
 
