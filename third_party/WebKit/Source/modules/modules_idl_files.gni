@@ -12,14 +12,12 @@ blink_modules_output_dir = "$root_gen_dir/blink/modules"
 
 modules_core_global_constructors_original_interfaces = [
   "AudioWorkletGlobalScope",
-  "CompositorWorkerGlobalScope",
   "PaintWorkletGlobalScope",
   "ServiceWorkerGlobalScope",
 ]
 
 modules_global_constructors_original_interfaces = [
   "AudioWorkletGlobalScope",
-  "CompositorWorkerGlobalScope",
   "DedicatedWorkerGlobalScope",
   "PaintWorkletGlobalScope",
   "ServiceWorkerGlobalScope",
@@ -69,8 +67,6 @@ modules_idl_files =
                     "canvas2d/CanvasRenderingContext2D.idl",
                     "canvas2d/Path2D.idl",
                     "compositorworker/AnimationWorkletGlobalScope.idl",
-                    "compositorworker/CompositorWorker.idl",
-                    "compositorworker/CompositorWorkerGlobalScope.idl",
                     "compositorworker/WorkletAnimation.idl",
                     "credentialmanager/AuthenticatorAssertionResponse.idl",
                     "credentialmanager/AuthenticatorAttestationResponse.idl",

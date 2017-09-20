@@ -452,20 +452,9 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
     if (!gpu_channel_host) {
       shared_worker_context_provider_ = nullptr;
     } else {
-      if (!shared_worker_context_provider_) {
-        bool need_alpha_channel = false;
-        const bool support_locking = true;
-        shared_worker_context_provider_ = CreateContextCommon(
-            gpu_channel_host, gpu::kNullSurfaceHandle, need_alpha_channel,
-            false /* support_stencil */, support_locking, nullptr,
-            ui::command_buffer_metrics::BROWSER_WORKER_CONTEXT);
-        if (!shared_worker_context_provider_->BindToCurrentThread())
-          shared_worker_context_provider_ = nullptr;
-      }
-
       // The |context_provider| is used for both the browser compositor and the
-      // display compositor. It shares resources with the worker context, so if
-      // we failed to make a worker context, just start over and try again.
+      // display compositor.
+      // If we failed before, just start over and try again.
       if (shared_worker_context_provider_) {
         // For mus, we create an offscreen context for a mus window, and we will
         // use CommandBufferProxyImpl::TakeFrontBuffer() to take the context's
