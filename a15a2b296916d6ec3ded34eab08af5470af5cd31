@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b22b0ab7_464cba5e",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-20T18:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5828cdcd_482c1718",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "187d2e09_edd2b2d2",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52f5db36_b6ec07c1",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-20T18:08:31Z",
+      "side": 1,
+      "message": "PartitionBucket has a trivial constructor, and I kept it this way because its used much more like a C-struct [lots of pointer fun] than a C++ object.",
+      "parentUuid": "187d2e09_edd2b2d2",
+      "range": {
+        "startLine": 898,
+        "startChar": 11,
+        "endLine": 898,
+        "endChar": 26
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b070404_b3522765",
         "filename": "base/allocator/partition_allocator/spin_lock.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-20T04:33:45Z",
       "side": 1,
       "message": "erp... doesn\u0027t this need to be initialized to {0}?  \n\nI think you need the funky syntax w/o the \u003d sign so:\n\nstd::atomic_int lock_{0};\n\nhttps://stackoverflow.com/a/36320050",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24089828_8e47d1c3",
+        "filename": "base/allocator/partition_allocator/spin_lock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-20T18:08:31Z",
+      "side": 1,
+      "message": "whoops, didn\u0027t realize the default constructor was trivial and would leave it uninitialized. :(",
+      "parentUuid": "6b070404_b3522765",
       "range": {
         "startLine": 44,
         "startChar": 17,
