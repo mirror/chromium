@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c135bcc_e01beddd",
+        "filename": "ui/app_list/app_list_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-20T21:48:48Z",
+      "side": 1,
+      "message": "Is this file compiled for non-CrOS?",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "d6eab895d382aab61627dc1406ef84fb7b3df6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2958d6_8ccee622",
+        "filename": "ui/app_list/app_list_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-20T21:48:48Z",
+      "side": 1,
+      "message": "Make the XXXDefaultOn, XXXDefaultOff ish",
+      "range": {
+        "startLine": 23,
+        "startChar": 43,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "d6eab895d382aab61627dc1406ef84fb7b3df6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
