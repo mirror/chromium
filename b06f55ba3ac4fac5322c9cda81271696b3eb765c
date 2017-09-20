@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65863111_0a402b90",
+        "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-20T22:09:45Z",
+      "side": 0,
+      "message": "This is now split into two paths depending on which handler is triggered - one path resolves a promise and one path fires a webUI event.",
+      "revId": "b06f55ba3ac4fac5322c9cda81271696b3eb765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
