@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90e82f09_6d5b856c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T16:14:40Z",
+      "side": 1,
+      "message": "some egtests may break because back button no longer has accessibility label \u003d IDS_IOS_BOOKMARK_NEW_BACK_LABEL.",
+      "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e47e897_5b5c6ba5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-20T16:14:40Z",
+      "side": 1,
+      "message": "do we need\n#if defined(__IPHONE_11_0) \u0026\u0026 (__IPHONE_OS_VERSION_MAX_ALLOWED \u003e\u003d __IPHONE_11_0)\nlike the following:\n- https://cs.chromium.org/search/?q\u003d__IPHONE_11_0\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n- https://cs.corp.google.com/search/?q\u003d+__IPHONE_11_0+package:%5Epiper$+-file:%5E//depot/google3/experimental+file:%5E//depot/google3/\u0026type\u003dcs",
+      "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
