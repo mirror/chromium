@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4d3fd0d_ac749a49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-20T01:38:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a66fb0ee_0b32f610",
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fbf9595_a773e6b1",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1ceddf56_13154030",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-20T01:38:57Z",
+      "side": 1,
+      "message": "Ack.\n\nI think this class is most valuable as a transparent way of piping languages into GetTargetLanguage; \"protected\" state obfuscates this.",
+      "parentUuid": "7fbf9595_a773e6b1",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "344f7e08_6bed16e7",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72db81dc_23645bed",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-20T01:38:57Z",
+      "side": 1,
+      "message": "Ack - following precedent of above test.",
+      "parentUuid": "344f7e08_6bed16e7",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 80
+      },
+      "revId": "2c71387a70b6497cfb918a4c9c5e1aaa6353f228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
