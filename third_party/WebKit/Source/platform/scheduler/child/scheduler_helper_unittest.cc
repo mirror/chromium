@@ -16,6 +16,7 @@
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -155,8 +156,6 @@ class MockTaskObserver : public base::MessageLoop::TaskObserver {
   MOCK_METHOD1(DidProcessTask, void(const base::PendingTask& task));
   MOCK_METHOD1(WillProcessTask, void(const base::PendingTask& task));
 };
-
-void NopTask() {}
 }  // namespace
 
 TEST_F(SchedulerHelperTest, ObserversNotifiedFor_DefaultTaskRunner) {

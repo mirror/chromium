@@ -31,6 +31,7 @@
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/base/work_queue.h"
 #include "platform/scheduler/base/work_queue_sets.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "platform/scheduler/test/test_task_queue.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -216,8 +217,6 @@ void PostFromNestedRunloop(base::MessageLoop* message_loop,
   base::RunLoop().RunUntilIdle();
 }
 
-void NopTask() {}
-
 TEST_F(TaskQueueManagerTest,
        NowCalledMinimumNumberOfTimesToComputeTaskDurations) {
   message_loop_.reset(new base::MessageLoop());
@@ -280,8 +279,6 @@ TEST_F(TaskQueueManagerTest, NowNotCalledForNestedTasks) {
   // task. We shouldn't call it for any of the nested tasks.
   EXPECT_EQ(2, test_count_uses_time_source->now_calls_count());
 }
-
-void NullTask() {}
 
 void TestTask(EnqueueOrder value, std::vector<EnqueueOrder>* out_result) {
   out_result->push_back(value);
@@ -1140,7 +1137,7 @@ TEST_F(TaskQueueManagerTest, HasPendingImmediateWork) {
   Initialize(1u);
 
   EXPECT_FALSE(runners_[0]->HasTaskToRunImmediately());
-  runners_[0]->PostTask(FROM_HERE, base::Bind(NullTask));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(NopTask));
   EXPECT_TRUE(runners_[0]->HasTaskToRunImmediately());
 
   test_task_runner_->RunUntilIdle();
@@ -1151,7 +1148,7 @@ TEST_F(TaskQueueManagerTest, HasPendingImmediateWork_DelayedTasks) {
   Initialize(1u);
 
   EXPECT_FALSE(runners_[0]->HasTaskToRunImmediately());
-  runners_[0]->PostDelayedTask(FROM_HERE, base::Bind(NullTask),
+  runners_[0]->PostDelayedTask(FROM_HERE, base::Bind(NopTask),
                                base::TimeDelta::FromMilliseconds(12));
   EXPECT_FALSE(runners_[0]->HasTaskToRunImmediately());
 

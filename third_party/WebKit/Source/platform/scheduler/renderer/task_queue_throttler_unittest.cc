@@ -22,6 +22,7 @@
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -32,8 +33,6 @@ bool MessageLoopTaskCounter(size_t* count) {
   *count = *count + 1;
   return true;
 }
-
-void NopTask() {}
 
 void AddOneTask(size_t* count) {
   (*count)++;

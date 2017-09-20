@@ -22,6 +22,7 @@
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_impl.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,8 +47,6 @@ void AppendToVectorIdleTestTask(std::vector<std::string>* vector,
                                 base::TimeTicks deadline) {
   AppendToVectorTestTask(vector, value);
 }
-
-void NullTask() {}
 
 void NullIdleTask(base::TimeTicks deadline) {}
 
@@ -588,7 +587,7 @@ TEST_F(IdleHelperTest, TestLongIdlePeriodWithPendingDelayedTask) {
 
   idle_task_runner_->PostIdleTask(
       FROM_HERE, base::Bind(&IdleTestTask, &run_count, &deadline_in_task));
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         pending_task_delay);
 
   idle_helper_->EnableLongIdlePeriod();
@@ -602,7 +601,7 @@ TEST_F(IdleHelperTest, TestLongIdlePeriodWithLatePendingDelayedTask) {
   base::TimeTicks deadline_in_task;
   int run_count = 0;
 
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         pending_task_delay);
 
   // Advance clock until after delayed task was meant to be run.
@@ -745,7 +744,7 @@ TEST_F(IdleHelperTest, TestLongIdlePeriodRestartWaitsIfNotMaxDeadline) {
                                     retry_enable_long_idle_period_delay());
 
   // Post delayed task to ensure idle period doesn't have a max deadline.
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         pending_task_delay);
 
   g_max_idle_task_reposts = 2;
@@ -857,7 +856,7 @@ TEST_F(IdleHelperTest, CanExceedIdleDeadlineIfRequired) {
 
   // Should return false for a long idle period which is shortened due to a
   // pending delayed task.
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         base::TimeDelta::FromMilliseconds(10));
   idle_task_runner_->PostIdleTask(
       FROM_HERE,
@@ -905,7 +904,7 @@ class IdleHelperWithQuiescencePeriodTest : public BaseIdleHelperTest {
 
   void MakeNonQuiescent() {
     // Run an arbitrary task so we're deemed to be not quiescent.
-    default_task_runner_->PostTask(FROM_HERE, base::Bind(NullTask));
+    default_task_runner_->PostTask(FROM_HERE, base::Bind(NopTask));
     RunUntilIdle();
   }
 
@@ -1006,7 +1005,7 @@ TEST_F(IdleHelperWithQuiescencePeriodTest,
   RunUntilIdle();
 
   // Post a normal task to make the scheduler non-quiescent.
-  default_task_runner_->PostTask(FROM_HERE, base::Bind(&NullTask));
+  default_task_runner_->PostTask(FROM_HERE, base::Bind(&NopTask));
   RunUntilIdle();
 
   // Post an idle task. The idle task won't run initially because the system is
@@ -1063,7 +1062,7 @@ TEST_F(IdleHelperTest, NoLongIdlePeriodWhenDeadlineTooClose) {
 
   idle_task_runner_->PostIdleTask(
       FROM_HERE, base::Bind(&IdleTestTask, &run_count, &deadline_in_task));
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         less_than_min_deadline_duration);
 
   idle_helper_->EnableLongIdlePeriod();
@@ -1075,7 +1074,7 @@ TEST_F(IdleHelperTest, NoLongIdlePeriodWhenDeadlineTooClose) {
   RunUntilIdle();
   EXPECT_EQ(0, run_count);
 
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         more_than_min_deadline_duration);
   idle_helper_->EnableLongIdlePeriod();
   RunUntilIdle();

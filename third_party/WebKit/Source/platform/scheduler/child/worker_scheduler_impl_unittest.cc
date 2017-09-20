@@ -13,6 +13,7 @@
 #include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -22,8 +23,6 @@ namespace blink {
 namespace scheduler {
 
 namespace {
-void NopTask() {}
-
 int TimeTicksToIntMs(const base::TimeTicks& time) {
   return static_cast<int>((time - base::TimeTicks()).InMilliseconds());
 }

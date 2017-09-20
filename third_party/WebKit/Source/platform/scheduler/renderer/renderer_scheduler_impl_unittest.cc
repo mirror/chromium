@@ -24,6 +24,7 @@
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
+#include "platform/scheduler/test/nop_task.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -58,8 +59,6 @@ void AppendToVectorIdleTestTask(std::vector<std::string>* vector,
                                 base::TimeTicks deadline) {
   AppendToVectorTestTask(vector, value);
 }
-
-void NullTask() {}
 
 void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
                                  std::vector<int>* vector,
@@ -135,7 +134,7 @@ void PostingYieldingTestTask(RendererSchedulerImpl* scheduler,
                              bool* should_yield_before,
                              bool* should_yield_after) {
   *should_yield_before = scheduler->ShouldYieldForHighPriorityWork();
-  task_runner->PostTask(FROM_HERE, base::Bind(NullTask));
+  task_runner->PostTask(FROM_HERE, base::Bind(NopTask));
   if (simulate_input) {
     scheduler->DidHandleInputEventOnCompositorThread(
         FakeInputEvent(blink::WebInputEvent::kTouchMove),
@@ -871,7 +870,7 @@ TEST_F(RendererSchedulerImplTest, TestDelayedEndIdlePeriodCanceled) {
 
   // Post a task which simulates running until after the previous end idle
   // period delayed task was scheduled for
-  scheduler_->DefaultTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
+  scheduler_->DefaultTaskQueue()->PostTask(FROM_HERE, base::Bind(NopTask));
   clock_->Advance(base::TimeDelta::FromMilliseconds(300));
 
   RunUntilIdle();
@@ -1619,7 +1618,7 @@ TEST_F(RendererSchedulerImplTest,
   PostTestTasks(&run_order, "D1 C1");
 
   for (int i = 0; i < 20; i++) {
-    compositor_task_runner_->PostTask(FROM_HERE, base::Bind(&NullTask));
+    compositor_task_runner_->PostTask(FROM_HERE, base::Bind(&NopTask));
   }
   PostTestTasks(&run_order, "C2");
 
@@ -2190,7 +2189,7 @@ TEST_F(RendererSchedulerImplTest, TestLongIdlePeriodWithPendingDelayedTask) {
 
   idle_task_runner_->PostIdleTask(
       FROM_HERE, base::Bind(&IdleTestTask, &run_count, &deadline_in_task));
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         pending_task_delay);
 
   scheduler_->BeginFrameNotExpectedSoon();
@@ -2205,7 +2204,7 @@ TEST_F(RendererSchedulerImplTest,
   base::TimeTicks deadline_in_task;
   int run_count = 0;
 
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         pending_task_delay);
 
   // Advance clock until after delayed task was meant to be run.
@@ -2313,7 +2312,7 @@ TEST_F(RendererSchedulerImplTest, CanExceedIdleDeadlineIfRequired) {
 
   // Should return false for a long idle period which is shortened due to a
   // pending delayed task.
-  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NullTask),
+  default_task_runner_->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                         base::TimeDelta::FromMilliseconds(10));
   idle_task_runner_->PostIdleTask(
       FROM_HERE,
@@ -3931,11 +3930,11 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
   time_budget_pool->AddQueue(base::TimeTicks(),
                              scheduler_->TimerTaskQueue().get());
 
-  scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
+  scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NopTask));
 
   web_frame_scheduler->LoadingTaskRunner()
       ->ToSingleThreadTaskRunner()
-      ->PostDelayedTask(FROM_HERE, base::Bind(NullTask),
+      ->PostDelayedTask(FROM_HERE, base::Bind(NopTask),
                         TimeDelta::FromMilliseconds(10));
 
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> value =
