@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f97aa9c_afeb4fe9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/offset-position-001.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-20T03:13:52Z",
+      "side": 1,
+      "message": "i found this a bit confusing, pls add \u0027will pass for any fixed px value\u0027",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969fd013_dca82103",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/offset-position-001.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-20T03:13:52Z",
+      "side": 1,
+      "message": "this is inconsistent with the other tests that don\u0027t explicitly give offset-anchor auto but default to it",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "365fba24_13088ec7",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
         "patchSetId": 6
@@ -13,6 +47,24 @@
       "writtenOn": "2017-09-19T06:13:19Z",
       "side": 1,
       "message": "I concur with pdr@ about not passing a LayoutObject back into Style code. That goes against the notion of a pipeline system for the rendering engine where we each stage of the pipeline is considered read only by the next step. I would prefer that the LayoutObject manipulation happen in SVGElement?",
+      "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165339a8_ea429fb1",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-20T03:13:52Z",
+      "side": 1,
+      "message": "seems like from the cl description that the final implementation would not need to access the LayoutObject? is it too complex to use the true containing block in this patch?",
+      "parentUuid": "365fba24_13088ec7",
       "revId": "b1b1c5e19baa44e507de2f1c4b8ec563db1f9c12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
