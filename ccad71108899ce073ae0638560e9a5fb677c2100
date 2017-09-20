@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "9b075d55_30bde05b",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-20T15:08:22Z",
+      "side": 1,
+      "message": "I realize I was running in mash world. The pinyin dot is correctly shown in non-mash as you describe. I\u0027ll file a bug for this, thanks!",
+      "parentUuid": "24f91de0_6f876429",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1566c44_b890ee05",
         "filename": "ui/base/ime/input_method_chromeos.h",
         "patchSetId": 7
