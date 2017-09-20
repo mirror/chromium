@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e209921_46d7a693",
+        "filename": "chrome/browser/resources/download/download_internals.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:44:21Z",
+      "side": 1,
+      "message": "Can we reconsider the location of the newly added JS/HTML and C++ files?\n\nSpecifically how about, c/b/r/download_internals/, similar to all other \"internals\" pages under c/b/r. Using just c/b/r/download is confusing, especially as there as already an md_downloads/ which eventually should be renamed downloads/, now that the MD version is the only Downloads UI.\n\nThe widely used convention in c/b/r is that the host name becomes the folder name (but with underscores)\n\nHostname: chrome://foo-internals\nJS/HTML/CSS -\u003e c/b/r/foo_internals/\nC++ -\u003e c/b/ui/webui/foo_internals/",
+      "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc7d071_d3d45276",
+        "filename": "chrome/browser/resources/download/download_internals.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T19:44:21Z",
+      "side": 1,
+      "message": "Can you add Javascript compile targets for newly added JS files? See examples https://cs.chromium.org/search/?q\u003dcompiled_resources2.gyp+file:%5Esrc/chrome/browser/resources/+package:%5Echromium$\u0026type\u003dcs.",
+      "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
