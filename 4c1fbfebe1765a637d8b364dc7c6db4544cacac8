@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0045f901_7a35113a",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T11:30:24Z",
+      "side": 1,
+      "message": "The call to [super stop] already stops all children.  What prompted you to add this?",
+      "revId": "4c1fbfebe1765a637d8b364dc7c6db4544cacac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
