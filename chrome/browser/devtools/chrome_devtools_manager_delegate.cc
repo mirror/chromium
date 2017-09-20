@@ -334,8 +334,10 @@ class ChromeDevToolsManagerDelegate::HostData {
   RemoteLocations remote_locations_;
 };
 
-ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate() {
+ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate()
+    : dispatcher_(std::make_unique<protocol::UberDispatcher>(nullptr)) {
   content::DevToolsAgentHost::AddObserver(this);
+  dispatcher_->setFallThroughForNotFound(true);
 }
 
 ChromeDevToolsManagerDelegate::~ChromeDevToolsManagerDelegate() {
@@ -350,31 +352,40 @@ void ChromeDevToolsManagerDelegate::Inspect(
 base::DictionaryValue* ChromeDevToolsManagerDelegate::HandleCommand(
     DevToolsAgentHost* agent_host,
     base::DictionaryValue* command_dict) {
-
   int id = 0;
   std::string method;
   base::DictionaryValue* params = nullptr;
   if (!DevToolsProtocol::ParseCommand(command_dict, &id, &method, &params))
     return nullptr;
 
+#if 0
   // Do not actually handle the enable/disable commands, just keep track of the
   // enable state.
   if (method == chrome::devtools::Page::enable::kName)
     TogglePageEnable(true /* enable */, agent_host);
   if (method == chrome::devtools::Page::disable::kName)
     TogglePageEnable(false /* enable */, agent_host);
+#endif
 
   auto* result = HandleBrowserCommand(id, method, params).release();
   if (result)
     return result;
 
+#if 0
   if (method == chrome::devtools::Page::setAdBlockingEnabled::kName)
     return SetAdBlockingEnabled(agent_host, id, params).release();
+#endif
 
   if (method == chrome::devtools::Target::setRemoteLocations::kName)
     return SetRemoteLocations(agent_host, id, params).release();
 
-  return nullptr;
+  auto response =
+      dispatcher_->dispatch(protocol::toProtocolValue(command_dict, 1000));
+  if (response == protocol::DispatchResponse::Status::kError ||
+      response == protocol::DispatchResponse::Status::kFallThrough) {
+    return nullptr;
+  }
+  return DevToolsProtocol::CreateSuccessResponse(id, nullptr).release();
 }
 
 std::string ChromeDevToolsManagerDelegate::GetTargetType(
