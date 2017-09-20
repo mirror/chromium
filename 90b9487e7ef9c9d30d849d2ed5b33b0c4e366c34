@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c419a5ad_7bf447c9",
+        "filename": "content/browser/android/dialog_overlay_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-20T22:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9ca8f3_259fd70f",
+      "revId": "90b9487e7ef9c9d30d849d2ed5b33b0c4e366c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca04f287_fa98016f",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "90b9487e7ef9c9d30d849d2ed5b33b0c4e366c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841ac028_8f2e6424",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-20T22:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca04f287_fa98016f",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "90b9487e7ef9c9d30d849d2ed5b33b0c4e366c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
