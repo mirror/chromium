@@ -57,17 +57,19 @@ class BluetoothLowEnergyWeaveClientConnection
    public:
     static std::unique_ptr<Connection> NewInstance(
         const RemoteDevice& remote_device,
-        const std::string& device_address,
         scoped_refptr<device::BluetoothAdapter> adapter,
-        const device::BluetoothUUID remote_service_uuid);
+        const device::BluetoothUUID remote_service_uuid,
+        device::BluetoothDevice* bluetooth_device,
+        bool should_set_connection_latency);
     static void SetInstanceForTesting(Factory* factory);
 
    protected:
     virtual std::unique_ptr<Connection> BuildInstance(
         const RemoteDevice& remote_device,
-        const std::string& device_address,
         scoped_refptr<device::BluetoothAdapter> adapter,
-        const device::BluetoothUUID remote_service_uuid);
+        const device::BluetoothUUID remote_service_uuid,
+        device::BluetoothDevice* bluetooth_device,
+        bool should_set_connection_latency);
 
    private:
     static Factory* factory_instance_;
@@ -89,9 +91,10 @@ class BluetoothLowEnergyWeaveClientConnection
   // necessary to initiate the BLE connection.
   BluetoothLowEnergyWeaveClientConnection(
       const RemoteDevice& remote_device,
-      const std::string& device_address,
       scoped_refptr<device::BluetoothAdapter> adapter,
-      const device::BluetoothUUID remote_service_uuid);
+      const device::BluetoothUUID remote_service_uuid,
+      device::BluetoothDevice* bluetooth_device,
+      bool should_set_connection_latency);
 
   ~BluetoothLowEnergyWeaveClientConnection() override;
 
@@ -217,10 +220,12 @@ class BluetoothLowEnergyWeaveClientConnection
   // connection.
   std::string GetReasonForClose();
 
-  // The device to which to connect. This is the starting value, but the device
-  // address may change during the connection because BLE addresses are
-  // ephemeral. Use GetDeviceAddress() to get the most up-to-date address.
-  const std::string device_address_;
+  // The device to which to connect.
+  device::BluetoothDevice* bluetooth_device_;
+
+  // Whether BluetoothDevice::SetConnectionLatency() should be called before
+  // starting the connection. For most use cases, this should *not* be done.
+  bool should_set_connection_latency_;
 
   scoped_refptr<device::BluetoothAdapter> adapter_;
   RemoteAttribute remote_service_;
