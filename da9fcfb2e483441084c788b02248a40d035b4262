@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "2aac5a35_b590d653",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-20T21:56:56Z",
+      "side": 1,
+      "message": "Nit: No (c) for new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bda7945f_9c31ddbe",
         "filename": "base/trace_event/freed_object_tracker.cc",
         "patchSetId": 7
@@ -235,6 +258,29 @@
       "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8addb2f_428e5a35",
+        "filename": "chrome/browser/chrome_browser_field_trials.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-20T21:56:56Z",
+      "side": 1,
+      "message": "Use a base::Feature instead.",
+      "range": {
+        "startLine": 243,
+        "startChar": 75,
+        "endLine": 243,
+        "endChar": 0
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
