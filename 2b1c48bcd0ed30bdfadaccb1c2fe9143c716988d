@@ -16,6 +16,24 @@
       "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174e336f_52f4f180",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-20T20:59:54Z",
+      "side": 1,
+      "message": "Yes, most of the time.\n\nCurrently, the value is almost always a string.\n\nIn the future it will probably be changed to the actual policy type, but it still is rarely an object (see https://www.chromium.org/administrators/policy-list-3).",
+      "parentUuid": "6de55353_1e87cfab",
+      "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
