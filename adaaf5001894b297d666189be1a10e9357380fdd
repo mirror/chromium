@@ -68,6 +68,23 @@
       "revId": "adaaf5001894b297d666189be1a10e9357380fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40a5944_5dea9fb3",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-20T21:26:53Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t allow adding more power test cases until we get to power.desktop \u0026 power.mobile",
+      "revId": "adaaf5001894b297d666189be1a10e9357380fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
