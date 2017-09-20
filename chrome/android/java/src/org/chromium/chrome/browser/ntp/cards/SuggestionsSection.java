@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.chromium.base.Callback;
@@ -20,6 +21,7 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
+import org.chromium.chrome.browser.suggestions.ContentSuggestionPlaceholder;
 import org.chromium.chrome.browser.suggestions.SuggestionsOfflineModelObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
@@ -47,6 +49,7 @@ public class SuggestionsSection extends InnerNode {
 
     // Children
     private final SectionHeader mHeader;
+    private final @Nullable ContentSuggestionPlaceholder mPlaceholder;
     private final SuggestionsList mSuggestionsList;
     private final StatusItem mStatus;
     private final ActionItem mMoreButton;
@@ -100,12 +103,14 @@ public class SuggestionsSection extends InnerNode {
         boolean useModern = FeatureUtilities.isChromeHomeModernEnabled();
         if (useModern) {
             mStatus = null;
+            mPlaceholder = new ContentSuggestionPlaceholder();
         } else {
             mStatus = StatusItem.createNoSuggestionsItem(info);
+            mPlaceholder = null;
         }
         mMoreButton = new ActionItem(this, ranker);
         if (useModern) {
-            addChildren(mHeader, mSuggestionsList, mMoreButton);
+            addChildren(mHeader, mPlaceholder, mSuggestionsList, mMoreButton);
         } else {
             addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton);
         }
@@ -250,7 +255,11 @@ public class SuggestionsSection extends InnerNode {
         int newSuggestionsCount = getSuggestionsCount();
         if ((newSuggestionsCount == 0) == (oldSuggestionsCount == 0)) return;
 
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            // TODO(dgn): Remove before landing.
+            if (mPlaceholder.isVisible()) assert !hasSuggestions();
+            mPlaceholder.setVisible(isLoading() && !hasSuggestions());
+        } else {
             mStatus.setVisible(newSuggestionsCount == 0);
         }
 
@@ -378,8 +387,18 @@ public class SuggestionsSection extends InnerNode {
         return mIsDataStale;
     }
 
+    /** Whether the section is waiting for content to be loaded. */
     public boolean isLoading() {
         return mMoreButton.getState() == ActionItem.State.LOADING;
+    }
+
+    /**
+     * @return Whether the section is showing content cards. The placeholder is included in this
+     * check, as it's standing for content, but the status card is not.
+     */
+    public boolean hasCards() {
+        return hasSuggestions()
+                || (FeatureUtilities.isChromeHomeEnabled() && mPlaceholder.isVisible());
     }
 
     /**
@@ -539,8 +558,11 @@ public class SuggestionsSection extends InnerNode {
             Log.d(TAG, "setStatus: unavailable status, cleared suggestions.");
         }
 
-        mMoreButton.updateState(SnippetsBridge.isCategoryLoading(status) ? ActionItem.State.LOADING
-                                                                         : ActionItem.State.BUTTON);
+        boolean isLoading = SnippetsBridge.isCategoryLoading(status);
+        mMoreButton.updateState(isLoading ? ActionItem.State.LOADING : ActionItem.State.BUTTON);
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            mPlaceholder.setVisible(isLoading && !hasSuggestions());
+        }
     }
 
     /** Clears the suggestions and related data, resetting the state of the section. */
