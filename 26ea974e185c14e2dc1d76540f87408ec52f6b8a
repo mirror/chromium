@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bd6b84c2_cc5dc3a9",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T18:40:53Z",
+      "side": 1,
+      "message": "Oops - I guess pending_write_ will always be nullptr in that case - I was thinking that if it wasn\u0027t, we\u0027ve move ahead to next next URLRequest::Read, which would get us into that situation, but since pending_write_ is always null, we\u0027d run into the next BeginWrite, which should fail (So my comments on the bug were right).  Anyhow, seems fine either way.",
+      "parentUuid": "8e07d603_f881ae0b",
+      "range": {
+        "startLine": 459,
+        "startChar": 13,
+        "endLine": 459,
+        "endChar": 0
+      },
+      "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff675691_fb210fde",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 2

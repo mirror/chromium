@@ -16,6 +16,47 @@
       "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caca4ed8_ab1e8c70",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T18:40:53Z",
+      "side": 1,
+      "message": "I don\u0027t think calling this method makes sense, since the response body has not yet been closed.  Also, is response_body_stream_ still valid if it\u0027s been closed, but we haven\u0027t been notified of the fact yet?",
+      "parentUuid": "3a29feea_121acd53",
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c83ed57_c6a7e0b3",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T18:40:53Z",
+      "side": 1,
+      "message": "Hrm...I hadn\u0027t noticed this, but it looks like we only delete this class when connected_ is false...which only happens after the other side hangs up on us, but this side deletes the data pipe on error.\n\nShould NotifyComplete itself set connected_ to false and destroy both pipes?",
+      "range": {
+        "startLine": 460,
+        "startChar": 22,
+        "endLine": 460,
+        "endChar": 35
+      },
+      "revId": "9ba43c2682b0c23f49bc8ceb35abb4e2c2a4ecb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
