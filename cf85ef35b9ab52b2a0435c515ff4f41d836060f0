@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a58ba577_d5937677",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-20T18:47:20Z",
+      "side": 1,
+      "message": "How about using classes or tuples for representing the result? Returning 2 dictionary with more than 1 level indentation make API hard to use.",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "cf85ef35b9ab52b2a0435c515ff4f41d836060f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
