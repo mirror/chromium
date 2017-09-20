@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2984bc9_d1c2bb98",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:30:28Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to use aura::Window here. How about:\n\nreturn browser \u0026\u0026 browser-\u003ewindow()-\u003eIsActive() ? browser : nullptr;\n\nIs there a reason not to move to browser_finder now? It doesn\u0027t seem like you\u0027ll hit merge conflicts, but maybe I\u0027m wrong?",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 67
+      },
+      "revId": "b345291e6bc03cf4ee4327c4b1975d7198d859c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
