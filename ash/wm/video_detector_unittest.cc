@@ -13,6 +13,7 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "base/compiler_specific.h"
+#include "base/containers/circular_deque.h"
 #include "base/time/time.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/aura/client/aura_constants.h"
@@ -47,7 +48,7 @@ class TestObserver : public VideoDetector::Observer {
 
  private:
   // States in the order they were received.
-  std::deque<VideoDetector::State> states_;
+  base::circular_deque<VideoDetector::State> states_;
 
   DISALLOW_COPY_AND_ASSIGN(TestObserver);
 };

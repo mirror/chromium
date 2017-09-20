@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "android_webview/browser/compositor_id.h"
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "ui/gfx/geometry/rect.h"
@@ -54,7 +55,7 @@ class ChildFrame {
   DISALLOW_COPY_AND_ASSIGN(ChildFrame);
 };
 
-using ChildFrameQueue = std::deque<std::unique_ptr<ChildFrame>>;
+using ChildFrameQueue = base::circular_deque<std::unique_ptr<ChildFrame>>;
 
 }  // namespace android_webview
 
