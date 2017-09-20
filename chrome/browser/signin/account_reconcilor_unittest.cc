@@ -319,6 +319,164 @@ TEST_F(AccountReconcilorTest, ProfileAlreadyConnected) {
 }
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
+
+struct AccountReconcilorTestDiceParam {
+  const char* tokens;
+  const char* cookies;
+  bool is_first_reconcile;
+  const char* tokens_result;
+  const char* cookie_actions;
+};
+
+const AccountReconcilorTestDiceParam kDiceParams[] = {
+    // Sync enabled, first reconcile.
+    {"* A B", "AB", true, "* A B", " "},
+    {"* A B", "BA", true, "* A B", "XAB"},
+    {"* A B", "A", true, "* A B", " B"},
+    {"* A B", "B", true, "* A B", "XAB"},
+    {"* A B", "", true, "* A B", " AB"},
+    // Sync enabled, first reconcile, token error on primary.
+    {"*xA B", "AB", true, "* A B", "X"},
+    {"*xA B", "BA", true, "* A B", "X"},
+    {"*xA B", "A", true, "* A B", "X"},
+    {"*xA B", "B", true, "* A B", "X"},
+    {"*xA B", "", true, "* A B", " "},
+    // Sync enabled, first reconcile, token error on secondary.
+    {"* AxB", "AB", true, "* A B", "XA"},
+    {"* AxB", "BA", true, "* A B", "XA"},
+    {"* AxB", "A", true, "* A B", " "},
+    {"* AxB", "B", true, "* A B", "XA"},
+    {"* AxB", "", true, "* A B", " A"},
+    // Sync enabled, first reconcile, token error on both accounts.
+    {"*xAxB", "AB", true, "* A B", "X"},
+    {"*xAxB", "BA", true, "* A B", "X"},
+    {"*xAxB", "A", true, "* A B", "X"},
+    {"*xAxB", "B", true, "* A B", "X"},
+    {"*xAxB", "", true, "* A B", " "},
+    // Sync disabled, first reconcile.
+    {"  A B", "AB", true, "* A B", " "},
+    {"  A B", "BA", true, "* A B", " "},
+    {"  A B", "A", true, "* A B", " B"},
+    {"  A B", "B", true, "* A B", " A"},
+    {"  A B", "", true, "* A B", " AB"},
+    // Sync disabled, first reconcile, token error on primary.
+    {" xA B", "AB", true, "* A B", "XB"},
+    {" xA B", "BA", true, "* A B", "XB"},
+    {" xA B", "A", true, "* A B", "XB"},
+    {" xA B", "B", true, "* A B", " "},
+    {" xA B", "", true, "* A B", " B"},
+    // Sync disabled, first reconcile, token error on secondary.
+    {"  AxB", "AB", true, "* A B", "XA"},
+    {"  AxB", "BA", true, "* A B", "XA"},
+    {"  AxB", "A", true, "* A B", " "},
+    {"  AxB", "B", true, "* A B", "XA"},
+    {"  AxB", "", true, "* A B", " A"},
+    // Sync disabled, first reconcile, token error on both accounts.
+    {" xAxB", "AB", true, "* A B", "X"},
+    {" xAxB", "BA", true, "* A B", "X"},
+    {" xAxB", "A", true, "* A B", "X"},
+    {" xAxB", "B", true, "* A B", "X"},
+    {" xAxB", "", true, "* A B", " "},
+    // Triple account, check that Gaia default account is kept.
+    {"  A B", "BC", true, "* A B", "XBA"},
+};
+
+class AccountReconcilorTestDice
+    : public AccountReconcilorTest,
+      public ::testing::WithParamInterface<AccountReconcilorTestDiceParam> {
+ protected:
+  AccountReconcilorTestDice() {
+    accounts_['A'] = std::make_pair("a@gmail.com", "A");
+    accounts_['B'] = std::make_pair("b@gmail.com", "B");
+    accounts_['C'] = std::make_pair("c@gmail.com", "C");
+  }
+
+  std::map<char, std::pair<std::string, std::string>> accounts_;
+};
+
+TEST_P(AccountReconcilorTestDice, Foo) {
+  // Enable Dice.
+  signin::ScopedAccountConsistencyDice scoped_dice;
+
+  // Setup tokens.
+  for (int i = 0; GetParam().tokens[i] != '\0'; ++i) {
+    if (i < 2 || ((i % 2) != 0))
+      continue;
+    bool is_signed_in = (i == 2) && GetParam().tokens[0] == '*';
+    std::string account_id =
+        PickAccountIdForAccount(accounts_[GetParam().tokens[i]].second,
+                                accounts_[GetParam().tokens[i]].first);
+    if (is_signed_in) {
+      ConnectProfileToAccount(accounts_[GetParam().tokens[i]].second,
+                              accounts_[GetParam().tokens[i]].first);
+    } else {
+      token_service()->UpdateCredentials(account_id, "refresh_token");
+    }
+    if (GetParam().tokens[i - 1] == 'x') {
+      token_service_delegate()->SetLastErrorForAccount(
+          account_id, GoogleServiceAuthError(
+                          GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS));
+    }
+  }
+
+  // Setup cookies.
+  std::string cookies(GetParam().cookies);
+  if (cookies.size() == 0) {
+    cookie_manager_service()->SetListAccountsResponseNoAccounts();
+  } else if (cookies.size() == 1) {
+    cookie_manager_service()->SetListAccountsResponseOneAccount(
+        accounts_[GetParam().cookies[0]].first.c_str(),
+        accounts_[GetParam().cookies[0]].second.c_str());
+  } else {
+    ASSERT_EQ(2u, cookies.size());
+    cookie_manager_service()->SetListAccountsResponseTwoAccounts(
+        accounts_[GetParam().cookies[0]].first.c_str(),
+        accounts_[GetParam().cookies[0]].second.c_str(),
+        accounts_[GetParam().cookies[1]].first.c_str(),
+        accounts_[GetParam().cookies[1]].second.c_str());
+  }
+
+  // Dummy reconcile if needed.
+  if (!GetParam().is_first_reconcile) {
+    // TODO: dummy reconcile.
+    NOTREACHED();
+  }
+
+  // Setup expectations.
+  testing::InSequence mock_sequence;
+  if (GetParam().cookie_actions[0] == 'X') {
+    EXPECT_CALL(*GetMockReconcilor(), PerformLogoutAllAccountsAction())
+        .Times(1);
+  } else {
+    EXPECT_CALL(*GetMockReconcilor(), PerformLogoutAllAccountsAction())
+        .Times(0);
+  }
+
+  for (int i = 1; GetParam().cookie_actions[i] != '\0'; ++i) {
+    std::string cookie(1, GetParam().cookie_actions[i]);
+    EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(cookie)).Times(1);
+  }
+
+  // Reconcile.
+  AccountReconcilor* reconcilor = GetMockReconcilor();
+  reconcilor->StartReconcile();
+  ASSERT_TRUE(reconcilor->is_reconcile_started_);
+  base::RunLoop().RunUntilIdle();
+  for (int i = 1; GetParam().cookie_actions[i] != '\0'; ++i) {
+    std::string account_id =
+        PickAccountIdForAccount(accounts_[GetParam().cookie_actions[i]].second,
+                                accounts_[GetParam().cookie_actions[i]].first);
+    SimulateAddAccountToCookieCompleted(
+        reconcilor, account_id, GoogleServiceAuthError::AuthErrorNone());
+  }
+  ASSERT_FALSE(reconcilor->is_reconcile_started_);
+  ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
+}
+
+INSTANTIATE_TEST_CASE_P(Bar,
+                        AccountReconcilorTestDice,
+                        ::testing::ValuesIn(kDiceParams));
+
 // Tests that the AccountReconcilor is enabled when Dice is enabled.
 TEST_F(AccountReconcilorTest, EnabledWithDice) {
   signin::ScopedAccountConsistencyDice scoped_dice;
