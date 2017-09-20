@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a95f2f1f_07e346b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-20T00:47:14Z",
+      "side": 1,
+      "message": "Yes, the browser will resolve the path to the CDM and pass it to the sandbox profile. Note that this doesn\u0027t require the CDM to trust the browser because if the browser lies about the CDM path, Widevine just won\u0027t initialize. But it can\u0027t be used to load a false CDM or anything.",
+      "parentUuid": "a78b2394_72e5444b",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
