@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c432a25c_34394036",
+        "filename": "ash/accessibility/accessibility_cursor_ring_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-20T17:18:14Z",
+      "side": 1,
+      "message": "Good point. Reverted this.",
+      "parentUuid": "0a8638e9_9de929f6",
+      "revId": "650cac7172f629ade2cfeb1490d909d7934ad283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72ca70c_eb0174a5",
         "filename": "ash/accessibility/accessibility_focus_ring.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "650cac7172f629ade2cfeb1490d909d7934ad283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881aed8e_74b04dcb",
+        "filename": "ash/accessibility/accessibility_focus_ring.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-20T17:18:14Z",
+      "side": 1,
+      "message": "Unfortunately it has to be exported for use in ash_unittests. I added a comment.",
+      "parentUuid": "b72ca70c_eb0174a5",
+      "revId": "650cac7172f629ade2cfeb1490d909d7934ad283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
