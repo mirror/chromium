@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c9836f_75cc5be1",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T15:19:38Z",
+      "side": 1,
+      "message": "My only concern is that \u0027this\u0027 is still valid by the time you get here. Many of these calls may call out to delegates and we\u0027ve had plenty of crashes in the past when the stack unwinds and this is destroyed. How about guarding these calls with a weakref?",
+      "range": {
+        "startLine": 801,
+        "startChar": 2,
+        "endLine": 801,
+        "endChar": 25
+      },
+      "revId": "0448f5b704edbe5e06c1a5438b9400f85ed2b712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e3b15c_9a7aab3a",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T15:19:38Z",
+      "side": 1,
+      "message": "newline between 227/228 please.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 19
+      },
+      "revId": "0448f5b704edbe5e06c1a5438b9400f85ed2b712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
