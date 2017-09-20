@@ -534,9 +534,9 @@ void Surface::AppendSurfaceHierarchyContentsToFrame(
 
   AppendContentsToFrame(origin, device_scale_factor, frame);
 
-  DCHECK(
-      !current_resource_.id ||
-      frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id));
+  // DCHECK(
+  //    !current_resource_.id ||
+  //    frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id));
 }
 
 bool Surface::IsSynchronized() const {
