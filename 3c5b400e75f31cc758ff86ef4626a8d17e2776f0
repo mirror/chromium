@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b7cf825c_db52acbb",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T15:15:46Z",
+      "side": 1,
+      "message": "Hey, and you even fixed the bug in my code! :)",
+      "parentUuid": "592ee934_5ff9596b",
+      "range": {
+        "startLine": 721,
+        "startChar": 17,
+        "endLine": 721,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a020c95_dbee1c51",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
