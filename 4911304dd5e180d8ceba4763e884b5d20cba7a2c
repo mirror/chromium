@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd75a8f4_3f7e35d3",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7976bc8d_4e8ef630",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f5efe0_b0df68e7",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "63a99dc2_996295bc",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21f5efe0_b0df68e7",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c34f334_1df45c89",
         "filename": "cc/trees/layer_tree_mutator.h",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-31T13:45:43Z",
       "side": 1,
       "message": "Nit; these comments don\u0027t feel like they add any information vs the code.\n\nPerhaps a larger question is - if this struct is entirely about WorkletAnimation, why isn\u0027t it called WorkletAnimatorInputState ?",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a07e26_4fe29f00",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Fix the nit.\n\nI am not a big fan of current naming suggestion welcome. How does the following sound?\n\nAnimatorsInputState -\u003e MutatorInputState\nAnimatorInputState  -\u003e WorkletAnimationInputState",
+      "parentUuid": "1c34f334_1df45c89",
       "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

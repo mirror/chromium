@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "36a42b4b_88d34087",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Fair enough. I removed Timing model and made it part of AnimationPlayer itself.\nNow it is virtual methods that WorkletAnimaitonPlayer overrides.",
+      "parentUuid": "a16c2927_a5d61866",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d76ef412_b079cad5",
         "filename": "cc/trees/layer_tree_mutator.h",
         "patchSetId": 12
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "476e9514_fda976a2",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Ack. Corrected comment. I assume you didn\u0027t mean that we should make\nthe change in this patch.",
+      "parentUuid": "d76ef412_b079cad5",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5931e38_858c7a82",
         "filename": "cc/trees/layer_tree_mutator.h",
         "patchSetId": 12
@@ -70,6 +112,24 @@
       "writtenOn": "2017-09-19T07:03:16Z",
       "side": 1,
       "message": "We should probably have a bug for this.",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4ef1e7_b568b438",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Added http://crbug.com/767043",
+      "parentUuid": "b5931e38_858c7a82",
       "revId": "3788a711895782d11dfe4ec6486580747231343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "d17bcee6_cd1016cf",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Added TODO to remove this once CW is removed.",
+      "parentUuid": "e00736e6_dda3fd80",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f22c3716_1e6daaef",
         "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-animator-animate.html",
         "patchSetId": 12
@@ -104,6 +182,24 @@
       "writtenOn": "2017-09-19T07:03:16Z",
       "side": 1,
       "message": "What\u0027s this for?",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32967eb1_e676990b",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-animator-animate.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f22c3716_1e6daaef",
       "revId": "3788a711895782d11dfe4ec6486580747231343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "90bb44f8_6f62f95d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Done. Thanks for the style pointer.",
+      "parentUuid": "604ab051_e5937c0c",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5324ac9_70f2862e",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.idl",
         "patchSetId": 12
@@ -138,6 +252,24 @@
       "writtenOn": "2017-09-19T07:03:16Z",
       "side": 1,
       "message": "It seems likely we\u0027ll want to have other test related methods anyways. We should probably just do this now and create a partial interface extending an internals interface from core/testing/\n\nSee for example getInternalResponseURLList",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a88f2a_8bd74fca",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "This is reasonable but it is a bit more involved as \nI need to update webkit testing infra to inject \ninternals into worklet context. \n\nI will make this change in a follow up CL. Here is WIP:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/676170",
+      "parentUuid": "e5324ac9_70f2862e",
       "revId": "3788a711895782d11dfe4ec6486580747231343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +290,24 @@
       "revId": "3788a711895782d11dfe4ec6486580747231343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b02247_570b8154",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScopeTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-20T21:33:58Z",
+      "side": 1,
+      "message": "Done. Also added a test to verify AW output",
+      "parentUuid": "c8ddcfa9_defae033",
+      "revId": "3788a711895782d11dfe4ec6486580747231343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
