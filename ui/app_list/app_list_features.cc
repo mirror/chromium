@@ -20,6 +20,8 @@ const base::Feature kEnableFullscreenAppList{"EnableFullscreenAppList",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kEnablePlayStoreAppSearch{
     "EnablePlayStoreAppSearch", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kEnableAppListFocus{"EnableAppListFocus",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 bool IsAnswerCardEnabled() {
   static const bool enabled = base::FeatureList::IsEnabled(kEnableAnswerCard);
@@ -51,6 +53,10 @@ bool IsTouchFriendlySearchResultsPageEnabled() {
 bool IsPlayStoreAppSearchEnabled() {
   // Not using local static variable to allow tests to change this value.
   return base::FeatureList::IsEnabled(kEnablePlayStoreAppSearch);
+}
+
+bool IsAppListFocusEnabled() {
+  return base::FeatureList::IsEnabled(kEnableAppListFocus);
 }
 
 std::string AnswerServerUrl() {

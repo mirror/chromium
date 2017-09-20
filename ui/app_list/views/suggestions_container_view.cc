@@ -25,9 +25,11 @@ constexpr int kTilesHorizontalMarginLeft = 145;
 
 SuggestionsContainerView::SuggestionsContainerView(
     ContentsView* contents_view,
-    AllAppsTileItemView* all_apps_button)
+    AllAppsTileItemView* all_apps_button,
+    PaginationModel* model)
     : contents_view_(contents_view),
       all_apps_button_(all_apps_button),
+      model_(model),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
@@ -161,7 +163,7 @@ void SuggestionsContainerView::CreateAppsGrid(int apps_num) {
       features::IsPlayStoreAppSearchEnabled();
   for (; i < apps_num; ++i) {
     SearchResultTileItemView* tile_item = new SearchResultTileItemView(
-        this, view_delegate_, true, is_fullscreen_app_list_enabled,
+        this, view_delegate_, model_, true, is_fullscreen_app_list_enabled,
         is_play_store_app_search_enabled);
     if (i % kNumTilesCols == 0)
       tiles_layout_manager->StartRow(0, 0);

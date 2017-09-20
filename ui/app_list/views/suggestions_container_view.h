@@ -23,7 +23,8 @@ class TileItemView;
 class SuggestionsContainerView : public SearchResultContainerView {
  public:
   SuggestionsContainerView(ContentsView* contents_view,
-                           AllAppsTileItemView* all_apps_button);
+                           AllAppsTileItemView* all_apps_button,
+                           PaginationModel* model);
   ~SuggestionsContainerView() override;
 
   TileItemView* GetTileItemView(int index);
@@ -51,6 +52,8 @@ class SuggestionsContainerView : public SearchResultContainerView {
 
   std::vector<SearchResultTileItemView*> search_result_tile_views_;
   AllAppsTileItemView* all_apps_button_ = nullptr;
+
+  PaginationModel* model_;  // Owned by AppsGridView.
 
   const bool is_fullscreen_app_list_enabled_;
 
