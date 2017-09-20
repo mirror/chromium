@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cbf7ddc_32d24788",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "Add \"If in a test, use ScopedAllowBaseSyncPrimitivesForTesting.\" to avoid the inevitable code reviews to add friends in test scenarios that don\u0027t need friending.",
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae1b46a_a4dd646d",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 77,
+        "startChar": 42,
+        "endLine": 77,
+        "endChar": 74
+      },
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3d4b59_1c795e40",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "IF",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 17
+      },
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dc3740_c80a7be0",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "EMPTY_BODY_IF_DCHECK_IS_OFF here too?",
+      "range": {
+        "startLine": 132,
+        "startChar": 47,
+        "endLine": 132,
+        "endChar": 48
+      },
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae13bea_fc4d890f",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "rm empty line",
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d684c729_54127a7d",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "// This can be used in tests without being a friend of ScopedAllowBaseSyncPrimitives.\n\n(a quick recall of the meta comment above as you did on ScopedAllowBaseSyncPrimitivesOutsideBlockingScope is useful here)",
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

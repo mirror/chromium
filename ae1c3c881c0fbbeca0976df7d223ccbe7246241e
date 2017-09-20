@@ -230,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "cd932252_48a4d2fc",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "Interesting... ok then!",
+      "parentUuid": "aad8ec57_798eeb9d",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d3d3534_8de59ec4",
         "filename": "base/threading/thread_restrictions.h",
         "patchSetId": 5
@@ -426,6 +450,24 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1107e489_59c3ca61",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-20T20:36:18Z",
+      "side": 1,
+      "message": "Ah ok, missed that; hence why I like EXPECT_DCHECK_DEATH to have its scope as narrow as possible.",
+      "parentUuid": "c6d05dad_386da6eb",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
