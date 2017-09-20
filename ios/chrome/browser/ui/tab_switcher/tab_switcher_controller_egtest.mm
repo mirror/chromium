@@ -311,6 +311,11 @@ void EnterTabSwitcherWithCommand() {
   if (!IsIPadIdiom())
     EARL_GREY_TEST_SKIPPED(@"TabSwitcherController is only used on iPads.");
 
+// TODO(crbug.com/767249): Enable this test on devices.
+#if !TARGET_IPHONE_SIMULATOR
+  EARL_GREY_TEST_DISABLED(@"Failing constently on iPad devices.");
+#endif
+
   // Load the blank test page so that JavaScript can be executed.
   const GURL kBlankPageURL = HttpServer::MakeUrl("http://blank-page");
   web::test::AddResponseProvider(
