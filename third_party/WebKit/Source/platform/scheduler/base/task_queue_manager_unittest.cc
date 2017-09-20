@@ -31,6 +31,7 @@
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/base/work_queue.h"
 #include "platform/scheduler/base/work_queue_sets.h"
+#include "platform/scheduler/test/message_loop_task_counter.h"
 #include "platform/scheduler/test/test_task_queue.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -429,11 +430,6 @@ TEST_F(TaskQueueManagerTest, DelayedTaskPosting) {
   test_task_runner_->RunForPeriod(base::TimeDelta::FromMilliseconds(1));
   EXPECT_THAT(run_order, ElementsAre(1));
   EXPECT_FALSE(runners_[0]->HasTaskToRunImmediately());
-}
-
-bool MessageLoopTaskCounter(size_t* count) {
-  *count = *count + 1;
-  return true;
 }
 
 TEST_F(TaskQueueManagerTest, DelayedTaskExecutedInOneMessageLoopTask) {
