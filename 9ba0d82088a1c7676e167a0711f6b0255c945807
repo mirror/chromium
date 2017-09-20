@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0cf7924a_5115f56f",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T17:30:58Z",
+      "side": 1,
+      "message": "Needed for x509_util::CreateCryptoBuffer()",
+      "parentUuid": "fcb7e4d5_28ec0889",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "9ba0d82088a1c7676e167a0711f6b0255c945807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a3f82e3_8aa36b28",
         "filename": "net/cert/internal/ocsp.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9ba0d82088a1c7676e167a0711f6b0255c945807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e077852_a56daae7",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T17:30:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a3f82e3_8aa36b28",
+      "revId": "9ba0d82088a1c7676e167a0711f6b0255c945807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

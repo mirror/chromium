@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e526d68_f53a6210",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T17:30:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e0b8cb_64e2e2c1",
+      "range": {
+        "startLine": 522,
+        "startChar": 28,
+        "endLine": 522,
+        "endChar": 46
+      },
+      "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ed47d6_085b1e0a",
         "filename": "net/cert/internal/ocsp.h",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-20T16:38:55Z",
       "side": 1,
       "message": "Are you already regenerating the certs, otherwise I\u0027ll go see if I can cut up the go script I used to trawl for OCSP responses to generate them.",
+      "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497e6a4b_e8b0bf1a",
+        "filename": "net/cert/internal/ocsp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T17:30:58Z",
+      "side": 1,
+      "message": "I have not yet modified any test data (or written scripts to do that).\n\nIf you have a script for doing so that would be super and appreciated!\nIdeally I would like to commit it as well so we can re-generate in the future.\n\nThe modifications I would like to make to the test data are:\n\n  * Change the producedAt to coincide with a date within the certificate\u0027s validity range. Right now this time check fails.\n\n  * The test data using nextUpdate IIRC also needs an adjustment.\n\n  * Ability to re-generate using different signing algorithms (in particular, the test data is heavily SHA1, which does reflect today\u0027s OCSP reality. However I would like to confirm non-SHA1 behaviors).",
+      "parentUuid": "f2ed47d6_085b1e0a",
       "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
