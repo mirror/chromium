@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "f06bee8c_34da81df",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "To me it\u0027s clear both ways.",
+      "parentUuid": "4c44846e_e74c8850",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d228372_4ef205fe",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -566,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "5e4b536b_759c672e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "Yes, make TestBrowserThreadBundle the first member of the class. You can make other members private too and create getters when you need.",
+      "parentUuid": "91dc1bc9_07229071",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6852dbb5_7634ac70",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -648,6 +696,30 @@
       "side": 1,
       "message": "Using ScopedTaskEnvironment instead of TestBrowserThreadBundle resulted in a \"Must be called on Chrome_UIThread; actually called on Unknown Thread.\" error. (I might have not been using it correctly, but it had no effect even when constructed with base::test::ScopedTaskEnvironment::MainThreadType::UI.)",
       "parentUuid": "e811e7c7_4ccf68c0",
+      "range": {
+        "startLine": 178,
+        "startChar": 11,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7cf9097_1073fb07",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "568c1b27_95002d72",
       "range": {
         "startLine": 178,
         "startChar": 11,

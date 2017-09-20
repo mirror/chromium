@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255b4763_15a3731a",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "Let\u0027s call it CredentialProviderInterface or something. It\u0027s just strange that PasswordStore has nothing to do with PasswordStoreInterface.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f76549d_9c665539",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "It makes sense to inline those methods here so the test looks meaningful.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 17
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd00605_b8875fc5",
+        "filename": "chrome/browser/ui/passwords/password_store_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T11:57:25Z",
+      "side": 1,
+      "message": "don\u0027t forget a virtual constructor (probably protected) and a comment.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
