@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2faaa9bb_d19b789d",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d43ff2_f4bb11f9",
+      "range": {
+        "startLine": 359,
+        "startChar": 4,
+        "endLine": 359,
+        "endChar": 33
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84109cbe_714284d7",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4642e39_fdf2762c",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84109cbe_714284d7",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 12
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf5149b6_d6dced7c",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-19T16:47:22Z",
       "side": 1,
       "message": "What if StopCaching is called before we get to the stage that we\u0027re InWriters? E.g., what if it\u0027s a headers transaction when StopCaching is called? I believe we still want to prevent it from caching in the future.\n\nOr is StopCaching meant to only be called after the first Read? In which case that needs to be documented in HttpTransaction and we need to verify that existing consumers obey that.",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 50
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2baa3cc6_a94850e2",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Yes, I think we should handle that. Added a case.",
+      "parentUuid": "cf5149b6_d6dced7c",
       "range": {
         "startLine": 444,
         "startChar": 41,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "882fbcde_5db1439b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "DoneWritingToEntry assumes that we are done writing to the entry and will invoke ImpactQeuedTransactions via WritersDoneWritingToEntry bur as discussed f2f, we do not want to do that but just remove this transaction from entry. Also changed the implementation of Writers::DoneReading to invoke WritersDoneWritingToEntry only if writers is empty after the removal of this transaction.",
+      "parentUuid": "44602f3a_9543dc21",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 41
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ee70621_1761117b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "c6bec796_5349c5d0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ee70621_1761117b",
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc9b7b2_040878c9",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -122,6 +236,24 @@
       "writtenOn": "2017-09-19T16:47:22Z",
       "side": 1,
       "message": "The name of this function (and its comments) do not make it clear that the entry has removed this transaction, which this function needs to recover from.  The name sounds like a normal setter.\n\nPerhaps instead: AboutToBeRemovedFromActiveEntry(int error_code);\n\nThis same function could also be used for saving network information from writers when necessary so that Writers doesn\u0027t have to do it on HC::T\u0027s behalf. This is a continuation of an earlier comment.\n\n\nIn F2F we agreed to use AboutToBeRemovedFromActiveEntry rather than use the util method to save network info.",
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98686317_a8e657c4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Used AboutToBeRemovedFromWriters to save network transaction info. Not clear if this should be combined with AboutToBeRemovedFromWriters since this is a specific failure path.\nNote that entry_ \u003d nullptr is being set because there has been a failure. Added to the comment as well.",
+      "parentUuid": "bcc9b7b2_040878c9",
       "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "92f6cdd1_ad050e25",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba3cf97_e37add80",
+      "range": {
+        "startLine": 646,
+        "startChar": 24,
+        "endLine": 646,
+        "endChar": 52
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "450d9147_4bd61caa",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "718866de_b21268b7",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450d9147_4bd61caa",
+      "range": {
+        "startLine": 2072,
+        "startChar": 0,
+        "endLine": 2073,
+        "endChar": 76
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd78a8ab_e6a06f7d",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -185,6 +365,30 @@
       "writtenOn": "2017-09-19T16:47:22Z",
       "side": 1,
       "message": "I\u0027d prefer if the uncommon case (partial_) gets the early return here.",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2089,
+        "endChar": 3
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c024c86f_603c6d99",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "The earlier if also works for partial for result \u003c 0.",
+      "parentUuid": "fd78a8ab_e6a06f7d",
       "range": {
         "startLine": 2085,
         "startChar": 0,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "2d8bc36f_7b2d2885",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c870fd_d3a1c0ef",
+      "range": {
+        "startLine": 2126,
+        "startChar": 0,
+        "endLine": 2130,
+        "endChar": 3
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4282fb5f_b152fa0b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
@@ -231,6 +459,30 @@
       "writtenOn": "2017-09-19T16:47:22Z",
       "side": 1,
       "message": "Can you add a comment here why it\u0027s okay to keep writing to disk if MaybeSetNetworkReadOnly fails? It\u0027s non-obvious because we can call this function for no-store resources.",
+      "range": {
+        "startLine": 2915,
+        "startChar": 21,
+        "endLine": 2915,
+        "endChar": 57
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d8cdd2_83a920fb",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "It is SetNetworkReadOnly now so it never is a no-op",
+      "parentUuid": "4282fb5f_b152fa0b",
       "range": {
         "startLine": 2915,
         "startChar": 21,
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "eefc8257_32e98e8f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11bc7551_61cb0a75",
+      "range": {
+        "startLine": 2921,
+        "startChar": 29,
+        "endLine": 2921,
+        "endChar": 61
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b4d7a3_b29d9e26",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 20
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "0e28fd50_5c42d5dd",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b4d7a3_b29d9e26",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10afce85_9c612845",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 20
@@ -300,6 +600,30 @@
       "writtenOn": "2017-09-19T16:47:22Z",
       "side": 1,
       "message": "Why would it be null for range requests?\n\nnit: nullptr instead of null",
+      "range": {
+        "startLine": 111,
+        "startChar": 37,
+        "endLine": 111,
+        "endChar": 74
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a192059_2607c74c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-20T13:45:25Z",
+      "side": 1,
+      "message": "Since range requests may not serve all ranges from the network.",
+      "parentUuid": "10afce85_9c612845",
       "range": {
         "startLine": 111,
         "startChar": 37,
