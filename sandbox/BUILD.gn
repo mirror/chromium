@@ -13,8 +13,11 @@ source_set("sandbox_export") {
   ]
 }
 
-# Meta-target that forwards to the proper platform one.
-group("sandbox") {
+source_set("sandbox") {
+  sources = [
+    "policy/sandbox_type.cc",
+    "policy/sandbox_type.h",
+  ]
   if (is_win) {
     public_deps = [
       "//sandbox/win:sandbox",
