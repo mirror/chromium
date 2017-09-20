@@ -141,6 +141,30 @@
       "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a113e92_81cea1f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-20T12:48:49Z",
+      "side": 1,
+      "message": "Thanks! Yeah, I forgot about falling back to generic promo after hitting impression limit, sorry for that.",
+      "parentUuid": "4e564672_6d723e64",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
