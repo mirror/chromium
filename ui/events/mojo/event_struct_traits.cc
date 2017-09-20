@@ -5,6 +5,7 @@
 #include "ui/events/mojo/event_struct_traits.h"
 
 #include "ui/events/event.h"
+#include "ui/events/gesture_event_details.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
 #include "ui/events/mojo/event_constants.mojom.h"
 #include "ui/latency/mojo/latency_info_struct_traits.h"
@@ -14,6 +15,12 @@ namespace {
 
 ui::mojom::EventType UIEventTypeToMojo(ui::EventType type) {
   switch (type) {
+    case ui::ET_KEY_PRESSED:
+      return ui::mojom::EventType::KEY_PRESSED;
+
+    case ui::ET_KEY_RELEASED:
+      return ui::mojom::EventType::KEY_RELEASED;
+
     case ui::ET_POINTER_DOWN:
       return ui::mojom::EventType::POINTER_DOWN;
 
@@ -32,11 +39,8 @@ ui::mojom::EventType UIEventTypeToMojo(ui::EventType type) {
     case ui::ET_POINTER_WHEEL_CHANGED:
       return ui::mojom::EventType::POINTER_WHEEL_CHANGED;
 
-    case ui::ET_KEY_PRESSED:
-      return ui::mojom::EventType::KEY_PRESSED;
-
-    case ui::ET_KEY_RELEASED:
-      return ui::mojom::EventType::KEY_RELEASED;
+    case ui::ET_GESTURE_TAP:
+      return ui::mojom::EventType::GESTURE_TAP;
 
     default:
       break;
@@ -237,6 +241,24 @@ StructTraits<ui::mojom::EventDataView, EventUniquePtr>::pointer_data(
   return pointer_data;
 }
 
+ui::mojom::GestureDataPtr
+StructTraits<ui::mojom::EventDataView, EventUniquePtr>::gesture_data(
+    const EventUniquePtr& event) {
+  if (!event->IsGestureEvent())
+    return nullptr;
+
+  ui::mojom::GestureDataPtr gesture_data(ui::mojom::GestureData::New());
+  ui::mojom::LocationDataPtr location_data(ui::mojom::LocationData::New());
+  const ui::LocatedEvent* located_event = event->AsLocatedEvent();
+  location_data->x = located_event->location_f().x();
+  location_data->y = located_event->location_f().y();
+  location_data->screen_x = located_event->root_location_f().x();
+  location_data->screen_y = located_event->root_location_f().y();
+  gesture_data->location = std::move(location_data);
+
+  return gesture_data;
+}
+
 bool StructTraits<ui::mojom::EventDataView, EventUniquePtr>::Read(
     ui::mojom::EventDataView event,
     EventUniquePtr* out) {
@@ -325,7 +347,20 @@ bool StructTraits<ui::mojom::EventDataView, EventUniquePtr>::Read(
       }
       break;
     }
+    case ui::mojom::EventType::GESTURE_TAP: {
+      ui::mojom::GestureDataPtr gesture_data;
+      if (!event.ReadGestureData<ui::mojom::GestureDataPtr>(&gesture_data))
+        return false;
+
+      out->reset(
+          new ui::GestureEvent(gesture_data->location->x,
+                               gesture_data->location->y, event.flags(),
+                               time_stamp,
+                               ui::GestureEventDetails(ui::ET_GESTURE_TAP)));
+      break;
+    }
     case ui::mojom::EventType::UNKNOWN:
+      NOTREACHED() << "Unsupported event passed via Mojo; this breaks pipes!";
       return false;
   }
 
