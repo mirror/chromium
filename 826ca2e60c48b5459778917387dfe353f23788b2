@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a09fd512_2a9eec71",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-20T18:01:48Z",
+      "side": 1,
+      "message": "Yeah, this is exactly what I was hoping.  I think piman should double check that this is ok to expose, as I am not the right owner of this class to know if this is an unreasonable interface change.\n\nAlso, what\u0027s the lifetime of this object? Am I right in reading that this is owned by RenderThreadImpl (forever?) and so it\u0027s safe to just pass a raw pointer around?",
+      "revId": "826ca2e60c48b5459778917387dfe353f23788b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
