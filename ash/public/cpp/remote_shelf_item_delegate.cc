@@ -26,6 +26,13 @@ void RemoteShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
     else
       NOTREACHED() << "Need conversion of event to pointer event.";
   }
+
+  if (event && !event->IsPointerEvent() && !event->IsGestureEvent()) {
+    NOTREACHED() << "This unsupported event type would close the connection";
+    std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
+    return;
+  }
+
   delegate_->ItemSelected(std::move(event), display_id, source,
                           std::move(callback));
 }
