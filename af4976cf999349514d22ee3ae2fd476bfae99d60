@@ -33,6 +33,24 @@
       "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c229b92e_c767f04f",
+        "filename": "chrome/test/data/webui/settings/route_tests.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T22:40:33Z",
+      "side": 1,
+      "message": "I\u0027d try adding a console.log here:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/route.js?q\u003dfile:settings+file:route\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d434\n\nand here (in the same file):\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/route.js?q\u003dfile:settings+file:route\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d533\n\nand running the browser_tests locally to see if both places log output. I suspect that the second one (line 533) will not print the console.log.",
+      "parentUuid": "57270b7e_591baa81",
+      "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
