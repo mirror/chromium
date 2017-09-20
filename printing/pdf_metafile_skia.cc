@@ -299,4 +299,8 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
   return metafile;
 }
 
+SkiaDocumentType PdfMetafileSkia::DataDocType() const {
+  return data_->type_;
+}
+
 }  // namespace printing

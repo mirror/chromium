@@ -45,7 +45,7 @@ void PrintRenderFrameHelper::PrintPagesInternal(
     const std::vector<int>& printed_pages,
     int page_count,
     blink::WebLocalFrame* frame) {
-  PdfMetafileSkia metafile(params.printed_doc_type);
+  PdfMetafileSkia metafile(params.doc_type);
   CHECK(metafile.Init());
 
   gfx::Size page_size_in_dpi;
@@ -57,14 +57,14 @@ void PrintRenderFrameHelper::PrintPagesInternal(
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params page_params;
-  page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = params.document_cookie;
   page_params.page_size = page_size_in_dpi;
   page_params.content_area = content_area_in_dpi;
 
   // Ask the browser to create the shared memory for us.
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &page_params.metafile_data_handle,
+                                   &page_params.data_size,
+                                   &page_params.printed_doc_type)) {
     // TODO(thestig): Fail and return false instead.
     page_params.data_size = 0;
   }
@@ -87,8 +87,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
       print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_;
 
   if (render_to_draft) {
-    draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = base::MakeUnique<PdfMetafileSkia>(print_params.doc_type);
     CHECK(draft_metafile->Init());
     initial_render_metafile = draft_metafile.get();
   }
@@ -110,7 +109,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
       DCHECK(!draft_metafile.get());
       draft_metafile =
           print_preview_context_.metafile()->GetMetafileForCurrentPage(
-              print_params.printed_doc_type);
+              print_params.doc_type);
     }
   }
   return PreviewPageRendered(page_number, draft_metafile.get());

@@ -26,7 +26,7 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   std::vector<gfx::Rect> content_area_in_dpi(printed_pages.size());
   std::vector<gfx::Rect> printable_area_in_dpi(printed_pages.size());
 
-  PdfMetafileSkia metafile(params.params.printed_doc_type);
+  PdfMetafileSkia metafile(params.params.doc_type);
   CHECK(metafile.Init());
 
   for (size_t i = 0; i < printed_pages.size(); ++i) {
@@ -42,12 +42,13 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
 
   PrintHostMsg_DidPrintPage_Params printed_page_params;
   if (!CopyMetafileDataToSharedMem(metafile,
-                                   &printed_page_params.metafile_data_handle)) {
+                                   &printed_page_params.metafile_data_handle,
+                                   &printed_page_params.data_size,
+                                   &printed_page_params.printed_doc_type)) {
     return false;
   }
 
   printed_page_params.content_area = params.params.printable_area;
-  printed_page_params.data_size = metafile.GetDataSize();
   printed_page_params.document_cookie = params.params.document_cookie;
   printed_page_params.page_size = params.params.page_size;
 

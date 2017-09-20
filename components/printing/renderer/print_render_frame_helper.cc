@@ -1301,7 +1301,7 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const std::vector<int>& pages = print_pages_params_->pages;
 
   if (!print_preview_context_.CreatePreviewDocument(
-          std::move(prep_frame_view_), pages, print_params.printed_doc_type)) {
+          std::move(prep_frame_view_), pages, print_params.doc_type)) {
     return false;
   }
 
@@ -1407,8 +1407,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
   std::unique_ptr<PdfMetafileSkia> draft_metafile;
   PdfMetafileSkia* initial_render_metafile = print_preview_context_.metafile();
   if (print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_) {
-    draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = base::MakeUnique<PdfMetafileSkia>(print_params.doc_type);
     initial_render_metafile = draft_metafile.get();
   }
 
@@ -1426,7 +1425,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
     DCHECK(!draft_metafile.get());
     draft_metafile =
         print_preview_context_.metafile()->GetMetafileForCurrentPage(
-            print_params.printed_doc_type);
+            print_params.doc_type);
   }
   return PreviewPageRendered(page_number, draft_metafile.get());
 }
@@ -1439,14 +1438,14 @@ bool PrintRenderFrameHelper::FinalizePrintReadyDocument() {
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
   PrintHostMsg_DidPreviewDocument_Params preview_params;
 
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(
+          *metafile, &preview_params.metafile_data_handle,
+          &preview_params.data_size, &preview_params.printed_doc_type)) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_params.data_size = metafile->GetDataSize();
   preview_params.document_cookie = print_pages_params_->params.document_cookie;
   preview_params.expected_pages_count =
       print_preview_context_.total_page_count();
@@ -2003,8 +2002,12 @@ void PrintRenderFrameHelper::PrintPageInternal(
 
 bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
     const PdfMetafileSkia& metafile,
-    base::SharedMemoryHandle* shared_mem_handle) {
+    base::SharedMemoryHandle* shared_mem_handle,
+    uint32_t* size,
+    SkiaDocumentType* type) {
   uint32_t buf_size = metafile.GetDataSize();
+  *size = 0;
+  *type = metafile.DataDocType();
   if (buf_size == 0)
     return false;
 
@@ -2021,6 +2024,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
 
   *shared_mem_handle =
       base::SharedMemory::DuplicateHandle(shared_buf->handle());
+  *size = metafile.GetDataSize();
   return true;
 }
 
@@ -2141,13 +2145,14 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
 
   PrintHostMsg_DidPreviewPage_Params preview_page_params;
   if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_page_params.metafile_data_handle)) {
+                                   &preview_page_params.metafile_data_handle,
+                                   &preview_page_params.data_size,
+                                   &preview_page_params.printed_doc_type)) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_page_params.data_size = metafile->GetDataSize();
   preview_page_params.page_number = page_number;
   preview_page_params.preview_request_id =
       print_pages_params_->params.preview_request_id;
