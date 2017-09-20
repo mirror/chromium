@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edbb899d_dc6a55c4",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T05:44:22Z",
+      "side": 1,
+      "message": "In the following code, I didn\u0027t check the resource id in DisplayResourceProvider directly. So I didn\u0027t get the mapped id here. In SurfaceAggregator (Started by DrawFrame), it will use the mapped id.",
+      "parentUuid": "3e4cf5e5_e88d1077",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dd9017e_aa02630c",
         "filename": "cc/test/render_pass_test_utils.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c88ee1ab_c03eeebe",
+        "filename": "cc/test/render_pass_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T05:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd9017e_aa02630c",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9000ae3_75bc4162",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7ed34a_0bbbef1f",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-20T05:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9000ae3_75bc4162",
+      "revId": "4b575d233a17d28c4080737e3050f8317c5c2f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
