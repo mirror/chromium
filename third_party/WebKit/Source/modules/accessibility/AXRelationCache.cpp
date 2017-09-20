@@ -244,7 +244,7 @@ void AXRelationCache::UpdateTreeIfElementIdIsAriaOwned(Element* element) {
   if (!owners)
     return;
 
-  AXObject* ax_element = GetOrCreate(element);
+  AXObject* ax_element = Get(element);
   if (!ax_element)
     return;
 
