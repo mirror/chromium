@@ -847,11 +847,14 @@ void MetricsService::RecordCurrentHistograms() {
   DCHECK(log_manager_.current_log());
   SCOPED_UMA_HISTOGRAM_TIMER("UMA.MetricsService.RecordCurrentHistograms.Time");
 
-  // "true" indicates that StatisticsRecorder should include histograms held in
-  // persistent storage.
+  int omit_percentage = reporting_service_.GetUploadReductionPercent();
+  UMA_HISTOGRAM_PERCENTAGE("UMA.MetricsService.RecordCurrentHistograms.Omit",
+                           omit_percentage);
+
   base::StatisticsRecorder::PrepareDeltas(
-      true, base::Histogram::kNoFlags,
-      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_);
+      /*include_persistent=*/true, base::Histogram::kNoFlags,
+      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_,
+      omit_percentage);
   delegating_provider_.RecordHistogramSnapshots(&histogram_snapshot_manager_);
 }
 
