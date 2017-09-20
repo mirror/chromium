@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92477517_3fb66790",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb5336a_a6f5f64d",
+      "range": {
+        "startLine": 222,
+        "startChar": 9,
+        "endLine": 222,
+        "endChar": 34
+      },
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b320d26_99361d44",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 13
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "558b058e_b5d1f7b5",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b320d26_99361d44",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b20c084_ef51a3ee",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 13
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-19T22:30:47Z",
       "side": 1,
       "message": "woah - if you return true here, you also need to assign to *accelerator. Isn\u0027t it what populates the text of the fullscreen bubble? (what does the bubble say?)",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e91997_80fd9209",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "The bubble says \"Press |Esc| to exit full screen\".\n\nIn some codepaths it\u0027s what populates the bubble, but not in the one it\u0027s taking here. I\u0027ve added one just in case.",
+      "parentUuid": "6b20c084_ef51a3ee",
       "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4b667414_0de1d865",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Only codepaths to this come from the browser part (not app) so good point :) Same goes for ExitFullscreen.",
+      "parentUuid": "c5fb7e20_ea48aed4",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2aae985_ecb85b6b",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
         "patchSetId": 13
@@ -90,6 +168,24 @@
       "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a900be_4cabe617",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2aae985_ecb85b6b",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "8784d715_e325aaf7",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cc67a85_b7dc15f0",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c16b582_24ab2fbc",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
         "patchSetId": 13
@@ -124,6 +238,24 @@
       "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d43356_9f65c467",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-20T14:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c16b582_24ab2fbc",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
