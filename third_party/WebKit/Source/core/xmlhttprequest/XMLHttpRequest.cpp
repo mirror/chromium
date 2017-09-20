@@ -75,6 +75,7 @@
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkLog.h"
 #include "platform/network/ParsedContentType.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Assertions.h"
@@ -1062,9 +1063,17 @@ void XMLHttpRequest::CreateRequest(RefPtr<EncodedFormData> http_body,
   request.SetFetchRequestMode(
       upload_events ? WebURLRequest::kFetchRequestModeCORSWithForcedPreflight
                     : WebURLRequest::kFetchRequestModeCORS);
-  request.SetFetchCredentialsMode(
-      with_credentials_ ? WebURLRequest::kFetchCredentialsModeInclude
-                        : WebURLRequest::kFetchCredentialsModeSameOrigin);
+
+  // If we have an Origin Manifest with CORS for our origin, use it
+  OriginManifestStoreClient origin_manifest_store;
+  if (origin_manifest_store.DefinesCORSPreflight(request)) {
+    origin_manifest_store.SetCORSFetchModes(request);
+  } else {
+    request.SetFetchCredentialsMode(
+        with_credentials_ ? WebURLRequest::kFetchCredentialsModeInclude
+                          : WebURLRequest::kFetchCredentialsModeSameOrigin);
+  }
+
   request.SetServiceWorkerMode(is_isolated_world_
                                    ? WebURLRequest::ServiceWorkerMode::kNone
                                    : WebURLRequest::ServiceWorkerMode::kAll);
