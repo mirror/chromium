@@ -22,6 +22,30 @@
       "revId": "0dfc8a83f465865c8d4b6d8bfd512e65c0b37eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f96302_021366f9",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12020,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-20T03:49:11Z",
+      "side": 1,
+      "message": "Thanks for the catch. It turns out these UMA pings are no longer needed. They were removed in an earlier patch revision [1]. I have removed these UMA action definitions in this patch.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/664480/4..5/components/omnibox/browser/keyword_provider.cc#b396",
+      "parentUuid": "14f72935_4aa86dc5",
+      "range": {
+        "startLine": 12020,
+        "startChar": 60,
+        "endLine": 12020,
+        "endChar": 0
+      },
+      "revId": "0dfc8a83f465865c8d4b6d8bfd512e65c0b37eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

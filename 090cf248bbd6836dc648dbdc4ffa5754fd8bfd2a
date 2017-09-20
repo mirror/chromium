@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9afa2d0_8a8beda6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-20T03:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61c6073_aa70d07f",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5e7e8b_fd1879aa",
         "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
         "patchSetId": 5
