@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed0dc159_15601b97",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T10:36:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9401708_a5342f1e",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76597be4_9b2f5536",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387fe54c_16ac6ed3",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T10:36:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76597be4_9b2f5536",
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0fb1e2bb_4229a7ec",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T10:36:02Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO for this. We need to discuss a standardised way to deal with these errors. The trace importer just logs and continues.",
+      "parentUuid": "c508c83f_6c2d3f1c",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a2b40f8_1ed04976",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b015b3ef_b3e44274",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-20T10:36:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2b40f8_1ed04976",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
