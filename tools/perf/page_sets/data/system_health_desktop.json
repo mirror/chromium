@@ -1,5 +1,23 @@
 {
     "archives": {
+        "accessibility:load:amazon": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
+        "accessibility:load:aria-live": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
+        "accessibility:load:aria-owns": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
+        "accessibility:load:codesearch": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
+        "accessibility:load:wikipedia": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
+        "accessibility:typing:contenteditable": {
+            "DEFAULT": "system_health_desktop_059.wprgo"
+        },
         "browse:media:imgur": {
             "DEFAULT": "system_health_desktop_025.wprgo"
         },
