@@ -41,4 +41,14 @@ void ImageProvider::ScopedDecodedDrawImage::DestroyDecode() {
     std::move(destruction_callback_).Run(std::move(image_));
 }
 
+ImageProvider::ScopedImageDecoder::ScopedImageDecoder(
+    ImageProvider* provider,
+    const std::vector<DrawImage>& images) {
+  DCHECK(provider || images.empty());
+  for (auto& draw_image : images)
+    decoded_.push_back(provider->GetDecodedDrawImage(draw_image));
+}
+
+ImageProvider::ScopedImageDecoder::~ScopedImageDecoder() = default;
+
 }  // namespace cc

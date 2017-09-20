@@ -14,6 +14,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/paint/image_provider.h"
 #include "cc/raster/raster_source.h"
 #include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource.h"
@@ -35,13 +36,13 @@ class RasterBufferImpl : public RasterBuffer {
   }
 
   // Overridden from RasterBuffer:
-  void Playback(
-      const RasterSource* raster_source,
-      const gfx::Rect& raster_full_rect,
-      const gfx::Rect& raster_dirty_rect,
-      uint64_t new_content_id,
-      const gfx::AxisTransform2d& transform,
-      const RasterSource::PlaybackSettings& playback_settings) override {
+  void Playback(const RasterSource* raster_source,
+                const gfx::Rect& raster_full_rect,
+                const gfx::Rect& raster_dirty_rect,
+                uint64_t new_content_id,
+                const gfx::AxisTransform2d& transform,
+                const RasterSource::PlaybackSettings& playback_settings,
+                const std::vector<DrawImage>& at_raster_images) override {
     TRACE_EVENT0("cc", "BitmapRasterBuffer::Playback");
     gfx::Rect playback_rect = raster_full_rect;
     if (resource_has_previous_content_) {
@@ -49,6 +50,9 @@ class RasterBufferImpl : public RasterBuffer {
     }
     DCHECK(!playback_rect.IsEmpty())
         << "Why are we rastering a tile that's not dirty?";
+
+    ImageProvider::ScopedImageDecoder decoder(playback_settings.image_provider,
+                                              at_raster_images);
 
     size_t stride = 0u;
     RasterBufferProvider::PlaybackToMemory(

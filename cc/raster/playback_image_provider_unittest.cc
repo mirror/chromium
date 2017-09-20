@@ -54,20 +54,20 @@ TEST(PlaybackImageProviderTest, SkipsAllImages) {
   MockDecodeCache cache;
   PlaybackImageProvider provider(true, {}, &cache, gfx::ColorSpace());
 
-  SkRect rect = SkRect::MakeWH(10, 10);
+  SkIRect rect = SkIRect::MakeWH(10, 10);
   SkMatrix matrix = SkMatrix::I();
 
-  EXPECT_FALSE(
-      provider.GetDecodedDrawImage(PaintImageBuilder()
-                                       .set_id(PaintImage::kNonLazyStableId)
-                                       .set_image(CreateRasterImage())
-                                       .TakePaintImage(),
-                                   rect, kMedium_SkFilterQuality, matrix));
+  EXPECT_FALSE(provider.GetDecodedDrawImage(
+      DrawImage(PaintImageBuilder()
+                    .set_id(PaintImage::kNonLazyStableId)
+                    .set_image(CreateRasterImage())
+                    .TakePaintImage(),
+                rect, kMedium_SkFilterQuality, matrix)));
   EXPECT_EQ(cache.images_decoded(), 0);
 
   EXPECT_FALSE(provider.GetDecodedDrawImage(
-      CreateDiscardablePaintImage(gfx::Size(10, 10)), rect,
-      kMedium_SkFilterQuality, matrix));
+      CreateDiscardableDrawImage(gfx::Size(10, 10), nullptr, SkRect::Make(rect),
+                                 kMedium_SkFilterQuality, matrix)));
   EXPECT_EQ(cache.images_decoded(), 0);
 }
 
@@ -77,10 +77,10 @@ TEST(PlaybackImageProviderTest, SkipsSomeImages) {
   PlaybackImageProvider provider(false, {skip_image.stable_id()}, &cache,
                                  gfx::ColorSpace());
 
-  SkRect rect = SkRect::MakeWH(10, 10);
+  SkIRect rect = SkIRect::MakeWH(10, 10);
   SkMatrix matrix = SkMatrix::I();
-  EXPECT_FALSE(provider.GetDecodedDrawImage(skip_image, rect,
-                                            kMedium_SkFilterQuality, matrix));
+  EXPECT_FALSE(provider.GetDecodedDrawImage(
+      DrawImage(skip_image, rect, kMedium_SkFilterQuality, matrix)));
   EXPECT_EQ(cache.images_decoded(), 0);
 }
 
@@ -91,9 +91,8 @@ TEST(PlaybackImageProviderTest, RefAndUnrefDecode) {
   {
     SkRect rect = SkRect::MakeWH(10, 10);
     SkMatrix matrix = SkMatrix::I();
-    auto decode = provider.GetDecodedDrawImage(
-        CreateDiscardablePaintImage(gfx::Size(10, 10)), rect,
-        kMedium_SkFilterQuality, matrix);
+    auto decode = provider.GetDecodedDrawImage(CreateDiscardableDrawImage(
+        gfx::Size(10, 10), nullptr, rect, kMedium_SkFilterQuality, matrix));
     EXPECT_TRUE(decode);
     EXPECT_EQ(cache.refed_image_count(), 1);
   }

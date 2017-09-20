@@ -16,6 +16,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
+#include "cc/paint/image_provider.h"
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/resources/platform_color.h"
@@ -58,12 +59,13 @@ void OneCopyRasterBufferProvider::RasterBufferImpl::Playback(
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
     const gfx::AxisTransform2d& transform,
-    const RasterSource::PlaybackSettings& playback_settings) {
+    const RasterSource::PlaybackSettings& playback_settings,
+    const std::vector<DrawImage>& at_raster_images) {
   TRACE_EVENT0("cc", "OneCopyRasterBuffer::Playback");
   client_->PlaybackAndCopyOnWorkerThread(
       resource_, &lock_, sync_token_, raster_source, raster_full_rect,
-      raster_dirty_rect, transform, playback_settings, previous_content_id_,
-      new_content_id);
+      raster_dirty_rect, transform, playback_settings, at_raster_images,
+      previous_content_id_, new_content_id);
 }
 
 OneCopyRasterBufferProvider::OneCopyRasterBufferProvider(
@@ -213,9 +215,13 @@ void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
     const gfx::Rect& raster_dirty_rect,
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
+    const std::vector<DrawImage>& at_raster_images,
     uint64_t previous_content_id,
     uint64_t new_content_id) {
   WaitSyncToken(sync_token);
+
+  ImageProvider::ScopedImageDecoder decoder(playback_settings.image_provider,
+                                            at_raster_images);
 
   std::unique_ptr<StagingBuffer> staging_buffer =
       staging_pool_.AcquireStagingBuffer(resource, previous_content_id);

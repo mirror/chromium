@@ -20,6 +20,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/base/unique_notifier.h"
+#include "cc/paint/draw_image.h"
 #include "cc/raster/bitmap_raster_buffer_provider.h"
 #include "cc/raster/gpu_raster_buffer_provider.h"
 #include "cc/raster/one_copy_raster_buffer_provider.h"
@@ -80,9 +81,10 @@ class TestRasterTaskImpl : public TileTask {
     RasterSource::PlaybackSettings settings;
 
     uint64_t new_content_id = 0;
-    raster_buffer_->Playback(raster_source_.get(), gfx::Rect(1, 1),
-                             gfx::Rect(1, 1), new_content_id,
-                             gfx::AxisTransform2d(), settings);
+    std::vector<DrawImage> at_raster_images;
+    raster_buffer_->Playback(
+        raster_source_.get(), gfx::Rect(1, 1), gfx::Rect(1, 1), new_content_id,
+        gfx::AxisTransform2d(), settings, at_raster_images);
   }
 
   // Overridden from TileTask:
