@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "161fdd47_aa6b7d3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-20T21:27:44Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s the only reason. There are also cases like click a link-\u003epage starts loading, realizes it\u0027s a download and closes (i.e. back to old renderer). There\u0027s also some tolerance for quick back\u003c-\u003eforward. I\u0027m pretty sure this predates moderate binding so perhaps it\u0027s still ok to do :/",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "ec7d2be3d24b4148197c4f3b3706a34ab2432ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

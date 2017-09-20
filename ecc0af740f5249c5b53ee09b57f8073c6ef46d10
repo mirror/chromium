@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30359b52_e91bef17",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/BindingManagerIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-20T21:27:44Z",
+      "side": 0,
+      "message": "so i get that this is a layer violation, but it\u0027s also useful. Now it seems like there are test for moderate binding management but nothing for the more critical strong binding behaviour. Do we have equivalent coverage (minus moderate binding) in ChildProcessLauncher{Helper,Integration}Test? Doesn\u0027t look as thorough",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 32
+      },
+      "revId": "ecc0af740f5249c5b53ee09b57f8073c6ef46d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
