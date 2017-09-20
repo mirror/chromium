@@ -77,10 +77,10 @@ inline bool IsShadowInsertionPointFocusScopeOwner(Element& element) {
 
 class FocusNavigation : public GarbageCollected<FocusNavigation> {
  public:
-  virtual Element* Next(Element*) const = 0;
-  virtual Element* Previous(Element*) const = 0;
-  virtual Element* First() const = 0;
-  virtual Element* Last() const = 0;
+  virtual Element* Next(Element*) = 0;
+  virtual Element* Previous(Element*) = 0;
+  virtual Element* First() = 0;
+  virtual Element* Last() = 0;
 
   virtual Element* Owner() const = 0;
 
@@ -151,21 +151,21 @@ class SlotFocusNavigation final : public FocusNavigation {
  public:
   SlotFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
 
-  Element* Next(Element* current) const override {
+  Element* Next(Element* current) override {
     DCHECK(current);
     return SlotScopedTraversal::Next(*current);
   }
 
-  Element* Previous(Element* current) const override {
+  Element* Previous(Element* current) override {
     DCHECK(current);
     return SlotScopedTraversal::Previous(*current);
   }
 
-  Element* First() const override {
+  Element* First() override {
     return SlotScopedTraversal::FirstAssignedToSlot(*root_);
   }
 
-  Element* Last() const override {
+  Element* Last() override {
     return SlotScopedTraversal::LastAssignedToSlot(*root_);
   }
 
@@ -187,38 +187,34 @@ class SlotFallbackContentsFocusNavigation final : public FocusNavigation {
  public:
   SlotFallbackContentsFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
 
-  Element* Next(Element* current) const override {
+  Element* Next(Element* current) override {
     DCHECK(current);
     Element* next = ElementTraversal::Next(*current, root_);
-    while (next && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                       *root_, *next))
-      next = ElementTraversal::Next(*next, root_);
+    while (next && !IsOwnedByRoot(next))
+      next = ElementTraversal::NextSkippingChildren(*next, root_);
     return next;
   }
 
-  Element* Previous(Element* current) const override {
+  Element* Previous(Element* current) override {
     DCHECK(current);
     Element* previous = ElementTraversal::Previous(*current, root_);
     if (previous == root_)
       previous = nullptr;
-    while (previous && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                           *root_, *previous))
+    while (previous && !IsOwnedByRoot(previous))
       previous = ElementTraversal::Previous(*previous, root_);
     return previous;
   }
 
-  Element* First() const override {
+  Element* First() override {
     Element* first = ElementTraversal::FirstChild(*root_);
-    while (first && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                        *root_, *first))
-      first = ElementTraversal::Next(*first, root_);
+    while (first && !IsOwnedByRoot(first))
+      first = ElementTraversal::NextSkippingChildren(*first, root_);
     return first;
   }
 
-  Element* Last() const override {
+  Element* Last() override {
     Element* last = ElementTraversal::LastWithin(*root_);
-    while (last && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                       *root_, *last))
+    while (last && !IsOwnedByRoot(last))
       last = ElementTraversal::Previous(*last, root_);
     return last;
   }
@@ -227,11 +223,45 @@ class SlotFallbackContentsFocusNavigation final : public FocusNavigation {
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(root_);
+    visitor->Trace(owner_);
     FocusNavigation::Trace(visitor);
   }
 
  private:
   Member<HTMLSlotElement> root_;
+  HeapHashMap<Member<Element>, Member<Element>> owner_;
+
+  Element* FindOwner(Element* element) {
+    if (owner_.find(element) != owner_.end())
+      return owner_.find(element)->value;
+
+    // Fallback contents owner is set to nearest ancestor slot node even if
+    // the slot node have assigned nodes.
+    //
+    if (element == root_)
+      owner_.insert(element, root_);
+
+    else if (element->IsShadowRoot())
+      owner_.insert(element, element->ParentOrShadowHostElement());
+
+    else if (element->AssignedSlot())
+      owner_.insert(element, element->AssignedSlot());
+
+    else if (isHTMLSlotElement(element->ParentOrShadowHostElement()))
+      owner_.insert(element, element->ParentOrShadowHostElement());
+
+    else
+      owner_.insert(element, FindOwner(element->ParentOrShadowHostElement()));
+
+    return owner_.find(element)->value;
+  }
+
+  bool IsOwnedByRoot(Element* element) {
+    if (FindOwner(element) == root_)
+      return true;
+
+    return false;
+  }
 };
 
 // The navigation in tree scope.
@@ -240,7 +270,7 @@ class TreeFocusNavigation final : public FocusNavigation {
  public:
   TreeFocusNavigation(ContainerNode& root) : root_(&root) {}
 
-  Element* Next(Element* current) const override {
+  Element* Next(Element* current) override {
     DCHECK(current);
     Element* next = ElementTraversal::Next(*current);
     while (next && (SlotScopedTraversal::IsSlotScoped(*next) ||
@@ -249,7 +279,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return next;
   }
 
-  Element* Previous(Element* current) const override {
+  Element* Previous(Element* current) override {
     DCHECK(current);
     Element* previous = ElementTraversal::Previous(*current);
     while (previous && (SlotScopedTraversal::IsSlotScoped(*previous) ||
@@ -258,7 +288,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return previous;
   }
 
-  Element* First() const override {
+  Element* First() override {
     Element* first = root_->IsElementNode() ? &ToElement(*root_)
                                             : ElementTraversal::Next(*root_);
     while (first && (SlotScopedTraversal::IsSlotScoped(*first) ||
@@ -267,7 +297,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return first;
   }
 
-  Element* Last() const override {
+  Element* Last() override {
     Element* last = ElementTraversal::LastWithin(*root_);
     while (last && (SlotScopedTraversal::IsSlotScoped(*last) ||
                     ScopedFocusNavigation::IsSlotFallbackScoped(*last)))
