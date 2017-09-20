@@ -1487,6 +1487,7 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
   }
 
   SetShaderOpacity(params->quad);
+  SetShaderColorTemperature(params->quad);
   SetShaderQuadF(params->surface_quad);
 }
 
@@ -1815,6 +1816,7 @@ void GLRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad,
   SetUseProgram(ProgramKey::SolidColor(use_aa ? USE_AA : NO_AA),
                 quad_color_space);
   SetShaderColor(color, opacity);
+  SetShaderColorTemperature(quad);
 
   if (use_aa) {
     gl_->Uniform3fv(current_program_->edge_location(), 8, edge);
@@ -1999,6 +2001,7 @@ void GLRenderer::DrawContentQuadAA(const cc::ContentDrawQuadBase* quad,
   local_quad.Scale(1.0f / tile_rect.width(), 1.0f / tile_rect.height());
 
   SetShaderOpacity(quad);
+  SetShaderColorTemperature(quad);
   SetShaderQuadF(local_quad);
 
   // The transform and vertex data are used to figure out the extents that the
@@ -2067,6 +2070,7 @@ void GLRenderer::DrawContentQuadNoAA(const cc::ContentDrawQuadBase* quad,
   SetBlendEnabled(quad->ShouldDrawWithBlending());
 
   SetShaderOpacity(quad);
+  SetShaderColorTemperature(quad);
 
   // Pass quad coordinates to the uniform in the same order as GeometryBinding
   // does, then vertices will match the texture mapping in the vertex buffer.
@@ -2261,6 +2265,7 @@ void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
   auto tile_rect = gfx::RectF(quad->rect);
 
   SetShaderOpacity(quad);
+  SetShaderColorTemperature(quad);
   if (!clip_region) {
     DrawQuadGeometry(current_frame()->projection_matrix,
                      quad->shared_quad_state->quad_to_target_transform,
@@ -2304,6 +2309,7 @@ void GLRenderer::DrawStreamVideoQuad(const cc::StreamVideoDrawQuad* quad,
       current_program_->tex_matrix_location(), false, gl_matrix);
 
   SetShaderOpacity(quad);
+  SetShaderColorTemperature(quad);
   gfx::Size texture_size = lock.size();
   gfx::Vector2dF uv = quad->matrix.Scale2d();
   gfx::RectF uv_visible_rect(0, 0, uv.x(), uv.y());
@@ -2656,6 +2662,41 @@ void GLRenderer::SetShaderOpacity(const DrawQuad* quad) {
     return;
   gl_->Uniform1f(current_program_->alpha_location(),
                  quad->shared_quad_state->opacity);
+}
+
+void GLRenderer::SetShaderColorTemperature(const DrawQuad* quad) {
+  if (!current_program_ ||
+      current_program_->color_temperature_matrix_location() == -1) {
+    return;
+  }
+
+  const float color_temperature = quad->shared_quad_state->color_temperature;
+  // If we only tone down the blue scale, the screen will look very green so we
+  // also need to tone down the green, but with a less value compared to the
+  // blue scale to avoid making things look very red.
+  const float layer_blue_scale = 1.0f - color_temperature;
+  const float layer_green_scale = 1.0f - 0.3f * color_temperature;
+
+  const float gl_matrix[] = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      layer_green_scale,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      layer_blue_scale,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+  };
+  gl_->UniformMatrix4fv(current_program_->color_temperature_matrix_location(),
+                        1, false, gl_matrix);
 }
 
 void GLRenderer::SetShaderMatrix(const gfx::Transform& transform) {

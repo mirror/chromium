@@ -23,6 +23,7 @@ LayerImplTestProperties::LayerImplTestProperties(LayerImpl* owning_layer)
       subtree_has_copy_request(false),
       sorting_context_id(0),
       opacity(1.f),
+      color_temperature(0.f),
       blend_mode(SkBlendMode::kSrcOver),
       scroll_parent(nullptr),
       clip_parent(nullptr),

@@ -373,7 +373,8 @@ void FastInkView::UpdateSurface() {
       /*visible_quad_layer_rect=*/output_rect,
       /*clip_rect=*/gfx::Rect(),
       /*is_clipped=*/false, /*are_contents_opaque=*/false, /*opacity=*/1.f,
-      /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
+      /*color_temperature=*/0.f, /*blend_mode=*/SkBlendMode::kSrcOver,
+      /*sorting_context_id=*/0);
 
   cc::CompositorFrame frame;
   // TODO(eseckler): FastInkView should use BeginFrames and set the ack
