@@ -22,6 +22,30 @@
       "revId": "b6c7a9f6f9ce496378852888ebb726c0f10ab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee4789c_b5a584f5",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:55:29Z",
+      "side": 0,
+      "message": "Ah wait... you handled that already in the parsing code.\n\nMy comment above can be ignored, I think.",
+      "parentUuid": "1126f0b8_dcdaf448",
+      "range": {
+        "startLine": 922,
+        "startChar": 10,
+        "endLine": 922,
+        "endChar": 32
+      },
+      "revId": "b6c7a9f6f9ce496378852888ebb726c0f10ab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
