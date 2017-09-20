@@ -31,21 +31,22 @@ class PrefetchBackgroundTaskAndroid
   void SetTaskReschedulingForTesting(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jcaller,
-      jboolean reschedule,
-      jboolean backoff);
+      int reschedule_type);
   void SignalTaskFinishedForTesting(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jcaller);
 
   // When this task completes, we tell the system whether the task should be
   // rescheduled with or without backoff.
-  void SetNeedsReschedule(bool reschedule, bool backoff) override;
-  bool needs_reschedule() { return needs_reschedule_; }
+  void SetReschedule(PrefetchBackgroundTaskRescheduleType type) override;
 
  private:
+  bool NeedsReschedule() const;
+  int GetAdditionalSeconds() const;
+
   bool task_killed_by_system_ = false;
-  bool needs_reschedule_ = false;
-  bool needs_backoff_ = false;
+  PrefetchBackgroundTaskRescheduleType reschedule_type_ =
+      PrefetchBackgroundTaskRescheduleType::NO_RETRY;
 
   // A pointer to the controlling |PrefetchBackgroundTask|.
   base::android::ScopedJavaGlobalRef<jobject> java_prefetch_background_task_;
