@@ -16,6 +16,24 @@
       "revId": "6ecb5a0efeb3d96ff988d0cc87aa96bfd6cd4d22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2219e2_a889e7b4",
+        "filename": "base/memory/ref_counted_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-20T06:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9044eaf_2900f707",
+      "revId": "6ecb5a0efeb3d96ff988d0cc87aa96bfd6cd4d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
