@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b375f25_fddf14b7",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T19:34:39Z",
+      "side": 1,
+      "message": "|sourcePoint| here and on the next line.",
+      "revId": "5d6a1a0f5000a1f849af805af492f6af9ddd991c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0f8bbb_0c946224",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-20T19:34:39Z",
+      "side": 1,
+      "message": "This is fine, but [[UIView alloc] init] will also work.",
+      "revId": "5d6a1a0f5000a1f849af805af492f6af9ddd991c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
