@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbddd7c7_45143328",
+        "filename": "third_party/WebKit/Source/modules/media_controls/DEPS",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-20T01:29:32Z",
+      "side": 1,
+      "message": "why the empty line here?",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1294d2e6_8ea32295",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-20T01:29:32Z",
+      "side": 1,
+      "message": "all static classes should be namespaces",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
