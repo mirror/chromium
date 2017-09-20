@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7d16cc_3461a484",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-20T07:21:51Z",
+      "side": 1,
+      "message": "Hm, this seems way too short for Android. It often takes around a second to maximize on Android as we may be restarting the activity. Can we increase it to 2500 ms to match kOrientationLockTimeoutMs?\n\n\nIf not, then we need custom logic for ARC, as we can\u0027t meet this 100ms limit in majority of cases.",
+      "range": {
+        "startLine": 63,
+        "startChar": 60,
+        "endLine": 63,
+        "endChar": 63
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe69284_b1938c6d",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-20T07:21:51Z",
+      "side": 1,
+      "message": "If the client is late, won\u0027t we show a badly looking animation? IIUC it\u0027s completely legal for clients to be late here.",
+      "range": {
+        "startLine": 1050,
+        "startChar": 6,
+        "endLine": 1050,
+        "endChar": 77
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc660b40_6fa9105e",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-20T07:21:51Z",
+      "side": 1,
+      "message": "I tried it for ARC windows, but the frames would be still rendered even though the compositor lock is held (when maximized using Alt+). Can it be because of the layer being recreated just after OnPreWindowStateTypeChange leaves?",
+      "range": {
+        "startLine": 1054,
+        "startChar": 6,
+        "endLine": 1054,
+        "endChar": 32
+      },
+      "revId": "3acdaebbe2f31d890e22942821c2fe4a3bfd5e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
