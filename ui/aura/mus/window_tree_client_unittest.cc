@@ -278,7 +278,7 @@ TEST_P(WindowTreeClientWmTestSurfaceSync,
   // TOP_LEVEL_IN_WM and EMBED_IN_OWNER windows allocate viz::LocalSurfaceIds
   // when their sizes change.
   window.SetProperty(aura::client::kEmbedType,
-                     aura::client::WindowEmbedType::EMBED_IN_OWNER);
+                     aura::client::WindowEmbedType::TOP_LEVEL_IN_WM);
   window.Init(ui::LAYER_NOT_DRAWN);
 
   // The window will allocate a viz::LocalSurfaceId once it has a bounds.
