@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a56963d1_e84c116f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "Sorry I made a mistake copying the bug.\nThis is definitely here to fix 766274 as you say.\nI am not sure this is related with 763365. As I explained in the doc, these crashes seem just noise (see also brucedawson analysis on the doc).",
+      "parentUuid": "008d2e44_18e513a4",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc08e795_98516ad5",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-20T02:29:54Z",
       "side": 1,
       "message": "This might cause problems like the ordering in the |dump_providers_| list. This is an ordered set. Do you know what is the behavior of the set if this changes?\nApart from that this might cause asan errors? while inserting other providers the comparison operator would read while this writes.\n\nHow about we change the ordering comparison to have a dummy sequence or a use |this| pointer of MDPInfo instead of dump_provider?\n\nAlso need to update the comment on MDPInfo that says const members can be accessed without lock. |dump_provider| is an exception. All other places that access |dump_provider| seems to be trying to call some function which should not race with unregister.",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 472,
+        "endChar": 58
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69ca572_0588dbcb",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "\u003e This might cause problems like the ordering in the |dump_providers_| list. This is an ordered set.\n\nYou are right (again). This is a bad idea, fixed the check I do here to jsut use |disabled|",
+      "parentUuid": "dc08e795_98516ad5",
       "range": {
         "startLine": 471,
         "startChar": 4,
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "58f48774_675a1ef7",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "Excellent point. Indeed, it could still happen if we do enable tracing right in between as you say.\nIt is honesty way more unlikely than today (today you don\u0027t have to race, it can happen by just enable tracing and then comfortably doing a memory-infra dump minutes later, this repro as long as this trace_event is the first thing that happens on the thread after the generation change).\n\nAnyways, I don\u0027t like just reducing the race window, so I found an easier fix: just move\nthe TRACE_EVENT macro before the if() check, as the real problem here is the TOCTTOU.\n\nThe new patchset I just uploaded will make the TRACE_EVENT a bit of a lie when the MDP is disabled, but MDPs are\ndisabled extremely rarely, so not worth extra complexity of trying to deal with that.",
+      "parentUuid": "4786d6ab_1a7cfe8d",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef91ddc9_c9c04cee",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -94,6 +160,24 @@
       "writtenOn": "2017-09-20T02:29:54Z",
       "side": 1,
       "message": "Maybe we could do a TRACE_EVETN_BEGIN here if should_dump is true, and end the event after OnMemoryDump() call?",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a443f11f_01a8241d",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "I added a scope. I think that your pipeline might miss th event because BEGIN/END pairs are functionally identically but generate different json (they have a different ph: argument. See complete vs duration events in the trace event format doc)",
+      "parentUuid": "ef91ddc9_c9c04cee",
       "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "cf50f14d_5797cef3",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df099da_58f11ad6",
+      "range": {
+        "startLine": 663,
+        "startChar": 50,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4321251_570d725e",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
         "patchSetId": 3
@@ -134,6 +242,30 @@
       "writtenOn": "2017-09-20T02:29:54Z",
       "side": 1,
       "message": "nit remove",
+      "range": {
+        "startLine": 683,
+        "startChar": 11,
+        "endLine": 683,
+        "endChar": 33
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2fb9b9_f6f5973c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "Oops. Done",
+      "parentUuid": "d4321251_570d725e",
       "range": {
         "startLine": 683,
         "startChar": 11,

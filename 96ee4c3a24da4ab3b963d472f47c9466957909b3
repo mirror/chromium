@@ -22,6 +22,30 @@
       "revId": "96ee4c3a24da4ab3b963d472f47c9466957909b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a46f4bc_b8767063",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-20T02:56:15Z",
+      "side": 1,
+      "message": "You are absolutely right, thanks. Enclosed this in a scope.",
+      "parentUuid": "736dabc2_44ee45f3",
+      "range": {
+        "startLine": 685,
+        "startChar": 2,
+        "endLine": 685,
+        "endChar": 14
+      },
+      "revId": "96ee4c3a24da4ab3b963d472f47c9466957909b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
