@@ -16,6 +16,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c97fced_80ddd57d",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-20T20:54:57Z",
+      "side": 1,
+      "message": "Yes, need extension id to dispatch event. The other concern is that, if extension observer is added when creating CastSocket, extension will get notified for all channel message and errors, even if it never tries to open channel / send message on that channel...",
+      "parentUuid": "562bc22b_d1b8f4ee",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
