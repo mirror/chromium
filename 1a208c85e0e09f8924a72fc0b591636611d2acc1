@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9401708_a5342f1e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T00:39:36Z",
+      "side": 1,
+      "message": "Maybe pull this (and the equivalent path below) out above the if?\nSomething like:\n\nContainerDump container \u003d  is_global ? global_dump.global_container() : container_dump;\n\nI think that might make these paths a lot simpler.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76597be4_9b2f5536",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T00:39:36Z",
+      "side": 1,
+      "message": "nit: While\nif (x)\n  A;\nelse\n  B;\n\nIs allowed by the style guide... personally I have been burned by:\n\nif (x)\n  A;\n  C;\nelse\n  B;\n\ntoo many times and prefer {} here",
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c508c83f_6c2d3f1c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T00:39:36Z",
+      "side": 1,
+      "message": "This is a \"this should never happen\" condition right? Might be better to CHECK, silently discarding the second thing with a given name seems like bug waiting to happen (we should also\ntry and make it impossible for users of MemoryAllocatorDump to do the wrong thing but thats another CL...)",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
