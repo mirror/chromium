@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b587f7_bff87431",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_deviceconnect.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-20T22:20:58Z",
+      "side": 1,
+      "message": "I thought testharness.js gets angry if asserts aren\u0027t wrapped in a test step?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
