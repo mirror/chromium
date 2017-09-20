@@ -48,7 +48,7 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
                                               int page_count) {
   const PrintMsg_PrintPages_Params& params = *print_pages_params_;
   const PrintMsg_Print_Params& print_params = params.params;
-  PdfMetafileSkia metafile(print_params.printed_doc_type);
+  PdfMetafileSkia metafile(print_params.doc_type);
   CHECK(metafile.Init());
 
   std::vector<int> printed_pages = GetPrintedPages(params, page_count);
@@ -83,11 +83,12 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   PrintHostMsg_DidPrintPage_Params printed_page_params;
 
   if (!CopyMetafileDataToSharedMem(metafile,
-                                   &printed_page_params.metafile_data_handle)) {
+                                   &printed_page_params.metafile_data_handle,
+                                   &printed_page_params.data_size,
+                                   &printed_page_params.printed_doc_type)) {
     return false;
   }
 
-  printed_page_params.data_size = metafile.GetDataSize();
   printed_page_params.document_cookie = params.params.document_cookie;
 
   for (size_t i = 0; i < printed_pages.size(); ++i) {
