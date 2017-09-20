@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3749fc25_ee541c12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T14:58:18Z",
+      "side": 1,
+      "message": "\u003e That sounds kinda wrong; I\u0027m not sure we want to preload the animated image. Seems better to just load it the first time it\u0027s clicked.\n\nI agree, better not to preload.\n\nHowever, that makes a flash likely on a slow connection, so I\u0027ll want to address that in a separate CL.",
+      "parentUuid": "cc59bf2b_c04b5e8d",
+      "range": {
+        "startLine": 10,
+        "startChar": 66,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d72074f_f010c2dd",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5100f5c9_f3aa02f4",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T14:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d72074f_f010c2dd",
+      "range": {
+        "startLine": 713,
+        "startChar": 28,
+        "endLine": 713,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "592ee934_5ff9596b",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T14:58:18Z",
+      "side": 1,
+      "message": "Stolen.",
+      "parentUuid": "de045f72_f3ac02b5",
+      "range": {
+        "startLine": 721,
+        "startChar": 17,
+        "endLine": 721,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a020c95_dbee1c51",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af751cf0_1699249a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-20T14:58:18Z",
+      "side": 1,
+      "message": "I don\u0027t know if it makes a difference, but yes, the change was intentional.\n\nI think a screen reader encountering \u003ca\u003e\u003cimg/\u003e\u003c/a\u003e would expect to read img[@title], but I don\u0027t know if it would read a[@title] if img[@title] was missing.",
+      "parentUuid": "6a020c95_dbee1c51",
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
