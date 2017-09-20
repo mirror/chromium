@@ -115,7 +115,8 @@ ContentFaviconDriver::ContentFaviconDriver(
     FaviconService* favicon_service,
     history::HistoryService* history_service)
     : content::WebContentsObserver(web_contents),
-      FaviconDriverImpl(favicon_service, history_service) {}
+      FaviconDriverImpl(favicon_service, history_service),
+      navigation_stopped_(false) {}
 
 ContentFaviconDriver::~ContentFaviconDriver() {
 }
@@ -163,13 +164,11 @@ void ContentFaviconDriver::OnFaviconUpdated(
 
 void ContentFaviconDriver::DidUpdateFaviconURL(
     const std::vector<content::FaviconURL>& candidates) {
-  DCHECK(!candidates.empty());
-
   // Ignore the update if there is no last committed navigation entry. This can
   // occur when loading an initially blank page.
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  if (!entry)
+  if (!entry || navigation_stopped_)
     return;
 
   favicon_urls_ = candidates;
@@ -185,7 +184,7 @@ void ContentFaviconDriver::DidUpdateWebManifestURL(
   // occur when loading an initially blank page.
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  if (!entry)
+  if (!entry || navigation_stopped_)
     return;
 
   manifest_url_ = manifest_url.value_or(GURL());
@@ -206,6 +205,7 @@ void ContentFaviconDriver::DidStartNavigation(
     return;
 
   favicon_urls_.reset();
+  navigation_stopped_ = false;
 
   if (!navigation_handle->IsSameDocument())
     manifest_url_ = GURL();
@@ -241,6 +241,13 @@ void ContentFaviconDriver::DidFinishNavigation(
 
   // Get the favicon, either from history or request it from the net.
   FetchFavicon(url, navigation_handle->IsSameDocument());
+}
+
+void ContentFaviconDriver::NavigationStopped() {
+  // If a navigation was stopped, there's a chance we receive a partial
+  // candidate list (or the default favicon.ico). Hence, let's not process
+  // favicons.
+  navigation_stopped_ = true;
 }
 
 }  // namespace favicon
