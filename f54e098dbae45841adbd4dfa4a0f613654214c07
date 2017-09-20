@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03def585_3b561342",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-20T06:31:34Z",
+      "side": 1,
+      "message": "It is, unfortunately, used in a MILLION tests. I\u0027ll rename it, I guess. What\u0027s 77 more files in this already nutso patch?",
+      "parentUuid": "5a7a29b0_a92ea399",
+      "range": {
+        "startLine": 611,
+        "startChar": 2,
+        "endLine": 611,
+        "endChar": 6
+      },
+      "revId": "f54e098dbae45841adbd4dfa4a0f613654214c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a3496ca_0f873172",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-20T05:42:21Z",
       "side": 1,
       "message": "friendly ping :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "f54e098dbae45841adbd4dfa4a0f613654214c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa87e3d3_033eca62",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-20T06:31:34Z",
+      "side": 1,
+      "message": "Ah. Yes. Will do.",
+      "parentUuid": "0a3496ca_0f873172",
       "range": {
         "startLine": 96,
         "startChar": 4,
