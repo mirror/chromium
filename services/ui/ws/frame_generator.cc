@@ -135,7 +135,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
     bool is_clipped = false;
     bool are_contents_opaque = false;
     shared_state->SetAll(gfx::Transform(), gfx::Rect(scaled_bounds), bounds,
-                         bounds, is_clipped, are_contents_opaque, 1.f,
+                         bounds, is_clipped, are_contents_opaque, 1.f, 0.f,
                          SkBlendMode::kSrcOver, 0);
     auto* quad = invert_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
     frame.render_pass_list.back()->filters.Append(
@@ -200,7 +200,8 @@ void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
               bounds_at_origin /* visible_layer_bounds */,
               bounds_at_origin /* clip_rect */, false /* is_clipped */,
               false /* are_contents_opaque */, 1.0f /* opacity */,
-              SkBlendMode::kSrcOver, 0 /* sorting-context_id */);
+              0.f /* color_temperature */, SkBlendMode::kSrcOver,
+              0 /* sorting-context_id */);
   auto* quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
   quad->SetAll(sqs, bounds_at_origin /* rect */,
                bounds_at_origin /* visible_rect */, true /* needs_blending*/,

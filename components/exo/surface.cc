@@ -753,7 +753,8 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
       gfx::Rect(content_size_) /* quad_layer_rect */,
       output_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
       false /* is_clipped */, are_contents_opaque, state_.alpha /* opacity */,
-      SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);
+      0.f /* color_temperature */, SkBlendMode::kSrcOver /* blend_mode */,
+      0 /* sorting_context_id */);
 
   if (current_resource_.id) {
     gfx::PointF uv_top_left(0.f, 0.f);

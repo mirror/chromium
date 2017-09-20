@@ -417,6 +417,8 @@ void FragmentShader::Init(GLES2Interface* context,
     uniforms.push_back("colorMatrix");
     uniforms.push_back("colorOffset");
   }
+  // TODO(afakhry): Make this conditional maybe?
+  uniforms.emplace_back("colorTemperatureMatrix");
   if (has_uniform_alpha_)
     uniforms.push_back("alpha");
   if (has_background_color_)
@@ -473,6 +475,8 @@ void FragmentShader::Init(GLES2Interface* context,
     color_matrix_location_ = locations[index++];
     color_offset_location_ = locations[index++];
   }
+  // TODO(afakhry): Make this conditional maybe?
+  color_temperature_matrix_location_ = locations[index++];
   if (has_uniform_alpha_)
     alpha_location_ = locations[index++];
   if (has_background_color_)
@@ -999,6 +1003,17 @@ std::string FragmentShader::GetShaderSource() const {
     line += ";\n";
     source += line;
   }
+
+  // --------------------------------------------
+  // TODO(afakhry): Make this conditional maybe?
+  HDR("uniform mat4 colorTemperatureMatrix;");
+  SRC("// Apply the color temperature matrix");
+  SRC("float nonZeroAlpha = max(texColor.a, 0.00001);");
+  SRC("texColor = vec4(texColor.rgb / nonZeroAlpha, nonZeroAlpha);");
+  SRC("texColor = colorTemperatureMatrix * texColor;");
+  SRC("texColor = clamp(texColor, 0.0, 1.0);");
+  SRC("texColor.rgb *= texColor.a;");
+  // --------------------------------------------
 
   // Write the fragment color.
   SRC("// Write the fragment color");
