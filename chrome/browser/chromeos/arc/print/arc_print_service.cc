@@ -4,47 +4,16 @@
 
 #include "chrome/browser/chromeos/arc/print/arc_print_service.h"
 
-#include <utility>
-
-#include "ash/shell.h"
-#include "ash/shell_delegate.h"
-#include "base/bind.h"
-#include "base/files/file_util.h"
-#include "base/logging.h"
 #include "base/memory/singleton.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
-#include "base/threading/thread_restrictions.h"
+#include "chrome/browser/printing/print_job.h"
+#include "chrome/browser/printing/print_job_worker.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
-#include "mojo/edk/embedder/embedder.h"
-#include "net/base/filename_util.h"
-#include "url/gurl.h"
-
-namespace {
-
-base::Optional<base::FilePath> SavePdf(base::File file) {
-  base::ThreadRestrictions::AssertIOAllowed();
-
-  base::FilePath file_path;
-  base::CreateTemporaryFile(&file_path);
-  base::File out(file_path,
-                 base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-
-  char buf[8192];
-  ssize_t bytes;
-  while ((bytes = file.ReadAtCurrentPos(buf, sizeof(buf))) > 0) {
-    int written = out.WriteAtCurrentPos(buf, bytes);
-    if (written < 0) {
-      LOG(ERROR) << "Error while saving PDF to a disk";
-      return base::nullopt;
-    }
-  }
-
-  return file_path;
-}
-
-}  // namespace
+#include "content/public/common/child_process_host.h"
+#include "printing/backend/print_backend.h"
+#include "printing/print_job_constants.h"
+#include "printing/printed_pages_source.h"
 
 namespace arc {
 namespace {
@@ -68,6 +37,51 @@ class ArcPrintServiceFactory
   ~ArcPrintServiceFactory() override = default;
 };
 
+class ArcPagesSource : public printing::PrintedPagesSource {
+ public:
+  base::string16 RenderSourceName() override {
+    // TODO
+    return base::string16();
+  }
+};
+
+void SetSettingsDoneOnUI(scoped_refptr<printing::PrintJobWorkerOwner> query) {
+  ArcPagesSource source;
+  scoped_refptr<printing::PrintJob> job(new printing::PrintJob());
+  job->Initialize(query.get(), &source, 1);
+  job->DisconnectSource();
+  job->StartPrinting();
+}
+
+void SetSettingsDone(scoped_refptr<printing::PrintJobWorkerOwner> query) {
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   base::BindOnce(&SetSettingsDoneOnUI, query));
+}
+
+void PrintOnIO() {
+  scoped_refptr<printing::PrinterQuery> query(
+      new printing::PrinterQuery(content::ChildProcessHost::kInvalidUniqueID,
+                                 content::ChildProcessHost::kInvalidUniqueID));
+  std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue());
+  // TODO actual settings
+  settings->SetBoolean(printing::kSettingHeaderFooterEnabled, false);
+  settings->SetBoolean(printing::kSettingShouldPrintBackgrounds, false);
+  settings->SetBoolean(printing::kSettingShouldPrintSelectionOnly, false);
+  settings->SetBoolean(printing::kSettingCollate, true);
+  settings->SetInteger(printing::kSettingCopies, 1);
+  settings->SetInteger(printing::kSettingColor, printing::COLOR);
+  settings->SetInteger(printing::kSettingDuplexMode, printing::SIMPLEX);
+  settings->SetBoolean(printing::kSettingLandscape, false);
+  settings->SetString(printing::kSettingDeviceName, "");
+  settings->SetInteger(printing::kSettingScaleFactor, 100);
+  settings->SetBoolean(printing::kSettingRasterizePdf, false);
+  settings->SetBoolean(printing::kSettingPrintToPDF, false);
+  settings->SetBoolean(printing::kSettingCloudPrintDialog, false);
+  settings->SetBoolean(printing::kSettingPrintWithPrivet, false);
+  settings->SetBoolean(printing::kSettingPrintWithExtension, false);
+  query->SetSettings(std::move(settings), base::Bind(&SetSettingsDone, query));
+}
+
 }  // namespace
 
 // static
@@ -80,8 +94,11 @@ ArcPrintService::ArcPrintService(content::BrowserContext* context,
                                  ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),
+      printers_manager_(chromeos::CupsPrintersManager::Create(
+          Profile::FromBrowserContext(context))),
       weak_ptr_factory_(this) {
   arc_bridge_service_->print()->AddObserver(this);
+  printers_manager_->AddObserver(this);
 }
 
 ArcPrintService::~ArcPrintService() {
@@ -93,41 +110,89 @@ void ArcPrintService::OnInstanceReady() {
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->print(), Init);
   DCHECK(print_instance);
   mojom::PrintHostPtr host_proxy;
+  binding_.Close();
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   print_instance->Init(std::move(host_proxy));
 }
 
-void ArcPrintService::Print(mojo::ScopedHandle pdf_data) {
-  if (!pdf_data.is_valid()) {
-    LOG(ERROR) << "handle is invalid";
-    return;
-  }
-
-  mojo::edk::ScopedPlatformHandle scoped_platform_handle;
-  MojoResult mojo_result = mojo::edk::PassWrappedPlatformHandle(
-      pdf_data.release().value(), &scoped_platform_handle);
-  if (mojo_result != MOJO_RESULT_OK) {
-    LOG(ERROR) << "PassWrappedPlatformHandle failed: " << mojo_result;
-    return;
-  }
-
-  base::File file(scoped_platform_handle.release().handle);
-
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock()},
-      base::BindOnce(&SavePdf, base::Passed(&file)),
-      base::BindOnce(&ArcPrintService::OpenPdf,
-                     weak_ptr_factory_.GetWeakPtr()));
+void ArcPrintService::PrintDeprecated(mojo::ScopedHandle pdf_data) {
+  LOG(ERROR) << "ArcPrintService::Print(ScopedHandle) is deprecated.";
 }
 
-void ArcPrintService::OpenPdf(base::Optional<base::FilePath> file_path) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (!file_path)
-    return;
+void ArcPrintService::Print(mojom::ArcPrintJobPtr print_job) {
+  content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
+                                   base::BindOnce(&PrintOnIO));
+}
 
-  GURL gurl = net::FilePathToFileURL(file_path.value());
-  ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(gurl);
-  // TODO(poromov) Delete file after printing. (http://crbug.com/629843)
+void ArcPrintService::Cancel(mojom::ArcPrintJobPtr print_job) {}
+
+void ArcPrintService::StartPrinterDiscovery(
+    const std::string& session_id,
+    const std::vector<std::string>& printer_ids) {
+  discovering_sessions_.insert(session_id);
+  auto* instance =
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->print(), AddPrinters);
+  std::vector<mojom::ArcPrinterInfoPtr> arc_printers;
+  for (int i = 0; i < chromeos::CupsPrintersManager::kNumPrinterClasses; i++) {
+    std::vector<chromeos::Printer> printers = printers_manager_->GetPrinters(
+        (chromeos::CupsPrintersManager::PrinterClass)i);
+    for (const auto& printer : printers) {
+      arc_printers.push_back(mojom::ArcPrinterInfo::New(
+          printer.id(), printer.display_name(), mojom::PrinterStatus::IDLE,
+          base::Optional<std::string>(printer.description()), base::nullopt,
+          nullptr));
+    }
+  }
+  if (!arc_printers.empty()) {
+    instance->AddPrinters(session_id, std::move(arc_printers));
+  }
+}
+
+void ArcPrintService::StopPrinterDiscovery(const std::string& session_id) {
+  discovering_sessions_.insert(session_id);
+}
+
+void ArcPrintService::ValidatePrinters(
+    const std::string& session_id,
+    const std::vector<std::string>& printer_ids) {}
+
+void ArcPrintService::StartPrinterStateTracking(const std::string& session_id,
+                                                const std::string& printer_id) {
+  LOG(ERROR) << "StartPrinterStateTracking";
+}
+
+void ArcPrintService::StopPrinterStateTracking(const std::string& session_id,
+                                               const std::string& printer_id) {}
+
+void ArcPrintService::DestroyDiscoverySession(const std::string& session_id) {
+  discovering_sessions_.insert(session_id);
+}
+
+void ArcPrintService::OnPrintersChanged(
+    chromeos::CupsPrintersManager::PrinterClass printer_class,
+    const std::vector<chromeos::Printer>& printers) {
+  // TODO remove missing printers and only add new ones.
+  auto* instance =
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->print(), AddPrinters);
+  std::vector<mojom::ArcPrinterInfoPtr> arc_printers;
+  for (const auto& printer : printers) {
+    arc_printers.push_back(mojom::ArcPrinterInfo::New(
+        printer.id(), printer.display_name(), mojom::PrinterStatus::IDLE,
+        base::Optional<std::string>(printer.description()), base::nullopt,
+        nullptr));
+  }
+  for (auto it = discovering_sessions_.begin();
+       it != discovering_sessions_.end(); ++it) {
+    if (it == discovering_sessions_.rbegin().base()) {
+      instance->AddPrinters(*it, std::move(arc_printers));
+    } else {
+      std::vector<mojom::ArcPrinterInfoPtr> arc_printers_copy;
+      for (const auto& arc_printer : arc_printers) {
+        arc_printers_copy.push_back(arc_printer->Clone());
+      }
+      instance->AddPrinters(*it, std::move(arc_printers_copy));
+    }
+  }
 }
 
 }  // namespace arc

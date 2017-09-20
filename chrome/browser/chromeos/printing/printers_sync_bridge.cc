@@ -383,6 +383,7 @@ void PrintersSyncBridge::AddPrinterLocked(
   CommitPrinterPut(*printer);
   auto& dest = all_data_[printer->id()];
   dest = std::move(printer);
+  LOG(ERROR) << all_data_.size();
 }
 
 void PrintersSyncBridge::StoreSpecifics(
@@ -392,6 +393,7 @@ void PrintersSyncBridge::StoreSpecifics(
   const std::string id = specifics->id();
   batch->WriteData(id, specifics->SerializeAsString());
   all_data_[id] = std::move(specifics);
+  LOG(ERROR) << all_data_.size();
 }
 
 bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
