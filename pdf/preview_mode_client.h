@@ -31,7 +31,7 @@ class PreviewModeClient : public PDFEngine::Client {
   void Invalidate(const pp::Rect& rect) override;
   void Scroll(const pp::Point& point) override;
   void ScrollToX(int position) override;
-  void ScrollToY(int position) override;
+  void ScrollToY(int position, bool compensate_for_toolbar) override;
   void ScrollToPage(int page) override;
   void NavigateTo(const std::string& url,
                   WindowOpenDisposition disposition) override;

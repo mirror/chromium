@@ -74,7 +74,7 @@ class PDFEngine {
 
     // Scroll the horizontal/vertical scrollbars to a given position.
     virtual void ScrollToX(int position) = 0;
-    virtual void ScrollToY(int position) = 0;
+    virtual void ScrollToY(int position, bool compensate_for_toolbar) = 0;
 
     // Scroll to zero-based |page|.
     virtual void ScrollToPage(int page) = 0;
