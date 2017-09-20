@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905fdbc9_17fa6b3e",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:49:51Z",
+      "side": 1,
+      "message": "This is also unsafe after SchedulerSingleThreadTaskRunnerManager destruction. Add:\n\nif (!g_manager_is_alive)\n  return false;",
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbe7d2c_c1021cee",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:49:51Z",
+      "side": 1,
+      "message": "ReleaseSharedSchedulerWorkers(), called in JoinForTesting(), releases shared single-threaded SchedulerWorkers and thus invalidates SingleThreadTaskRunners before ~SchedulerSingleThreadTaskRunnerManager.\n\nrobliao@: What\u0027s the purpose of ReleaseSharedSchedulerWorkers()?\n\nNote: We can land this CL without addressing this comment.",
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00624ab4_647aed21",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:49:51Z",
+      "side": 1,
+      "message": "before any pool is started\n\nTasks can be posted before the pools are started and this isn\u0027t a problem.",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c3ea83_e540078e",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:49:51Z",
+      "side": 1,
+      "message": "Could this change and changes to chrome/browser/browser_process_impl_unittest.cc go in a separate CL?",
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
