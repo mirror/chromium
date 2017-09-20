@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53537184_408678e1",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T00:33:18Z",
+      "side": 1,
+      "message": "Is this outer scope needed?",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a962ba61_e9297284",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T00:33:18Z",
+      "side": 1,
+      "message": "There is no need for a new Promise, when there is already one. You can just chain the existing one.\n\nreturn pageHandler_.getPreviewsEnabled().then(function(response) {\n  ...\n});",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a0760f_c0abac0a",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T00:33:18Z",
+      "side": 1,
+      "message": "Nit (optional):\nmessage +\u003d response.enabled ? \u0027Enabled\u0027 : \u0027Disabled\u0027;",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbb1030_6091c4c5",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T00:33:18Z",
+      "side": 1,
+      "message": "Would the following be equivalent?\n\n$(\u0027log-message\u0027).textContent \u003d message;",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac83ee0b_e85ee6bf",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T00:33:18Z",
+      "side": 1,
+      "message": "Can you use Mocha which has Promise support (you can simply return a Promise from a test function)? There are quite a few examples in the code. For example see print_preview where [1] holds the old (outer) testing framework code and [2] holds the inner Mocha code. There is more info on the outer/inner thing at [3] (just in case you want to explore deeper guts of WebUI testing).\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/print_preview_ui_browsertest.js\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/print_preview_tests.js[3] https://docs.google.com/document/d/1Z18WTNv28z5FW3smNEm_GtsfVD2IL-CmmAikwjw3ryo/edit#heading\u003dh.ve2cf2rpfomn",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
