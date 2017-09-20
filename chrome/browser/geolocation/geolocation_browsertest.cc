@@ -35,7 +35,10 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "device/geolocation/geoposition.h"
+#include "google_apis/google_api_keys.h"
+#include "net/base/escape.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/url_request/test_url_fetcher_factory.h"
 
 namespace {
 
@@ -163,6 +166,33 @@ class PermissionRequestObserver : public PermissionRequestManager::Observer {
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionRequestObserver);
+};
+
+// Observer that waits until a TestURLFetcher starts, after which it is
+// available through .fetcher().
+class TestURLFetcherObserver : public net::TestURLFetcher::DelegateForTests {
+ public:
+  TestURLFetcherObserver() { factory_.SetDelegateForTests(this); }
+  virtual ~TestURLFetcherObserver() {}
+
+  void Wait() { loop_.Run(); }
+
+  net::TestURLFetcher* fetcher() { return fetcher_; }
+
+  // net::TestURLFetcher::DelegateForTests:
+  void OnRequestStart(int fetcher_id) override {
+    fetcher_ = factory_.GetFetcherByID(fetcher_id);
+    fetcher_->SetDelegateForTests(nullptr);
+    factory_.SetDelegateForTests(nullptr);
+    loop_.Quit();
+  }
+  void OnChunkUpload(int fetcher_id) override {}
+  void OnRequestEnd(int fetcher_id) override {}
+
+ private:
+  net::TestURLFetcher* fetcher_ = nullptr;
+  net::TestURLFetcherFactory factory_;
+  base::RunLoop loop_;
 };
 
 }  // namespace
@@ -456,6 +486,21 @@ IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, Geoposition) {
   ASSERT_NO_FATAL_FAILURE(Initialize(INITIALIZATION_DEFAULT));
   ASSERT_TRUE(WatchPositionAndGrantPermission());
   ExpectPosition(fake_latitude(), fake_longitude());
+}
+
+// Tests that the request consists of the correct URL including Google API key.
+IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, UrlWithApiKey) {
+  ASSERT_NO_FATAL_FAILURE(Initialize(INITIALIZATION_DEFAULT));
+  // Intercept the URLFetcher from network geolocation request:
+  TestURLFetcherObserver observer;
+  ASSERT_TRUE(WatchPositionAndGrantPermission());
+  observer.Wait();
+  DCHECK(observer.fetcher());
+  // Verify full URL including Google API key.
+  const std::string expected_url =
+      "https://www.googleapis.com/geolocation/v1/geolocate?key=" +
+      net::EscapeQueryParamValue(google_apis::GetAPIKey(), true);
+  EXPECT_EQ(observer.fetcher()->GetOriginalURL(), expected_url);
 }
 
 IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, ErrorOnPermissionDenied) {
