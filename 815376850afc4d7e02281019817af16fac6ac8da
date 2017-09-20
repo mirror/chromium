@@ -45,6 +45,30 @@
       "revId": "815376850afc4d7e02281019817af16fac6ac8da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba529509_24a6cd59",
+        "filename": "ui/native_theme/native_theme_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-20T23:48:15Z",
+      "side": 1,
+      "message": "bokan@, can we keep this flag and remove it further?",
+      "parentUuid": "c65ec164_fd32763b",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "815376850afc4d7e02281019817af16fac6ac8da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
