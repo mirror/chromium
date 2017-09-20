@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d3a7e7_50b4dc17",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-20T15:13:02Z",
+      "side": 1,
+      "message": "nit: ..even if it",
+      "range": {
+        "startLine": 20,
+        "startChar": 49,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "a0c410f8983d33da7019409660518f4979d4a519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
