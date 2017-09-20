@@ -220,6 +220,8 @@ void V8Platform::CallOnBackgroundThread(
 
 void V8Platform::CallOnForegroundThread(v8::Isolate* isolate, v8::Task* task) {
   PerIsolateData* data = PerIsolateData::From(isolate);
+  if (!data)
+    return;
   if (data->access_mode() == IsolateHolder::kUseLocker) {
     data->task_runner()->PostTask(
         FROM_HERE, base::Bind(RunWithLocker, base::Unretained(isolate),
