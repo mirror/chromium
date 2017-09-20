@@ -19,6 +19,7 @@ using base::trace_event::MemoryAllocatorDumpGuid;
 
 class DumpNode;
 class ContainerDump;
+class DumpEdge;
 
 // Contains processed dump graphs for each process and in the global space.
 // This class is also the arena which owns the nodes of the graph.
@@ -39,6 +40,7 @@ class GlobalDump {
 
   // Inserts a mapping between the given |guid| and |node|.
   void InsertNodeToGuidMap(const MemoryAllocatorDumpGuid& guid, DumpNode* node);
+  bool AddNodeOwnershipEdge(DumpNode* owner, DumpNode* owned, int priority);
 
   ContainerDump* global_container() { return global_container_; }
   const GuidNodeMap& nodes_by_guid() { return nodes_by_guid_; }
@@ -50,6 +52,8 @@ class GlobalDump {
   DumpNode* CreateNode(ContainerDump* container_dump);
 
   std::vector<std::unique_ptr<DumpNode>> all_nodes_;
+  std::vector<std::unique_ptr<DumpEdge>> all_edges_;
+
   GuidNodeMap nodes_by_guid_;
   ContainerDump* global_container_;
   ContainerDumpMap dumps_;
@@ -122,6 +126,9 @@ class DumpNode {
   // with the given |subpath| as the key.
   void InsertChild(std::string subpath, DumpNode* node);
 
+  void SetOwnsEdge(DumpEdge* edge);
+  void AddOwnedByEdge(DumpEdge* edge);
+
   // Adds an entry for this dump node with the given |name|, |units| and
   // type.
   void AddEntry(std::string name, Entry::Units units, uint64_t value);
@@ -134,6 +141,26 @@ class DumpNode {
   ContainerDump* container_dump_;
   std::map<std::string, Entry> entries_;
   std::map<std::string, DumpNode*> children_;
+
+  DumpEdge* owns_edge_;
+  std::vector<DumpEdge*> owned_by_edges_;
+};
+
+class DumpEdge {
+ public:
+  DumpEdge(DumpNode* source, DumpNode* target, int priority);
+
+  const DumpNode* source() { return source_; }
+  const DumpNode* target() { return target_; }
+  int priority() { return priority_; }
+  bool is_weak() { return weak_; }
+  void set_weak(bool weak) { weak_ = weak; }
+
+ private:
+  const DumpNode* source_;
+  const DumpNode* target_;
+  const int priority_;
+  bool weak_;
 };
 
 }  // namespace memory_instrumentation
