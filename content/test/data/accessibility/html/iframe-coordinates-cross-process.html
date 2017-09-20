@@ -19,6 +19,8 @@
 @BLINK-ALLOW:size=(300, 100)
 @BLINK-ALLOW:size=(250, 50)
 @BLINK-ALLOW:size=(150, 50)
+
+@WAIT-FOR:Done
 -->
 <!DOCTYPE html>
 <html>
@@ -38,11 +40,20 @@ div {
   height: 150px;
 }
 </style>
+<script>
+  var count = 0;
+  function onFrameLoaded() {
+    count = count + 1;
+    if (count == 2) {
+      document.getElementById("button1").innerText = "Done";
+    }
+  }
+</script>
 </head>
 <body style="margin: 0; padding: 0;">
 
 <div>
-  <button style="margin: 25px; border: 0; width: 250px; height: 50px">
+  <button id="button1" style="margin: 25px; border: 0; width: 250px; height: 50px">
     Button
   </button>
 </div>
@@ -55,13 +66,15 @@ div {
 
 <div>
   <iframe id="frame1" style="width: 300px; height: 100px;" scrolling="no"
-          src="/cross-site/1.com/accessibility/html/frame/button.html">
+          src="/cross-site/1.com/accessibility/html/frame/button.html"
+          onLoad="onFrameLoaded()">
   </iframe>
 </div>
 
 <div>
   <iframe id="frame2" style="width: 150px; height: 50px;" scrolling="no"
-          src="/cross-site/2.com/accessibility/html/frame/button_scrolled.html">
+          src="/cross-site/2.com/accessibility/html/frame/button_scrolled.html"
+          onLoad="onFrameLoaded()">
   </iframe>
 </div>
 

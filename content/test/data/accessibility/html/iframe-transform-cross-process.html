@@ -3,11 +3,29 @@
 @BLINK-ALLOW:pageSize=(200, 200)
 @BLINK-ALLOW:pageSize=(300, 300)
 @BLINK-ALLOW:transform
+
+@WAIT-FOR:Done
 -->
 <!DOCTYPE html>
 <html>
-<body style="padding: 0; margin: 0;">
-  <iframe width=220 height=220 src="/cross-site/1.com/accessibility/html/frame/box.html" style="border: 0; position: absolute; top: 0px; left: 0px;"></iframe>
-  <iframe width=220 height=220 src="/cross-site/2.com/accessibility/html/frame/box.html" style="border: 0; position: absolute; top: 250px; left: 0px; transform: scale(1.5); transform-origin: left top;"></iframe>
+  <head>
+    <script>
+      var count = 0;
+      function onFrameLoaded() {
+        count = count + 1;
+        if (count == 2) {
+          document.getElementById("waitfor").innerText = "Done";
+        }
+      }
+    </script>
+  </head>
+  <body style="padding: 0; margin: 0;">
+    <div id="waitfor"></div>
+  <iframe width=220 height=220 src="/cross-site/1.com/accessibility/html/frame/box.html"
+          style="border: 0; position: absolute; top: 0px; left: 0px;"
+          onLoad="onFrameLoaded()"></iframe>
+  <iframe width=220 height=220 src="/cross-site/2.com/accessibility/html/frame/box.html"
+          style="border: 0; position: absolute; top: 250px; left: 0px; transform: scale(1.5); transform-origin: left top;"
+          onLoad="onFrameLoaded()"></iframe>
 </body>
 </html>
