@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534a1892_4c0d7df1",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T22:31:33Z",
+      "side": 1,
+      "message": "The plan is to fully replicate the functionality of the current snapshotting system. As of now, this class only listens for the web state destruction event so it can remove the snapshot from the cache. In the future, it will listen for other events like DidFinishNavigation. I need to further investigate the full functionality of the current system.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "0a2f5f795e685b1767de5474c0561f19eda0576e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce88666_1a3cfecb",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T22:31:33Z",
+      "side": 1,
+      "message": "Web state navigations often occur when the view is not in the view hierarchy. In further iterations of this class, we will observe DidFinishNavigation to take a snapshot, but we have to make sure the view is in the view hierarchy before we take a snapshot.",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "0a2f5f795e685b1767de5474c0561f19eda0576e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48a2842_8e437171",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T22:31:33Z",
+      "side": 1,
+      "message": "I am contemplating this design vs. mapping registrations (e.g., \"chrome:://newtab\" --\u003e new tab snapshot provider).",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "0a2f5f795e685b1767de5474c0561f19eda0576e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e01821_a34f8c9f",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T22:31:33Z",
+      "side": 1,
+      "message": "I am planning on removing this from here, and moving the resizing to the retrieval side of the cache.",
+      "range": {
+        "startLine": 55,
+        "startChar": 29,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "0a2f5f795e685b1767de5474c0561f19eda0576e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde18e30_da7990cb",
+        "filename": "ios/chrome/browser/snapshots/snapshots_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-20T22:31:33Z",
+      "side": 1,
+      "message": "This will get moved out of here and the resizing operation will be put in the retrieval side of the snapshot cache.",
+      "range": {
+        "startLine": 22,
+        "startChar": 55,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "0a2f5f795e685b1767de5474c0561f19eda0576e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
