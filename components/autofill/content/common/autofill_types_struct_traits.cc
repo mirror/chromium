@@ -600,6 +600,7 @@ bool StructTraits<mojom::PasswordFormDataView, PasswordForm>::Read(
   out->is_public_suffix_match = data.is_public_suffix_match();
   out->is_affiliation_based_match = data.is_affiliation_based_match();
   out->does_look_like_signup_form = data.does_look_like_signup_form();
+  out->only_for_fallback_saving = data.only_for_fallback_saving();
 
   return true;
 }
