@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cddc1c01_6b78a173",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-20T22:19:14Z",
+      "side": 1,
+      "message": "nit: private members should have a trailing underscore (_).\ngetAbsolutePath_()\n\n(you may also remove @private if that\u0027s appropriate).",
+      "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57270b7e_591baa81",
         "filename": "chrome/test/data/webui/settings/route_tests.js",
         "patchSetId": 15
