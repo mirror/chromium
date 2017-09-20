@@ -291,6 +291,24 @@
       "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80be3e31_fdb6a7de",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_focus_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-20T07:25:59Z",
+      "side": 1,
+      "message": "Style guide mentions by-value members at https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes\n\n\u003e if it would otherwise make sense to use a type as a member by-value, don\u0027t convert it to a pointer just to be able to forward-declare the type.\n\n\nand ViewTracker is pretty simple. We should use a value member unless it\u0027s an error to do so.",
+      "parentUuid": "2d73f487_a27a069e",
+      "revId": "cc4d22b19964f4cdac53c426b113c9afe46c2744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
