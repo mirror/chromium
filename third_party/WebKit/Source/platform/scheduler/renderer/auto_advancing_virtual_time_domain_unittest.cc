@@ -61,7 +61,7 @@ class AutoAdvancingVirtualTimeDomainTest : public ::testing::Test {
 };
 
 namespace {
-void NopTask(bool* task_run) {
+void NopTaskWithFlag(bool* task_run) {
   *task_run = true;
 }
 }  // namesapce
@@ -69,8 +69,8 @@ void NopTask(bool* task_run) {
 TEST_F(AutoAdvancingVirtualTimeDomainTest, VirtualTimeAdvances) {
   base::TimeDelta delay = base::TimeDelta::FromMilliseconds(10);
   bool task_run = false;
-  task_queue_->PostDelayedTask(FROM_HERE, base::Bind(NopTask, &task_run),
-                               delay);
+  task_queue_->PostDelayedTask(FROM_HERE,
+                               base::Bind(NopTaskWithFlag, &task_run), delay);
 
   mock_task_runner_->RunUntilIdle();
 
@@ -83,8 +83,8 @@ TEST_F(AutoAdvancingVirtualTimeDomainTest, VirtualTimeAdvances) {
 TEST_F(AutoAdvancingVirtualTimeDomainTest, VirtualTimeDoesNotAdvance) {
   base::TimeDelta delay = base::TimeDelta::FromMilliseconds(10);
   bool task_run = false;
-  task_queue_->PostDelayedTask(FROM_HERE, base::Bind(NopTask, &task_run),
-                               delay);
+  task_queue_->PostDelayedTask(FROM_HERE,
+                               base::Bind(NopTaskWithFlag, &task_run), delay);
 
   auto_advancing_time_domain_->SetCanAdvanceVirtualTime(false);
 

@@ -27,12 +27,13 @@ namespace {
 
 const int kWorkBatchSize = 2;
 
-class MockTask {
+class MockTaskForRendererScheduler {
  public:
   MOCK_METHOD0(Run, void());
 };
 
-class MockTaskObserver : public blink::WebThread::TaskObserver {
+class MockTaskObserverForRendererScheduler
+    : public blink::WebThread::TaskObserver {
  public:
   MOCK_METHOD0(WillProcessTask, void());
   MOCK_METHOD0(DidProcessTask, void());
@@ -72,9 +73,9 @@ class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
 };
 
 TEST_F(WebThreadImplForRendererSchedulerTest, TestTaskObserver) {
-  MockTaskObserver observer;
+  MockTaskObserverForRendererScheduler observer;
   thread_->AddTaskObserver(&observer);
-  MockTask task;
+  MockTaskForRendererScheduler task;
 
   {
     ::testing::InSequence sequence;
@@ -84,15 +85,16 @@ TEST_F(WebThreadImplForRendererSchedulerTest, TestTaskObserver) {
   }
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task)));
   base::RunLoop().RunUntilIdle();
   thread_->RemoveTaskObserver(&observer);
 }
 
 TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithOneTask) {
-  MockTaskObserver observer;
+  MockTaskObserverForRendererScheduler observer;
   thread_->AddTaskObserver(&observer);
-  MockTask task;
+  MockTaskForRendererScheduler task;
 
   SetWorkBatchSizeForTesting(kWorkBatchSize);
   {
@@ -103,16 +105,17 @@ TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithOneTask) {
   }
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task)));
   base::RunLoop().RunUntilIdle();
   thread_->RemoveTaskObserver(&observer);
 }
 
 TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithTwoTasks) {
-  MockTaskObserver observer;
+  MockTaskObserverForRendererScheduler observer;
   thread_->AddTaskObserver(&observer);
-  MockTask task1;
-  MockTask task2;
+  MockTaskForRendererScheduler task1;
+  MockTaskForRendererScheduler task2;
 
   SetWorkBatchSizeForTesting(kWorkBatchSize);
   {
@@ -127,19 +130,21 @@ TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithTwoTasks) {
   }
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task1)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task1)));
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task2)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task2)));
   base::RunLoop().RunUntilIdle();
   thread_->RemoveTaskObserver(&observer);
 }
 
 TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithThreeTasks) {
-  MockTaskObserver observer;
+  MockTaskObserverForRendererScheduler observer;
   thread_->AddTaskObserver(&observer);
-  MockTask task1;
-  MockTask task2;
-  MockTask task3;
+  MockTaskForRendererScheduler task1;
+  MockTaskForRendererScheduler task2;
+  MockTaskForRendererScheduler task3;
 
   SetWorkBatchSizeForTesting(kWorkBatchSize);
   {
@@ -158,11 +163,14 @@ TEST_F(WebThreadImplForRendererSchedulerTest, TestWorkBatchWithThreeTasks) {
   }
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task1)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task1)));
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task2)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task2)));
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task3)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForRendererScheduler::Run, WTF::Unretained(&task3)));
   base::RunLoop().RunUntilIdle();
   thread_->RemoveTaskObserver(&observer);
 }
@@ -179,7 +187,7 @@ void EnterRunLoop(base::MessageLoop* message_loop, blink::WebThread* thread) {
 }
 
 TEST_F(WebThreadImplForRendererSchedulerTest, TestNestedRunLoop) {
-  MockTaskObserver observer;
+  MockTaskObserverForRendererScheduler observer;
   thread_->AddTaskObserver(&observer);
 
   {
