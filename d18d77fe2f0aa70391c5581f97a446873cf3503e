@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa90adb9_78cfba7f",
+        "filename": "chromeos/dbus/services/org.chromium.VirtualFileRequestService.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-20T05:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5eba220_735799b6",
+      "revId": "d18d77fe2f0aa70391c5581f97a446873cf3503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "524dff1c_8eabdc57",
         "filename": "chromeos/dbus/services/virtual_file_request_service_provider.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T14:20:46Z",
       "side": 1,
       "message": "nice :-)",
+      "revId": "d18d77fe2f0aa70391c5581f97a446873cf3503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddfb4ad_0413fb25",
+        "filename": "chromeos/dbus/services/virtual_file_request_service_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-20T05:37:54Z",
+      "side": 1,
+      "message": "Yey, lambdas are great :)",
+      "parentUuid": "524dff1c_8eabdc57",
       "revId": "d18d77fe2f0aa70391c5581f97a446873cf3503e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
