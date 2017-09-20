@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2783281f_b08ac92d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "This is no longer true, because OPA is not OOBE.\nConsidering this is M61 cherry-pick target, I\u0027m ok to leave the method name as is to just keep the change small to avoid conflict, but please explicitly mention it in the comment.\nAlso, please add TODO to rename/redesign entirely for the (current) OOBE UI.",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e220ac3_818fe2cb",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "nit/style: pls use \"\u003d default;\" in ARC code.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e265e90f_c5f58586",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d59237_95c22974",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "You cannot override non virtual methods.\nIf you need a fake instance, please redesign the original class to be fake-able.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc236b9_70af73e4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "The method overriding purpose for faking is not very trivial, compared to the current real implementation.\nPlease comment for each.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1660e83_45165dea",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Leak.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b53543_e47d6b18",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Uninitialized.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7b6a68_214ac295",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Is it necessary to reset before another instance creation?\nIf so, please comment the reason.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56348158_16656695",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Pls use std::make_unique().",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1414ff4f_6bf2a982",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "nit: ARC ToS",
+      "range": {
+        "startLine": 869,
+        "startChar": 70,
+        "endLine": 869,
+        "endChar": 77
+      },
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a877106e_e6f8fe42",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "This is not a flow for OOBE, but for enabling OPA, right?\nIf so, please keep the OOBE flow testing working, and add yours, too.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ca9e4e_50cd39f5",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "This looks replacement of view()-\u003eShow() ?",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607ac8b1_4f77b5e6",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "WizardController(nullptr, nullptr) and WizardControler() behave differently, which looks confusing.\nPlease fix it to be consistent somehow.\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Overloading",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c76acb0_45f65f50",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T06:03:06Z",
+      "side": 1,
+      "message": "Please s/ForTest/ForTesting/ to enable presbumit check.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#naming",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
