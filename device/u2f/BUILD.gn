@@ -35,6 +35,8 @@ source_set("u2f") {
     "//device/base",
     "//device/hid",
     "//net",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/interfaces",
   ]
 }
 
