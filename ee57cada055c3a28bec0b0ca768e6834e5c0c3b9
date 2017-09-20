@@ -45,6 +45,30 @@
       "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe5624f_7a1edea0",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-20T12:39:23Z",
+      "side": 1,
+      "message": "Hmm, does this mean that migrating from the FILE thread in [1] was unsafe?\n\n[1] crrev.com/ad98d2c716bf5347388a7c52281762bc2fdfc16e",
+      "parentUuid": "8c50e2cc_00b3b3d7",
+      "range": {
+        "startLine": 538,
+        "startChar": 66,
+        "endLine": 539,
+        "endChar": 35
+      },
+      "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
