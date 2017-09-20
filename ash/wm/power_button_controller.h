@@ -67,6 +67,8 @@ class ASH_EXPORT PowerButtonController
   // Overrides the tick clock used by |this| for testing.
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
+  void ResetPowerButtonDisplayControllerForTesting();
+
   // If |display_off_timer_| is running, stops it, runs its task, and returns
   // true. Otherwise, returns false.
   bool TriggerDisplayOffTimerForTesting() WARN_UNUSED_RESULT;

@@ -39,7 +39,8 @@ PowerButtonController::PowerButtonController()
     : lock_state_controller_(Shell::Get()->lock_state_controller()),
       tick_clock_(new base::DefaultTickClock) {
   ProcessCommandLine();
-  display_controller_ = std::make_unique<PowerButtonDisplayController>();
+  display_controller_ =
+      std::make_unique<PowerButtonDisplayController>(tick_clock_.get());
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
@@ -245,6 +246,11 @@ void PowerButtonController::SetTickClockForTesting(
     std::unique_ptr<base::TickClock> tick_clock) {
   DCHECK(tick_clock);
   tick_clock_ = std::move(tick_clock);
+}
+
+void PowerButtonController::ResetPowerButtonDisplayControllerForTesting() {
+  display_controller_ =
+      std::make_unique<PowerButtonDisplayController>(tick_clock_.get());
 }
 
 bool PowerButtonController::TriggerDisplayOffTimerForTesting() {
