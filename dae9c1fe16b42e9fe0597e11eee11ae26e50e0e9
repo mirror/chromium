@@ -34,6 +34,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6721bd_04825c4b",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-20T21:00:33Z",
+      "side": 1,
+      "message": "Is there a reason the extension can\u0027t call chrome.cast.channel.open and we return the existing CastSocket to the IP:port?  That would activate the existing code path to add the observer.  (I wasn\u0027t able to figure out from the linked bug the reason for this change.)\n\nThis might cause a problem when the extension calls close?",
+      "parentUuid": "5c97fced_80ddd57d",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
