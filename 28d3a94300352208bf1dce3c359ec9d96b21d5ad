@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6767ab8a_8389aaa8",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-20T08:56:45Z",
+      "side": 1,
+      "message": "Add: \"It is an error to add a guide with the same name as an existing guide.\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 74,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "28d3a94300352208bf1dce3c359ec9d96b21d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
