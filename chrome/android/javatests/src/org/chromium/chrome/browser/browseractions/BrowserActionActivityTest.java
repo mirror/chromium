@@ -39,6 +39,8 @@ import org.chromium.chrome.browser.contextmenu.ShareContextMenuItem;
 import org.chromium.chrome.browser.customtabs.CustomTabActivityTestRule;
 import org.chromium.chrome.browser.customtabs.CustomTabsTestUtils;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
@@ -282,8 +284,13 @@ public class BrowserActionActivityTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                activity1.getHelperForTesting().onItemSelected(
-                        R.id.browser_actions_open_in_background);
+                StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+                try {
+                    activity1.getHelperForTesting().onItemSelected(
+                            R.id.browser_actions_open_in_background);
+                } finally {
+                    StrictMode.setThreadPolicy(oldPolicy);
+                }
             }
         });
         // Preferences should update a Tab is created and notification title should be for single
@@ -305,8 +312,13 @@ public class BrowserActionActivityTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                activity2.getHelperForTesting().onItemSelected(
-                        R.id.browser_actions_open_in_background);
+                StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+                try {
+                    activity2.getHelperForTesting().onItemSelected(
+                            R.id.browser_actions_open_in_background);
+                } finally {
+                    StrictMode.setThreadPolicy(oldPolicy);
+                }
             }
         });
         // Notification title should be shown for multiple tabs.
@@ -388,12 +400,27 @@ public class BrowserActionActivityTest {
                 BrowserActionsService.getTitleRestId());
         // New tab should be added to the BrowserActionTabModelSelector.
         Assert.assertEquals(1, selector.getCurrentModel().getCount());
+        Tab newTab = selector.getCurrentModel().getTabAt(0);
         CriteriaHelper.pollUiThread(Criteria.equals(mTestPage, new Callable<String>() {
             @Override
             public String call() {
-                return selector.getCurrentModel().getTabAt(0).getUrl();
+                return newTab.getUrl();
             }
         }));
+
+        // Browser Actions tabs should be merged into Chrome tab model when Chrome starts.
+        Intent notificationIntent = BrowserActionsService.getNotificationIntent();
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivityTestRule.startActivityCompletely(notificationIntent);
+        TabModel currentModel =
+                mActivityTestRule.getActivity().getTabModelSelector().getCurrentModel();
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return currentModel.getCount() == 1;
+            }
+        });
+        Assert.assertEquals(newTab.getId(), currentModel.getTabAt(0).getId());
     }
 
     @Test
@@ -474,6 +501,31 @@ public class BrowserActionActivityTest {
                 return selector.getCurrentModel().getTabAt(1).getUrl();
             }
         }));
+        Tab newTab1 = selector.getCurrentModel().getTabAt(0);
+        Tab newTab2 = selector.getCurrentModel().getTabAt(1);
+
+        // Browser Actions tabs should be merged into Chrome tab model when Chrome starts.
+        Intent notificationIntent = BrowserActionsService.getNotificationIntent();
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivityTestRule.startActivityCompletely(notificationIntent);
+        TabModel currentModel =
+                mActivityTestRule.getActivity().getTabModelSelector().getCurrentModel();
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return currentModel.getCount() == 2;
+            }
+        });
+        Assert.assertEquals(newTab1.getId(), currentModel.getTabAt(0).getId());
+        Assert.assertEquals(newTab2.getId(), currentModel.getTabAt(1).getId());
+
+        // Tab switcher should be shown on phones.
+        if (DeviceFormFactor.isTablet()) {
+            Assert.assertFalse(
+                    mActivityTestRule.getActivity().getLayoutManager().overviewVisible());
+        } else {
+            Assert.assertTrue(mActivityTestRule.getActivity().getLayoutManager().overviewVisible());
+        }
     }
 
     private BrowserActionActivity startBrowserActionActivity(String url) throws Exception {
