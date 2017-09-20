@@ -22,6 +22,30 @@
       "revId": "5326c3317d3031dd774a9dd11ad70edaef95d245",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b2e0a8_489a4839",
+        "filename": "ios/chrome/browser/language/language_model_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-20T03:58:54Z",
+      "side": 1,
+      "message": "Ack. Leaving as-is because I\u0027m concerned that the comment will go out of date (which is worse than being absent) and the logic will be obvious from the cc file (one if statement).",
+      "parentUuid": "f0c2b40e_d23eb29f",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "5326c3317d3031dd774a9dd11ad70edaef95d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
