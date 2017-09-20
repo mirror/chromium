@@ -356,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "519fbf55_735602fb",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-20T17:53:35Z",
+      "side": 1,
+      "message": "Ah yeah I didn\u0027t see that API.  Perfect thanks!",
+      "parentUuid": "e2e22d6e_1104385b",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b377d15a_f5c952ac",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
         "patchSetId": 5
