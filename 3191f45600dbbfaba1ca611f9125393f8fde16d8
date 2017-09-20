@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8c7d9eb_44759266",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "Can there be a bug for this?",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89043930_cf06f6ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ssl/CaptivePortalHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "In general, we really try to not call hidden APIs without a path to make this public.  Along the line of the bug id on the CL, it would be nice to potentially add a link to a discussion with the Android team to open this up.\n\nSince this has a sane fallback and doesn\u0027t rely on this working for the function to behave, it is \"ok\"ish, but again, it is really something we try not to do.",
+      "range": {
+        "startLine": 31,
+        "startChar": 61,
+        "endLine": 31,
+        "endChar": 88
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e994d7a_ab3e3174",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
         "patchSetId": 5
@@ -42,6 +88,99 @@
         "startChar": 4,
         "endLine": 54,
         "endChar": 39
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e18f1cc_6a11a775",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "Yeah, this is correct for java.",
+      "parentUuid": "63489d91_88e3c109",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3a38d7_dbae04fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "thoughts on tweaking TabTitleObserver to allow extension to cut down on the boiler plate?\n\nI could imagine:\n\nTabTitleObserver {\n    private boolean notifyCallbackIfTitleMatches(...) {\n        if (doesTitleMatch(mExpectedTitle, tab.getTitle()) {\n        ...\n    }\n\n    /** @return Whether the title matches the expected condition. */\n    protected boolean doesTitleMatch(String expectedTitle, String actualTitle) {\n    }\n}\n\nThen you could have this just be:\n\nnew TabTitleObserver(tab, expectedPrefix) {\n    doesTitleMatch(...) {\n         return actualTitle.startsWith(expectedTitle);\n    }\n}\n\nYou could potentially inline this class in your test as well to make it shorter a bit.",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 47
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1913bcf6_763dccb5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "you can replace these simple classes with lambdas (if you like)\n\nrunOnUiThreadBlocking(() -\u003e {\n    if (!notifyCallbackIfTitleMatches(tab)) {\n        tab.addObserver(TabTitlePrefixObserver.this);\n    }\n});\n\nYou can use it for the callable above if you like, but I\u0027ll defer to you on readability as you see fit.",
+      "range": {
+        "startLine": 89,
+        "startChar": 50,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3310f390_fc66bc46",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T00:03:35Z",
+      "side": 1,
+      "message": "I\u0027d put these at the top as well.\n\nIn general, I think the order works well as:\nstatic finals\nstatic non-finals\nclass finals\nclass non-finals\n\nconstructor\n\n....stuff and things...",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 24
       },
       "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
