@@ -104,6 +104,13 @@ bool ModulatorImplBase::HasValidContext() {
   return script_state_->ContextIsValid();
 }
 
+void ModulatorImplBase::ResolveDynamically(const String& specifier,
+                                           const String& referrer_url,
+                                           const ReferrerScriptInfo&,
+                                           ScriptPromiseResolver*) {
+  NOTIMPLEMENTED();
+}
+
 ScriptModule ModulatorImplBase::CompileModule(
     const String& provided_source,
     const String& url_str,

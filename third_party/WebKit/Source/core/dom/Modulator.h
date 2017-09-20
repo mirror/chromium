@@ -20,10 +20,12 @@ namespace blink {
 
 class ExceptionState;
 class ModuleScript;
-class ModuleScriptFetcher;
 class ModuleScriptFetchRequest;
+class ModuleScriptFetcher;
 class ModuleScriptLoaderClient;
+class ReferrerScriptInfo;
 class ScriptModuleResolver;
+class ScriptPromiseResolver;
 class ScriptState;
 class ScriptValue;
 class SecurityOrigin;
@@ -106,6 +108,12 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   // https://html.spec.whatwg.org/#resolve-a-module-specifier
   static KURL ResolveModuleSpecifier(const String& module_request,
                                      const KURL& base_url);
+
+  // https://tc39.github.io/proposal-dynamic-import/#sec-hostimportmoduledynamically
+  virtual void ResolveDynamically(const String& specifier,
+                                  const String& referrer_url,
+                                  const ReferrerScriptInfo&,
+                                  ScriptPromiseResolver*) = 0;
 
   virtual bool HasValidContext() = 0;
 
