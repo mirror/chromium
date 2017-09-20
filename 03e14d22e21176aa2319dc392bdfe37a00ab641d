@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c0271a_2364c856",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-20T07:52:37Z",
+      "side": 1,
+      "message": "Can we have a short comment about why we have this?\n\nI started to feel this would look cryptic enough if this line is just given without context.",
+      "revId": "03e14d22e21176aa2319dc392bdfe37a00ab641d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
