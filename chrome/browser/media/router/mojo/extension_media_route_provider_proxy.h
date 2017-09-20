@@ -97,6 +97,9 @@ class ExtensionMediaRouteProviderProxy : public mojom::MediaRouteProvider {
   // Called when a Mojo connection to the component extension is invalidated.
   void OnMojoConnectionError();
 
+  // Sets the extension ID used by |request_manager_|.
+  void SetExtensionId(const std::string& extension_id);
+
  private:
   // These methods call the corresponding |media_route_provider_| methods.
   // Passed to |request_manager_| as requests to be run when the Mojo connection
