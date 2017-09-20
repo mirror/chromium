@@ -34,6 +34,24 @@
       "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952a514d_7360ec62",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-20T17:19:51Z",
+      "side": 1,
+      "message": "Hmm, I thought we used it for chrome:// schemes at least. There\u0027s an explicit SchemeIsHTTPOrHTTPS method in GURL which suggests that GURL itself should not care, at least for parsing a URL? I can understand that we may not be able to use it at a higher level, but it would be nice not to replicate the parsing code. That said, this is definitely an improvement and seems fine.",
+      "parentUuid": "2ac97333_ca1b3f2e",
+      "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
