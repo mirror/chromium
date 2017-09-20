@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4a30d53_67bcf09e",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0660b6_fd274df7",
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7931ba4_ed146b60",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-19T11:53:05Z",
       "side": 1,
       "message": "Not sure why you need {} here",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b71cacf_a573161b",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Oops, left over from previous version of this.  Removed.",
+      "parentUuid": "c7931ba4_ed146b60",
       "range": {
         "startLine": 222,
         "startChar": 3,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fcfdec40_6024e277",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da2003e_8a007e7a",
+      "range": {
+        "startLine": 1122,
+        "startChar": 4,
+        "endLine": 1122,
+        "endChar": 31
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19122de5_713860d5",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 7
@@ -76,6 +142,30 @@
       "writtenOn": "2017-09-19T18:02:25Z",
       "side": 1,
       "message": "You don\u0027t need to check it here, since |provisionally_save_form| wouldn\u0027t be created because check in ProvisionallySavePassword",
+      "range": {
+        "startLine": 1144,
+        "startChar": 1,
+        "endLine": 1146,
+        "endChar": 11
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d86d93_76db06be",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Done - I turned this into a DCHECK instead, just to ensure someone doesn\u0027t change this assumption in the future.",
+      "parentUuid": "19122de5_713860d5",
       "range": {
         "startLine": 1144,
         "startChar": 1,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7b3479a6_5c33ce88",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Done, also turned into DCHECK.",
+      "parentUuid": "1681b86f_574b6dd6",
+      "range": {
+        "startLine": 1352,
+        "startChar": 6,
+        "endLine": 1352,
+        "endChar": 65
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d9fae14_6a158e51",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 7
@@ -131,6 +245,30 @@
       "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89559aa4_d6293a62",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-20T01:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9fae14_6a158e51",
+      "range": {
+        "startLine": 1555,
+        "startChar": 2,
+        "endLine": 1555,
+        "endChar": 22
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
