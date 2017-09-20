@@ -67,6 +67,23 @@
       "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93c6425_6b6f79e5",
+        "filename": "net/http/http_auth_handler_ntlm_portable_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-20T18:11:20Z",
+      "side": 1,
+      "message": "You can use something like this: https://cs.chromium.org/chromium/src/components/certificate_reporting/error_report_unittest.cc?rcl\u003d844ad7f86cf81bd601adbf597664d4f1255ac6ef\u0026l\u003d64",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
