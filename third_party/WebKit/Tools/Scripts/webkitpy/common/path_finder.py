@@ -32,6 +32,9 @@ import sys
 from webkitpy.common.memoized import memoized
 
 
+# TODO(tkent): Remove this flag after the Great Blink mv. crbug.com/622551.
+BLINK_SOURCE_WAS_MOVED = False
+
 def add_typ_dir_to_sys_path():
     path_to_typ = get_typ_dir()
     if path_to_typ not in sys.path:
@@ -68,6 +71,8 @@ def get_scripts_dir():
 
 
 def get_source_dir():
+    if BLINK_SOURCE_WAS_MOVED:
+        return os.path.join(get_chromium_src_dir(), 'third_party', 'blink', 'renderer')
     return os.path.join(get_blink_dir(), 'Source')
 
 
@@ -124,6 +129,9 @@ class PathFinder(object):
         return self._filesystem.join(self.chromium_base(), *comps)
 
     def path_from_blink_source(self, *comps):
+        if BLINK_SOURCE_WAS_MOVED:
+            return self._filesystem.join(self._filesystem.join(
+                self.chromium_base(), 'third_party', 'blink', 'renderer'), *comps)
         return self._filesystem.join(self._filesystem.join(self._webkit_base(), 'Source'), *comps)
 
     def path_from_tools_scripts(self, *comps):
