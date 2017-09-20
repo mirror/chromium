@@ -52,6 +52,24 @@
       "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d97202a_6ad521f7",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-20T19:35:20Z",
+      "side": 1,
+      "message": "Yes.  Since ipp:// isn\u0027t recognized as a standard scheme, the url isn\u0027t parsed correctly.  While I\u0027d like to use GURL, I\u0027m hesitant to patch it to support our use case.  If you want to see how it fails, I uploaded this test https://chromium-review.googlesource.com/c/chromium/src/+/676124",
+      "parentUuid": "952a514d_7360ec62",
+      "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
