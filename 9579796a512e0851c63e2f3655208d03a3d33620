@@ -52,6 +52,24 @@
       "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510532f0_fea77b79",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-20T22:51:51Z",
+      "side": 1,
+      "message": "Done (added the non-classic check). I spent some time investigating the underlying cause and posted some notes to the bug, but it\u0027s still unclear why this only manifests on mus/mash. Afaict, the same thing should be happening on classic. If we don\u0027t want a simple workaround for this P3 issue, we can just punt or WontFix, I don\u0027t think it\u0027s worth spending much more time on this right now.",
+      "parentUuid": "4758506f_c7df17e9",
+      "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
