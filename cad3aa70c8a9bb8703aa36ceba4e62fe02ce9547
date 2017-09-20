@@ -33,6 +33,57 @@
       "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c427b3_2f56d0cd",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-20T11:05:26Z",
+      "side": 1,
+      "message": "Blink uses STATIC_ONLY() for all static classes. (We should probably think about converting them to namespaces but haven\u0027t yet discussed it.)\n\nAlso ResourceLoader sounds a bit too generic to me. ResourceBundleHelper?",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0adf687_cc372ce0",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-20T11:05:26Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f7890a_ffbb0d6a",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-20T11:05:26Z",
+      "side": 1,
+      "message": "Why does this need to return WebString instead of String?",
+      "revId": "cad3aa70c8a9bb8703aa36ceba4e62fe02ce9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
