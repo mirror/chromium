@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207d980f_632bd682",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-20T22:10:17Z",
+      "side": 1,
+      "message": "Another idea that I considered here was to create a PaintRecordImageGenerator to rasterize the record_ with these params, mimicing what SkPictureImageGenerator was doing. But it doesn\u0027t work for the GPU path (https://cs.chromium.org/chromium/src/third_party/skia/src/core/SkPictureImageGenerator.cpp?sq\u003dpackage:chromium\u0026l\u003d103).",
+      "range": {
+        "startLine": 280,
+        "startChar": 10,
+        "endLine": 280,
+        "endChar": 77
+      },
+      "revId": "1e3ee655d4ed127ee161423533740c1ac4a677ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
