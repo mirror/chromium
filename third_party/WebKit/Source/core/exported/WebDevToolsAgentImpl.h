@@ -101,7 +101,7 @@ class CORE_EXPORT WebDevToolsAgentImpl final
                                   int call_id,
                                   const WebString& method,
                                   const WebString& message) override;
-  void InspectElementAt(int session_id, const WebPoint&) override;
+  void InspectElementAt(int session_id, const WebFloatPoint&) override;
   void FailedToRequestDevTools() override;
   WebString EvaluateInWebInspectorOverlay(const WebString& script) override;
 

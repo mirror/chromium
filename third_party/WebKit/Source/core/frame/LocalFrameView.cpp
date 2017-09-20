@@ -3688,6 +3688,17 @@ IntPoint LocalFrameView::ConvertToLayoutItem(
   return RoundedIntPoint(layout_item.AbsoluteToLocal(point, kUseTransforms));
 }
 
+FloatPoint LocalFrameView::ConvertFromLayoutItem(
+    const LayoutItem& layout_item,
+    const FloatPoint& layout_object_point) const {
+  FloatPoint point =
+      layout_item.LocalToAbsolute(layout_object_point, kUseTransforms);
+
+  // Convert from page ("absolute") to LocalFrameView coordinates.
+  point.Move(-ScrollOffsetInt());
+  return point;
+}
+
 IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
                                             const IntPoint& point) const {
   IntPoint new_point = point;
@@ -3724,6 +3735,25 @@ IntRect LocalFrameView::ConvertFromContainingEmbeddedContentView(
   }
 
   return parent_rect;
+}
+
+FloatPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
+    const FloatPoint& local_point) const {
+  if (LocalFrameView* parent = ParentFrameView()) {
+    // Get our layoutObject in the parent view
+    LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
+    if (layout_item.IsNull())
+      return local_point;
+
+    FloatPoint point(local_point);
+
+    // Add borders and padding
+    point.Move((layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
+               (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
+    return parent->ConvertFromLayoutItem(layout_item, point);
+  }
+
+  return local_point;
 }
 
 IntPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
@@ -4517,6 +4547,11 @@ void LocalFrameView::ScrollContents(const IntSize& scroll_delta) {
   FrameRectsChanged();
 }
 
+FloatPoint LocalFrameView::ContentsToFrame(
+    const FloatPoint& point_in_content_space) const {
+  return point_in_content_space - GetScrollOffset();
+}
+
 IntPoint LocalFrameView::ContentsToFrame(
     const IntPoint& point_in_content_space) const {
   return point_in_content_space - ScrollOffsetInt();
@@ -4542,6 +4577,12 @@ IntRect LocalFrameView::FrameToContents(const IntRect& rect_in_frame) const {
                  rect_in_frame.Size());
 }
 
+FloatPoint LocalFrameView::RootFrameToContents(
+    const FloatPoint& point_in_root_frame) const {
+  FloatPoint frame_point = ConvertFromRootFrame(point_in_root_frame);
+  return FrameToContents(frame_point);
+}
+
 IntPoint LocalFrameView::RootFrameToContents(
     const IntPoint& root_frame_point) const {
   IntPoint frame_point = ConvertFromRootFrame(root_frame_point);
@@ -4554,6 +4595,12 @@ IntRect LocalFrameView::RootFrameToContents(
                  root_frame_rect.Size());
 }
 
+FloatPoint LocalFrameView::ContentsToRootFrame(
+    const FloatPoint& contents_point) const {
+  FloatPoint frame_point = ContentsToFrame(contents_point);
+  return ConvertToRootFrame(frame_point);
+}
+
 IntPoint LocalFrameView::ContentsToRootFrame(
     const IntPoint& contents_point) const {
   IntPoint frame_point = ContentsToFrame(contents_point);
@@ -4564,12 +4611,6 @@ IntRect LocalFrameView::ContentsToRootFrame(
     const IntRect& contents_rect) const {
   IntRect rect_in_frame = ContentsToFrame(contents_rect);
   return ConvertToRootFrame(rect_in_frame);
-}
-
-FloatPoint LocalFrameView::RootFrameToContents(
-    const FloatPoint& point_in_root_frame) const {
-  FloatPoint frame_point = ConvertFromRootFrame(point_in_root_frame);
-  return FrameToContents(frame_point);
 }
 
 IntRect LocalFrameView::ViewportToContents(
@@ -4876,6 +4917,16 @@ IntRect LocalFrameView::ConvertToRootFrame(const IntRect& local_rect) const {
 IntPoint LocalFrameView::ConvertToRootFrame(const IntPoint& local_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     IntPoint parent_point = ConvertToContainingEmbeddedContentView(local_point);
+    return parent->ConvertToRootFrame(parent_point);
+  }
+  return local_point;
+}
+
+FloatPoint LocalFrameView::ConvertToRootFrame(
+    const FloatPoint& local_point) const {
+  if (LocalFrameView* parent = ParentFrameView()) {
+    FloatPoint parent_point =
+        ConvertToContainingEmbeddedContentView(local_point);
     return parent->ConvertToRootFrame(parent_point);
   }
   return local_point;

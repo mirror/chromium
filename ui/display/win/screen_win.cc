@@ -22,7 +22,7 @@
 #include "ui/display/win/dpi.h"
 #include "ui/display/win/scaling_util.h"
 #include "ui/display/win/screen_win_display.h"
-#include "ui/gfx/geometry/point.h"
+#include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -218,6 +218,16 @@ gfx::Point ScalePointRelative(const gfx::Point& from_origin,
   return scaled_relative_point + to_origin_vector;
 }
 
+gfx::PointF ScalePointRelativeFloat(const gfx::Point& from_origin,
+                                    const gfx::Point& to_origin,
+                                    const float scale_factor,
+                                    const gfx::PointF& point) {
+  gfx::Vector2d from_origin_vector(from_origin.x(), from_origin.y());
+  gfx::Vector2d to_origin_vector(to_origin.x(), to_origin.y());
+  gfx::PointF scaled_relative_point(
+      gfx::ScalePoint(point - from_origin_vector, scale_factor));
+  return scaled_relative_point + to_origin_vector;
+}
 }  // namespace
 
 ScreenWin::ScreenWin() : ScreenWin(true) {}
@@ -237,15 +247,14 @@ ScreenWin::~ScreenWin() {
 }
 
 // static
-gfx::Point ScreenWin::ScreenToDIPPoint(const gfx::Point& pixel_point) {
+gfx::PointF ScreenWin::ScreenToDIPPoint(const gfx::PointF& pixel_point) {
   const ScreenWinDisplay screen_win_display =
       GetScreenWinDisplayVia(&ScreenWin::GetScreenWinDisplayNearestScreenPoint,
-                             pixel_point);
+                             gfx::ToFlooredPoint(pixel_point));
   const Display display = screen_win_display.display();
-  return ScalePointRelative(screen_win_display.pixel_bounds().origin(),
-                            display.bounds().origin(),
-                            1.0f / display.device_scale_factor(),
-                            pixel_point);
+  return ScalePointRelativeFloat(
+      screen_win_display.pixel_bounds().origin(), display.bounds().origin(),
+      1.0f / display.device_scale_factor(), pixel_point);
 }
 
 // static
@@ -390,8 +399,8 @@ gfx::NativeWindow ScreenWin::GetNativeWindowFromHWND(HWND hwnd) const {
 gfx::Point ScreenWin::GetCursorScreenPoint() {
   POINT pt;
   ::GetCursorPos(&pt);
-  gfx::Point cursor_pos_pixels(pt);
-  return ScreenToDIPPoint(cursor_pos_pixels);
+  gfx::PointF cursor_pos_pixels(pt.x, pt.y);
+  return gfx::ToFlooredPoint(ScreenToDIPPoint(cursor_pos_pixels));
 }
 
 bool ScreenWin::IsWindowUnderCursor(gfx::NativeWindow window) {
