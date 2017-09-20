@@ -786,7 +786,7 @@ unpacker.app = {
                   };
 
                   var loadPromise = unpacker.app.loadVolume_(
-                      fileSystemId, entry, {}, '' /* passphrase */);
+                      fileSystemId, entry, {}, null /* passphrase */);
                   loadPromise
                       .then(function() {
                         // Mount the volume and save its information in local
