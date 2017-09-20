@@ -185,7 +185,7 @@ template("write_build_config") {
         rebase_path(invoker.java_resources_jar, root_build_dir),
       ]
     }
-    if (is_apk || is_deps_dex || (is_java && supports_android)) {
+    if (defined(invoker.dex_path)) {
       args += [
         "--dex-path",
         rebase_path(invoker.dex_path, root_build_dir),
@@ -291,14 +291,6 @@ template("write_build_config") {
         ]
       }
 
-      if (defined(invoker.proguard_enabled) && invoker.proguard_enabled) {
-        args += [
-          "--proguard-enabled",
-          "--proguard-info",
-          rebase_path(invoker.proguard_info, root_build_dir),
-        ]
-      }
-
       if (defined(invoker.apk_path)) {
         _rebased_apk_path = rebase_path(invoker.apk_path, root_build_dir)
         _rebased_incremental_apk_path =
@@ -343,6 +335,13 @@ template("write_build_config") {
       _rebased_input_jars_paths =
           rebase_path(invoker.input_jars_paths, root_build_dir)
       args += [ "--extra-classpath-jars=$_rebased_input_jars_paths" ]
+    }
+    if (defined(invoker.proguard_enabled) && invoker.proguard_enabled) {
+      args += [
+        "--proguard-enabled",
+        "--proguard-info",
+        rebase_path(invoker.proguard_info, root_build_dir),
+      ]
     }
     if (defined(invoker.proguard_configs)) {
       _rebased_proguard_configs =
@@ -855,8 +854,9 @@ if (enable_java_templates) {
       set_sources_assignment_filter([])
       forward_variables_from(invoker,
                              [
-                               "deps",
+                               "data",
                                "data_deps",
+                               "deps",
                                "public_deps",
                                "testonly",
                              ])
