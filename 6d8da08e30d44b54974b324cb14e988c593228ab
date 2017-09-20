@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93fc9d85_473062f6",
+        "filename": "chrome/browser/extensions/service_worker_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T22:46:26Z",
+      "side": 1,
+      "message": "FYI: Copied from c/b/e/extension_bindings_apitest.cc",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "6d8da08e30d44b54974b324cb14e988c593228ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
