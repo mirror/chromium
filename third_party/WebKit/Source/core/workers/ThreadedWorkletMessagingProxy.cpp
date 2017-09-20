@@ -24,15 +24,14 @@ namespace blink {
 ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
     ExecutionContext* execution_context,
     WorkerClients* worker_clients)
-    : ThreadedMessagingProxyBase(execution_context, worker_clients) {
-  worklet_object_proxy_ =
-      CreateObjectProxy(this, GetParentFrameTaskRunners());
-}
+    : ThreadedMessagingProxyBase(execution_context, worker_clients) {}
 
 void ThreadedWorkletMessagingProxy::Initialize() {
   DCHECK(IsMainThread());
   if (AskedToTerminate())
     return;
+
+  worklet_object_proxy_ = CreateObjectProxy(this, GetParentFrameTaskRunners());
 
   Document* document = ToDocument(GetExecutionContext());
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
