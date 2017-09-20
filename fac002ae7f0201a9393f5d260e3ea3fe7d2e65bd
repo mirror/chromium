@@ -341,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "b8c2ce7b_4a2fe369",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T17:34:26Z",
+      "side": 1,
+      "message": "Oh, I meant, \"nullptr\" is unnecessary.\n\ninstance_.reset();",
+      "parentUuid": "2a54a8ee_b71396e4",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5826d3_ff581bac",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 11
