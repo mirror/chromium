@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37bc124_2a30fdd1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-20T22:45:30Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to do this after you\u0027ve checked that AudioWorklets are enabled? (I.e. Inside the if block below.)",
+      "revId": "29b668b61dcb8ce219c9108fc211bf36e9417c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a6f954_11213d2a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-20T22:45:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "29b668b61dcb8ce219c9108fc211bf36e9417c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
