@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1fdbbb89_33efa83c",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-20T01:15:18Z",
+      "side": 1,
+      "message": "Yes, it\u0027s intentional and should be fine. Double events should be better than an event at wrong time (i.e. event is dispatched when tree id is not available).",
+      "parentUuid": "466b8022_15cc0322",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 27
+      },
+      "revId": "2257788c5136c77553277cb0b7cdfc798124a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11461fd5_607246a1",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 8
