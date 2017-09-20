@@ -200,13 +200,25 @@ TEST_F(PreconnectManagerTest, TestTwoConcurrentMainFrameUrls) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(PreconnectManagerTest, TestStartPreresolveOneHost) {
+TEST_F(PreconnectManagerTest, TestStartPreresolveHost) {
   GURL url_to_preresolve("http://cdn.google.com");
 
   EXPECT_CALL(*preconnect_manager_, PreresolveUrl(url_to_preresolve, _))
       .WillOnce(Return(net::OK));
-  preconnect_manager_->StartPreresolveHosts({url_to_preresolve.host()});
+  preconnect_manager_->StartPreresolveHost(url_to_preresolve);
   // PreconnectFinished shouldn't be called.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(PreconnectManagerTest, TestStartPreresolveHosts) {
+  GURL cdn("http://cdn.google.com");
+  GURL fonts("http://fonts.google.com");
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(cdn, _))
+      .WillOnce(Return(net::OK));
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(fonts, _))
+      .WillOnce(Return(net::OK));
+  preconnect_manager_->StartPreresolveHosts({cdn.host(), fonts.host()});
   base::RunLoop().RunUntilIdle();
 }
 
@@ -244,7 +256,7 @@ TEST_F(PreconnectManagerTest, TestDetachedRequestHasHigherPriority) {
 
   // This url should come to the front of the queue.
   GURL detached_preresolve("http://ads.google.com");
-  preconnect_manager_->StartPreresolveHosts({detached_preresolve.host()});
+  preconnect_manager_->StartPreresolveHost(detached_preresolve);
   Mock::VerifyAndClearExpectations(preconnect_manager_.get());
 
   net::CompletionCallback detached_callback;

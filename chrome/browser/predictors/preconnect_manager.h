@@ -115,7 +115,9 @@ class PreconnectManager {
              const std::vector<GURL>& preresolve_hosts);
 
   // Starts special preconnect and preresolve jobs that are not cancellable and
-  // don't report about their completion.
+  // don't report about their completion. They are considered more important
+  // than trackable requests thus they are put in the front of the jobs queue.
+  void StartPreresolveHost(const GURL& url);
   void StartPreresolveHosts(const std::vector<std::string> hostnames);
   void StartPreconnectUrl(const GURL& url, bool allow_credentials);
 
