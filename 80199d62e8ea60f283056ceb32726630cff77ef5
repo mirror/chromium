@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37abc0f4_3a15d186",
+        "filename": "device/hid/hid_connection_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-20T03:22:06Z",
+      "side": 1,
+      "message": "This #if shouldn\u0027t be needed because these tests shouldn\u0027t be compiled on platforms where HID is unsupported.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 46
+      },
+      "revId": "80199d62e8ea60f283056ceb32726630cff77ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdff234_3a0bee9f",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-20T03:22:06Z",
+      "side": 1,
+      "message": "Can we isolate this in HidManagerImpl instead? In the HidManagerImpl constructor check if HidManagerImpl::SetHidServiceForTesting has been called and otherwise call HidService::Create() as usual?\n\nWe should also be sure to call SetHidServiceForTesting() with nullptr in TearDown() to prevent state from leaking between tests.",
+      "revId": "80199d62e8ea60f283056ceb32726630cff77ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3aa6ddd_448d3e39",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-20T03:22:06Z",
+      "side": 1,
+      "message": "{}",
+      "range": {
+        "startLine": 280,
+        "startChar": 8,
+        "endLine": 280,
+        "endChar": 30
+      },
+      "revId": "80199d62e8ea60f283056ceb32726630cff77ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
