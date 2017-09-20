@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7de17468_3af21ef2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b54bd5a_5a70daed",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32c72c4_d88b031f",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "cd025f61_b8af77c8",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "242d2f48_fffe0d91",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ab26b1_a5156ed8",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-19T06:26:47Z",
       "side": 1,
       "message": "Could you share more logic between CreateShadowRootInternal and AttachShadowInternal\n at least not having copied error message.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8beab0f_851ad0bc",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2425,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "I added AttachShadowRootInternal() and AttachShadowRooot(), and make both of CreateShadowRootInternal() and AttachShadowRoot() call AttachShadowROotInternal() to reduce the duplicated codes. When we try to attach ShadowRoot from C++ program, the AttachShadowRoot() is suspected to be used.",
+      "parentUuid": "06ab26b1_a5156ed8",
       "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "a2a9b3b1_c4eebcef",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2463,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b200bde_3cb5070f",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8990e9_d428c81e",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "6a85fd8a_3f14fcf2",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "I added DCHECK() here since CreateShadowRootInternal() checked if the shadow root is closed. I\u0027ll removed this DCHECK here.",
+      "parentUuid": "7f8990e9_d428c81e",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6af9b6cd_b3bcc77f",
         "filename": "third_party/WebKit/Source/core/dom/Element.h",
         "patchSetId": 4
@@ -118,6 +208,24 @@
       "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853b3fed_c028933f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-20T00:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af9b6cd_b3bcc77f",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
