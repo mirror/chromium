@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/strings/string_piece_forward.h"
 #include "base/time/time.h"
 #include "base/values.h"
@@ -206,17 +207,15 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
                             Extension::State initial_state,
                             const syncer::StringOrdinal& page_ordinal,
                             int install_flags,
-                            const std::string& install_parameter);
-  // OnExtensionInstalled with no install flags.
+                            const std::string& install_parameter,
+                            const base::Optional<int>& dnr_ruleset_checksum);
+  // OnExtensionInstalled with no install flags and |dnr_ruleset_checksum|.
   void OnExtensionInstalled(const Extension* extension,
                             Extension::State initial_state,
                             const syncer::StringOrdinal& page_ordinal,
                             const std::string& install_parameter) {
-    OnExtensionInstalled(extension,
-                         initial_state,
-                         page_ordinal,
-                         kInstallFlagNone,
-                         install_parameter);
+    OnExtensionInstalled(extension, initial_state, page_ordinal,
+                         kInstallFlagNone, install_parameter, base::nullopt);
   }
 
   // Called when an extension is uninstalled, so that prefs get cleaned up.
@@ -447,12 +446,14 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   // to install it.
   //
   // |install_flags| are a bitmask of extension::InstallFlags.
-  void SetDelayedInstallInfo(const Extension* extension,
-                             Extension::State initial_state,
-                             int install_flags,
-                             DelayReason delay_reason,
-                             const syncer::StringOrdinal& page_ordinal,
-                             const std::string& install_parameter);
+  void SetDelayedInstallInfo(
+      const Extension* extension,
+      Extension::State initial_state,
+      int install_flags,
+      DelayReason delay_reason,
+      const syncer::StringOrdinal& page_ordinal,
+      const std::string& install_parameter,
+      const base::Optional<int>& dnr_ruleset_checksum = base::nullopt);
 
   // Removes any delayed install information we have for the given
   // |extension_id|. Returns true if there was info to remove; false otherwise.
@@ -563,6 +564,12 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   // changed before Sync is ready.
   bool NeedsSync(const std::string& extension_id) const;
   void SetNeedsSync(const std::string& extension_id, bool needs_sync);
+
+  // Returns false if there is no ruleset checksum corresponding to
+  // |extension_id|. On success, returns true and populates
+  // |dnr_ruleset_checksum|.
+  bool GetDNRRulesetChecksum(const std::string& extension_id,
+                             int* dnr_ruleset_checksum) const;
 
  private:
   friend class ExtensionPrefsBlacklistedExtensions;  // Unit test.
@@ -682,6 +689,7 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
       Extension::State initial_state,
       int install_flags,
       const std::string& install_parameter,
+      const base::Optional<int>& dnr_ruleset_checksum,
       prefs::DictionaryValueUpdate* extension_dict) const;
 
   void InitExtensionControlledPrefs(ExtensionPrefValueMap* value_map);

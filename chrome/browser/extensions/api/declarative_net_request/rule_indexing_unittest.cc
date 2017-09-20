@@ -17,11 +17,12 @@
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/version_info/version_info.h"
 #include "extensions/browser/api/declarative_net_request/constants.h"
-#include "extensions/browser/api/declarative_net_request/flat/extension_ruleset_generated.h"
 #include "extensions/browser/api/declarative_net_request/parse_info.h"
 #include "extensions/browser/api/declarative_net_request/utils.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/api/declarative_net_request/test_utils.h"
 #include "extensions/common/features/feature_channel.h"
@@ -30,7 +31,6 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/flatbuffers/src/include/flatbuffers/flatbuffers.h"
 
 namespace extensions {
 namespace declarative_net_request {
@@ -188,9 +188,13 @@ class RuleIndexingTest
     std::string data;
     ASSERT_TRUE(base::ReadFileToString(
         file_util::GetIndexedRulesetPath(extension_->path()), &data));
-    flatbuffers::Verifier verifier(
-        reinterpret_cast<const uint8_t*>(data.c_str()), data.size());
-    ASSERT_TRUE(flat::VerifyExtensionIndexedRulesetBuffer(verifier));
+
+    int expected_checksum;
+    ASSERT_TRUE(ExtensionPrefs::Get(profile())->GetDNRRulesetChecksum(
+        extension_->id(), &expected_checksum));
+    EXPECT_TRUE(
+        IsValidRulesetData(reinterpret_cast<const uint8_t*>(data.c_str()),
+                           data.size(), expected_checksum));
   }
 
   ExtensionErrorReporter* error_reporter() {
