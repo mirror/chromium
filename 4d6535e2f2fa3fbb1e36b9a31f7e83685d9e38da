@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89ee8741_4981de1e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T17:49:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this line also be moved elsewhere? AllowJavascript is not meant to be called by an async C++ callback. It is meant to be called once the page comes up (indicated by the 1st message of the page to the C++).",
+      "revId": "4d6535e2f2fa3fbb1e36b9a31f7e83685d9e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
