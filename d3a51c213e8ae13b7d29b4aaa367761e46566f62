@@ -22,6 +22,30 @@
       "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf04986_5575e5b9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T11:12:35Z",
+      "side": 1,
+      "message": "Yes, you shouldn\u0027t remove the @Features annotations completely. In local JUnit tests, each feature that is tested must be explicitly enabled or disabled, because there is no native side from which to get the default state. When I changed this to disable Chrome Home, the tests pass for me.",
+      "parentUuid": "1cb13a58_3ea5d2c9",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
