@@ -54,6 +54,10 @@ unit tests.
      All files are from the src/test/testdada directory in
      https://code.google.com/p/certificate-transparency/
 
+- legacy_symantec_root.pem
+    A legacy Symantec root that is scheduled for future distrust, per
+    https://security.googleblog.com/2017/09/chromes-plan-to-distrust-symantec.html.
+
 - twitter-chain.pem : A certificate chain for twitter.com which should be
      valid albeit expired.
 
