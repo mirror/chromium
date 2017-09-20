@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd271cd9_25a1fa97",
+        "filename": "ios/web/public/test/fakes/crw_test_web_state_observer.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-20T12:38:04Z",
+      "side": 1,
+      "message": "Here and below make_unique",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "20731af8a3a3ee3a8fa8ab804efb60a895ea3125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
