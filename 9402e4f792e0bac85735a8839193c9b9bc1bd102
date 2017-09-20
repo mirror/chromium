@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19fa0faa_3a03861e",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-20T16:00:16Z",
+      "side": 1,
+      "message": "why do we keep editing mode related things?",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "9402e4f792e0bac85735a8839193c9b9bc1bd102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f183247_95063517",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-20T16:00:16Z",
+      "side": 1,
+      "message": "do we still need that?",
+      "range": {
+        "startLine": 429,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 47
+      },
+      "revId": "9402e4f792e0bac85735a8839193c9b9bc1bd102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
