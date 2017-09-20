@@ -132,34 +132,28 @@ void APIRequestHandler::CompleteRequest(int request_id,
   v8::Context::Scope context_scope(context);
   std::unique_ptr<content::V8ValueConverter> converter =
       content::V8ValueConverter::Create();
-  std::vector<v8::Local<v8::Value>> args;
-  args.reserve(response_args.GetSize() +
-               pending_request.callback_arguments.size());
-  for (const auto& arg : pending_request.callback_arguments)
-    args.push_back(arg.Get(isolate));
+  std::vector<v8::Local<v8::Value>> v8_args;
+  v8_args.reserve(response_args.GetSize());
   for (const auto& arg : response_args)
-    args.push_back(converter->ToV8Value(&arg, context));
+    v8_args.push_back(converter->ToV8Value(&arg, context));
 
-  blink::WebScopedUserGesture user_gesture(pending_request.user_gesture_token);
-  if (!error.empty())
-    last_error_.SetError(context, error);
+  CompleteRequestImpl(&pending_request, v8_args, error);
+}
 
-  v8::TryCatch try_catch(isolate);
-  // args.size() is converted to int, but args is controlled by chrome and is
-  // never close to std::numeric_limits<int>::max.
-  call_js_.Run(pending_request.callback.Get(isolate), context, args.size(),
-               args.data());
-  if (try_catch.HasCaught()) {
-    v8::Local<v8::Message> v8_message = try_catch.Message();
-    base::Optional<std::string> message;
-    if (!v8_message.IsEmpty())
-      message = gin::V8ToString(v8_message->Get());
-    exception_handler_->HandleException(context, "Error handling response",
-                                        &try_catch);
-  }
+void APIRequestHandler::CompleteRequest(
+    int request_id,
+    const std::vector<v8::Local<v8::Value>>& response_args,
+    const std::string& error) {
+  auto iter = pending_requests_.find(request_id);
+  // The request may have been removed if the context was invalidated before a
+  // response is ready.
+  if (iter == pending_requests_.end())
+    return;
 
-  if (!error.empty())
-    last_error_.ClearError(context, true);
+  PendingRequest pending_request = std::move(iter->second);
+  pending_requests_.erase(iter);
+
+  CompleteRequestImpl(&pending_request, response_args, error);
 }
 
 int APIRequestHandler::AddPendingRequest(v8::Local<v8::Context> context,
@@ -186,6 +180,44 @@ std::set<int> APIRequestHandler::GetPendingRequestIdsForTesting() const {
   for (const auto& pair : pending_requests_)
     result.insert(pair.first);
   return result;
+}
+
+void APIRequestHandler::CompleteRequestImpl(
+    PendingRequest* pending_request,
+    const std::vector<v8::Local<v8::Value>>& response_args,
+    const std::string& error) {
+  v8::Isolate* isolate = pending_request->isolate;
+  v8::HandleScope handle_scope(isolate);
+  v8::Local<v8::Context> context = pending_request->context.Get(isolate);
+  v8::Context::Scope context_scope(context);
+  std::vector<v8::Local<v8::Value>> args;
+  args.reserve(response_args.size() +
+               pending_request->callback_arguments.size());
+  for (const auto& arg : pending_request->callback_arguments)
+    args.push_back(arg.Get(isolate));
+  for (const auto& arg : response_args)
+    args.push_back(arg);
+
+  blink::WebScopedUserGesture user_gesture(pending_request->user_gesture_token);
+  if (!error.empty())
+    last_error_.SetError(context, error);
+
+  v8::TryCatch try_catch(isolate);
+  // args.size() is converted to int, but args is controlled by chrome and is
+  // never close to std::numeric_limits<int>::max.
+  call_js_.Run(pending_request->callback.Get(isolate), context, args.size(),
+               args.data());
+  if (try_catch.HasCaught()) {
+    v8::Local<v8::Message> v8_message = try_catch.Message();
+    base::Optional<std::string> message;
+    if (!v8_message.IsEmpty())
+      message = gin::V8ToString(v8_message->Get());
+    exception_handler_->HandleException(context, "Error handling response",
+                                        &try_catch);
+  }
+
+  if (!error.empty())
+    last_error_.ClearError(context, true);
 }
 
 }  // namespace extensions
