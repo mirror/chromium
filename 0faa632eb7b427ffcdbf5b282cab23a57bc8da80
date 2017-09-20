@@ -22,6 +22,29 @@
       "revId": "0faa632eb7b427ffcdbf5b282cab23a57bc8da80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedd8c6b_2d3318a7",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-20T22:33:25Z",
+      "side": 1,
+      "message": "Do you mean crbug/?\n\nHow do you want to solve it after crbug/761120?\n\nFrom the bug it seems to say event \"hide metalayer\" happens before \"start voice interaction session\".  Do we guarantee this happens before hide metalayer?",
+      "range": {
+        "startLine": 504,
+        "startChar": 58,
+        "endLine": 504,
+        "endChar": 61
+      },
+      "revId": "0faa632eb7b427ffcdbf5b282cab23a57bc8da80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
