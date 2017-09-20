@@ -381,7 +381,7 @@ static void ZygotePreSandboxInit() {
 #endif
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   // Ensure access to the library CDMs before the sandbox is turned on.
-  PreloadLibraryCdms();
+  // PreloadLibraryCdms();
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
   InitializeWebRtcModule();

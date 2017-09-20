@@ -217,7 +217,9 @@ void MediaInterfaceProxy::ConnectToCdmService(const std::string& key_system) {
   if (cdm_info)
     cdm_path = cdm_info->path;
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  media_service->PreSandboxStartup(cdm_path);
+  base::ThreadRestrictions::SetIOAllowed(true);
+  base::File cdm_file(cdm_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  media_service->PreSandboxStartup(std::move(cdm_file));
 
   media_service->CreateInterfaceFactory(
       MakeRequest(&cdm_interface_factory_ptr_), GetFrameServices());

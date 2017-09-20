@@ -14,6 +14,8 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
 
+#include "base/strings/string_number_conversions.h"
+
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "media/cdm/cdm_module.h"
 #endif
@@ -57,18 +59,21 @@ void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void MediaService::PreSandboxStartup(const base::FilePath& cdm_path) {
-  DVLOG(1) << __func__ << ": cdm_path = " << cdm_path.value();
+void MediaService::PreSandboxStartup(base::File cdm_file) {
+  base::PlatformFile fd = cdm_file.TakePlatformFile();
+  DVLOG(1) << __func__ << ": cdm_fd = " << fd;
 
   if (is_cdm_preloaded_) {
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-    DCHECK_EQ(cdm_path, CdmModule::GetInstance()->GetCdmPath());
+    // DCHECK_EQ(cdm_path, CdmModule::GetInstance()->GetCdmPath());
 #endif
     return;
   }
 
   is_cdm_preloaded_ = true;
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  const char kFDDir[] = "/proc/self/fd";
+  base::FilePath cdm_path = base::FilePath(kFDDir).Append(base::IntToString(fd));
   CdmModule::GetInstance()->Initialize(cdm_path);
 #endif
 

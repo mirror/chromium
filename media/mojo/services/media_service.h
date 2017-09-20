@@ -45,7 +45,7 @@ class MEDIA_MOJO_EXPORT MediaService : public service_manager::Service,
   void Create(mojom::MediaServiceRequest request);
 
   // mojom::MediaService implementation.
-  void PreSandboxStartup(const base::FilePath& cdm_path) final;
+  void PreSandboxStartup(base::File cdm_file) final;
   void CreateInterfaceFactory(
       mojom::InterfaceFactoryRequest request,
       service_manager::mojom::InterfaceProviderPtr host_interfaces) final;
