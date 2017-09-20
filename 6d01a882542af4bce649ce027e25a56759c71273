@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da4a0f9_7d76bc91",
+        "filename": "android_webview/browser/net/aw_url_request_context_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-09-20T19:33:05Z",
+      "side": 1,
+      "message": "Perhaps a little vague? Might be clearer if this says something like \"pull the file to a host machine.\" Right now, I\u0027m not sure if it\u0027s really required to be on the host machine\u0027s desktop, or just somewhere on the host machine\u0027s file system.",
+      "range": {
+        "startLine": 212,
+        "startChar": 5,
+        "endLine": 212,
+        "endChar": 29
+      },
+      "revId": "6d01a882542af4bce649ce027e25a56759c71273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
