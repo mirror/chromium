@@ -16,7 +16,6 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
-#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/media_router_feature.h"
@@ -33,6 +32,10 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/presentation_connection_message.h"
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
+#endif
 
 #define DVLOG_WITH_INSTANCE(level) \
   DVLOG(level) << "MR #" << instance_id_ << ": "
@@ -72,13 +75,18 @@ MediaRouterMojoImpl::MediaRouterMojoImpl(content::BrowserContext* context)
 
 MediaRouterMojoImpl::~MediaRouterMojoImpl() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (dial_media_sink_service_proxy_) {
+  if (dial_media_sink_service_proxy_)
     dial_media_sink_service_proxy_->Stop();
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+  if (dial_media_sink_service_proxy_) {
     dial_media_sink_service_proxy_->ClearObserver(
         cast_media_sink_service_.get());
   }
+
   if (cast_media_sink_service_)
     cast_media_sink_service_->Stop();
+#endif
 }
 
 void MediaRouterMojoImpl::OnConnectionError() {
@@ -299,8 +307,10 @@ void MediaRouterMojoImpl::ClearIssue(const Issue::Id& issue_id) {
 
 void MediaRouterMojoImpl::OnUserGesture() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   if (cast_media_sink_service_)
     cast_media_sink_service_->ForceDiscovery();
+#endif
 }
 
 void MediaRouterMojoImpl::SearchSinks(
@@ -828,6 +838,7 @@ void MediaRouterMojoImpl::StartDiscovery() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG_WITH_INSTANCE(1) << "StartDiscovery";
 
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   if (media_router::CastDiscoveryEnabled()) {
     if (!cast_media_sink_service_) {
       cast_media_sink_service_ = new CastMediaSinkService(
@@ -839,6 +850,7 @@ void MediaRouterMojoImpl::StartDiscovery() {
     }
     cast_media_sink_service_->Start();
   }
+#endif
 
   if (media_router::DialLocalDiscoveryEnabled()) {
     if (!dial_media_sink_service_proxy_) {
@@ -846,8 +858,10 @@ void MediaRouterMojoImpl::StartDiscovery() {
           base::Bind(&MediaRouterMojoImpl::ProvideSinks,
                      weak_factory_.GetWeakPtr(), "dial"),
           context_);
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
       dial_media_sink_service_proxy_->SetObserver(
           cast_media_sink_service_.get());
+#endif
     }
     dial_media_sink_service_proxy_->Start();
   }

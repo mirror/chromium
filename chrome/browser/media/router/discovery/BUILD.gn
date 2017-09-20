@@ -3,6 +3,8 @@
 # found in the LICENSE file.
 #
 
+import("//chrome/common/features.gni")
+
 static_library("discovery") {
   inputs = [
     "$root_gen_dir/chrome/grit/generated_resources.h",
@@ -37,16 +39,6 @@ static_library("discovery") {
     "dial/parsed_dial_device_description.h",
     "dial/safe_dial_device_description_parser.cc",
     "dial/safe_dial_device_description_parser.h",
-    "mdns/cast_media_sink_service.cc",
-    "mdns/cast_media_sink_service.h",
-    "mdns/cast_media_sink_service_impl.cc",
-    "mdns/cast_media_sink_service_impl.h",
-    "mdns/dns_sd_delegate.cc",
-    "mdns/dns_sd_delegate.h",
-    "mdns/dns_sd_device_lister.cc",
-    "mdns/dns_sd_device_lister.h",
-    "mdns/dns_sd_registry.cc",
-    "mdns/dns_sd_registry.h",
     "media_sink_discovery_metrics.cc",
     "media_sink_discovery_metrics.h",
     "media_sink_service_base.cc",
@@ -65,6 +57,21 @@ static_library("discovery") {
       "discovery_network_list_win.cc",
       "discovery_network_monitor.cc",
       "discovery_network_monitor.h",
+    ]
+  }
+
+  if (enable_service_discovery) {
+    sources += [
+      "mdns/cast_media_sink_service.cc",
+      "mdns/cast_media_sink_service.h",
+      "mdns/cast_media_sink_service_impl.cc",
+      "mdns/cast_media_sink_service_impl.h",
+      "mdns/dns_sd_delegate.cc",
+      "mdns/dns_sd_delegate.h",
+      "mdns/dns_sd_device_lister.cc",
+      "mdns/dns_sd_device_lister.h",
+      "mdns/dns_sd_registry.cc",
+      "mdns/dns_sd_registry.h",
     ]
   }
 

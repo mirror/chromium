@@ -25,7 +25,6 @@ schema_sources = [
   "braille_display_private.idl",
   "browser.idl",
   "chrome_web_view_internal.json",
-  "cloud_print_private.json",
   "command_line_private.json",
   "content_settings.json",
   "context_menus_internal.json",
@@ -120,6 +119,9 @@ if (is_chromeos) {
   ]
 } else if (is_linux || is_win) {
   schema_sources += [ "input_ime.json" ]
+}
+if (enable_print_preview) {
+  schema_sources += [ "cloud_print_private.json" ]
 }
 if (enable_service_discovery) {
   schema_sources += [ "mdns.idl" ]

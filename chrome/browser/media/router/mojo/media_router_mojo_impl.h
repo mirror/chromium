@@ -24,6 +24,7 @@
 #include "chrome/browser/media/router/issue_manager.h"
 #include "chrome/browser/media/router/media_router_base.h"
 #include "chrome/browser/media/router/media_routes_observer.h"
+#include "chrome/common/features.h"
 #include "chrome/common/media_router/issue.h"
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "chrome/common/media_router/route_request_result.h"
@@ -345,7 +346,9 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;
 
   // Media sink service for CAST devices.
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   scoped_refptr<CastMediaSinkService> cast_media_sink_service_;
+#endif
 
   content::BrowserContext* const context_;
 

@@ -88,8 +88,6 @@ static_library("extensions") {
     "api/chrome_device_permissions_prompt.h",
     "api/chrome_extensions_api_client.cc",
     "api/chrome_extensions_api_client.h",
-    "api/cloud_print_private/cloud_print_private_api.cc",
-    "api/cloud_print_private/cloud_print_private_api.h",
     "api/command_line_private/command_line_private_api.cc",
     "api/command_line_private/command_line_private_api.h",
     "api/commands/command_service.cc",
@@ -1108,6 +1106,13 @@ static_library("extensions") {
 
   if (enable_hotwording) {
     defines += [ "ENABLE_HOTWORDING" ]
+  }
+
+  if (enable_print_preview) {
+    sources += [
+      "api/cloud_print_private/cloud_print_private_api.cc",
+      "api/cloud_print_private/cloud_print_private_api.h",
+    ]
   }
 
   if (enable_service_discovery) {
