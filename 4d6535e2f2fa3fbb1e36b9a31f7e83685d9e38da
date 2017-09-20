@@ -34,6 +34,24 @@
       "revId": "4d6535e2f2fa3fbb1e36b9a31f7e83685d9e38da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0d9beb_ba6e7fd3",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T18:03:20Z",
+      "side": 1,
+      "message": "In that case, I am wondering how this fix is working at all.\n\nCalling AllowJavascript() is what ends up triggering the OnJavascriptAllowed() above, see [1]. Which seems that the observer will never be registered, if the only thing calling AllowJavascript() is the observer method itself. What am I missing?\n\n[1] https://cs.chromium.org/chromium/src/content/browser/webui/web_ui_message_handler.cc?l\u003d25.",
+      "parentUuid": "25046a23_172f7245",
+      "revId": "4d6535e2f2fa3fbb1e36b9a31f7e83685d9e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
