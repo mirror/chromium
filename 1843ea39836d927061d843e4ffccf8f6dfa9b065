@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "60274373_78ac4747",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-20T20:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940aa52c_9285d055",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75a87ca6_a85ebff0",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 5
@@ -174,6 +192,24 @@
       "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e4bd36_4d66d0b8",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-20T20:40:34Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "1dda55bb_ab6f556d",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
