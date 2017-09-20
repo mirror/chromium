@@ -1249,9 +1249,9 @@ static ScrollOffset expectedMaxFrameViewScrollOffset(
   float aspect_ratio = visual_viewport.VisibleRect().Width() /
                        visual_viewport.VisibleRect().Height();
   float new_height = frame_view.FrameRect().Width() / aspect_ratio;
-  return ScrollOffset(
-      frame_view.ContentsSize().Width() - frame_view.FrameRect().Width(),
-      frame_view.ContentsSize().Height() - new_height);
+  IntRect document_rect = frame_view.GetLayoutView()->DocumentRect();
+  return ScrollOffset(document_rect.Width() - frame_view.FrameRect().Width(),
+                      document_rect.Height() - new_height);
 }
 
 TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
