@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b25fb02e_8a06967a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-09-20T04:42:41Z",
+      "side": 1,
+      "message": "Hmm, that might actually work. Thanks!\n\nI tried something similar: exposing isolate-\u003eterminate through V8 devtools and calling it from the client when \"we are tired to wait\", but that didn\u0027t work - the command wasn\u0027t processed in that state, but Debugger.pause seems to get through. I\u0027ll play with this a little bit more.",
+      "parentUuid": "f1649afb_478e6b7c",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20dc8f1a_e889d046",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
         "patchSetId": 2
