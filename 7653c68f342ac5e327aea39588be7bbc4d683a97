@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eea3642_663c5a40",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-20T18:12:21Z",
+      "side": 1,
+      "message": "Do I need to walk the tree nodes here somehow?\n\nI\u0027m not sure what those nodes represent.",
+      "range": {
+        "startLine": 606,
+        "startChar": 2,
+        "endLine": 606,
+        "endChar": 67
+      },
+      "revId": "7653c68f342ac5e327aea39588be7bbc4d683a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b5d08c_4eb7c713",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-20T18:12:21Z",
+      "side": 1,
+      "message": "I also want to understand the relationship between a RenderSurfaceImpl and LayerImpl and their similar draw properties.\n\nFrom reading around a bit, it seems that LayerImpl will draw to a RenderSurfaceImpl that it owns or owned by a parent LayerImpl, but why do we need two draw properties.",
+      "range": {
+        "startLine": 609,
+        "startChar": 45,
+        "endLine": 609,
+        "endChar": 54
+      },
+      "revId": "7653c68f342ac5e327aea39588be7bbc4d683a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374fa1e7_ee6df086",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-20T18:12:21Z",
+      "side": 1,
+      "message": "Same question here, do I need to walk the tree?",
+      "range": {
+        "startLine": 612,
+        "startChar": 2,
+        "endLine": 612,
+        "endChar": 33
+      },
+      "revId": "7653c68f342ac5e327aea39588be7bbc4d683a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f904636_ac737739",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-20T18:12:21Z",
+      "side": 1,
+      "message": "we can use a condition iff `color_temperature \u003e 0.f`.",
+      "range": {
+        "startLine": 420,
+        "startChar": 30,
+        "endLine": 420,
+        "endChar": 41
+      },
+      "revId": "7653c68f342ac5e327aea39588be7bbc4d683a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da160f3b_b0cd8db0",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-20T18:12:21Z",
+      "side": 1,
+      "message": "From experimenting, it seems that this line is only important one here, other `SRC(...)` lines here seem unnecessary for color temperature, what do you think?",
+      "range": {
+        "startLine": 1013,
+        "startChar": 2,
+        "endLine": 1013,
+        "endChar": 55
+      },
+      "revId": "7653c68f342ac5e327aea39588be7bbc4d683a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
