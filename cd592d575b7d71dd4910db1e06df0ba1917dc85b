@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75f8b957_66945bd2",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "This bot doesn\u0027t exist right now, but even if it did it would just make that bot red, so this is safe to land.",
+      "parentUuid": "bf373853_0356e908",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "687831d7_a21d5231",
         "filename": "testing/buildbot/chromium.perf.fyi.json",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-15T17:30:28Z",
       "side": 1,
       "message": "so this is the device currently on our fyi waterfall that we are targeting for our migrated one buildbot step?  \n\nWho currently owns this bot? Are they aware that we are re-purposing it for our new recipe?",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7f81fb_ed2c5955",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "So actually, this isn\u0027t going to run on that bot. This is me kinda abusing the way the script works; it will run the tests that that bot is supposed to run. It\u0027s actually going to run on a different bot. \n\nThat being said, I\u0027m not sure which bot. I think I\u0027ll just get a gce machine to run the tests on.",
+      "parentUuid": "687831d7_a21d5231",
       "range": {
         "startLine": 61,
         "startChar": 19,
@@ -56,6 +98,24 @@
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62021dc_be60f86a",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "Yes, I missed that.",
+      "parentUuid": "61b77268_c239dd62",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +170,24 @@
     },
     {
       "key": {
+        "uuid": "518d614c_40441ab4",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "3e01c552_8e49d3f6",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33e769e6_c23f964c",
         "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
         "patchSetId": 1
@@ -127,6 +205,24 @@
     },
     {
       "key": {
+        "uuid": "3f212ffd_c8ad24b5",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "Some of it is still accurate. I reworded some of it though.",
+      "parentUuid": "33e769e6_c23f964c",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24a7bfe0_a9f80f8d",
         "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
         "patchSetId": 1
@@ -138,6 +234,24 @@
       "writtenOn": "2017-09-15T17:30:28Z",
       "side": 1,
       "message": "above here these are copy/paste, do you think we should try and combine the scripts?  or do oyu think they should be separate files and just deprecate the other?  If we go the two separate files route, please add a note to the other to say deprecated in one buildbot step efforts and reference bug.",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffd2108_a9d5a209",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "They are roughly copy paste. I believe they should be separate files though. I\u0027ve simplified the arguments though",
+      "parentUuid": "24a7bfe0_a9f80f8d",
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -175,6 +289,24 @@
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4933c7c_376ce2b3",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-20T01:21:52Z",
+      "side": 1,
+      "message": "Resolved offline.",
+      "parentUuid": "b03da932_55486ff5",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
