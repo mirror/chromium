@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc6490a6_1ed2d870",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T16:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9fa4a77_680bfbde",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 72
+      },
+      "revId": "52ff6f5c104b7c30ac96881a24b887a48c36362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac1ebd0_f477dd57",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "52ff6f5c104b7c30ac96881a24b887a48c36362d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccd1b17_663a589f",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T16:55:54Z",
+      "side": 1,
+      "message": "No, this should always be called. Fixed.",
+      "parentUuid": "5ac1ebd0_f477dd57",
+      "revId": "52ff6f5c104b7c30ac96881a24b887a48c36362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
