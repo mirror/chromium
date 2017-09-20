@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a6061f_8afb9214",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:14:10Z",
+      "side": 1,
+      "message": "Please avoid adding an enum like this as it means switch statements have to deal with it. Have a static const outside the enum and set it to UPGRADE_ANNOYANCE_LAST + 1, where LAST \u003d CRITICAL.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "85865feded46ae7a2bab22c5fff537ca576e66f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
