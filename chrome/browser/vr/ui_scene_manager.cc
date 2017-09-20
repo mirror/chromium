@@ -212,15 +212,15 @@ static constexpr float kContentAspectRatioPropagationThreshold = 0.01f;
 UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
                                UiScene* scene,
                                ContentInputDelegate* content_input_delegate,
-                               bool in_cct,
-                               bool in_web_vr,
-                               bool web_vr_autopresentation_expected)
+                               const UiInitialState& ui_initial_state)
     : browser_(browser),
       scene_(scene),
-      in_cct_(in_cct),
-      web_vr_mode_(in_web_vr),
-      started_for_autopresentation_(web_vr_autopresentation_expected),
-      showing_web_vr_splash_screen_(web_vr_autopresentation_expected),
+      in_cct_(ui_initial_state.in_cct),
+      web_vr_mode_(ui_initial_state.in_web_vr),
+      started_for_autopresentation_(
+          ui_initial_state.web_vr_autopresentation_expected),
+      showing_web_vr_splash_screen_(
+          ui_initial_state.web_vr_autopresentation_expected),
       weak_ptr_factory_(this) {
   Create2dBrowsingSubtreeRoots();
   CreateWebVrRoot();

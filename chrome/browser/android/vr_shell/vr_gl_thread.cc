@@ -42,23 +42,22 @@ VrGLThread::~VrGLThread() {
 }
 
 void VrGLThread::Init() {
-  scene_ = base::MakeUnique<vr::UiScene>();
-  vr_shell_gl_ = base::MakeUnique<VrShellGl>(this, gvr_api_, initially_web_vr_,
-                                             reprojected_rendering_,
-                                             daydream_support_, scene_.get());
-  scene_manager_ = base::MakeUnique<vr::UiSceneManager>(
-      this, scene_.get(), vr_shell_gl_.get(), in_cct_, initially_web_vr_,
-      web_vr_autopresentation_expected_);
+  vr::UiInitialState ui_state;
+  ui_state.in_cct = in_cct_;
+  ui_state.in_web_vr = initially_web_vr_;
+  ui_state.web_vr_autopresentation_expected = web_vr_autopresentation_expected_;
+  vr_shell_gl_ =
+      base::MakeUnique<VrShellGl>(this, this, ui_state, gvr_api_,
+                                  reprojected_rendering_, daydream_support_);
 
   weak_vr_shell_gl_ = vr_shell_gl_->GetWeakPtr();
-  weak_scene_manager_ = scene_manager_->GetWeakPtr();
+  // TODO(cjgrant): Hide scene manager inside a UI object.
+  weak_scene_manager_ = vr_shell_gl_->GetSceneManagerGetWeakPtr();
   vr_shell_gl_->Initialize();
 }
 
 void VrGLThread::CleanUp() {
-  scene_manager_.reset();
   vr_shell_gl_.reset();
-  scene_.reset();
 }
 
 void VrGLThread::ContentSurfaceChanged(jobject surface) {
@@ -133,12 +132,6 @@ void VrGLThread::ToggleCardboardGamepad(bool enabled) {
   main_thread_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&VrShell::ToggleCardboardGamepad, weak_vr_shell_, enabled));
-}
-
-void VrGLThread::OnGlInitialized(unsigned int content_texture_id) {
-  task_runner()->PostTask(FROM_HERE,
-                          base::Bind(&vr::UiSceneManager::OnGlInitialized,
-                                     weak_scene_manager_, content_texture_id));
 }
 
 void VrGLThread::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
@@ -245,17 +238,17 @@ void VrGLThread::SetIsExiting() {
 
 void VrGLThread::OnWebVrFrameAvailable() {
   DCHECK(task_runner()->BelongsToCurrentThread());
-  scene_manager_->OnWebVrFrameAvailable();
+  weak_scene_manager_->OnWebVrFrameAvailable();
 }
 
 void VrGLThread::OnWebVrTimedOut() {
   DCHECK(task_runner()->BelongsToCurrentThread());
-  scene_manager_->OnWebVrTimedOut();
+  weak_scene_manager_->OnWebVrTimedOut();
 }
 
 void VrGLThread::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
   DCHECK(task_runner()->BelongsToCurrentThread());
-  scene_manager_->OnProjMatrixChanged(proj_matrix);
+  weak_scene_manager_->OnProjMatrixChanged(proj_matrix);
 }
 
 void VrGLThread::SetExitVrPromptEnabled(bool enabled,

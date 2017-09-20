@@ -100,6 +100,8 @@ static_library("vr_common") {
     "gltf_asset.h",
     "gltf_parser.cc",
     "gltf_parser.h",
+    "string_resource.cc",
+    "string_resource.h",
     "target_property.h",
     "toolbar_helper.cc",
     "toolbar_helper.h",
@@ -121,6 +123,8 @@ static_library("vr_common") {
     "ui_unsupported_mode.h",
     "vr_controller_model.cc",
     "vr_controller_model.h",
+    "vr_gl.cc",
+    "vr_gl.h",
     "vr_gl_util.cc",
     "vr_gl_util.h",
     "vr_shell_renderer.cc",
@@ -180,6 +184,12 @@ test("vr_common_unittests") {
     "ui_scene_unittest.cc",
     "vr_gl_util_unittest.cc",
   ]
+  if (is_linux) {
+    sources += [
+      "vr_gl_linux.cc",
+      "vr_gl_linux.h",
+    ]
+  }
 
   deps = [
     ":vr_common",

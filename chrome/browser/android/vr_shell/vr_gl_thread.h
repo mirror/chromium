@@ -55,7 +55,6 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
-  void OnGlInitialized(unsigned int content_texture_id) override;
   void OnWebVrFrameAvailable() override;
   void OnWebVrTimedOut() override;
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;
@@ -94,8 +93,6 @@ class VrGLThread : public base::android::JavaHandlerThread,
 
  private:
   // Created on GL thread.
-  std::unique_ptr<vr::UiScene> scene_;
-  std::unique_ptr<vr::UiSceneManager> scene_manager_;
   base::WeakPtr<vr::UiSceneManager> weak_scene_manager_;
   std::unique_ptr<VrShellGl> vr_shell_gl_;
   base::WeakPtr<VrShellGl> weak_vr_shell_gl_;

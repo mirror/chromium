@@ -12,6 +12,12 @@ namespace vr {
 
 struct ToolbarState;
 
+struct UiInitialState {
+  bool in_cct = false;
+  bool in_web_vr = false;
+  bool web_vr_autopresentation_expected = false;
+};
+
 // This class manages the communication of browser state from VR shell to the
 // HTML UI. State information is asynchronous and unidirectional.
 class UiInterface {

@@ -36,9 +36,7 @@ class UiSceneManager {
   UiSceneManager(UiBrowserInterface* browser,
                  UiScene* scene,
                  ContentInputDelegate* content_input_delegate,
-                 bool in_cct,
-                 bool in_web_vr,
-                 bool web_vr_autopresentation_expected);
+                 const UiInitialState& ui_initial_state);
   ~UiSceneManager();
 
   base::WeakPtr<UiSceneManager> GetWeakPtr();

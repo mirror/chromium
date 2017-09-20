@@ -21,6 +21,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/vr_controller_model.h"
+#include "chrome/browser/vr/vr_gl.h"
 #include "device/vr/vr_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -50,8 +51,8 @@ struct MailboxHolder;
 namespace vr {
 class FPSMeter;
 class SlidingAverage;
-class UiScene;
-class VrShellRenderer;
+class UiBrowserInterface;
+struct UiInitialState;
 }  // namespace vr
 
 namespace vr_shell {
@@ -73,15 +74,16 @@ struct WebVrBounds {
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
-class VrShellGl : public device::mojom::VRPresentationProvider,
+class VrShellGl : public vr::VrGl,
+                  public device::mojom::VRPresentationProvider,
                   public vr::ContentInputDelegate {
  public:
-  VrShellGl(GlBrowserInterface* browser,
+  VrShellGl(GlBrowserInterface* browser_interface,
+            vr::UiBrowserInterface* ui_host_interface,
+            const vr::UiInitialState& ui_initial_state,
             gvr_context* gvr_api,
-            bool initially_web_vr,
             bool reprojected_rendering,
-            bool daydream_support,
-            vr::UiScene* scene);
+            bool daydream_support);
   ~VrShellGl() override;
 
   void Initialize();
@@ -103,6 +105,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void UIBoundsChanged(int width, int height);
   void UIPhysicalBoundsChanged(int width, int height);
   base::WeakPtr<VrShellGl> GetWeakPtr();
+  base::WeakPtr<vr::UiSceneManager> GetSceneManagerGetWeakPtr();
 
   void SetControllerModel(std::unique_ptr<vr::VrControllerModel> model);
 
@@ -116,12 +119,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
-  void DrawFrame(int16_t frame_index);
+  void DrawFrame(int16_t frame_index) override;
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 gvr_frame* frame_ptr,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
-  bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
@@ -183,10 +185,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
-  void closePresentationBindings();
+  void ClosePresentationBindings();
 
-  // samplerExternalOES texture data for main content image.
-  int content_texture_id_ = 0;
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
@@ -217,8 +217,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
 
-  std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
-
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
 
@@ -232,7 +230,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   std::vector<bool> webvr_frame_oustanding_;
   std::vector<gfx::Transform> webvr_head_pose_;
 
-  bool web_vr_mode_;
   bool ready_to_draw_ = false;
   bool paused_ = true;
   bool surfaceless_rendering_;
@@ -251,8 +248,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   GlBrowserInterface* browser_;
 
-  vr::UiScene* scene_ = nullptr;
-
   uint8_t frame_index_ = 0;
   // Larger than frame_index_ so it can be initialized out-of-band.
   uint16_t last_frame_index_ = -1;
@@ -269,12 +264,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   gfx::Point3F pointer_start_;
 
-  std::unique_ptr<vr::UiInputManager> input_manager_;
-  std::unique_ptr<vr::UiRenderer> ui_renderer_;
-
   vr::ControllerInfo controller_info_;
   vr::RenderInfo render_info_primary_;
-  vr::RenderInfo render_info_webvr_browser_ui_;
 
   AndroidVSyncHelper vsync_helper_;
 

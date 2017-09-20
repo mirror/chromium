@@ -38,16 +38,24 @@ void UiSceneManagerTest::SetUp() {
 
 void UiSceneManagerTest::MakeManager(InCct in_cct, InWebVr in_web_vr) {
   scene_ = base::MakeUnique<UiScene>();
-  manager_ = base::MakeUnique<UiSceneManager>(browser_.get(), scene_.get(),
-                                              &content_input_delegate_, in_cct,
-                                              in_web_vr, kNotAutopresented);
+
+  UiInitialState ui_initial_state;
+  ui_initial_state.in_cct = in_cct;
+  ui_initial_state.in_web_vr = in_web_vr;
+  ui_initial_state.web_vr_autopresentation_expected = false;
+  manager_ = base::MakeUnique<UiSceneManager>(
+      browser_.get(), scene_.get(), &content_input_delegate_, ui_initial_state);
 }
 
 void UiSceneManagerTest::MakeAutoPresentedManager() {
   scene_ = base::MakeUnique<UiScene>();
+
+  UiInitialState ui_initial_state;
+  ui_initial_state.in_cct = false;
+  ui_initial_state.in_web_vr = false;
+  ui_initial_state.web_vr_autopresentation_expected = true;
   manager_ = base::MakeUnique<UiSceneManager>(
-      browser_.get(), scene_.get(), &content_input_delegate_, kNotInCct,
-      kNotInWebVr, kAutopresented);
+      browser_.get(), scene_.get(), &content_input_delegate_, ui_initial_state);
 }
 
 bool UiSceneManagerTest::IsVisible(UiElementName name) const {
@@ -68,7 +76,9 @@ void UiSceneManagerTest::VerifyElementsVisible(
     SCOPED_TRACE(name);
     auto* element = scene_->GetUiElementByName(name);
     EXPECT_NE(nullptr, element);
-    EXPECT_TRUE(element->IsVisible() && IsElementFacingCamera(element));
+    if (element) {
+      EXPECT_TRUE(element->IsVisible() && IsElementFacingCamera(element));
+    }
   }
 }
 
