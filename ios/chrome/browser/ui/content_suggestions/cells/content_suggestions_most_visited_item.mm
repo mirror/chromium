@@ -23,6 +23,7 @@
 @synthesize attributes = _attributes;
 @synthesize title = _title;
 @synthesize URL = _URL;
+@synthesize nameSource = _nameSource;
 @synthesize source = _source;
 @synthesize commandHandler = _commandHandler;
 @synthesize metricsRecorded = _metricsRecorded;
