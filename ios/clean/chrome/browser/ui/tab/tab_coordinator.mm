@@ -9,6 +9,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#import "ios/chrome/browser/snapshots/snapshot_constants.h"
+#import "ios/chrome/browser/snapshots/snapshot_provider.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
+#import "ios/chrome/browser/snapshots/snapshots_util.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
@@ -33,6 +37,7 @@
 #endif
 
 @interface TabCoordinator ()<CRWWebStateObserver,
+                             SnapshotProvider,
                              TabCommands,
                              WebStateListObserving>
 @property(nonatomic, strong) ZoomTransitionController* transitionController;
@@ -90,7 +95,7 @@
   _scopedWebStateListObserver->Add(&self.browser->web_state_list());
 
   [self.dispatcher startDispatchingToTarget:self
-                                forSelector:@selector(loadURL:)];
+                                forProtocol:@protocol(TabCommands)];
 
   // NavigationController will handle all the dispatcher navigation calls.
   self.navigationController = [[TabNavigationController alloc]
@@ -123,6 +128,7 @@
     self.viewController.contentViewController =
         self.ntpCoordinator.viewController;
   }
+  SnapshotTabHelper::FromWebState(self.webState)->SetSnapshotProvider(self);
   [super start];
 }
 
@@ -134,6 +140,7 @@
   _webStateObserver.reset();
   [self.dispatcher stopDispatchingToTarget:self];
   [self.navigationController stop];
+  SnapshotTabHelper::FromWebState(self.webState)->SetSnapshotProvider(nil);
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
@@ -219,6 +226,13 @@
   }
 }
 
+#pragma mark - SnapshotProvider
+
+- (void)provideSnapshot:(SnapshotProvidingBlock)snapshotProvidingBlock {
+  snapshotProvidingBlock(TakeSnapshotOfView(
+      self.viewController.contentViewController.view, kSnapshotThumbnailSize));
+}
+
 #pragma mark - Helper Methods
 
 - (void)addNTPCoordinator {
@@ -245,6 +259,10 @@
 
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params {
   self.webState->GetNavigationManager()->LoadURLWithParams(params);
+}
+
+- (void)takeTabSnapshot {
+  SnapshotTabHelper::FromWebState(self.webState)->TakeSnapshot();
 }
 
 @end

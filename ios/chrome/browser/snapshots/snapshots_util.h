@@ -5,6 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_SNAPSHOTS_SNAPSHOTS_UTIL_H_
 #define IOS_CHROME_BROWSER_SNAPSHOTS_SNAPSHOTS_UTIL_H_
 
+#import <UIKit/UIKit.h>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -15,5 +16,9 @@ void ClearIOSSnapshots();
 // Adds to |snapshotsPaths| all the possible paths to the application's
 // snapshots taken by iOS.
 void GetSnapshotsPaths(std::vector<base::FilePath>* snapshotsPaths);
+
+// Takes a snapshot of |view| with |target_size|. The aspect ratio of |view| is
+// preserved. The width of |view| is scaled to fit the width of |target_size|.
+UIImage* TakeSnapshotOfView(UIView* view, const CGSize target_size);
 
 #endif  // IOS_CHROME_BROWSER_SNAPSHOTS_SNAPSHOTS_UTIL_H_
