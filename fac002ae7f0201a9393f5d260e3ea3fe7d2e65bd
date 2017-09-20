@@ -1,0 +1,334 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d41d55_79cfa463",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "nit/style: We often use implicit nullptr check.\nif (!cert) {\n  ...\n}\n\nDitto for below. (Sorry, I overlooked in the previous iteration).",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e8c206_e8e70251",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "base::StringPiece, instead?",
+      "range": {
+        "startLine": 140,
+        "startChar": 23,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3963d3c0_99ca0168",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "nit: probably \"const auto\u0026\" is better to declare const-ness explicitly?",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea6a6fb_b4a85e23",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "style: please elide braces for one-line if stmt.",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12472e07_77e84a12",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "const std::vector\u003cstd::string\u003e\u0026",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e13f6cd_8ff41211",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Why not in the SetUp, instead?\n\nPls use std::make_unique. Ditto for below.",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858c4bc9_a62a1081",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Are these (L90-L101) necessary to be done before parent\u0027s SetUpOnMainThread()?\nThen could you comment reason?",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3541f1c0_c1642b50",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Could you use PostTaskAndReply() and remove PostTask from SetUpTestSystemSlotOnIO for simplicity and better memory management?\nDitto for below.",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3300f6c1_42eae995",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "unnecessary.",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5826d3_ff581bac",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "nit: std::string client_cert1_spki(...);",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792641a8_e91029ee",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "This part looks not necessary to be done in this callback?\nIf so, please exclude it, and create expectation in another place, like TEST_F body or another utility.",
+      "range": {
+        "startLine": 216,
+        "startChar": 3,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c8cc81_7955621a",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "nit: SetUp for consistency?",
+      "range": {
+        "startLine": 227,
+        "startChar": 7,
+        "endLine": 227,
+        "endChar": 12
+      },
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a36c63b_3c3be76a",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc6ada3_065110c4",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c467255c_432b8934",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "style: Move these above to be closer to SetUp and TearDown?",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7015d6_e67aa807",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Instead of testing internally in the callback, could you return the result, and verify explicitly in the TEST_F body for better readability and maintainability?\nYou can remove expected_certs_.",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672955be_c5cfb5ca",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Error sounds a bit too generic to me, because the name space is shared with other mojom files.\nMaybe, KeymasterError?",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1e3ef3_c18ad6cf",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T08:18:27Z",
+      "side": 1,
+      "message": "Could you document argument details for methods?",
+      "revId": "fac002ae7f0201a9393f5d260e3ea3fe7d2e65bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
