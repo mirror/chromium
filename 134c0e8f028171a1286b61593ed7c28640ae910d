@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b15f7a6_1bc8461e",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-20T19:06:08Z",
+      "side": 1,
+      "message": "I added this since in PS#14, this fails test CrSettingsMainPageTest.MainPage. I guess should because in some tests didn\u0027t initialize this value? Like what I did in appearance_page_test.js?\n\nSo, it will fail the assert either if we add assert here.\nI added a defaultPageVisibility_ and this.pageVisibility \u003d this.pageVisibility || this.defaultPageVisibility_; here. Do you think it is correct?",
+      "parentUuid": "2c05683b_91092e6c",
+      "revId": "134c0e8f028171a1286b61593ed7c28640ae910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8befe175_71b5ea89",
         "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "134c0e8f028171a1286b61593ed7c28640ae910d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2584b438_ab001b57",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-20T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8befe175_71b5ea89",
+      "revId": "134c0e8f028171a1286b61593ed7c28640ae910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
