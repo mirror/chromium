@@ -13,7 +13,7 @@
 #include "ash/system/overview/overview_button_tray.h"
 #include "ash/system/palette/palette_tray.h"
 #include "ash/system/session/logout_button_tray.h"
-#include "ash/system/status_area_focus_observer.h"
+#include "ash/system/status_area_and_shelf_focus_observer.h"
 #include "ash/system/status_area_widget_test_helper.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -65,25 +65,26 @@ TEST_F(StatusAreaWidgetTest, Basics) {
   EXPECT_FALSE(status->virtual_keyboard_tray_for_testing()->visible());
 }
 
-class StatusAreaFocusTestObserver : public StatusAreaFocusObserver {
+class StatusAreaAndShelfFocusTestObserver
+    : public StatusAreaAndShelfFocusObserver {
  public:
-  StatusAreaFocusTestObserver() {}
-  ~StatusAreaFocusTestObserver() override {}
+  StatusAreaAndShelfFocusTestObserver() {}
+  ~StatusAreaAndShelfFocusTestObserver() override {}
 
   int focus_out_count() { return focus_out_count_; }
   int reverse_focus_out_count() { return reverse_focus_out_count_; }
 
  protected:
-  // StatusAreaFocusObserver:
-  void OnFocusOut(bool reverse) override {
-    reverse ? ++reverse_focus_out_count_ : ++focus_out_count_;
-  }
+  // StatusAreaAndShelfFocusObserver:
+  void OnFocusAboutToLeaveStatusArea() override { ++focus_out_count_; }
+
+  void OnFocusAboutToLeaveShelf() override { ++reverse_focus_out_count_; }
 
  private:
   int focus_out_count_ = 0;
   int reverse_focus_out_count_ = 0;
 
-  DISALLOW_COPY_AND_ASSIGN(StatusAreaFocusTestObserver);
+  DISALLOW_COPY_AND_ASSIGN(StatusAreaAndShelfFocusTestObserver);
 };
 
 class StatusAreaWidgetFocusTest : public AshTestBase {
@@ -94,14 +95,14 @@ class StatusAreaWidgetFocusTest : public AshTestBase {
   // AshTestBase:
   void SetUp() override {
     AshTestBase::SetUp();
-    test_observer_.reset(new StatusAreaFocusTestObserver);
-    Shell::Get()->system_tray_notifier()->AddStatusAreaFocusObserver(
+    test_observer_.reset(new StatusAreaAndShelfFocusTestObserver);
+    Shell::Get()->system_tray_notifier()->AddStatusAreaAndShelfFocusObserver(
         test_observer_.get());
   }
 
   // AshTestBase:
   void TearDown() override {
-    Shell::Get()->system_tray_notifier()->RemoveStatusAreaFocusObserver(
+    Shell::Get()->system_tray_notifier()->RemoveStatusAreaAndShelfFocusObserver(
         test_observer_.get());
     test_observer_.reset();
     AshTestBase::TearDown();
@@ -114,7 +115,7 @@ class StatusAreaWidgetFocusTest : public AshTestBase {
   }
 
  protected:
-  std::unique_ptr<StatusAreaFocusTestObserver> test_observer_;
+  std::unique_ptr<StatusAreaAndShelfFocusTestObserver> test_observer_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(StatusAreaWidgetFocusTest);

@@ -5,7 +5,10 @@
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 
 #include "ash/focus_cycler.h"
+#include "ash/root_window_controller.h"
+#include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/system/status_area_widget.h"
 #include "ash/system/status_area_widget_delegate.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -190,7 +193,9 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
 
   if (!ash_util::IsRunningInMash() &&
       ash::Shell::Get()->HasPrimaryStatusArea()) {
-    ash::Shell::Get()->system_tray_notifier()->AddStatusAreaFocusObserver(this);
+    ash::Shell::Get()
+        ->system_tray_notifier()
+        ->AddStatusAreaAndShelfFocusObserver(this);
   } else {
     NOTIMPLEMENTED();
   }
@@ -208,8 +213,9 @@ WebUILoginView::~WebUILoginView() {
 
   if (!ash_util::IsRunningInMash() &&
       ash::Shell::Get()->HasPrimaryStatusArea()) {
-    ash::Shell::Get()->system_tray_notifier()->RemoveStatusAreaFocusObserver(
-        this);
+    ash::Shell::Get()
+        ->system_tray_notifier()
+        ->RemoveStatusAreaAndShelfFocusObserver(this);
     ash::StatusAreaWidgetDelegate::GetPrimaryInstance()
         ->set_default_last_focusable_child(false);
   } else {
@@ -537,8 +543,9 @@ bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
   if (!forward_keyboard_event_)
     return false;
 
-  // For default tab order, after login UI, try focusing the system tray.
-  if (!reverse && MoveFocusToSystemTray(reverse))
+  // For default tab order, after login UI, try focusing the shelf or system
+  // tray.
+  if (!reverse && MoveFocusToShelfOrSystemTray(reverse))
     return true;
 
   // Either if tab order is reversed (in which case system tray focus was not
@@ -551,9 +558,9 @@ bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
   }
 
   // If initial MoveFocusToSystemTray was skipped due to lock screen app being
-  // a preferred option (due to traversal direction), try focusing system tray
-  // again.
-  if (reverse && MoveFocusToSystemTray(reverse))
+  // a preferred option (due to traversal direction), try focusing shelf or
+  // system tray again.
+  if (reverse && MoveFocusToShelfOrSystemTray(reverse))
     return true;
 
   // Since neither system tray nor a lock screen app window was focusable, the
@@ -597,26 +604,41 @@ void WebUILoginView::UnregisterLockScreenAppFocusHandler() {
 }
 
 void WebUILoginView::HandleLockScreenAppFocusOut(bool reverse) {
-  if (reverse && MoveFocusToSystemTray(reverse))
+  if (reverse && MoveFocusToShelfOrSystemTray(reverse))
     return;
 
   AboutToRequestFocusFromTabTraversal(reverse);
 }
 
-void WebUILoginView::OnFocusOut(bool reverse) {
-  if (!reverse && !lock_screen_app_focus_handler_.is_null()) {
-    lock_screen_app_focus_handler_.Run(reverse);
+void WebUILoginView::OnFocusAboutToLeaveStatusArea() {
+  if (!lock_screen_app_focus_handler_.is_null()) {
+    lock_screen_app_focus_handler_.Run(false /*reverse*/);
     return;
   }
 
-  AboutToRequestFocusFromTabTraversal(reverse);
+  AboutToRequestFocusFromTabTraversal(false /*reverse*/);
 }
 
-bool WebUILoginView::MoveFocusToSystemTray(bool reverse) {
+void WebUILoginView::OnFocusAboutToLeaveShelf() {
+  AboutToRequestFocusFromTabTraversal(true /*reverse*/);
+}
+
+bool WebUILoginView::MoveFocusToShelfOrSystemTray(bool reverse) {
   // Focus is accepted, but the Ash system tray is not available in Mash, so
   // exit early.
   if (ash_util::IsRunningInMash())
     return true;
+
+  // If |reverse| is true and views-based shelf is shown, focus goes to the
+  // shelf widget. If views-based shelf is disabled, focus goes to the system
+  // tray, because the web-UI shelf has been traversed when we reach here.
+  if (!reverse && ash::ShelfWidget::IsUsingMdLoginShelf()) {
+    ash::ShelfWidget::GetPrimaryShelfWidget()->set_default_last_focusable_child(
+        reverse);
+    ash::Shell::Get()->focus_cycler()->FocusWidget(
+        ash::ShelfWidget::GetPrimaryShelfWidget());
+    return true;
+  }
 
   ash::SystemTray* tray = ash::Shell::Get()->GetPrimarySystemTray();
   if (!tray || !tray->GetWidget()->IsVisible() || !tray->visible())
@@ -624,8 +646,10 @@ bool WebUILoginView::MoveFocusToSystemTray(bool reverse) {
 
   ash::StatusAreaWidgetDelegate::GetPrimaryInstance()
       ->set_default_last_focusable_child(reverse);
-  ash::Shell::Get()->focus_cycler()->RotateFocus(
-      reverse ? ash::FocusCycler::BACKWARD : ash::FocusCycler::FORWARD);
+  ash::Shell::Get()->focus_cycler()->FocusWidget(
+      ash::Shell::Get()
+          ->GetPrimaryRootWindowController()
+          ->GetStatusAreaWidget());
   return true;
 }
 
