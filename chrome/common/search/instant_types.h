@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "base/strings/string16.h"
+#include "components/ntp_tiles/tile_name_source.h"
 #include "components/ntp_tiles/tile_source.h"
 #include "url/gurl.h"
 
@@ -126,6 +127,9 @@ struct InstantMostVisitedItem {
 
   // The external URL of the favicon associated with this page.
   GURL favicon;
+
+  // The source of the item's |title|.
+  ntp_tiles::TileNameSource name_source;
 
   // The source of the item, e.g. server-side or client-side.
   ntp_tiles::TileSource source;
