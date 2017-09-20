@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "4578304f_7080d96c",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T10:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd5d684_d229f0a1",
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90d42465_7f91b2fb",
         "filename": "chrome/browser/permissions/permission_manager.cc",
         "patchSetId": 1
@@ -89,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "258ca1f3_9f1f8fc4",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T10:00:12Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure it does matter, but I don\u0027t know which is correct: In OnContentSettingChanged, we check the requesting_origin against primary_pattern. I don\u0027t know if primary_pattern refers to the actual or the canonical origin, but if we use the wrong one then it won\u0027t match even when it should.\nI\u0027ll investigate more and see if I can trigger this code path.",
+      "parentUuid": "279a085f_89247b6f",
+      "range": {
+        "startLine": 529,
+        "startChar": 48,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76c1b79d_d93acebc",
         "filename": "chrome/browser/permissions/permission_manager.h",
         "patchSetId": 1
@@ -103,6 +145,24 @@
       "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdd05ad_f3263f02",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T10:00:12Z",
+      "side": 1,
+      "message": "Comment added, to the best of my understanding. Improvements welcome :)\n\nIt can\u0027t be static because it needs |profile_| to get the Google base URL.",
+      "parentUuid": "76c1b79d_d93acebc",
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
