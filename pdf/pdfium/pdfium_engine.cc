@@ -2028,7 +2028,9 @@ bool PDFiumEngine::OnMouseUp(const pp::MouseInputEvent& event) {
       return true;
     }
     if (area == PDFiumPage::DOCLINK_AREA) {
-      client_->ScrollToPage(target.page);
+      pp::Rect page_rect(GetPageScreenRect(target.page));
+      client_->ScrollToY(position_.y() + page_rect.y() +
+                         target.y_in_pixels * current_zoom_);
       SetInFormTextArea(false);
       return true;
     }
