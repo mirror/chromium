@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c2b40e_d23eb29f",
+        "filename": "ios/chrome/browser/language/language_model_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-09-20T02:50:39Z",
+      "side": 1,
+      "message": "Just an opinion: you could write the name of the flags in the comment to help the reader.",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "5326c3317d3031dd774a9dd11ad70edaef95d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
