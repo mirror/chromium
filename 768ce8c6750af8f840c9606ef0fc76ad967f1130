@@ -22,6 +22,30 @@
       "revId": "768ce8c6750af8f840c9606ef0fc76ad967f1130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85c17f2_e4d27d57",
+        "filename": "components/multidevice/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-20T17:32:25Z",
+      "side": 0,
+      "message": "When I had added \"//components/multidevice:unit_tests\" to the if statement on line 276 of components/BUILD.gn, the tests finally merged to master.  So I thought these were redundant and removed them.",
+      "parentUuid": "8a6560eb_aebcee6e",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "768ce8c6750af8f840c9606ef0fc76ad967f1130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
