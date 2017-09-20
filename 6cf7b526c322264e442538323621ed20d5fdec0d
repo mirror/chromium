@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddd1a0da_26e44a9f",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-20T22:36:57Z",
+      "side": 1,
+      "message": "\u003e Is is possible that there is a site-instance mismatch in a non-malicious scenario?  DidCommitProvisionalLoad should only affect the state of the committing frame, right?  OTOH, a comment in WebContentsImpl::UpdateStateForFrame indicates that the mismatch when updating might be expected in non-malicious scenarios.\n\nI don\u0027t think the UpdateStateForFrame case applies here (since that\u0027s about an UpdateState message that gets sent after the swap), but I think you\u0027re right that it may be possible to get here in non-malicious cases due to OOPIFs and the race described in https://crbug.com/616820.  Hopefully we can resolve that by avoiding the need to call SetPageState here (in an upcoming CL), in addition to moving unique name computation to the browser process.\n\n\u003e I wonder if you could clarify in the comment what is meant by \"mistake\", perhaps by giving some examples (one example is a compromised renderer lying about a unique name;  if there is a non-malicious example then it would be useful mentioning it as well).\n\nDone.",
+      "parentUuid": "67b92f91_10c727c1",
+      "range": {
+        "startLine": 940,
+        "startChar": 68,
+        "endLine": 940,
+        "endChar": 75
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38435fe_7c9bb86d",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 4
@@ -42,6 +66,47 @@
         "endLine": 634,
         "endChar": 2
       },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9397ae8b_199013c5",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-20T22:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38435fe_7c9bb86d",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 634,
+        "endChar": 2
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e48e84ca_f4ad124e",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-20T22:36:57Z",
+      "side": 1,
+      "message": "Bizarre-- this line was failing without the fix before I rebased, but it no longer fails without the fix.  I\u0027m trying to track down what change is relevant-- I suspect that something about the Mojoification of the DidCommit IPC is causing child1_url to commit, even though I\u0027ve verified that we\u0027re sending the data URL down in the PageState.\n\nSince I did confirm that the test worked as expected on my build from last week (and thus recreates the attack, which affects earlier builds), I\u0027m going to proceed with landing the CL to get the bug fixed in a timely manner.  Separately, I\u0027ll investigate what separate issue is preventing the test\u0027s exploit from working on the latest trunk build.",
       "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +133,30 @@
       "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32afc480_7a1c7e15",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-20T22:36:57Z",
+      "side": 1,
+      "message": "\u003e I am a bit surprised that this test assertion didn\u0027t fail after I 1) patched in this CL and 2) commented out the changes in navigation_controller_impl.cc.  I think this means that the test doesn\u0027t replicate the steps taken by corrupt_war_page_state, right?  Not sure how much this matters...\n\nActually, this particular one is just a sanity check that it does repro the attack without the fix.  If this were false, then we would have updated the SiteInstance on the FNE as well, and the data URL wouldn\u0027t be going into the intended victim process.  Because the process ID hasn\u0027t changed since before, the attack succeeds if the URL check on line 705 fails.\n\nSame with the SiteInstance check on line 689.  A failed test run looks like failures on line 688 and 705.  I\u0027ve updated the comments and changed the URL check to an ASSERT_EQ.  (I didn\u0027t want to change the earlier PageState check to an ASSERT_EQ because that would prevent us from getting to the end of the test.)",
+      "parentUuid": "f7b5d4c2_090d54dc",
+      "range": {
+        "startLine": 706,
+        "startChar": 2,
+        "endLine": 706,
+        "endChar": 77
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
