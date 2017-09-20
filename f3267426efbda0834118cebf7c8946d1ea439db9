@@ -46,6 +46,30 @@
       "revId": "f3267426efbda0834118cebf7c8946d1ea439db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b6d7aa_34cdc7a0",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-20T00:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76e1d62f_4f987bb7",
+      "range": {
+        "startLine": 1357,
+        "startChar": 34,
+        "endLine": 1357,
+        "endChar": 69
+      },
+      "revId": "f3267426efbda0834118cebf7c8946d1ea439db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
