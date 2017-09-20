@@ -22,7 +22,8 @@ class StubCompositorMutator : public CompositorMutator {
  public:
   StubCompositorMutator() {}
 
-  bool Mutate(double monotonic_time_now) override { return false; }
+  void Mutate(double monotonic_time_now,
+              std::unique_ptr<CompositorMutatorInputState>) override {}
 };
 
 class MockCompositoMutationsTarget : public CompositorMutationsTarget {
