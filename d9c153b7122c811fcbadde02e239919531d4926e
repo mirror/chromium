@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35ea0aa9_a5fed0d0",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T13:52:47Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "255b4763_15a3731a",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f76549d_9c665539",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "105e8160_8b0198e6",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T13:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f76549d_9c665539",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 17
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fd00605_b8875fc5",
         "filename": "chrome/browser/ui/passwords/password_store_interface.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213112ed_5621f603",
+        "filename": "chrome/browser/ui/passwords/password_store_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T13:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd00605_b8875fc5",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "d9c153b7122c811fcbadde02e239919531d4926e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
