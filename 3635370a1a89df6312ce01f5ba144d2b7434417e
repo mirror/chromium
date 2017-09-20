@@ -118,6 +118,30 @@
       "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b54470c9_8e7621d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T15:16:44Z",
+      "side": 1,
+      "message": "No, what I meant was, there was a flash when opening the sheet again, because we would transition from the placeholder content to the SuggestionsBottomSheetContent.",
+      "parentUuid": "3a7b8af5_43720716",
+      "range": {
+        "startLine": 986,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 9
+      },
+      "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

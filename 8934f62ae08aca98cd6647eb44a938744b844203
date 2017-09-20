@@ -46,6 +46,30 @@
       "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1615f4_9b2181f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T15:16:44Z",
+      "side": 1,
+      "message": "So, the easiest thing to do would be just to get rid of deferred default content initialization, and show the SuggestionsBottomSheetContent when opening the sheet an NO_CONTENT_ID is selected. That fixes all the test failures except for the one that verifies getSelectedItemIdForTests after the sheet has been closed (which is expected).",
+      "parentUuid": "9ea3871b_cd702f8b",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 51
+      },
+      "revId": "8934f62ae08aca98cd6647eb44a938744b844203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
