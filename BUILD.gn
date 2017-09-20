@@ -399,8 +399,8 @@ group("gn_all") {
       "//net:disk_cache_memory_test",
       "//net:quic_client",
       "//net:quic_server",
+      "//sandbox:sandbox_unittests",
       "//sandbox/linux:chrome_sandbox",
-      "//sandbox/linux:sandbox_linux_unittests",
     ]
 
     if (use_dbus) {
@@ -818,8 +818,8 @@ if (is_chromeos) {
       "//chrome/test/chromedriver",
       "//media:media_unittests",
       "//ppapi/examples/video_decode",
+      "//sandbox:sandbox_unittests",
       "//sandbox/linux:chrome_sandbox",
-      "//sandbox/linux:sandbox_linux_unittests",
 
       # Blocked on https://github.com/catapult-project/catapult/issues/2297
       #"//third_party/catapult/telemetry:bitmaptools",
