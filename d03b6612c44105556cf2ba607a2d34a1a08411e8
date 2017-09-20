@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7835be45_780fd103",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6093,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-20T07:17:01Z",
+      "side": 1,
+      "message": "Could you explain why this?\n\n(Sorry, just sensitive to hardcoded IPv4 literals, wanting to make sure I understand why to see if I can suggest anything better)",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be30cc2_d101308e",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-20T07:17:01Z",
+      "side": 1,
+      "message": "Can we use a file for this? Alternatively, can/should we update the files so we can use CreateCertificateChainFromFile() instead and store these certs in the file?",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ef692d_da2bc88d",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-20T07:17:01Z",
+      "side": 1,
+      "message": "s/in future/in the future/ ?",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
