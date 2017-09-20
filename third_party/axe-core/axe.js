@@ -1338,6 +1338,7 @@
     return map[sorting.pop()];
   };
   'use strict';
+  var _axe$constants = axe.constants, CANTTELL_PRIO = _axe$constants.CANTTELL_PRIO, FAIL_PRIO = _axe$constants.FAIL_PRIO;
   var checkMap = [];
   checkMap[axe.constants.PASS_PRIO] = true;
   checkMap[axe.constants.CANTTELL_PRIO] = null;
@@ -1360,26 +1361,28 @@
         check.priority = 4 - check.priority;
       }
     });
-    var priorities = anyAllNone(nodeResult, function(c) {
-      return c.priority;
-    });
-    nodeResult.priority = Math.max(priorities.all.reduce(function(a, b) {
-      return Math.max(a, b);
-    }, 0), priorities.none.reduce(function(a, b) {
-      return Math.max(a, b);
-    }, 0), priorities.any.reduce(function(a, b) {
-      return Math.min(a, b);
-    }, 4) % 4);
+    var priorities = {
+      all: nodeResult.all.reduce(function(a, b) {
+        return Math.max(a, b.priority);
+      }, 0),
+      none: nodeResult.none.reduce(function(a, b) {
+        return Math.max(a, b.priority);
+      }, 0),
+      any: nodeResult.any.reduce(function(a, b) {
+        return Math.min(a, b.priority);
+      }, 4) % 4
+    };
+    nodeResult.priority = Math.max(priorities.all, priorities.none, priorities.any);
     var impacts = [];
     checkTypes.forEach(function(type) {
       nodeResult[type] = nodeResult[type].filter(function(check) {
-        return check.priority === nodeResult.priority;
+        return check.priority === nodeResult.priority && check.priority === priorities[type];
       });
       nodeResult[type].forEach(function(check) {
         return impacts.push(check.impact);
       });
     });
-    if (nodeResult.priority === axe.constants.FAIL_PRIO) {
+    if ([ CANTTELL_PRIO, FAIL_PRIO ].includes(nodeResult.priority)) {
       nodeResult.impact = axe.utils.aggregate(axe.constants.impact, impacts);
     } else {
       nodeResult.impact = null;
@@ -1445,9 +1448,12 @@
         var groupName = axe.constants.resultGroupMap[subResult.result];
         ruleResult[groupName].push(subResult);
       });
-      var failGroup = axe.constants.FAIL_GROUP;
-      if (ruleResult[failGroup].length > 0) {
-        var impactList = ruleResult[failGroup].map(function(failure) {
+      var impactGroup = axe.constants.FAIL_GROUP;
+      if (ruleResult[impactGroup].length === 0) {
+        impactGroup = axe.constants.CANTTELL_GROUP;
+      }
+      if (ruleResult[impactGroup].length > 0) {
+        var impactList = ruleResult[impactGroup].map(function(failure) {
           return failure.impact;
         });
         ruleResult.impact = axe.utils.aggregate(axe.constants.impact, impactList) || null;
@@ -5480,7 +5486,7 @@
             return false;
           }
         }
-        if (axe.commons.text.visible(virtualNode, false, true) === '') {
+        if (axe.commons.text.visibleVirtual(virtualNode, false, true) === '') {
           return false;
         }
         var range = document.createRange(), childNodes = virtualNode.children, length = childNodes.length, child, index;
@@ -6450,7 +6456,7 @@
     }, {
       id: 'duplicate-img-label',
       evaluate: function evaluate(node, options, virtualNode) {
-        var text = axe.commons.text.visible(virtualNode, true).toLowerCase();
+        var text = axe.commons.text.visibleVirtual(virtualNode, true).toLowerCase();
         if (text === '') {
           return false;
         }
@@ -6459,7 +6465,7 @@
           return axe.commons.dom.isVisible(actualNode) && ![ 'none', 'presentation' ].includes(actualNode.getAttribute('role'));
         });
         return images.some(function(img) {
-          return text === axe.commons.text.accessibleText(img).toLowerCase();
+          return text === axe.commons.text.accessibleTextVirtual(img).toLowerCase();
         });
       }
     }, {
@@ -6478,7 +6484,7 @@
     }, {
       id: 'help-same-as-label',
       evaluate: function evaluate(node, options, virtualNode) {
-        var labelText = axe.commons.text.label(virtualNode), check = node.getAttribute('title');
+        var labelText = axe.commons.text.labelVirtual(virtualNode), check = node.getAttribute('title');
         if (!labelText) {
           return false;
         }
@@ -6528,7 +6534,7 @@
     }, {
       id: 'title-only',
       evaluate: function evaluate(node, options, virtualNode) {
-        var labelText = axe.commons.text.label(virtualNode);
+        var labelText = axe.commons.text.labelVirtual(virtualNode);
         return !labelText && !!(node.getAttribute('title') || node.getAttribute('aria-describedby'));
       }
     }, {
@@ -6661,9 +6667,6 @@
             var actualNode = _ref6.actualNode;
             return (actualNode.getAttribute('kind') || '').toLowerCase() === 'descriptions';
           });
-          axe.log(tracks.map(function(t) {
-            return t.actualNode.getAttribute('kind');
-          }), out);
           return out;
         }
         return undefined;
@@ -6982,22 +6985,19 @@
     }, {
       id: 'duplicate-id',
       evaluate: function evaluate(node, options, virtualNode) {
-        if (!node.getAttribute('id').trim()) {
+        var id = node.getAttribute('id').trim();
+        if (!id) {
           return true;
         }
-        var id = axe.commons.utils.escapeSelector(node.getAttribute('id'));
-        var matchingNodes = document.querySelectorAll('[id="' + id + '"]');
-        var related = [];
-        for (var i = 0; i < matchingNodes.length; i++) {
-          if (matchingNodes[i] !== node) {
-            related.push(matchingNodes[i]);
-          }
+        var root = axe.commons.dom.getRootNode(node);
+        var matchingNodes = Array.from(root.querySelectorAll('[id="' + axe.commons.utils.escapeSelector(id) + '"]')).filter(function(foundNode) {
+          return foundNode !== node;
+        });
+        if (matchingNodes.length) {
+          this.relatedNodes(matchingNodes);
         }
-        if (related.length) {
-          this.relatedNodes(related);
-        }
-        this.data(node.getAttribute('id'));
-        return matchingNodes.length <= 1;
+        this.data(id);
+        return matchingNodes.length === 0;
       },
       after: function after(results, options) {
         var uniqueIds = [];
@@ -7251,7 +7251,7 @@
       id: 'hidden-content',
       evaluate: function evaluate(node, options, virtualNode) {
         var whitelist = [ 'SCRIPT', 'HEAD', 'TITLE', 'NOSCRIPT', 'STYLE', 'TEMPLATE' ];
-        if (!whitelist.includes(node.tagName.toUpperCase()) && axe.commons.dom.hasContent(virtualNode)) {
+        if (!whitelist.includes(node.tagName.toUpperCase()) && axe.commons.dom.hasContentVirtual(virtualNode)) {
           var styles = window.getComputedStyle(node);
           if (styles.getPropertyValue('display') === 'none') {
             return undefined;
@@ -7339,6 +7339,9 @@
           type: 'nmtoken',
           values: [ 'true', 'false', 'spelling', 'grammar' ]
         },
+        'aria-keyshortcuts': {
+          type: 'string'
+        },
         'aria-label': {
           type: 'string'
         },
@@ -7351,6 +7354,10 @@
         'aria-live': {
           type: 'nmtoken',
           values: [ 'off', 'polite', 'assertive' ]
+        },
+        'aria-modal': {
+          type: 'boolean',
+          values: [ 'true', 'false' ]
         },
         'aria-multiline': {
           type: 'boolean',
@@ -7366,6 +7373,9 @@
         },
         'aria-owns': {
           type: 'idrefs'
+        },
+        'aria-placeholder': {
+          type: 'string'
         },
         'aria-posinset': {
           type: 'int'
@@ -7419,7 +7429,7 @@
           type: 'string'
         }
       };
-      lookupTables.globalAttributes = [ 'aria-atomic', 'aria-busy', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-disabled', 'aria-dropeffect', 'aria-flowto', 'aria-grabbed', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-label', 'aria-labelledby', 'aria-live', 'aria-owns', 'aria-relevant' ];
+      lookupTables.globalAttributes = [ 'aria-atomic', 'aria-busy', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-disabled', 'aria-dropeffect', 'aria-flowto', 'aria-grabbed', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-keyshortcuts', 'aria-label', 'aria-labelledby', 'aria-live', 'aria-owns', 'aria-relevant' ];
       lookupTables.role = {
         alert: {
           type: 'widget',
@@ -7433,7 +7443,7 @@
         alertdialog: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-expanded' ]
+            allowed: [ 'aria-expanded', 'aria-modal' ]
           },
           owned: null,
           nameFrom: [ 'author' ],
@@ -7491,7 +7501,7 @@
         checkbox: {
           type: 'widget',
           attributes: {
-            required: [ 'aria-checked' ]
+            allowed: [ 'aria-checked' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7501,7 +7511,7 @@
         columnheader: {
           type: 'structure',
           attributes: {
-            allowed: [ 'aria-expanded', 'aria-sort', 'aria-readonly', 'aria-selected', 'aria-required' ]
+            allowed: [ 'aria-colindex', 'aria-colspan', 'aria-expanded', 'aria-rowindex', 'aria-rowspan', 'aria-required', 'aria-readonly', 'aria-selected', 'aria-sort' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7511,8 +7521,7 @@
         combobox: {
           type: 'composite',
           attributes: {
-            required: [ 'aria-expanded' ],
-            allowed: [ 'aria-autocomplete', 'aria-required', 'aria-activedescendant' ]
+            allowed: [ 'aria-expanded', 'aria-autocomplete', 'aria-required', 'aria-activedescendant' ]
           },
           owned: {
             all: [ 'listbox', 'textbox' ]
@@ -7556,12 +7565,12 @@
           owned: null,
           nameFrom: [ 'author' ],
           context: null,
-          implicit: [ 'dd' ]
+          implicit: [ 'dd', 'dfn' ]
         },
         dialog: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-expanded' ]
+            allowed: [ 'aria-expanded', 'aria-modal' ]
           },
           owned: null,
           nameFrom: [ 'author' ],
@@ -7586,6 +7595,17 @@
           nameFrom: [ 'author' ],
           context: null,
           implicit: [ 'body' ]
+        },
+        feed: {
+          type: 'structure',
+          attributes: {
+            allowed: [ 'aria-expanded' ]
+          },
+          owned: {
+            one: [ 'article' ]
+          },
+          nameFrom: [ 'author' ],
+          context: null
         },
         form: {
           type: 'landmark',
@@ -7612,7 +7632,7 @@
         gridcell: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-selected', 'aria-readonly', 'aria-expanded', 'aria-required' ]
+            allowed: [ 'aria-colindex', 'aria-colspan', 'aria-expanded', 'aria-rowindex', 'aria-rowspan', 'aria-selected', 'aria-readonly', 'aria-required' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7771,7 +7791,7 @@
         menuitemcheckbox: {
           type: 'widget',
           attributes: {
-            required: [ 'aria-checked' ]
+            allowed: [ 'aria-checked' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7781,8 +7801,7 @@
         menuitemradio: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-selected', 'aria-posinset', 'aria-setsize' ],
-            required: [ 'aria-checked' ]
+            allowed: [ 'aria-checked', 'aria-selected', 'aria-posinset', 'aria-setsize' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7845,8 +7864,7 @@
         radio: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-selected', 'aria-posinset', 'aria-setsize' ],
-            required: [ 'aria-checked' ]
+            allowed: [ 'aria-checked', 'aria-selected', 'aria-posinset', 'aria-setsize' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7884,7 +7902,7 @@
         row: {
           type: 'structure',
           attributes: {
-            allowed: [ 'aria-level', 'aria-selected', 'aria-activedescendant', 'aria-expanded' ]
+            allowed: [ 'aria-activedescendant', 'aria-colcount', 'aria-expanded', 'aria-level', 'aria-selected', 'aria-rowcount' ]
           },
           owned: {
             one: [ 'cell', 'columnheader', 'rowheader', 'gridcell' ]
@@ -7908,7 +7926,7 @@
         rowheader: {
           type: 'structure',
           attributes: {
-            allowed: [ 'aria-sort', 'aria-required', 'aria-readonly', 'aria-expanded', 'aria-selected' ]
+            allowed: [ 'aria-colindex', 'aria-colspan', 'aria-expanded', 'aria-rowindex', 'aria-rowspan', 'aria-required', 'aria-readonly', 'aria-selected', 'aria-sort' ]
           },
           owned: null,
           nameFrom: [ 'author', 'contents' ],
@@ -7918,8 +7936,8 @@
         scrollbar: {
           type: 'widget',
           attributes: {
-            required: [ 'aria-controls', 'aria-orientation', 'aria-valuenow', 'aria-valuemax', 'aria-valuemin' ],
-            allowed: [ 'aria-valuetext' ]
+            required: [ 'aria-controls', 'aria-valuenow', 'aria-valuemax', 'aria-valuemin' ],
+            allowed: [ 'aria-valuetext', 'aria-orientation' ]
           },
           owned: null,
           nameFrom: [ 'author' ],
@@ -7937,7 +7955,7 @@
         searchbox: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-activedescendant', 'aria-autocomplete', 'aria-multiline', 'aria-readonly', 'aria-required' ]
+            allowed: [ 'aria-activedescendant', 'aria-autocomplete', 'aria-multiline', 'aria-readonly', 'aria-required', 'aria-placeholder' ]
           },
           owned: null,
           nameFrom: [ 'author' ],
@@ -8051,6 +8069,16 @@
           nameFrom: [ 'author' ],
           context: null
         },
+        term: {
+          type: 'structure',
+          attributes: {
+            allowed: [ 'aria-expanded' ]
+          },
+          owned: null,
+          nameFrom: [ 'author', 'contents' ],
+          context: null,
+          implicit: [ 'dt' ]
+        },
         text: {
           type: 'structure',
           owned: null,
@@ -8060,7 +8088,7 @@
         textbox: {
           type: 'widget',
           attributes: {
-            allowed: [ 'aria-activedescendant', 'aria-autocomplete', 'aria-multiline', 'aria-readonly', 'aria-required' ]
+            allowed: [ 'aria-activedescendant', 'aria-autocomplete', 'aria-multiline', 'aria-readonly', 'aria-required', 'aria-placeholder' ]
           },
           owned: null,
           nameFrom: [ 'author' ],
@@ -8109,7 +8137,7 @@
         treegrid: {
           type: 'composite',
           attributes: {
-            allowed: [ 'aria-activedescendant', 'aria-expanded', 'aria-level', 'aria-multiselectable', 'aria-readonly', 'aria-required' ]
+            allowed: [ 'aria-activedescendant', 'aria-colcount', 'aria-expanded', 'aria-level', 'aria-multiselectable', 'aria-readonly', 'aria-required', 'aria-rowcount' ]
           },
           owned: {
             all: [ 'treeitem' ]
@@ -8192,22 +8220,20 @@
           return /^[-+]?[0-9]+$/.test(value);
         }
       };
-      aria.label = function(node) {
-        var ref, candidate;
-        if (node.actualNode instanceof Node === false) {
-          node = axe.utils.getNodeFromTree(axe._tree[0], node);
-        }
-        if (node.actualNode.getAttribute('aria-labelledby')) {
-          ref = dom.idrefs(node.actualNode, 'aria-labelledby');
+      aria.labelVirtual = function(_ref8) {
+        var actualNode = _ref8.actualNode;
+        var ref = void 0, candidate = void 0;
+        if (actualNode.getAttribute('aria-labelledby')) {
+          ref = dom.idrefs(actualNode, 'aria-labelledby');
           candidate = ref.map(function(thing) {
             var vNode = axe.utils.getNodeFromTree(axe._tree[0], thing);
-            return vNode ? text.visible(vNode, true) : '';
+            return vNode ? text.visibleVirtual(vNode, true) : '';
           }).join(' ').trim();
           if (candidate) {
             return candidate;
           }
         }
-        candidate = node.actualNode.getAttribute('aria-label');
+        candidate = actualNode.getAttribute('aria-label');
         if (candidate) {
           candidate = text.sanitize(candidate).trim();
           if (candidate) {
@@ -8215,6 +8241,10 @@
           }
         }
         return null;
+      };
+      aria.label = function(node) {
+        node = axe.utils.getNodeFromTree(axe._tree[0], node);
+        return aria.labelVirtual(node);
       };
       aria.isValidRole = function(role) {
         'use strict';
@@ -8629,10 +8659,9 @@
         }
         return finalElements;
       };
-      dom.findElmsInContext = function(_ref8) {
-        var context = _ref8.context, value = _ref8.value, attr = _ref8.attr, _ref8$elm = _ref8.elm, elm = _ref8$elm === undefined ? '' : _ref8$elm;
+      dom.findElmsInContext = function(_ref9) {
+        var context = _ref9.context, value = _ref9.value, attr = _ref9.attr, _ref9$elm = _ref9.elm, elm = _ref9$elm === undefined ? '' : _ref9$elm;
         var root = void 0;
-        context = context.actualNode || context;
         var escapedValue = axe.utils.escapeSelector(value);
         if (context.nodeType === 9 || context.nodeType === 11) {
           root = context;
@@ -8748,19 +8777,20 @@
       var hiddenTextElms = [ 'HEAD', 'TITLE', 'TEMPLATE', 'SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'VIDEO', 'AUDIO', 'NOSCRIPT' ];
       function hasChildTextNodes(elm) {
         if (!hiddenTextElms.includes(elm.actualNode.nodeName.toUpperCase())) {
-          return elm.children.some(function(_ref9) {
-            var actualNode = _ref9.actualNode;
+          return elm.children.some(function(_ref10) {
+            var actualNode = _ref10.actualNode;
             return actualNode.nodeType === 3 && actualNode.nodeValue.trim();
           });
         }
       }
-      dom.hasContent = function hasContent(elm, noRecursion) {
-        if (!elm.actualNode) {
-          elm = axe.utils.getNodeFromTree(axe._tree[0], elm);
-        }
-        return hasChildTextNodes(elm) || dom.isVisualContent(elm.actualNode) || !!aria.label(elm) || !noRecursion && elm.children.some(function(child) {
-          return child.actualNode.nodeType === 1 && dom.hasContent(child);
+      dom.hasContentVirtual = function(elm, noRecursion) {
+        return hasChildTextNodes(elm) || dom.isVisualContent(elm.actualNode) || !!aria.labelVirtual(elm) || !noRecursion && elm.children.some(function(child) {
+          return child.actualNode.nodeType === 1 && dom.hasContentVirtual(child);
         });
+      };
+      dom.hasContent = function hasContent(elm, noRecursion) {
+        elm = axe.utils.getNodeFromTree(axe._tree[0], elm);
+        return dom.hasContentVirtual(elm, noRecursion);
       };
       dom.idrefs = function(node, attr) {
         'use strict';
@@ -8871,22 +8901,25 @@
         'use strict';
         return candidate instanceof Node;
       };
-      dom.isOffscreen = function(element) {
-        'use strict';
-        var noParentScrolled = function noParentScrolled(element, offset) {
-          element = element.parentNode;
-          while (element.nodeName.toLowerCase() !== 'html') {
-            if (element.scrollTop) {
-              offset += element.scrollTop;
-              if (offset >= 0) {
-                return false;
-              }
+      function noParentScrolled(element, offset) {
+        element = dom.getComposedParent(element);
+        while (element && element.nodeName.toLowerCase() !== 'html') {
+          if (element.scrollTop) {
+            offset += element.scrollTop;
+            if (offset >= 0) {
+              return false;
             }
-            element = element.parentNode;
           }
-          return true;
-        };
-        var leftBoundary, docElement = document.documentElement, styl = window.getComputedStyle(element), dir = window.getComputedStyle(document.body || docElement).getPropertyValue('direction'), coords = dom.getElementCoordinates(element);
+          element = dom.getComposedParent(element);
+        }
+        return true;
+      }
+      dom.isOffscreen = function(element) {
+        var leftBoundary = void 0;
+        var docElement = document.documentElement;
+        var styl = window.getComputedStyle(element);
+        var dir = window.getComputedStyle(document.body || docElement).getPropertyValue('direction');
+        var coords = dom.getElementCoordinates(element);
         if (coords.bottom < 0 && (noParentScrolled(element, coords.bottom) || styl.position === 'absolute')) {
           return true;
         }
@@ -9099,7 +9132,7 @@
         return cell.nodeName.toUpperCase() === 'TD';
       };
       table.isDataTable = function(node) {
-        var role = node.getAttribute('role');
+        var role = (node.getAttribute('role') || '').toLowerCase();
         if ((role === 'presentation' || role === 'none') && !dom.isFocusable(node)) {
           return false;
         }
@@ -9143,7 +9176,7 @@
             if (cell.getAttribute('scope') || cell.getAttribute('headers') || cell.getAttribute('abbr')) {
               return true;
             }
-            if ([ 'columnheader', 'rowheader' ].indexOf(cell.getAttribute('role')) !== -1) {
+            if ([ 'columnheader', 'rowheader' ].includes((cell.getAttribute('role') || '').toLowerCase())) {
               return true;
             }
             if (cell.children.length === 1 && cell.children[0].nodeName.toUpperCase() === 'ABBR') {
@@ -9207,7 +9240,7 @@
         return false;
       };
       table.isRowHeader = function(node) {
-        return [ 'row', 'auto' ].indexOf(table.getScope(node)) !== -1;
+        return [ 'row', 'auto' ].includes(table.getScope(node));
       };
       table.toGrid = function(node) {
         var table = [];
@@ -9304,8 +9337,8 @@
       };
       var inputTypes = [ 'text', 'search', 'tel', 'url', 'email', 'date', 'time', 'number', 'range', 'color' ];
       var phrasingElements = [ 'A', 'EM', 'STRONG', 'SMALL', 'MARK', 'ABBR', 'DFN', 'I', 'B', 'S', 'U', 'CODE', 'VAR', 'SAMP', 'KBD', 'SUP', 'SUB', 'Q', 'CITE', 'SPAN', 'BDO', 'BDI', 'BR', 'WBR', 'INS', 'DEL', 'IMG', 'EMBED', 'OBJECT', 'IFRAME', 'MAP', 'AREA', 'SCRIPT', 'NOSCRIPT', 'RUBY', 'VIDEO', 'AUDIO', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'LABEL', 'OUTPUT', 'DATALIST', 'KEYGEN', 'PROGRESS', 'COMMAND', 'CANVAS', 'TIME', 'METER' ];
-      function findLabel(_ref10) {
-        var actualNode = _ref10.actualNode;
+      function findLabel(_ref11) {
+        var actualNode = _ref11.actualNode;
         var label = void 0;
         if (actualNode.id) {
           label = dom.findElmsInContext({
@@ -9319,25 +9352,25 @@
         }
         return axe.utils.getNodeFromTree(axe._tree[0], label);
       }
-      function isButton(_ref11) {
-        var actualNode = _ref11.actualNode;
+      function isButton(_ref12) {
+        var actualNode = _ref12.actualNode;
         return [ 'button', 'reset', 'submit' ].includes(actualNode.type.toLowerCase());
       }
-      function isInput(_ref12) {
-        var actualNode = _ref12.actualNode;
+      function isInput(_ref13) {
+        var actualNode = _ref13.actualNode;
         var nodeName = actualNode.nodeName.toUpperCase();
         return nodeName === 'TEXTAREA' || nodeName === 'SELECT' || nodeName === 'INPUT' && actualNode.type.toLowerCase() !== 'hidden';
       }
-      function shouldCheckSubtree(_ref13) {
-        var actualNode = _ref13.actualNode;
+      function shouldCheckSubtree(_ref14) {
+        var actualNode = _ref14.actualNode;
         return [ 'BUTTON', 'SUMMARY', 'A' ].includes(actualNode.nodeName.toUpperCase());
       }
-      function shouldNeverCheckSubtree(_ref14) {
-        var actualNode = _ref14.actualNode;
+      function shouldNeverCheckSubtree(_ref15) {
+        var actualNode = _ref15.actualNode;
         return [ 'TABLE', 'FIGURE' ].includes(actualNode.nodeName.toUpperCase());
       }
-      function formValueText(_ref15) {
-        var actualNode = _ref15.actualNode;
+      function formValueText(_ref16) {
+        var actualNode = _ref16.actualNode;
         var nodeName = actualNode.nodeName.toUpperCase();
         if (nodeName === 'INPUT') {
           if (!actualNode.hasAttribute('type') || inputTypes.includes(actualNode.type.toLowerCase())) {
@@ -9363,8 +9396,8 @@
         }
         return '';
       }
-      function checkDescendant(_ref16, nodeName) {
-        var actualNode = _ref16.actualNode;
+      function checkDescendant(_ref17, nodeName) {
+        var actualNode = _ref17.actualNode;
         var candidate = actualNode.querySelector(nodeName.toLowerCase());
         if (candidate) {
           return text.accessibleText(candidate);
@@ -9388,15 +9421,19 @@
           return false;
         }
       }
-      function shouldCheckAlt(_ref17) {
-        var actualNode = _ref17.actualNode;
+      function shouldCheckAlt(_ref18) {
+        var actualNode = _ref18.actualNode;
         var nodeName = actualNode.nodeName.toUpperCase();
         return [ 'IMG', 'APPLET', 'AREA' ].includes(nodeName) || nodeName === 'INPUT' && actualNode.type.toLowerCase() === 'image';
       }
       function nonEmptyText(t) {
         return !!text.sanitize(t);
       }
-      text.accessibleText = function(element, inLabelledByContext) {
+      text.accessibleText = function accessibleText(element, inLabelledByContext) {
+        var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], element);
+        return axe.commons.text.accessibleTextVirtual(virtualNode, inLabelledByContext);
+      };
+      text.accessibleTextVirtual = function accessibleTextVirtual(element, inLabelledByContext) {
         var accessibleNameComputation = void 0;
         var encounteredNodes = [];
         if (element instanceof Node) {
@@ -9515,9 +9552,9 @@
         };
         return text.sanitize(accessibleNameComputation(element, inLabelledByContext));
       };
-      text.label = function(node) {
+      text.labelVirtual = function(node) {
         var ref, candidate, doc;
-        candidate = aria.label(node);
+        candidate = aria.labelVirtual(node);
         if (candidate) {
           return candidate;
         }
@@ -9525,39 +9562,42 @@
           var id = axe.commons.utils.escapeSelector(node.actualNode.getAttribute('id'));
           doc = axe.commons.dom.getRootNode(node.actualNode);
           ref = doc.querySelector('label[for="' + id + '"]');
-          ref = axe.utils.getNodeFromTree(axe._tree[0], ref);
           candidate = ref && text.visible(ref, true);
           if (candidate) {
             return candidate;
           }
         }
         ref = dom.findUp(node.actualNode, 'label');
-        ref = axe.utils.getNodeFromTree(axe._tree[0], ref);
         candidate = ref && text.visible(ref, true);
         if (candidate) {
           return candidate;
         }
         return null;
       };
+      text.label = function(node) {
+        node = axe.utils.getNodeFromTree(axe._tree[0], node);
+        return text.labelVirtual(node);
+      };
       text.sanitize = function(str) {
         'use strict';
         return str.replace(/\r\n/g, '\n').replace(/\u00A0/g, ' ').replace(/[\s]{2,}/g, ' ').trim();
       };
-      text.visible = function(element, screenReader, noRecursing) {
-        'use strict';
-        var index, child, nodeValue, childNodes = element.children, length = childNodes.length, result = '';
-        for (index = 0; index < length; index++) {
-          child = childNodes[index];
+      text.visibleVirtual = function(element, screenReader, noRecursing) {
+        var result = element.children.map(function(child) {
           if (child.actualNode.nodeType === 3) {
-            nodeValue = child.actualNode.nodeValue;
+            var nodeValue = child.actualNode.nodeValue;
             if (nodeValue && dom.isVisible(element.actualNode, screenReader)) {
-              result += nodeValue;
+              return nodeValue;
             }
           } else if (!noRecursing) {
-            result += text.visible(child, screenReader);
+            return text.visibleVirtual(child, screenReader);
           }
-        }
+        }).join('');
         return text.sanitize(result);
+      };
+      text.visible = function(element, screenReader, noRecursing) {
+        element = axe.utils.getNodeFromTree(axe._tree[0], element);
+        return text.visibleVirtual(element, screenReader, noRecursing);
       };
       axe.utils.toArray = function(thing) {
         'use strict';
