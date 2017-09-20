@@ -4,6 +4,7 @@
 
 #include "ash/login/ui/login_auth_user_view.h"
 #include "ash/login/ui/login_test_base.h"
+#include "ash/login/ui/login_password_view.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/views/layout/box_layout.h"
 
@@ -74,6 +75,15 @@ TEST_F(LoginAuthUserViewUnittest, ShowingPasswordForcesOpaque) {
   EXPECT_FALSE(user_test.is_opaque());
   view_->SetAuthMethods(LoginAuthUserView::AUTH_PASSWORD);
   EXPECT_TRUE(user_test.is_opaque());
+}
+
+// TODO: probably not needed?
+TEST_F(LoginAuthUserViewUnittest, PasswordViewWidth) {
+  LoginAuthUserView::TestApi auth_test(view_);
+  LoginPasswordView::TestApi password_test(auth_test.password_view());
+
+  EXPECT_EQ(204, auth_test.password_view()->width());
+  EXPECT_EQ(52, auth_test.password_view()->height());
 }
 
 }  // namespace ash

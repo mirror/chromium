@@ -24,7 +24,7 @@ struct UserPodCustomIconOptions {
   bool autoshow_tooltip;
   mojo.common.mojom.String16 aria_label;
   bool hardlock_on_click;
-  bool is_trial_run;
+  bool is_trial_run; // TODO: make sure we handle this.
 };
 
 // Info about a user in login/lock screen.

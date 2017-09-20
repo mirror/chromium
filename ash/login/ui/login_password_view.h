@@ -14,6 +14,7 @@
 namespace views {
 class Button;
 class ButtonListener;
+class ImageView;
 class Textfield;
 }  // namespace views
 
@@ -44,6 +45,26 @@ class ASH_EXPORT LoginPasswordView : public views::View,
     LoginPasswordView* view_;
   };
 
+  enum class EasyUnlockState {
+    kNone,
+    kHardlocked,
+    kHardlockedHover,
+    kHardlockedPressed,
+    kLocked,
+    kLockedHover,
+    kLockedPressed,
+    kLockedToBeActivated,
+    kLockedToBeActivatedHover,
+    kLockedToBeActivatedPressed,
+    kLockedWithProximityHint,
+    kLockedWithProximityHintHover,
+    kLockedWithProximityHintPressed,
+    kSpinner,
+    kUnlocked,
+    kUnlockedHover,
+    kUnlockedPressed,
+  };
+
   using OnPasswordSubmit =
       base::RepeatingCallback<void(const base::string16& password)>;
 
@@ -51,6 +72,9 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   // Must not be null.
   explicit LoginPasswordView(const OnPasswordSubmit& on_submit);
   ~LoginPasswordView() override;
+
+  // Change the active icon for easy unlock.
+  void SetEasyUnlockIcon(EasyUnlockState state);
 
   // Updates accessibility information for |user|.
   void UpdateForUser(const mojom::UserInfoPtr& user);
@@ -88,8 +112,11 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   void SubmitPassword();
 
   OnPasswordSubmit on_submit_;
-  views::Textfield* textfield_;
-  views::Button* submit_button_;
+  views::Textfield* textfield_ = nullptr;
+  views::Button* submit_button_ = nullptr;
+
+  views::ImageView* easy_unlock_icon_ = nullptr;
+  views::View* easy_unlock_right_margin_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(LoginPasswordView);
 };

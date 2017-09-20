@@ -366,6 +366,7 @@ bool PNGCodec::Decode(const unsigned char* input, size_t input_size,
 // static
 bool PNGCodec::Decode(const unsigned char* input, size_t input_size,
                       SkBitmap* bitmap) {
+  // TODO: needs to handle APNG, this is used for resource bundle decoding.
   DCHECK(bitmap);
   PngReadStructInfo si;
   if (!si.Build(input, input_size))

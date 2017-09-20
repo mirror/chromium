@@ -72,6 +72,15 @@ void LockScreenController::ClearErrors() {
 void LockScreenController::ShowUserPodCustomIcon(
     const AccountId& account_id,
     mojom::UserPodCustomIconOptionsPtr icon) {
+  // icon->Serialize()
+  LOG(ERROR) << "!! ShowUserPodCustomIcon "
+             << "icon->id=" << icon->id
+             << ", icon->aria_label=" << icon->aria_label
+             << ", icon->autoshow_tooltip=" << icon->autoshow_tooltip
+             << ", icon->hardlock_on_click=" << icon->hardlock_on_click
+             << ", icon->is_trial_run=" << icon->is_trial_run
+             << ", icon->tooltip=" << icon->tooltip
+             << ", account_id=" << account_id.Serialize();
   NOTIMPLEMENTED();
 }
 

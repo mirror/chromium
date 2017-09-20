@@ -198,7 +198,7 @@ class BackspacePinButton : public BasePinButton {
       : BasePinButton(on_press),
         delay_timer_(base::MakeUnique<base::OneShotTimer>()),
         repeat_timer_(base::MakeUnique<base::RepeatingTimer>()) {
-    views::ImageView* image = new views::ImageView();
+    auto* image = new views::ImageView();
     // TODO: Change icon color when enabled/disabled.
     image->SetImage(
         gfx::CreateVectorIcon(kLockScreenBackspaceIcon, SK_ColorWHITE));
