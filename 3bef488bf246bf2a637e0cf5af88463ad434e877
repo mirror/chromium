@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3190182f_287cfff3",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-20T07:42:27Z",
+      "side": 1,
+      "message": "I think we have related TODO comment in ScriptURLLoaderFactory, could you look at that and update it if necessary?",
+      "revId": "3bef488bf246bf2a637e0cf5af88463ad434e877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
