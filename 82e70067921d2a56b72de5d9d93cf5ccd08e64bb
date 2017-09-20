@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45bad4c4_e9e9ed13",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Good point. We can use RUNNING, though we need small change in ArcSessionRunner, instead.",
+      "parentUuid": "427cf7bb_6f69caba",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e77ae84_bdda4db6",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "459c98c1_cd10e5fe",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e77ae84_bdda4db6",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c37533f0_bb44c29e",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T21:20:06Z",
       "side": 1,
       "message": "document missing for the new parameter? Also, is it a good idea to leak the existence of mojo socket to the ASR layer? You (primarily) used the term \u0027fully set up\u0027 at L65 rather than mojo.",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58148a94_f6726ca7",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Renamed. How about this?",
+      "parentUuid": "c37533f0_bb44c29e",
       "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "85375590_81e4a609",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40be38af_898cfd26",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6b53555_c699dd11",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6c221d_5e28dd10",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done. Fixed above, as well.",
+      "parentUuid": "d6b53555_c699dd11",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "6ebda4ba_6eeb5d1e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7696a611_9f5ae4ec",
+      "range": {
+        "startLine": 101,
+        "startChar": 31,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e45cc4ef_96c5a2c2",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "dc5e08ec_803f920c",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "I\u0027d like to keep focusing on removing State in this CL.\nInstead, added TODO, and sent a discussion thread. Let\u0027s revisit here later.",
+      "parentUuid": "e45cc4ef_96c5a2c2",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99568e2d_6e04b1d6",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -138,6 +270,30 @@
       "writtenOn": "2017-09-19T21:20:06Z",
       "side": 1,
       "message": "These 3 are also used in DCHECKs in ASM though. Are these DCHECKs in ASM worth keeping? (you removed bunch of DCHECKs from ASR in this CL.)\n\nIsStopped() is also used in ArcSessionManager::OnRetryClicked() but I guess ASM can do the same with the observer interface.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 62
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc59625_f1fc535e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Acknowledged. Similar to above, I hope TODO satisfies your request.",
+      "parentUuid": "99568e2d_6e04b1d6",
       "range": {
         "startLine": 130,
         "startChar": 0,
@@ -197,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "b6345055_85752c46",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "IsRunning check is actually not necessary, because previously we didn\u0027t check it.\nThe only diff is, if we were in STOPPING, this returned false, but in this PS it is not.\nFixed.\n\nYusuke-san, as for renaming, I\u0027m happy to revisit here later, but I\u0027d like to discuss the accessors first (then this may be just removed).",
+      "parentUuid": "0af98420_90b62093",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c158ec1_5ac246c0",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -217,6 +397,30 @@
       "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205787e1_fddcbf6e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c158ec1_5ac246c0",
+      "range": {
+        "startLine": 199,
+        "startChar": 41,
+        "endLine": 199,
+        "endChar": 47
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "3961b541_f92e3d3d",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b80aa054_c5c1dc9e",
+      "range": {
+        "startLine": 203,
+        "startChar": 5,
+        "endLine": 203,
+        "endChar": 7
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f22c9c0_102ed298",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -266,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "c4e4f08a_fef3ef39",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f22c9c0_102ed298",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 49
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739d0801_a321858a",
         "filename": "components/arc/arc_session_runner.h",
         "patchSetId": 1
@@ -280,6 +532,24 @@
       "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c28f2f3_9db1bf86",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739d0801_a321858a",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

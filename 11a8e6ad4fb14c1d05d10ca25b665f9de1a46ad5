@@ -22,6 +22,30 @@
       "revId": "11a8e6ad4fb14c1d05d10ca25b665f9de1a46ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098130fc_286881a3",
+        "filename": "components/arc/arc_session_runner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-20T09:40:56Z",
+      "side": 0,
+      "message": "Oh, no. Sorry for my poor explanation.\nThese are already covered above cases. (BootFailure, and Restart).\nSo, I\u0027ve just de-dupped.\n\nBTW, L262 looks wrong check. If GENERIC_BOOT_FAILURE triggers, we don\u0027t expect restart, right?",
+      "parentUuid": "5e2a7194_5e0ed702",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "11a8e6ad4fb14c1d05d10ca25b665f9de1a46ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
