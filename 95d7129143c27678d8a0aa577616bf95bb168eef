@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a98ef336_d813c311",
+        "filename": "chrome/browser/ui/page_info/page_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-20T17:22:12Z",
+      "side": 1,
+      "message": "Nit: Explicitly assign to 1 to avoid accidental renumbering.\n\n(We haven\u0027t done this with all old histograms, but we should do it to any new/modified ones.)",
+      "revId": "95d7129143c27678d8a0aa577616bf95bb168eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
