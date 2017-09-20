@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "982725e2_724fb0a3",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-20T19:44:17Z",
+      "side": 1,
+      "message": "nit\ns/pixel bounds/paint recording bounds\n\nThis class is unaware of pixel coordinates. It uses paint recording coordinates instead of pixel coordinates to keep things consistent when pixel canvas is disabled.",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "13675dbe2d32cc5f50c5f90530f03ceea20bbf1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2912ef16_9478c424",
         "filename": "ui/views/paint_info.cc",
         "patchSetId": 16
