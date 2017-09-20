@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "394a7193_9eefdf96",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T17:46:40Z",
+      "side": 1,
+      "message": "Done!\n\nI saw this from omnibox\u0027s code [1]. I am not very familiar with JavaScript, so could you tell me when to use this outer scope? Do they work the same?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/omnibox/omnibox.js?q\u003domnibox.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d20",
+      "parentUuid": "53537184_408678e1",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a962ba61_e9297284",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d7ea8d_a822391f",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T17:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a962ba61_e9297284",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dbc2de01_b7911174",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T17:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a0760f_c0abac0a",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bbb1030_6091c4c5",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "70c0c926_0b1045ce",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T17:46:40Z",
+      "side": 1,
+      "message": "Actually the equivalent is node.textContent \u003d message. Thanks, fixed!",
+      "parentUuid": "6bbb1030_6091c4c5",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac83ee0b_e85ee6bf",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b223116d_194a153c",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-20T17:46:40Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I have switched to mocha, but is there an easy way to have each test() in a different function without having to separate them into 2 files?",
+      "parentUuid": "ac83ee0b_e85ee6bf",
+      "revId": "fc159418549c7d6849a39e80166d88f5540a4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
