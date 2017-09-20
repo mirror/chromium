@@ -64,8 +64,10 @@ class TestDeviceStatusListener : public DeviceStatusListener {
 class DeviceStatusListenerTest : public testing::Test {
  public:
   void SetUp() override {
-    power_monitor_ = base::MakeUnique<base::PowerMonitor>(
-        base::MakeUnique<base::PowerMonitorTestSource>());
+    auto power_source = base::MakeUnique<base::PowerMonitorTestSource>();
+    power_source_ = power_source.get();
+    power_monitor_ =
+        base::MakeUnique<base::PowerMonitor>(std::move(power_source));
 
     listener_ = base::MakeUnique<TestDeviceStatusListener>(
         base::TimeDelta::FromSeconds(0));
@@ -80,8 +82,7 @@ class DeviceStatusListenerTest : public testing::Test {
 
   // Simulates a battery change call.
   void SimulateBatteryChange(bool on_battery_power) {
-    static_cast<base::PowerObserver*>(listener_.get())
-        ->OnPowerStateChange(on_battery_power);
+    power_source_->GeneratePowerStateEvent(on_battery_power);
   }
 
  protected:
@@ -92,6 +93,7 @@ class DeviceStatusListenerTest : public testing::Test {
   base::MessageLoop message_loop_;
   TestNetworkChangeNotifier test_network_notifier_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
+  base::PowerMonitorTestSource* power_source_;
 };
 
 // Ensures the observer is notified when network condition changes.

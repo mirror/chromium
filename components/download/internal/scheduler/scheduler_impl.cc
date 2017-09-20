@@ -67,6 +67,7 @@ Entry* SchedulerImpl::Next(const Model::EntryList& entries,
                            const DeviceStatus& device_status) {
   std::map<DownloadClient, Entry*> candidates =
       FindCandidates(entries, device_status);
+  LOG(ERROR) << "@@@ " << __func__ << "2222 entries size = " << entries.size();
 
   Entry* entry = nullptr;
   size_t index = current_client_index_;
@@ -96,6 +97,11 @@ Entry* SchedulerImpl::Next(const Model::EntryList& entries,
       if (ui_priority)
         break;
     }
+  }
+
+  if (entry) {
+    LOG(ERROR) << "@@@ "
+               << " next entry :" << entry->guid;
   }
   return entry;
 }

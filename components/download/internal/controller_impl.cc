@@ -974,6 +974,7 @@ void ControllerImpl::KillTimedOutDownloads() {
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
+  LOG(ERROR) << "@@@ " << __func__;
   if (controller_state_ != State::READY)
     return;
 
@@ -994,12 +995,13 @@ void ControllerImpl::ActivateMoreDownloads() {
   uint32_t active_count = entries_states[Entry::State::ACTIVE];
 
   bool has_actionable_downloads = false;
+  LOG(ERROR) << "@@@ " << __func__ << "111";
   while (CanActivateMoreDownloads(config_, active_count, paused_count)) {
     Entry* next = scheduler_->Next(
         model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
     if (!next)
       break;
-
+    LOG(ERROR) << "@@@ " << __func__ << "2222";
     has_actionable_downloads = true;
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
     TransitTo(next, Entry::State::ACTIVE, model_.get());

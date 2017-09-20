@@ -28,3 +28,13 @@ source_set("components_unittests_gtest_filter") {
     "components_unittests.filter",
   ]
 }
+
+source_set("test_support") {
+  testonly = true
+
+  public_deps = [
+    # TODO(xingliu): Add the public test support here.
+    #"//components/download/public/test:test_support",
+    "//components/download/content/factory:test_support",
+  ]
+}
