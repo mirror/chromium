@@ -16,6 +16,7 @@
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/prefs/pref_member.h"
+#include "components/undo/undo_manager.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 
 namespace autofill {
@@ -66,12 +67,23 @@ class PasswordManagerPresenter
   // |index| the entry index to be removed.
   void RemovePasswordException(size_t index);
 
+  // Undoes the last saved password or exception removal.
+  void UndoRemoveSavedPasswordOrException();
+
   // Requests the plain text password for entry at |index| to be revealed.
   // |index| The index of the entry.
   void RequestShowPassword(size_t index);
 
   // Returns true if the user is authenticated.
   virtual bool IsUserAuthenticated();
+
+  // Wrapper around |PasswordStore::AddLogin| that adds the corresponding undo
+  // action to |undo_manager_|.
+  void AddLogin(const autofill::PasswordForm& form);
+
+  // Wrapper around |PasswordStore::RemoveLogin| that adds the corresponding
+  // undo action to |undo_manager_|.
+  void RemoveLogin(const autofill::PasswordForm& form);
 
  private:
   friend class PasswordManagerPresenterTest;
@@ -141,6 +153,8 @@ class PasswordManagerPresenter
   std::vector<std::unique_ptr<autofill::PasswordForm>> password_exception_list_;
   DuplicatesMap password_duplicates_;
   DuplicatesMap password_exception_duplicates_;
+
+  UndoManager undo_manager_;
 
   // Whether to show stored passwords or not.
   BooleanPrefMember show_passwords_;
