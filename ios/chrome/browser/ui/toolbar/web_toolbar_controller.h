@@ -31,6 +31,13 @@ namespace web {
 class WebState;
 }
 
+enum OmniboxLayoutStyle {
+  FULL_BLEED,
+  BACK_BUTTON_TO_STACK_BUTTON,
+  FORWARD_BUTTON_TO_STACK_BUTTON,
+  FORWARD_BUTTON_TO_SHARE_BUTTON,
+};
+
 // Notification when the tab history popup is shown.
 extern NSString* const kTabHistoryPopupWillShowNotification;
 // Notification when the tab history popup is hidden.
