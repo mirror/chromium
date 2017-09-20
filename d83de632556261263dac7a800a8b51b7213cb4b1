@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "344aa0af_3576e2d4",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-09-20T02:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ecf6a0f_93bcaea4",
+      "revId": "d83de632556261263dac7a800a8b51b7213cb4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460cedbc_f3429ab8",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "33f31675_8afe0139",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-09-20T02:54:14Z",
+      "side": 1,
+      "message": "Yes, and also for uniform the data return. I.e., https://cs.chromium.org/chromium/src/components/printing/renderer/print_render_frame_helper_mac.mm?l\u003d69 is no longer needed.",
+      "parentUuid": "460cedbc_f3429ab8",
+      "revId": "d83de632556261263dac7a800a8b51b7213cb4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3dd8533_fb648e75",
         "filename": "printing/pdf_metafile_skia.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T21:49:54Z",
       "side": 1,
       "message": "There\u0027s no callers for this method.",
+      "revId": "d83de632556261263dac7a800a8b51b7213cb4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fa933e_78489216",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-09-20T02:54:14Z",
+      "side": 1,
+      "message": "Yes, this is the plumbing. I am going to use it in another CL. :)",
+      "parentUuid": "b3dd8533_fb648e75",
       "revId": "d83de632556261263dac7a800a8b51b7213cb4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
