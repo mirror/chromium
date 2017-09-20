@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd92f640_ba11d651",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-20T23:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed670de9_da5f1356",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "5755473e8d9f72f3b4dcc1d33811bacd9350d900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8cf3c06_ac5e538c",
         "filename": "chrome/browser/upgrade_detector.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-20T23:31:18Z",
       "side": 1,
       "message": "When adding a new value it\u0027s easy to miss this needs to be updated as well. That\u0027s why I suggested you use a LAST value, e.g.:\n\nUPGRADE_ANNOYANCE_CRITICAL,\nUPGRADE_ANNOYANCE_LAST \u003d UPGRADE_ANNOYANCE_CRITICAL,\n\nAs LAST is the same as CRITICAL you don\u0027t need to update switch statements.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "5755473e8d9f72f3b4dcc1d33811bacd9350d900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fb4879_caa532be",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-20T23:50:24Z",
+      "side": 1,
+      "message": "Ah, so that\u0027s what you meant. Thanks for pointing this out!",
+      "parentUuid": "e8cf3c06_ac5e538c",
       "range": {
         "startLine": 45,
         "startChar": 6,
