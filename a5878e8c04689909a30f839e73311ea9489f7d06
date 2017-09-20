@@ -22,6 +22,30 @@
       "revId": "a5878e8c04689909a30f839e73311ea9489f7d06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f04e1a1_a95da3ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T14:56:55Z",
+      "side": 1,
+      "message": "Much easier than touch delegates and the like!",
+      "parentUuid": "d0812443_7fb51bf6",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 42
+      },
+      "revId": "a5878e8c04689909a30f839e73311ea9489f7d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
