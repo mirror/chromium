@@ -41,6 +41,7 @@
 #include "media/base/channel_layout.h"
 #include "media/base/ipc/media_param_traits.h"
 #include "media/capture/ipc/capture_param_traits.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 #include "net/base/network_change_notifier.h"
 #include "ppapi/features/features.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
@@ -553,6 +554,11 @@ IPC_MESSAGE_ROUTED1(ViewMsg_SetViewportIntersection,
 
 // Sets the inert bit on an out-of-process iframe.
 IPC_MESSAGE_ROUTED1(ViewMsg_SetIsInert, bool /* inert */)
+
+#if defined(USE_AURA)
+IPC_MESSAGE_ROUTED1(ViewMsg_GetWindowTreeClient,
+                    mojo::MessagePipeHandle /* window_tree_client_request */)
+#endif
 
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.
