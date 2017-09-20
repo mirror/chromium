@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f097b1ae_0c408237",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-20T00:02:40Z",
+      "side": 1,
+      "message": "\"render\" or \"renderer\" means the renderer process to me. e.g. there are various other\nUMAS in cc with Renderer vs Browser versions, for each process.\n\nI don\u0027t think there is a great name other than \"main thread\". You could use \"Main\" if you want.",
+      "parentUuid": "6d00399e_76e3b7ae",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f205113_2961d0f4",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 5
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "Same question.",
       "parentUuid": "0f205113_2961d0f4",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bb97e9_63a2a416",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-20T00:02:40Z",
+      "side": 1,
+      "message": "Hmm. I can\u0027t find any unittesting examples for UMA. One option would be to add an\naccessor for testing and FRIEND_TEST.",
+      "parentUuid": "9e5a802d_6bd1f175",
       "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
