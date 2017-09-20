@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "008d2e44_18e513a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "I would not suspect the thread local buffer to cause crashes in stable since those reports are crashes mostly due to memory uma background dump. I checked the 5 crashes in the latest version (61.0..) and it shows either Malloc or ProcessMemoryMetrics provider. This issue is probably fixed after the process metrics provider is moved out of MDM now. There was one crash on gpu::BufferManager.\nSo, maybe bug\u003d766274?",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc08e795_98516ad5",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "This might cause problems like the ordering in the |dump_providers_| list. This is an ordered set. Do you know what is the behavior of the set if this changes?\nApart from that this might cause asan errors? while inserting other providers the comparison operator would read while this writes.\n\nHow about we change the ordering comparison to have a dummy sequence or a use |this| pointer of MDPInfo instead of dump_provider?\n\nAlso need to update the comment on MDPInfo that says const members can be accessed without lock. |dump_provider| is an exception. All other places that access |dump_provider| seems to be trying to call some function which should not race with unregister.",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 472,
+        "endChar": 58
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4786d6ab_1a7cfe8d",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -13,6 +59,87 @@
       "writtenOn": "2017-09-19T19:08:12Z",
       "side": 1,
       "message": "q: How does this avoid the re-entrancy? e.g. what if the trace log generation changes between here and the TRACE_EVENTs?",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4bddae_3bc163b7",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "yeah it is possible that the tracing was disabled and enabled again before flush happens, between the disabled check and if(should_dump) scope. In which case the buffer will again get created.",
+      "parentUuid": "4786d6ab_1a7cfe8d",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef91ddc9_c9c04cee",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "Maybe we could do a TRACE_EVETN_BEGIN here if should_dump is true, and end the event after OnMemoryDump() call?",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df099da_58f11ad6",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "nit invoke",
+      "range": {
+        "startLine": 663,
+        "startChar": 50,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4321251_570d725e",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T02:29:54Z",
+      "side": 1,
+      "message": "nit remove",
+      "range": {
+        "startLine": 683,
+        "startChar": 11,
+        "endLine": 683,
+        "endChar": 33
+      },
       "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
