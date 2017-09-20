@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5828cdcd_482c1718",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-20T04:33:45Z",
+      "side": 1,
+      "message": "Why did we do this?  The lock being inside the struct reads cleaner.\n\nShould ranctx have been the LazyInstance?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187d2e09_edd2b2d2",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-20T04:33:45Z",
+      "side": 1,
+      "message": "Why is this a memset() when nearly everywhere else you are using the initializer syntax?\n\nIf keeping memset, can we use the arraysize() macro? https://cs.chromium.org/chromium/src/base/macros.h?q\u003darraysize\u0026sq\u003dpackage:chromium\u0026l\u003d54",
+      "range": {
+        "startLine": 898,
+        "startChar": 11,
+        "endLine": 898,
+        "endChar": 26
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b070404_b3522765",
+        "filename": "base/allocator/partition_allocator/spin_lock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-20T04:33:45Z",
+      "side": 1,
+      "message": "erp... doesn\u0027t this need to be initialized to {0}?  \n\nI think you need the funky syntax w/o the \u003d sign so:\n\nstd::atomic_int lock_{0};\n\nhttps://stackoverflow.com/a/36320050",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "a15a2b296916d6ec3ded34eab08af5470af5cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
