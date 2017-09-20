@@ -36,12 +36,15 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/icons/chrome_icon.h"
+#import "ios/chrome/browser/ui/material_components/utils.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
+#import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ios/web/public/referrer.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -78,10 +81,13 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
     BookmarkTableViewDelegate,
     ContextBarDelegate>
 
+@property(nonatomic, strong) MDCAppBar* appBar;
+
 @end
 
 @implementation BookmarkHomeViewController
 
+@synthesize appBar = _appBar;
 @synthesize actionSheetCoordinator = _actionSheetCoordinator;
 @synthesize bookmarkPromoController = _bookmarkPromoController;
 @synthesize bookmarks = _bookmarks;
@@ -157,8 +163,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                                action:@selector(navigationBarWantsEditing:)];
     [self.navigationBar setBackTarget:self
                                action:@selector(navigationBarBack:)];
-  } else {
-    [self setupNavigationBar];
   }
 }
 
@@ -992,6 +996,9 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   [self.bookmarksTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.view addSubview:self.bookmarksTableView];
 
+  // After the table view has been added.
+  [self setupNavigationBar];
+
   if (_rootNode != self.bookmarks->root_node()) {
     [self setupContextBar];
   }
@@ -1048,77 +1055,52 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   [self.view addSubview:self.contextBar];
 }
 
+- (UIViewController*)childViewControllerForStatusBarHidden {
+  return self.appBar.headerViewController;
+}
+
+- (UIViewController*)childViewControllerForStatusBarStyle {
+  return self.appBar.headerViewController;
+}
+
 // Set up navigation bar for the new UI.
 - (void)setupNavigationBar {
+  self.navigationController.navigationBarHidden = YES;
+
+  self.appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:_appBar.headerViewController];
+  ConfigureAppBarWithCardStyle(self.appBar);
+  // Set the header view's tracking scroll view.
+  self.appBar.headerViewController.headerView.trackingScrollView =
+      self.bookmarksTableView.tableView;
+  self.bookmarksTableView.headerView =
+      self.appBar.headerViewController.headerView;
+
+  [self.appBar addSubviewsToParent];
+
   // Add custom back button.
-  self.navigationItem.backBarButtonItem = [self customizedBackButton];
+  self.navigationItem.backBarButtonItem =
+      [ChromeIcon templateBarButtonItemWithImage:[ChromeIcon backIcon]
+                                          target:self
+                                          action:@selector(back)];
 
   // Add custom title.
-  self.navigationItem.leftBarButtonItem = [self customizedNavigationTitle];
+  self.title = bookmark_utils_ios::TitleForBookmarkNode(_rootNode);
 
   // Add custom done button.
   self.navigationItem.rightBarButtonItem = [self customizedDoneButton];
-
-  self.navigationController.navigationBar.tintColor = UIColor.blackColor;
-  self.navigationController.navigationBar.barTintColor =
-      bookmark_utils_ios::mainBackgroundColor();
-  self.navigationController.navigationBar.translucent = NO;
 }
 
-- (UIBarButtonItem*)customizedBackButton {
-  UIImage* backImage = [UIImage imageNamed:@"bookmark_gray_back"];
-  // Set these two properties to customize the back button.
-  [UINavigationBar appearance].backIndicatorImage = backImage;
-  [UINavigationBar appearance].backIndicatorTransitionMaskImage = backImage;
-  // Removes back button label.
-  UIBarButtonItem* backButton =
-      [[UIBarButtonItem alloc] initWithTitle:@""
-                                       style:UIBarButtonItemStylePlain
-                                      target:nil
-                                      action:nil];
-  backImage.accessibilityLabel =
-      l10n_util::GetNSString(IDS_IOS_BOOKMARK_NEW_BACK_LABEL);
-  return backButton;
-}
-
-- (UIBarButtonItem*)customizedNavigationTitle {
-  NSDictionary* titleAttributes = @{
-    NSForegroundColorAttributeName :
-        [UIColor colorWithWhite:68 / 255.0 alpha:1.0],
-    NSFontAttributeName : [MDCTypography titleFont]
-  };
-  UILabel* titleView = [[UILabel alloc] initWithFrame:CGRectZero];
-  [titleView
-      setAttributedText:
-          [[NSAttributedString alloc]
-              initWithString:bookmark_utils_ios::TitleForBookmarkNode(_rootNode)
-                  attributes:titleAttributes]];
-  [titleView sizeToFit];
-  // iOS11 navigation bar uses auto layout, hence explicitly set this to NO.
-  if (base::ios::IsRunningOnIOS11OrLater()) {
-    titleView.translatesAutoresizingMaskIntoConstraints = NO;
-  }
-  self.navigationItem.leftItemsSupplementBackButton = YES;
-  return [[UIBarButtonItem alloc] initWithCustomView:titleView];
+- (void)back {
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UIBarButtonItem*)customizedDoneButton {
   UIBarButtonItem* doneButton = [[UIBarButtonItem alloc]
       initWithTitle:l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)
-                        .localizedUppercaseString
-              style:UIBarButtonItemStylePlain
+              style:UIBarButtonItemStyleDone
              target:self
              action:@selector(navigationBarCancel:)];
-  NSDictionary* attributes = @{
-    NSForegroundColorAttributeName :
-        [UIColor colorWithWhite:68 / 255.0 alpha:1.0],
-    NSFontAttributeName : [MDCTypography buttonFont]
-  };
-  [doneButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
-  // iOS11 bug requires us to set the text attribute for every state used.
-  // See http://www.openradar.me/34276265.
-  [doneButton setTitleTextAttributes:attributes
-                            forState:UIControlStateSelected];
   doneButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON);
   return doneButton;
@@ -1186,7 +1168,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
         @"topGuide" : self.topLayoutGuide,
       };
       NSArray* constraints = @[
-        @"V:|[topGuide][tableView][contextBar(==48)]|",
+        @"V:|[tableView][contextBar(==48)]|",
         @"H:|[tableView]|",
         @"H:|[contextBar]|",
       ];
@@ -1197,7 +1179,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
         @"topGuide" : self.topLayoutGuide,
       };
       NSArray* constraints = @[
-        @"V:|[topGuide][tableView]|",
+        @"V:|[tableView]|",
         @"H:|[tableView]|",
       ];
       ApplyVisualConstraints(constraints, views);
