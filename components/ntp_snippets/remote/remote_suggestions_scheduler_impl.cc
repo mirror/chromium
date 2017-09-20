@@ -142,6 +142,10 @@ const char* const kTriggerTypesParamValueForEmptyList = "-";
 
 const int kBlockBackgroundFetchesMinutesAfterClearingHistory = 30;
 
+// Variation parameter for minimal age of a suggestion to be considered "stale".
+const char kMinAgeForStaleSuggestionParamName[] =
+    "min_age_for_stale_suggestions_minutes";
+
 // Returns the time interval to use for scheduling remote suggestion fetches for
 // the given interval and user_class.
 base::TimeDelta GetDesiredFetchingInterval(
@@ -411,6 +415,14 @@ bool RemoteSuggestionsSchedulerImpl::FetchingSchedule::is_empty() const {
          interval_shown_fallback.is_zero();
 }
 
+base::TimeDelta
+RemoteSuggestionsSchedulerImpl::FetchingSchedule::get_staleness_interval()
+    const {
+  return base::TimeDelta::FromMinutes(base::GetFieldTrialParamByFeatureAsInt(
+      ntp_snippets::kArticleSuggestionsFeature,
+      kMinAgeForStaleSuggestionParamName, interval_startup_wifi.InMinutes()));
+}
+
 // The TriggerType enum specifies values for the events that can trigger
 // fetching remote suggestions. These values are written to logs. New enum
 // values can be added, but existing enums must never be renumbered or deleted
@@ -478,6 +490,7 @@ void RemoteSuggestionsSchedulerImpl::RegisterProfilePrefs(
   registry->RegisterInt64Pref(prefs::kSnippetShownFetchingIntervalWifi, 0);
   registry->RegisterInt64Pref(prefs::kSnippetShownFetchingIntervalFallback, 0);
   registry->RegisterInt64Pref(prefs::kSnippetLastFetchAttempt, 0);
+  registry->RegisterInt64Pref(prefs::kSnippetLastSuccessfulFetch, 0);
 }
 
 void RemoteSuggestionsSchedulerImpl::SetProvider(
@@ -660,6 +673,26 @@ void RemoteSuggestionsSchedulerImpl::StoreFetchingSchedule() {
                            schedule_.interval_shown_fallback.ToInternalValue());
 }
 
+void RemoteSuggestionsSchedulerImpl::MarkSuggestionsUpToDate() {
+  profile_prefs_->SetInt64(
+      prefs::kSnippetLastSuccessfulFetch,
+      (clock_->Now() - base::Time::UnixEpoch()).ToMicroseconds());
+}
+
+bool RemoteSuggestionsSchedulerImpl::AreSuggestionsStale() const {
+  const base::Time last_successful_fetch_time =
+      base::Time::UnixEpoch() +
+      base::TimeDelta::FromMicroseconds(
+          profile_prefs_->GetInt64(prefs::kSnippetLastSuccessfulFetch));
+  // Avoid claiming staleness on the first fetch (after upgrading Chrome) as we
+  // really do not know when was the last fetch.
+  if (last_successful_fetch_time.is_null())
+    return false;
+
+  return clock_->Now() - last_successful_fetch_time >
+         schedule_.get_staleness_interval();
+}
+
 void RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundIfAppropriate(
     TriggerType trigger) {
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
@@ -739,6 +772,16 @@ void RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundIfAppropriate(
 
   debug_logger_->Log(FROM_HERE, "issuing a fetch");
   background_fetch_in_progress_ = true;
+
+  // Signalize to the provider (by going through a different code path) that
+  // current suggestions are stale.
+  if (AreSuggestionsStale()) {
+    provider_->RefetchInTheBackgroundDueToStaleness(base::Bind(
+        &RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundFinished,
+        base::Unretained(this)));
+    return;
+  }
+
   provider_->RefetchInTheBackground(base::Bind(
       &RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundFinished,
       base::Unretained(this)));
@@ -837,6 +880,8 @@ void RemoteSuggestionsSchedulerImpl::OnFetchCompleted(Status fetch_status) {
   if (fetch_status.code != StatusCode::SUCCESS) {
     return;
   }
+
+  MarkSuggestionsUpToDate();
   ApplyPersistentFetchingSchedule();
 }
 

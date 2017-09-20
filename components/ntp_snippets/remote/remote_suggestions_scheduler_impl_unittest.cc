@@ -95,6 +95,12 @@ class MockRemoteSuggestionsProvider : public RemoteSuggestionsProvider {
   }
   MOCK_METHOD1(RefetchInTheBackgroundMock,
                void(RemoteSuggestionsProvider::FetchStatusCallback*));
+  void RefetchInTheBackgroundDueToStaleness(
+      RemoteSuggestionsProvider::FetchStatusCallback callback) override {
+    RefetchInTheBackgroundDueToStalenessMock(&callback);
+  }
+  MOCK_METHOD1(RefetchInTheBackgroundDueToStalenessMock,
+               void(RemoteSuggestionsProvider::FetchStatusCallback*));
   MOCK_CONST_METHOD0(suggestions_fetcher_for_debugging,
                      const RemoteSuggestionsFetcher*());
   MOCK_CONST_METHOD1(GetUrlWithFavicon,
@@ -1076,6 +1082,51 @@ TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldIgnoreSignalsWhenOffline) {
   scheduler()->OnSuggestionsSurfaceOpened();
   scheduler()->OnBrowserForegrounded();
   scheduler()->OnBrowserColdStart();
+}
+
+TEST_F(RemoteSuggestionsSchedulerImplTest,
+       ShouldRefetchNonStaleAfterShortDelay) {
+  // Activating the provider should schedule the persistent background fetches.
+  EXPECT_CALL(*persistent_scheduler(), Schedule(_, _)).Times(2);
+  // First enable the scheduler -- this will trigger the persistent scheduling.
+  ActivateProviderAndEula();
+
+  // The first refetch is never considered due to staleness.
+  RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
+  EXPECT_CALL(*provider(), RefetchInTheBackgroundMock(_))
+      .WillOnce(SaveArgByMove<0>(&signal_fetch_done));
+  scheduler()->OnBrowserForegrounded();
+  std::move(signal_fetch_done).Run(Status::Success());
+
+  // The staleness threshold by default coincides with the startup interval.
+  test_clock()->Advance(base::TimeDelta::FromHours(24) -
+                        base::TimeDelta::FromMinutes(1));
+
+  // Not long enough: non-stale.
+  EXPECT_CALL(*provider(), RefetchInTheBackgroundMock(_));
+  scheduler()->OnSuggestionsSurfaceOpened();
+}
+
+TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldRefetchStaleAfterLongDelay) {
+  // Activating the provider should schedule the persistent background fetches.
+  EXPECT_CALL(*persistent_scheduler(), Schedule(_, _)).Times(2);
+  // First enable the scheduler -- this will trigger the persistent scheduling.
+  ActivateProviderAndEula();
+
+  // The first refetch is never considered due to staleness.
+  RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
+  EXPECT_CALL(*provider(), RefetchInTheBackgroundMock(_))
+      .WillOnce(SaveArgByMove<0>(&signal_fetch_done));
+  scheduler()->OnBrowserForegrounded();
+  std::move(signal_fetch_done).Run(Status::Success());
+
+  // The staleness threshold by default coincides with the startup interval.
+  test_clock()->Advance(base::TimeDelta::FromHours(24) +
+                        base::TimeDelta::FromMinutes(1));
+
+  // Long enough: stale.
+  EXPECT_CALL(*provider(), RefetchInTheBackgroundDueToStalenessMock(_));
+  scheduler()->OnBrowserForegrounded();
 }
 
 }  // namespace ntp_snippets

@@ -17,6 +17,7 @@
 #include "base/containers/circular_deque.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/time/clock.h"
 #include "base/time/time.h"
@@ -89,6 +90,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // RemoteSuggestionsProvider implementation.
   void RefetchInTheBackground(FetchStatusCallback callback) override;
+  void RefetchInTheBackgroundDueToStaleness(
+      FetchStatusCallback callback) override;
 
   // TODO(fhorschig): Remove this getter when there is an interface for the
   // fetcher that allows better mocks.
@@ -386,6 +389,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   void MarkEmptyCategoriesAsLoading();
 
+  void MarkAvailableCategoriesAsLoading();
+  void MarkLoadingCategoriesAsAvailable();
+
   State state_;
 
   PrefService* pref_service_;
@@ -448,6 +454,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // Additional logging, accesible through snippets-internals.
   Logger* debug_logger_;
+
+  base::WeakPtrFactory<RemoteSuggestionsProviderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };

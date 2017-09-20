@@ -71,6 +71,12 @@ class RemoteSuggestionsSchedulerImpl : public RemoteSuggestionsScheduler {
     bool operator!=(const FetchingSchedule& other) const;
     bool is_empty() const;
 
+    // Interval since the last successful fetch after which to consider the
+    // current content stale.
+    base::TimeDelta get_staleness_interval() const;
+
+    // Intervals since the last fetch attempt after which to fetch again
+    // (depending on the trigger and connectivity).
     base::TimeDelta interval_persistent_wifi;
     base::TimeDelta interval_persistent_fallback;
     base::TimeDelta interval_startup_wifi;
@@ -90,6 +96,9 @@ class RemoteSuggestionsSchedulerImpl : public RemoteSuggestionsScheduler {
   // Idempotent, can be run any time later without impacting the current
   // schedule.
   void StopScheduling();
+
+  void MarkSuggestionsUpToDate();
+  bool AreSuggestionsStale() const;
 
   // Trigger a background refetch for the given |trigger| if enabled and if the
   // timing is appropriate for another fetch.
