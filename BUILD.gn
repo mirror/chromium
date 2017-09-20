@@ -1101,3 +1101,13 @@ template("assert_valid_out_dir") {
 assert_valid_out_dir("_unused") {
   actual_sources = [ "$root_build_dir/foo" ]
 }
+
+executable("xc_test") {
+  sources = [
+    "xc_test.cc",
+  ]
+  deps = [
+    "//crypto:crypto",
+    "//third_party/boringssl",
+  ]
+}
