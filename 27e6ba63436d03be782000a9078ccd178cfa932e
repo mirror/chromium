@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3dfa643_acaa5cee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-20T08:26:39Z",
+      "side": 1,
+      "message": "I think this whole CL description could be improved (see hints here https://chris.beams.io/posts/git-commit/).\n\nHere, if I were to look at \"git log\" in the future, I would have no idea of what this CL does from the description. My personal opinion is that a re-submit should include the original CL message verbatim, and optionally add a paragraph explaining how the original CL was fixed to work properly this time *if* the fix was complex enough.\n\nSo I would suggest the following CL description instead:\n\n  Implement \u0027Open (All) in incognito\u0027\n\n  Add the possibility to open all selected tabs in incognito mode\n  as part of the new iOS bookmark UI.\n\n  Clear the bookmark position cache before running the EarlGrey\n  tests to prevent breakage when running multiple tests.\n\n  Demo:\n  https://drive.google.com/open?id\u003d0B1O0Z7eoZMuGRVJIU0R0RDJmTkU\n  https://drive.google.com/open?id\u003d0B1O0Z7eoZMuGQjItQ2Jfd191ZEU\n\n  Bug: 695749, 766660",
+      "revId": "27e6ba63436d03be782000a9078ccd178cfa932e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e69d5c_b7683b80",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-20T08:26:39Z",
+      "side": 1,
+      "message": "I think this should be done in -tearDown as test should put back the app in the state they found it after themselves, not clean up for the previous test (aka. \"leave it as you found it\").",
+      "revId": "27e6ba63436d03be782000a9078ccd178cfa932e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
