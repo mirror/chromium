@@ -22,6 +22,30 @@
       "revId": "20731af8a3a3ee3a8fa8ab804efb60a895ea3125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf8dc9a_218395c7",
+        "filename": "ios/web/public/test/fakes/crw_test_web_state_observer.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-20T13:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd271cd9_25a1fa97",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "20731af8a3a3ee3a8fa8ab804efb60a895ea3125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
