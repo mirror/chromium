@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe19be6c_3c91ffc4",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T17:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e850e11_4565501c",
+      "revId": "fb12eec5a0120b15b9224b74795cacf399cdb5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d58150_ac257e8a",
         "filename": "extensions/renderer/worker_thread_dispatcher.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T13:51:33Z",
       "side": 1,
       "message": "nit: Any reason to not have this be a simple accessor?\n\nEventBookkeeper* event_bookkeeper() { return \u0026event_bookkeeper_; }",
+      "revId": "fb12eec5a0120b15b9224b74795cacf399cdb5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f702d38_0e8d1776",
+        "filename": "extensions/renderer/worker_thread_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T17:03:09Z",
+      "side": 1,
+      "message": "Right.\nDone.",
+      "parentUuid": "b9d58150_ac257e8a",
       "revId": "fb12eec5a0120b15b9224b74795cacf399cdb5db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
