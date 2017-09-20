@@ -1,0 +1,16 @@
+{
+  "name": "chrome.virtualKeyboard test kiosk app in the kiosk session on no audio environment.",
+  "version": "0.1",
+  "description": "Extension ID: hjboabiagenbgeaooddjbabngkgmpicl",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "kiosk_only": true,
+  "kiosk_enabled": true,
+  "permissions": [
+    "virtualKeyboard",
+    "virtualKeyboardPrivate"
+  ]
+}
