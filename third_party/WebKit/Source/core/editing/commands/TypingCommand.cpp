@@ -120,23 +120,9 @@ bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection) {
   if (!element)
     return false;
 
-  const Document& document = element->GetDocument();
   BeforeTextInsertedEvent* event =
       BeforeTextInsertedEvent::Create(String("\n"));
   element->DispatchEvent(event);
-  // event may invalidate frame or selection
-  if (!document.GetFrame() || document.GetFrame()->GetDocument() != &document) {
-    // editing/inserting/insert-linebreak-remove-frame-on-webkitBeforeTextInserted.html
-    // and
-    // editing/inserting/insert-paragraph-remove-frame-on-webkitBeforeTextInserted.html
-    // reaches here.
-    return false;
-  }
-  if (!selection.IsValidFor(document)) {
-    // editing/inserting/insert-seperator-disconnect-nodes-on-webkitBeforeTextInserted.html
-    // reaches here.
-    return false;
-  }
   return event->GetText().length();
 }
 
@@ -663,7 +649,17 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
 void TypingCommand::InsertLineBreak(EditingState* editing_state) {
   if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
     return;
-
+  // event dispatch may invalidate frame
+  if (!IsDocumentActive()) {
+    // editing/inserting/webkitBeforeTextInserted-removes-frame.html reaches
+    // here.
+    return;
+  }
+  if (!EndingSelection().IsValidFor(GetDocument())) {
+    // editing/inserting/webkitBeforeTextInserted-disconnects-selection.html
+    // reaches here.
+    return;
+  }
   ApplyCommandToComposite(InsertLineBreakCommand::Create(GetDocument()),
                           editing_state);
   if (editing_state->IsAborted())
@@ -674,7 +670,17 @@ void TypingCommand::InsertLineBreak(EditingState* editing_state) {
 void TypingCommand::InsertParagraphSeparator(EditingState* editing_state) {
   if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
     return;
-
+  // event dispatch may invalidate frame
+  if (!IsDocumentActive()) {
+    // editing/inserting/webkitBeforeTextInserted-removes-frame.html reaches
+    // here.
+    return;
+  }
+  if (!EndingSelection().IsValidFor(GetDocument())) {
+    // editing/inserting/webkitBeforeTextInserted-disconnects-selection.html
+    // reaches here.
+    return;
+  }
   ApplyCommandToComposite(
       InsertParagraphSeparatorCommand::Create(GetDocument()), editing_state);
   if (editing_state->IsAborted())
