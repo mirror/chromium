@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a10abf_0e8f69a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T09:37:32Z",
+      "side": 1,
+      "message": "You could even just overwrite |requestedState| in an if-statement. Usually I\u0027m a fan of single assignments, but in this case it might actually be clearer.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 97
+      },
+      "revId": "5825c86b7e5c86fdd3a5f0a11a2ac800142ce084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
