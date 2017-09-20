@@ -62,6 +62,29 @@
       "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2b40f8_1ed04976",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T00:47:24Z",
+      "side": 1,
+      "message": "nit: I\u0027m finding this comment a bit opaque, maybe a bit more detail?",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "1a208c85e0e09f8924a72fc0b591636611d2acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
