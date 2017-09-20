@@ -696,8 +696,13 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   provider_info->registration = std::move(info);
   provider_info->client_request = mojo::MakeRequest(&container_);
 
-  mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+  // S13nServiceWorker:
+  // Bind with ServiceWorkerScriptURLLoader only when installing a new service
+  // worker. Otherwise, the service worker unfavorably attempts to install
+  // scripts every time it restarts.
+  if (ServiceWorkerUtils::IsServicificationEnabled() &&
+      running_hosted_version()->status() == ServiceWorkerVersion::NEW) {
+    mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
     mojo::MakeStrongAssociatedBinding(
         base::MakeUnique<ServiceWorkerScriptURLLoaderFactory>(
             context_, AsWeakPtr(), context_->loader_factory_getter()),
