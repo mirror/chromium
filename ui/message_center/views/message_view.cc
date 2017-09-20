@@ -92,6 +92,7 @@ void MessageView::UpdateWithNotification(const Notification& notification) {
   pinned_ = notification.pinned();
   accessible_name_ = CreateAccessibleName(notification);
   slide_out_controller_.set_enabled(!GetPinned());
+  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
 }
 
 // static
