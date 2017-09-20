@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7b0ba806_9588d5d8",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7064fb_ec5c226e",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61eae539_60036f24",
         "filename": "base/threading/thread_restrictions.cc",
         "patchSetId": 5
@@ -56,6 +80,24 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adbc855_3592ac82",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "There is a significant number of files that need to disallow blocking in a scope. I think it\u0027s best to provide both ScopedDisallowBlocking and DisallowBlocking.\n\nDisallow forever:\nios/web/web_thread_impl.cc\nchrome/browser/metrics/thread_watcher.cc\ncontent/renderer/render_thread_impl.cc\ncontent/browser/browser_process_sub_thread.cc\nremoting/host/chromoting_host_context.cc\n\nDisallow in a scope:\nnet/base/file_stream_unittest.cc\nios/web/app/web_main_loop.mm\ndbus/property_unittest.cc\ncontent/public/test/browser_test_base.cc\ncontent/browser/browser_main_loop.cc\ndbus/signal_sender_verification_unittest.cc\ndbus/object_manager_unittest.cc\nbase/files/file_proxy_unittest.cc\nnet/disk_cache/backend_unittest.cc\ndbus/end_to_end_async_unittest.cc\nstorage/browser/blob/blob_registry_impl_unittest.cc\ncomponents/autofill/core/browser/data_driven_test.cc\nstorage/browser/blob/blob_transport_strategy_unittest.cc\nstorage/browser/blob/blob_memory_controller_unittest.cc\nbase/task_scheduler/task_tracker_unittest.cc\nchrome/browser/metrics/antivirus_metrics_provider_win_unittest.cc\ncontent/browser/fileapi/file_system_operation_runner_unittest.cc\nchrome/browser/ui/cocoa/profiles/profile_menu_controller_unittest.mm\nchromecast/app/linux/cast_crash_reporter_client_unittest.cc",
+      "parentUuid": "61eae539_60036f24",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "db457fcd_2059403b",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df6a933b_0be6b37a",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b6acec_3f764651",
         "filename": "base/threading/thread_restrictions.h",
         "patchSetId": 5
@@ -96,6 +162,24 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fcaecd_751ef0c2",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b6acec_3f764651",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "aad8ec57_798eeb9d",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Unfortunately, using \u003d default causes clang to warn about an unused variable with this code:\n\n../../base/threading/thread_restrictions_unittest.cc(49,25):  error: unused variable \u0027scoped_allow_blocking\u0027 [-Werror,-Wunused-variable]\n    ScopedAllowBlocking scoped_allow_blocking;",
+      "parentUuid": "e9a8d92b_cbbc3e48",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d3d3534_8de59ec4",
         "filename": "base/threading/thread_restrictions.h",
         "patchSetId": 5
@@ -142,6 +250,30 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f81d00_6bc4de6f",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "n/a",
+      "parentUuid": "5d3d3534_8de59ec4",
+      "range": {
+        "startLine": 212,
+        "startChar": 3,
+        "endLine": 212,
+        "endChar": 4
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "13537413_ed0bb09c",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453cc77e_b396c42c",
+      "range": {
+        "startLine": 311,
+        "startChar": 18,
+        "endLine": 311,
+        "endChar": 36
+      },
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ffe4dd_9985f862",
         "filename": "base/threading/thread_restrictions.h",
         "patchSetId": 5
@@ -182,6 +338,24 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e05527_897c50d2",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ffe4dd_9985f862",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "6f32e1bd_7ec7307e",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b71acc_c271666a",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b67097_c2c6e44f",
         "filename": "base/threading/thread_restrictions_unittest.cc",
         "patchSetId": 5
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "c6d05dad_386da6eb",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "It shouldn\u0027t. It\u0027s within an EXPECT_DCHECK_DEATH.",
+      "parentUuid": "e5b67097_c2c6e44f",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c7a65c_f7608a9d",
         "filename": "base/threading/thread_restrictions_unittest.cc",
         "patchSetId": 5
@@ -233,6 +443,24 @@
       "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b091ed5_0eeb2db6",
+        "filename": "base/threading/thread_restrictions_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-20T18:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c7a65c_f7608a9d",
+      "revId": "ae1c3c881c0fbbeca0976df7d223ccbe7246241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
