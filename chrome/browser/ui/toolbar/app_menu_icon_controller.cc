@@ -34,6 +34,8 @@ AppMenuIconController::Severity SeverityFromUpgradeLevel(
     case UpgradeDetector::UPGRADE_ANNOYANCE_SEVERE:
     case UpgradeDetector::UPGRADE_ANNOYANCE_CRITICAL:
       return AppMenuIconController::Severity::HIGH;
+    case UpgradeDetector::UPGRADE_ANNOYANCE_COUNT:
+      NOTREACHED();
   }
   NOTREACHED();
   return AppMenuIconController::Severity::NONE;
