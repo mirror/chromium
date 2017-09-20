@@ -41,8 +41,10 @@ class SystemHealthStory(page.Page):
   SUPPORTED_PLATFORMS = platforms.ALL_PLATFORMS
   TAGS = None
   PLATFORM_SPECIFIC = False
+  EXTRA_BROWSER_ARGS = []
 
-  def __init__(self, story_set, take_memory_measurement):
+  def __init__(self, story_set, take_memory_measurement,
+               shared_page_state_class=shared_page_state.SharedPageState):
     case, group, _ = self.NAME.split(':')
     tags = []
     if self.TAGS:
@@ -50,7 +52,7 @@ class SystemHealthStory(page.Page):
         assert t in story_tags.ALL_TAGS
         tags.append(t.name)
     super(SystemHealthStory, self).__init__(
-        shared_page_state_class=shared_page_state.SharedPageState,
+        shared_page_state_class=shared_page_state_class,
         page_set=story_set, name=self.NAME, url=self.URL, tags=tags,
         credentials_path='../data/credentials.json',
         grouping_keys={'case': case, 'group': group},
