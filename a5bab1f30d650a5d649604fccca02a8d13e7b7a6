@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb7c7c6d_4196ca0a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 5027,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-20T09:32:06Z",
+      "side": 1,
+      "message": "Tiny nit: only one space before the attribute.",
+      "range": {
+        "startLine": 5027,
+        "startChar": 116,
+        "endLine": 5027,
+        "endChar": 117
+      },
+      "revId": "a5bab1f30d650a5d649604fccca02a8d13e7b7a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
