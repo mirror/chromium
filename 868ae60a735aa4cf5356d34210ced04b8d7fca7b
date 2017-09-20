@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "447829a2_0e09cb20",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "699f16d9_32efaf21",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "505004dd_8221f455",
         "filename": "extensions/renderer/event_bookkeeper.h",
         "patchSetId": 1
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I\u0027d just make everything stack allocated.  Containers should be extremely easy to construct, stack allocation is much cheaper than dynamic, and I think it just makes it look a bit cleaner overall.",
       "parentUuid": "a3168b36_520bcf60",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a4a207_2f69a883",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "OK, made all members stack allocated.",
+      "parentUuid": "bc93d7f1_b3251f7b",
       "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

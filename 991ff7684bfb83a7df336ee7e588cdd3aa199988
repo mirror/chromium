@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5be6fb9_08a8d138",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dba48fc_17ee78fa",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4326e8c1_8caec4c2",
         "filename": "extensions/renderer/event_bookkeeper.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a0b485_da7db34e",
+        "filename": "extensions/renderer/event_bookkeeper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4326e8c1_8caec4c2",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ae570cb_b9db838d",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "Copy from old code failure.\nThis is context id -\u003e (event name -\u003e count)\n\nFor map of map, I find sentences harder to read, resorted to arrows:\n// Maps context id -\u003e (map of event name -\u003e listener count).\n\ni\u0027ve typedefed std::string-\u003eEventName to make these readable.\nMoving description before typedef SG.",
+      "parentUuid": "ba0923f3_4602e56e",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89d774da_ffd80bd7",
         "filename": "extensions/renderer/event_bookkeeper.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-19T21:58:39Z",
       "side": 1,
       "message": "Hmm... do we want this to leak?  I could see this being a potential problem for worker threads, because they can be set up and torn down.  Could we instead have this owned by the bookkeeper?",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95658fc4_ed3a63a6",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-20T00:14:31Z",
+      "side": 1,
+      "message": "OK, made this owned by |this|.",
+      "parentUuid": "89d774da_ffd80bd7",
       "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
