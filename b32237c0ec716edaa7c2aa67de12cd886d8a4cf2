@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f995c7c_ea65db5d",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "entirely optional: but an ...\n\n   auto* security_policy \u003d ChildProcessSecurityPolicyImpl::GetInstance();\n\naround here might help with that unfortunate line-break caused by style line limits when doing a security-sensitive CanReadFile.\n\ncode-left even had:\n\n  // Get file metadata only when the child process has been granted\n  // permission to read the file.",
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c762ae6_627c432f",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "base::nullopt remember that one, k, and very nice use of base::optional in this CL and it\u0027s mojos.",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec26f65_b56aadcf",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "FYI: once local provider arrives [1], man, is this gonna change.  Fine for now though, so again FYI only.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/614422",
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e01c94_5b75e920",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "Convention would be to add a \n\n  // blink::mojom::FileUtilitiesHost:\n\ncomment here, I believe.",
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21976314_b1d9edaa",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "nit: space before this line.",
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7a6ddf_55cfcfe3",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-20T01:52:20Z",
+      "side": 1,
+      "message": "confusing: GetFileInfo() per the mojo is not bool returning.  Where does the bool come from?",
+      "revId": "b32237c0ec716edaa7c2aa67de12cd886d8a4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
