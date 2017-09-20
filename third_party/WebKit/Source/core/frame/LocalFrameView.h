@@ -633,6 +633,7 @@ class CORE_EXPORT LocalFrameView final
   // frame and so they are affected by scroll offset. Content coordinates are
   // relative to the document's top left corner and thus are not affected by
   // scroll offset.
+  FloatPoint ContentsToFrame(const FloatPoint&) const;
   IntPoint ContentsToFrame(const IntPoint&) const;
   IntRect ContentsToFrame(const IntRect&) const;
   IntPoint FrameToContents(const IntPoint&) const;
