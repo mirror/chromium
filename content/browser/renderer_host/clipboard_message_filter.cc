@@ -292,7 +292,7 @@ void ClipboardMessageFilter::OnWriteImage(ui::ClipboardType clipboard_type,
 
   // Make sure the size is representable as a signed 32-bit int, so
   // SkBitmap::getSize() won't be truncated.
-  if (!sk_64_isS32(bitmap.computeSize64()))
+  if (!bitmap.getSafeSize())
     return;
 
   if (!bitmap_buffer->Map(bitmap.getSize()))
