@@ -343,9 +343,8 @@ void GpuVSyncWorker::UpdateCurrentDisplayFrequency() {
         base::Time::kMicrosecondsPerSecond / static_cast<double>(frequency));
     ClearIntervalHistory();
 
-    min_accepted_interval_ = interval * 0.8;
-    max_accepted_interval_ = interval * 1.2;
-    AddInterval(interval);
+    min_accepted_interval_ = interval * 0.5;
+    max_accepted_interval_ = interval * 2.0;
   }
 }
 
@@ -365,28 +364,30 @@ void GpuVSyncWorker::SendGpuVSyncUpdate(base::TimeTicks now, bool use_dwm) {
   base::TimeTicks timestamp;
   base::TimeDelta adjustment;
 
+  // Add current timestamp for the average interval calculation.
+  AddTimestamp(now);
+  base::TimeDelta interval = GetAverageInterval();
+
   if (use_dwm && GetDwmVBlankTimestamp(&timestamp)) {
     // Timestamp comes from DwmGetCompositionTimingInfo and apparently it might
     // be up to 2-3 vsync cycles in the past or in the future.
     // The adjustment formula was suggested here:
     // http://www.vsynctester.com/firefoxisbroken.html
-    base::TimeDelta interval = GetAverageInterval();
     adjustment =
         ((now - timestamp + interval / 8) % interval + interval) % interval -
         interval / 8;
+
     timestamp = now - adjustment;
   } else {
     // Not using DWM.
     timestamp = now;
   }
 
-  AddTimestamp(timestamp);
-
   TRACE_EVENT1("gpu", "GpuVSyncWorker::SendGpuVSyncUpdate", "adjustment",
                adjustment.ToInternalValue());
 
-  DCHECK_GT(GetAverageInterval().InMillisecondsF(), 0);
-  InvokeCallbackAndReschedule(timestamp, GetAverageInterval());
+  DCHECK_GT(interval.InMillisecondsF(), 0);
+  InvokeCallbackAndReschedule(timestamp, interval);
 }
 
 void GpuVSyncWorker::InvokeCallbackAndReschedule(base::TimeTicks timestamp,
