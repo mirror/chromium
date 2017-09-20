@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43667078_23bdebbc",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-20T20:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7520bfa_27ad14fc",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 11
+      },
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a42dd334_7381a76a",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227c2573_f748c705",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-20T20:25:14Z",
+      "side": 1,
+      "message": "Not sure what you mean. This already is unsigned?",
+      "parentUuid": "a42dd334_7381a76a",
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81dead1_0e5deadb",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-20T20:25:14Z",
+      "side": 1,
+      "message": "Not sure what you mean. This already is unsigned?",
+      "parentUuid": "0c44d3e2_b8b0b6fe",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 340,
+        "endChar": 10
+      },
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
