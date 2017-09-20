@@ -16,6 +16,24 @@
       "revId": "e7c766717cc1099dadb7f318522e0f78dd4a1c01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e773f0a3_a3eb4f94",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-20T21:57:04Z",
+      "side": 1,
+      "message": "I think it is public:\nhttps://play.google.com/store/apps/details?id\u003dcom.chrome.canary\u0026hl\u003den\n\nI might try whitelisting dev too, but probably no harm in doing this first. The whitelist doesn\u0027t live in Chrome.",
+      "parentUuid": "4ab8b1fc_dcc3cebf",
+      "revId": "e7c766717cc1099dadb7f318522e0f78dd4a1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
