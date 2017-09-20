@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted_delete_on_sequence.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "content/public/browser/utility_process_mojo_client.h"
 #include "extensions/browser/crx_file_info.h"
@@ -53,12 +54,16 @@ class SandboxedUnpackerClient
   // for deleting this memory.
   //
   // install_icon - The icon we will display in the installation UI, if any.
+  //
+  // dnr_ruleset_checksum - Checksum for the indexed ruleset corresponding to
+  // the Declarative Net Request API.
   virtual void OnUnpackSuccess(
       const base::FilePath& temp_dir,
       const base::FilePath& extension_root,
       std::unique_ptr<base::DictionaryValue> original_manifest,
       const Extension* extension,
-      const SkBitmap& install_icon) = 0;
+      const SkBitmap& install_icon,
+      const base::Optional<int>& dnr_ruleset_checksum) = 0;
   virtual void OnUnpackFailure(const CrxInstallError& error) = 0;
 
  protected:
@@ -292,6 +297,10 @@ class SandboxedUnpacker : public base::RefCountedThreadSafe<SandboxedUnpacker> {
 
   // Sequenced task runner where file I/O operations will be performed.
   scoped_refptr<base::SequencedTaskRunner> unpacker_io_task_runner_;
+
+  // The checksum for the indexed ruleset corresponding to the Declarative Net
+  // Request API.
+  base::Optional<int> dnr_ruleset_checksum_;
 
   // Utility client used for sending tasks to the utility process.
   std::unique_ptr<content::UtilityProcessMojoClient<mojom::ExtensionUnpacker>>
