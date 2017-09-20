@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be7863fa_6537d8eb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-20T19:54:00Z",
+      "side": 1,
+      "message": "nit: please assign self.appBar.headerViewController.headerView to a headerView local variable and reuse.",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 49
+      },
+      "revId": "19ea1b0ca06cc8461e04d28f5e44505ae3895b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49fde08_266fa7c5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-20T19:54:00Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 194,
+        "startChar": 6,
+        "endLine": 194,
+        "endChar": 49
+      },
+      "revId": "19ea1b0ca06cc8461e04d28f5e44505ae3895b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
