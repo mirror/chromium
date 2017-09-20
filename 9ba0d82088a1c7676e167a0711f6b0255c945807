@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb7e4d5_28ec0889",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-20T00:21:22Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "9ba0d82088a1c7676e167a0711f6b0255c945807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3f82e3_8aa36b28",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-20T00:21:22Z",
+      "side": 1,
+      "message": "update comment about matching?",
+      "revId": "9ba0d82088a1c7676e167a0711f6b0255c945807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
