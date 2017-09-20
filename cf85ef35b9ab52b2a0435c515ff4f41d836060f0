@@ -22,6 +22,30 @@
       "revId": "cf85ef35b9ab52b2a0435c515ff4f41d836060f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ac1787_66296383",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-20T21:23:01Z",
+      "side": 1,
+      "message": "Thanks for the feedback!\n\nI combined two dictionaries into one, please let me know if you think classes or tuples are better.\n\nHere is the structure of per directory code coverage report:\n\n    dict \u003d\u003e Directory line coverage report.\n    -- dir_name: dict \u003d\u003e Directory line coverage report for the directory.\n    ---- summary: Line coverage summary.\n    ------ total: int \u003d\u003e Number of total lines.\n    ------ executed: int \u003d\u003e Number of executed lines.\n    ---- children: Set of sub-directories or sub-files.\n\nAnd to make per file report consistent with per directory report, I also added a \u0027summary\u0027 entry to per file report, as following:\n\n      dict \u003d\u003e Line coverage report for files.\n      -- file_name: dict \u003d\u003e Line coverage report for the file.\n      ---- summary: line coverage summary.\n      ------ total: int \u003d\u003e Number of total lines.\n      ------ executed: int \u003d\u003e Number of executed lines.",
+      "parentUuid": "a58ba577_d5937677",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "cf85ef35b9ab52b2a0435c515ff4f41d836060f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
