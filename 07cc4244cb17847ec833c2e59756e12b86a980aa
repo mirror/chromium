@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937c2db0_7dbfda77",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-09-20T20:18:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this function is useful anymore since AS is now in charge or knowing when the session is running. ASR doesn\u0027t benefit from being notified. You will also be able to remove the call to it in AS, reducing the coupling between ASR and AS.",
+      "revId": "07cc4244cb17847ec833c2e59756e12b86a980aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
