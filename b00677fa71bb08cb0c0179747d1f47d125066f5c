@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c059851_818e9c14",
+        "filename": "chrome/browser/snapshot_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-20T22:29:31Z",
+      "side": 1,
+      "message": "I think you want to a ResultCatcher.\nIf I remember correctly those things reacts to when the title of the window is changed in a particular way.",
+      "revId": "b00677fa71bb08cb0c0179747d1f47d125066f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
