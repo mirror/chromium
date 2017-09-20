@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fff26fbe_334fd5b5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-20T23:00:39Z",
+      "side": 1,
+      "message": "We call it for testing, where setting up a (fake) event would be a touch onerous.",
+      "parentUuid": "7be6e881_3c4b8abc",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f247a5f1_21139025",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2a6e8990_c4f6c3b6",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-20T23:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f247a5f1_21139025",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e555d7_8246eb7b",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53bef47_dce30d01",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-20T23:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e555d7_8246eb7b",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

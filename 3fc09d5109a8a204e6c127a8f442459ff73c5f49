@@ -384,6 +384,30 @@
     },
     {
       "key": {
+        "uuid": "bf18405d_e39bca54",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-20T23:00:39Z",
+      "side": 1,
+      "message": "I would argue that calling a class Abstract that didn\u0027t inherit was the inevitable cause of that confusion.\n\nModulesInitializer is simply a missed piece of this CL as a result of that.",
+      "parentUuid": "f9c93191_8e1f8153",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7282fe_f0198570",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
         "patchSetId": 8
