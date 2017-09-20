@@ -22,6 +22,30 @@
       "revId": "5c018f77139b9888092cfa441144d51d9663a8bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891a8ff5_93c3d70d",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-20T08:42:59Z",
+      "side": 1,
+      "message": "There\u0027s only a top toolbar constraints being set. So this was actually my fault for not grouping the constraints correctly, and even I thought the the contentView constraints were toolbar constraints after reading your comment. Done.",
+      "parentUuid": "fe2e0cc4_696d889f",
+      "range": {
+        "startLine": 261,
+        "startChar": 22,
+        "endLine": 261,
+        "endChar": 34
+      },
+      "revId": "5c018f77139b9888092cfa441144d51d9663a8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
