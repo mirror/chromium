@@ -75,6 +75,9 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
                                              const gfx::Rect& content_area,
                                              const float& scale_factor);
 
+  void SetDataDocType(SkiaDocumentType type);
+  SkiaDocumentType DataDocType() const;
+
  private:
   std::unique_ptr<PdfMetafileSkiaData> data_;
 
