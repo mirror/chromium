@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4cc03c_d978b014",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:19:22Z",
+      "side": 1,
+      "message": "/** @override */\n              ^\nNote that the closing comment only has one asterisk.",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe606b6_5cb22195",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-20T22:19:22Z",
+      "side": 1,
+      "message": "Wondering if this test can be improved a bit. Currently the line that calls getPreviewsEnabled() in the prod code is not tested. One could delete it, and this test (and next one) would still pass.\n\nNormally, you would test this as follows:\n1) TestPageHandler extends TestBrowserProxy,see examples https://cs.chromium.org/search/?q\u003dTestBrowserProxy+lang:js\u0026sq\u003dpackage:chromium\u0026type\u003dcs.\n\n2) Instead of manually calling getPreviewsEnabled(), would would call\ntestPageHandler.whenCalled(\u0027getPreviewsEnabled\u0027).then(function() {\n ... assertions here\n});\n\nThis way the test actually ensures that the prod code does call getPreviewsEnabled.",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
