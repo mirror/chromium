@@ -36,7 +36,7 @@ void SurroundingTextTest::SetUp() {
 }
 
 void SurroundingTextTest::SetHTML(const String& content) {
-  GetDocument().body()->setInnerHTML(content);
+  GetDocument().body()->SetInnerHTMLFromString(content);
   GetDocument().UpdateStyleAndLayout();
 }
 
