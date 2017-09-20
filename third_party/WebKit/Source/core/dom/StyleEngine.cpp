@@ -41,6 +41,7 @@
 #include "core/css/resolver/ViewportStyleResolver.h"
 #include "core/dom/DocumentStyleSheetCollector.h"
 #include "core/dom/Element.h"
+#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ShadowRoot.h"
@@ -138,20 +139,21 @@ StyleEngine::StyleSheetsForStyleSheetList(TreeScope& tree_scope) {
   return collection.StyleSheetsForStyleSheetList();
 }
 
-WebStyleSheetId StyleEngine::InjectAuthorSheet(
-    StyleSheetContents* author_sheet) {
-  injected_author_style_sheets_.push_back(
-      std::make_pair(++injected_author_sheets_id_count_,
-                     CSSStyleSheet::Create(author_sheet, *document_)));
+WebStyleSheetId StyleEngine::InjectSheet(StyleSheetContents* sheet) {
+  user_style_sheets_.push_back(
+      std::make_pair(++injected_sheets_id_count_,
+                     CSSStyleSheet::Create(sheet, *document_)));
 
+  user_style_sheets_modified_ = true;
   MarkDocumentDirty();
-  return injected_author_sheets_id_count_;
+  return injected_sheets_id_count_;
 }
 
-void StyleEngine::RemoveInjectedAuthorSheet(WebStyleSheetId author_sheet_id) {
-  for (size_t i = 0; i < injected_author_style_sheets_.size(); ++i) {
-    if (injected_author_style_sheets_[i].first == author_sheet_id) {
-      injected_author_style_sheets_.erase(i);
+void StyleEngine::RemoveInjectedSheet(WebStyleSheetId sheet_id) {
+  for (size_t i = 0; i < user_style_sheets_.size(); ++i) {
+    if (user_style_sheets_[i].first == sheet_id) {
+      user_style_sheets_.erase(i);
+      user_style_sheets_modified_ = true;
       MarkDocumentDirty();
     }
   }
@@ -338,6 +340,20 @@ void StyleEngine::UpdateActiveStyleSheetsInShadow(
   }
 }
 
+void StyleEngine::UpdateActiveUserStyleSheets() {
+  DCHECK(user_style_sheets_modified_);
+
+  ActiveStyleSheetVector new_active_sheets;
+  for (auto& sheet : user_style_sheets_) {
+    if (RuleSet* rule_set = RuleSetForSheet(*sheet.second))
+      new_active_sheets.push_back(std::make_pair(sheet.second, rule_set));
+  }
+
+  ApplyUserRuleSetChanges(active_user_style_sheets_, new_active_sheets);
+
+  new_active_sheets.swap(active_user_style_sheets_);
+}
+
 void StyleEngine::UpdateActiveStyleSheets() {
   if (!NeedsActiveStyleSheetUpdate())
     return;
@@ -347,6 +363,9 @@ void StyleEngine::UpdateActiveStyleSheets() {
   DCHECK(GetDocument().IsActive());
 
   TRACE_EVENT0("blink,blink_style", "StyleEngine::updateActiveStyleSheets");
+
+  if (user_style_sheets_modified_)
+    UpdateActiveUserStyleSheets();
 
   if (ShouldUpdateDocumentStyleSheetCollection())
     GetDocumentStyleSheetCollection().UpdateActiveStyleSheets(*this);
@@ -371,6 +390,7 @@ void StyleEngine::UpdateActiveStyleSheets() {
   document_scope_dirty_ = false;
   all_tree_scopes_dirty_ = false;
   tree_scopes_removed_ = false;
+  user_style_sheets_modified_ = false;
 }
 
 void StyleEngine::UpdateViewport() {
@@ -919,7 +939,8 @@ void StyleEngine::InvalidateSlottedElements(HTMLSlotElement& slot) {
 
 void StyleEngine::ScheduleInvalidationsForRuleSets(
     TreeScope& tree_scope,
-    const HeapHashSet<Member<RuleSet>>& rule_sets) {
+    const HeapHashSet<Member<RuleSet>>& rule_sets,
+    bool follow_shadow) {
 #if DCHECK_IS_ON()
   // Full scope recalcs should be handled while collecting the ruleSets before
   // calling this method.
@@ -952,6 +973,15 @@ void StyleEngine::ScheduleInvalidationsForRuleSets(
     ScheduleRuleSetInvalidationsForElement(*element, rule_sets);
     if (invalidate_slotted && isHTMLSlotElement(element))
       InvalidateSlottedElements(toHTMLSlotElement(*element));
+
+    if (follow_shadow) {
+      ElementShadow* shadow = element->Shadow();
+      ShadowRoot* shadow_root = shadow ? &shadow->OldestShadowRoot() : nullptr;
+      while (shadow_root) {
+        ScheduleInvalidationsForRuleSets(*shadow_root, rule_sets, true);
+        shadow_root = shadow_root->YoungerShadowRoot();
+      }
+    }
 
     if (element->GetStyleChangeType() < kSubtreeStyleChange)
       element = ElementTraversal::Next(*element, stay_within);
@@ -1089,6 +1119,53 @@ unsigned GetRuleSetFlags(const HeapHashSet<Member<RuleSet>> rule_sets) {
 
 }  // namespace
 
+void StyleEngine::ApplyUserRuleSetChanges(
+    const ActiveStyleSheetVector& old_style_sheets,
+    const ActiveStyleSheetVector& new_style_sheets) {
+  DCHECK(IsMaster());
+  DCHECK(global_rule_set_);
+  HeapHashSet<Member<RuleSet>> changed_rule_sets;
+
+  ActiveSheetsChange change = CompareActiveStyleSheets(
+      old_style_sheets, new_style_sheets, changed_rule_sets);
+
+  // With rules added or removed, we need to re-aggregate rule meta data.
+  global_rule_set_->MarkDirty();
+
+  unsigned changed_rule_flags = GetRuleSetFlags(changed_rule_sets);
+  bool fonts_changed = changed_rule_flags & kFontFaceRules;
+
+  // We don't need to clear the font cache if new sheets are appended.
+  if (fonts_changed && change == kActiveSheetsChanged)
+    ClearFontCache();
+
+  if (document_->HasPendingForcedStyleRecalc())
+    return;
+
+  if (!document_->body() ||
+      document_->HasNodesWithPlaceholderStyle()) {
+    document_->SetNeedsStyleRecalc(
+        kSubtreeStyleChange, StyleChangeReasonForTracing::Create(
+                                 StyleChangeReason::kCleanupPlaceholderStyles));
+    return;
+  }
+
+  if (changed_rule_sets.IsEmpty())
+    return;
+
+  if (document_->GetStyleChangeType() >= kSubtreeStyleChange)
+    return;
+
+  if (fonts_changed || (changed_rule_flags & kFullRecalcRules)) {
+    document_->SetNeedsStyleRecalc(
+        kSubtreeStyleChange, StyleChangeReasonForTracing::Create(
+                                 StyleChangeReason::kActiveStylesheetsUpdate));
+    return;
+  }
+
+  ScheduleInvalidationsForRuleSets(*document_, changed_rule_sets, true);
+}
+
 void StyleEngine::ApplyRuleSetChanges(
     TreeScope& tree_scope,
     const ActiveStyleSheetVector& old_style_sheets,
@@ -1222,9 +1299,20 @@ bool StyleEngine::UpdateRemUnits(const ComputedStyle* old_root_style,
   return false;
 }
 
+void StyleEngine::CollectMatchingUserRules(
+    ElementRuleCollector& collector) const {
+  for (unsigned i = 0; i < active_user_style_sheets_.size(); ++i) {
+    DCHECK(active_user_style_sheets_[i].second);
+    collector.CollectMatchingRules(
+        MatchRequest(active_user_style_sheets_[i].second, nullptr,
+                     active_user_style_sheets_[i].first, i));
+  }
+}
+
 DEFINE_TRACE(StyleEngine) {
   visitor->Trace(document_);
-  visitor->Trace(injected_author_style_sheets_);
+  visitor->Trace(user_style_sheets_);
+  visitor->Trace(active_user_style_sheets_);
   visitor->Trace(inspector_style_sheet_);
   visitor->Trace(document_style_sheet_collection_);
   visitor->Trace(style_sheet_collection_map_);
@@ -1244,7 +1332,7 @@ DEFINE_TRACE(StyleEngine) {
 }
 
 DEFINE_TRACE_WRAPPERS(StyleEngine) {
-  for (const auto& sheet : injected_author_style_sheets_) {
+  for (const auto& sheet : user_style_sheets_) {
     visitor->TraceWrappers(sheet.second);
   }
   visitor->TraceWrappers(document_style_sheet_collection_);
