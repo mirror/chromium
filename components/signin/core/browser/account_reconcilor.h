@@ -117,6 +117,7 @@ class AccountReconcilor : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, DiceLastKnownFirstAccount);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            DiceReconcileReuseGaiaFirstAccount);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, DiceAccountReordering);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            StartReconcileCookiesDisabled);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
@@ -188,6 +189,8 @@ class AccountReconcilor : public KeyedService,
   bool IsTokenServiceReady();
 
   // Returns the first account to add in the Gaia cookie.
+  // If this returns an empty string, the user must be logged out of all
+  // accounts.
   std::string GetFirstGaiaAccountForReconcile() const;
 
   // Overriden from content_settings::Observer.

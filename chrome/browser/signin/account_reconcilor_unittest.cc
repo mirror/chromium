@@ -476,6 +476,65 @@ TEST_F(AccountReconcilorTest, DiceLastKnownFirstAccount) {
   }
 }
 
+// Tests that the Gaia accounts are reodered on the first exectution only.
+TEST_F(AccountReconcilorTest, DiceAccountReordering) {
+  // Enable Dice.
+  signin::ScopedAccountConsistencyDice scoped_dice;
+
+  // Add accounts 1 and 2 to the token service.
+  const std::string account_id_1 =
+      ConnectProfileToAccount("12345", "user@gmail.com");
+  const std::string account_id_2 =
+      PickAccountIdForAccount("67890", "other@gmail.com");
+  token_service()->UpdateCredentials(account_id_2, "refresh_token");
+
+  ASSERT_EQ(2u, token_service()->GetAccounts().size());
+  ASSERT_EQ(account_id_1, token_service()->GetAccounts()[0]);
+  ASSERT_EQ(account_id_2, token_service()->GetAccounts()[1]);
+
+  // Add accounts to the Gaia cookie in the reverse order.
+  cookie_manager_service()->SetListAccountsResponseTwoAccounts(
+      "other@gmail.com", "67890", "user@gmail.com", "12345");
+
+  // First reconcile: accounts are reordered.
+  {
+    testing::InSequence mock_sequence;
+    EXPECT_CALL(*GetMockReconcilor(), PerformLogoutAllAccountsAction());
+    // Account 1 is added first.
+    EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id_1));
+    EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id_2));
+
+    AccountReconcilor* reconcilor = GetMockReconcilor();
+    ASSERT_TRUE(reconcilor->first_execution_);
+    reconcilor->StartReconcile();
+    ASSERT_TRUE(reconcilor->is_reconcile_started_);
+    base::RunLoop().RunUntilIdle();
+    SimulateAddAccountToCookieCompleted(
+        reconcilor, account_id_1, GoogleServiceAuthError::AuthErrorNone());
+    SimulateAddAccountToCookieCompleted(
+        reconcilor, account_id_2, GoogleServiceAuthError::AuthErrorNone());
+    ASSERT_FALSE(reconcilor->is_reconcile_started_);
+    ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
+  }
+
+  cookie_manager_service()->set_list_accounts_stale_for_testing(true);
+
+  // Reconcile again: accounts are not reordered.
+  {
+    EXPECT_CALL(*GetMockReconcilor(), PerformLogoutAllAccountsAction())
+        .Times(0);
+    EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(testing::_)).Times(0);
+
+    AccountReconcilor* reconcilor = GetMockReconcilor();
+    ASSERT_FALSE(reconcilor->first_execution_);
+    reconcilor->StartReconcile();
+    ASSERT_TRUE(reconcilor->is_reconcile_started_);
+    base::RunLoop().RunUntilIdle();
+    ASSERT_FALSE(reconcilor->is_reconcile_started_);
+    ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
+  }
+}
+
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 TEST_F(AccountReconcilorTest, GetAccountsFromCookieSuccess) {
