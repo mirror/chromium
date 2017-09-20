@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba09ec9_41e53f8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "Should this ever be possible?  Seems like we should be able to guarantee the tab is created.\n\nI think if this is supported, then I think we run into other issues if this happens for the first tab we are attempting to create.  Because we would be calling stopForeground without first ever calling startForeground, which I believe isn\u0027t handled nicely at the android level.\n\nSince I \"think\" we can ensure the tab isn\u0027t null, I think we should probably assert non-null at the bottom.  Then we can remove this and get rid of the INVALID_TAB_ID check above as well.",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 33
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428b66d1_9b6e386f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "I think we should split up this method and have some helpers like:\n\nTab tab \u003d launchTabInRunningTabbedActivity();\nif (tab \u003d\u003d null) {\n    tab \u003d launchTabInBrowserActionsModel();\n}\nif (tab !\u003d null) {\n    // Add observer\n}\n\nThat being said, we might need to tweak this if we can defer the I/O operations in a AsyncTask.",
+      "range": {
+        "startLine": 144,
+        "startChar": 13,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62684ed_c09e6e79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "I believe loadState requires a fair amount of I/O.  We should see if this can be run off the UI thread.\n\nIn Chrome, I think we should probably be better about not blocking on this, but that requires more work.  Here since we\u0027re not rendering the tab UI to the user, I think we should try harder to not block the UI loop here.",
+      "range": {
+        "startLine": 168,
+        "startChar": 21,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e816ec_8080b83d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "we probably shouldn\u0027t remove the foreground-ness of the service until the selector broadcasts onTabStateInitialized.",
+      "range": {
+        "startLine": 169,
+        "startChar": 21,
+        "endLine": 169,
+        "endChar": 32
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8a32c5_b5f9b59b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "Why true?",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cffcfd2_16f86401",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "we should probably assert that type passed in is FROM_BROWSER_ACTIONS then use it below.",
+      "range": {
+        "startLine": 43,
+        "startChar": 75,
+        "endLine": 43,
+        "endChar": 79
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d422ae45_a9567026",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "do we need all of these functions to be working?  I think we should implement the minimal set and add exceptions for the rest to show they\u0027re not supported (something like NOTIMPLEMENTED in c++...maybe UnsupportedOperationException).",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46f9e05_17bf2c25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "I would add\n\nif (incognito) {\n    throw new IllegalStateException(\"Browser actions does not support background incognito tabs\");\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ec8f71_1b335377",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "why do we need our own class?  Why can\u0027t we use TabModelSelectorImpl directly?  I thought we talked about removing the the activity reference and just reusing it?",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32979b1b_f32083fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "Are we saving in the same directory as tabbed mode?  Should we just return\nTabbedModeTabPersistencePolicy.getOrCreateTabbedModeStateDirectory(); here instead?",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf99898_56843a25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "older samsung versions supported multiple selectors (I think up to 4 indexed 0 - 3), so I think the number here is risky.  I think we should use something like browser_actions or something here instead.",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6988ce3d_77eadd47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "I think we should be able to return false here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3513d875_8ac29a21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModelImplCreator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-20T20:49:30Z",
+      "side": 1,
+      "message": "If we can reuse TabModelSelectorImpl then this shouldn\u0027t be necessary, and if we want, we shouldn\u0027t be creating an incognito tab model for a state that we don\u0027t support so we should find a way to not need to do this.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
