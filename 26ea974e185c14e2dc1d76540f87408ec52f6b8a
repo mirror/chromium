@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff675691_fb210fde",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-20T14:52:07Z",
+      "side": 1,
+      "message": "So this can go through either the OnResponseBodyStreamClosed or OnResponseBodyStreamReady paths?  Think that\u0027s worth a comment.",
+      "range": {
+        "startLine": 500,
+        "startChar": 26,
+        "endLine": 500,
+        "endChar": 65
+      },
+      "revId": "26ea974e185c14e2dc1d76540f87408ec52f6b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
