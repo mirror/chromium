@@ -1,0 +1,376 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e849df54_29e1569b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "If we have another file that converts PMD into this graph, the point is that these classes do not know about PMD structure. Do you need this include?",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a977d722_65497dd5",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "nit: normally we don\u0027t use using class from a different namespace on header files. This would make MemoryAllocatorDumpGuid part of memory_instrumentation namespace, for all files using this header. I think it\u0027s fine to use it in .cc files to make the code shorter.\nI don\u0027t have a strong preference. Also the header memory_allocator_dyump_guid.h isn\u0027t included here.",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668de682_b53aae9d",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "maybe GlobalDumpgraph",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed684049_5dd931be",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "This can go under private: section?\n\nMaybe instead of friend class can the Container class be defined nested in this class?\nIt also helps reader to understand that the container class is owned by global dump class. These 2 classes seem to be closely related. the container is a sub-graph of a bigger graph.\n\nclass GlobalDumpGraph {\npublic:\n class ProcessDumpGraph {\n }\n\n CreateGraphForProcess();\n\n// These 2 functions can be either in the ProcessGraph or in here. Its better inside ProcessGraph as it is.\n DumpNode* CreateNodeInGraph(ProcessGraph*, const std::string\u0026 path);\n DumpNode* FindNodeInGraph(ProcessGraph* const std::string\u0026 path);\n\nprivate:\n maps..\n}",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51651e1_760f53d0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "This can be private and called by CreateNodeInGraph. What if some code creates node and forgets to call Insert into map here",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 80
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fb250a_d8b9ccf8",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "associated",
+      "range": {
+        "startLine": 48,
+        "startChar": 65,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860abf56_25af21d0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "DumpTree? or DumpGraph? Right now it is just a tree.\nContain is too generic and hard to follow.\nMaybe even ProcessDumpTree and say global dump are just exceptions.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe369f70_7d4831d5",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "nit either\nbut readable without comment.",
+      "range": {
+        "startLine": 85,
+        "startChar": 38,
+        "endLine": 85,
+        "endChar": 43
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa18bff3_3d867ead",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "enum ScalarUnits?\n\nwe have other units in the codebase like \"url\" or \"reason\" or empty \"\". Why don\u0027t we leave this a string? I\u0027d prefer just making units a string since we don\u0027t really use this field except maybe a dcheck to see if \"size\" entry is in \"bytes\".",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c38d049_bc94e205",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "It is readable without comment that \"type\" in struct \"entry\" is type of entry",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d439a0b_9d2a0c53",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8f42db_1a7e942a",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "stringpiece?",
+      "range": {
+        "startLine": 119,
+        "startChar": 21,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d732f71_b85760e8",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "stringpiece",
+      "range": {
+        "startLine": 123,
+        "startChar": 19,
+        "endLine": 123,
+        "endChar": 30
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36925ea9_e2eaedd9",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "An argument that is modified is sent as pointer. pass by reference is only used on const references. and global_dump also.",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295a9e36_041f63e0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "DCHECK(!is_global);\nDCHECK_EQ(node-\u003econtainer_dump(), process_container_dump);\n\nThere should be no case where there are 2 dumps with same guid other than global dumps.\nThis reminds me we should remove the CreateAllocatorDump() function that takes a Guid.",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed3e838_49a8e6bc",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "nit pid_to_dump",
+      "range": {
+        "startLine": 91,
+        "startChar": 13,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2347c93c_7168370c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "to create\n\ns/graphs/graph.\n\nI am guessing this method is only used to convert the PMD into a graph.\nAny computation over the graph will be done by some other method.",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a010306_54b3df75",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-20T23:30:44Z",
+      "side": 1,
+      "message": "ASSERT_EQ(1u, global_dump-\u003econtainer_dumps().size());\nconst auto\u0026 id_to_dump \u003d global_dump-\u003econtainer_dumps().begin();",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
