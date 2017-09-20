@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "68019b69_f3f500e5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1244134
+      },
+      "writtenOn": "2017-09-20T00:34:55Z",
+      "side": 1,
+      "message": "Is there a test for 206? I think we should add one, that\u0027s the key to the correctness of this CL.",
+      "range": {
+        "startLine": 763,
+        "startChar": 39,
+        "endLine": 763,
+        "endChar": 60
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e8ff4d0_64d22223",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 1
@@ -18,6 +41,75 @@
         "startChar": 5,
         "endLine": 553,
         "endChar": 6
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad450d8_3c5decfe",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1244134
+      },
+      "writtenOn": "2017-09-20T00:34:55Z",
+      "side": 1,
+      "message": "This should be CalculateEffectiveOCL(), right?\n\nThe way to think about this is that, we are not sending OCL from server anymore; instead, we send OFCL, and the client needs to scale OFCL to get OCL if it is a 206; for 200, OFCL is just OCL.",
+      "range": {
+        "startLine": 554,
+        "startChar": 10,
+        "endLine": 554,
+        "endChar": 33
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446cb94f_bfa4d44d",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1244134
+      },
+      "writtenOn": "2017-09-20T00:34:55Z",
+      "side": 1,
+      "message": "Before this, can we capture/error when the compression ratio doesn\u0027t make sense, i.e., range_content_length \u003e OFCL? Your call, I feel we should capture this, though it should not happen from the server side,",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 66
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3658ea81_ef050173",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1244134
+      },
+      "writtenOn": "2017-09-20T00:34:55Z",
+      "side": 1,
+      "message": "FYI, we will deprecate XOCL at some point. For new clients, it\u0027s not necessary to fall back to XOCL.",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 64
       },
       "revId": "156f4683297b292921457e608a184a79642faa97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
