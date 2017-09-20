@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e05af3_e5158593",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-20T12:32:06Z",
+      "side": 1,
+      "message": "block_offsets -\u003e reloc_block_offsets",
+      "range": {
+        "startLine": 52,
+        "startChar": 46,
+        "endLine": 52,
+        "endChar": 59
+      },
+      "revId": "fd930c1b1ab01ad4483d8d9a02bd93fa577694fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
