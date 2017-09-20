@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc59bf2b_c04b5e8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T12:39:53Z",
+      "side": 1,
+      "message": "That sounds kinda wrong; I\u0027m not sure we want to preload the animated image. Seems better to just load it the first time it\u0027s clicked.",
+      "range": {
+        "startLine": 10,
+        "startChar": 66,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d72074f_f010c2dd",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T12:39:53Z",
+      "side": 1,
+      "message": "This comment isn\u0027t accurate anymore.",
+      "range": {
+        "startLine": 713,
+        "startChar": 28,
+        "endLine": 713,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de045f72_f3ac02b5",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T12:39:53Z",
+      "side": 1,
+      "message": "optional: It took me a while to get this. How about the following, which would IMO make this easier to read:\n\nvar haveDoodle \u003d $(IDS.LOGO_DOODLE).style.opacity \u003d\u003d 0;\nvar wantDoodle \u003d doodle.image !\u003d\u003d null;\nif (!haveDoodle || !wantDoodle)\n  return wantDoodle \u003d\u003d haveDoodle;\n// We have a Doodle and want to show a Doodle. Make sure they\u0027re the same.\n...",
+      "range": {
+        "startLine": 721,
+        "startChar": 17,
+        "endLine": 721,
+        "endChar": 0
+      },
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a020c95_dbee1c51",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-20T12:39:53Z",
+      "side": 1,
+      "message": "Before, we\u0027d set the title on the link instead of the image. Is this change on purpose? Does it make any difference?",
+      "revId": "3c5b400e75f31cc758ff86ef4626a8d17e2776f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
