@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1126f0b8_dcdaf448",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:51:41Z",
+      "side": 0,
+      "message": "does this code currently do something that the client relies on? If so, then you can\u0027t land this change until the server-side is deployed.\n\nI would suggest that you pass the entire field response here and then have it check server_predictions and fall back to field-\u003eserver_type(). I.e., it needs to support both the old and the new response format in the interim. Maybe add a TODO + crbug to remove support for the old after the server-side change is deemed stable.",
+      "range": {
+        "startLine": 922,
+        "startChar": 10,
+        "endLine": 922,
+        "endChar": 32
+      },
+      "revId": "b6c7a9f6f9ce496378852888ebb726c0f10ab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

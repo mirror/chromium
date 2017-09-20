@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "144583e5_a986fd4e",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3774,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:51:41Z",
+      "side": 1,
+      "message": "+ confidence? here and below.",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b31ab6_3d95e8eb",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:51:41Z",
+      "side": 1,
+      "message": "As this field is \"required\" for legacy clients, we actually need to promise that autofill_type will NEVER be empty, but will instead be the same as the autofill_type of the FieldPrediction having the highest confidence.",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d27bcf8_82015061",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:51:41Z",
+      "side": 1,
+      "message": "Do we intend that both of these fields are populated for any given FieldPrediction? I.e., is confidence truly optional at runtime? If not, then I would suggest updating the unittest to validate that each prediction has a confidence.",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647f3919_0f9886d8",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-20T15:51:41Z",
+      "side": 1,
+      "message": "Is that a statement of policy going forward or of how things currently work?\n\nThe way I think this feature should work is that the server should give it\u0027s best guess as to what the field is, and put it in server_type_, with all of the possibilities in server_predictions_. The client should then be able to offer multiple suggestion types, ranked by the confidence values.\n\nI\u0027m curious to know how often we currently get conflicts server side, is there a dashboard for this somewhere?",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
