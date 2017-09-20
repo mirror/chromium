@@ -218,6 +218,7 @@ viz_source_set("unit_tests") {
     "display/gl_renderer_unittest.cc",
     "display/layer_quad_unittest.cc",
     "display/overlay_unittest.cc",
+    "display/renderer_pixeltest.cc",
     "display/shader_unittest.cc",
     "display/software_renderer_unittest.cc",
     "display/surface_aggregator_pixeltest.cc",
