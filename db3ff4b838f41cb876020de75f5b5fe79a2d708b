@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54aab7e2_227d7aad",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-20T00:38:32Z",
+      "side": 1,
+      "message": "It seems IsActiveUserSessionStarted() returns true on lock screen, but we need transparent background for shelf when screen is locked.",
+      "parentUuid": "1f964f4a_b52dcec1",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32f9eb23_a4a71cb5",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a11321f6_2143d074",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-20T00:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f9eb23_a4a71cb5",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59b55571_18e17653",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bb9032_786b404d",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-20T00:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b55571_18e17653",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
