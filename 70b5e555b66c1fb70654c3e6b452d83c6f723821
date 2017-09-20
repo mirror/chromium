@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "248d0e0e_384b0cf4",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "Then it should be a DCHECK/NOTREACHED, shouldn\u0027t it?  To put it differently, if your guess is wrong you\u0027re changing behavior, which you don\u0027t want to do.  So if you don\u0027t have faith in your guess you shouldn\u0027t change behavior, and if you do, you should make it DCHECK/NOTREACHED?",
+      "parentUuid": "c8a50374_9c95c042",
+      "range": {
+        "startLine": 1137,
+        "startChar": 11,
+        "endLine": 1137,
+        "endChar": 15
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34e5c03a_1cbc4ebb",
         "filename": "net/http/http_cache.h",
         "patchSetId": 26
@@ -566,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "5edb1830_3ecc3029",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "8d803414_828c088a",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 16
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33a1f84c_ce2ed377",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 26
@@ -613,6 +661,30 @@
     },
     {
       "key": {
+        "uuid": "6ba4c182_4602f147",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c17c3efd_39b2c908",
+      "range": {
+        "startLine": 258,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3f9aa4f_28e7d601",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 26
@@ -648,6 +720,30 @@
       "side": 1,
       "message": "The guard on all_writers_.size() takes care if there are other writers. If this was the only writer, we would have anyways reset network transaction to null, so no callback can be invoked from network transaction layer. Also, after this call entry is going to be destroyed, so if we were in the midst of a cache write operation, disk_entry should not invoke the callback, right?\nThis is how currently HC::T also handles it.",
       "parentUuid": "a3f9aa4f_28e7d601",
+      "range": {
+        "startLine": 317,
+        "startChar": 23,
+        "endLine": 317,
+        "endChar": 53
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52c40d4_7691f92b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "Ah, that last point is key.  I still don\u0027t like it, but I won\u0027t worry about it for this CL.",
+      "parentUuid": "96763b33_c6e5ed02",
       "range": {
         "startLine": 317,
         "startChar": 23,
@@ -801,6 +897,30 @@
     },
     {
       "key": {
+        "uuid": "bbb1e70f_e13b9c53",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "Ok, never mind; that sounds like my \"conditional call at every site\".",
+      "parentUuid": "8fb2c0cb_827f60a8",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b68f547_bdedb965",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 26
@@ -836,6 +956,30 @@
       "side": 1,
       "message": "As we discussed yesterday SetNetworkReadOnly will only be invoked for partial transactions, but this can also be used for full requests.",
       "parentUuid": "3b68f547_bdedb965",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2382932c_38fefb7f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-20T15:55:55Z",
+      "side": 1,
+      "message": "My suggestion yesterday was not that SetNetworkReadOnly only be allowed for partial transactions, but that it only be allowed for writers on which there is only a single transaction.  That would allow this dual use.",
+      "parentUuid": "d65e002a_7da9ec84",
       "range": {
         "startLine": 75,
         "startChar": 27,
