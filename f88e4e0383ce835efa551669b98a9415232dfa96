@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d93f0c0_074e9eb2",
+        "filename": "chrome/browser/ui/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c95bef_bf7a50f9",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d8ce528_4eab6afe",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341eec24_f6811ea4",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d8ce528_4eab6afe",
+      "range": {
+        "startLine": 154,
+        "startChar": 35,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7600872a_87203136",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de457fc_fd9f06d6",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c6b453_77c9fdf6",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b2db2eac_a9e0b3d0",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c6b453_77c9fdf6",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab580085_52c03f4e",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-18T16:15:19Z",
       "side": 1,
       "message": "SelectFileDialog without ui:: works",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c44846e_e74c8850",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Not as-is: should I use the ui namespace to make it cleaner?",
+      "parentUuid": "ab580085_52c03f4e",
       "range": {
         "startLine": 39,
         "startChar": 10,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ffaa3c46_177f6809",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d228372_4ef205fe",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f5c340e_28f361f2",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba25dd8_4db5ea22",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f5c340e_28f361f2",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "d257dfa2_385949d5",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "That\u0027s a much better idea!",
+      "parentUuid": "ddc09196_2c710384",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbd6513f_0db5fac9",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e6b71a_f37f6bbb",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd6513f_0db5fac9",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "6b4df08a_39afdf8d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1057175_6f5fe898",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d943196_afb31410",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "36d75e57_8c26eab3",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Nope, SetFactory will handle it. I\u0027ve added a comment making note of that, though.",
+      "parentUuid": "8d943196_afb31410",
+      "range": {
+        "startLine": 147,
+        "startChar": 37,
+        "endLine": 147,
+        "endChar": 68
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af75a4cd_f9ab4833",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -266,6 +530,30 @@
       "writtenOn": "2017-09-18T16:15:19Z",
       "side": 1,
       "message": "Would not this happen anyway?",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91dc1bc9_07229071",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "If it\u0027s destructed without explicitly resetting the members, it crashes due to not being called on the main thread. There might be a cleaner way to reset them without the crash, though?",
+      "parentUuid": "af75a4cd_f9ab4833",
       "range": {
         "startLine": 154,
         "startChar": 4,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "695a7afa_05ad7b13",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6852dbb5_7634ac70",
+      "range": {
+        "startLine": 158,
+        "startChar": 3,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e811e7c7_4ccf68c0",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "568c1b27_95002d72",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Using ScopedTaskEnvironment instead of TestBrowserThreadBundle resulted in a \"Must be called on Chrome_UIThread; actually called on Unknown Thread.\" error. (I might have not been using it correctly, but it had no effect even when constructed with base::test::ScopedTaskEnvironment::MainThreadType::UI.)",
+      "parentUuid": "e811e7c7_4ccf68c0",
+      "range": {
+        "startLine": 178,
+        "startChar": 11,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d003eaca_f4041a34",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -344,6 +680,30 @@
       "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088853a9_1b95b58c",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d003eaca_f4041a34",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
