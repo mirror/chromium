@@ -2128,6 +2128,8 @@ split_static_library("ui") {
       "views/renderer_context_menu/render_view_context_menu_views.h",
       "views/tab_contents/chrome_web_contents_view_delegate_views.cc",
       "views/tab_contents/chrome_web_contents_view_delegate_views.h",
+      "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
+      "views/tab_contents/chrome_web_contents_view_focus_helper.h",
       "views/theme_profile_key.cc",
       "views/theme_profile_key.h",
       "window_sizer/window_sizer_aura.cc",
@@ -2482,6 +2484,8 @@ split_static_library("ui") {
         "views/infobars/legacy_infobars_mac.cc",
         "views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
         "views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/tabs/window_finder_mac.mm",
       ]
       deps += [ "//extensions/components/native_app_window" ]
