@@ -33,13 +33,11 @@ component("animation") {
     "tween.h",
   ]
 
-  if (is_android) {
-    if (!use_aura) {
-      sources -= [
-        "throb_animation.cc",
-        "throb_animation.h",
-      ]
-    }
+  if (!use_aura) {
+    sources -= [
+      "throb_animation.cc",
+      "throb_animation.h",
+    ]
   }
 
   if (is_mac) {
