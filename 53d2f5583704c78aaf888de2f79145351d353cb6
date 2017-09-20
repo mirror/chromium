@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3f34212_6ba9c6b9",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "nit: maybe something like this would be clearer:\n\n  // The actual display may remain off for a short period after\n  // powerd asks Chrome to turn it on. If the user presses the\n  // power button again during this time, they probably intend\n  // to turn the display on. Avoid forcing off in this case.",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4e5958_30876d9e",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "would it be a bit cleaner to move this if condition immediately after the other kIgnorePowerButtonAfterResumeDelay condition that also unsets force_off_on_button_up_?",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec6215c_251139bb",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "thanks for cleaning all these constants up!",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cba69a7_a9e6fa35",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "nit: instead of hardcoding this duration, make the actual delay constant a static public constexpr and add a small amount to it here (or maybe better, advance to delay - base::TimeDelta::FromMilliseconds(1) before the previous ignored press and then add 2 milliseconds to it here -- then you\u0027re verifying that we\u0027re using the correct delay instead of e.g. any non-zero amount of time)",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bd718ef_f25d2afa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 5
@@ -13,6 +81,41 @@
       "writtenOn": "2017-09-20T20:41:46Z",
       "side": 1,
       "message": "In review question: shall we remove this, and instead directly observe powerd\u0027 BrightnessChanged?\nPowerEventObserver firstly casts the level from int to double. I don\u0027t know the reason for it.",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4086b61c_9fb19f25",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "nice catch. yes, that seems cleaner to me. this class already observes PowerManagerClient, and it\u0027s weird to have PowerEventObserver also inject these events into it.",
+      "parentUuid": "7bd718ef_f25d2afa",
+      "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39480da_0815d7ab",
+        "filename": "ash/wm/power_button_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-20T20:55:07Z",
+      "side": 1,
+      "message": "how about making SetTickClockForTesting do this automatically? it seems like we always want that behavior, right?",
       "revId": "53d2f5583704c78aaf888de2f79145351d353cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
