@@ -259,7 +259,6 @@ class TypedURLSyncBridgeTest : public testing::Test {
     const auto error =
         bridge()->MergeSyncData(bridge()->CreateMetadataChangeList(),
                                 CreateEntityChangeList(specifics));
-
     EXPECT_FALSE(error);
   }
 
