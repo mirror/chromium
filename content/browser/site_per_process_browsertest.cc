@@ -11699,6 +11699,8 @@ class TouchSelectionControllerClientTestWrapper
     return client_->CreateDrawable();
   }
 
+  void UpdateSelectionBoundsIfNecessary() override {}
+
   ui::SelectionEventType expected_event_;
   std::unique_ptr<base::RunLoop> run_loop_;
   // Not owned.

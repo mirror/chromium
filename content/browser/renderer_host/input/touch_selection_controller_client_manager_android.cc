@@ -144,4 +144,10 @@ TouchSelectionControllerClientManagerAndroid::CreateDrawable() {
   return rwhv_->CreateDrawable();
 }
 
+void TouchSelectionControllerClientManagerAndroid::
+    UpdateSelectionBoundsIfNecessary() {
+  // TODO(wjmaclean): I don't think anything needs to be done here, but verify
+  // this.
+}
+
 }  // namespace content
