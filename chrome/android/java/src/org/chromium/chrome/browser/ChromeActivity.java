@@ -398,8 +398,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                             .inflate();
             int controlContainerHeight =
                     ((ControlContainer) findViewById(R.id.control_container)).getView().getHeight();
-            mBottomSheetContentController.init(
-                    mBottomSheet, controlContainerHeight, mTabModelSelector, this);
+            mBottomSheetContentController.init(mBottomSheet, controlContainerHeight,
+                    mTabModelSelector, this, false /* bottomNavIsTransparent */);
         }
         ((BottomContainer) findViewById(R.id.bottom_container)).initialize(mFullscreenManager);
     }
@@ -463,7 +463,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 if (controlContainerLayoutId == R.layout.bottom_control_container) {
                     View coordinator = findViewById(R.id.coordinator);
                     mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
+                    mBottomSheet.init(coordinator, controlContainer.getView(), this,
+                            false /* bottomNavIsTransparent */);
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);

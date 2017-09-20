@@ -272,6 +272,15 @@ public class BottomSheet
     private int mPersistentControlsToken;
 
     /**
+     * A manager for adding padding to some content in the bottom sheet, mostly for adding
+     * appropriate offset for a transparent bottom navigation menu.
+     */
+    private final BottomSheetPaddingManager mPaddingManager = new BottomSheetPaddingManager();
+
+    /** Whether or not the bottom navigation is transparent. **/
+    private boolean mBottomNavIsTransparent;
+
+    /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
      */
@@ -284,8 +293,17 @@ public class BottomSheet
         View getContentView();
 
         /**
-         * Get the {@link View} that contains the toolbar specific to the content being displayed.
-         * If null is returned, the omnibox is used.
+         * Gets the {@link View} that needs additional padding applied to it to accommodate other
+         * UI elements, such as the transparent bottom navigation menu.
+         * @return The view that needs additional padding applied to it.
+         */
+        default View getViewForPadding() {
+            return getContentView();
+        }
+
+        /**
+         * Get the {@link View} that contains the toolbar specific to the content being
+         * displayed. If null is returned, the omnibox is used.
          * TODO(mdjones): This still needs implementation in the sheet.
          *
          * @return The toolbar view.
@@ -705,17 +723,19 @@ public class BottomSheet
      * @param controlContainer The container for the toolbar.
      * @param activity The activity displaying the bottom sheet.
      */
-    public void init(View root, View controlContainer, ChromeActivity activity) {
+    public void init(View root, View controlContainer, ChromeActivity activity,
+            boolean bottomNavIsTransparent) {
         mControlContainer = controlContainer;
         mToolbarHeight = mControlContainer.getHeight();
         mActivity = activity;
         mActionBarDelegate = new ViewShiftingActionBarDelegate(mActivity, this);
+        mBottomNavIsTransparent = bottomNavIsTransparent;
 
         getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
-        mBottomSheetContentContainer.setPadding(
-                0, 0, 0, (int) mBottomNavHeight - mToolbarShadowHeight);
+        mBottomSheetContentContainer.setPadding(0, 0, 0,
+                bottomNavIsTransparent ? 0 : (int) mBottomNavHeight - mToolbarShadowHeight);
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -733,6 +753,20 @@ public class BottomSheet
 
                 if (previousWidth != mContainerWidth || previousHeight != mContainerHeight) {
                     updateSheetStateRatios();
+
+                    // Fixes visible bar at the bottom of the sheet when scrolled to the top.
+                    // Posted in a runnable for Android J.
+                    // (crbug.com/762823)
+                    if (bottomNavIsTransparent) {
+                        post(new Runnable() {
+                            @Override
+                            public void run() {
+                                getLayoutParams().height =
+                                        (int) mContainerHeight + mToolbarShadowHeight;
+                                requestLayout();
+                            }
+                        });
+                    }
                 }
 
                 int heightMinusKeyboard = (int) mContainerHeight;
@@ -762,8 +796,10 @@ public class BottomSheet
                     // sheet to its default state.
                     // Setting the padding is posted in a runnable for the sake of Android J.
                     // See crbug.com/751013.
-                    final int finalPadding =
-                            keyboardHeight + ((int) mBottomNavHeight - mToolbarShadowHeight);
+                    final int finalPadding = keyboardHeight
+                            + (bottomNavIsTransparent
+                                              ? 0
+                                              : (int) mBottomNavHeight - mToolbarShadowHeight);
                     post(new Runnable() {
                         @Override
                         public void run() {
@@ -1004,8 +1040,13 @@ public class BottomSheet
 
         View contentView = content.getContentView();
         if (content.applyDefaultTopPadding()) {
-            contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
-                    contentView.getPaddingRight(), contentView.getPaddingBottom());
+            mPaddingManager.handlerForView(contentView)
+                    .applyPadding(new Rect(0, mToolbarHolder.getHeight(), 0, 0));
+        }
+
+        if (mBottomNavIsTransparent) {
+            mPaddingManager.handlerForView(content.getViewForPadding())
+                    .applyPadding(new Rect(0, 0, 0, (int) mBottomNavHeight));
         }
 
         // For the toolbar transition, make sure we don't detach the default toolbar view.
