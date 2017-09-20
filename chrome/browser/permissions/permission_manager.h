@@ -34,6 +34,15 @@ class PermissionManager : public KeyedService,
   explicit PermissionManager(Profile* profile);
   ~PermissionManager() override;
 
+  // Converts from |url|'s actual origin to the "canonical origin" that should
+  // be used for the purpose of requesting/storing permissions. For example, the
+  // origin of the local NTP gets mapped to the Google base URL instead.
+  // Note that all the methods below such as RequestPermission or
+  // GetPermissionStatus may be called with the actual origin, since they do the
+  // canonicalization themselves. You only need to call this explicitly if you
+  // do something else with the origin, such as display it in the UI.
+  GURL GetCanonicalOrigin(const GURL& url) const;
+
   // Callers from within chrome/ should use the methods which take the
   // ContentSettingsType enum. The methods which take PermissionType values
   // are for the content::PermissionManager overrides and shouldn't be used
