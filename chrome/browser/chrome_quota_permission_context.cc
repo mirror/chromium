@@ -88,11 +88,10 @@ QuotaPermissionRequest::QuotaPermissionRequest(
 QuotaPermissionRequest::~QuotaPermissionRequest() {}
 
 PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
-  // TODO(gbillock): get the proper image here
 #if defined(OS_ANDROID)
-  return IDR_ANDROID_INFOBAR_WARNING;
+  return IDR_ANDROID_INFOBAR_FOLDER;
 #else
-  return vector_icons::kWarningIcon;
+  return vector_icons::kFolderIcon;
 #endif
 }
 
