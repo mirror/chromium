@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
@@ -40,6 +41,7 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
  public:
   using ValueMap = std::map<std::vector<uint8_t>, std::vector<uint8_t>>;
   using ValueMapCallback = base::OnceCallback<void(std::unique_ptr<ValueMap>)>;
+  using KeysOnlyMap = std::map<std::vector<uint8_t>, size_t>;
 
   class CONTENT_EXPORT Delegate {
    public:
@@ -65,8 +67,9 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
 
   void Bind(mojom::LevelDBWrapperRequest request);
 
-  bool empty() const { return bytes_used_ == 0; }
-  size_t bytes_used() const { return bytes_used_; }
+  bool empty() const { return storage_used_ == 0; }
+  size_t storage_used() const { return storage_used_; }
+  size_t memory_used() const { return memory_used_; }
 
   // Commence aggressive flushing. This should be called early during startup,
   // before any localStorage writing. Currently scheduled writes will not be
@@ -88,6 +91,10 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   void OnMemoryDump(const std::string& name,
                     base::trace_event::ProcessMemoryDump* pmd);
 
+  // Sets cache mode to either store only keys or keys and values. See
+  // SetCacheMode().
+  void SetCacheModeForTesting(bool only_keys);
+
   // LevelDBWrapper:
   void AddObserver(mojom::LevelDBObserverAssociatedPtrInfo observer) override;
   void Put(const std::vector<uint8_t>& key,
@@ -107,6 +114,9 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
       GetAllCallback callback) override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(LevelDBWrapperImplTest, SetOnlyKeysWithoutDatabase);
+  FRIEND_TEST_ALL_PREFIXES(LevelDBWrapperImplTest, SetOnlyKeysWithDatabase);
+
   // Used to rate limit commits.
   class RateLimiter {
    public:
@@ -130,13 +140,29 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
     base::TimeDelta time_quantum_;
   };
 
+  enum LoadState {
+    LOAD_STATE_UNLOADED = 0,
+    LOAD_STATE_KEYS_ONLY = 1,
+    LOAD_STATE_KEYS_AND_VALUES = 2
+  };
+
   struct CommitBatch {
     bool clear_all_first;
-    std::set<std::vector<uint8_t>> changed_keys;
+    std::map<std::vector<uint8_t>, base::Optional<std::vector<uint8_t>>>
+        changed_values;
 
     CommitBatch();
     ~CommitBatch();
   };
+
+  // Changes the cache (a copy of map stored in memory) to contain only keys
+  // instead or keys and values. The only keys mode can be set only when there
+  // is one client binding and it automatically changes to keys and values mode
+  // when more than one binding exists. The max size constrints are still valid.
+  // The notification on observers when a value depends on the
+  // |client_old_value| when cache contains only keys. Changing the mode and
+  // using GetAll() when only keys are stored would cause extra disk access.
+  void SetCacheMode(bool only_keys);
 
   void OnConnectionError();
   void LoadMap(const base::Closure& completion_callback);
@@ -149,16 +175,22 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   base::TimeDelta ComputeCommitDelay() const;
   void CommitChanges();
   void OnCommitComplete(leveldb::mojom::DatabaseError error);
+  void UnloadMapIfDesired();
+  bool IsMapReloadNeeded() const;
 
   std::vector<uint8_t> prefix_;
   mojo::BindingSet<mojom::LevelDBWrapper> bindings_;
   mojo::AssociatedInterfacePtrSet<mojom::LevelDBObserver> observers_;
   Delegate* delegate_;
   leveldb::mojom::LevelDBDatabase* database_;
-  std::unique_ptr<ValueMap> map_;
+  std::unique_ptr<ValueMap> keys_values_map_;
+  std::unique_ptr<KeysOnlyMap> keys_only_map_;
+  LoadState load_state_;
+  LoadState desired_load_state_;
   std::vector<base::Closure> on_load_complete_tasks_;
-  size_t bytes_used_;
+  size_t storage_used_;
   size_t max_size_;
+  size_t memory_used_;
   base::TimeTicks start_time_;
   base::TimeDelta default_commit_delay_;
   RateLimiter data_rate_limiter_;

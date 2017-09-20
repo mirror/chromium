@@ -12,6 +12,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "content/common/dom_storage/dom_storage_map.h"
 #include "content/common/storage_partition_service.mojom.h"
 #include "content/renderer/dom_storage/local_storage_area.h"
@@ -108,13 +109,26 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
     return false;
 
   EnsureLoaded();
+  base::Optional<std::vector<uint8_t>> optional_old_value;
+#if !defined(OS_ANDROID)
   if (!map_->SetItem(key, value, nullptr))
     return false;
+#else
+  // The old value is only used on Android when the cache stores only the keys.
+  // Do not send old value on other platforms.
+  // TODO(ssid): Clear this value when values are stored in the browser cache on
+  // Android, crbug.com/743187.
+  base::NullableString16 old_value;
+  if (!map_->SetItem(key, value, &old_value))
+    return false;
+  if (!old_value.is_null())
+    optional_old_value = old_value.string();
+#endif  // !defined(OS_ANDROID)
 
   // Ignore mutations to |key| until OnSetItemComplete.
   ignore_key_mutations_[key]++;
   leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
-                base::nullopt, PackSource(page_url, storage_area_id),
+                optional_old_value, PackSource(page_url, storage_area_id),
                 base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
                            weak_factory_.GetWeakPtr(), key));
   return true;
@@ -124,12 +138,25 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
                                         const GURL& page_url,
                                         const std::string& storage_area_id) {
   EnsureLoaded();
+  base::Optional<std::vector<uint8_t>> optional_old_value;
+#if !defined(OS_ANDROID)
   if (!map_->RemoveItem(key, nullptr))
     return;
+#else
+  // The old value is only used on Android when the cache stores only the keys.
+  // Do not send old value on other platforms.
+  // TODO(ssid): Clear this value when values are stored in the browser cache on
+  // Android, crbug.com/743187.
+  base::string16 old_value;
+  if (!map_->RemoveItem(key, &old_value))
+    return;
+  if (!old_value.is_null())
+    optional_old_value = old_value.string();
+#endif  // !defined(OS_ANDROID)
 
   // Ignore mutations to |key| until OnRemoveItemComplete.
   ignore_key_mutations_[key]++;
-  leveldb_->Delete(String16ToUint8Vector(key), base::nullopt,
+  leveldb_->Delete(String16ToUint8Vector(key), optional_old_value,
                    PackSource(page_url, storage_area_id),
                    base::Bind(&LocalStorageCachedArea::OnRemoveItemComplete,
                               weak_factory_.GetWeakPtr(), key));

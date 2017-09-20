@@ -219,7 +219,7 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
       LocalStorageOriginMetaData data;
       data.set_last_modified(base::Time::Now().ToInternalValue());
-      data.set_size_bytes(level_db_wrapper()->bytes_used());
+      data.set_size_bytes(level_db_wrapper()->storage_used());
       item->value = leveldb::StdStringToUint8Vector(data.SerializeAsString());
     }
     operations.push_back(std::move(item));
@@ -908,7 +908,7 @@ void LocalStorageContextMojo::GetStatistics(size_t* total_cache_size,
   *total_cache_size = 0;
   *unused_wrapper_count = 0;
   for (const auto& it : level_db_wrappers_) {
-    *total_cache_size += it.second->level_db_wrapper()->bytes_used();
+    *total_cache_size += it.second->level_db_wrapper()->memory_used();
     if (!it.second->has_bindings())
       (*unused_wrapper_count)++;
   }
