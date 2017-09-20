@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9fa4a77_680bfbde",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T08:20:04Z",
+      "side": 1,
+      "message": "Update.",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 72
+      },
+      "revId": "52ff6f5c104b7c30ac96881a24b887a48c36362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac1ebd0_f477dd57",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T08:20:04Z",
+      "side": 1,
+      "message": "Is it ok for PrintPreviewHandler::OnGetPrintersDone() -\u003e ResolveJavascriptCallback() to never get called for some callback id?",
+      "revId": "52ff6f5c104b7c30ac96881a24b887a48c36362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
