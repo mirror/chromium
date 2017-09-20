@@ -66,6 +66,9 @@ class MEDIA_EXPORT MediaObserver {
   // Called when the data source is asynchronously initialized.
   virtual void OnDataSourceInitialized(const GURL& url_after_redirects) = 0;
 
+  // Called on Android, whenever we detect that we are playing back HLS.
+  virtual void OnHlsManifestDetected() = 0;
+
   // Set the MediaObserverClient.
   virtual void SetClient(MediaObserverClient* client) = 0;
 };

@@ -1406,6 +1406,9 @@ void WebMediaPlayerImpl::OnError(PipelineStatus status) {
 
 #if defined(OS_ANDROID)
   if (status == PipelineStatus::DEMUXER_ERROR_DETECTED_HLS) {
+    if (observer_)
+      observer_->OnHlsManifestDetected();
+
     renderer_factory_selector_->SetUseMediaPlayer(true);
 
     pipeline_controller_.Stop();
