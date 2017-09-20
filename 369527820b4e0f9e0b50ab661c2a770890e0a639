@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a260559b_3fbc93ee",
+        "filename": "android_webview/browser/net/aw_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T00:41:38Z",
+      "side": 1,
+      "message": "Have you considered using net::FileNetLogObserver::{CreateUnbounded(), CreateBounded()} directly?\n\nThe advantage is not needing to pull in components/net_log.\n\nSee for instance https://cs.chromium.org/chromium/src/content/shell/browser/shell_net_log.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d54",
+      "revId": "369527820b4e0f9e0b50ab661c2a770890e0a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396ac5ea_a73e73ac",
+        "filename": "android_webview/browser/net/aw_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T00:41:38Z",
+      "side": 1,
+      "message": "I would suggest not having this convenience path, and forcing giving a name.",
+      "revId": "369527820b4e0f9e0b50ab661c2a770890e0a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28fb983_b1ac79a2",
+        "filename": "android_webview/browser/net/aw_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-20T00:41:38Z",
+      "side": 1,
+      "message": "Can you check out the comments at:\n\nhttps://cs.chromium.org/chromium/src/components/net_log/chrome_net_log.h?type\u003dcs\u0026q\u003dStartWritingToFile\u0026sq\u003dpackage:chromium\u0026l\u003d70\n\nAnd confirm whether or not that applies here?\n(If it can outlive explicit destruction of TaskScheduler the logs may be truncated).",
+      "revId": "369527820b4e0f9e0b50ab661c2a770890e0a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
