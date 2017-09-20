@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3412a7fc_a9466e65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Umm, that\u0027s exactly what I meant. It\u0027s a refactoring \"for\" positioned grid items. But it\u0027s clearly confusing, so I\u0027ll rephrase it.",
+      "parentUuid": "4a582f2c_6143c9bc",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5842bf_c0bb7511",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a98759a2_552a9b23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa5842bf_c0bb7511",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520b8e3f_95448fc9",
         "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-20T14:28:44Z",
       "side": 1,
       "message": "Maybe rename this to HasOverrideContainingBlockForChild().",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dbb380_29210802",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "I used the original name, which somehow intended to suggest that we will return the \"content width\" or \"content height\". However, the logical functions that are called based on the Track Sizing Direction don\u0027t suggest that. I think this was pretty confusing before and perhaps this is a good moment to solve it. So I agree with your suggestion.",
+      "parentUuid": "520b8e3f_95448fc9",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6b39d9b1_43d9f76a",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ce92bc0_931903ca",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5a0184_93c84151",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-20T14:28:44Z",
       "side": 1,
       "message": "Maybe the name should be more descriptive than \"IsAuto\" as that would be just \"position.IsAuto()\".",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cee4d2_64cba303",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2074,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this. Just \"IsAuto\" seems too generic and cryptic for my taste. Is there any similar pattern in the Grid code ?",
+      "parentUuid": "7f5a0184_93c84151",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "04f6623f_1e71ae8b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "yes, that\u0027s one of my concern. I had that feeling while implementing but I didn\u0027t find any easy solution by that time. It\u0027s true that I haven\u0027t thought about that too much; I\u0027m open to suggestions but I\u0027ll think about it anyway.",
+      "parentUuid": "dcc7216f_1998c7cd",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aa4cf41_7e2d884f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-20T14:28:44Z",
       "side": 1,
       "message": "I guess we don\u0027t need to consider overflow for this computations.\nIf we need it, we might want to use the new ContentAlignment() method here.",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df34dd6_6d75f378",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2142,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Good question. I\u0027m not sure right now, but we will see it as soon as I start implementing the actual alignment logic and playing with the tests.",
+      "parentUuid": "5aa4cf41_7e2d884f",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5a28d24d_452f6fb6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "True. I tried to preserver the current terms for now, but I can change it if you prefer. However, the fact that we are using the GridTrackSizingDirection instead of the actual axis makes this change so obvious. I\u0027ll think about it.",
+      "parentUuid": "450f2e39_8365b3c7",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c5e116_dbfdd1c0",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-20T14:28:44Z",
       "side": 1,
       "message": "I guess this was the case for RTL, but I\u0027m not 100% sure though.\nHave you checked what happens if we don\u0027t have this std::max?",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc330655_afa8d42b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "yes, I know for sure that it triggers some assertions. There are several cases where \u0027end\u0027 is lower than \u0027start\u0027.",
+      "parentUuid": "d7c5e116_dbfdd1c0",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9fd0960c_2cfb8b0a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a159be42_eb2f0915",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186a6c8d_c963ca28",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 3
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-20T14:28:44Z",
       "side": 1,
       "message": "Have you verified it? If so, could you add some new cases to cover this?",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d69974e_d5303a24",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Yes, I know that we lack of those tests. I wonder if a refactoring deserves additional tests. Those will be defined anyway as soon as we implemented the alignment logic.",
+      "parentUuid": "186a6c8d_c963ca28",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +401,24 @@
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a35dd4_eeb3064b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-20T20:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f45dad6c_d2687156",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
