@@ -27,6 +27,12 @@ TaskManagerObserver::~TaskManagerObserver() {
     observed_task_manager()->RemoveObserver(this);
 }
 
+void TaskManagerObserver::OnTaskReplaced(TaskId old_task_id,
+                                         TaskId new_task_id) {
+  OnTaskAdded(new_task_id);
+  OnTaskToBeRemoved(old_task_id);
+}
+
 void TaskManagerObserver::AddRefreshType(RefreshType type) {
   desired_resources_flags_ |= type;
 
