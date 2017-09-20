@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b92f91_10c727c1",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-20T18:41:54Z",
+      "side": 1,
+      "message": "Is is possible that there is a site-instance mismatch in a non-malicious scenario?  DidCommitProvisionalLoad should only affect the state of the committing frame, right?  OTOH, a comment in WebContentsImpl::UpdateStateForFrame indicates that the mismatch when updating might be expected in non-malicious scenarios.\n\nI wonder if you could clarify in the comment what is meant by \"mistake\", perhaps by giving some examples (one example is a compromised renderer lying about a unique name;  if there is a non-malicious example then it would be useful mentioning it as well).",
+      "range": {
+        "startLine": 940,
+        "startChar": 68,
+        "endLine": 940,
+        "endChar": 75
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38435fe_7c9bb86d",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-20T18:41:54Z",
+      "side": 1,
+      "message": "nit: Can you add a reference to the bug please?",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 634,
+        "endChar": 2
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b5d4c2_090d54dc",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-20T18:41:54Z",
+      "side": 1,
+      "message": "I am a bit surprised that this test assertion didn\u0027t fail after I 1) patched in this CL and 2) commented out the changes in navigation_controller_impl.cc.  I think this means that the test doesn\u0027t replicate the steps taken by corrupt_war_page_state, right?  Not sure how much this matters...",
+      "range": {
+        "startLine": 706,
+        "startChar": 2,
+        "endLine": 706,
+        "endChar": 77
+      },
+      "revId": "6cf7b526c322264e442538323621ed20d5fdec0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
