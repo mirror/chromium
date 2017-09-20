@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12c733ce_4ec2ed57",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Unnested them here and in few other files.",
+      "parentUuid": "42e57a70_aa7a3d02",
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa3bc2a_d4bdfae5",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d8b7c0e3_eac32b94",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa3bc2a_d4bdfae5",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "093bb601_4316fa29",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-20T00:11:30Z",
       "side": 1,
       "message": "RefCountedThreadSafe since we are still bouncing to |blocking_task_runner_| and back.",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ea5847_0975524b",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "093bb601_4316fa29",
       "range": {
         "startLine": 117,
         "startChar": 19,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0254bd26_12c497c9",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Good point. When I started the patch I was thinking all the printing interfaces would be in one utility process, but since it\u0027s not the case already, it shouldn\u0027t be.\nNamed it to be PWG converter specific and renamed the service class as well.",
+      "parentUuid": "7f4f5800_029200d9",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49d9ed45_a09957f3",
         "filename": "chrome/utility/BUILD.gn",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-09-20T00:11:30Z",
       "side": 1,
       "message": "I may have overlooked something when reviewing https://chromium-review.googlesource.com/c/chromium/src/+/636743 - Wasn\u0027t this originally print preview only?",
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b615d5_4249af1f",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Oh, you are right. Addressed it and tried to simplify the conditions for printing_handler.*",
+      "parentUuid": "49d9ed45_a09957f3",
       "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "66dbf324_b496d1a9",
+        "filename": "chrome/utility/printing/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cbaa7c5_75952d98",
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b992129_4f4ccb32",
         "filename": "chrome/utility/printing/printing_utility_service.cc",
         "patchSetId": 4
@@ -136,6 +262,24 @@
       "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fe68a2_7d65a96d",
+        "filename": "chrome/utility/printing/printing_utility_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-20T15:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b992129_4f4ccb32",
+      "revId": "53492950c4def2beaf163c2eb89436be70fe2753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
