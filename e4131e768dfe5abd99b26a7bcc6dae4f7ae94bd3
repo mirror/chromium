@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa20e38e_71aab1b2",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-20T02:24:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0253ba68_c8c06789",
+      "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bec8c58_b220bd65",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T16:51:09Z",
       "side": 1,
       "message": "Why did this test with a background filter pass before the rest of the code changes in this patch?",
+      "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc64f4a_fb755686",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-20T02:24:51Z",
+      "side": 1,
+      "message": "The reason is that the size of mask is too small here to produce multiple tiles. But this DCHECK does get triggered even if mask is small, since it is a flag to determine whether we would try tiling the mask.",
+      "parentUuid": "5bec8c58_b220bd65",
       "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
