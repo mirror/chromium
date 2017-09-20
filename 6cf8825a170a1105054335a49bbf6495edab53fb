@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "1714612e_78e6517e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T22:42:49Z",
+      "side": 1,
+      "message": "+1 loadState does require a fair amount of I/O.",
+      "parentUuid": "b62684ed_c09e6e79",
+      "range": {
+        "startLine": 168,
+        "startChar": 21,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e816ec_8080b83d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 4
@@ -87,6 +111,29 @@
         "startChar": 21,
         "endLine": 169,
         "endChar": 32
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b344b2_3a7666bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T22:42:49Z",
+      "side": 1,
+      "message": "Why do we need to fully load tabs here?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 15
       },
       "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -209,6 +256,29 @@
     },
     {
       "key": {
+        "uuid": "2f387e8b_56313a37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T22:42:49Z",
+      "side": 1,
+      "message": "nit: The TAG should be specific to this class.",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32979b1b_f32083fe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
@@ -232,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "a0b8ea79_aae44433",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T22:42:49Z",
+      "side": 1,
+      "message": "We should save in the same directory to facilitate merging the tabs later.\n\nI have a design doc explaining the rationale for using a single tab state directory - ping me if you\u0027d like a link.",
+      "parentUuid": "32979b1b_f32083fe",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcf99898_56843a25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
@@ -243,6 +337,30 @@
       "writtenOn": "2017-09-20T20:49:30Z",
       "side": 1,
       "message": "older samsung versions supported multiple selectors (I think up to 4 indexed 0 - 3), so I think the number here is risky.  I think we should use something like browser_actions or something here instead.",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ce8e24_c7740b0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-20T22:42:49Z",
+      "side": 1,
+      "message": "We currently support up to 3 (indexed 0-2) which maps to Samsung\u0027s possible 3 activities showing at once (one in the bottom window, one in the top window, and one in a floating window).\n\nI like something specific to browser_actions in case we support N ChromeTabbedActivity windows in the future.",
+      "parentUuid": "dcf99898_56843a25",
       "range": {
         "startLine": 41,
         "startChar": 34,
