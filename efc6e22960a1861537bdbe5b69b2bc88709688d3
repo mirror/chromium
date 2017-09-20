@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d16db747_a043cca8",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T19:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0541eb2_55a726c6",
+      "revId": "efc6e22960a1861537bdbe5b69b2bc88709688d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5981118e_1de3fc62",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d281a536_233177e0",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T19:31:54Z",
+      "side": 1,
+      "message": "AFAICT there can be multiple matches for cloud, but this is handled in the last case with COOKIES and DEVICE. Changed to else if.",
+      "parentUuid": "5981118e_1de3fc62",
+      "revId": "efc6e22960a1861537bdbe5b69b2bc88709688d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cd29044_6ee086e5",
         "filename": "chrome/test/data/webui/print_preview/native_layer_stub.js",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "efc6e22960a1861537bdbe5b69b2bc88709688d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a02b60_bea829ae",
+        "filename": "chrome/test/data/webui/print_preview/native_layer_stub.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-20T19:31:54Z",
+      "side": 1,
+      "message": "For tests we don\u0027t do anything other than local printers. I can change it to type though.",
+      "parentUuid": "6cd29044_6ee086e5",
+      "revId": "efc6e22960a1861537bdbe5b69b2bc88709688d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
