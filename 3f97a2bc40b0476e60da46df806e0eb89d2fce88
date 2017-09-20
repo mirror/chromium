@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f74ec9ad_0ee86703",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d749e71c_d998bb54",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8bffd49_b01b7622",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
         "patchSetId": 5
@@ -68,6 +92,54 @@
       "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1436a05_d4ccc90b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8bffd49_b01b7622",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c97eb8_ec8d5d7d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Okay, will do!",
+      "parentUuid": "312e2e7a_e8e6ee08",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
