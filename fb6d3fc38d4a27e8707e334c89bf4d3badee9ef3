@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d043d81_d65446a2",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T22:39:26Z",
+      "side": 1,
+      "message": "Merge lines 3025-3026 into this #if blocK?",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002a3b6c_6ca25cba",
+        "filename": "chrome/utility/network/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T22:39:26Z",
+      "side": 1,
+      "message": "Maybe ask mmenke for advice on who else to add to OWNERS here. Otherwise this directory falls back to chrome/OWNERS.",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ad7a2f_2c1f9f53",
+        "filename": "chrome/utility/network/mojo_proxy_resolver_factory_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T22:39:26Z",
+      "side": 1,
+      "message": "Can this be:\n\nsize_t erased \u003d jobs_.erase(job);\nDCHECK_EQ(1U, erased);",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98bc964_0142fe2b",
+        "filename": "chrome/utility/network/mojo_proxy_resolver_factory_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-20T22:39:26Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
