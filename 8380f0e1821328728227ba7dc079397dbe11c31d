@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f2b6d14_a7a9db62",
+        "filename": "remoting/ios/app/pin_entry_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-20T14:57:16Z",
+      "side": 1,
+      "message": "This should go to the RemotingTheme class while you are doing cleanup.",
+      "range": {
+        "startLine": 82,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "8380f0e1821328728227ba7dc079397dbe11c31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
