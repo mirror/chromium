@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70afc48_b12d6686",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-20T05:46:13Z",
+      "side": 1,
+      "message": "One unit test are failing due to a exception raised here:\n  AttributeError: \u0027MockGerritCL\u0027 object has no attribute \u0027number\u0027",
+      "revId": "153e0f2f71fb640515a3dcb104833eb307dbdafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
