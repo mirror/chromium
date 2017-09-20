@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b25cf8d_7570fdd1",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-20T00:41:47Z",
+      "side": 1,
+      "message": "Would it make sense to check if the media session is controllable? If it\u0027s not, maybe you should leave this block and use the previous path.\n\nSomething like that for example:\n```\nif (browser) {\n  content::MediaSession* media_session \u003d ...;\n  if (media_session-\u003eIsControllable()) {\n    // resume or suspend\n    return;\n  }\n}\n```",
+      "revId": "bc8d17358936b98792e98407eefb3c196f1bef2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

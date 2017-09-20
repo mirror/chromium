@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "11fd9ab7_cd00b814",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-20T00:41:47Z",
+      "side": 1,
+      "message": "In general, I would prefer:\n```\nif (!browser)\n  return nullptr;\naura::Window* window \u003d browser-\u003ewindow()-\u003eGetNativeWindow();\nwm::ActivationClient* client \u003d wm::GetActivationClient(window-\u003eGetRootWindow());\nreturn (client-\u003eGetActiveWindow() \u003d\u003d window) ? browser : nullptr;\n```\n\nBut I have a strong bias for early-return so feel free to ignore :)",
+      "parentUuid": "8bc6add0_41ba74b8",
+      "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9725a79_d98d97d8",
         "filename": "content/public/browser/media_session.h",
         "patchSetId": 2
