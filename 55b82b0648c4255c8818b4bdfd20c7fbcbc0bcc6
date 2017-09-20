@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b1de124_d0c6abc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-09-20T02:11:30Z",
+      "side": 1,
+      "message": "I refuse to believe that we commit so many MBs to chrome every hour that we get these alerts :(\nI do believe that we have inefficiencies in bot_update and between git client and server.",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "55b82b0648c4255c8818b4bdfd20c7fbcbc0bcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
