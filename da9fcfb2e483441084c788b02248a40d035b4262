@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c24668d1_e858bcdd",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-20T15:15:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2d6cbc89_66009af9",
+      "range": {
+        "startLine": 591,
+        "startChar": 14,
+        "endLine": 591,
+        "endChar": 26
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bda7945f_9c31ddbe",
         "filename": "base/trace_event/freed_object_tracker.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-20T14:33:32Z",
       "side": 1,
       "message": "Are you sure you don\u0027t want here  (address \u0026\u0026 size \u003d\u003d 0).\nrealloc with size\u003d\u003d0 has the same effect of free semantic.\nwith an actual size it will just expand the old allocation, so not sure if you should count that as removed in that case",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab06576_44f7b765",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-20T15:15:11Z",
+      "side": 1,
+      "message": "Won\u0027t the expansion typically require a different allocation and thus end up freeing this one?  I think it\u0027s more important to record the change so that something can\u0027t get missed rather than what was here two allocation operations ago.",
+      "parentUuid": "bda7945f_9c31ddbe",
       "range": {
         "startLine": 47,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf1f16e0_400c0a5a",
+        "filename": "base/trace_event/freed_object_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-20T15:15:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7034d31b_54931945",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc795f8_4b9aaf40",
         "filename": "base/trace_event/freed_object_tracker.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c7678c_99815049",
+        "filename": "base/trace_event/freed_object_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-20T15:15:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc795f8_4b9aaf40",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "da9fcfb2e483441084c788b02248a40d035b4262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
