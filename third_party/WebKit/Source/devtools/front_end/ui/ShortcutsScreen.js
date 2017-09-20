@@ -176,20 +176,27 @@ UI.ShortcutsScreen = class {
 
     // Layers panel
     section = UI.shortcutsScreen.section(Common.UIString('Layers Panel'));
-    section.addAlternateKeys(UI.ShortcutsScreen.LayersPanelShortcuts.ResetView, Common.UIString('Reset view'));
-    section.addAlternateKeys(UI.ShortcutsScreen.LayersPanelShortcuts.PanMode, Common.UIString('Switch to pan mode'));
     section.addAlternateKeys(
-        UI.ShortcutsScreen.LayersPanelShortcuts.RotateMode, Common.UIString('Switch to rotate mode'));
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.reset-view'), Common.UIString('Reset view'));
     section.addAlternateKeys(
-        UI.ShortcutsScreen.LayersPanelShortcuts.TogglePanRotate,
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.pan-mode'), Common.UIString('Switch to pan mode'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.rotate-mode'),
+        Common.UIString('Switch to rotate mode'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.toggle-pan-rotate'),
         Common.UIString('Temporarily toggle pan/rotate mode while held'));
-    section.addAlternateKeys(UI.ShortcutsScreen.LayersPanelShortcuts.ZoomIn, Common.UIString('Zoom in'));
-    section.addAlternateKeys(UI.ShortcutsScreen.LayersPanelShortcuts.ZoomOut, Common.UIString('Zoom out'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.zoom-in'), Common.UIString('Zoom in'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.zoom-out'), Common.UIString('Zoom out'));
     section.addRelatedKeys(
-        UI.ShortcutsScreen.LayersPanelShortcuts.Up.concat(UI.ShortcutsScreen.LayersPanelShortcuts.Down),
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.up')
+            .concat(UI.shortcutRegistry.shortcutDescriptorsForAction('layers.down')),
         Common.UIString('Pan or rotate up/down'));
     section.addRelatedKeys(
-        UI.ShortcutsScreen.LayersPanelShortcuts.Left.concat(UI.ShortcutsScreen.LayersPanelShortcuts.Right),
+        UI.shortcutRegistry.shortcutDescriptorsForAction('layers.left')
+            .concat(UI.shortcutRegistry.shortcutDescriptorsForAction('layers.right')),
         Common.UIString('Pan or rotate left/right'));
   }
 
@@ -458,34 +465,6 @@ UI.ShortcutsScreen.SourcesPanelShortcuts = {
 
   SaveAll: [UI.KeyboardShortcut.makeDescriptor(
       's', UI.KeyboardShortcut.Modifiers.CtrlOrMeta | UI.KeyboardShortcut.Modifiers.ShiftOrOption)],
-};
-
-UI.ShortcutsScreen.LayersPanelShortcuts = {
-  ResetView: [UI.KeyboardShortcut.makeDescriptor('0')],
-
-  PanMode: [UI.KeyboardShortcut.makeDescriptor('x')],
-
-  RotateMode: [UI.KeyboardShortcut.makeDescriptor('v')],
-
-  TogglePanRotate: [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Shift)],
-
-  ZoomIn: [
-    UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Plus, UI.KeyboardShortcut.Modifiers.Shift),
-    UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.NumpadPlus)
-  ],
-
-  ZoomOut: [
-    UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Minus, UI.KeyboardShortcut.Modifiers.Shift),
-    UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.NumpadMinus)
-  ],
-
-  Up: [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Up), UI.KeyboardShortcut.makeDescriptor('w')],
-
-  Down: [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Down), UI.KeyboardShortcut.makeDescriptor('s')],
-
-  Left: [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Left), UI.KeyboardShortcut.makeDescriptor('a')],
-
-  Right: [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Right), UI.KeyboardShortcut.makeDescriptor('d')]
 };
 
 UI.ShortcutsScreen.PerformancePanelShortcuts = {
