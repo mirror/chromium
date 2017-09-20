@@ -27,8 +27,7 @@ SkBlendMode const kBlendModes[] = {
     SkBlendMode::kSoftLight, SkBlendMode::kDifference,
     SkBlendMode::kExclusion, SkBlendMode::kMultiply,
     SkBlendMode::kHue,       SkBlendMode::kSaturation,
-    SkBlendMode::kColor,     SkBlendMode::kLuminosity,
-    SkBlendMode::kDstIn};
+    SkBlendMode::kColor,     SkBlendMode::kLuminosity};
 
 SkColor kCSSTestColors[] = {
     0xffff0000,  // red
@@ -198,7 +197,7 @@ class LayerTreeHostBlendingPixelTest : public LayerTreeHostPixelResourceTest {
                                  int lane_height,
                                  scoped_refptr<Layer> background,
                                  RenderPassOptions flags) {
-    const int kLanesCount = kBlendModesCount + 6;
+    const int kLanesCount = kBlendModesCount + 4;
     const SkColor kMiscOpaqueColor = 0xffc86464;
     const SkColor kMiscTransparentColor = 0x80c86464;
     const SkBlendMode kCoeffBlendMode = SkBlendMode::kScreen;
@@ -224,21 +223,14 @@ class LayerTreeHostBlendingPixelTest : public LayerTreeHostPixelResourceTest {
       } else if (i == kBlendModesCount + 3) {
         blend_mode = kShaderBlendMode;
         color = kMiscTransparentColor;
-      } else if (i == kBlendModesCount + 4) {
-        blend_mode = SkBlendMode::kDstIn;
-        opacity = 0.5f;
-      } else if (i == kBlendModesCount + 5) {
-        blend_mode = SkBlendMode::kDstIn;
-        color = kMiscTransparentColor;
       }
-
       scoped_refptr<SolidColorLayer> lane =
           CreateSolidColorLayer(child_rect, color);
       lane->SetBlendMode(blend_mode);
       lane->SetOpacity(opacity);
       lane->SetForceRenderSurfaceForTesting(true);
       // Layers with kDstIn blend mode with a mask is not supported.
-      if (flags & kUseMasks && blend_mode != SkBlendMode::kDstIn)
+      if (flags & kUseMasks)
         SetupMaskLayer(lane);
       if (flags & kUseColorMatrix) {
         SetupColorMatrix(lane);
@@ -251,7 +243,7 @@ class LayerTreeHostBlendingPixelTest : public LayerTreeHostPixelResourceTest {
                                  const base::FilePath::CharType* expected_path,
                                  RenderPassOptions flags) {
     const int kLaneWidth = 8;
-    const int kRootWidth = kLaneWidth * (kBlendModesCount + 6);
+    const int kRootWidth = kLaneWidth * (kBlendModesCount + 4);
     const int kRootHeight = kLaneWidth * kCSSTestColorsCount;
     InitializeFromTestCase(type);
 
