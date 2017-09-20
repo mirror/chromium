@@ -14,6 +14,7 @@
 
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
+#import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -61,6 +62,10 @@ using password_manager::PasswordManagerDriver;
 namespace {
 // Types of password infobars to display.
 enum class PasswordInfoBarType { SAVE, UPDATE };
+
+// Script command prefix for form changes. Possible command to be sent from
+// injected JS is 'form.buttonClicked'.
+constexpr char kCommandPrefix[] = "form";
 }
 
 @interface PasswordController ()
@@ -130,6 +135,9 @@ enum class PasswordInfoBarType { SAVE, UPDATE };
 // to save the password.
 - (void)showInfoBarForForm:(std::unique_ptr<PasswordFormManager>)form
                infoBarType:(PasswordInfoBarType)type;
+
+// Handler for injected JavaScript callbacks.
+- (BOOL)handleScriptCommand:(const base::DictionaryValue&)JSONCommand;
 
 @end
 
@@ -326,6 +334,16 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
       credentialManager_ = base::MakeUnique<CredentialManager>(
           passwordManagerClient_.get(), webState_);
     }
+
+    __weak PasswordController* weakSelf = self;
+    auto callback = base::BindBlockArc(^bool(const base::DictionaryValue& JSON,
+                                             const GURL& originURL,
+                                             bool userIsInteracting) {
+      PasswordController* strongSelf = weakSelf;
+      // |originURL| and |isInteracting| aren't used.
+      return [strongSelf handleScriptCommand:JSON];
+    });
+    webState->AddScriptCommandCallback(callback, kCommandPrefix);
   }
   return self;
 }
@@ -352,6 +370,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (void)detach {
+  if (webState_)
+    webState_->RemoveScriptCommandCallback(kCommandPrefix);
   webState_ = nullptr;
   webStateObserverBridge_.reset();
   passwordGenerationAgent_ = nil;
@@ -871,6 +891,28 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
             withUsername:formData_->username_field.value
                 password:formData_->password_field.value
        completionHandler:completionHandler];
+}
+
+- (BOOL)handleScriptCommand:(const base::DictionaryValue&)JSONCommand {
+  std::string command;
+  if (!JSONCommand.GetString("command", &command))
+    return NO;
+
+  if (command == "form.submitButtonClick") {
+    GURL pageURL;
+    if (!GetPageURLAndCheckTrustLevel(webState_, &pageURL))
+      return NO;
+    autofill::PasswordForm form;
+    BOOL form_parsed_from_JSON = [self getPasswordForm:&form
+                                        fromDictionary:&JSONCommand
+                                               pageURL:pageURL];
+    if (form_parsed_from_JSON && ![self isWebStateDestroyed]) {
+      self.passwordManager->OnPasswordFormSubmitted(self.passwordManagerDriver,
+                                                    form);
+      return YES;
+    }
+  }
+  return NO;
 }
 
 - (PasswordGenerationAgent*)passwordGenerationAgent {
