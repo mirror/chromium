@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8974e17_ff91b62c",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-20T17:36:04Z",
+      "side": 1,
+      "message": "This test is a move/edit of TaskManagerImplTest. It has changed somewhat: cycles are not really possible anymore (since we read parents at task creation time, and the ordering logic is more stable, since a TaskGroup\u0027s position is now fixed at creation time, and doesn\u0027t change.",
+      "revId": "45238fcc27accc8844d70de7037b5efa3b980b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
