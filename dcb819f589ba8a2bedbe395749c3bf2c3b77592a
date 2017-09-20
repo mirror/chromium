@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "598635e6_efdb787d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/import-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-20T05:40:28Z",
+      "side": 1,
+      "message": "Looks like \"foo\" is never used. Can we remove this?",
+      "revId": "dcb819f589ba8a2bedbe395749c3bf2c3b77592a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
