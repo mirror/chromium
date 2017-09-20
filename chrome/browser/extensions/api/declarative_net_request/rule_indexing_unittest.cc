@@ -17,6 +17,7 @@
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/version_info/version_info.h"
 #include "extensions/browser/api/declarative_net_request/constants.h"
 #include "extensions/browser/api/declarative_net_request/flat/extension_ruleset_generated.h"
@@ -188,9 +189,10 @@ class RuleIndexingTest
     std::string data;
     ASSERT_TRUE(base::ReadFileToString(
         file_util::GetIndexedRulesetPath(extension_->path()), &data));
-    flatbuffers::Verifier verifier(
-        reinterpret_cast<const uint8_t*>(data.c_str()), data.size());
-    ASSERT_TRUE(flat::VerifyExtensionIndexedRulesetBuffer(verifier));
+
+    EXPECT_TRUE(IsValidRulesetData(
+        extension_->id(), reinterpret_cast<const uint8_t*>(data.c_str()),
+        data.size(), profile()));
   }
 
   ExtensionErrorReporter* error_reporter() {
