@@ -45,7 +45,7 @@ public class TileGridLayout extends FrameLayout {
         super(context, attrs);
 
         Resources res = getResources();
-        mVerticalSpacing = FeatureUtilities.isChromeHomeModernEnabled()
+        mVerticalSpacing = FeatureUtilities.isChromeHomeEnabled()
                 ? res.getDimensionPixelOffset(R.dimen.tile_grid_layout_vertical_spacing_modern)
                 : res.getDimensionPixelOffset(R.dimen.tile_grid_layout_vertical_spacing);
         mMinHorizontalSpacing =

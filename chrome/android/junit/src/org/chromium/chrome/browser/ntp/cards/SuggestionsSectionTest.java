@@ -73,11 +73,8 @@ import java.util.TreeSet;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-// TODO(bauerb): Enable these tests with the modern layout.
-@Features({
-        @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
-        @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT, enabled = false)
-})
+// TODO(bauerb): Enable these tests with chrome home enabled.
+@Features({ @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false) })
 public class SuggestionsSectionTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();

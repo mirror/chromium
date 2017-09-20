@@ -302,7 +302,7 @@ public class LocationBarPhone extends LocationBarLayout {
 
         boolean showIncognitoBadge = getToolbarDataProvider() != null
                 && getToolbarDataProvider().isIncognito()
-                && !FeatureUtilities.isChromeHomeModernEnabled();
+                && !FeatureUtilities.isChromeHomeEnabled();
         mIncognitoBadge.setVisibility(showIncognitoBadge ? VISIBLE : GONE);
         updateIncognitoBadgePadding();
     }
