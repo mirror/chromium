@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2566edf7_d6d48414",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-20T21:10:55Z",
+      "side": 1,
+      "message": "I\u0027d like to land this change in https://chromium-review.googlesource.com/c/chromium/src/+/675579 as it will be merged to 61/62.",
+      "revId": "c71b03a2c34d162665fd83f2a72798c2f892ec90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
