@@ -16,6 +16,24 @@
       "revId": "e4b26650cf6860560cafe52023d5305ce8f05b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45825c37_a61520a4",
+        "filename": "ui/events/x/events_x_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-09-20T22:26:29Z",
+      "side": 1,
+      "message": "XModifierStateWatcher seems to only support a single modifier at the moment, but your version is more future proof in case that ever changes (which I should probably do after this).\n\nSo I\u0027ve changed it to your version (except without the !! since we\u0027re returning a bool and don\u0027t need it).",
+      "parentUuid": "918b8f32_a06c5f5d",
+      "revId": "e4b26650cf6860560cafe52023d5305ce8f05b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
