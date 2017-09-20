@@ -12,7 +12,6 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -56,14 +55,14 @@ void FakeAppInstance::RefreshAppList() {
 void FakeAppInstance::LaunchApp(const std::string& package_name,
                                 const std::string& activity,
                                 const base::Optional<gfx::Rect>& dimension) {
-  launch_requests_.push_back(base::MakeUnique<Request>(package_name, activity));
+  launch_requests_.push_back(std::make_unique<Request>(package_name, activity));
 }
 
 void FakeAppInstance::RequestAppIcon(const std::string& package_name,
                                      const std::string& activity,
                                      mojom::ScaleFactor scale_factor) {
   icon_requests_.push_back(
-      base::MakeUnique<IconRequest>(package_name, activity, scale_factor));
+      std::make_unique<IconRequest>(package_name, activity, scale_factor));
 }
 
 void FakeAppInstance::SendRefreshAppList(
@@ -335,7 +334,7 @@ void FakeAppInstance::RequestIcon(const std::string& icon_resource_id,
                                   arc::mojom::ScaleFactor scale_factor,
                                   const RequestIconCallback& callback) {
   shortcut_icon_requests_.push_back(
-      base::MakeUnique<ShortcutIconRequest>(icon_resource_id, scale_factor));
+      std::make_unique<ShortcutIconRequest>(icon_resource_id, scale_factor));
 
   std::string png_data_as_string;
   if (GetFakeIcon(scale_factor, &png_data_as_string)) {

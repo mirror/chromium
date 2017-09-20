@@ -68,7 +68,7 @@ void FakeArcSession::SuspendBoot() {
 
 // static
 std::unique_ptr<ArcSession> FakeArcSession::Create() {
-  return base::MakeUnique<FakeArcSession>();
+  return std::make_unique<FakeArcSession>();
 }
 
 }  // namespace arc
