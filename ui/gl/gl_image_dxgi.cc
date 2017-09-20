@@ -6,8 +6,8 @@
 
 #include <d3d11_1.h>
 
-#include "third_party/khronos/EGL/egl.h"
-#include "third_party/khronos/EGL/eglext.h"
+#include "third_party/angle/include/EGL/egl.h"
+#include "third_party/angle/include/EGL/eglext.h"
 #include "ui/gl/gl_angle_util_win.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_image.h"
@@ -226,7 +226,7 @@ bool GLImageDXGIHandle::Initialize() {
   }
   D3D11_TEXTURE2D_DESC desc;
   texture_->GetDesc(&desc);
-  if (desc.Format != DXGI_FORMAT_NV12 || desc.ArraySize <= level_)
+  if (desc.ArraySize <= level_)
     return false;
   if (FAILED(texture_.CopyTo(keyed_mutex_.GetAddressOf())))
     return false;
@@ -234,5 +234,109 @@ bool GLImageDXGIHandle::Initialize() {
 }
 
 GLImageDXGIHandle::~GLImageDXGIHandle() {}
+
+unsigned GLImageDXGIHandle::GetInternalFormat() {
+  return GL_RGB;
+}
+
+EGLConfig GLImageDXGIHandle::ChooseCompatibleConfig() {
+  EGLint const attrib_list[] = {
+      EGL_RED_SIZE,    8,  EGL_GREEN_SIZE,          8,
+      EGL_BLUE_SIZE,   8,  EGL_BIND_TO_TEXTURE_RGB, EGL_TRUE,
+      EGL_BUFFER_SIZE, 24, EGL_SURFACE_TYPE,        EGL_PBUFFER_BIT,
+      EGL_NONE};
+
+  EGLint num_config;
+  auto display = gl::GLSurfaceEGL::GetHardwareDisplay();
+  auto result = eglChooseConfig(display, attrib_list, nullptr, 0, &num_config);
+  if (result != EGL_TRUE)
+    return false;
+  std::vector<EGLConfig> allConfigs(num_config);
+  result = eglChooseConfig(gl::GLSurfaceEGL::GetHardwareDisplay(), attrib_list,
+                           allConfigs.data(), num_config, &num_config);
+  if (result != EGL_TRUE)
+    return 0;
+  for (auto config : allConfigs) {
+    EGLint red_bits;
+    if (!eglGetConfigAttrib(display, config, EGL_RED_SIZE, &red_bits) ||
+        red_bits != 8) {
+      continue;
+    }
+
+    if (!eglGetConfigAttrib(display, config, EGL_BLUE_SIZE, &red_bits) ||
+        red_bits != 8) {
+      continue;
+    }
+
+    if (!eglGetConfigAttrib(display, config, EGL_GREEN_SIZE, &red_bits) ||
+        red_bits != 8) {
+      continue;
+    }
+
+    return config;
+  }
+  return 0;
+}
+
+EGLSurface GLImageDXGIHandle::CreatePbuffer(EGLConfig config, unsigned target) {
+  D3D11_TEXTURE2D_DESC desc;
+  texture_->GetDesc(&desc);
+  EGLint width = desc.Width;
+  EGLint height = desc.Height;
+
+  EGLint pBufferAttributes[] = {EGL_WIDTH,
+                                width,
+                                EGL_HEIGHT,
+                                height,
+                                EGL_TEXTURE_TARGET,
+                                EGL_TEXTURE_2D,
+                                EGL_TEXTURE_FORMAT,
+                                EGL_TEXTURE_RGB,
+                                EGL_NONE};
+
+  EGLSurface surface = eglCreatePbufferFromClientBuffer(
+      gl::GLSurfaceEGL::GetHardwareDisplay(), EGL_D3D_TEXTURE_ANGLE,
+      texture_.Get(), config, pBufferAttributes);
+  if (surface == EGL_NO_SURFACE) {
+    return 0;
+  }
+
+  return surface;
+}
+
+bool GLImageDXGIHandle::BindTexImage(unsigned target) {
+  if (!texture_ || !keyed_mutex_)
+    return false;
+
+  EGLConfig config = ChooseCompatibleConfig();
+  if (!config)
+    return false;
+
+  HRESULT hrWait = keyed_mutex_->AcquireSync(
+      KEY_BIND, 0);  // We don't wait, just return immediately.
+  if (hrWait == WAIT_TIMEOUT || hrWait == WAIT_ABANDONED || FAILED(hrWait))
+    return false;
+
+  surface_ = CreatePbuffer(config, target);
+  return eglBindTexImage(gl::GLSurfaceEGL::GetHardwareDisplay(), surface_,
+                         EGL_BACK_BUFFER) == EGL_TRUE;
+}
+
+void GLImageDXGIHandle::ReleaseTexImage(unsigned target) {
+  if (!texture_ || !keyed_mutex_)
+    return;
+
+  base::win::ScopedComPtr<ID3D11Device> device =
+      QueryD3D11DeviceObjectFromANGLE();
+  base::win::ScopedComPtr<ID3D11Device1> device1;
+  device.CopyTo(device1.GetAddressOf());
+
+  keyed_mutex_->ReleaseSync(KEY_RELEASE);
+
+  eglReleaseTexImage(gl::GLSurfaceEGL::GetHardwareDisplay(), surface_,
+                     EGL_BACK_BUFFER);
+  eglDestroySurface(gl::GLSurfaceEGL::GetHardwareDisplay(), surface_);
+  surface_ = nullptr;
+}
 
 }  // namespace gl

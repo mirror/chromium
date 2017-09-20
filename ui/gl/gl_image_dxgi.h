@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef UI_GL_GL_IMAGE_DXGI_H_
+#define UI_GL_GL_IMAGE_DXGI_H_
+
+#include <DXGI1_2.h>
 #include <d3d11.h>
 
 #include "base/win/scoped_comptr.h"
@@ -10,6 +14,8 @@
 #include "ui/gl/gl_image.h"
 
 typedef void* EGLStreamKHR;
+typedef void* EGLConfig;
+typedef void* EGLSurface;
 
 namespace gl {
 
@@ -111,9 +117,25 @@ class GL_EXPORT GLImageDXGIHandle : public GLImageDXGIBase {
 
   bool Initialize();
 
+  // GLImage implementation.
+  bool BindTexImage(unsigned target) override;
+  unsigned GetInternalFormat() override;
+  void ReleaseTexImage(unsigned target) override;
+
+  // Keys used to acquire and release the keyed mutex.
+  const static UINT64 KEY_BIND = 0;
+  const static UINT64 KEY_RELEASE = 1;
+
  protected:
   ~GLImageDXGIHandle() override;
 
   base::win::ScopedHandle handle_;
+  EGLSurface surface_ = nullptr;
+
+ private:
+  EGLConfig ChooseCompatibleConfig();
+  EGLSurface CreatePbuffer(EGLConfig config, unsigned target);
 };
 }
+
+#endif  // UI_GL_GL_IMAGE_DXGI_H_

@@ -16,11 +16,13 @@ namespace gpu {
 gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #if defined(OS_MACOSX)
   return gfx::IO_SURFACE_BUFFER;
-#endif
-#if defined(OS_LINUX)
+#elif defined(OS_LINUX)
   return gfx::NATIVE_PIXMAP;
-#endif
+#elif defined(OS_WIN)
+  return gfx::DXGI_SHARED_HANDLE;
+#else
   return gfx::EMPTY_BUFFER;
+#endif
 }
 
 bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
@@ -48,19 +50,24 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
   }
   NOTREACHED();
   return false;
-#endif
-
-#if defined(OS_LINUX)
+#elif defined(OS_LINUX)
   if (!gfx::ClientNativePixmapFactory::GetInstance()) {
     // unittests don't have to set ClientNativePixmapFactory.
     return false;
   }
   return gfx::ClientNativePixmapFactory::GetInstance()
       ->IsConfigurationSupported(format, usage);
-#endif
-
+#elif defined(OS_WIN)
+  return (usage == gfx::BufferUsage::GPU_READ ||
+          usage == gfx::BufferUsage::SCANOUT) &&
+         (format == gfx::BufferFormat::BGRA_8888 ||
+          format == gfx::BufferFormat::RGBA_8888 ||
+          format == gfx::BufferFormat::BGRX_8888 ||
+          format == gfx::BufferFormat::RGBX_8888);
+#else
   NOTREACHED();
   return false;
+#endif
 }
 
 }  // namespace gpu
