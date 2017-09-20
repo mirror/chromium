@@ -36,6 +36,7 @@
 #include "platform/graphics/ImageObserver.h"
 #include "platform/graphics/test/MockImageDecoder.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/test/fake_web_task_runner.h"
 #include "platform/testing/HistogramTester.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -85,6 +86,7 @@ class BitmapImageTest : public ::testing::Test {
     return image_->frames_[frame].frame_bytes_;
   }
   size_t DecodedFramesCount() const { return image_->frames_.size(); }
+  void StartAnimation() { image_->StartAnimation(); }
 
   void SetFirstFrameNotComplete() { image_->frames_[0].is_complete_ = false; }
 
@@ -347,11 +349,17 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
                                        public MockImageDecoderClient {
  public:
   void SetUp() override {
+    original_time_function_ = SetTimeFunctionsForTesting([] { return now_; });
+
     BitmapImageTest::SetUp();
     auto decoder = MockImageDecoder::Create(this);
     decoder->SetSize(10, 10);
     image_->SetDecoderForTesting(
         DeferredImageDecoder::CreateForTesting(std::move(decoder)));
+  }
+
+  void TearDown() override {
+    SetTimeFunctionsForTesting(original_time_function_);
   }
 
   void DecoderBeingDestroyed() override {}
@@ -371,7 +379,12 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
   size_t frame_count_;
   ImageFrame::Status status_;
   bool last_frame_complete_;
+
+  static double now_;
+  TimeFunction original_time_function_;
 };
+
+double BitmapImageTestWithMockDecoder::now_ = 0;
 
 TEST_F(BitmapImageTestWithMockDecoder, ImageMetadataTracking) {
   // For a zero duration, we should make it non-zero when creating a PaintImage.
@@ -416,6 +429,37 @@ TEST_F(BitmapImageTestWithMockDecoder, ImageMetadataTracking) {
     EXPECT_TRUE(data.complete);
   }
 };
+
+TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
+  repetition_count_ = kAnimationLoopInfinite;
+  frame_count_ = 5u;
+  last_frame_complete_ = true;
+  duration_ = TimeDelta::FromSeconds(10);
+  now_ = 10;
+  image_->SetData(SharedBuffer::Create("data", sizeof("data")), true);
+
+  RefPtr<scheduler::FakeWebTaskRunner> task_runner =
+      AdoptRef(new scheduler::FakeWebTaskRunner);
+  image_->SetTaskRunnerForTesting(task_runner);
+
+  // Start the animation at 10s. This should schedule a timer for the next frame
+  // after 1 second.
+  StartAnimation();
+  EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 0u);
+
+  // No frames skipped since we just started the animation.
+  EXPECT_EQ(image_->last_num_frames_skipped_for_testing(), 0u);
+
+  // Run the posted animation advancement.
+  task_runner->RunUntilIdle();
+
+  // Set now_ to 41 seconds. Since the animation started at 10s, and each frame
+  // has a duration of 10s, we should see the fourth frame at 41 seconds.
+  now_ = 41;
+  StartAnimation();
+  EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 3u);
+  EXPECT_EQ(image_->last_num_frames_skipped_for_testing(), 2u);
+}
 
 template <typename HistogramEnumType>
 struct HistogramTestParams {
