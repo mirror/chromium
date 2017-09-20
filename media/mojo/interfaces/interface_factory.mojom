@@ -20,5 +20,7 @@ interface InterfaceFactory {
   // media/audio/audio_device_description.h. If |audio_device_id| is empty,
   // kDefaultDeviceId will be used.
   CreateRenderer(string audio_device_id, Renderer& renderer);
-  CreateCdm(ContentDecryptionModule& cdm);
+
+  // Creates a CDM based on the |key_system| provided.
+  CreateCdm(string key_system, ContentDecryptionModule& cdm);
 };
