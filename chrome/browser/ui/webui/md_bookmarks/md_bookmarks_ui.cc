@@ -155,6 +155,8 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   source->AddResourcePath("dnd_manager.html",
                           IDR_MD_BOOKMARKS_DND_MANAGER_HTML);
   source->AddResourcePath("dnd_manager.js", IDR_MD_BOOKMARKS_DND_MANAGER_JS);
+  source->AddResourcePath("debouncer.html", IDR_MD_BOOKMARKS_DEBOUNCER_HTML);
+  source->AddResourcePath("debouncer.js", IDR_MD_BOOKMARKS_DEBOUNCER_JS);
   source->AddResourcePath("edit_dialog.html",
                           IDR_MD_BOOKMARKS_EDIT_DIALOG_HTML);
   source->AddResourcePath("edit_dialog.js", IDR_MD_BOOKMARKS_EDIT_DIALOG_JS);
@@ -182,9 +184,6 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   source->AddResourcePath("store_client.html",
                           IDR_MD_BOOKMARKS_STORE_CLIENT_HTML);
   source->AddResourcePath("store_client.js", IDR_MD_BOOKMARKS_STORE_CLIENT_JS);
-  source->AddResourcePath("timer_proxy.html",
-                          IDR_MD_BOOKMARKS_TIMER_PROXY_HTML);
-  source->AddResourcePath("timer_proxy.js", IDR_MD_BOOKMARKS_TIMER_PROXY_JS);
   source->AddResourcePath("toast_manager.html",
                           IDR_MD_BOOKMARKS_TOAST_MANAGER_HTML);
   source->AddResourcePath("toast_manager.js",
