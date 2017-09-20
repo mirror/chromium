@@ -6,7 +6,8 @@
 
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 
-PageHandler::PageHandler(protocol::UberDispatcher* dispatcher) {
+PageHandler::PageHandler(protocol::UberDispatcher* dispatcher)
+    : frontend_(new protocol::Page::Frontend(dispatcher->channel())) {
   protocol::Page::Dispatcher::wire(dispatcher, this);
 }
 
@@ -25,16 +26,12 @@ void PageHandler::ToggleAdBlocking(bool enabled,
 
 protocol::Response PageHandler::Enable() {
   enabled_ = true;
-  // Do not mark the command as handled. Let it fall through instead, so that
-  // the handler in content gets a chance to process the command.
   return protocol::Response::FallThrough();
 }
 
 protocol::Response PageHandler::Disable() {
   enabled_ = false;
   ToggleAdBlocking(false /* enable */, web_contents_);
-  // Do not mark the command as handled. Let it fall through instead, so that
-  // the handler in content gets a chance to process the command.
   return protocol::Response::FallThrough();
 }
 

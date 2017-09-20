@@ -32,6 +32,7 @@ class PageHandler : public protocol::Page::Backend {
  private:
   content::WebContents* web_contents_ = nullptr;
   bool enabled_ = false;
+  std::unique_ptr<protocol::Page::Frontend> frontend_;
 
   DISALLOW_COPY_AND_ASSIGN(PageHandler);
 };
