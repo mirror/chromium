@@ -292,4 +292,24 @@ TEST_F(DesktopViewportTest, TestScaleDesktop) {
                   new_transformation.GetScale());
 }
 
+TEST_F(DesktopViewportTest, TestSurfaceOffset) {
+  viewport_.SetDesktopSize(2, 1);
+  viewport_.SetSurfaceSize(3, 4);
+  AssertTransformationReceived(FROM_HERE, 4.f, 0.f, 0.f);
+  viewport_.SetSurfaceOffset(1, 2);
+  AssertTransformationReceived(FROM_HERE, 4.f, 1.f, 2.f);
+
+  viewport_.SetDesktopSize(8, 6);
+  AssertTransformationReceived(FROM_HERE, 0.667f, 1.f, 2.f);
+  viewport_.SetSurfaceSize(2, 3);
+  AssertTransformationReceived(FROM_HERE, 0.5f, 1.f, 2.f);
+
+  // Verify ScaleDesktop respects to the surface offset.
+  viewport_.ScaleDesktop(0, 0, 2);
+  AssertTransformationReceived(FROM_HERE, 1.f, 1.f, 2.f);
+
+  viewport_.SetViewportCenter(1.f, 2.f);
+  AssertTransformationReceived(FROM_HERE, 1.f, 1.f, 1.5f);
+}
+
 }  // namespace remoting

@@ -74,7 +74,7 @@ class GestureInterpreter {
   // Called to process one animation frame.
   void ProcessAnimations();
 
-  void OnSurfaceSizeChanged(int width, int height);
+  void OnSurfaceBoundsChanged(int x, int y, int width, int height);
   void OnDesktopSizeChanged(int width, int height);
 
  private:

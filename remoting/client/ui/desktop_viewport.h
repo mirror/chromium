@@ -42,6 +42,12 @@ class DesktopViewport {
   // dimensions are changed.
   void SetSurfaceSize(int surface_width, int surface_height);
 
+  // Sets an extra offset on the surface coordinate to be added to the
+  // transformation, i.e. a point originally being mapped to (x, y) will be
+  // now mapped to (x + dx, y + dy). This also affects operations on surface's
+  // reference frame, e.g. ScaleDesktop.
+  void SetSurfaceOffset(int dx, int dy);
+
   // Translates the desktop on the surface's reference frame by <dx, dy>.
   void MoveDesktop(float dx, float dy);
 
@@ -112,6 +118,9 @@ class DesktopViewport {
 
   ViewMatrix::Vector2D desktop_size_{0.f, 0.f};
   ViewMatrix::Vector2D surface_size_{0.f, 0.f};
+
+  // The surface offset is included in |desktop_to_surface_transform_|.
+  ViewMatrix::Vector2D surface_offset_{0.f, 0.f};
 
   ViewMatrix desktop_to_surface_transform_;
 

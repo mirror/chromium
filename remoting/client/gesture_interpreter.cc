@@ -149,8 +149,12 @@ void GestureInterpreter::ProcessAnimations() {
   scroll_animation_.Tick();
 }
 
-void GestureInterpreter::OnSurfaceSizeChanged(int width, int height) {
+void GestureInterpreter::OnSurfaceBoundsChanged(int x,
+                                                int y,
+                                                int width,
+                                                int height) {
   viewport_.SetSurfaceSize(width, height);
+  viewport_.SetSurfaceOffset(x, y);
   input_strategy_->FocusViewportOnCursor(&viewport_);
 }
 

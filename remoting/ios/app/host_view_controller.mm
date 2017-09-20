@@ -14,6 +14,7 @@
 #import "remoting/ios/app/physical_keyboard_detector.h"
 #import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/app/settings/remoting_settings_view_controller.h"
+#import "remoting/ios/app/view_utils.h"
 #import "remoting/ios/client_gestures.h"
 #import "remoting/ios/client_keyboard.h"
 #import "remoting/ios/display/eagl_view.h"
@@ -147,20 +148,15 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
   _clientKeyboard.delegate = self;
   [_hostView addSubview:_clientKeyboard];
 
-  NSDictionary* views = @{@"fab" : _floatingButton};
-  NSDictionary* metrics = @{ @"inset" : @(kFabInset) };
+  UILayoutGuide* safeAreaLayoutGuide =
+      remoting::SafeAreaLayoutGuideForView(self.view);
 
-  _fabLeftConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"H:|-(inset)-[fab]"
-                          options:NSLayoutFormatDirectionLeftToRight
-                          metrics:metrics
-                            views:views];
-
-  _fabRightConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"H:[fab]-(inset)-|"
-                          options:NSLayoutFormatDirectionLeftToRight
-                          metrics:metrics
-                            views:views];
+  _fabLeftConstraints = @[ [_floatingButton.leftAnchor
+      constraintEqualToAnchor:safeAreaLayoutGuide.leftAnchor
+                     constant:kFabInset] ];
+  _fabRightConstraints = @[ [_floatingButton.rightAnchor
+      constraintEqualToAnchor:safeAreaLayoutGuide.rightAnchor
+                     constant:-kFabInset] ];
   [_floatingButton.bottomAnchor
       constraintEqualToAnchor:_keyboardPlaceholderView.topAnchor
                      constant:-kFabInset]
@@ -385,12 +381,19 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
       viewSize.height - _keyboardPlaceholderView.frame.size.height;
   CALayer* kbPlaceholderLayer =
       [_keyboardPlaceholderView.layer presentationLayer];
-  CGFloat currentVisibleHeight =
-      viewSize.height - kbPlaceholderLayer.frame.size.height;
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11, *)) {
+    safeAreaInsets = _hostView.safeAreaInsets;
+  }
+  safeAreaInsets.bottom =
+      MAX(safeAreaInsets.bottom, kbPlaceholderLayer.frame.size.height);
+  CGRect surfaceBounds =
+      UIEdgeInsetsInsetRect(_hostView.bounds, safeAreaInsets);
 
-  _client.gestureInterpreter->OnSurfaceSizeChanged(viewSize.width,
-                                                   currentVisibleHeight);
-  if (currentVisibleHeight == targetVisibleHeight) {
+  _client.gestureInterpreter->OnSurfaceBoundsChanged(
+      surfaceBounds.origin.x, surfaceBounds.origin.y, surfaceBounds.size.width,
+      surfaceBounds.size.height);
+  if (surfaceBounds.size.height == targetVisibleHeight) {
     // Animation is done.
     _surfaceSizeAnimationLink.paused = YES;
   }
