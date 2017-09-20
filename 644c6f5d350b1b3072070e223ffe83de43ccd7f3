@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1fd5d684_d229f0a1",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-20T01:50:28Z",
+      "side": 1,
+      "message": "nit: no {} needed",
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90d42465_7f91b2fb",
         "filename": "chrome/browser/permissions/permission_manager.cc",
         "patchSetId": 1
@@ -42,6 +59,47 @@
         "endLine": 529,
         "endChar": 0
       },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279a085f_89247b6f",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-20T01:50:28Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be needed here but maybe we should do the conversion for consistency.",
+      "parentUuid": "90d42465_7f91b2fb",
+      "range": {
+        "startLine": 529,
+        "startChar": 48,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c1b79d_d93acebc",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-20T01:50:28Z",
+      "side": 1,
+      "message": "nit: please add a comment about what this does\nnit: this could be static",
       "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
