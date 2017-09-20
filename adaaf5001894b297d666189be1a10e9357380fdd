@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d2fd8a8_a290b1ec",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-20T21:20:50Z",
+      "side": 1,
+      "message": "Since they are all .*:energy_sum and .*:power_avg it might make sense to break it down in terms of phases instead of energy vs. power. But no strong feelings on that.",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "adaaf5001894b297d666189be1a10e9357380fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d536d03_a77139a4",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-20T21:20:50Z",
+      "side": 1,
+      "message": "Not sure this sends a good message. If we feel that it warrants this message, why have the metric at all?",
+      "range": {
+        "startLine": 76,
+        "startChar": 123,
+        "endLine": 76,
+        "endChar": 131
+      },
+      "revId": "adaaf5001894b297d666189be1a10e9357380fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0984553e_ca138235",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-20T21:20:50Z",
+      "side": 1,
+      "message": "Should this include information on clock sync metrics?",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "adaaf5001894b297d666189be1a10e9357380fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
