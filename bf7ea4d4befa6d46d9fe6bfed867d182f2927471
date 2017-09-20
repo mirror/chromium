@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e4dd0a6_d99e37f2",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-20T13:09:04Z",
+      "side": 1,
+      "message": "We have changed the |allowed_touch_action_| to be Optional, so ResetTouchAction() is resetting that variable, not setting it to AUTO. I believe resetting |allowed_touch_action_| does indicate that we don\u0027t block on the touch event, is that correct?",
+      "parentUuid": "77a91a03_8ec49d3a",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fdf98f6_a0fcf03e",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 37
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d88693c0_2ffda98c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-20T13:09:04Z",
+      "side": 1,
+      "message": "Yes, that makes sense. I have changed this function to return Optional\u003ccc::TouchAction\u003e and updated all call sites.",
+      "parentUuid": "6fdf98f6_a0fcf03e",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0737aeed_3397bb61",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 37
@@ -50,6 +86,24 @@
       "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7014ab_bee0a3aa",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-20T13:09:04Z",
+      "side": 1,
+      "message": "I changed the variable name to be more obvious. I don\u0027t think using two variable is necessary since |suppress_manipulation_events_| is Optional.",
+      "parentUuid": "0737aeed_3397bb61",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
