@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e0b8cb_64e2e2c1",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-20T16:38:55Z",
+      "side": 1,
+      "message": "nit: OCSPSingleResponse",
+      "range": {
+        "startLine": 522,
+        "startChar": 28,
+        "endLine": 522,
+        "endChar": 46
+      },
+      "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ed47d6_085b1e0a",
+        "filename": "net/cert/internal/ocsp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-20T16:38:55Z",
+      "side": 1,
+      "message": "Are you already regenerating the certs, otherwise I\u0027ll go see if I can cut up the go script I used to trawl for OCSP responses to generate them.",
+      "revId": "b11eb150a5bc06b057e276062b45c4361fa04a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
