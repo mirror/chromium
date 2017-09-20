@@ -62,6 +62,9 @@ class CC_EXPORT ProxyMain : public Proxy {
     return final_pipeline_stage_;
   }
 
+  void WaitForImplCommit();
+  void ImplCommitCompleteSignaled();
+
  private:
   // Proxy implementation.
   bool IsStarted() const override;
@@ -106,6 +109,7 @@ class CC_EXPORT ProxyMain : public Proxy {
 
   const int layer_tree_host_id_;
 
+  CommitPipelineStage max_pending_request_pipeline_stage_;
   // The furthest pipeline stage which has been requested for the next
   // commit.
   CommitPipelineStage max_requested_pipeline_stage_;
@@ -123,6 +127,8 @@ class CC_EXPORT ProxyMain : public Proxy {
   bool started_;
 
   bool defer_commits_;
+
+  std::unique_ptr<CompletionEvent> impl_commit_completion_;
 
   // ProxyImpl is created and destroyed on the impl thread, and should only be
   // accessed on the impl thread.

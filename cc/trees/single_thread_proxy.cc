@@ -237,6 +237,7 @@ void SingleThreadProxy::CommitComplete() {
   commit_blocking_task_runner_.reset();
   layer_tree_host_->CommitComplete();
   layer_tree_host_->DidBeginMainFrame();
+  layer_tree_host_->CommitOnImplThreadComplete();
 
   next_frame_is_newly_committed_frame_ = true;
 }
