@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "3d0e6cfe_88c1f059",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-20T01:31:42Z",
+      "side": 1,
+      "message": "Done. Added comments in ArcAccessibilityHelperBridge and ArcNotificationContentView.",
+      "parentUuid": "3b7ecd0d_1b1e2ccf",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 27
+      },
+      "revId": "2257788c5136c77553277cb0b7cdfc798124a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11461fd5_607246a1",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 8
