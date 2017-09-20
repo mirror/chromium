@@ -117,6 +117,30 @@
       "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e564672_6d723e64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-20T12:24:56Z",
+      "side": 1,
+      "message": "Changed the name of the variable to mWasGenericSigninPromoDisplayed. BTW, AFAIK this variable shouldn\u0027t be removed because in Settings we should fall back to the generic promo after hitting the impression cap.",
+      "parentUuid": "ce82a62d_db77ea28",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
