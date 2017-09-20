@@ -12,7 +12,7 @@
 #include "base/process/process.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/public/common/sandbox_type.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/zygote_handle.h"
 
 namespace sandbox {
@@ -59,7 +59,7 @@ class CONTENT_EXPORT SandboxedProcessLauncherDelegate {
 
   // Returns the SandboxType to enforce on the process, or
   // SANDBOX_TYPE_NO_SANDBOX to run without a sandbox policy.
-  virtual SandboxType GetSandboxType() = 0;
+  virtual sandbox::SandboxType GetSandboxType() = 0;
 };
 
 }  // namespace content

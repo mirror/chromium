@@ -16,8 +16,8 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_type.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "sandbox/sandbox_features.h"
 
@@ -133,12 +133,12 @@ inline bool IsArchitectureArm() {
 }
 
 // If a BPF policy is engaged for |process_type|, run a few sanity checks.
-void RunSandboxSanityChecks(SandboxType sandbox_type) {
+void RunSandboxSanityChecks(sandbox::SandboxType sandbox_type) {
   switch (sandbox_type) {
-    case SANDBOX_TYPE_RENDERER:
-    case SANDBOX_TYPE_GPU:
-    case SANDBOX_TYPE_PPAPI:
-    case SANDBOX_TYPE_WIDEVINE: {
+    case sandbox::SANDBOX_TYPE_RENDERER:
+    case sandbox::SANDBOX_TYPE_GPU:
+    case sandbox::SANDBOX_TYPE_PPAPI:
+    case sandbox::SANDBOX_TYPE_WIDEVINE: {
       int syscall_ret;
       errno = 0;
 
@@ -182,27 +182,27 @@ std::unique_ptr<SandboxBPFBasePolicy> GetGpuProcessSandbox(
 }
 
 // Initialize the seccomp-bpf sandbox.
-bool StartBPFSandbox(SandboxType sandbox_type,
+bool StartBPFSandbox(sandbox::SandboxType sandbox_type,
                      base::ScopedFD proc_fd,
                      const gpu::GPUInfo* gpu_info) {
   std::unique_ptr<SandboxBPFBasePolicy> policy;
   switch (sandbox_type) {
-    case SANDBOX_TYPE_GPU:
+    case sandbox::SANDBOX_TYPE_GPU:
       policy = GetGpuProcessSandbox(gpu_info);
       break;
-    case SANDBOX_TYPE_RENDERER:
+    case sandbox::SANDBOX_TYPE_RENDERER:
       policy = std::make_unique<RendererProcessPolicy>();
       break;
-    case SANDBOX_TYPE_PPAPI:
+    case sandbox::SANDBOX_TYPE_PPAPI:
       policy = std::make_unique<PpapiProcessPolicy>();
       break;
-    case SANDBOX_TYPE_UTILITY:
+    case sandbox::SANDBOX_TYPE_UTILITY:
       policy = std::make_unique<UtilityProcessPolicy>();
       break;
-    case SANDBOX_TYPE_WIDEVINE:
+    case sandbox::SANDBOX_TYPE_WIDEVINE:
       policy = std::make_unique<WidevineProcessPolicy>();
       break;
-    case SANDBOX_TYPE_NO_SANDBOX:
+    case sandbox::SANDBOX_TYPE_NO_SANDBOX:
     default:
       NOTREACHED();
       policy = std::make_unique<AllowAllPolicy>();
