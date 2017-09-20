@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dbb7e60d_c0eb1722",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-20T21:31:35Z",
+      "side": 1,
+      "message": "Oh, that\u0027s annoying.",
+      "parentUuid": "b5787e47_c8ef79df",
+      "range": {
+        "startLine": 770,
+        "startChar": 58,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "2ac7c6e338f7db98e08d3d20d56b07faa8230b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22612c12_b6de9d27",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 2
