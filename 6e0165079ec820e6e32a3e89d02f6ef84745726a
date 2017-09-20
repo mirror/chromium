@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d6bd68_11e628f7",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-20T23:58:59Z",
+      "side": 1,
+      "message": "Can we use\n\n  height \u003d GetDocument().View()-\u003eLayoutViewportScrollableArea()-\u003eContentsSize().Height()\n\n(LayoutViewportScrollableArea will return the LayoutView\u0027s PLSA with RLS, or LocalFrameView without RLS.)",
+      "range": {
+        "startLine": 964,
+        "startChar": 10,
+        "endLine": 964,
+        "endChar": 16
+      },
+      "revId": "6e0165079ec820e6e32a3e89d02f6ef84745726a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a35e18_b2422593",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-20T23:58:59Z",
+      "side": 1,
+      "message": "Same in this file - check LayoutViewportScrollableArea()-\u003eContentsSize()",
+      "range": {
+        "startLine": 1482,
+        "startChar": 26,
+        "endLine": 1482,
+        "endChar": 41
+      },
+      "revId": "6e0165079ec820e6e32a3e89d02f6ef84745726a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a59e7c8_cff298ad",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4030,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-20T23:58:59Z",
+      "side": 1,
+      "message": "LocalFrameView::MaximumScrollOffsetInt should not be changed.\n\nIt is part of LocalFrameView\u0027s implementation of ScrollableArea, so it should use ContentsSize() as before.",
+      "revId": "6e0165079ec820e6e32a3e89d02f6ef84745726a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55d337c_33381599",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewportTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-20T23:58:59Z",
+      "side": 1,
+      "message": "use LayoutViewportScrollableArea here too\n\nAnd let\u0027s rename this helper to expectedMaxLayoutViewportScrollOffset.",
+      "range": {
+        "startLine": 1252,
+        "startChar": 37,
+        "endLine": 1252,
+        "endChar": 50
+      },
+      "revId": "6e0165079ec820e6e32a3e89d02f6ef84745726a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
