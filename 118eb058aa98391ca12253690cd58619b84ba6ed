@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5bcc405_31243fed",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:56:24Z",
+      "side": 1,
+      "message": "Why are you inserting null?",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6caca24b_0f8bcfe6",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:56:24Z",
+      "side": 1,
+      "message": "I\u0027m mildly confused by this name. I would think \u0027internal\u0027 is something used internal to IME. But this class is not part of IME, so I\u0027m confused by \u0027internal\u0027. Maybe Shu can answer what \u0027internal\u0027 means here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 70
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f8ef0b_90805691",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:56:24Z",
+      "side": 1,
+      "message": "no explicit.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31beb265_c057b15d",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:56:24Z",
+      "side": 1,
+      "message": "remove explicit.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d61763a_c377cf19",
+        "filename": "ui/base/ime/input_method_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-20T19:56:24Z",
+      "side": 1,
+      "message": "Style guide says members of classes should always be private (I realize sending_key_event_ is in the protected section too, but it shouldn\u0027t be).",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
