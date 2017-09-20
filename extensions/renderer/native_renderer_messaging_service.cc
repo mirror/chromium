@@ -76,7 +76,8 @@ bool ScriptContextIsValid(ScriptContext* script_context) {
 NativeRendererMessagingService::NativeRendererMessagingService(
     NativeExtensionBindingsSystem* bindings_system)
     : RendererMessagingService(bindings_system),
-      bindings_system_(bindings_system) {}
+      bindings_system_(bindings_system),
+      one_time_message_handler_(bindings_system) {}
 NativeRendererMessagingService::~NativeRendererMessagingService() {}
 
 gin::Handle<GinPort> NativeRendererMessagingService::Connect(
@@ -101,6 +102,27 @@ gin::Handle<GinPort> NativeRendererMessagingService::Connect(
       script_context, port->port_id(), target_id, channel_name,
       include_tls_channel_id);
   return port;
+}
+
+void NativeRendererMessagingService::SendOneTimeMessage(
+    ScriptContext* script_context,
+    const std::string& target_id,
+    const std::string& method_name,
+    bool include_tls_channel_id,
+    const Message& message,
+    v8::Local<v8::Function> response_callback) {
+  if (!ScriptContextIsValid(script_context))
+    return;
+
+  MessagingPerContextData* data =
+      GetPerContextData(script_context->v8_context(), true);
+
+  bool is_opener = true;
+  PortId port_id(script_context->context_id(), data->next_port_id++, is_opener);
+
+  one_time_message_handler_.SendMessage(script_context, port_id, target_id,
+                                        method_name, include_tls_channel_id,
+                                        message, response_callback);
 }
 
 void NativeRendererMessagingService::PostMessageToPort(
@@ -165,7 +187,8 @@ bool NativeRendererMessagingService::ContextHasMessagePort(
     const PortId& port_id) {
   MessagingPerContextData* data =
       GetPerContextData(script_context->v8_context(), false);
-  return data ? base::ContainsKey(data->ports, port_id) : false;
+  return one_time_message_handler_.HasPort(script_context, port_id) ||
+         (data && base::ContainsKey(data->ports, port_id));
 }
 
 void NativeRendererMessagingService::DispatchOnConnectToListeners(
@@ -180,12 +203,6 @@ void NativeRendererMessagingService::DispatchOnConnectToListeners(
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = script_context->v8_context();
-
-  if (channel_name == "chrome.extension.sendRequest" ||
-      channel_name == "chrome.runtime.sendMessage") {
-    // TODO(devlin): Handle sendMessage/sendRequest.
-    return;
-  }
 
   gin::DataObjectBuilder sender_builder(isolate);
   if (!info.source_id.empty())
@@ -216,7 +233,21 @@ void NativeRendererMessagingService::DispatchOnConnectToListeners(
     }
   }
 
-  v8::Local<v8::Value> sender = sender_builder.Build();
+  v8::Local<v8::Object> sender = sender_builder.Build();
+
+  LOG(WARNING) << "Dispatching to listeners: " << channel_name;
+  if (channel_name == "chrome.extension.sendRequest" ||
+      channel_name == "chrome.runtime.sendMessage") {
+    LOG(WARNING) << "Dispatching to onetime";
+    OneTimeMessageHandler::Event event =
+        channel_name == "chrome.extension.sendRequest"
+            ? OneTimeMessageHandler::Event::ON_REQUEST
+            : OneTimeMessageHandler::Event::ON_MESSAGE;
+    one_time_message_handler_.AddReceiver(script_context, target_port_id,
+                                          sender, event);
+    return;
+  }
+
   gin::Handle<GinPort> port =
       CreatePort(script_context, channel_name, target_port_id);
   port->SetSender(context, sender);
@@ -232,8 +263,11 @@ void NativeRendererMessagingService::DispatchOnMessageToListeners(
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
 
-  // TODO(devlin): Handle special casing for the sendMessage/sendRequest
-  // versions.
+  if (one_time_message_handler_.DeliverMessage(script_context, message,
+                                               target_port_id)) {
+    return;
+  }
+
   gin::Handle<GinPort> port = GetPort(script_context, target_port_id);
   DCHECK(!port.IsEmpty());
 
@@ -247,8 +281,11 @@ void NativeRendererMessagingService::DispatchOnDisconnectToListeners(
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
 
-  // TODO(devlin): Handle special casing for the sendMessage/sendRequest
-  // versions.
+  if (one_time_message_handler_.Disconnect(script_context, port_id,
+                                           error_message)) {
+    return;
+  }
+
   v8::Local<v8::Context> context = script_context->v8_context();
   gin::Handle<GinPort> port = GetPort(script_context, port_id);
   DCHECK(!port.IsEmpty());
@@ -265,6 +302,127 @@ void NativeRendererMessagingService::DispatchOnDisconnectToListeners(
   MessagingPerContextData* data = GetPerContextData(context, false);
   data->ports.erase(port_id);
 }
+
+/*bool NativeRendererMessagingService::DispatchOneTimeMessage(
+    ScriptContext* script_context,
+    const Message& message,
+    const PortId& port_id) {
+  DCHECK(!port_id.is_opener);
+
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> context = script_context->v8_context();
+
+  bool handled = false;
+
+  MessagingPerContextData* data =
+      GetPerContextData(script_context->v8_context(), false);
+  DCHECK(data);
+  auto iter = data->one_time_receivers.find(port_id);
+  if (iter == data->one_time_receivers.end())
+    return handled;
+
+  handled = true;
+  OneTimeReceiver& port = iter->second;
+
+  // This port is a receiver, so we invoke the onMessage event and provide a
+  // callback through which the port can respond. The port stays open until
+  // we receive a response.
+  // TODO(devlin): With chrome.runtime.sendMessage, we actually require that a
+  // listener return `true` if they intend to respond asynchronously; otherwise
+  // we close the port. With both sendMessage and sendRequest, we can monitor
+  // the lifetime of the response callback and close the port if it's collected.
+  auto callback = std::make_unique<OneTimeMessageCallback>(
+      base::Bind(&NativeRendererMessagingService::OnOneTimeMessageResponse,
+                 weak_factory_.GetWeakPtr(),
+                 port_id));
+  v8::Local<v8::External> data = v8::External::New(isolate, callback.get());
+  v8::Local<v8::Function> response_function;
+
+  if (!v8::Function::New(context, &OneTimeMessageResponseHelper, data).ToLocal(
+          &response_function)) {
+    return handled;
+  }
+
+  data->pending_callbacks.push_back(std::move(callback));
+  bindings_system_->api_system()->event_handler()->
+      FireEventInContext(event_name, v8_context, args, nullptr);
+
+  return handled;
+}
+
+bool NativeRendererMessagingService::DispatchOneTimeReply(
+    ScriptContext* script_context,
+    const Message& message,
+    const PortId& port_id) {
+  DCHECK(port_id.is_opener);
+
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> context = script_context->v8_context();
+
+  bool handled = false;
+
+  MessagingPerContextData* data =
+      GetPerContextData(script_context->v8_context(), false);
+  DCHECK(data);
+  auto iter = data->one_time_openers.find(port_id);
+  if (iter == data->one_time_openers.end())
+    return handled;
+
+  OneTimeOpener& port = iter->second;
+
+  // This port was the opener, so the message is the response from the
+  // receiver. Invoke the callback, if any, and close the message port.
+  if (port.request_id != -1) {
+    v8::Local<v8::String> v8_message = gin::StringToV8(isolate, message.data);
+    bindings_system_->api_system()->request_handler()->CompleteRequest(
+        port.request_id, {message}, std::string());
+  }
+
+  ipc_sender->SendCloseMessagePort(port.routing_id, port_id);
+  data->one_time_ports.erase(iter);
+
+  return handled;
+}
+
+bool NativeRendererMessagingService::DisconnectOneTimePort(
+    ScriptContext* script_context,
+    const PortId& port_id,
+    const std::string& error) {
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> context = script_context->v8_context();
+
+  bool handled = false;
+
+  MessagingPerContextData* data =
+      GetPerContextData(script_context->v8_context(), false);
+  DCHECK(data);
+  auto iter = data->one_time_ports.find(port_id);
+  if (iter == data->one_time_ports.end())
+    return false;
+
+  handled = true;
+  OneTimePort& port = iter->second;
+  if (port_id.is_opener && port.request_id != -1) {
+    bindings_system_->api_system()->request_handler()->CompleteRequest(
+        port.request_id, base::nullopt, error);
+  }
+  // Note: No need to do anything special if this wasn't the opener port or if
+  // the opener wasn't expected a response.
+
+  data->one_time_ports.erase(iter);
+  return handled;
+}
+
+void NativeRendererMessagingService::OnOneTimeMessageResponse(
+    const PortId& port_id,
+    gin::Arguments* arguments) {
+  v8::Local<v8::Value> response;
+  OneTimePort* port = GetOneTimePort();
+
+  IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
+  ipc_sender->SendPostMessageToPort(routing_id, port_id, *message);
+  ipc_sender->SendCloseMessagePort(routing_id, port_id, true);
+}*/
 
 gin::Handle<GinPort> NativeRendererMessagingService::CreatePort(
     ScriptContext* script_context,
@@ -312,7 +470,7 @@ gin::Handle<GinPort> NativeRendererMessagingService::GetPort(
   v8::Local<v8::Context> context = script_context->v8_context();
 
   MessagingPerContextData* data =
-      GetPerContextData(script_context->v8_context(), true);
+      GetPerContextData(script_context->v8_context(), false);
   DCHECK(data);
   DCHECK(base::ContainsKey(data->ports, port_id));
 
@@ -323,5 +481,30 @@ gin::Handle<GinPort> NativeRendererMessagingService::GetPort(
 
   return gin::CreateHandle(isolate, port);
 }
+
+/*
+void NativeRendererMessagingService::CreateOneTimePort(
+    ScriptContext* script_context,
+    const PortId& port_id,
+    v8::Local<v8::Object> sender,
+    int request_id) {
+  // Opener ports should not have an associated |sender| property.
+  DCHECK_EQ(port_id.is_opener, sender.IsEmpty());
+  // Only opener ports should have an associated request id (optional).
+  DCHECK(port_id.is_opener || request_id == -1);
+
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> context = script_context->v8_context();
+
+  MessagingPerContextData* data =
+      GetPerContextData(script_context->v8_context(), true);
+  DCHECK(data);
+  DCHECK(!base::ContainsKey(data->one_time_ports, port_id));
+
+  OneTimePort& port = data->one_time_ports[port_id];
+  if (!sender.IsEmpty())
+    port.sender.Reset(isolate, sender);
+  port.request_id = request_id;
+}*/
 
 }  // namespace extensions

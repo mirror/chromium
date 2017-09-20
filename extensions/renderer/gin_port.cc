@@ -40,6 +40,61 @@ GinPort::~GinPort() {}
 
 gin::WrapperInfo GinPort::kWrapperInfo = {gin::kEmbedderNativeGin};
 
+std::unique_ptr<Message> GinPort::ParseMessage(v8::Local<v8::Context> context,
+                                               v8::Local<v8::Value> value) {
+  DCHECK(!value.IsEmpty());
+  v8::Isolate* isolate = context->GetIsolate();
+
+  // TODO(devlin): For some reason, we don't use the signature for
+  // Port.postMessage when evaluating the parameters. We probably should, but
+  // we don't know how many extensions that may break. It would be good to
+  // investigate, and, ideally, use the signature.
+
+  if (value->IsUndefined()) {
+    // JSON.stringify won't serialized undefined (it returns undefined), but it
+    // will serialized null. We've always converted undefined to null in JS
+    // bindings, so preserve this behavior for now.
+    value = v8::Null(isolate);
+  }
+
+  bool success = false;
+  v8::Local<v8::String> stringified;
+  {
+    v8::TryCatch try_catch(isolate);
+    success = v8::JSON::Stringify(context, value).ToLocal(&stringified);
+  }
+
+  std::string message;
+  if (success) {
+    message = gin::V8ToString(stringified);
+    // JSON.stringify can either fail (with unserializable objects) or can
+    // return undefined. If it returns undefined, the v8 API then coerces it to
+    // the string value "undefined". Throw an error if we were passed
+    // unserializable objects.
+    success = message != "undefined";
+  }
+
+  if (!success)
+    return nullptr;
+
+  return std::make_unique<Message>(
+      message, blink::WebUserGestureIndicator::IsProcessingUserGesture());
+}
+
+v8::Local<v8::Value> GinPort::ConvertMessage(v8::Local<v8::Context> context,
+                                             const Message& message) {
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::Local<v8::String> v8_message_string =
+      gin::StringToV8(isolate, message.data);
+  v8::Local<v8::Value> parsed_message;
+  v8::TryCatch try_catch(isolate);
+  if (!v8::JSON::Parse(context, v8_message_string).ToLocal(&parsed_message)) {
+    NOTREACHED();
+    return v8::Local<v8::Value>();
+  }
+  return parsed_message;
+}
+
 gin::ObjectTemplateBuilder GinPort::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {
   return Wrappable<GinPort>::GetObjectTemplateBuilder(isolate)
@@ -57,16 +112,7 @@ void GinPort::DispatchOnMessage(v8::Local<v8::Context> context,
   v8::HandleScope handle_scope(isolate);
   v8::Context::Scope context_scope(context);
 
-  v8::Local<v8::String> v8_message_string =
-      gin::StringToV8(isolate, message.data);
-  v8::Local<v8::Value> parsed_message;
-  {
-    v8::TryCatch try_catch(isolate);
-    if (!v8::JSON::Parse(context, v8_message_string).ToLocal(&parsed_message)) {
-      NOTREACHED();
-      return;
-    }
-  }
+  v8::Local<v8::Value> parsed_message = ConvertMessage(context, message);
   v8::Local<v8::Object> self = GetWrapper(isolate).ToLocalChecked();
   std::vector<v8::Local<v8::Value>> args = {parsed_message, self};
   DispatchEvent(context, &args, kOnMessageEvent);
@@ -117,44 +163,14 @@ void GinPort::PostMessageHandler(gin::Arguments* arguments,
     return;
   }
 
-  // TODO(devlin): For some reason, we don't use the signature for
-  // Port.postMessage when evaluating the parameters. We probably should, but
-  // we don't know how many extensions that may break. It would be good to
-  // investigate, and, ideally, use the signature.
-
-  if (v8_message->IsUndefined()) {
-    // JSON.stringify won't serialized undefined (it returns undefined), but it
-    // will serialized null. We've always converted undefined to null in JS
-    // bindings, so preserve this behavior for now.
-    v8_message = v8::Null(isolate);
-  }
-
-  bool success = false;
-  v8::Local<v8::String> stringified;
-  {
-    v8::TryCatch try_catch(isolate);
-    success = v8::JSON::Stringify(context, v8_message).ToLocal(&stringified);
-  }
-
-  std::string message;
-  if (success) {
-    message = gin::V8ToString(stringified);
-    // JSON.stringify can either fail (with unserializable objects) or can
-    // return undefined. If it returns undefined, the v8 API then coerces it to
-    // the string value "undefined". Throw an error if we were passed
-    // unserializable objects.
-    success = message != "undefined";
-  }
-
-  if (!success) {
+  std::unique_ptr<Message> message = ParseMessage(context, v8_message);
+  if (!message) {
     ThrowError(isolate, "Illegal argument to Port.postMessage");
     return;
   }
 
-  delegate_->PostMessageToPort(
-      context, port_id_, routing_id_,
-      std::make_unique<Message>(
-          message, blink::WebUserGestureIndicator::IsProcessingUserGesture()));
+  delegate_->PostMessageToPort(context, port_id_, routing_id_,
+                               std::move(message));
 }
 
 std::string GinPort::GetName() {

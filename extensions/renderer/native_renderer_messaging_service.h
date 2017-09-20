@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "extensions/renderer/gin_port.h"
+#include "extensions/renderer/one_time_message_handler.h"
 #include "extensions/renderer/renderer_messaging_service.h"
 #include "gin/handle.h"
 
@@ -34,6 +35,13 @@ class NativeRendererMessagingService : public RendererMessagingService,
                                const std::string& target_id,
                                const std::string& name,
                                bool include_tls_channel_id);
+
+  void SendOneTimeMessage(ScriptContext* script_context,
+                          const std::string& target_id,
+                          const std::string& channel_name,
+                          bool include_tls_channel_id,
+                          const Message& message,
+                          v8::Local<v8::Function> response_callback);
 
   // GinPort::Delegate:
   void PostMessageToPort(v8::Local<v8::Context> context,
@@ -82,8 +90,23 @@ class NativeRendererMessagingService : public RendererMessagingService,
   gin::Handle<GinPort> GetPort(ScriptContext* script_context,
                                const PortId& port_id);
 
+  /*  void CreateOneTimePort(ScriptContext* script_context,
+                           const PortId& port_id,
+                           v8::Local<v8::Object> sender,
+                           int request_id);
+
+    bool DispatchOneTimeMessage(ScriptContext* script_context,
+                                const Message& message,
+                                const PortId& target_port_id);
+
+    bool DisconnectOneTimePort(ScriptContext* script_context,
+                               const PortId& port_id,
+                               const std::string& error); */
+
   // The associated bindings system; guaranteed to outlive this object.
   NativeExtensionBindingsSystem* const bindings_system_;
+
+  OneTimeMessageHandler one_time_message_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeRendererMessagingService);
 };

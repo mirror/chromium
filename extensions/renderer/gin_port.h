@@ -54,6 +54,11 @@ class GinPort final : public gin::Wrappable<GinPort> {
 
   static gin::WrapperInfo kWrapperInfo;
 
+  static std::unique_ptr<Message> ParseMessage(v8::Local<v8::Context> context,
+                                               v8::Local<v8::Value> value);
+  static v8::Local<v8::Value> ConvertMessage(v8::Local<v8::Context> context,
+                                             const Message& message);
+
   // gin::Wrappable:
   gin::ObjectTemplateBuilder GetObjectTemplateBuilder(
       v8::Isolate* isolate) override;
