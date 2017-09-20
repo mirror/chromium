@@ -20,6 +20,7 @@ namespace features {
 
 // Enables the answer card in the app list.
 APP_LIST_EXPORT extern const base::Feature kEnableAnswerCard;
+APP_LIST_EXPORT extern const base::Feature kEnableAnswerCardEve;
 
 // Enables the dark run answer card in the app list. In this mode, answer cards
 // may be loaded via mock URLs and are not shown to the user.
@@ -35,6 +36,7 @@ APP_LIST_EXPORT extern const base::Feature kEnableFullscreenAppList;
 
 // Enables the Play Store app search.
 APP_LIST_EXPORT extern const base::Feature kEnablePlayStoreAppSearch;
+APP_LIST_EXPORT extern const base::Feature kEnablePlayStoreAppSearchEve;
 
 bool APP_LIST_EXPORT IsAnswerCardEnabled();
 bool APP_LIST_EXPORT IsAnswerCardDarkRunEnabled();
