@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "base/gtest_prod_util.h"
+#include "base/unguessable_token.h"
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/Noncopyable.h"
@@ -297,6 +298,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   String host_;
   String domain_;
   Suborigin suborigin_;
+  base::UnguessableToken unique_id_;
   unsigned short port_;
   unsigned short effective_port_;
   bool is_unique_;
