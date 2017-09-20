@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5787688e_3d3b9a5a",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "Could we have another test for the situation that there\u0027re multiple sessions in the directory\nAnd verify the chrome://policy-tool can load them all and pick the correct default session?",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c6126e8_0fc65c45",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 3
@@ -36,6 +53,40 @@
       "writtenOn": "2017-09-20T20:08:52Z",
       "side": 1,
       "message": "nit: Name this kSessionsPattern.\n\nAlso, it should now be based on the \"json\" literal (see comment above).",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf6b288_b65eb659",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "Why you need a ListValue here instead of return a vector\u003cbase::FilePath::StringType\u003e directly?",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54abc74a_fbfc2698",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "If you decide to return vector instead of ListValue as the comment above. you could use std::transform when convert a vector\u003cpair\u003c\u003e\u003e to vector\u003cpair-\u003esecond\u003e.\n\nIf you decide keep using ListValue, you could convert the string to Value in the early for loop and call ListValue ctor directly here:\nhttps://cs.chromium.org/chromium/src/base/values.h?type\u003dcs\u0026q\u003dbase::ListValue\u0026sq\u003dpackage:chromium\u0026l\u003d588",
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +110,74 @@
         "endLine": 141,
         "endChar": 55
       },
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16733f9_9ad67235",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "Will reading file change the last access time?",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba67db41_a5bcaaf0",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "Personally, I\u0027m not a fan of FRIEND_TEST_ALL_PREFIXES. It means that you have to\nmodify the header file every time you add a new test.\n\nInstead of using FRIEND, there\u0027re some alternate ways to do the same thing.\n1) Create a public function ends with ForTesting/ForTest. Chromium\u0027s style check will make sure that this function can only be called for testing.\n2) Make it protected. In test, a subclass can access the private member and provides a getter function.\n\nWDYT?",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3415aec_a61f138d",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "Instead of using string here, use const char[] and convert it to string later.\nhttps://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nAlso, if you want to make it private, consider put it into anonymous namespace.\nhttps://google.github.io/styleguide/cppguide.html#Unnamed_Namespaces_and_Static_Variables",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda50f52_974fb461",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-20T21:07:28Z",
+      "side": 1,
+      "message": "I think it worth to documenting that the list will be sorted by last_access_time.\nAs reader is not able to know this by its name.",
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
