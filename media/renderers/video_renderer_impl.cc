@@ -314,8 +314,11 @@ scoped_refptr<VideoFrame> VideoRendererImpl::Render(
   //
   // Just after resuming from background rendering, we also don't count the
   // dropped frames since they are likely just dropped due to being too old.
-  if (!background_rendering && !was_background_rendering_)
+  if (!background_rendering && !was_background_rendering_ &&
+      frames_dropped > 0) {
     frames_dropped_ += frames_dropped;
+    TRACE_EVENT1("media", "FramesDropped", "count", frames_dropped);
+  }
   UpdateStats_Locked();
   was_background_rendering_ = background_rendering;
 

@@ -651,6 +651,8 @@ void WebMediaPlayerImpl::Seek(double seconds) {
 
 void WebMediaPlayerImpl::DoSeek(base::TimeDelta time, bool time_updated) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  TRACE_EVENT1("media", "WebMediaPlayerImpl::DoSeek", "target",
+               time.InSecondsF());
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   if (IsRemote()) {
@@ -1295,6 +1297,8 @@ void WebMediaPlayerImpl::OnCdmAttached(bool success) {
 }
 
 void WebMediaPlayerImpl::OnPipelineSeeked(bool time_updated) {
+  TRACE_EVENT1("media", "WebMediaPlayerImpl::OnPipelineSeeked", "target",
+               seek_time_.InSecondsF());
   seeking_ = false;
   seek_time_ = base::TimeDelta();
 
@@ -1437,6 +1441,7 @@ void WebMediaPlayerImpl::OnError(PipelineStatus status) {
 }
 
 void WebMediaPlayerImpl::OnEnded() {
+  TRACE_EVENT1("media", "WebMediaPlayerImpl::OnEnded", "duration", Duration());
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
