@@ -73,6 +73,8 @@ const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
     data_.AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
     return data_;
   }
+  
+  data_.AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
 
   view_->GetAccessibleNodeData(&data_);
   data_.location = GetBoundsInScreen();
