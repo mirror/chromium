@@ -10,6 +10,7 @@
 extern NSString* const kPaymentRequestPickerRowAccessibilityID;
 extern NSString* const kPaymentRequestPickerSearchBarAccessibilityID;
 
+@class MDCAppBar;
 @class PaymentRequestPickerViewController;
 @class PickerRow;
 
@@ -26,6 +27,9 @@ extern NSString* const kPaymentRequestPickerSearchBarAccessibilityID;
 // TableViewController that displays a searchable list of rows featuring a
 // selected row as well as an index list.
 @interface PaymentRequestPickerViewController : UITableViewController
+
+// The AppBar that provides the Navigation Bar.
+@property(nonatomic, strong) MDCAppBar* appBar;
 
 // The delegate to be notified when the user selects a row.
 @property(nonatomic, weak) id<PaymentRequestPickerViewControllerDelegate>

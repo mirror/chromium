@@ -6,7 +6,9 @@
 
 #import "base/logging.h"
 #import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/ui/material_components/utils.h"
 #import "ios/chrome/browser/ui/payments/payment_request_picker_row.h"
+#import "ios/third_party/material_components_ios/src/components/AppBar/src/MDCAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -48,12 +50,14 @@ NSString* const kPaymentRequestPickerViewControllerAccessibilityID =
 @synthesize displayedRows = _displayedRows;
 @synthesize selectedRow = _selectedRow;
 @synthesize sectionTitleToSectionRowsMap = _sectionTitleToSectionRowsMap;
+@synthesize appBar = _appBar;
 @synthesize delegate = _delegate;
 
 - (instancetype)initWithRows:(NSArray<PickerRow*>*)rows
                     selected:(PickerRow*)selectedRow {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
+    self.title = @"Country";  // DO NOT COMMIT: Fetch localized string.
     self.allRows = [rows sortedArrayUsingComparator:^NSComparisonResult(
                              PickerRow* row1, PickerRow* row2) {
       return [row1.label localizedCaseInsensitiveCompare:row2.label];
@@ -61,6 +65,12 @@ NSString* const kPaymentRequestPickerViewControllerAccessibilityID =
     self.selectedRow = selectedRow;
     // Default to displaying all the rows.
     self.displayedRows = self.allRows;
+
+    _appBar = [[MDCAppBar alloc] init];
+    [self addChildViewController:_appBar.headerViewController];
+
+    _appBar.headerViewController.headerView.shiftBehavior =
+        MDCFlexibleHeaderShiftBehaviorDisabled;
   }
   return self;
 }
@@ -77,6 +87,10 @@ NSString* const kPaymentRequestPickerViewControllerAccessibilityID =
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.tableView.delegate = self;
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 
   self.tableView.rowHeight = MDCCellDefaultOneLineHeight;
   self.tableView.accessibilityIdentifier =
@@ -96,6 +110,25 @@ NSString* const kPaymentRequestPickerViewControllerAccessibilityID =
   // context. Make this class the presentation context so that the search
   // controller does not present on top of the navigation controller.
   self.definesPresentationContext = YES;
+
+  ConfigureAppBarWithCardStyle(_appBar);
+
+  self.appBar.headerViewController.headerView.trackingScrollView =
+      self.tableView;
+  [self.appBar addSubviewsToParent];
+}
+
+- (UIViewController*)childViewControllerForStatusBarHidden {
+  return self.appBar.headerViewController;
+}
+
+- (UIViewController*)childViewControllerForStatusBarStyle {
+  return self.appBar.headerViewController;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 #pragma mark - UITableViewDataSource
@@ -141,25 +174,50 @@ NSString* const kPaymentRequestPickerViewControllerAccessibilityID =
   return cell;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+  if (scrollView ==
+      self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView {
+  if (scrollView ==
+      self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController
+            .headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView
+                  willDecelerate:(BOOL)decelerate {
+  MDCFlexibleHeaderView* headerView =
+      self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView*)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint*)targetContentOffset {
+  MDCFlexibleHeaderView* headerView =
+      self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
+  }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView*)tableView
     didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
-  if (self.selectedRow) {
-    NSIndexPath* oldSelectedIndexPath = [self indexPathForRow:self.selectedRow];
-    self.selectedRow = nil;
-    // Reload the previously selected row if it is displaying.
-    if (oldSelectedIndexPath) {
-      [self.tableView reloadRowsAtIndexPaths:@[ oldSelectedIndexPath ]
-                            withRowAnimation:UITableViewRowAnimationFade];
-    }
-  }
-
   self.selectedRow =
       [[self rowsInSection:indexPath.section] objectAtIndex:indexPath.row];
-  // Reload the newly selected row.
-  [self.tableView reloadRowsAtIndexPaths:@[ indexPath ]
-                        withRowAnimation:UITableViewRowAnimationFade];
 
   [_delegate paymentRequestPickerViewController:self
                                    didSelectRow:self.selectedRow];
