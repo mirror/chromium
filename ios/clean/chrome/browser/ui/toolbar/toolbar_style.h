@@ -11,7 +11,9 @@ typedef NS_ENUM(NSInteger, ToolbarStyle) {
   // Normal (non-incognito) style.
   NORMAL = 0,
   // Incognito style.
-  INCOGNITO = 1
+  INCOGNITO = 1,
+  // NTP style.
+  NTP = 2
 };
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_STYLE_H_
