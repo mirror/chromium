@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de1db994_59f48b43",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T01:49:53Z",
+      "side": 1,
+      "message": "I guess you added the setter for this because we\u0027ll need it at some point?\n(If not I would make it a constructor argument even though it makes the ctor kind of unwieldy)",
+      "revId": "8087f709b01b90212b31bebb8043eae7979540a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e8c40c_57e30860",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-20T01:49:53Z",
+      "side": 1,
+      "message": "nit: I super appreciate this comment as a reviewer but I think as a reader coming to the code it raises more questions than it answers ;) (especially as the js code isn\u0027t linked anywhere in this file).",
+      "revId": "8087f709b01b90212b31bebb8043eae7979540a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
