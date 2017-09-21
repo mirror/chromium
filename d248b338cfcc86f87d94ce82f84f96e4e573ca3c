@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6a2460_886b706f",
+        "filename": "skia/ext/skia_utils_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T20:17:50Z",
+      "side": 0,
+      "message": "I\u0027d keep some variant of this like \"Writes the specified str into the request pickle.\"",
+      "revId": "d248b338cfcc86f87d94ce82f84f96e4e573ca3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
