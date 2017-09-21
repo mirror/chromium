@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "ui/message_center/change_queue.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/message_center_types.h"
@@ -25,10 +26,15 @@
 
 namespace message_center {
 
+namespace internal {
+class ScopedNotificationsIterationLock;
+};
+
 // The default implementation of MessageCenter.
-class MessageCenterImpl : public MessageCenter,
-                          public NotificationBlocker::Observer,
-                          public message_center::NotifierSettingsObserver {
+class MESSAGE_CENTER_EXPORT MessageCenterImpl
+    : public MessageCenter,
+      public NotificationBlocker::Observer,
+      public message_center::NotifierSettingsObserver {
  public:
   MessageCenterImpl();
   ~MessageCenterImpl() override;
@@ -103,6 +109,7 @@ class MessageCenterImpl : public MessageCenter,
   void DisableTimersForTest() override;
 
  private:
+  friend internal::ScopedNotificationsIterationLock;
   struct NotificationCache {
     NotificationCache();
     ~NotificationCache();
@@ -112,6 +119,7 @@ class MessageCenterImpl : public MessageCenter,
     NotificationList::Notifications visible_notifications;
     size_t unread_count;
   };
+  class ScopedNotificationsLock;
 
   void RemoveNotificationsForNotifierId(const NotifierId& notifier_id);
 
@@ -124,9 +132,13 @@ class MessageCenterImpl : public MessageCenter,
   std::unique_ptr<base::OneShotTimer> quiet_mode_timer_;
   NotifierSettingsProvider* settings_provider_;
   std::vector<NotificationBlocker*> blockers_;
+  std::unique_ptr<ChangeQueue> notification_queue_;
 
   bool locked_ = false;
   bool visible_ = false;
+
+  // modified by ScopedNotificationsIterationLock.
+  bool iterating_ = false;
 
   base::string16 product_os_name_;
 
