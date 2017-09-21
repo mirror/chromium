@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0338d964_62e97b41",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "I\u0027ve opened https://crbug.com/767526 asking whether this is the right process to use here.\n\nI would have added a TODO comment, but I wanted to hold off until the bug is confirmed (in case  the current behavior is WAI - see the bug for more details).",
+      "range": {
+        "startLine": 445,
+        "startChar": 23,
+        "endLine": 445,
+        "endChar": 65
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b6070e_f11c19d8",
+        "filename": "chrome/browser/chromeos/power/renderer_freezer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "This seems fine given that\n1) the webui lock probably doesn\u0027t contain OOPIFs\n2) per the TODO comment above, this code will be eventually removed",
+      "range": {
+        "startLine": 158,
+        "startChar": 24,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28255ac2_ce995c31",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "FWIW, I\u0027ve opened https://crbug.com/767539 to ask whether sending |rules| only to one of the renderers is okay.",
+      "range": {
+        "startLine": 745,
+        "startChar": 24,
+        "endLine": 745,
+        "endChar": 38
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eee66636_7fe80bec",
+        "filename": "chrome/browser/download/save_package_file_picker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "This seems okay - AFAICT |render_process_id_| field is only used in SavePackageFilePicker::FileSelected to get the profile associated with the web contents:\n\nRenderProcessHost* process \u003d RenderProcessHost::FromID(render_process_id_);\n...\nProfile* profile \u003d Profile::FromBrowserContext(process-\u003eGetBrowserContext());",
+      "range": {
+        "startLine": 138,
+        "startChar": 39,
+        "endLine": 138,
+        "endChar": 53
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4975f28_4505daf2",
+        "filename": "chrome/browser/extensions/active_tab_permission_granter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "FWIW, I\u0027ve opened https://crbug.com/767557 to ask if sending only to the main frame is okay.",
+      "range": {
+        "startLine": 144,
+        "startChar": 26,
+        "endLine": 144,
+        "endChar": 40
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa8d127_35a8956b",
+        "filename": "chrome/browser/extensions/api/web_view/chrome_web_view_internal_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "This is |webview_embedder_process_id|.  Seems okay?",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 71
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89e9e163_7f44b93c",
+        "filename": "chrome/browser/extensions/api/webrtc_audio_private/webrtc_audio_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "Returning main frame\u0027s process (rather than a process of an OOPIF) seems ok, but I don\u0027t really understand what is the desired behavior here... :-/",
+      "range": {
+        "startLine": 174,
+        "startChar": 9,
+        "endLine": 174,
+        "endChar": 47
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1485da48_d303c4e8",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "Same uncertainty as in chrome/browser/extensions/api/webrtc_audio_private/webrtc_audio_private_api.cc",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 47
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1da9d32_6bb68d1e",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "This seems like a Mac-version of the problem raised in https://crbug.com/767526",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 51
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffc639b4_e138c6e1",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "This and other main-frame-only questions are tracked in https://crbug.com/767526",
+      "range": {
+        "startLine": 304,
+        "startChar": 10,
+        "endLine": 304,
+        "endChar": 48
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22b4dff9_60635ec3",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "Errr... I am just copying the const qualifier from the GetRenderProcessHost method - otherwise the cascading const-fixing changes have no end in sight... :-/",
+      "range": {
+        "startLine": 242,
+        "startChar": 42,
+        "endLine": 242,
+        "endChar": 47
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca152fdb_1c82632c",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-21T20:40:03Z",
+      "side": 1,
+      "message": "Already tracked by https://crbug.com/715924",
+      "range": {
+        "startLine": 282,
+        "startChar": 27,
+        "endLine": 282,
+        "endChar": 69
+      },
+      "revId": "2f9432e100d74dc3f2f30a48662b7a9b8b2a2685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
