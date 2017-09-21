@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39dfbc43_9a813254",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T00:44:37Z",
+      "side": 1,
+      "message": "nit: barrel",
+      "revId": "d346f992b89025c87035583bba5dc6e762780ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a0a9af_c792e9a1",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T00:44:37Z",
+      "side": 1,
+      "message": "Thanks for adding coverage.",
+      "revId": "d346f992b89025c87035583bba5dc6e762780ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cedaea_c03e1422",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T00:44:37Z",
+      "side": 1,
+      "message": "nit: consider doing this after feature_enabled(), since that test is cheaper and will return false on most chromebooks today.",
+      "revId": "d346f992b89025c87035583bba5dc6e762780ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
