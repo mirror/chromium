@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "45b7f596_4c27fbcb",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-21T21:30:55Z",
+      "side": 1,
+      "message": "\u003e I tend to think that pages will either pay attention to the events or the poll exclusively, and not a whole lot in between.\n\nThat sounds bad, and I think we should discourage it. Only polling is bad because polling is just bad and we shouldn\u0027t encourage it :P Why would we want folks to poll for devices on every vsync, or some arbitrary interval? It\u0027s unnecessary work.\n\nOnly paying attention to events is also weird. I get why registering an event handler like vrdisplayconnect initializes VR and triggers vrdisplayconnect, but that just feels like a hacky solution.\n\nReally, it just feels like we have two confusingly different ways of doing the exact same thing, and I think we should either pick one of the two to support, or just not call displayconnect for initialization and force pages to do the correct thing that\u0027s harder to get wrong.\n\nThis is probably the wrong place for this discussion though...",
+      "parentUuid": "121b4039_ec815d75",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce6e0e50_d4db521c",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
         "patchSetId": 1
