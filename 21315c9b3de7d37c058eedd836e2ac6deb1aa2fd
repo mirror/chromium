@@ -22,6 +22,30 @@
       "revId": "21315c9b3de7d37c058eedd836e2ac6deb1aa2fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5571b1c7_5f795885",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-21T18:01:27Z",
+      "side": 0,
+      "message": "This function is use to prevent overlapping of navigation title and done button.\nIt is no longer useful because it seems MDCAppBar handles that already.\nThanks for removing this.",
+      "parentUuid": "84c62c4a_0ecbb594",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "21315c9b3de7d37c058eedd836e2ac6deb1aa2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
