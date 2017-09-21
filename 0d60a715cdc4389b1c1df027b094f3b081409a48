@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1243f37d_7829922e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-21T20:54:08Z",
+      "side": 1,
+      "message": "Optional nit: I might name this histogram something like \"Apps.LockScreen.AppsProfile.Creation.Success\" and the other one \"Apps.LockScreen.AppsProfile.Creation.Duration\".  That way, they\u0027re alphabetically sorted right next to each other.",
+      "range": {
+        "startLine": 1907,
+        "startChar": 17,
+        "endLine": 1907,
+        "endChar": 69
+      },
+      "revId": "0d60a715cdc4389b1c1df027b094f3b081409a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
