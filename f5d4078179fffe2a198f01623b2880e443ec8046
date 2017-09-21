@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "121b4039_ec815d75",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T21:08:40Z",
+      "side": 1,
+      "message": "I\u0027ve actually had discussions with Mr. Doob within the last couple of weeks where he expressed a desire to have deviceconnect fire for every device at least once per page regardless of if it had been connected before or not. (It may not be \"new\", but it\u0027s new to you.) This is how the gamepad API works, FWIW.\n\nI tend to think that pages will either pay attention to the events or the poll exclusively, and not a whole lot in between.",
+      "parentUuid": "7b156d67_c83b0141",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce6e0e50_d4db521c",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
         "patchSetId": 1
