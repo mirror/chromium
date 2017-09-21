@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16b509f5_9f630912",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-21T05:43:14Z",
+      "side": 1,
+      "message": "It\u0027s a good thought, but I had decided against it.\n\nWe will be running an experiment to trial the language model; if we use two overloads of GetTargetLanguage, then there will be 7+ sites where we\u0027d have to implement the same \"if feature enabled then call one overload, else the other\" logic. For context, here\u0027s my (working) follow up patch with each call site modified: https://chromium-review.googlesource.com/c/chromium/src/+/676923\n\nThis approach lets us restrict the experiment logic to one site.\n\nLet me know what you think.",
+      "parentUuid": "1c4a4296_6fc95683",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c29301_cc9ecd49",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-21T05:43:14Z",
+      "side": 1,
+      "message": "Fair point - reverted.",
+      "parentUuid": "c507a925_6136ecf0",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
