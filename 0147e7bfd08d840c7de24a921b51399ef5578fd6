@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006ccd3c_7f79ae86",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-21T00:06:08Z",
+      "side": 1,
+      "message": "Optional nit: You might want to use UMA_HISTOGRAM_ENUMERATION as it\u0027s slightly more efficient, and safe to use in this case.",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 253,
+        "endChar": 31
+      },
+      "revId": "0147e7bfd08d840c7de24a921b51399ef5578fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b39d74f_b2eaa857",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-21T00:06:08Z",
+      "side": 1,
+      "message": "nit: Please create a small wrapper function for calling this, e.g. LogDownloadPauseReasonImpl(PauseReason::ANY);",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 70
+      },
+      "revId": "0147e7bfd08d840c7de24a921b51399ef5578fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbdacfd_de35f134",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 16352,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-21T00:06:08Z",
+      "side": 1,
+      "message": "nit: Please document here that a single pause will result in two entries: ANY + a more specific reason.  (Though, I would actually recommend structuring the code so that you record OTHER only when no known reason applies; that makes the dashboard do more of the math for you.  I\u0027d still have OTHER be the first entry in that case, so that if you add additional pause reasons, OTHER doesn\u0027t end up in the middle.)",
+      "range": {
+        "startLine": 16352,
+        "startChar": 68,
+        "endLine": 16352,
+        "endChar": 0
+      },
+      "revId": "0147e7bfd08d840c7de24a921b51399ef5578fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
