@@ -49,7 +49,7 @@ const uint32_t kSpdyMaxFrameSizeLimit = (1 << 24) - 1;
 
 // The initial value for the maximum frame payload size as per the spec. This is
 // the maximum control frame size we accept.
-const uint32_t kSpdyInitialFrameSizeLimit = 1 << 14;
+const uint32_t kHttp2DefaultFramePayloadLimit = 1 << 14;
 
 // The initial value for the maximum size of the header list, "unlimited" (max
 // unsigned 32-bit int) as per the spec.
@@ -460,8 +460,6 @@ class SPDY_EXPORT_PRIVATE SpdyFrameWithHeaderBlockIR
   void SetHeader(SpdyStringPiece name, SpdyStringPiece value) {
     header_block_[name] = value;
   }
-  bool end_headers() const { return end_headers_; }
-  void set_end_headers(bool end_headers) { end_headers_ = end_headers; }
 
  protected:
   SpdyFrameWithHeaderBlockIR(SpdyStreamId stream_id,
@@ -469,7 +467,6 @@ class SPDY_EXPORT_PRIVATE SpdyFrameWithHeaderBlockIR
 
  private:
   SpdyHeaderBlock header_block_;
-  bool end_headers_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SpdyFrameWithHeaderBlockIR);
 };
@@ -996,6 +993,15 @@ class SPDY_EXPORT_PRIVATE SpdyFramerDebugVisitorInterface {
                                         SpdyFrameType type,
                                         size_t frame_len) {}
 };
+
+// Calculates the number of bytes required to serialize a SpdyHeadersIR, not
+// including the bytes to be used for the encoded header set.
+size_t GetHeaderFrameSizeSansBlock(const SpdyHeadersIR& header_ir);
+
+// Calculates the number of bytes required to serialize a SpdyPushPromiseIR,
+// not including the bytes to be used for the encoded header set.
+size_t GetPushPromiseFrameSizeSansBlock(
+    const SpdyPushPromiseIR& push_promise_ir);
 
 }  // namespace net
 
