@@ -34,6 +34,24 @@
       "revId": "9c1bd8f8794bb7e1f79078fe3fb084127941f04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c430d06_1d44b651",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-21T21:06:24Z",
+      "side": 1,
+      "message": "Looks like it is needed after all: https://cs.chromium.org/chromium/src/chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java?q\u003dWebApkServiceImpl\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d47.",
+      "parentUuid": "f30565a9_29250787",
+      "revId": "9c1bd8f8794bb7e1f79078fe3fb084127941f04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
