@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0981b526_031a7a78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-21T09:49:32Z",
+      "side": 1,
+      "message": "It sounds like we may need to replicate the logic of InputMethodController::CreateSelectionRange() in InsertIncrementalTextCommand.\nIf that\u0027s the case, do we need to refactor the logic into common utility somewhere?",
+      "parentUuid": "c27ea761_6c30dcc4",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
