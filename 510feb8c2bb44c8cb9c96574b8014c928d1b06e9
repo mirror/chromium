@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b8871c_5083f521",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-21T18:52:55Z",
+      "side": 1,
+      "message": "Maybe put this in an internal namespace? since you only need it for testing? and/or add a comment that it\u0027s only exposed for testing purposes and shouldn\u0027t be checked directly.",
+      "revId": "510feb8c2bb44c8cb9c96574b8014c928d1b06e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
