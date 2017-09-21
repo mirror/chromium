@@ -16,6 +16,24 @@
       "revId": "7a492ca002e544045b6a87ce25be78a8d9286914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7728aab5_4bd21204",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParser.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-09-21T14:42:38Z",
+      "side": 1,
+      "message": "Done. I have no idea about the mode, but what you said makes sense, I\u0027ll investigate. :)",
+      "parentUuid": "2897b4f1_168c74be",
+      "revId": "7a492ca002e544045b6a87ce25be78a8d9286914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
