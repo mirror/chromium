@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec3b750e_7f48f149",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-21T01:28:53Z",
+      "side": 1,
+      "message": "could we make kShadowOpacity and kHorizontalMargin const as well?\nThanks a lot.",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cd2f17_2af85c0e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-21T01:28:53Z",
+      "side": 1,
+      "message": "do we need #if defined(__IPHONE_11_0) \u0026\u0026 (__IPHONE_OS_VERSION_MAX_ALLOWED \u003e\u003d __IPHONE_11_0) ?",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d3e369_90bda26d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-21T01:28:53Z",
+      "side": 1,
+      "message": "does it work if use \nAddSameConstraints(self.safeAreaLayoutGuide, _stackView);\nhere?",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
