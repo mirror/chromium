@@ -52,6 +52,24 @@
       "revId": "6ecb5a0efeb3d96ff988d0cc87aa96bfd6cd4d22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53dd35f2_12f11c6a",
+        "filename": "base/memory/ref_counted_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-21T02:42:18Z",
+      "side": 1,
+      "message": "Ohhhh, I thought there was some reason this particular instance. I wanted this CL to just be a straight s/make_scoped_refptr/WrapRefCounted change to avoid problems.",
+      "parentUuid": "0d8764f2_6e6b875b",
+      "revId": "6ecb5a0efeb3d96ff988d0cc87aa96bfd6cd4d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
