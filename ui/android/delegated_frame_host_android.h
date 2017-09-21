@@ -55,7 +55,7 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   ~DelegatedFrameHostAndroid() override;
 
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
-                             cc::CompositorFrame frame);
+                             viz::CompositorFrame frame);
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
 
   void DestroyDelegatedContent();
