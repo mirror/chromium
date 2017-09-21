@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79312b90_9ca18d5a",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T18:38:53Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the bubble code. Does calling CloseBubble() end up right back in this function?",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 42
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033b9bcb_5a2a4421",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T18:38:53Z",
+      "side": 1,
+      "message": "GetWidget()-\u003eClose() already early outs if IsClosed().",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 11
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2a1d3c_bbfa4171",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T18:38:53Z",
+      "side": 1,
+      "message": "Isn\u0027t the bubble already closing by the time you get here?",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 344,
+        "endChar": 53
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
