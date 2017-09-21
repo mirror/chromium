@@ -1754,6 +1754,13 @@ class WindowObserverTest : public WindowTest,
     float new_opacity = 0.0f;
   };
 
+  struct WindowBoundsInfo {
+    int changed_count = 0;
+    Window* window = nullptr;
+    gfx::Rect old_bounds;
+    gfx::Rect new_bounds;
+  };
+
   WindowObserverTest()
       : added_count_(0),
         removed_count_(0),
@@ -1765,6 +1772,14 @@ class WindowObserverTest : public WindowTest,
 
   const VisibilityInfo* GetVisibilityInfo() const {
     return visibility_info_.get();
+  }
+
+  const WindowBoundsInfo& window_bounds_will_change_info() const {
+    return window_bounds_will_change_info_;
+  }
+
+  const WindowBoundsInfo& window_bounds_changed_info() const {
+    return window_bounds_changed_info_;
   }
 
   const WindowOpacityInfo& window_opacity_info() const {
@@ -1825,6 +1840,28 @@ class WindowObserverTest : public WindowTest,
     old_property_value_ = old;
   }
 
+  void OnWindowBoundsWillChange(Window* window,
+                                const gfx::Rect& old_bounds,
+                                const gfx::Rect& new_bounds) override {
+    EXPECT_EQ(window_bounds_will_change_info_.changed_count,
+              window_bounds_changed_info_.changed_count);
+    ++window_bounds_will_change_info_.changed_count;
+    window_bounds_will_change_info_.window = window;
+    window_bounds_will_change_info_.old_bounds = old_bounds;
+    window_bounds_will_change_info_.new_bounds = new_bounds;
+  }
+
+  void OnWindowBoundsChanged(Window* window,
+                             const gfx::Rect& old_bounds,
+                             const gfx::Rect& new_bounds) override {
+    ++window_bounds_changed_info_.changed_count;
+    EXPECT_EQ(window_bounds_will_change_info_.changed_count,
+              window_bounds_changed_info_.changed_count);
+    window_bounds_changed_info_.window = window;
+    window_bounds_changed_info_.old_bounds = old_bounds;
+    window_bounds_changed_info_.new_bounds = new_bounds;
+  }
+
   void OnWindowOpacityChanged(Window* window,
                               float old_opacity,
                               float new_opacity) override {
@@ -1841,6 +1878,8 @@ class WindowObserverTest : public WindowTest,
   const void* property_key_;
   intptr_t old_property_value_;
   std::vector<std::pair<int, int> > transform_notifications_;
+  WindowBoundsInfo window_bounds_will_change_info_;
+  WindowBoundsInfo window_bounds_changed_info_;
   WindowOpacityInfo window_opacity_info_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowObserverTest);
@@ -1967,6 +2006,22 @@ TEST_P(WindowObserverTest, PropertyChanged) {
   // Sanity check to see if |PropertyChangeInfoAndClear| really clears.
   EXPECT_EQ(PropertyChangeInfo(
       reinterpret_cast<const void*>(NULL), -3), PropertyChangeInfoAndClear());
+}
+
+TEST_P(WindowObserverTest, WindowBoundsChanged) {
+  std::unique_ptr<Window> window(CreateTestWindowWithId(1, root_window()));
+  window->AddObserver(this);
+  gfx::Rect old_bounds = window->bounds();
+  gfx::Rect new_bounds(0, 0, 5, 5);
+  window->SetBounds(new_bounds);
+  ASSERT_EQ(1, window_bounds_will_change_info().changed_count);
+  EXPECT_EQ(window.get(), window_bounds_will_change_info().window);
+  EXPECT_EQ(old_bounds, window_bounds_will_change_info().old_bounds);
+  EXPECT_EQ(new_bounds, window_bounds_will_change_info().new_bounds);
+  ASSERT_EQ(1, window_bounds_changed_info().changed_count);
+  EXPECT_EQ(window.get(), window_bounds_changed_info().window);
+  EXPECT_EQ(old_bounds, window_bounds_changed_info().old_bounds);
+  EXPECT_EQ(new_bounds, window_bounds_changed_info().new_bounds);
 }
 
 // Verify that WindowObserver::OnWindowOpacityChanged() is notified when the

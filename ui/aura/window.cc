@@ -1047,6 +1047,9 @@ void Window::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
 }
 
 void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {
+  for (auto& observer : observers_)
+    observer.OnWindowBoundsWillChange(this, old_bounds, layer()->bounds());
+
   bounds_ = layer()->bounds();
 
   // Use |bounds_| as that is the bounds before any animations, which is what
