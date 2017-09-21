@@ -352,6 +352,20 @@ void MultibufferDataSource::Read(int64_t position,
       return;
     }
 
+    // Optimization: Try reading from the cache here to get back to
+    // muxing as soon as possible. This works because TryReadAt is
+    // thread-safe.
+    if (reader_) {
+      int bytes_read = reader_->TryReadAt(position, data, size);
+      if (bytes_read > 0) {
+        render_task_runner_->PostTask(
+            FROM_HERE,
+            base::Bind(&MultibufferDataSource::SeekTask,
+                       weak_factory_.GetWeakPtr(), position, bytes_read));
+        read_cb.Run(bytes_read);
+        return;
+      }
+    }
     read_op_.reset(new ReadOperation(position, size, data, read_cb));
   }
 
@@ -419,6 +433,23 @@ void MultibufferDataSource::ReadTask() {
     reader_->Wait(1, base::Bind(&MultibufferDataSource::ReadTask,
                                 weak_factory_.GetWeakPtr()));
   }
+  UpdateLoadingState_Locked(false);
+}
+
+void MultibufferDataSource::SeekTask(int64_t pos, int bytes_read) {
+  DCHECK(render_task_runner_->BelongsToCurrentThread());
+  DCHECK_GT(bytes_read, 0);
+
+  base::AutoLock auto_lock(lock_);
+  if (stop_signal_received_)
+    return;
+
+  url_data_->AddBytesRead(bytes_read);
+
+  int64_t new_pos = pos + bytes_read;
+  if (reader_ && reader_->AvailableAt(new_pos) <= reader_->Available())
+    reader_->Seek(new_pos);
+
   UpdateLoadingState_Locked(false);
 }
 

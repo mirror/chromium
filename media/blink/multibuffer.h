@@ -20,6 +20,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "build/build_config.h"
 #include "media/base/data_buffer.h"
 #include "media/blink/interval_map.h"
@@ -286,6 +287,10 @@ class MEDIA_BLINK_EXPORT MultiBuffer {
   // for a provider in a deferred state to wake up.
   void OnDataProviderEvent(DataProvider* provider);
 
+  // Protects data_ / map()
+  void LockData() { data_lock_.Acquire(); }
+  void UnlockData() { data_lock_.Release(); }
+
  protected:
   // Create a new writer at |pos| and return it.
   // Users needs to implemement this method.
@@ -355,6 +360,14 @@ class MEDIA_BLINK_EXPORT MultiBuffer {
   // and 0 for all blocks that are not. Used to quickly figure out
   // ranges of available/unavailable blocks without iterating.
   IntervalMap<BlockId, int32_t> present_;
+
+  // protects data_
+  // Note that because data_ is only modified on the a single thread,
+  // we don't need to lock this if we're reading data from the same thread.
+  // Instead, we only lock this when:
+  //   * modifying data_
+  //   * reading data_ from another thread
+  base::Lock data_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(MultiBuffer);
 };

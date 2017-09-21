@@ -84,9 +84,7 @@ int64_t MultiBufferReader::AvailableAt(int64_t pos) const {
 
 int64_t MultiBufferReader::TryReadAt(int64_t pos, uint8_t* data, int64_t len) {
   DCHECK_GT(len, 0);
-  current_wait_size_ = 0;
-  cb_.Reset();
-  DCHECK_LE(pos + len, end_);
+  multibuffer_->LockData();
   const MultiBuffer::DataMap& data_map = multibuffer_->map();
   MultiBuffer::DataMap::const_iterator i = data_map.find(block(pos));
   int64_t bytes_read = 0;
@@ -108,6 +106,7 @@ int64_t MultiBufferReader::TryReadAt(int64_t pos, uint8_t* data, int64_t len) {
     pos += tocopy;
     ++i;
   }
+  multibuffer_->UnlockData();
   return bytes_read;
 }
 
@@ -152,6 +151,7 @@ void MultiBufferReader::CheckWait() {
       (Available() >= current_wait_size_ || Available() == -1)) {
     // We redirect the call through a weak pointer to ourselves to guarantee
     // there are no callbacks from us after we've been destroyed.
+    current_wait_size_ = 0;
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(&MultiBufferReader::Call, weak_factory_.GetWeakPtr(),
