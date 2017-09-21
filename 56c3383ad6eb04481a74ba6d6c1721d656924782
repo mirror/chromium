@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5a76d823_0d3b5893",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-09-21T18:19:57Z",
+      "side": 1,
+      "message": "Done.\n\nMostly it should be WiFi as I am resetting the degrading_timestamp when NetworkMadeDefault, and log the degrading time in NetworkDisconnected only when degrading_timestamp is nonzero. That indicates, if a NetworkMadeDefault happens before NetworkDisconnected, we won\u0027t log the data(, and that\u0027s usually Cellular to WiFi).\n\nBut I think you are right, without explicitly checking the network type, there\u0027s no guarantee.",
+      "parentUuid": "79ff2a55_107ac8ad",
+      "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd696b0_52ec7562",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7afd00b_5a5d9c42",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-09-21T18:19:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0dd696b0_52ec7562",
+      "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
