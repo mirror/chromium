@@ -65,16 +65,15 @@ std::string GetIdentifierFromOrigin(const WebSecurityOrigin& origin) {
 
 }  // namespace
 
-WebDatabaseObserverImpl::WebDatabaseObserverImpl(IPC::SyncMessageFilter* sender)
-    : sender_(sender),
+WebDatabaseObserverImpl::WebDatabaseObserverImpl(
+    content::mojom::WebDatabaseHost& host)
+    : web_database_host_(host),
       open_connections_(new storage::DatabaseConnectionsWrapper),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
-  DCHECK(sender);
   DCHECK(main_thread_task_runner_);
 }
 
-WebDatabaseObserverImpl::~WebDatabaseObserverImpl() {
-}
+WebDatabaseObserverImpl::~WebDatabaseObserverImpl() = default;
 
 void WebDatabaseObserverImpl::DatabaseOpened(
     const WebSecurityOrigin& origin,
@@ -83,24 +82,20 @@ void WebDatabaseObserverImpl::DatabaseOpened(
     unsigned long estimated_size) {
   open_connections_->AddOpenConnection(GetIdentifierFromOrigin(origin),
                                        database_name.Utf16());
-  sender_->Send(new DatabaseHostMsg_Opened(origin, database_name.Utf16(),
-                                           database_display_name.Utf16(),
-                                           estimated_size));
+  web_database_host_.Opened(origin, database_name.Utf16(),
+                            database_display_name.Utf16(), estimated_size);
 }
 
 void WebDatabaseObserverImpl::DatabaseModified(const WebSecurityOrigin& origin,
                                                const WebString& database_name) {
-  sender_->Send(new DatabaseHostMsg_Modified(origin, database_name.Utf16()));
+  web_database_host_.Modified(origin, database_name.Utf16());
 }
 
 void WebDatabaseObserverImpl::DatabaseClosed(const WebSecurityOrigin& origin,
                                              const WebString& database_name) {
   DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
   base::string16 database_name_utf16 = database_name.Utf16();
-  main_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(base::IgnoreResult(&IPC::SyncMessageFilter::Send), sender_,
-                     new DatabaseHostMsg_Closed(origin, database_name_utf16)));
+  web_database_host_.Closed(origin, database_name_utf16);
   open_connections_->RemoveOpenConnection(GetIdentifierFromOrigin(origin),
                                           database_name_utf16);
 }
@@ -192,8 +187,7 @@ void WebDatabaseObserverImpl::HandleSqliteError(const WebSecurityOrigin& origin,
   // a unnecessary ipc traffic, this method can get called at a fairly
   // high frequency (per-sqlstatement).
   if (error == SQLITE_CORRUPT || error == SQLITE_NOTADB) {
-    sender_->Send(new DatabaseHostMsg_HandleSqliteError(
-        origin, database_name.Utf16(), error));
+    web_database_host_.HandleSqliteError(origin, database_name.Utf16(), error);
   }
 }
 

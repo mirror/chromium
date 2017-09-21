@@ -90,10 +90,11 @@ base::TaskRunner* DatabaseMessageFilter::OverrideTaskRunnerForMessage(
 bool DatabaseMessageFilter::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(DatabaseMessageFilter, message)
-    IPC_MESSAGE_HANDLER(DatabaseHostMsg_Opened, OnDatabaseOpened)
-    IPC_MESSAGE_HANDLER(DatabaseHostMsg_Modified, OnDatabaseModified)
-    IPC_MESSAGE_HANDLER(DatabaseHostMsg_Closed, OnDatabaseClosed)
-    IPC_MESSAGE_HANDLER(DatabaseHostMsg_HandleSqliteError, OnHandleSqliteError)
+    //    IPC_MESSAGE_HANDLER(DatabaseHostMsg_Opened, OnDatabaseOpened)
+    // IPC_MESSAGE_HANDLER(DatabaseHostMsg_Modified, OnDatabaseModified)
+    // IPC_MESSAGE_HANDLER(DatabaseHostMsg_Closed, OnDatabaseClosed)
+    // IPC_MESSAGE_HANDLER(DatabaseHostMsg_HandleSqliteError,
+    // OnHandleSqliteError)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;

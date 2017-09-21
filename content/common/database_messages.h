@@ -17,26 +17,26 @@
 // Database messages sent from the renderer to the browser.
 
 // Notifies the browser process that a new database has been opened
-IPC_MESSAGE_CONTROL4(DatabaseHostMsg_Opened,
-                     url::Origin /* origin */,
-                     base::string16 /* database name */,
-                     base::string16 /* database description */,
-                     int64_t /* estimated size */)
+// IPC_MESSAGE_CONTROL4(DatabaseHostMsg_Opened,
+//                      url::Origin /* origin */,
+//                      base::string16  database name ,
+//                      base::string16 /* database description */,
+//                      int64_t /* estimated size */)
 
 // Notifies the browser process that a database might have been modified
-IPC_MESSAGE_CONTROL2(DatabaseHostMsg_Modified,
-                     url::Origin /* origin */,
-                     base::string16 /* database name */)
+// IPC_MESSAGE_CONTROL2(DatabaseHostMsg_Modified,
+//                      url::Origin /* origin */,
+//                      base::string16 /* database name */)
 
 // Notifies the browser process that a database is about to close
-IPC_MESSAGE_CONTROL2(DatabaseHostMsg_Closed,
-                     url::Origin /* origin */,
-                     base::string16 /* database name */)
+// IPC_MESSAGE_CONTROL2(DatabaseHostMsg_Closed,
+//                      url::Origin /* origin */,
+//                      base::string16 /* database name */)
 
 // Sent when a sqlite error indicates the database is corrupt.
-IPC_MESSAGE_CONTROL3(DatabaseHostMsg_HandleSqliteError,
-                     url::Origin /* origin */,
-                     base::string16 /* database name */,
-                     int /* error */)
+// IPC_MESSAGE_CONTROL3(DatabaseHostMsg_HandleSqliteError,
+//                      url::Origin  origin ,
+//                      base::string16 /* database name */,
+//                      int /* error */)
 
 #endif  // CONTENT_COMMON_DATABASE_MESSAGES_H_

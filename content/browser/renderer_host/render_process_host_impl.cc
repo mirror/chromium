@@ -1886,7 +1886,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(
-          &WebDatabaseHostImpl::Create,
+          &WebDatabaseHostImpl::Create, GetID(),
           make_scoped_refptr(storage_partition_impl_->GetDatabaseTracker())),
       storage_partition_impl_->GetDatabaseTracker()->task_runner());
 
