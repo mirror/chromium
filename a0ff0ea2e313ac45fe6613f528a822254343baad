@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e59d15_b5ed79a1",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 0,
+      "message": "It seems it is better to move this part to another function first instead of\nthis patch which moves 200+ lines of code to another function.",
+      "revId": "a0ff0ea2e313ac45fe6613f528a822254343baad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1c0de2_ceccceff",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 0,
+      "message": "It seems once we move L1616-L1627 to another function, we can rewrite to\n\nif (!fragment.HasInterchangeNewlineAtEnd()) {\n  DoReplace(Position(), editing_state);\n  return;\n}\n\nDoReplace(ComputeLastPositionToSelect(), editing_gstate);\n\nvoid ReplaceSelectionCommand::DoReplace(...) {\n  if (ShouldPerformSmartReplace()) {\n    AddSpacesForSmartReplace(editing_state);\n    if (editing_state-\u003eIsAborted())\n      return;\n  }\n\n  // If we are dealing with a fragment created from plain text\n  // no style matching is necessary.\n  if (plain_text_fragment)\n    match_style_ \u003d false;\n\n  CompleteHTMLReplacement(last_position_to_select, editing_state);\n}\n\nThis is the final shape. When we introduce DoReplace(), we can change\nassignments of |last_position_select| to |return DoReplace(...);|",
+      "revId": "a0ff0ea2e313ac45fe6613f528a822254343baad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8583b7_67082678",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 1,
+      "message": "Is this patch a second part of series of patch?\nIf so, please add link to other patches.",
+      "revId": "807a64388533032ce516e1c20b3a2f007b856a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944e4dae_487c70e0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 1,
+      "message": "nit: s/m_startOfInsertedContent/start_of_inserted_content_/\nnit: s/m_endOfInsertedContent/end_of_inserted_content_/",
+      "revId": "807a64388533032ce516e1c20b3a2f007b856a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1681ce_4921e84f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 1,
+      "message": "Could you make |start_of_paragraph_to_move| to const?",
+      "revId": "807a64388533032ce516e1c20b3a2f007b856a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77fa0c6_55cb1d2c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 1,
+      "message": "Could you introduce new const variable for |start_of_paragraph_to_move|.",
+      "revId": "807a64388533032ce516e1c20b3a2f007b856a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169c41ac_fefa6210",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:32:58Z",
+      "side": 1,
+      "message": "Could you add parameter names for |bool| parameters?\nThree |bool| parameter is hard to read.",
+      "revId": "807a64388533032ce516e1c20b3a2f007b856a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
