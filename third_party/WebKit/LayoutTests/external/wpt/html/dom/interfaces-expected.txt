@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 5298 tests; 5123 PASS, 175 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 5298 tests; 5127 PASS, 171 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS Test driver
 PASS Document interface: attribute domain
 PASS Document interface: attribute referrer
@@ -3642,7 +3642,7 @@ PASS HTMLSelectElement interface object length
 PASS HTMLSelectElement interface object name
 PASS HTMLSelectElement interface: existence and properties of interface prototype object
 PASS HTMLSelectElement interface: existence and properties of interface prototype object's "constructor" property
-FAIL HTMLSelectElement interface: attribute autocomplete assert_true: The prototype object must have a property "autocomplete" expected true got false
+PASS HTMLSelectElement interface: attribute autocomplete
 PASS HTMLSelectElement interface: attribute autofocus
 PASS HTMLSelectElement interface: attribute disabled
 PASS HTMLSelectElement interface: attribute form
@@ -3670,7 +3670,7 @@ PASS HTMLSelectElement interface: operation setCustomValidity(DOMString)
 PASS HTMLSelectElement interface: attribute labels
 PASS HTMLSelectElement must be primary interface of document.createElement("select")
 PASS Stringification of document.createElement("select")
-FAIL HTMLSelectElement interface: document.createElement("select") must inherit property "autocomplete" with the proper type assert_inherits: property "autocomplete" not found in prototype chain
+PASS HTMLSelectElement interface: document.createElement("select") must inherit property "autocomplete" with the proper type
 PASS HTMLSelectElement interface: document.createElement("select") must inherit property "autofocus" with the proper type
 PASS HTMLSelectElement interface: document.createElement("select") must inherit property "disabled" with the proper type
 PASS HTMLSelectElement interface: document.createElement("select") must inherit property "form" with the proper type
@@ -3759,7 +3759,7 @@ PASS HTMLTextAreaElement interface object length
 PASS HTMLTextAreaElement interface object name
 PASS HTMLTextAreaElement interface: existence and properties of interface prototype object
 PASS HTMLTextAreaElement interface: existence and properties of interface prototype object's "constructor" property
-FAIL HTMLTextAreaElement interface: attribute autocomplete assert_true: The prototype object must have a property "autocomplete" expected true got false
+PASS HTMLTextAreaElement interface: attribute autocomplete
 PASS HTMLTextAreaElement interface: attribute autofocus
 PASS HTMLTextAreaElement interface: attribute cols
 PASS HTMLTextAreaElement interface: attribute dirName
@@ -3794,7 +3794,7 @@ PASS HTMLTextAreaElement interface: operation setRangeText(DOMString, unsigned l
 PASS HTMLTextAreaElement interface: operation setSelectionRange(unsigned long, unsigned long, DOMString)
 PASS HTMLTextAreaElement must be primary interface of document.createElement("textarea")
 PASS Stringification of document.createElement("textarea")
-FAIL HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "autocomplete" with the proper type assert_inherits: property "autocomplete" not found in prototype chain
+PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "autocomplete" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "autofocus" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "cols" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "dirName" with the proper type
