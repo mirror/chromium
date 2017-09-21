@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df4783b_e1fa2e66",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57341,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-09-21T08:30:44Z",
+      "side": 1,
+      "message": "To make it easy for non-experts to interpret this value, could you please document the reset behaviour? Is it continuously increasing for the lifetime of the filesystem, or is it reset at recovery, or at fsck?",
+      "range": {
+        "startLine": 57341,
+        "startChar": 46,
+        "endLine": 57341,
+        "endChar": 0
+      },
+      "revId": "f9e7187e0aab6ce78c5be4d12576f364cf16c3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
