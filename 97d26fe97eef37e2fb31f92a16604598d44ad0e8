@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe6f8d3_82419e95",
+        "filename": "third_party/zlib/patches/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-21T18:32:08Z",
+      "side": 1,
+      "message": "I feel like keeping patch descriptions in one file is likely to run into the same problem as before.\nWhy don\u0027t we put each description in a separate file which goes along side the .patch file?\n\nFor example:\n0000-build.README\nChanges from the upstream version, mostly related to the build.\n\n0001-simd.README\nIntegrate Intel SIMD optimzations from https://github.com/jtkukunas/zlib",
+      "revId": "97d26fe97eef37e2fb31f92a16604598d44ad0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
