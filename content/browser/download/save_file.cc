@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "content/browser/download/download_task_runner.h"
-#include "net/log/net_log_with_source.h"
 
 namespace content {
 
@@ -15,7 +14,7 @@ namespace content {
 //               Unfortunately, as it is, constructors of SaveFile don't always
 //               have access to the SavePackage at this point.
 SaveFile::SaveFile(const SaveFileCreateInfo* info, bool calculate_hash)
-    : file_(net::NetLogWithSource()), info_(info) {
+    : info_(info) {
   DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
 
   DCHECK(info);

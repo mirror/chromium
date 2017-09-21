@@ -28,10 +28,6 @@
 #include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/download_url_parameters.h"
 
-namespace net {
-class NetLog;
-}
-
 namespace content {
 class DownloadFileFactory;
 class DownloadItemFactory;
@@ -45,9 +41,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
  public:
   using DownloadItemImplCreated = base::Callback<void(DownloadItemImpl*)>;
 
-  // Caller guarantees that |net_log| will remain valid
-  // for the lifetime of DownloadManagerImpl (until Shutdown() is called).
-  DownloadManagerImpl(net::NetLog* net_log, BrowserContext* browser_context);
+  explicit DownloadManagerImpl(BrowserContext* browser_context);
   ~DownloadManagerImpl() override;
 
   // Implementation functions (not part of the DownloadManager interface).
@@ -237,8 +231,6 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   // Allows an embedder to control behavior. Guaranteed to outlive this object.
   DownloadManagerDelegate* delegate_;
-
-  net::NetLog* net_log_;
 
   std::vector<
       std::unique_ptr<UrlDownloadHandler, BrowserThread::DeleteOnIOThread>>

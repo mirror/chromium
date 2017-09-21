@@ -43,7 +43,6 @@
 #include "content/browser/download/download_item_impl_delegate.h"
 #include "content/browser/download/download_job_factory.h"
 #include "content/browser/download/download_job_impl.h"
-#include "content/browser/download/download_net_log_parameters.h"
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_task_runner.h"
@@ -61,10 +60,6 @@
 #include "content/public/common/referrer.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
-#include "net/log/net_log.h"
-#include "net/log/net_log_event_type.h"
-#include "net/log/net_log_parameters_callback.h"
-#include "net/log/net_log_source.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace content {
@@ -222,8 +217,7 @@ DownloadItemImpl::DownloadItemImpl(
     bool opened,
     base::Time last_access_time,
     bool transient,
-    const std::vector<DownloadItem::ReceivedSlice>& received_slices,
-    const net::NetLogWithSource& net_log)
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices)
     : request_info_(url_chain,
                     referrer_url,
                     site_url,
@@ -257,7 +251,6 @@ DownloadItemImpl::DownloadItemImpl(
       last_modified_time_(last_modified),
       etag_(etag),
       received_slices_(received_slices),
-      net_log_(net_log),
       is_updating_observers_(false),
       weak_ptr_factory_(this) {
   delegate_->Attach();
@@ -270,8 +263,7 @@ DownloadItemImpl::DownloadItemImpl(
 // Constructing for a regular download:
 DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
                                    uint32_t download_id,
-                                   const DownloadCreateInfo& info,
-                                   const net::NetLogWithSource& net_log)
+                                   const DownloadCreateInfo& info)
     : request_info_(info.url_chain,
                     info.referrer_url,
                     info.site_url,
@@ -302,20 +294,10 @@ DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
                             : TARGET_DISPOSITION_OVERWRITE),
       last_modified_time_(info.last_modified),
       etag_(info.etag),
-      net_log_(net_log),
       is_updating_observers_(false),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   Init(true /* actively downloading */, SRC_ACTIVE_DOWNLOAD);
-
-  // Link the event sources.
-  net_log_.AddEvent(
-      net::NetLogEventType::DOWNLOAD_URL_REQUEST,
-      info.request_net_log.source().ToEventParametersCallback());
-
-  info.request_net_log.AddEvent(
-      net::NetLogEventType::DOWNLOAD_STARTED,
-      net_log_.source().ToEventParametersCallback());
 }
 
 // Constructing for the "Save Page As..." feature:
@@ -325,8 +307,7 @@ DownloadItemImpl::DownloadItemImpl(
     const base::FilePath& path,
     const GURL& url,
     const std::string& mime_type,
-    std::unique_ptr<DownloadRequestHandleInterface> request_handle,
-    const net::NetLogWithSource& net_log)
+    std::unique_ptr<DownloadRequestHandleInterface> request_handle)
     : request_info_(url),
       guid_(base::GenerateGUID()),
       download_id_(download_id),
@@ -336,7 +317,6 @@ DownloadItemImpl::DownloadItemImpl(
       state_(IN_PROGRESS_INTERNAL),
       delegate_(delegate),
       destination_info_(path, path, 0, false, std::string(), base::Time()),
-      net_log_(net_log),
       is_updating_observers_(false),
       weak_ptr_factory_(this) {
   job_ = DownloadJobFactory::CreateJob(this, std::move(request_handle),
@@ -398,10 +378,6 @@ void DownloadItemImpl::ValidateDangerousDownload() {
                                 GetTargetFilePath());
 
   danger_type_ = DOWNLOAD_DANGER_TYPE_USER_VALIDATED;
-
-  net_log_.AddEvent(
-      net::NetLogEventType::DOWNLOAD_ITEM_SAFETY_STATE_UPDATED,
-      base::Bind(&ItemCheckedNetLogCallback, GetDangerType()));
 
   UpdateObservers();  // TODO(asanka): This is potentially unsafe. The download
                       // may not be in a consistent state or around at all after
@@ -1161,10 +1137,6 @@ DownloadItemImpl::DestinationObserverAsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-const net::NetLogWithSource& DownloadItemImpl::GetNetLogWithSource() const {
-  return net_log_;
-}
-
 void DownloadItemImpl::SetTotalBytes(int64_t total_bytes) {
   total_bytes_ = total_bytes;
 }
@@ -1228,11 +1200,6 @@ void DownloadItemImpl::DestinationUpdate(
 
   UpdateProgress(bytes_so_far, bytes_per_sec);
   received_slices_ = received_slices;
-  if (net_log_.IsCapturing()) {
-    net_log_.AddEvent(
-        net::NetLogEventType::DOWNLOAD_ITEM_UPDATED,
-        net::NetLog::Int64Callback("bytes_so_far", GetReceivedBytes()));
-  }
 
   UpdateObservers();
 }
@@ -1291,16 +1258,6 @@ void DownloadItemImpl::Init(bool active,
     // From the URL file name.
     if (file_name.empty())
       file_name = GetURL().ExtractFileName();
-  }
-
-  net::NetLogParametersCallback active_data =
-      base::Bind(&ItemActivatedNetLogCallback, this, download_type, &file_name);
-  if (active) {
-    net_log_.BeginEvent(net::NetLogEventType::DOWNLOAD_ITEM_ACTIVE,
-                              active_data);
-  } else {
-    net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_ITEM_ACTIVE,
-                            active_data);
   }
 
   DVLOG(20) << __func__ << "() " << DebugString(true);
@@ -2020,38 +1977,21 @@ void DownloadItemImpl::TransitionTo(DownloadInternalState new_state) {
       DCHECK(!GetTargetFilePath().empty()) << "Target path must be known.";
       DCHECK(GetFullPath() == GetTargetFilePath())
           << "Current output path must match target path.";
-
-      net_log_.AddEvent(
-          net::NetLogEventType::DOWNLOAD_ITEM_COMPLETING,
-          base::Bind(&ItemCompletingNetLogCallback, GetReceivedBytes(),
-                     &destination_info_.hash));
       break;
 
     case COMPLETE_INTERNAL:
-      net_log_.AddEvent(
-          net::NetLogEventType::DOWNLOAD_ITEM_FINISHED,
-          base::Bind(&ItemFinishedNetLogCallback, auto_opened_));
       break;
 
     case INTERRUPTED_INTERNAL:
       DCHECK(!download_file_)
           << "Download file must be released prior to interruption.";
       DCHECK_NE(last_reason_, DOWNLOAD_INTERRUPT_REASON_NONE);
-      net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_ITEM_INTERRUPTED,
-                        base::Bind(&ItemInterruptedNetLogCallback, last_reason_,
-                                   GetReceivedBytes()));
       break;
 
     case RESUMING_INTERNAL:
-      net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_ITEM_RESUMED,
-                        base::Bind(&ItemResumingNetLogCallback, false,
-                                   last_reason_, GetReceivedBytes()));
       break;
 
     case CANCELLED_INTERNAL:
-      net_log_.AddEvent(
-          net::NetLogEventType::DOWNLOAD_ITEM_CANCELED,
-          base::Bind(&ItemCanceledNetLogCallback, GetReceivedBytes()));
       break;
 
     case MAX_DOWNLOAD_INTERNAL_STATE:
@@ -2062,32 +2002,9 @@ void DownloadItemImpl::TransitionTo(DownloadInternalState new_state) {
   DVLOG(20) << __func__ << "() from:" << DebugDownloadStateString(old_state)
             << " to:" << DebugDownloadStateString(state_)
             << " this = " << DebugString(true);
-  bool is_done =
-      (state_ == COMPLETE_INTERNAL || state_ == INTERRUPTED_INTERNAL ||
-       state_ == RESUMING_INTERNAL || state_ == CANCELLED_INTERNAL);
-  bool was_done =
-      (old_state == COMPLETE_INTERNAL || old_state == INTERRUPTED_INTERNAL ||
-       old_state == RESUMING_INTERNAL || old_state == CANCELLED_INTERNAL);
-
-  // Termination
-  if (is_done && !was_done)
-    net_log_.EndEvent(net::NetLogEventType::DOWNLOAD_ITEM_ACTIVE);
-
-  // Resumption
-  if (was_done && !is_done) {
-    std::string file_name(GetTargetFilePath().BaseName().AsUTF8Unsafe());
-    net_log_.BeginEvent(net::NetLogEventType::DOWNLOAD_ITEM_ACTIVE,
-                              base::Bind(&ItemActivatedNetLogCallback, this,
-                                         SRC_ACTIVE_DOWNLOAD, &file_name));
-  }
 }
 
 void DownloadItemImpl::SetDangerType(DownloadDangerType danger_type) {
-  if (danger_type != danger_type_) {
-    net_log_.AddEvent(
-        net::NetLogEventType::DOWNLOAD_ITEM_SAFETY_STATE_UPDATED,
-        base::Bind(&ItemCheckedNetLogCallback, danger_type));
-  }
   // Only record the Malicious UMA stat if it's going from {not malicious} ->
   // {malicious}.
   if ((danger_type_ == DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS ||
@@ -2108,10 +2025,6 @@ void DownloadItemImpl::SetFullPath(const base::FilePath& new_path) {
   DVLOG(20) << __func__ << "() new_path = \"" << new_path.value() << "\" "
             << DebugString(true);
   DCHECK(!new_path.empty());
-
-  net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_ITEM_RENAMED,
-                    base::Bind(&ItemRenamedNetLogCallback,
-                               &destination_info_.current_path, &new_path));
 
   destination_info_.current_path = new_path;
 }
