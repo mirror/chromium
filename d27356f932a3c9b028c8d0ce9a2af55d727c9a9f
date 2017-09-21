@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6cd8fe_5bd4108d",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-21T19:08:14Z",
+      "side": 0,
+      "message": "When is this different from\n         GetFrame()\n          .Selection()\n          .ComputeVisibleSelectionInDOMTreeDeprecated()\n          .RootEditableElement();\n?",
+      "range": {
+        "startLine": 822,
+        "startChar": 34,
+        "endLine": 822,
+        "endChar": 74
+      },
+      "revId": "d27356f932a3c9b028c8d0ce9a2af55d727c9a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
