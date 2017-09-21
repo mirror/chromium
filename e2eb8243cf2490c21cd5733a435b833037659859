@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da8c1bf_fe2303f1",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T21:08:17Z",
+      "side": 1,
+      "message": "I would point this to the doc of perf try job instead since that gonna change soon with pinpoint ;-)\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/speed/perf_trybots.md",
+      "revId": "e2eb8243cf2490c21cd5733a435b833037659859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
