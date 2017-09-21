@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6edc130a_7eadf532",
+        "filename": "net/base/filename_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T19:37:53Z",
+      "side": 1,
+      "message": "Please note I extended the anonymous namespace to cover all the constants.",
+      "parentUuid": "56b39d4f_ceb2e53b",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 70
+      },
+      "revId": "f9eacb8c1633c2916eb889b9cd5615326e264eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ebe8923_b9279e8b",
         "filename": "storage/browser/fileapi/dragged_file_util_unittest.cc",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "writtenOn": "2017-09-21T01:41:06Z",
       "side": 1,
       "message": "static constexpr instead of constexpr const?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "f9eacb8c1633c2916eb889b9cd5615326e264eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bcd8ce_617f0e9e",
+        "filename": "storage/browser/fileapi/dragged_file_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T19:37:53Z",
+      "side": 1,
+      "message": "Also inside an anonymous namespace already.",
+      "parentUuid": "5ebe8923_b9279e8b",
       "range": {
         "startLine": 50,
         "startChar": 0,
