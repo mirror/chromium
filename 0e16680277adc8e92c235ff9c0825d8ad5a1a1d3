@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6488f72_4b23945c",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-21T12:34:28Z",
+      "side": 1,
+      "message": "std::move(server_predictions)?",
+      "range": {
+        "startLine": 525,
+        "startChar": 36,
+        "endLine": 525,
+        "endChar": 54
+      },
+      "revId": "0e16680277adc8e92c235ff9c0825d8ad5a1a1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ed4b2f_b8f8f42b",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-21T12:34:28Z",
+      "side": 1,
+      "message": "Should this be renamed to overall_type_prediction?",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "0e16680277adc8e92c235ff9c0825d8ad5a1a1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab2d408_4088db57",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-21T12:34:28Z",
+      "side": 1,
+      "message": "should you mention that |autofill_type| will always be the first item in |predictions|?",
+      "range": {
+        "startLine": 33,
+        "startChar": 56,
+        "endLine": 33,
+        "endChar": 73
+      },
+      "revId": "0e16680277adc8e92c235ff9c0825d8ad5a1a1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f00cb6_4eba6f4f",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-21T12:34:28Z",
+      "side": 1,
+      "message": "Would rename this to |type| (autofill is assumed...)",
+      "range": {
+        "startLine": 34,
+        "startChar": 47,
+        "endLine": 34,
+        "endChar": 60
+      },
+      "revId": "0e16680277adc8e92c235ff9c0825d8ad5a1a1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
