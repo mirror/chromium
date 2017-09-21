@@ -16,6 +16,24 @@
       "revId": "d12d58a24c7a0772bd97368088abfc10243508e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac157570_4ed80076",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 0,
+      "message": "Sorry this must happens when I try to clean my logs, revert it back.",
+      "parentUuid": "cbdf3006_d5ee44e3",
+      "revId": "d12d58a24c7a0772bd97368088abfc10243508e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

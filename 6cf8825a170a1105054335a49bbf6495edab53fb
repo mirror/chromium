@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d38d4c8_8403ddac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Yes, looks like this should not be null because it is created by ChromeTabCreator.createNewTab(). So assert non-null and remove this is fine.",
+      "parentUuid": "aba09ec9_41e53f8e",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 33
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "428b66d1_9b6e386f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5714a327_b71ff9bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "428b66d1_9b6e386f",
+      "range": {
+        "startLine": 144,
+        "startChar": 13,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "85b63fa0_a2e853cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1714612e_78e6517e",
+      "range": {
+        "startLine": 168,
+        "startChar": 21,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e816ec_8080b83d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 4
@@ -106,6 +178,30 @@
       "writtenOn": "2017-09-20T20:49:30Z",
       "side": 1,
       "message": "we probably shouldn\u0027t remove the foreground-ness of the service until the selector broadcasts onTabStateInitialized.",
+      "range": {
+        "startLine": 169,
+        "startChar": 21,
+        "endLine": 169,
+        "endChar": 32
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2177d0_725b42d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "New designs will first load and restore the tab model and then create a new tab in onStateLoaded.",
+      "parentUuid": "51e816ec_8080b83d",
       "range": {
         "startLine": 169,
         "startChar": 21,
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "e6cddaad_38b2aa9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c9d6ae_9aa85a82",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 15
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8a32c5_b5f9b59b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
         "patchSetId": 4
@@ -176,6 +296,30 @@
       "writtenOn": "2017-09-20T20:49:30Z",
       "side": 1,
       "message": "Why true?",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2fc337_5168e177",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "I am not quite sure about this. My thought is this will not block the UI and Browser Actions tabs are ok to be created asynchronously?",
+      "parentUuid": "dd8a32c5_b5f9b59b",
       "range": {
         "startLine": 39,
         "startChar": 19,
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "8a06c66b_98dac796",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cffcfd2_16f86401",
+      "range": {
+        "startLine": 43,
+        "startChar": 75,
+        "endLine": 43,
+        "endChar": 79
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d422ae45_a9567026",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
         "patchSetId": 4
@@ -222,6 +390,30 @@
       "writtenOn": "2017-09-20T20:49:30Z",
       "side": 1,
       "message": "do we need all of these functions to be working?  I think we should implement the minimal set and add exceptions for the rest to show they\u0027re not supported (something like NOTIMPLEMENTED in c++...maybe UnsupportedOperationException).",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b2a781_84e2236f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "This is needed because when we restore the tab list for disk, it will use this to create a frozen tab?",
+      "parentUuid": "d422ae45_a9567026",
       "range": {
         "startLine": 54,
         "startChar": 19,
@@ -254,6 +446,30 @@
       "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eb0313_f773b92a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f46f9e05_17bf2c25",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -304,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "1e6f0af9_635687f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a70fdd0_d8b1609b",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d9574a_407d0d77",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 4
@@ -324,6 +564,30 @@
       "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bf6314_db0f7e8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d9574a_407d0d77",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +614,30 @@
     },
     {
       "key": {
+        "uuid": "73ca81e1_5257a448",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Wrap the load and restore inside the tab creation api that if tab model is not loaded, load and restore async and then create the new tab when onStateLoaded.",
+      "parentUuid": "14e413ae_b17c3b14",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f387e8b_56313a37",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
@@ -361,6 +649,30 @@
       "writtenOn": "2017-09-20T22:42:49Z",
       "side": 1,
       "message": "nit: The TAG should be specific to this class.",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d994a91_15f31646",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "This field is not needed after the new change.",
+      "parentUuid": "2f387e8b_56313a37",
       "range": {
         "startLine": 27,
         "startChar": 38,
@@ -420,6 +732,54 @@
     },
     {
       "key": {
+        "uuid": "e8e6d26f_d70c9fda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32979b1b_f32083fe",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04a46781_9410b1c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0b8ea79_aae44433",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf99898_56843a25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
@@ -467,6 +827,54 @@
     },
     {
       "key": {
+        "uuid": "94c0ca87_d821864f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcf99898_56843a25",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b36ac4e_1503b9f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0ce8e24_c7740b0a",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6988ce3d_77eadd47",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 4
@@ -490,6 +898,30 @@
     },
     {
       "key": {
+        "uuid": "232319d6_6bd3d4bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6988ce3d_77eadd47",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3513d875_8ac29a21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModelImplCreator.java",
         "patchSetId": 4
@@ -501,6 +933,30 @@
       "writtenOn": "2017-09-20T20:49:30Z",
       "side": 1,
       "message": "If we can reuse TabModelSelectorImpl then this shouldn\u0027t be necessary, and if we want, we shouldn\u0027t be creating an incognito tab model for a state that we don\u0027t support so we should find a way to not need to do this.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cded2b0a_51e8de38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModelImplCreator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-21T22:46:52Z",
+      "side": 1,
+      "message": "Per offline discussion, we can create a EmptyTabModel for incognito tab model, so this change is not needed.",
+      "parentUuid": "3513d875_8ac29a21",
       "range": {
         "startLine": 14,
         "startChar": 0,
