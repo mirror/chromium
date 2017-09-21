@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "320451fb_d7641ce8",
+        "filename": "net/data/ocsp_unittest/no_response.pem",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:48:10Z",
+      "side": 0,
+      "message": "Consider keeping these comments (may need to move them to the generator script)",
+      "revId": "a26b2bc3df0dcce9274b1f324c60db05c521310c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

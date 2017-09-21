@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "981cc8c9_a6a69cd0",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:48:10Z",
+      "side": 1,
+      "message": "2017?",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e53940_61325b84",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:48:10Z",
+      "side": 1,
+      "message": "style: The python style guide has function use hacker_notation(). UpperCamelCase is only used for types (comment applies throughout)",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9ad8e5_b4ec301f",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:48:10Z",
+      "side": 1,
+      "message": "style: sig_alg (comment applies throughout)",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
