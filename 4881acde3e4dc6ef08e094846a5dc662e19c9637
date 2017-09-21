@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97834c88_bae0acd0",
+        "filename": "ui/file_manager/file_manager/foreground/js/metadata/external_metadata_provider.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-21T10:18:25Z",
+      "side": 1,
+      "message": "Note: This style was updated by git-cl format.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 80
+      },
+      "revId": "4881acde3e4dc6ef08e094846a5dc662e19c9637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
