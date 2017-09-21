@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63373d86_fdbc6277",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T19:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f30a1d_e0636648",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "fa22f2d30c685646ee16c4fbf0e8f2024df12aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c37a9a4_68e6aa0a",
         "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d4c5542f_5126d5a4",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T19:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c37a9a4_68e6aa0a",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "fa22f2d30c685646ee16c4fbf0e8f2024df12aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc6656ab_f780730a",
         "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-20T19:24:51Z",
       "side": 1,
       "message": "Is this function guaranteed to be called once?",
+      "range": {
+        "startLine": 236,
+        "startChar": 46,
+        "endLine": 236,
+        "endChar": 60
+      },
+      "revId": "fa22f2d30c685646ee16c4fbf0e8f2024df12aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0153f75_9e69fed6",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T19:14:47Z",
+      "side": 1,
+      "message": "you mean at least once or exactly once? No, it can be called 0-many times. I changed the name from default size to \"auto resize size\".",
+      "parentUuid": "cc6656ab_f780730a",
       "range": {
         "startLine": 236,
         "startChar": 46,
