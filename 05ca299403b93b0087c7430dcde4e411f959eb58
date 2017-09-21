@@ -141,6 +141,24 @@
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3583015_588c5ba2",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T16:22:37Z",
+      "side": 1,
+      "message": "In patch 10, I suggested a way to fix this race  condition, but I think that solution is a little bit hacky.",
+      "parentUuid": "2a765011_dcb978cd",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
