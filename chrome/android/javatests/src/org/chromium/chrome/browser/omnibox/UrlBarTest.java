@@ -49,6 +49,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -398,6 +399,56 @@ public class UrlBarTest {
             Assert.assertEquals(
                     "Text w/ Autocomplete", "testing is fun", state.textWithAutocomplete);
         }
+    }
+
+    /**
+     * Ensure that we send cursor position with autocomplete requests.
+     *
+     * When reading this test, it helps to remember that autocomplete requests are not sent
+     * with the user simply moves the cursor.  They're only sent on keypress.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Omnibox"})
+    @RetryOnFailure
+    public void testSendCursorPosition() throws InterruptedException, TimeoutException {
+        mActivityTestRule.startMainActivityOnBlankPage();
+
+        final CallbackHelper autocompleteHelper = new CallbackHelper();
+        final AtomicInteger cursorPositionUsed = new AtomicInteger();
+        final StubAutocompleteController controller = new StubAutocompleteController() {
+            @Override
+            public void start(Profile profile, String url, String text, int cursorPosition,
+                    boolean preventInlineAutocomplete, boolean focusedFromFakebox) {
+                cursorPositionUsed.set(cursorPosition);
+                autocompleteHelper.notifyCalled();
+            }
+        };
+        setAutocompleteController(controller);
+
+        final UrlBar urlBar = getUrlBar();
+        toggleFocusAndIgnoreImeOperations(urlBar, true);
+
+        urlBar.append("f");
+        autocompleteHelper.waitForCallback(0); // ***
+        // urlBar text: f|
+        Assert.assertEquals(1, cursorPositionUsed.get());
+        urlBar.append("o");
+        autocompleteHelper.waitForCallback(1); // ***
+        // urlBar text: fo|
+        Assert.assertEquals(2, cursorPositionUsed.get());
+        urlBar.setSelection(1, 0);
+        // urlBar text: f|o
+        urlBar.super_dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_O));
+        urlBar.super_dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_O));
+        autocompleteHelper.waitForCallback(2); // ***
+        // urlBar text: fo|o
+        Assert.assertEquals(2, cursorPositionUsed.get());
+        urlBar.super_dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+        urlBar.super_dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+        autocompleteHelper.waitForCallback(3); // ***
+        // urlBar text: f|o
+        Assert.assertEquals(1, cursorPositionUsed.get());
     }
 
     /**
