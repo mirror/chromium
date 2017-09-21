@@ -114,6 +114,7 @@ class TestServerThread(threading.Thread):
     self.port_forwarder = port_forwarder
     self.test_server_process = None
     self.is_ready = False
+    print 'setting is_ready = False'
     self.host_port = self.arguments['port']
     assert isinstance(self.host_port, int)
     # The forwarder device port now is dynamically allocated.
@@ -235,16 +236,20 @@ class TestServerThread(threading.Thread):
         cwd=DIR_SOURCE_ROOT)
     if unbuf:
       os.environ['PYTHONUNBUFFERED'] = unbuf
+    print 'self.process=', self.process
     if self.process:
       if self.pipe_out:
         self.is_ready = self._WaitToStartAndGetPortFromTestServer()
+        print 'is_ready after _WaitToStartAndGetPortFromTestServer'
       else:
         self.is_ready = self.port_forwarder.WaitPortNotAvailable(self.host_port)
+        print 'is_ready after WaitPortNotAvailable'
     if self.is_ready:
       self.port_forwarder.Map([(0, self.host_port)])
 
       # Check whether the forwarder is ready on the device.
       self.is_ready = False
+      print 'doing this case'
       device_port = self.port_forwarder.GetDevicePortForHostPort(self.host_port)
       if device_port and self.port_forwarder.WaitDevicePortReady(device_port):
         self.is_ready = True
@@ -257,6 +262,7 @@ class TestServerThread(threading.Thread):
       self.process.kill()
     self.port_forwarder.Unmap(self.forwarder_device_port)
     self.process = None
+    print 'setting to false down here'
     self.is_ready = False
     if self.pipe_out:
       os.close(self.pipe_in)
