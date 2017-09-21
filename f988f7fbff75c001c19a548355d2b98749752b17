@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "9e707958_719c86b1",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T16:45:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do this because the build rules make it so that sandbox/win code is never on other platforms, and same for sandbox/{linux,mac}. So from the client\u0027s perspective, sandbox:: just represents all the relevant code for that platform. The nested namespace isn\u0027t necessary per https://groups.google.com/a/chromium.org/d/msg/chromium-dev/RVps606IB_g/ZLes1CVel40J. And on Mac at least, new base primitives are going into just base:: and not base::mac::.\n\nThat said, I was also wondering if we wanted to draw a boundary between \"low-level, Chrome-agnostic sandbox primitives\" and \"Chrome\u0027s sandboxing guts.\" I think we do, but I don\u0027t know how we want to draw that.\n\nIn the Linux sandbox, we kind of do this with //sandbox/linux/seccomp-bpf and seccomp-bpf-helpers.",
+      "parentUuid": "322da346_e7119aee",
+      "range": {
+        "startLine": 2801,
+        "startChar": 9,
+        "endLine": 2801,
+        "endChar": 16
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038f4abc_b82c2e96",
         "filename": "content/BUILD.gn",
         "patchSetId": 18
