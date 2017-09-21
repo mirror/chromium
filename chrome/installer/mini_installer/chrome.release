@@ -66,6 +66,12 @@ SmallLogoDev.png: %(VersionDir)s\VisualElements\
 swiftshader\libEGL.dll: %(VersionDir)s\swiftshader\
 swiftshader\libGLESv2.dll: %(VersionDir)s\swiftshader\
 
+#
+# SSLErrorAssistant bundled component sub-dir
+#
+SSLErrorAssistant\manifest.json: %(VersionDir)s\SSLErrorAssistant\
+SSLErrorAssistant\ssl_error_assistant.pb: %(VersionDir)s\SSLErrorAssistant\
+
 [HIDPI]
 chrome_200_percent.pak: %(VersionDir)s\
 

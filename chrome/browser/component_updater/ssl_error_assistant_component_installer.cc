@@ -81,7 +81,7 @@ void SSLErrorAssistantComponentInstallerTraits::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
-  DVLOG(1) << "Component ready, version " << version.GetString() << " in "
+  LOG(ERROR) << "Component ready, version " << version.GetString() << " in "
            << install_dir.value();
 
   base::PostTaskWithTraits(

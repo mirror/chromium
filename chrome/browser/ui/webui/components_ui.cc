@@ -131,6 +131,7 @@ void ComponentsDOMHandler::HandleCheckUpdate(const base::ListValue* args) {
     return;
   }
 
+  LOG(ERROR) << ">> COMPONENT ID: " << component_id;
   ComponentsUI::OnDemandUpdate(component_id);
 }
 
