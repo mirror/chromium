@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2020ff5_f79f33bf",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:49:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand in which scenario this can happen. Can you extend a bit in the comment? Also if it is specific to the network service, can you say so and DCHECK is it is enabled?",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b5c637_612bb974",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:49:26Z",
+      "side": 1,
+      "message": "Couldn\u0027t you just integrate what\u0027s happening in OnNavigationIntercepted inside the call to ProceedWithResponse below? This way when asked to proceed with navigation, the URLLoader determines that it should be handed to the DownloadService instead?",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7c0286_bc45c3ec",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:49:26Z",
+      "side": 1,
+      "message": "You should never be in a failed state when you reach that block.",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3200d8f_80161f0c",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:49:26Z",
+      "side": 1,
+      "message": "OnNavigationIntercepted seems to be a bit of a weird name, especially given where it s called. InterceptNavigation seems better to me, since you call when you want the navigation to be handled by something else than the NavigationRequest, and not after it has been intercepted.",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
