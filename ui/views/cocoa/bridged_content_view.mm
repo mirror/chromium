@@ -650,7 +650,12 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
 // NSView implementation.
 
 - (BOOL)acceptsFirstResponder {
-  return YES;
+  // If returns YES, it makes |web_contents|' focus got lost by mouse clicks on
+  // |this|. This view can still get key events because it is made as the first
+  // responder in NativeWidgetMac::InitNativeWidget(). When other native view
+  // become first responder, it can again become first responder by it's
+  // views::View get focused due to NativeWidgetMac::ClearNativeFocus().
+  return NO;
 }
 
 - (BOOL)becomeFirstResponder {
