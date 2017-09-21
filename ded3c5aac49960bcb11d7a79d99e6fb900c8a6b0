@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d13510_13950e3f",
+        "filename": "third_party/inspector_protocol/lib/Values_h.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-21T01:08:00Z",
+      "side": 1,
+      "message": "Here and below, len should perhaps be size_t.",
+      "revId": "ded3c5aac49960bcb11d7a79d99e6fb900c8a6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
