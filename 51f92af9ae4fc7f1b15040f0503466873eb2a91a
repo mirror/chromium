@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bb7bd226_101a9914",
+        "filename": "cc/tiles/image_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T20:17:02Z",
+      "side": 1,
+      "message": "That is my bad, I messed up the naming in TileManager. Naming is hard. :P",
+      "parentUuid": "43f47637_55482b4d",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "51f92af9ae4fc7f1b15040f0503466873eb2a91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6190c9e_c3658ae9",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
