@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b1393f5_182634db",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-21T13:27:41Z",
+      "side": 1,
+      "message": "As an alternative to this renaming, could we wrap the tests into anonymous namespaces?",
+      "range": {
+        "startLine": 284,
+        "startChar": 5,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc17608c_7cd90aab",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/message_loop_task_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-21T13:27:41Z",
+      "side": 1,
+      "message": "This seems trivial enough to turn into a lambda too.",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9624d9_9644f21a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/nop_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-21T13:27:41Z",
+      "side": 1,
+      "message": "nit: this could be replaced with an empty lambda at the call site: \"[]() { }\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
