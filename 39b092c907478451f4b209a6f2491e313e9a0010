@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d47b90_7fb39c12",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "Do this in LoginTestBase, as it applies to all LoginTestBase derived types.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7839468_2a66b2ff",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "Add a comment that we don\u0027t actually focus the shelf.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492eb5ac_56a41dc1",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "What happens if the shelf view itself gets focus? You probably want to add an OnFocus() override.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f235c9de_88ddc589",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "nit: follow inheritance ordering in class declaration, put views::View above views::ButtonListener.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c671ef1_3f2d41c0",
+        "filename": "ash/system/status_area_and_shelf_focus_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "SystemTrayFocusObserver?",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe5247f_be1859dd",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "This comment is a pretty literal restatement of the if. Either remove it or try to explain something confusing or non-obvious about the code, ie,\n\n  // Focus shelf widget when |reverse| is true, which happens when focus is \n  // coming from the status area.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637c1db5_ed796dfd",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "Please add what condition makes |reverse| false.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fc756f_56c09e4a",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T20:52:02Z",
+      "side": 1,
+      "message": "This is pretty confusing, since there is no shelf.\n\nIMO OnFocusLeavingSystemTray(bool reverse) is clearer. Then the calling code doesn\u0027t care about what is inside the system tray. Right now the interface is leaking internal system tray details.",
+      "revId": "39b092c907478451f4b209a6f2491e313e9a0010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
