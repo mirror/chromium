@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f84d5df0_5dce0f90",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-21T15:38:45Z",
+      "side": 1,
+      "message": "Would this be more clear if we eliminated the duplicate explanation construction? E.g. something like:\n\nif (security_info.sha1_in_chain) {\n  auto explanation \u003d content::SecurityStyleExplanation(\n              l10n_util::GetStringUTF8(IDS_SHA1),\n              l10n_util::GetStringUTF8(IDS_SHA1_DESCRIPTION),\n              security_info.certificate,\n              blink::WebMixedContentContextType::kNotMixedContent);\n\n  // The impact of SHA1 on the certificate status depends on\n  // the EnableSHA1ForLocalAnchors policy.\n  if (security_info.cert_status \u0026 net::CERT_STATUS_WEAK_SIGNATURE_ALGORITHM)\n    security_style_explanations-\u003einsecure_explanations.push_back(explanation);\n  else\n    security_style_explanations-\u003eneutral_explanations.push_back(explanation);",
+      "revId": "de9d1aa3349414ea715712c8b4c62840d67d5e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
