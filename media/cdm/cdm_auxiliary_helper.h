@@ -30,14 +30,16 @@ class MEDIA_EXPORT CdmAuxiliaryHelper : public CdmAllocator,
  public:
   // Callback to create CdmAllocator for the created CDM.
   using CreationCB =
-      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>()>;
+      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>(
+          const std::string& key_system)>;
 
   CdmAuxiliaryHelper();
   ~CdmAuxiliaryHelper() override;
 
   // Given |client|, create a CdmFileIO object and return it. Caller owns the
-  // returned object, and should only destroy it after Close() has been called.
-  virtual std::unique_ptr<CdmFileIO> CreateCdmFileIO(cdm::FileIOClient* client);
+  // returned object.
+  virtual std::unique_ptr<media::CdmFileIO> CreateCdmFileIO(
+      cdm::FileIOClient* client);
 
   // CdmAllocator implementation.
   cdm::Buffer* CreateCdmBuffer(size_t capacity) override;

@@ -11,7 +11,7 @@ namespace media {
 CdmAuxiliaryHelper::CdmAuxiliaryHelper() {}
 CdmAuxiliaryHelper::~CdmAuxiliaryHelper() {}
 
-std::unique_ptr<CdmFileIO> CdmAuxiliaryHelper::CreateCdmFileIO(
+std::unique_ptr<media::CdmFileIO> CdmAuxiliaryHelper::CreateCdmFileIO(
     cdm::FileIOClient* client) {
   return nullptr;
 }

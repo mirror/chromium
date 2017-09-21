@@ -38,7 +38,8 @@ void CdmAdapterFactory::Create(
     return;
   }
 
-  std::unique_ptr<CdmAuxiliaryHelper> cdm_helper = helper_creation_cb_.Run();
+  std::unique_ptr<CdmAuxiliaryHelper> cdm_helper =
+      helper_creation_cb_.Run(key_system);
   if (!cdm_helper) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
