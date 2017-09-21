@@ -16,6 +16,24 @@
       "revId": "7301ad0666cf57e6c4e69c1d040b3e0a97a2a9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b437ea3_f88805e5",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T16:08:14Z",
+      "side": 1,
+      "message": "\u003e MIME type check is wrong\n\nIs there a crbug issue about this? I feel we should fix WriteToCacheJob first. WDYT?\n\n(My intension is to minimize the deviation from the non-servicified code as much as possible so that we can avoid compatibility troubles when we switch to the servicified code)",
+      "parentUuid": "1b4d3c46_3cfa0b91",
+      "revId": "7301ad0666cf57e6c4e69c1d040b3e0a97a2a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
