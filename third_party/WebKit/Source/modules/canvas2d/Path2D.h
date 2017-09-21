@@ -28,7 +28,8 @@
 #ifndef Path2D_h
 #define Path2D_h
 
-#include "core/svg/SVGMatrixTearOff.h"
+#include "core/geometry/DOMMatrix.h"
+#include "core/geometry/DOMMatrix2DInit.h"
 #include "core/svg/SVGPathUtilities.h"
 #include "modules/canvas2d/CanvasPath.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -53,12 +54,17 @@ class MODULES_EXPORT Path2D final : public GarbageCollectedFinalized<Path2D>,
 
   const Path& GetPath() const { return path_; }
 
-  void addPath(Path2D* path) { addPath(path, 0); }
+  void addPath(Path2D* path) {
+    DOMMatrix2DInit transform;
+    addPath(path, transform);
+  }
 
-  void addPath(Path2D* path, SVGMatrixTearOff* transform) {
+  void addPath(Path2D* path, DOMMatrix2DInit& transform) {
     Path src = path->GetPath();
-    path_.AddPath(src, transform ? transform->Value()
-                                 : AffineTransform(1, 0, 0, 1, 0, 0));
+    DOMMatrixReadOnly* m = nullptr;
+    m = DOMMatrixReadOnly::fromMatrix2D(transform);
+    path_.AddPath(
+        src, m ? m->GetAffineTransform() : AffineTransform(1, 0, 0, 1, 0, 0));
   }
 
   ~Path2D() override {}

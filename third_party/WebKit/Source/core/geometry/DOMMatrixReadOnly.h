@@ -13,6 +13,7 @@
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "platform/transforms/AffineTransform.h"
 #include "platform/transforms/TransformationMatrix.h"
 
 namespace blink {
@@ -106,6 +107,8 @@ class CORE_EXPORT DOMMatrixReadOnly
   ScriptValue toJSONForBinding(ScriptState*) const;
 
   const TransformationMatrix& Matrix() const { return *matrix_; }
+
+  AffineTransform GetAffineTransform() const;
 
   DEFINE_INLINE_TRACE() {}
 

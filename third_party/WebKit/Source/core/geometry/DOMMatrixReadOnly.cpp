@@ -446,6 +446,10 @@ ScriptValue DOMMatrixReadOnly::toJSONForBinding(
   return result.GetScriptValue();
 }
 
+AffineTransform DOMMatrixReadOnly::GetAffineTransform() const {
+  return AffineTransform(a(), b(), c(), d(), e(), f());
+}
+
 void DOMMatrixReadOnly::SetMatrixValueFromString(
     const String& input_string,
     ExceptionState& exception_state) {
