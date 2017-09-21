@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de93bb6e_821c60e1",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-21T01:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abb0615_fc3cd7e3",
+      "revId": "2f2c7b52dc94dfeac6c1d8502a85b1cb809736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbfce062_faa12bf3",
         "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2f2c7b52dc94dfeac6c1d8502a85b1cb809736fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9831cf4c_54384dfc",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-21T01:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbfce062_faa12bf3",
+      "revId": "2f2c7b52dc94dfeac6c1d8502a85b1cb809736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
