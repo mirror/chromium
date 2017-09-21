@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "5b836524_b68dae1e",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-21T07:23:32Z",
+      "side": 1,
+      "message": "Ah ok so you\u0027ll remove the default nullptr value in the future, right?\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/676923/2/chrome/browser/translate/translate_service.h\n\nThank you for elaborating.",
+      "parentUuid": "88aa5116_44c5503c",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
