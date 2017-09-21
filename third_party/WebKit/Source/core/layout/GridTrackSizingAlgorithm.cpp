@@ -749,7 +749,7 @@ void GridTrackSizingAlgorithm::InitializeTrackSizes() {
       content_sized_tracks_index_.push_back(i);
     if (track_size.MaxTrackBreadth().IsFlex())
       flexible_sized_tracks_index_.push_back(i);
-    if (track_size.HasAutoMaxTrackBreadth())
+    if (track_size.HasAutoMaxTrackBreadth() && !track_size.IsFitContent())
       auto_sized_tracks_index_.push_back(i);
   }
 }
