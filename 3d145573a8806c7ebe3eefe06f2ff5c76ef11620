@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b820e26_e019a0c6",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-21T00:00:01Z",
+      "side": 1,
+      "message": "Possible follow up patch: Right now, I\u0027m being strict with this new property, so that if some other process sets this property, we revert it.\n\nIf this is not necessary, and this isn\u0027t a security problem, kWindowPinType can go away and all its callers can be migrated to just setting kWindowStateType for signaling instead, as it\u0027s a proper subset.",
+      "revId": "3d145573a8806c7ebe3eefe06f2ff5c76ef11620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d877af_f5600f78",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-21T00:00:01Z",
+      "side": 1,
+      "message": "Follow up patch: Fixing both this and the other WindowStateTypeObservers to observe the window property instead.",
+      "revId": "3d145573a8806c7ebe3eefe06f2ff5c76ef11620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
