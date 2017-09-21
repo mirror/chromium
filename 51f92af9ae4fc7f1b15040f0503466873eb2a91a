@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c217bbb_88172c5e",
+        "filename": "cc/test/skia_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea2ac2f_7a35c9c9",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "51f92af9ae4fc7f1b15040f0503466873eb2a91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99122745_c53b3825",
         "filename": "cc/tiles/image_controller.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43f47637_55482b4d",
+        "filename": "cc/tiles/image_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:03:23Z",
+      "side": 1,
+      "message": "I think I intended them to be the same, but I guess I misunderstood the code.  \u003c_\u003c",
+      "parentUuid": "99122745_c53b3825",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "51f92af9ae4fc7f1b15040f0503466873eb2a91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6190c9e_c3658ae9",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-21T03:06:27Z",
       "side": 1,
       "message": "Could we add these images to PlaybackImageProvider instead? And have some BeginRaster/EndRaster methods on PlaybackImageProvider to let it internally scope the lifetime of the decodes, which get called in RasterTaskImpl::RunOnWorkerThread.\n\nThen as a follow up we can do 2 things:\n1) Change ImageProvider to return a DecodedDrawImage. The only reason it had to give a scoped object was because decodes could be scoped per op. But that wouldn\u0027t be the case now.\n\n2) Add a new API to ImageDecodeCache that asserts that it has a reffed decode to return, or the decode failed, but does not perform a decode or add any refs. And use this instead for GetDecodedDrawImage on ImageProvider. So we can be sure that we predecoded everything.",
+      "range": {
+        "startLine": 1188,
+        "startChar": 6,
+        "endLine": 1188,
+        "endChar": 33
+      },
+      "revId": "51f92af9ae4fc7f1b15040f0503466873eb2a91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6635f0_274af420",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:03:23Z",
+      "side": 1,
+      "message": "Ooh, excellent suggestion, thanks!",
+      "parentUuid": "e6190c9e_c3658ae9",
       "range": {
         "startLine": 1188,
         "startChar": 6,
