@@ -52,6 +52,24 @@
       "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43a081e_b04f7a77",
+        "filename": "ui/message_center/views/message_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-21T21:07:01Z",
+      "side": 1,
+      "message": "Took another look and found the root problem. ToastContensView takes a bool in SetContents that is *always* false; hence, we never actually fire the alert. The ToastContentsView btw is the parent view of MessageView.",
+      "parentUuid": "ea6ed5ec_4f9c8154",
+      "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
