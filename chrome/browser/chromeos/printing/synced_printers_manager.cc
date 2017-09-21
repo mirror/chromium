@@ -18,6 +18,7 @@
 #include "base/optional.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/printing/external_printers.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printers_sync_bridge.h"
 #include "chrome/browser/chromeos/printing/specifics_translation.h"
@@ -38,6 +39,15 @@ constexpr int kBlacklistAccess = 0;
 // constexpr int kWhitelistAccess = 1;
 // constexpr int kAllAccess = 2;
 
+ExternalPrinterPolicies UserPolicyNames() {
+  ExternalPrinterPolicies user_policy_names;
+  user_policy_names.configuration_file = prefs::kRecommendedNativePrintersFile;
+  user_policy_names.access_mode = prefs::kRecommendedNativePrintersAccessMode;
+  user_policy_names.blacklist = prefs::kRecommendedNativePrintersBlacklist;
+  user_policy_names.whitelist = prefs::kRecommendedNativePrintersWhitelist;
+  return user_policy_names;
+}
+
 class SyncedPrintersManagerImpl : public SyncedPrintersManager {
  public:
   SyncedPrintersManagerImpl(Profile* profile,
@@ -45,6 +55,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
       : profile_(profile),
         sync_bridge_(std::move(sync_bridge)),
         observers_(new base::ObserverListThreadSafe<Observer>()) {
+    bulk_user_printers_ = ExternalPrinters::Create(UserPolicyNames());
     pref_change_registrar_.Init(profile->GetPrefs());
     pref_change_registrar_.Add(
         prefs::kRecommendedNativePrinters,
@@ -219,6 +230,8 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
 
   Profile* profile_;
   PrefChangeRegistrar pref_change_registrar_;
+
+  std::unique_ptr<ExternalPrinters> bulk_user_printers_;
 
   // The backend for profile printers.
   std::unique_ptr<PrintersSyncBridge> sync_bridge_;
