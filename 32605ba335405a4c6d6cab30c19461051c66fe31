@@ -20,6 +20,24 @@
     },
     {
       "key": {
+        "uuid": "4aed5ae7_f3deed6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-21T13:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076d1cd1_50d0d325",
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbf7ddc_32d24788",
         "filename": "base/threading/thread_restrictions.cc",
         "patchSetId": 6
