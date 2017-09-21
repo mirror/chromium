@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf26cf5_cdfd6125",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T04:19:17Z",
+      "side": 1,
+      "message": "\"module script\"\u0027s error will be removed by https://github.com/whatwg/html/pull/2991, so perhaps the current spec proposal (and adding TODO to make the impl to match the spec) is the way to go?",
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f45382_fc680abe",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T04:19:17Z",
+      "side": 1,
+      "message": "nit: line break before \"Step 6\".",
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
