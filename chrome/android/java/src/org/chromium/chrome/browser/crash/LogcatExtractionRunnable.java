@@ -123,16 +123,26 @@ public class LogcatExtractionRunnable implements Runnable {
 
     @Override
     public void run() {
+        uploadMinidumpWithLogcat(false);
+    }
+
+    /**
+     * @param uploadNow If this flag is set to true, we will upload the minidump immediately,
+     * otherwise the upload is controlled by the job scheduler.
+     */
+    public void uploadMinidumpWithLogcat(boolean uploadNow) {
         Log.i(TAG, "Trying to extract logcat for minidump %s.", mMinidumpFile.getName());
-        CrashFileManager fileManager =
-                new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
-        File fileToUpload = mMinidumpFile;
-        try {
-            List<String> logcat = getElidedLogcat();
-            fileToUpload = new MinidumpLogcatPrepender(fileManager, mMinidumpFile, logcat).run();
-            Log.i(TAG, "Succeeded extracting logcat to %s.", fileToUpload.getName());
-        } catch (IOException | InterruptedException e) {
-            Log.w(TAG, e.toString());
+        File fileToUpload = attachLogcatToMinidump();
+
+        if (uploadNow) {
+            try {
+                MinidumpUploadService.tryUploadCrashDumpNow(fileToUpload);
+            } catch (SecurityException e) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Log.w(TAG, e.toString());
+                }
+            }
+            return;
         }
 
         // Regardless of success, initiate the upload. That way, even if there are errors augmenting
@@ -152,6 +162,21 @@ public class LogcatExtractionRunnable implements Runnable {
                 }
             }
         }
+    }
+
+    @VisibleForTesting
+    public File attachLogcatToMinidump() {
+        CrashFileManager fileManager =
+                new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
+        File fileToUpload = mMinidumpFile;
+        try {
+            List<String> logcat = getElidedLogcat();
+            fileToUpload = new MinidumpLogcatPrepender(fileManager, mMinidumpFile, logcat).run();
+            Log.i(TAG, "Succeeded extracting logcat to %s.", fileToUpload.getName());
+        } catch (IOException | InterruptedException e) {
+            Log.w(TAG, e.toString());
+        }
+        return fileToUpload;
     }
 
     private List<String> getElidedLogcat() throws IOException, InterruptedException {
