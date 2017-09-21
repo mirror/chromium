@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "bec315de_888cc3ec",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bcc566c_afaa552f",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "e0c0b5b013e7f8d462359385c48b81bd9d785797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e73126_aee4a834",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 8
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-21T17:37:46Z",
       "side": 1,
       "message": "nit: maybe add a const here to be consistent with the rest.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "e0c0b5b013e7f8d462359385c48b81bd9d785797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd089461_18510f50",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:52:19Z",
+      "side": 1,
+      "message": "The GetWizardController is not a const method so we cannot mark the host as const here.",
+      "parentUuid": "b3e73126_aee4a834",
       "range": {
         "startLine": 168,
         "startChar": 2,
