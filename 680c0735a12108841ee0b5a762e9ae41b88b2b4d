@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474014f7_37d87226",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-21T19:17:57Z",
+      "side": 0,
+      "message": "As the comment says, these lines were added to fix an unrelated bug in http://crrev.com/1a7c680e93a \"Textfields don\u0027t get focus when navigated to from \u0027show all tabs\u0027 button\", and calling ShowVirtualKeyboard has nothing to do with that, so we\u0027d have to believe that the original bug no longer exists/is relevant for this patch to make sense.",
+      "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
