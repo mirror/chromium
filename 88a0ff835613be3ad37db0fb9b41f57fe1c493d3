@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f099ef82_c4b085b7",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T11:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c59b207_5f90cb10",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4126f07f_262a854a",
         "filename": "chrome/browser/extensions/component_loader.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384370d3_461efcd4",
+        "filename": "chrome/browser/extensions/component_loader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T11:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4126f07f_262a854a",
+      "range": {
+        "startLine": 111,
+        "startChar": 40,
+        "endLine": 111,
+        "endChar": 68
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "Sorry, I missed your reply. Got it. Thank you!",
       "parentUuid": "78b647d1_9132e906",
+      "range": {
+        "startLine": 4,
+        "startChar": 39,
+        "endLine": 4,
+        "endChar": 56
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "424ed1a1_ff72d812",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T11:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b2d27d_1512538d",
       "range": {
         "startLine": 4,
         "startChar": 39,
