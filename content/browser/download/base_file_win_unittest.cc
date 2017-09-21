@@ -68,7 +68,7 @@ TEST(BaseFileWin, AnnotateWithSourceInformation) {
     SCOPED_TRACE(::testing::Message() << "Source URL: " << url.spec()
                                       << " Referrer: " << test_case.referrer);
 
-    BaseFile base_file((net::NetLogWithSource()));
+    BaseFile base_file;
     ASSERT_EQ(DOWNLOAD_INTERRUPT_REASON_NONE,
               base_file.Initialize(base::FilePath(), target_directory.GetPath(),
                                    base::File(), 0, std::string(),
