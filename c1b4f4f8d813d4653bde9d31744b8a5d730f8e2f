@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e543f4f3_c73c3c9a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-21T00:54:24Z",
+      "side": 1,
+      "message": "You can get rid of the comment now that it is clear what it refers to.",
+      "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
