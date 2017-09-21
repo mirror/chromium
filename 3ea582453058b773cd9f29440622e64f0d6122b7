@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e27f85bf_7f1c4bea",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-21T08:26:21Z",
+      "side": 1,
+      "message": "There are other functions relying in this term \"ContentSize\", \"ContentWidth\" \"ContentHeight\", so the suggested renaming should be done in a follow up patch.",
+      "parentUuid": "e7dbb380_29210802",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ce92bc0_931903ca",
         "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
         "patchSetId": 3
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "2ce92bc0_931903ca",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff4f2090_7a603d34",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-21T08:26:21Z",
+      "side": 1,
+      "message": "I\u0027ll do it in a follow up patch.",
+      "parentUuid": "6b39d9b1_43d9f76a",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -346,6 +382,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "a159be42_eb2f0915",
+      "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8cbb1bf_99aa4c5a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-21T08:26:21Z",
+      "side": 1,
+      "message": "I couldn\u0027t find any track_size term in the patch. It\u0027s true that I added new functions using the Size term instead, like GridAreaSizeXXX. I m not sure if that justifies using now track_size. Not sure if GridAreaBreadth is better either. Perhaps the later is better.",
+      "parentUuid": "9fd0960c_2cfb8b0a",
       "revId": "3ea582453058b773cd9f29440622e64f0d6122b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
