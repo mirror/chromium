@@ -34,9 +34,9 @@
 #include "chrome/browser/supervised_user/supervised_user_whitelist_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
+#include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_paths.h"
 #include "components/component_updater/component_updater_service.h"
-#include "components/component_updater/default_component_installer.h"
 #include "components/crx_file/id_util.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -239,7 +239,7 @@ void RemoveUnregisteredWhitelistsOnTaskRunner(
 }
 
 class SupervisedUserWhitelistComponentInstallerTraits
-    : public ComponentInstallerTraits {
+    : public ComponentInstallerPolicy {
  public:
   using RawWhitelistReadyCallback =
       base::Callback<void(const base::string16&, /* title */
@@ -254,7 +254,7 @@ class SupervisedUserWhitelistComponentInstallerTraits
   ~SupervisedUserWhitelistComponentInstallerTraits() override {}
 
  private:
-  // ComponentInstallerTraits overrides:
+  // ComponentInstallerPolicy overrides:
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
@@ -418,13 +418,13 @@ void SupervisedUserWhitelistInstallerImpl::RegisterComponent(
     const std::string& crx_id,
     const std::string& name,
     const base::Closure& callback) {
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new SupervisedUserWhitelistComponentInstallerTraits(
           crx_id, name,
           base::Bind(&SupervisedUserWhitelistInstallerImpl::OnRawWhitelistReady,
                      weak_ptr_factory_.GetWeakPtr(), crx_id)));
-  scoped_refptr<DefaultComponentInstaller> installer(
-      new DefaultComponentInstaller(std::move(traits)));
+  scoped_refptr<ComponentInstaller> installer(
+      new ComponentInstaller(std::move(traits)));
   installer->Register(cus_, callback);
 }
 

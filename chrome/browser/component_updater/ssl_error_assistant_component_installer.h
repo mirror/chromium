@@ -11,7 +11,7 @@
 
 #include "base/macros.h"
 #include "base/values.h"
-#include "components/component_updater/default_component_installer.h"
+#include "components/component_updater/component_installer.h"
 
 namespace base {
 class FilePath;
@@ -19,13 +19,13 @@ class FilePath;
 
 namespace component_updater {
 class SSLErrorAssistantComponentInstallerTraits
-    : public ComponentInstallerTraits {
+    : public ComponentInstallerPolicy {
  public:
   SSLErrorAssistantComponentInstallerTraits() {}
   ~SSLErrorAssistantComponentInstallerTraits() override {}
 
  private:
-  // ComponentInstallerTraits methods:
+  // ComponentInstallerPolicy methods:
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(

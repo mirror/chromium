@@ -363,7 +363,7 @@ SwReporterInstallerTraits::GetInstallerAttributes() const {
         kExperimentalEngineFeature, kTagParam);
 
     // If the tag is not a valid attribute (see the regexp in
-    // ComponentInstallerTraits::InstallerAttributes), set it to a valid but
+    // ComponentInstallerPolicy::InstallerAttributes), set it to a valid but
     // unrecognized value so that nothing will be downloaded.
     constexpr size_t kMaxAttributeLength = 256;
     constexpr char kExtraAttributeChars[] = "-.,;+_=";
@@ -475,12 +475,11 @@ void RegisterSwReporterComponent(ComponentUpdateService* cus) {
       is_x86_architecture;
 
   // Install the component.
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new SwReporterInstallerTraits(base::Bind(&RunSwReportersAfterStartup),
                                     is_experimental_engine_supported));
   // |cus| will take ownership of |installer| during installer->Register(cus).
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, base::Closure());
 }
 

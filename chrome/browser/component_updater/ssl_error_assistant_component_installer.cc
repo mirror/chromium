@@ -127,11 +127,10 @@ void RegisterSSLErrorAssistantComponent(ComponentUpdateService* cus,
                                         const base::FilePath& user_data_dir) {
   DVLOG(1) << "Registering SSL Error Assistant component.";
 
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new SSLErrorAssistantComponentInstallerTraits());
   // |cus| takes ownership of |installer|.
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, base::Closure());
 }
 

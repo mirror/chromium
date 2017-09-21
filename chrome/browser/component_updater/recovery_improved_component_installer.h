@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/feature_list.h"
-#include "components/component_updater/default_component_installer.h"
+#include "components/component_updater/component_installer.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -19,7 +19,7 @@ namespace component_updater {
 
 class ComponentUpdateService;
 
-class RecoveryImprovedInstallerTraits : public ComponentInstallerTraits {
+class RecoveryImprovedInstallerTraits : public ComponentInstallerPolicy {
  public:
   explicit RecoveryImprovedInstallerTraits(PrefService* prefs);
   ~RecoveryImprovedInstallerTraits() override;
@@ -27,7 +27,7 @@ class RecoveryImprovedInstallerTraits : public ComponentInstallerTraits {
  private:
   friend class RecoveryImprovedInstallerTest;
 
-  // ComponentInstallerTraits implementation.
+  // ComponentInstallerPolicy implementation.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(

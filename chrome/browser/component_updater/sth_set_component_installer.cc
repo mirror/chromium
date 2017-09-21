@@ -201,11 +201,10 @@ void RegisterSTHSetComponent(ComponentUpdateService* cus,
   // The global STHDistributor should have been created by this point.
   DCHECK(distributor);
 
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new STHSetComponentInstallerTraits(distributor));
   // |cus| will take ownership of |installer| during installer->Register(cus).
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, base::Closure());
 }
 

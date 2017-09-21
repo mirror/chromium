@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/gtest_prod_util.h"
-#include "components/component_updater/default_component_installer.h"
+#include "components/component_updater/component_installer.h"
 
 namespace base {
 class FilePath;
@@ -22,7 +22,7 @@ class ComponentUpdateService;
 
 // Component for receiving Safe Browsing Subresource filtering rules.
 class SubresourceFilterComponentInstallerTraits
-    : public ComponentInstallerTraits {
+    : public ComponentInstallerPolicy {
  public:
   static const char kManifestRulesetFormatKey[];
   static const int kCurrentRulesetFormat;
@@ -37,7 +37,7 @@ class SubresourceFilterComponentInstallerTraits
 
   static std::string GetInstallerTag();
 
-  // ComponentInstallerTraits implementation.
+  // ComponentInstallerPolicy implementation.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(

@@ -11,8 +11,8 @@
 #include <vector>
 
 #include "chromeos/dbus/dbus_method_call_status.h"
+#include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_service.h"
-#include "components/component_updater/default_component_installer.h"
 #include "components/update_client/update_client.h"
 #include "crypto/sha2.h"
 
@@ -42,7 +42,7 @@ struct ComponentConfig {
   ~ComponentConfig();
 };
 
-class CrOSComponentInstallerTraits : public ComponentInstallerTraits {
+class CrOSComponentInstallerTraits : public ComponentInstallerPolicy {
  public:
   explicit CrOSComponentInstallerTraits(const ComponentConfig& config);
   ~CrOSComponentInstallerTraits() override {}
@@ -53,7 +53,7 @@ class CrOSComponentInstallerTraits : public ComponentInstallerTraits {
                            ComponentReadyCorrectManifest);
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
                            ComponentReadyWrongManifest);
-  // The following methods override ComponentInstallerTraits.
+  // The following methods override ComponentInstallerPolicy.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(

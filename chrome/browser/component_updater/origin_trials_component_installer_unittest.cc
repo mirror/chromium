@@ -147,7 +147,7 @@ class OriginTrialsComponentInstallerTest : public PlatformTest {
  protected:
   base::ScopedTempDir temp_dir_;
   ScopedTestingLocalState testing_local_state_;
-  std::unique_ptr<ComponentInstallerTraits> traits_;
+  std::unique_ptr<ComponentInstallerPolicy> traits_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(OriginTrialsComponentInstallerTest);
