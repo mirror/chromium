@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b5689c_c1b3b208",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T05:49:30Z",
+      "side": 1,
+      "message": "I\u0027d normally suggest we invert this condition to avoid the negation, but I kinda like how it reads this way.",
+      "revId": "2199f535d3d20c636fdabdf1a3814483fc6a63f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
