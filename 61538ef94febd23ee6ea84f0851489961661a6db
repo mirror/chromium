@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d84d71e_36f8b12a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-21T02:43:12Z",
+      "side": 1,
+      "message": "what is the benefit of making this a LazyInstanec? s_ranctx is trivially constructible and destructible, this seem to be adding an extra layer of indirection for something that was a linker-initialized struct of pods.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "61538ef94febd23ee6ea84f0851489961661a6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b63ec45_df193c76",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-21T02:43:12Z",
+      "side": 1,
+      "message": "I think the right pattern for for SpinLock was replicating base::ThreadLocalStorage, where we have both a Static* version, that can be linker-initialized without a LazyInstance, and non-static version for all other cases.",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "61538ef94febd23ee6ea84f0851489961661a6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03b01c8_59655164",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-21T02:43:12Z",
+      "side": 1,
+      "message": "I don\u0027t think any of these needed a ctor.\nIf you kept everything trivially constructible and destructible you could have linker-initialized all this hierarchy of structs.",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 22
+      },
+      "revId": "61538ef94febd23ee6ea84f0851489961661a6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38a1a3a_99fdd604",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-21T02:43:12Z",
+      "side": 1,
+      "message": "why memset here and not \u003d {} like above? PartitionBucket seems a struct of pods.",
+      "range": {
+        "startLine": 899,
+        "startChar": 3,
+        "endLine": 900,
+        "endChar": 65
+      },
+      "revId": "61538ef94febd23ee6ea84f0851489961661a6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
