@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8bdd911_9da8ddc0",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "nit: move this space to the next line, please.",
+      "range": {
+        "startLine": 34,
+        "startChar": 73,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706dcfe4_ee3f6713",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "do we really do it that often?",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 77
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22154df3_d73fac79",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "Do we envision mode modes?\nOr is this simply a boolean?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 9
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d41645c_07fa7c1e",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "I just spoke with Justin about it and suggest a different approach\n(with a transaction and multiple queries for a single namespace)\n\nSee:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/677744/1/components/offline_pages/core/model/get_pages_task.cc\n\nAlso, you might like the change to ClientPolicyController in that patch.",
+      "range": {
+        "startLine": 111,
+        "startChar": 52,
+        "endLine": 111,
+        "endChar": 77
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2355fa_33848e36",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "Let\u0027s try to shorten that per our discussion:\n\none for loop:\n  is expired?\n  did it hit page limit?\n  did it hit max allowed size?",
+      "range": {
+        "startLine": 120,
+        "startChar": 39,
+        "endLine": 120,
+        "endChar": 58
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85fa520_6adeb4bd",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "either this or include above. please choose one.",
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb76fe4_2374b198",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "Add a comment above related to how to find the UMA enum.",
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f918cae1_c836db1f",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "Probably worth explaining in enum documentation why we have a NOT_NEEDED mode and what it means. I don\u0027t know right now.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 14
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5fa5f9_403070c2",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "document all fields and ownership model...",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 82,
+        "endChar": 37
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f887963_5cc3b968",
+        "filename": "components/offline_pages/core/model/clear_storage_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T22:12:52Z",
+      "side": 1,
+      "message": "nit: not needed.",
+      "range": {
+        "startLine": 165,
+        "startChar": 44,
+        "endLine": 165,
+        "endChar": 45
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
