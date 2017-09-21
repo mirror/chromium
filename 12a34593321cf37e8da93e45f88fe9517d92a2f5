@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d9b1d5_8a50f1bb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/path_finder.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-21T00:04:26Z",
+      "side": 1,
+      "message": "One alternate way to do this might be to check for existence of some path that should only exist after the move, e.g.:\n\npost_move_path \u003d os.path.join(get_chromium_src_dir(), \u0027third_party\u0027, \u0027blink\u0027, \u0027renderer\u0027)\nif os.path.exists(post_move_path):\n    return post_move_path\n\nThis would make the global constant unnecessary -- I think that later we\u0027ll also want to add something like this for the other methods below ... including PathFinder.layout_tests_dir, etc.\n\nWDYT?",
+      "revId": "12a34593321cf37e8da93e45f88fe9517d92a2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
