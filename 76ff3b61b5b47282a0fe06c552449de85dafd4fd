@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a00a4056_5fa21739",
+        "filename": "third_party/inspector_protocol/lib/Values_cpp.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-21T22:59:06Z",
+      "side": 1,
+      "message": "drop {}",
+      "revId": "76ff3b61b5b47282a0fe06c552449de85dafd4fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca33c1fc_93bcf21c",
+        "filename": "third_party/inspector_protocol/lib/Values_cpp.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-21T22:59:06Z",
+      "side": 1,
+      "message": "I bet you don\u0027t need to specify the type.",
+      "revId": "76ff3b61b5b47282a0fe06c552449de85dafd4fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
