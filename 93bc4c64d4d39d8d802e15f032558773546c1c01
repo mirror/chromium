@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "85db91b4_54f2e2ef",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-21T19:26:45Z",
+      "side": 1,
+      "message": "Hiding the fact that we have Feature we are checking to determine if Metrics is enabled seems more like an implementation detail that should be hidden than metrics consent.\n\nThe distinction between having consent and recording allowed being our sampling + privacy policy and seems a reasonable enough level of detail.",
+      "parentUuid": "daedffd5_e1b5293c",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 44
+      },
+      "revId": "93bc4c64d4d39d8d802e15f032558773546c1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "913dac81_91e52c69",
         "filename": "components/metrics_services_manager/metrics_services_manager.cc",
         "patchSetId": 5
