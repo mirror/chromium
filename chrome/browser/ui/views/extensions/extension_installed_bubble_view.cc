@@ -115,13 +115,14 @@ class ExtensionInstalledBubbleView : public BubbleSyncPromoDelegate,
                                      public views::BubbleDialogDelegateView,
                                      public views::LinkListener {
  public:
-  explicit ExtensionInstalledBubbleView(ExtensionInstalledBubble* bubble);
+  ExtensionInstalledBubbleView(ExtensionInstalledBubble* bubble,
+                               BubbleReference reference);
   ~ExtensionInstalledBubbleView() override;
 
   // Recalculate the anchor position for this bubble.
   void UpdateAnchorView();
 
-  void CloseBubble();
+  void CloseBubble(BubbleCloseReason reason);
 
  private:
   Browser* browser() { return controller_->browser(); }
@@ -146,6 +147,8 @@ class ExtensionInstalledBubbleView : public BubbleSyncPromoDelegate,
 
   ExtensionInstalledBubble* controller_;
 
+  BubbleReference bubble_reference_;
+
   // The shortcut to open the manage shortcuts page.
   views::Link* manage_shortcut_;
 
@@ -153,13 +156,15 @@ class ExtensionInstalledBubbleView : public BubbleSyncPromoDelegate,
 };
 
 ExtensionInstalledBubbleView::ExtensionInstalledBubbleView(
-    ExtensionInstalledBubble* controller)
+    ExtensionInstalledBubble* controller,
+    BubbleReference bubble_reference)
     : BubbleDialogDelegateView(nullptr,
                                controller->anchor_position() ==
                                        ExtensionInstalledBubble::ANCHOR_OMNIBOX
                                    ? views::BubbleBorder::TOP_LEFT
                                    : views::BubbleBorder::TOP_RIGHT),
       controller_(controller),
+      bubble_reference_(bubble_reference),
       manage_shortcut_(nullptr) {
   chrome::RecordDialogCreation(chrome::DialogIdentifier::EXTENSION_INSTALLED);
 }
@@ -178,7 +183,10 @@ void ExtensionInstalledBubbleView::UpdateAnchorView() {
   }
 }
 
-void ExtensionInstalledBubbleView::CloseBubble() {
+void ExtensionInstalledBubbleView::CloseBubble(BubbleCloseReason reason) {
+  if (bubble_reference_)
+    bubble_reference_->CloseBubble(reason);
+
   if (GetWidget()->IsClosed())
     return;
   GetWidget()->Close();
@@ -277,7 +285,7 @@ void ExtensionInstalledBubbleView::OnSignInLinkClicked() {
   chrome::ShowBrowserSignin(
       browser(),
       signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE);
-  CloseBubble();
+  CloseBubble(BUBBLE_CLOSE_NAVIGATED);
 }
 
 void ExtensionInstalledBubbleView::LinkClicked(views::Link* source,
@@ -289,7 +297,7 @@ void ExtensionInstalledBubbleView::LinkClicked(views::Link* source,
   chrome::NavigateParams params(
       chrome::GetSingletonTabNavigateParams(browser(), GURL(configure_url)));
   chrome::Navigate(&params);
-  CloseBubble();
+  CloseBubble(BUBBLE_CLOSE_NAVIGATED);
 }
 
 gfx::Size ExtensionInstalledBubbleView::GetIconSize() const {
@@ -312,8 +320,8 @@ ExtensionInstalledBubbleUi::~ExtensionInstalledBubbleUi() {
     bubble_view_->GetWidget()->RemoveObserver(this);
 }
 
-void ExtensionInstalledBubbleUi::Show(BubbleReference /*bubble_reference*/) {
-  bubble_view_ = new ExtensionInstalledBubbleView(bubble_);
+void ExtensionInstalledBubbleUi::Show(BubbleReference bubble_reference) {
+  bubble_view_ = new ExtensionInstalledBubbleView(bubble_, bubble_reference);
 
   views::BubbleDialogDelegateView::CreateBubble(bubble_view_)->Show();
   bubble_view_->GetWidget()->AddObserver(this);
@@ -323,7 +331,7 @@ void ExtensionInstalledBubbleUi::Show(BubbleReference /*bubble_reference*/) {
 
 void ExtensionInstalledBubbleUi::Close() {
   if (bubble_view_)
-    bubble_view_->CloseBubble();
+    bubble_view_->CloseBubble(BUBBLE_CLOSE_USER_DISMISSED);
 }
 
 void ExtensionInstalledBubbleUi::UpdateAnchorPosition() {
@@ -333,6 +341,7 @@ void ExtensionInstalledBubbleUi::UpdateAnchorPosition() {
 
 void ExtensionInstalledBubbleUi::OnWidgetClosing(views::Widget* widget) {
   widget->RemoveObserver(this);
+  bubble_view_->CloseBubble(BUBBLE_CLOSE_FOCUS_LOST);
   bubble_view_ = nullptr;
 }
 
