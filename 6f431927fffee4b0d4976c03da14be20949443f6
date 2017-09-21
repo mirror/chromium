@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "63633386_ca059b28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T22:02:11Z",
+      "side": 1,
+      "message": "This is a case where the user has explicitly used the \"select all\" command, and then the IME tries to call setComposingText() without changing the selection. We know exactly what range of elements is selected here, independent of whether or not we consider the \u003cimg /\u003e as being equivalent to a space.",
+      "parentUuid": "387e29a0_40e783e1",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
