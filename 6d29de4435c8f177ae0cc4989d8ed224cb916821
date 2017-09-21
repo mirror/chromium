@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "6baa6418_a8378b82",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-21T13:19:00Z",
+      "side": 1,
+      "message": "\u003e did you consider ios/testing/wait_util.h constants?\n\nDone\n\nRegarding the other timeout, I left it there, after asking you in the morning",
+      "parentUuid": "962bc8a2_0df7572f",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32dd7843_51338afe",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
