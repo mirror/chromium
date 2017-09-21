@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bcf4d84b_d53844aa",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-21T20:22:05Z",
+      "side": 1,
+      "message": "Replacing this with a continue should restore the old behavior, and I could even check !S_ISREG instead of S_ISLNK above, but we do need to check for links here before we open on line 382 in some fashion and we still need the fstat at 389 to ensure we\u0027re not being fooled.",
+      "range": {
+        "startLine": 371,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 19
+      },
+      "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e64a82c3_122acd9f",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 1
