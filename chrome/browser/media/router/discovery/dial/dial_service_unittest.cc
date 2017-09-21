@@ -17,7 +17,6 @@
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/base/network_interfaces.h"
-#include "net/log/test_net_log.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -56,14 +55,13 @@ class DialServiceTest : public testing::Test {
   DialServiceTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         mock_ip_(net::IPAddress::IPv4AllZeros()),
-        dial_service_(&test_net_log_) {
+        dial_service_(nullptr) {
     dial_service_.AddObserver(&mock_observer_);
     dial_socket_ = dial_service_.CreateDialSocket();
   }
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;
-  net::TestNetLog test_net_log_;
   net::IPAddress mock_ip_;
   DialServiceImpl dial_service_;
   std::unique_ptr<DialServiceImpl::DialSocket> dial_socket_;
