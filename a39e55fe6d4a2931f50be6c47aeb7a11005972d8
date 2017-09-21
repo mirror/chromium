@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a977e6f_4781ee67",
+        "filename": "ash/public/cpp/remote_shelf_item_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-21T14:40:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure I catch the meaning of your question. I believe that both Cash and Mash process mouse/touch/gesture events on ShelfView and send them through here (the unfortunate explicit conversion to PointerEvent is above). This was meant to guard against other events that would fail deserialization and close the connection (making the shelf unusable), but it wouldn\u0027t catch non-ET_GESTURE_TAP gesture events, so perhaps this isn\u0027t worthwhile. (Removed)",
+      "parentUuid": "1c811666_be14d794",
+      "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c741149_15b10f3f",
         "filename": "ui/events/mojo/event_struct_traits.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4788ab3e_e9deba78",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-21T14:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c741149_15b10f3f",
+      "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
