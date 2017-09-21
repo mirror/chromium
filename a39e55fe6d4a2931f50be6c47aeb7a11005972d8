@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "98b3bd37_6d24b457",
+        "filename": "ash/public/cpp/remote_shelf_item_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T15:42:10Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear. I was just asking if the reason that the bug didn\u0027t happen on mash was because under mash we do everything with pointer events. (Or maybe the bug did happen with mash? I wasn\u0027t sure.)",
+      "parentUuid": "7a977e6f_4781ee67",
+      "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c741149_15b10f3f",
         "filename": "ui/events/mojo/event_struct_traits.cc",
         "patchSetId": 4
