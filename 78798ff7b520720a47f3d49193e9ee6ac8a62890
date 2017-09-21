@@ -22,6 +22,30 @@
       "revId": "78798ff7b520720a47f3d49193e9ee6ac8a62890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697fe07a_761ec36c",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T21:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef476bed_dd2d5682",
+      "range": {
+        "startLine": 155,
+        "startChar": 46,
+        "endLine": 155,
+        "endChar": 49
+      },
+      "revId": "78798ff7b520720a47f3d49193e9ee6ac8a62890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
