@@ -153,7 +153,7 @@ void AshTestBase::SetUp() {
   Shell::GetPrimaryRootWindow()->GetHost()->Show();
   // Move the mouse cursor to far away so that native events doesn't
   // interfere test expectations.
-  Shell::GetPrimaryRootWindow()->MoveCursorTo(gfx::Point(-1000, -1000));
+  Shell::GetPrimaryRootWindow()->MoveCursorTo(gfx::PointF(-1000, -1000));
   // TODO: mus/mash needs to support CursorManager. http://crbug.com/637853.
   if (Shell::GetAshConfig() == Config::CLASSIC)
     Shell::Get()->cursor_manager()->EnableMouseEvents();

@@ -37,7 +37,7 @@
 namespace blink {
 
 class WebString;
-struct WebPoint;
+struct WebFloatPoint;
 
 class WebDevToolsAgent {
  public:
@@ -56,7 +56,7 @@ class WebDevToolsAgent {
                                           const WebString& method,
                                           const WebString& message) = 0;
 
-  virtual void InspectElementAt(int session_id, const WebPoint&) = 0;
+  virtual void InspectElementAt(int session_id, const WebFloatPoint&) = 0;
   virtual void FailedToRequestDevTools() = 0;
 
   // Exposed for TestRunner.

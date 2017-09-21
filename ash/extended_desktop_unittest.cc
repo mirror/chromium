@@ -265,17 +265,17 @@ TEST_F(ExtendedDesktopTest, TestCursorLocation) {
   aura::test::WindowTestApi root_window0_test_api(root_windows[0]);
   aura::test::WindowTestApi root_window1_test_api(root_windows[1]);
 
-  root_windows[0]->MoveCursorTo(gfx::Point(10, 10));
+  root_windows[0]->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("10,10",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
   EXPECT_TRUE(root_window0_test_api.ContainsMouse());
   EXPECT_FALSE(root_window1_test_api.ContainsMouse());
-  root_windows[1]->MoveCursorTo(gfx::Point(10, 20));
+  root_windows[1]->MoveCursorTo(gfx::PointF(10, 20));
   EXPECT_EQ("1010,20",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
   EXPECT_FALSE(root_window0_test_api.ContainsMouse());
   EXPECT_TRUE(root_window1_test_api.ContainsMouse());
-  root_windows[0]->MoveCursorTo(gfx::Point(20, 10));
+  root_windows[0]->MoveCursorTo(gfx::PointF(20, 10));
   EXPECT_EQ("20,10",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
   EXPECT_TRUE(root_window0_test_api.ContainsMouse());

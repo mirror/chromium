@@ -428,6 +428,29 @@ const Window* Window::GetChildById(int id) const {
 // static
 void Window::ConvertPointToTarget(const Window* source,
                                   const Window* target,
+                                  gfx::PointF* point) {
+  if (!source)
+    return;
+  if (source->GetRootWindow() != target->GetRootWindow()) {
+    client::ScreenPositionClient* source_client =
+        client::GetScreenPositionClient(source->GetRootWindow());
+    // |source_client| can be NULL in tests.
+    if (source_client)
+      source_client->ConvertPointToScreen(source, point);
+
+    client::ScreenPositionClient* target_client =
+        client::GetScreenPositionClient(target->GetRootWindow());
+    // |target_client| can be NULL in tests.
+    if (target_client)
+      target_client->ConvertPointFromScreen(target, point);
+  } else {
+    ui::Layer::ConvertPointToLayer(source->layer(), target->layer(), point);
+  }
+}
+
+// static
+void Window::ConvertPointToTarget(const Window* source,
+                                  const Window* target,
                                   gfx::Point* point) {
   if (!source)
     return;
@@ -458,10 +481,10 @@ void Window::ConvertRectToTarget(const Window* source,
   rect->set_origin(origin);
 }
 
-void Window::MoveCursorTo(const gfx::Point& point_in_window) {
+void Window::MoveCursorTo(const gfx::PointF& point_in_window) {
   Window* root_window = GetRootWindow();
   DCHECK(root_window);
-  gfx::Point point_in_root(point_in_window);
+  gfx::PointF point_in_root(point_in_window);
   ConvertPointToTarget(this, root_window, &point_in_root);
   root_window->GetHost()->MoveCursorToLocationInDIP(point_in_root);
 }

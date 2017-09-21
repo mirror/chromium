@@ -458,7 +458,7 @@ void WindowTreeHostManager::UpdateMouseLocationAfterDisplayChange() {
   if (target_location_in_native !=
           cursor_location_in_native_coords_for_restore_ ||
       target_display_id != cursor_display_id_for_restore_) {
-    dst_root_window->MoveCursorTo(target_location_in_root);
+    dst_root_window->MoveCursorTo(gfx::PointF(target_location_in_root));
   } else if (target_location_in_screen !=
              cursor_location_in_screen_coords_for_restore_) {
     // The cursor's native position did not change but its screen position did

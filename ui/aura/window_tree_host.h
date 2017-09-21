@@ -116,6 +116,7 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Converts |point| from the root window's coordinate system to the
   // host window's.
   void ConvertDIPToPixels(gfx::Point* point) const;
+  void ConvertDIPToPixels(gfx::PointF* point) const;
 
   // Converts |point| from the host window's coordinate system to the
   // root window's.
@@ -132,7 +133,7 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   void OnCursorVisibilityChanged(bool visible);
 
   // Moves the cursor to the specified location relative to the root window.
-  void MoveCursorToLocationInDIP(const gfx::Point& location_in_dip);
+  void MoveCursorToLocationInDIP(const gfx::PointF& location_in_dip);
 
   // Moves the cursor to the |location_in_pixels| given in host coordinates.
   void MoveCursorToLocationInPixels(const gfx::Point& location_in_pixels);
