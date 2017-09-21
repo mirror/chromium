@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a5e075f_26ecd3ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T02:54:54Z",
+      "side": 1,
+      "message": "The bug occurs regardless of whether there\u0027s a valid image resource.",
+      "parentUuid": "11c7c7a7_886b6601",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
