@@ -34,6 +34,24 @@
       "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46333055_841858ca",
+        "filename": "device/u2f/u2f_ble_frames_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-21T06:12:19Z",
+      "side": 1,
+      "message": "Maybe I misunderstand how these new objects will be used but it appears that you are serializing a packet based on |data| first and then trying to parse it. My suggestion is to directly try to parse |data| so you are testing inputs that your serializer would never generate.",
+      "parentUuid": "3c4a1616_56fe6ddb",
+      "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
