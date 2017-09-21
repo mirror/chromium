@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddf6a57a_33250326",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "It was meant to make obvious which class was responsible for logging to DevTools, but as it\u0027s not strictly linked, I\u0027ve renamed the class.",
+      "parentUuid": "40d27436_bdd7e4d2",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16adfa99_45755c15",
         "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T19:01:34Z",
       "side": 1,
       "message": "Consider exposing convenience AddMessageToConsole overload on WebLocalFrame instead. Why buffering nodes otherwise?",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ba7c1d_e95c3dc1",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "The nodes are primarily buffered here so that they can be printed in priority order: the highest-level messages first (ordered by DOM appearance after that). Everything else could be raised to the AddMessageToConsole level (wrapping in a WebConsoleMessage, etc.), but I thought it would be best to touch the higher-level methods less if it was not necessary, so as to not clutter the interface.\n\nI could overload AddMessageToConsole, but handling the ordering would still be necessary here, so there would be little benefit here, at least for now.",
+      "parentUuid": "16adfa99_45755c15",
       "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3139e65a_78bc48ea",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff4f108b_d27dea78",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98cf4f3b_42d981e8",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 26
@@ -67,6 +121,24 @@
       "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6c2bf1_9d2bb042",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cf4f3b_42d981e8",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "10f08e5c_f1bfec80",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60edabdc_40891680",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0704ee2_396e64e8",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
         "patchSetId": 26
@@ -101,6 +191,24 @@
       "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728a5274_da78e1cc",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0704ee2_396e64e8",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3c01b99d_c57018bc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 26
+      },
+      "lineNbr": 4904,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5452845f_a05471a9",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18e77e1d_77a943d8",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
         "patchSetId": 26
@@ -135,6 +261,24 @@
       "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813bfc52_00992ec4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-21T21:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e77e1d_77a943d8",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
