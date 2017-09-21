@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/gtest_prod_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
@@ -17,6 +18,7 @@
 #include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket.h"
 #include "net/base/backoff_entry.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace cast_channel {
 class CastSocketService;
@@ -39,6 +41,7 @@ class CastMediaSinkServiceImpl
       const OnSinksDiscoveredCallback& callback,
       cast_channel::CastSocketService* cast_socket_service,
       DiscoveryNetworkMonitor* network_monitor,
+      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner);
   ~CastMediaSinkServiceImpl() override;
 
@@ -213,8 +216,7 @@ class CastMediaSinkServiceImpl
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
-  // Owned by |g_browser_process|.
-  net::NetLog* const net_log_;
+  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

@@ -16,6 +16,8 @@
 #include "components/cast_channel/cast_socket_service.h"
 #include "components/net_log/chrome_net_log.h"
 #include "net/base/backoff_entry.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace {
 
@@ -94,13 +96,14 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
     const OnSinksDiscoveredCallback& callback,
     cast_channel::CastSocketService* cast_socket_service,
     DiscoveryNetworkMonitor* network_monitor,
+    scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
     const scoped_refptr<base::SequencedTaskRunner>& task_runner)
     : MediaSinkServiceBase(callback),
       cast_socket_service_(cast_socket_service),
       network_monitor_(network_monitor),
       backoff_policy_(kDefaultBackoffPolicy),
       task_runner_(task_runner),
-      net_log_(g_browser_process->net_log()) {
+      url_request_context_getter_(std::move(url_request_context_getter)) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
@@ -257,7 +260,10 @@ void CastMediaSinkServiceImpl::OpenChannel(
            << " name: " << cast_sink.sink().name();
 
   cast_socket_service_->OpenSocket(
-      ip_endpoint, net_log_,
+      ip_endpoint,
+      url_request_context_getter_.get()
+          ? url_request_context_getter_->GetURLRequestContext()->net_log()
+          : nullptr,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
                      cast_sink, std::move(backoff_entry)),
       this);

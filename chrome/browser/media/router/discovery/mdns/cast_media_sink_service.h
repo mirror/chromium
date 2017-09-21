@@ -16,6 +16,7 @@
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
 #include "content/public/browser/browser_thread.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace content {
 class BrowserContext;
@@ -97,6 +98,8 @@ class CastMediaSinkService
 
   // List of cast sinks found in current round of mDNS discovery.
   std::vector<MediaSinkInternal> cast_sinks_;
+
+  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkService);
 };
