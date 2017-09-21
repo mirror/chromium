@@ -1747,6 +1747,8 @@ bool NavigationControllerImpl::CanPruneAllButLastCommitted() {
 }
 
 void NavigationControllerImpl::PruneAllButLastCommitted() {
+  int count_before_pruning = GetEntryCount();
+  int index_before_pruning = last_committed_entry_index_;
   PruneAllButLastCommittedInternal();
 
   DCHECK_EQ(0, last_committed_entry_index_);
@@ -1754,6 +1756,13 @@ void NavigationControllerImpl::PruneAllButLastCommitted() {
 
   delegate_->SetHistoryOffsetAndLength(last_committed_entry_index_,
                                        GetEntryCount());
+  if (index_before_pruning > 0) {  // front
+    NotifyPrunedEntries(this, true, index_before_pruning);
+  }
+  if (count_before_pruning - index_before_pruning > 0) {  // back
+    NotifyPrunedEntries(this, false,
+                        count_before_pruning - index_before_pruning);
+  }
 }
 
 void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
