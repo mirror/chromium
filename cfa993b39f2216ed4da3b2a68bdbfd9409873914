@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30bbb994_c9a91eba",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T10:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4754f87_db145b1c",
+      "range": {
+        "startLine": 337,
+        "startChar": 10,
+        "endLine": 337,
+        "endChar": 20
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74b58c0f_fa03f61d",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa40e7c_edf4d6f4",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T10:37:21Z",
+      "side": 1,
+      "message": "Now it should work as expected. When user clicks \u0027Cancel\u0027 password form will close.",
+      "parentUuid": "74b58c0f_fa03f61d",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 45
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2536eebc_70b41735",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T10:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ffd5af6_7c961211",
+      "range": {
+        "startLine": 238,
+        "startChar": 13,
+        "endLine": 238,
+        "endChar": 19
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3111dc02_05bb4b37",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/decompressor.js",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15e52aa_9f7dde17",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/decompressor.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T10:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3111dc02_05bb4b37",
+      "range": {
+        "startLine": 300,
+        "startChar": 21,
+        "endLine": 300,
+        "endChar": 31
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
