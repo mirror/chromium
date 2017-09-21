@@ -5,6 +5,12 @@ if (window.testRunner) {
     testRunner.waitUntilDone();
     testRunner.setCanOpenWindows(true);
     testRunner.setCloseRemainingWindowsWhenComplete(true);
+
+    // 100ms passed to setTimeout below is sometimes sufficient to see
+    //     CONSOLE MESSAGE: Blink Test Plugin: initializing
+    // in the text output and sometimes not.  Let's keep the test focused
+    // on verifying whether a crash occured and ignore console messages.
+    testRunner.setDumpConsoleMessages(false);
 }
 
 setTimeout(function() {
