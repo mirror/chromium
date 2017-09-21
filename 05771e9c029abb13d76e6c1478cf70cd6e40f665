@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1ded7d_750afc1c",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T19:01:54Z",
+      "side": 1,
+      "message": "nit: I usually do this as the first thing in the destructor, since it\u0027s usually not valid for outsiders to call Get() on a partially destroyed object.",
+      "revId": "05771e9c029abb13d76e6c1478cf70cd6e40f665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
