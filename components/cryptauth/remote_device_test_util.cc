@@ -11,9 +11,16 @@ namespace cryptauth {
 std::vector<RemoteDevice> GenerateTestRemoteDevices(size_t num_to_create) {
   std::vector<RemoteDevice> generated_devices;
 
+  std::string current_char;
   for (size_t i = 0; i < num_to_create; i++) {
     RemoteDevice device;
-    device.public_key = "publicKey" + std::to_string(i);
+    current_char = std::to_string(i);
+    device.name = "name" + current_char;
+    device.public_key = "publicKey" + current_char;
+    device.bluetooth_address = "bluetoothAddress" + current_char;
+    device.persistent_symmetric_key = "persistentSymmetricKey" + current_char;
+    device.unlock_key = i % 2;
+    device.supports_mobile_hotspot = i % 2;
     generated_devices.push_back(device);
   }
 
