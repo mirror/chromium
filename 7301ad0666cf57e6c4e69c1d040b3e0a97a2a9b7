@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b4d3c46_3cfa0b91",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:35:08Z",
+      "side": 1,
+      "message": "I want to avoid this dependency on WriteToCacheJob. Also our MIME type check is wrong. Can we just use blink::IsSupportedJavascriptMimeType() here?",
+      "revId": "7301ad0666cf57e6c4e69c1d040b3e0a97a2a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
