@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c323827e_b3b4943d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T02:21:21Z",
+      "side": 1,
+      "message": "Can we add a short justification to use ReferrerScriptInfo() here, like the comment in WorkerOrWorkletScriptController.cpp?",
+      "revId": "7cecb4d967ef4b82a76eb09a46e56f6262e7ee03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
