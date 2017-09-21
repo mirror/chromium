@@ -42,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "149423b6_6ba42ac9",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-21T17:33:08Z",
+      "side": 1,
+      "message": "Why is this here as opposed to with the constructor/destructor or at the bottom of the private:? Same in ASLMessage.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e19f330_0bb121ba",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-21T17:33:08Z",
+      "side": 1,
+      "message": "Also, all of this looks totally familiar. Is there an expectation of recusal in codecestuous situations like this one?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab2fd3e_d6bcf4cf",
         "filename": "sandbox/mac/sandbox_logging.cc",
         "patchSetId": 2
@@ -82,6 +116,41 @@
     },
     {
       "key": {
+        "uuid": "0686962a_10830e44",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-21T17:33:08Z",
+      "side": 1,
+      "message": "\u003e Will this also log to stderr?\n\nIt should, that’s what ASL_OPT_STDERR is supposed to do.",
+      "parentUuid": "8ab2fd3e_d6bcf4cf",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c87fc09_f5bbbb86",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-21T17:33:08Z",
+      "side": 1,
+      "message": "Since you’ve already checked for ret \u003c 0, doesn’t this basically amount to being unnecessary?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8158328b_9de6e05a",
         "filename": "sandbox/mac/sandbox_logging.h",
         "patchSetId": 2
@@ -110,6 +179,23 @@
       "writtenOn": "2017-09-21T15:27:24Z",
       "side": 1,
       "message": "Why does this need to be in the header?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bb3418_b03e5a75",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-21T17:33:08Z",
+      "side": 1,
+      "message": "Why am I not in the namespace?",
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
