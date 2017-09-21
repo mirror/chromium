@@ -1393,13 +1393,12 @@ index dec531fd2a4f..17cb07c104d9 100644
      'Document': 'document',
      'ThisValue': 'ScriptValue(scriptState, info.Holder())',
  }
-@@ -243,16 +243,16 @@ def deprecate_as(member):
+@@ -243,15 +243,15 @@ def deprecate_as(member):
  
  # [Exposed]
  EXPOSED_EXECUTION_CONTEXT_METHOD = {
 -    'AnimationWorklet': 'isAnimationWorkletGlobalScope',
 -    'AudioWorklet': 'isAudioWorkletGlobalScope',
--    'CompositorWorker': 'isCompositorWorkerGlobalScope',
 -    'DedicatedWorker': 'isDedicatedWorkerGlobalScope',
 -    'PaintWorklet': 'isPaintWorkletGlobalScope',
 -    'ServiceWorker': 'isServiceWorkerGlobalScope',
@@ -1409,7 +1408,6 @@ index dec531fd2a4f..17cb07c104d9 100644
 -    'Worklet': 'isWorkletGlobalScope',
 +    'AnimationWorklet': 'IsAnimationWorkletGlobalScope',
 +    'AudioWorklet': 'IsAudioWorkletGlobalScope',
-+    'CompositorWorker': 'IsCompositorWorkerGlobalScope',
 +    'DedicatedWorker': 'IsDedicatedWorkerGlobalScope',
 +    'PaintWorklet': 'IsPaintWorkletGlobalScope',
 +    'ServiceWorker': 'IsServiceWorkerGlobalScope',

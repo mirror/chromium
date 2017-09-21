@@ -139,7 +139,7 @@ std::string ContextTypeToString(ContextType type) {
     case BROWSER_OFFSCREEN_MAINTHREAD_CONTEXT:
       return "Offscreen-MainThread";
     case BROWSER_WORKER_CONTEXT:
-      return "CompositorWorker";
+      return "BrowserWorker";
     case RENDER_COMPOSITOR_CONTEXT:
       return "RenderCompositor";
     case RENDER_WORKER_CONTEXT:

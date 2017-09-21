@@ -80,6 +80,10 @@
       status: "stable",
     },
     {
+      name: "AnimationWorklet",
+      status: "experimental",
+    },
+    {
       name: "AsyncClipboard",
       status: "experimental",
     },
@@ -168,10 +172,6 @@
     {
       name: "CompositorTouchAction",
       status: "test",
-    },
-    {
-      name: "CompositorWorker",
-      status: "experimental",
     },
     {
       name: "ComputedAccessibilityInfo",
@@ -435,7 +435,7 @@
     },
     {
       name: "GeometryInterfaces",
-      implied_by: ["CompositorWorker"],
+      implied_by: ["AnimationWorklet"],
       status: "stable",
     },
     {
