@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "c53bb9a1_bfbc80ab",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-001-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "for all the tests i think a comment of where 30x and 50 px come from would be useful here (offset-position x value plus offset-distance?)",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f855e3e_228807e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "i\u0027m confused about where 50 came from here. by my calculation the closest-corner should be 42px away from the offset-distance",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446f6d6c_4b256238",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "for all the tests, please add info to description as to why this test is different from other closest-corner tests, e.g. this one might be \"This tests closest-corner ray lengths where offset-position is outside the parent box.\"",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db47cd95_b5c473bf",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-004.html",
         "patchSetId": 1
@@ -81,6 +132,91 @@
       "writtenOn": "2017-09-20T08:57:21Z",
       "side": 1,
       "message": "How about specifying the value as \"calc(100% + 130px)\" here?",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efee9b4_2563f25f",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "why not use the cmath function?",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5e99d3_73f1ddfb",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "this method should go in an unnamed namespace",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13d5f8a_6b106d70",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "why abs? seems like it would mess up the distances when the initial position is not within the containing box",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975df3d4_fd47229f",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "does this handle the case where the initial position is not within the containing box?\n\nalso please add comment to this case that it is finding the distance between the initial position and the intersection of the ray with the box, I think this case in particular is not obvious",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b8b8ed_94a4cf43",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-21T02:45:40Z",
+      "side": 1,
+      "message": "is this the correct maximum? does it take into account the parent not being on the far left?",
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
