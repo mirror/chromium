@@ -697,7 +697,8 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   provider_info->client_request = mojo::MakeRequest(&container_);
 
   mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+  if (ServiceWorkerUtils::IsServicificationEnabled() &&
+      running_hosted_version()->status() == ServiceWorkerVersion::NEW) {
     mojo::MakeStrongAssociatedBinding(
         base::MakeUnique<ServiceWorkerScriptURLLoaderFactory>(
             context_, AsWeakPtr(), context_->loader_factory_getter()),
