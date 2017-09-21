@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c4d44de_40d9458d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T22:11:59Z",
+      "side": 1,
+      "message": "you don\u0027t need to override this many methods.  only the pure virtual ones.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "c007bb2b0dc05e087de5199bb6be4e2fa6298b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183ce4cf_6e409703",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T22:11:59Z",
+      "side": 1,
+      "message": "What I am thinking is not to special case a particular screen id here.\n\n    fake_screen_ \u003d std::make_unique\u003cFakeBaseScreen\u003e(first_screen);\n    wizard_controller_-\u003eSetCurrentScreenForTesting(fake_screen_);",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 23
+      },
+      "revId": "c007bb2b0dc05e087de5199bb6be4e2fa6298b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
