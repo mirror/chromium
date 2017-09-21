@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "80b4d391_d8fb47db",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T01:20:50Z",
+      "side": 1,
+      "message": "ReleaseSharedSchedulerWorkers() is responsible for releasing the task runners and workers associated with the SingleThreadTaskRunnerThreadMode::SHARED as the SchedulerSingleThreadTaskRunner will generally be the last owner of these STTRs.\n\nThe reason it was needed before was to satisfy the DCHECK in the old condition (e.g. no outstanding STTR\u0027s surviving the manager). With PostTask returning false, releasing the STTRs themselves is less critical.",
+      "parentUuid": "3fbe7d2c_c1021cee",
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00624ab4_647aed21",
         "filename": "base/task_scheduler/scheduler_worker_pool.cc",
         "patchSetId": 24
@@ -146,6 +164,29 @@
       "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d1b0eab_aa2a14fc",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T01:20:50Z",
+      "side": 1,
+      "message": "I just realized we might technically need a barrier here, but later lock acquisitions will probably save us here.",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 25
+      },
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
