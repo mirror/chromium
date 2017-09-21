@@ -16,6 +16,24 @@
       "revId": "01d98e5194ba45c860c263cda98bae15317ab88c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43967691_d25f667a",
+        "filename": "chrome/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T16:33:05Z",
+      "side": 1,
+      "message": "Not totally sure what you mean. (DevToolsSession, DevToolsDomainHandler etc. are all inside content, inaccessible from here)",
+      "parentUuid": "c56cc4b4_108e2ab7",
+      "revId": "01d98e5194ba45c860c263cda98bae15317ab88c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
