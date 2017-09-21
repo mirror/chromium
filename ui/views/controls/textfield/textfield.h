@@ -384,6 +384,9 @@ class VIEWS_EXPORT Textfield : public View,
   // Update the cursor position in the text field.
   void UpdateCursorViewPosition();
 
+  // Gets the style::TextStyle that should be used.
+  int GetTextStyle() const;
+
   void PaintTextAndCursor(gfx::Canvas* canvas);
 
   // Helper function to call MoveCursorTo on the TextfieldModel.
