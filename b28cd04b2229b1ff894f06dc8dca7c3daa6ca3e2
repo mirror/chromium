@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "362dfd11_56ffa4a0",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-21T19:26:14Z",
+      "side": 1,
+      "message": "Actually this shouldn\u0027t  happen for the situation I mentioned above. The first OnRequestFailed() call should destroy the NavigationURLLoaderNetworkService weakptr, and thus the OnComplete() call will never get executed on UI thread. Remove the if check here.",
+      "parentUuid": "f3472c74_0d864f48",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b5c637_612bb974",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 5
