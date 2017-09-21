@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336be9d6_96a0f55b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-21T22:04:21Z",
+      "side": 1,
+      "message": "We should probably still check ChromeFeatureList.isEnabled(ChromeFeatureList.VR_SHELL) here in case the user has opted out of Chrome VR and we start allowing going back to Chrome VR from Web VR mode in the future.",
+      "range": {
+        "startLine": 872,
+        "startChar": 45,
+        "endLine": 872,
+        "endChar": 62
+      },
+      "revId": "972681c5398affa03195ebfddbbd085a9ea1f32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
