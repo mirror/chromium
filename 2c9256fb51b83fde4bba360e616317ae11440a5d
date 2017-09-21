@@ -22,6 +22,30 @@
       "revId": "2c9256fb51b83fde4bba360e616317ae11440a5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ce6f8f_64372549",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-21T21:56:33Z",
+      "side": 1,
+      "message": "In what way does it fail?",
+      "parentUuid": "74c6c951_65adfb52",
+      "range": {
+        "startLine": 691,
+        "startChar": 26,
+        "endLine": 691,
+        "endChar": 38
+      },
+      "revId": "2c9256fb51b83fde4bba360e616317ae11440a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
