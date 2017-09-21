@@ -1,0 +1,5 @@
+@font-face {
+  font-family: Ahem;
+  /* Delay is added in the hope of deflaking the test, though it is not perfect. */
+  src: url("slow-ahem-loading.cgi?delay=500");
+}

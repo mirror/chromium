@@ -1,0 +1,9 @@
+<title>Test an @font-face in an external stylesheet.</title>
+<!--
+    This setup tries to reproduce https://crbug.com/507054 as reliably as possible.
+    i.e. Blink test runner sometimes takes screenshot before webfont is loaded,
+    especially when @font-face is in an external stylesheet.
+-->
+<link rel="stylesheet" href="ahem.css" type="text/css">
+<link rel="match" href="fontface-external-stylesheet-expected.html">
+<p style="font-family: Ahem">This text must be in Ahem.</p>
