@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7f38614f_5ea68416",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-21T06:17:02Z",
+      "side": 1,
+      "message": "It\u0027s possible I\u0027ve misunderstood, but:\n\nWe want every call site to use either the legacy or new logic, depending on the kUseBaselineLanguageModel feature flag. In that patch I\u0027ve linked, enabling the flag will cause all language_model arguments to be populated, making all calls to GetTargetLanguage use the new logic (which is what we want).\n\nIf we had two overloads, then we\u0027d need to update each call site to provide either a TranslatePrefs or LanguageModel depending on the value of kUseBaselineLanguageModel.\n\nI chose the two arg approach to avoid duplicating the same flag logic at each call site.",
+      "parentUuid": "6c251f0b_8ab0c1b8",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
