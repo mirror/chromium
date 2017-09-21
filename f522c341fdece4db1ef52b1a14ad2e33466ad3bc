@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1b70ce_fe961ec8",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T20:15:35Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this trace is worth its own category. In fact\nI am not sure if we really need to trace this any more at all.\n\nSo either use \"cc.debug\" or even just remove them.",
+      "revId": "f522c341fdece4db1ef52b1a14ad2e33466ad3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928fbb4c_47d0c82f",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T20:15:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f522c341fdece4db1ef52b1a14ad2e33466ad3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd67772_a37d1739",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T20:15:35Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 645,
+        "endChar": 14
+      },
+      "revId": "f522c341fdece4db1ef52b1a14ad2e33466ad3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737f8592_0e1b63ee",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T20:15:35Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "f522c341fdece4db1ef52b1a14ad2e33466ad3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab20ab2_9fa399e7",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterfaceDocument.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T20:15:35Z",
+      "side": 1,
+      "message": "This seems unnecesary.",
+      "revId": "f522c341fdece4db1ef52b1a14ad2e33466ad3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
