@@ -20,20 +20,13 @@ settings.defaultResourceLoaded = true;
 Polymer({
   is: 'settings-ui',
 
-  behaviors: [settings.RouteObserverBehavior],
+  behaviors: [I18nBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /**
      * Preferences state.
      */
     prefs: Object,
-
-    /** @type {?settings.DirectionDelegate} */
-    directionDelegate: {
-      observer: 'directionDelegateChanged_',
-      type: Object,
-      value: new settings.DirectionDelegateImpl(),
-    },
 
     /** @private */
     advancedOpened_: {
@@ -264,10 +257,5 @@ Polymer({
     listenOnce(this.$.container, ['blur', 'pointerdown'], () => {
       this.$.container.removeAttribute('tabindex');
     });
-  },
-
-  /** @private */
-  directionDelegateChanged_: function() {
-    this.$.drawer.align = this.directionDelegate.isRtl() ? 'right' : 'left';
   },
 });
