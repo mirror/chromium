@@ -46378,6 +46378,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Network.Shill.Wifi.Ap80211kSupport" enum="WiFiAp80211kSupport">
+  <owner>matthewmwang@chromium.org</owner>
+  <summary>
+    Chrome OS network metric sampling the number of BSSes that support the
+    802.11k standard.
+  </summary>
+</histogram>
+
+<histogram name="Network.Shill.Wifi.Ap80211rSupport" enum="WiFiAp80211rSupport">
+  <owner>matthewmwang@chromium.org</owner>
+  <summary>
+    Chrome OS network metric sampling the number of BSSes that support the
+    802.11r standard.
+  </summary>
+</histogram>
+
+<histogram name="Network.Shill.Wifi.Ap80211vSupport" enum="WiFiAp80211vSupport">
+  <owner>matthewmwang@chromium.org</owner>
+  <summary>
+    Chrome OS network metric sampling the number of BSSes that support the
+    802.11v standard.
+  </summary>
+</histogram>
+
 <histogram name="Network.Shill.WiFi.ApDisconnectReason" enum="WiFiReasonCode">
   <owner>quiche@chromium.org</owner>
   <summary>
