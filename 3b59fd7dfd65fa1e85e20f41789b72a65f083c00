@@ -51,6 +51,24 @@
       "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e9cbbd_89d94424",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-21T10:20:50Z",
+      "side": 1,
+      "message": "I tried that before and it broke some tests.\n\nThere reason is that we treat fit-content() as an \"auto\" track\nand later cap it to the argument.\nIf we change HasAutoMaxTrackBreadth() for fit-content() to return false,\nthe track of the size is wrongly computed.",
+      "parentUuid": "fafb72cd_96777290",
+      "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
