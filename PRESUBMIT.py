@@ -443,7 +443,15 @@ _BANNED_CPP_FUNCTIONS = (
       ),
       True,
       (),
-    )
+    ),
+    (
+    'base::ThreadRestrictions',
+      (
+        'Use the new API in base/threading/thread_restrictions.h.',
+      ),
+      True,
+      (),
+    ),
 )
 
 
