@@ -131,14 +131,15 @@ class SystemClockClientImpl : public SystemClockClient {
     dbus::MessageWriter writer(&method_call);
     system_clock_proxy_->CallMethod(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        base::BindOnce(&SystemClockClientImpl::OnGetCanSet,
-                       weak_ptr_factory_.GetWeakPtr()));
+        base::Bind(&SystemClockClientImpl::OnGetCanSet,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   // Whether the time can be set. Value is false until the first
   // CanSetTime response is received.
   bool can_set_time_;
   bool can_set_time_initialized_;
+
   dbus::ObjectProxy* system_clock_proxy_;
   base::ObserverList<Observer> observers_;
 
