@@ -43,6 +43,49 @@ function overlaps(rect1, rect2) {
 }
 
 /**
+ * Node state. Nodes can be on-screen like normal, or they may
+ * be invisible if they are in a tab that is not in the foreground
+ * or similar, or they may be invalid if they were removed from their
+ * root, i.e. if they were in a window that was closed.
+ * @enum {number}
+ */
+const NodeState = {
+  NODE_STATE_INVALID: 0,
+  NODE_STATE_INVISIBLE: 1,
+  NODE_STATE_NORMAL: 2,
+};
+
+/**
+ * Gets the current visiblity state for a given node.
+ *
+ * @param {AutomationNode} node The starting node.
+ * @return {NodeState} the current node state.
+ */
+function getNodeVisibilityState(node) {
+  if (node.root == null) {
+    // The node has been removed from the tree, perhaps because the
+    // window was closed.
+    return NodeState.NODE_STATE_INVALID;
+  }
+  // This might not be populated correctly on children nodes even if their
+  // parents or roots are now invisible.
+  if (node.state.invisible) {
+    return NodeState.NODE_STATE_INVISIBLE;
+  }
+  // Walk up the tree to make sure the window it is in is not invisible.
+  var parent = node;
+  while (parent != null && parent.role != 'window') {
+    parent = parent.parent;
+  }
+  if (parent != null && parent.state['invisible']) {
+    return NodeState.NODE_STATE_INVISIBLE;
+  }
+  // TODO: Also need a check for whether the window is minimized,
+  // which would also return NodeState.NODE_STATE_INVISIBLE.
+  return NodeState.NODE_STATE_NORMAL;
+}
+
+/**
  * @constructor
  */
 var SelectToSpeak = function() {
@@ -95,6 +138,17 @@ var SelectToSpeak = function() {
   /** @const { string } */
   this.color_ = '#f73a98';
 
+  /** @private { ?AutomationNode } */
+  this.currentNode_ = null;
+
+  /** @private { function() } */
+  this.nodeTestInterval_ = function() {
+    if (this.currentNode_ == null) {
+      return;
+    }
+    this.updateFromNodeState_(this.currentNode_);
+  };
+
   this.initPreferences_();
 
   this.setUpEventListeners_();
@@ -124,7 +178,7 @@ SelectToSpeak.prototype = {
     this.trackingMouse_ = true;
     this.didTrackMouse_ = true;
     this.mouseStart_ = {x: evt.screenX, y: evt.screenY};
-    chrome.tts.stop();
+    chrome.tts.stop();  // TODO: Clear focus and current node here?
 
     // Fire a hit test event on click to warm up the cache.
     this.desktop_.hitTest(evt.screenX, evt.screenY, EventType.MOUSE_PRESSED);
@@ -163,7 +217,7 @@ SelectToSpeak.prototype = {
     this.onMouseMove_(evt);
     this.trackingMouse_ = false;
 
-    chrome.accessibilityPrivate.setFocusRing([]);
+    this.clearFocus_();
 
     this.mouseEnd_ = {x: evt.screenX, y: evt.screenY};
     var ctrX = Math.floor((this.mouseStart_.x + this.mouseEnd_.x) / 2);
@@ -232,8 +286,7 @@ SelectToSpeak.prototype = {
       // If we were in the middle of tracking the mouse, cancel it.
       if (this.trackingMouse_) {
         this.trackingMouse_ = false;
-        chrome.accessibilityPrivate.setFocusRing([]);
-        chrome.tts.stop();
+        this.stopAll_();
       }
     }
 
@@ -245,8 +298,7 @@ SelectToSpeak.prototype = {
         this.keysPressedTogether_.has(evt.keyCode) &&
         this.keysPressedTogether_.size == 1) {
       this.trackingMouse_ = false;
-      chrome.accessibilityPrivate.setFocusRing([]);
-      chrome.tts.stop();
+      this.stopAll_();
     }
 
     this.keysCurrentlyDown_.delete(evt.keyCode);
@@ -254,6 +306,31 @@ SelectToSpeak.prototype = {
       this.keysPressedTogether_.clear();
       this.didTrackMouse_ = false;
     }
+  },
+
+  /**
+   * Stop speech and clear the focus ring
+   */
+  stopAll_: function() {
+    this.clearFocusAndNode_();
+    chrome.tts.stop();
+  },
+
+  /**
+   * Clears the current focus ring and node, but does
+   * not stop the speech.
+   */
+  clearFocusAndNode_: function() {
+    this.clearFocus_();
+    this.currentNode_ = null;
+  },
+
+  /**
+   * Clears the focus ring, but does not clear the current
+   * node.
+   */
+  clearFocus_: function() {
+    chrome.accessibilityPrivate.setFocusRing([]);
   },
 
   /**
@@ -268,6 +345,8 @@ SelectToSpeak.prototype = {
     document.addEventListener('mousedown', this.onMouseDown_.bind(this));
     document.addEventListener('mousemove', this.onMouseMove_.bind(this));
     document.addEventListener('mouseup', this.onMouseUp_.bind(this));
+    // TODO: Could only set the interval when we have an active node.
+    setInterval(this.nodeTestInterval_.bind(this), 1000);
   },
 
   /**
@@ -317,14 +396,14 @@ SelectToSpeak.prototype = {
         onEvent:
             (function(node, isLast, event) {
               if (event.type == 'start') {
-                chrome.accessibilityPrivate.setFocusRing(
-                    [node.location], this.color_);
+                this.currentNode_ = node;
+                this.updateFromNodeState_(node);
               } else if (
                   event.type == 'interrupted' || event.type == 'cancelled') {
-                chrome.accessibilityPrivate.setFocusRing([]);
+                this.clearFocusAndNode_();
               } else if (event.type == 'end') {
                 if (isLast) {
-                  chrome.accessibilityPrivate.setFocusRing([]);
+                  this.clearFocusAndNode_();
                 }
               }
             }).bind(this, node, isLast)
@@ -429,5 +508,25 @@ SelectToSpeak.prototype = {
                 }
               }).bind(this));
         }).bind(this));
+  },
+
+  /**
+   * Updates the speech and focus ring states based on a node's current state.
+   *
+   * @param {AutomationNode} node The node to use for udpates
+   */
+  updateFromNodeState_: function(node) {
+    var state = getNodeVisibilityState(node);
+    if (state == NodeState.NODE_STATE_INVALID) {
+      // If the node is invalid, stop speaking entirely.
+      this.stopAll_();
+    } else if (state == NodeState.NODE_STATE_INVISIBLE) {
+      // If it is invisible but still valid, just clear the focus ring.
+      // Don't clear the current node because we may still use it
+      // if it becomes visibile later.
+      this.clearFocus_();
+    } else if (state == NodeState.NODE_STATE_NORMAL) {
+      chrome.accessibilityPrivate.setFocusRing([node.location], this.color_);
+    }
   }
 };
