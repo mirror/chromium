@@ -183,6 +183,7 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
      * @param accountHolder the account holder to add
      */
     public void addAccountHolderExplicitly(AccountHolder accountHolder) {
+        ThreadUtils.assertOnUiThread();
         boolean added = mAccounts.add(accountHolder);
         Assert.assertTrue("Account was already added", added);
         for (AccountsChangeObserver observer : mObservers) {
@@ -196,6 +197,7 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
      * @param accountHolder the account holder to remove
      */
     public void removeAccountHolderExplicitly(AccountHolder accountHolder) {
+        ThreadUtils.assertOnUiThread();
         boolean removed = mAccounts.remove(accountHolder);
         Assert.assertTrue("Account was already added", removed);
         for (AccountsChangeObserver observer : mObservers) {

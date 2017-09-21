@@ -107,15 +107,19 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
     }
 
     public Account setUpTestAccount() {
-        Account account = SigninTestUtil.addTestAccount();
-        Assert.assertFalse(SyncTestUtil.isSyncRequested());
-        return account;
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            Account account = SigninTestUtil.addTestAccount();
+            Assert.assertFalse(SyncTestUtil.isSyncRequested());
+            return account;
+        });
     }
 
     public Account setUpTestAccountAndSignIn() {
-        Account account = setUpTestAccount();
-        signIn(account);
-        return account;
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            Account account = setUpTestAccount();
+            signIn(account);
+            return account;
+        });
     }
 
     public void startSync() {
