@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "8ca093d8_87810392",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T22:50:16Z",
+      "side": 1,
+      "message": "Yes, but if fixing a potential security issue causes other problems, the cure may be worse than the disease. With symlinks in the destination, aren\u0027t there valid use cases where one may want to set up a symlink? The code in base/ has a lot of caller in Chromium, and more elsewhere. e.g. as libbase in ChromeOS. So I want to be conservative and not potentially break behavior callers rely on. Can we leave the general behavior the same, focus on fixing the implementation details that can trigger TOC-TOU issues, and worry about handling symlinks in the destination separately?",
+      "parentUuid": "16a5b796_e97ee34e",
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "926b2b6c_5d7ae8c0",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 4
