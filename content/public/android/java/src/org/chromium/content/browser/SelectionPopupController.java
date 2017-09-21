@@ -30,7 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.view.textclassifier.TextClassifier;
+// import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.Log;
@@ -94,6 +94,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private final RenderCoordinates mRenderCoordinates;
     private ActionMode.Callback mCallback;
 
+    private SelectionClient.ResultCallback mResultCallback;
+
     // Used to customize PastePopupMenu
     private ActionMode.Callback mNonSelectionCallback;
 
@@ -134,8 +136,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private SelectionClient mSelectionClient;
 
     // The classificaton result of the selected text if the selection exists and
-    // SmartSelectionProvider was able to classify it, otherwise null.
-    private SmartSelectionProvider.Result mClassificationResult;
+    // SelectionClient was able to classify it, otherwise null.
+    private SelectionClient.Result mClassificationResult;
 
     // This variable is set to true when showActionMode() is postponed till classification result
     // arrives or till the selection is adjusted based on the classification result.
@@ -173,12 +175,46 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             }
         };
 
-        mSelectionClient =
-                SmartSelectionClient.create(new SmartSelectionCallback(), window, webContents);
+        mResultCallback = new SmartSelectionCallback();
 
         mLastSelectedText = "";
 
         nativeInit(webContents);
+    }
+
+    /**
+     * Create {@link SelectionPopupController} instance.
+     * @param context Context for action mode.
+     * @param window WindowAndroid instance.
+     * @param webContents WebContents instance.
+     * @param view Container view.
+     * @param renderCoordinates Coordinates info used to position elements.
+     * @param distinguisher Boolean to indicate this is only used for testing.
+     */
+    public SelectionPopupController(Context context, WindowAndroid window, WebContents webContents,
+            View view, RenderCoordinates renderCoordinates, boolean distinguisher) {
+        mContext = context;
+        mWindowAndroid = window;
+        mWebContents = webContents;
+        mView = view;
+        mRenderCoordinates = renderCoordinates;
+
+        // The menu items are allowed by default.
+        mAllowedMenuItems = MENU_ITEM_SHARE | MENU_ITEM_WEB_SEARCH | MENU_ITEM_PROCESS_TEXT;
+        mRepeatingHideRunnable = new Runnable() {
+            @Override
+            public void run() {
+                assert mHidden;
+                final long hideDuration = getDefaultHideDuration();
+                // Ensure the next hide call occurs before the ActionMode reappears.
+                mView.postDelayed(mRepeatingHideRunnable, hideDuration - 1);
+                hideActionModeTemporarily(hideDuration);
+            }
+        };
+
+        mResultCallback = new SmartSelectionCallback();
+
+        mLastSelectedText = "";
     }
 
     /**
@@ -205,6 +241,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     void setNonSelectionCallback(ActionMode.Callback callback) {
         mNonSelectionCallback = callback;
+    }
+
+    public SelectionClient.ResultCallback getResultCallback() {
+        return mResultCallback;
     }
 
     @Override
@@ -1139,7 +1179,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     /**
      * Sets TextClassifier for Smart Text selection.
      */
-    public void setTextClassifier(TextClassifier textClassifier) {
+    public void setTextClassifier(Object textClassifier) {
         if (mSelectionClient != null) mSelectionClient.setTextClassifier(textClassifier);
     }
 
@@ -1148,21 +1188,21 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * has been set with setTextClassifier, returns that object, otherwise returns the system
      * classifier.
      */
-    public TextClassifier getTextClassifier() {
+    public Object getTextClassifier() {
         return mSelectionClient == null ? null : mSelectionClient.getTextClassifier();
     }
 
     /**
      * Returns the TextClassifier which has been set with setTextClassifier(), or null.
      */
-    public TextClassifier getCustomTextClassifier() {
+    public Object getCustomTextClassifier() {
         return mSelectionClient == null ? null : mSelectionClient.getCustomTextClassifier();
     }
 
     // The callback class that delivers result from a SmartSelectionClient.
-    private class SmartSelectionCallback implements SmartSelectionProvider.ResultCallback {
+    private class SmartSelectionCallback implements SelectionClient.ResultCallback {
         @Override
-        public void onClassified(SmartSelectionProvider.Result result) {
+        public void onClassified(SelectionClient.Result result) {
             // If the selection does not exist any more, discard |result|.
             if (!hasSelection()) {
                 assert !mHidden;
