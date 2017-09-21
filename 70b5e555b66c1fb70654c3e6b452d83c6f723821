@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d32ae625_27e357e5",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "DoneWritingToEntry no longer exists",
+      "parentUuid": "db6139ba_e168b345",
+      "range": {
+        "startLine": 964,
+        "startChar": 16,
+        "endLine": 964,
+        "endChar": 17
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d00db487_0df8dc64",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 26
@@ -296,6 +320,30 @@
       "side": 1,
       "message": "Then it should be a DCHECK/NOTREACHED, shouldn\u0027t it?  To put it differently, if your guess is wrong you\u0027re changing behavior, which you don\u0027t want to do.  So if you don\u0027t have faith in your guess you shouldn\u0027t change behavior, and if you do, you should make it DCHECK/NOTREACHED?",
       "parentUuid": "c8a50374_9c95c042",
+      "range": {
+        "startLine": 1137,
+        "startChar": 11,
+        "endLine": 1137,
+        "endChar": 15
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706c893d_ab5e94af",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "As discussed f2f, here is the diff that introduced this function with the bug:\nhttps://chromium.googlesource.com/chromium/src/+/8061c420676998bda77caa74581ea8061860f438%5E%21/net/http/http_cache.cc",
+      "parentUuid": "248d0e0e_384b0cf4",
       "range": {
         "startLine": 1137,
         "startChar": 11,

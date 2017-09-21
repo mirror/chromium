@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2ff458b_6aaaefcf",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Oops, removed the writers related conditions from the top level if.",
+      "parentUuid": "486261dc_67409b55",
+      "range": {
+        "startLine": 448,
+        "startChar": 6,
+        "endLine": 448,
+        "endChar": 29
+      },
+      "revId": "ab58012bc61526d8ec2d90f72f351d4e17a70141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a069965_58fe7c89",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 30
@@ -45,6 +69,30 @@
       "revId": "ab58012bc61526d8ec2d90f72f351d4e17a70141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf349c6a_b44bf9eb",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a069965_58fe7c89",
+      "range": {
+        "startLine": 453,
+        "startChar": 14,
+        "endLine": 453,
+        "endChar": 32
+      },
+      "revId": "ab58012bc61526d8ec2d90f72f351d4e17a70141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

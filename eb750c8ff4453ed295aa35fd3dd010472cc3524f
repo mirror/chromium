@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ae9c6797_d22d9661",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2804,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50dccf2b_64ed229f",
+      "range": {
+        "startLine": 2804,
+        "startChar": 2,
+        "endLine": 2804,
+        "endChar": 30
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a21120_64be3ca0",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 31
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "744d7f02_5d99c302",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc6385d5_acc6b76a",
+      "range": {
+        "startLine": 3063,
+        "startChar": 0,
+        "endLine": 3067,
+        "endChar": 17
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8307ad65_b9eaa601",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 31
@@ -114,6 +162,30 @@
       "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9067ccc8_67e9462d",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8307ad65_b9eaa601",
+      "range": {
+        "startLine": 213,
+        "startChar": 69,
+        "endLine": 213,
+        "endChar": 70
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +223,30 @@
       "writtenOn": "2017-09-20T16:40:16Z",
       "side": 1,
       "message": "Not sure this is true, I see it called in Read() and in StopCaching().",
+      "range": {
+        "startLine": 441,
+        "startChar": 5,
+        "endLine": 441,
+        "endChar": 29
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565795a3_118d4389",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:33:58Z",
+      "side": 1,
+      "message": "Changed the function DoneWithEntry and also the comment",
+      "parentUuid": "a896b522_86113369",
       "range": {
         "startLine": 441,
         "startChar": 5,
