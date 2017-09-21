@@ -54,17 +54,12 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
   /**
    * @return {!Promise<?UI.Widget>}
    */
-  async _htmlErrorPreview() {
+  async _htmlPreview() {
     var contentData = await this.request.contentData();
     if (contentData.error)
       return new UI.EmptyWidget(Common.UIString('Failed to load response data'));
 
-    // We can assume the status code has been set already because fetching contentData should wait for request to be
-    // finished.
-    if (!this.request.hasErrorStatusCode() && this.request.resourceType() !== Common.resourceTypes.XHR)
-      return null;
-
-    var whitelist = new Set(['text/html', 'text/plain', 'application/xhtml+xml']);
+    var whitelist = new Set(['text/html', 'application/xhtml+xml']);
     if (!whitelist.has(this.request.mimeType))
       return null;
 
@@ -78,7 +73,7 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
    * @return {!Promise<!UI.Widget>}
    */
   async createPreview() {
-    var htmlErrorPreview = await this._htmlErrorPreview();
+    var htmlErrorPreview = await this._htmlPreview();
     if (htmlErrorPreview)
       return htmlErrorPreview;
 
