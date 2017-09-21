@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ee7411_e194c7d3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f9c100_63cf7b30",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "\"due to staleness\"",
+      "range": {
+        "startLine": 205,
+        "startChar": 69,
+        "endLine": 206,
+        "endChar": 28
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af532684_8a94d41a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "I guess you also need to inject a task runner and treib@ suggested injecting a OneShotTimer instead of a clock and a task runner. See example in breaking_news_gcm_app_handler_unittest.cc.\n\nAlso injecting TestMockTimeTaskRunner is very convenient. It provides clocks. You just advance the time in the runner, it adjusts time in the clocks and runs the task.",
+      "range": {
+        "startLine": 451,
+        "startChar": 19,
+        "endLine": 451,
+        "endChar": 49
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964f4669_55aeeb06",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "confusing name in this context. |timeout_timer|?",
+      "range": {
+        "startLine": 460,
+        "startChar": 9,
+        "endLine": 460,
+        "endChar": 16
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe9e632_6eadd427",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "From this, I\u0027ve got an impression that you will be using OnNewSuggestions, however, it seems like you are using the new approach, when UI will be asking for suggestions on status change. Could you comment to make this explicit?",
+      "range": {
+        "startLine": 461,
+        "startChar": 28,
+        "endLine": 461,
+        "endChar": 62
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e57bbc2_293976df",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "Does your new code play nicely with FetchMore?\n\nOr will we rely on UI to prevent FetchMore during the stale refetch?",
+      "range": {
+        "startLine": 528,
+        "startChar": 36,
+        "endLine": 528,
+        "endChar": 42
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d826e80_af4aac4d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "what about merging these into \n\nvoid ChangeCategoriesStatus(CategoryStatus from, CategoryStatus to)?",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 622,
+        "endChar": 3
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd128d5_36d1b793",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "I would like to have tests for keeping prefetched pages longer when refetching due to staleness. So far, the features should be independent, but I am not sure whether it will stay this way.",
+      "range": {
+        "startLine": 449,
+        "startChar": 18,
+        "endLine": 449,
+        "endChar": 40
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53529b2f_5dc80993",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "Could you add Minutes to the name? Same for the parameters you add in RemoteProvider.\n\nWithout it, it is easier to mix up units in the GetFieldTrialParamByFeatureAsInt call.",
+      "range": {
+        "startLine": 146,
+        "startChar": 35,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7023df_e3d99f31",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "It may make sense to add a comment that this interval is configurable as well. This is somewhat unusual that default value can change.",
+      "range": {
+        "startLine": 423,
+        "startChar": 42,
+        "endLine": 423,
+        "endChar": 63
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07347b62_e908ed49",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "I would prefer \"FetchTime\" in the name, however, there is \"kSnippetLastFetchAttempt\" already, so I am not sure whether it is feasible to change both.\n\nI feel like the name should hint about its content. When I see \"Attempt\" or \"Fetch\" this confuses me, because I can\u0027t imagine what is actually stored there. Thus, I prefer \"AttempTime\" and \"FetchTime\" to make things clear.",
+      "range": {
+        "startLine": 493,
+        "startChar": 59,
+        "endLine": 493,
+        "endChar": 64
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11793119_2ba8b86c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "The name is confusing. There are no suggestions in the scheduler.\n\nWhat about\n\n\"OnSuccessfulBackgroundFetch\"\n\nor \n\n\"RecordSuccessfulBackgroundFetchTime\"\n\nor SetLastSuccessfulBackgroundFetchTime(const base::Time\u0026 new_value)?\n\nUPD: or just inline as you do with LastFetchAttempt.",
+      "range": {
+        "startLine": 676,
+        "startChar": 41,
+        "endLine": 676,
+        "endChar": 52
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4959aa_d88cb997",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "I guess you observed that base::Time::ToInternalValue has been deprecated.\n\nThere are (De)SerializeTime in ntp_snippets/time_serialization.h, which you could use instead.\n\nI am strongly against using a different serialization approach here (previously it was \"microseconds since Windows epoch\", now you are using \"microseconds since Unix epoch\"), because it is very unexpected that the same data type can be serialized differently (i.e. kSnippetLastFetchAttempt vs kSnippetLastSuccessfulFetch).",
+      "range": {
+        "startLine": 679,
+        "startChar": 7,
+        "endLine": 679,
+        "endChar": 64
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35398f2f_319c92da",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "IsLastSuccessfulFetchStale?\n\nThis is not based on suggestions. E.g. if server returns 2 days old suggestions, this won\u0027t notice. Thus, I would like to make it more clear in the name.",
+      "range": {
+        "startLine": 682,
+        "startChar": 37,
+        "endLine": 682,
+        "endChar": 56
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fdedba_af65ccc7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "this is a bug, base::Time::UnixEpoch() !\u003d null time.\nHowever, once you use DeserializeTime, it should be fine and 0 will be mapped to 0 time.",
+      "range": {
+        "startLine": 689,
+        "startChar": 6,
+        "endLine": 689,
+        "endChar": 42
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffdfaf7_89468980",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "{ }",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 17
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ca10bb_59a7c846",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "above you inline SetInt64, so I am not sure whether you need a helper here.",
+      "range": {
+        "startLine": 884,
+        "startChar": 2,
+        "endLine": 884,
+        "endChar": 28
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1ac7f7_00a17482",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "This is not needed.",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab67f9f4_c49ac061",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "ShouldNotRefetchDueToStaleness",
+      "range": {
+        "startLine": 1088,
+        "startChar": 7,
+        "endLine": 1088,
+        "endChar": 28
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbc1013_dae54707",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "this must be at least a constant or better set through a variation parameter to make the test independent of default values.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 51,
+        "endLine": 1102,
+        "endChar": 53
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb928618_ead2f7ef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "could you also add EXPECT_CALL for RefetchInTheBackgroundDueToStalenessMock with Times(0) to make it clear how and what you check.",
+      "range": {
+        "startLine": 1106,
+        "startChar": 2,
+        "endLine": 1106,
+        "endChar": 13
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50763367_90552657",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T09:15:46Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a OnBrowserForegrounded?\n\nDo we do stale refetches only on startup?\nIndependently of you answer, could you add a test for it?",
+      "range": {
+        "startLine": 1107,
+        "startChar": 15,
+        "endLine": 1107,
+        "endChar": 41
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
