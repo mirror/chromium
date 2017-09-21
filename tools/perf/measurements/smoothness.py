@@ -14,17 +14,7 @@ class _CustomResultsWrapper(timeline_based_measurement.ResultsWrapperInterface):
     super(_CustomResultsWrapper, self).__init__()
     self._pages_to_tir_labels = {}
 
-  def _AssertNewValueHasSameInteractionLabel(self, new_value):
-    tir_label = self._pages_to_tir_labels.get(new_value.page)
-    if tir_label:
-      assert tir_label == self._tir_label, (
-          'Smoothness measurement do not support multiple interaction record '
-          'labels per page yet. See crbug.com/453109 for more information.')
-    else:
-      self._pages_to_tir_labels[new_value.page] = self._tir_label
-
   def AddValue(self, value):
-    self._AssertNewValueHasSameInteractionLabel(value)
     self._results.AddValue(value)
 
 
