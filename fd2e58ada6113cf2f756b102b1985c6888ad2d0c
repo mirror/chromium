@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32cb6dac_9e4b0526",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:32:40Z",
+      "side": 1,
+      "message": "Nit: Use android.support.annotation.Nullable.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "fd2e58ada6113cf2f756b102b1985c6888ad2d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8085fa_10416009",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:32:40Z",
+      "side": 1,
+      "message": "Could you use a nicer bitmap?",
+      "range": {
+        "startLine": 84,
+        "startChar": 61,
+        "endLine": 84,
+        "endChar": 93
+      },
+      "revId": "fd2e58ada6113cf2f756b102b1985c6888ad2d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
