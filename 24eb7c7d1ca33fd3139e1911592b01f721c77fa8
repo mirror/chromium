@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eacb683b_a3e41a42",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "ooh, ooh, bike shedding! Perhaps kSimpleEntryMaxFileCount, kSimpleEntrySparseFileCount?",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb84b1d0_7ec0efe7",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "s/backends/backend instances/",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99ea27b_c69752a3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "Perhaps change the \"it will eventually ...\" comment into a TODO.",
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436d4cde_3c0cf277",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "This comment needs thread safety information about this class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 75,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0f3739_e08765a2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "Why have Register? Why not let Acquire create the File? It\u0027ll have to do that if the file has been closed due to FD pressure anyway.",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93b58f6_32ba50c9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "Why not return a scoped_refptr\u003cFileHandle\u003e where FileHandle is RefCounted? That way you can make Release a private function and you wouldn\u0027t need the manual ref counting that\u0027s going on in simple_synchronous_entry. We try to avoid manual ref counting if possible.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162d6148_bacaf69b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "This comment is confusing. Do consumers really need to know about doom_generation? And file name changing? Let\u0027s remove this function from this CL as it\u0027s not actually doing anything yet anyway.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 55
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9a7334_3da7b4f1",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "It\u0027s not obvious what you\u0027re referring to by recursion level.\n\nPerhaps:\n\nHelpers for grabbing File objects from SimpleFileTracker. ReleaseFile must be called once for each AcquireFile call. It\u0027s safe to call AcquireFile multiple times before the subsequent ReleaseFiles.\n\nThough in the end I think we should just use file_tracker_-\u003eAcquire and it should return a scoped_refptr\u003cFileHandle\u003e (with a slightly different FileHandle, see comment in simple_file_tracker.h)",
+      "range": {
+        "startLine": 432,
+        "startChar": 14,
+        "endLine": 432,
+        "endChar": 29
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151187e9_21a0337d",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T13:04:45Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be using the constant that you added?",
+      "range": {
+        "startLine": 472,
+        "startChar": 36,
+        "endLine": 472,
+        "endChar": 37
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
