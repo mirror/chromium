@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "02938e51_14b3d179",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3510,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T05:05:06Z",
+      "side": 1,
+      "message": "last one: I don\u0027t think this belongs nested inside `if (!is_mac || mac_views_browser)`, we can reduce a bit of nesting by moving this out one level so it\u0027s just under if (enable_extensions)",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf4ec53a_5a37cd72",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
