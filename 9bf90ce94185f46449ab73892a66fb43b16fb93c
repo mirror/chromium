@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7037956_94497b7e",
+        "filename": "third_party/WebKit/LayoutTests/webmessaging/MessageEvent_onmessage_infinite_loop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-21T01:32:16Z",
+      "side": 1,
+      "message": "this test seems both needlessly complicated, and not actually testing what you want to test. I.e. the test creates a new MessageChannel for each iteration, which I believe wouldn\u0027t actually cause problems even without your change (since that would already result in separate tasks for each message).",
+      "revId": "9bf90ce94185f46449ab73892a66fb43b16fb93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8ad0be_089dbc09",
+        "filename": "third_party/WebKit/LayoutTests/webmessaging/MessageEvent_onmessage_infinite_loop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-21T01:32:16Z",
+      "side": 1,
+      "message": "any particular reason you\u0027re actually stopping the message events? If you just wrap your onmessage event handler in t.step_func() (which you should do anyway), it\u0027ll stop looping as soon as the test finishes anyway.",
+      "revId": "9bf90ce94185f46449ab73892a66fb43b16fb93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be5ba7b_94dff1bc",
+        "filename": "third_party/WebKit/LayoutTests/webmessaging/MessageEvent_onmessage_infinite_loop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-21T01:32:16Z",
+      "side": 1,
+      "message": "testharness.js tests should use t.step_timeout() rather than window.setTimeout",
+      "revId": "9bf90ce94185f46449ab73892a66fb43b16fb93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5498cd0f_ae18b0fb",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-21T01:32:16Z",
+      "side": 1,
+      "message": "I think this is buggy. I.e. if the event handler for one message ends up post-messaging the port it was received on somewhere else, the message events for further messages on the port should be send to the new location of the port, rather than the old one, while this code will potentially queue multiple message events at the same time. Probably a better fix would be to keep this part of the code unmodified (i.e. call DispatchEvent synchronously), and instead replace the while (true) loop with posting a task to call DispatchMessages again at the end of it.",
+      "revId": "9bf90ce94185f46449ab73892a66fb43b16fb93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
