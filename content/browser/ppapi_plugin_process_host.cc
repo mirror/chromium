@@ -26,11 +26,11 @@
 #include "content/common/content_switches_internal.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/pepper_plugin_info.h"
 #include "content/public/common/process_type.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -114,12 +114,12 @@ class PpapiPluginSandboxedProcessLauncherDelegate
   }
 #endif  // OS_WIN
 
-  SandboxType GetSandboxType() override {
+  sandbox::SandboxType GetSandboxType() override {
 #if defined(OS_WIN)
     if (is_broker_)
-      return SANDBOX_TYPE_NO_SANDBOX;
+      return sandbox::SANDBOX_TYPE_NO_SANDBOX;
 #endif  // OS_WIN
-    return SANDBOX_TYPE_PPAPI;
+    return sandbox::SANDBOX_TYPE_PPAPI;
   }
 
  private:
