@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f66d81_bbad390a",
+        "filename": "chrome/browser/ui/views/tabs/tab_drag_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T18:20:39Z",
+      "side": 1,
+      "message": "OS_CHROMEOS sets OS_LINUX, so you don\u0027t need the OS_CHROMEOS check here.",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 21
+      },
+      "revId": "78614d400ecaa0eb432d8f7c4e11ff8b2ce62606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
