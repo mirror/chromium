@@ -254,6 +254,7 @@ class IDLParser(object):
 
   def p_Definition(self, p):
     """Definition : CallbackOrInterface
+                  | Namespace
                   | Partial
                   | Dictionary
                   | Enum
@@ -302,7 +303,8 @@ class IDLParser(object):
 
   def p_PartialDefinition(self, p):
     """PartialDefinition : PartialDictionary
-                         | PartialInterface"""
+                         | PartialInterface
+                         | Namespace"""
     p[0] = p[1]
 
   def p_PartialInterface(self, p):
@@ -754,6 +756,36 @@ class IDLParser(object):
     """SetlikeRest : SETLIKE '<' TypeWithExtendedAttributes '>' ';'"""
     p[0] = self.BuildProduction('Setlike', p, 2, p[3])
 
+  def p_Namespace(self, p):
+    """Namespace : NAMESPACE identifier '{' NamespaceMembers '}' ';'"""
+    p[0] = self.BuildNamed('Namespace', p, 2, p[4])
+
+  # Error recovery for namespace.
+  def p_NamespaceError(self, p):
+    """Namespace : NAMESPACE identifier '{' error"""
+    p[0] = self.BuildError(p, 'Namespace')
+
+  def p_NamespaceMembers(self, p):
+    """NamespaceMembers : ExtendedAttributeList NamespaceMember NamespaceMembers
+                        | """
+    if len(p) > 1:
+      p[2].AddChildren(p[1])
+      p[0] = ListFromConcat(p[2], p[3])
+
+  # Error recovery for NamespaceMembers
+  def p_NamespaceMembersError(self, p):
+    """NamespaceMembers : ExtendedAttributeList error"""
+    p[0] = self.BuildError(p, 'NamespaceMembers')
+
+  def p_NamespaceMember(self, p):
+    """NamespaceMember : ReturnType OperationRest
+                       | READONLY AttributeRest"""
+    if p[1] != 'readonly':
+      p[2].AddChildren(p[1])
+    else:
+      p[2].AddChildren(self.BuildTrue('READONLY'))
+    p[0] = p[2]
+
   # This rule has custom additions (i.e. SpecialComments).
   def p_ExtendedAttributeList(self, p):
     """ExtendedAttributeList : '[' ExtendedAttribute ExtendedAttributes ']'
@@ -806,6 +838,7 @@ class IDLParser(object):
                            | IMPLEMENTS
                            | INHERIT
                            | LEGACYCALLER
+                           | NAMESPACE
                            | PARTIAL
                            | SERIALIZER
                            | SETTER
