@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8ed0aa_e7ca6881",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-21T23:05:36Z",
+      "side": 1,
+      "message": "can you file a bug to track that decision, put the bug here and mention in the bug that tests has to be removed if we want to keep this way?",
+      "revId": "0e39e40ad28ebc5fc1655c774daeeefa6357095d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
