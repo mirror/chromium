@@ -8,6 +8,10 @@ glue_library_deps = [
   "//android_webview:android_webview_java",
   "//android_webview:android_webview_commandline_java",
   "//android_webview:android_webview_platform_services_java",
+
+  # TODO should move this include to a higher layer
+  "//android_webview/support_library_glue:support_lib_glue_java",
+
   "//base:base_java",
   "//components/autofill/android:autofill_java",
   "//components/autofill/android:provider_java",
