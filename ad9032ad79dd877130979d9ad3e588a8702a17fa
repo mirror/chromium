@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "866b3a31_51f30a15",
+        "filename": "tools/perf/core/generate_system_health_csv.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T20:32:51Z",
+      "side": 1,
+      "message": "nits: rename this to system_health_csv_generator.py \n\nPython module are typically nouns, script are verbs.",
+      "revId": "ad9032ad79dd877130979d9ad3e588a8702a17fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46920fdc_3c64ea6f",
+        "filename": "tools/perf/core/generate_system_health_csv.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T20:32:51Z",
+      "side": 1,
+      "message": "This directory should be updated so that we generate the file in tools/perf/system_health_stories.csv\n\nBetter, you can rename the main() method below to GenerateSystemHealthCSV(file_path) \u0026 have generate_system_health_csv script calls GenerateSystemHealthCSV(...)",
+      "revId": "ad9032ad79dd877130979d9ad3e588a8702a17fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
