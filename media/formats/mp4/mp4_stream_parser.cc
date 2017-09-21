@@ -456,7 +456,7 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
                               coded_size, visible_rect, natural_size,
                               // No decoder-specific buffer needed for AVC;
                               // SPS/PPS are embedded in the video stream
-                              EmptyExtraData(), scheme);
+                              EmptyExtraData(), scheme, VIDEO_ROTATION_0);
       DVLOG(1) << "video_track_id=" << video_track_id
                << " config=" << video_config.AsHumanReadableString();
       if (!video_config.IsValidConfig()) {

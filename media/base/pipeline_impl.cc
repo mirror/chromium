@@ -894,6 +894,14 @@ void PipelineImpl::RendererWrapper::InitializeRenderer(
   DCHECK(media_task_runner_->BelongsToCurrentThread());
 
   switch (demuxer_->GetType()) {
+    case MediaResource::Type::REMOTE:
+      if (demuxer_->GetRemoteId() == MediaResource::kInvalidRemoteId) {
+        DVLOG(1) << "Error: demuxer does not have a valid remote id.";
+        done_cb.Run(PIPELINE_ERROR_COULD_NOT_RENDER);
+        return;
+      }
+      break;
+
     case MediaResource::Type::STREAM:
       if (demuxer_->GetAllStreams().empty()) {
         DVLOG(1) << "Error: demuxer does not have an audio or a video stream.";
@@ -938,6 +946,7 @@ void PipelineImpl::RendererWrapper::ReportMetadata() {
   std::vector<DemuxerStream*> streams;
 
   switch (demuxer_->GetType()) {
+    case MediaResource::Type::REMOTE:
     case MediaResource::Type::STREAM:
       metadata.timeline_offset = demuxer_->GetTimelineOffset();
       // TODO(servolk): What should we do about metadata for multiple streams?
