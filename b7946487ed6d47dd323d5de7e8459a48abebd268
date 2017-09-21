@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4da129b_2af69080",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-21T16:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "732fc732_bf0108b7",
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da919932_c67c0e8b",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T22:25:54Z",
       "side": 1,
       "message": "nit: try to keep this in rough abc order. (and cite crbug.com/766363 here too?)",
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0569dda1_8ffcfb66",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-21T16:43:22Z",
+      "side": 1,
+      "message": "Sadly none of these are in alphabetical order :(.  Moved mine to the top to be somewhat close though.  I\u0027m happy to reorder all of them if you\u0027d like!\n\nDo you want me to cite the bug as a reference to this general function not being used on Android or to this entry in particular?  I feel like once the bug is fixed this file won\u0027t really need to be touched, only the other place.  So it doesn\u0027t make sense to cite the bug for this line.",
+      "parentUuid": "da919932_c67c0e8b",
       "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7751559_f2ed4dbb",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-21T16:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db12bf81_4b8c3b79",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,24 @@
       "side": 1,
       "message": "Ah, sorry, I somehow missed the ui/webui/PLATFORM_OWNERS note in c/b/ui/webui/OWNERS.",
       "parentUuid": "be6d070e_7a8a14c5",
+      "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020a2c2d_44314f38",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-21T16:43:22Z",
+      "side": 1,
+      "message": "I\u0027ll wait on adding the owners file until my team adds a bunch more code here and gets better acquainted with the JavaScript style/guidelines from reviews if that\u0027s ok with the current reviewers and they don\u0027t mind the load!",
+      "parentUuid": "5c487953_ef052711",
       "revId": "b7946487ed6d47dd323d5de7e8459a48abebd268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
