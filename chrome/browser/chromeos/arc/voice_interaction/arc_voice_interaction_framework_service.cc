@@ -312,7 +312,7 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
         value_prop_accepted &&
         (!prefs->GetUserPrefValue(prefs::kVoiceInteractionEnabled) ||
          prefs->GetBoolean(prefs::kVoiceInteractionEnabled));
-    SetVoiceInteractionEnabled(enable_voice_interaction);
+    SetVoiceInteractionEnabled(enable_voice_interaction, base::Bind([]() {}));
 
     SetVoiceInteractionContextEnabled(
         (enable_voice_interaction &&
@@ -354,7 +354,7 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
   // TODO(xiaohuic): remove deprecated prefs::kVoiceInteractionPrefSynced.
   prefs->SetBoolean(prefs::kVoiceInteractionPrefSynced, false);
   SetVoiceInteractionSetupCompletedInternal(false);
-  SetVoiceInteractionEnabled(false);
+  SetVoiceInteractionEnabled(false, base::Bind([]() {}));
   SetVoiceInteractionContextEnabled(false);
 }
 
@@ -391,21 +391,10 @@ void ArcVoiceInteractionFrameworkService::OnHotwordTriggered(uint64_t tv_sec,
 void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
-          StartVoiceInteractionSetupWizard);
-
-  if (!framework_instance)
-    return;
-
-  if (should_start_runtime_flow_) {
-    VLOG(1) << "Starting runtime setup flow.";
-    framework_instance->StartVoiceInteractionSession();
-    return;
-  }
-
-  framework_instance->StartVoiceInteractionSetupWizard();
+  SetVoiceInteractionEnabled(
+      true, base::Bind(&ArcVoiceInteractionFrameworkService::
+                           StartVoiceInteractionSetupWizardInternal,
+                       base::Unretained(this)));
 }
 
 void ArcVoiceInteractionFrameworkService::ShowVoiceInteractionSettings() {
@@ -432,19 +421,26 @@ void ArcVoiceInteractionFrameworkService::NotifyMetalayerStatusChanged(
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
-    bool enable) {
+    bool enable,
+    const base::Closure& setting_complete_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   ash::Shell::Get()->NotifyVoiceInteractionEnabled(enable);
 
   PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
 
-  // We assume voice interaction is always enabled on in ARC, but we guard
-  // all possible entry points on CrOS side with this flag. In this case,
-  // we only need to set CrOS side flag.
   prefs->SetBoolean(prefs::kVoiceInteractionEnabled, enable);
   if (!enable)
     prefs->SetBoolean(prefs::kVoiceInteractionContextEnabled, false);
+
+  mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service_->voice_interaction_framework(),
+          SetVoiceInteractionEnabled);
+  if (!framework_instance)
+    return;
+  framework_instance->SetVoiceInteractionEnabled(enable,
+                                                 setting_complete_callback);
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
@@ -469,7 +465,7 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionSetupCompleted() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   SetVoiceInteractionSetupCompletedInternal(true);
-  SetVoiceInteractionEnabled(true);
+  SetVoiceInteractionEnabled(true, base::Bind([]() {}));
   SetVoiceInteractionContextEnabled(true);
 }
 
@@ -592,6 +588,27 @@ void ArcVoiceInteractionFrameworkService::
   prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, completed);
 
   ash::Shell::Get()->NotifyVoiceInteractionSetupCompleted(completed);
+}
+
+void ArcVoiceInteractionFrameworkService::
+    StartVoiceInteractionSetupWizardInternal() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service_->voice_interaction_framework(),
+          StartVoiceInteractionSetupWizard);
+
+  if (!framework_instance)
+    return;
+
+  if (should_start_runtime_flow_) {
+    should_start_runtime_flow_ = false;
+    VLOG(1) << "Starting runtime setup flow.";
+    framework_instance->StartVoiceInteractionSession();
+    return;
+  }
+  framework_instance->StartVoiceInteractionSetupWizard();
 }
 
 }  // namespace arc
