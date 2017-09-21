@@ -152,6 +152,24 @@
       "revId": "839be157f457edeb96b6342196c703cae53788d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2129f671_e04729b1",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-21T20:35:58Z",
+      "side": 1,
+      "message": "\u003e 1) The drawer is not open on startup, so the argument is academic. Even if we do show the sidebar by default, Polymer happily executes bindings before attached(). When ready() fires, before attached(), all local DOM has been properly prepared/populated.\n\nthe performance/painting argument may be theoretical, BUT your proposed CL[1] adds 24 lines of code while mine removes 102.  I think this is a useful object metric to consider when comparing them.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/676383\n\n\u003e \n\u003e 2) I don\u0027t see the need to share the getTextAlign/getTextReverseAlign anywhere outside settings_animated_pages, whether it is C++, or a settings.* helper method. Why should that information be generi-fied?\n\u003e \n\u003e \u003e so much more effort for less benefit\n\u003e \n\u003e Basically, I don\u0027t see a reason for the effort you are describing.\n\u003e \n\u003e The left/right usage in this context has nothing to do with text direction, it only has to do with where do we want to slide-in/out subpages in LTR/RTL, which is only relevant within settings_animated_pages.\n\nwhat do LTR or RTL mean?  what is \"left to right\"?  the text?",
+      "parentUuid": "8d6e296c_c0122d15",
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
