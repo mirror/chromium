@@ -110,6 +110,8 @@ source_set("unit_tests") {
     "//components/infobars/core",
     "//components/language/core/browser",
     "//components/machine_intelligence",
+    "//components/machine_intelligence",
+    "//components/machine_intelligence/proto",
     "//components/machine_intelligence/proto",
     "//components/metrics/proto",
     "//components/pref_registry:pref_registry",
