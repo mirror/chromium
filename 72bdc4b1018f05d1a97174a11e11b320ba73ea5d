@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8467b93_9a3bc5c2",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: Explain the first parameter. In particular, what does it mean if:\n* the first param is true and all the others are false\n* the first param is false and some of the others are true",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ff1ec1_fd16cdc5",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: These calls would be more readable if the true/false values were other /*commented*/ or const bool stored_in_vars \u003d false.",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36e77bc_510d70a5",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "This seems different than the one below. (It isn\u0027t doing the \u0026\u0026 with is_enabled.) Are you sure both of these are right?",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec724d4_0ad19757",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd5d1fa_89c5b88c",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "see above",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893b6c65_4e4e8b82",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: add {} since it\u0027s multi-line",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583e6644_22c6fe23",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: move above line 67 (testing methods generally go last), change comment to just name of interface being overridden, and move comment to the interface declaration.",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dca261f_83833e39",
+        "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "Thanks for adding tests here.",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd1e552_cb7f9002",
+        "filename": "ui/base/ime/chromeos/input_method_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T16:14:24Z",
+      "side": 1,
+      "message": "nit: Can this be NotifyImeMenuFeatureChanged() or NotifyImeMenuExtraInputChanged() or something that doesn\u0027t have \"ehv\" in it?",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
