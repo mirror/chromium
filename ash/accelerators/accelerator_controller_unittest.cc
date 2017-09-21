@@ -1266,6 +1266,11 @@ class DeprecatedAcceleratorTester : public AcceleratorControllerTest {
     return nullptr != message_center()->FindVisibleNotificationById(id);
   }
 
+  bool ContainsHighContrastNotification() const {
+    return nullptr != message_center()->FindVisibleNotificationById(
+                          kHighContrastToggleAccelNotificationId);
+  }
+
   bool IsMessageCenterEmpty() const {
     return message_center()->GetVisibleNotifications().empty();
   }
@@ -1346,6 +1351,25 @@ TEST_F(DeprecatedAcceleratorTester, TestNewAccelerators) {
     // screen before we proceed testing the rest of accelerators.
     ResetStateIfNeeded();
   }
+
+  RemoveAllNotifications();
+}
+
+TEST_F(DeprecatedAcceleratorTester, TestToggleHighContrast) {
+  ui::Accelerator accelerator(ui::VKEY_H,
+                              ui::EF_COMMAND_DOWN | ui::EF_CONTROL_DOWN);
+  // High Contrast Mode Enabled notification should be shown.
+  EXPECT_TRUE(ProcessInController(accelerator));
+  EXPECT_TRUE(ContainsHighContrastNotification());
+
+  // High Contrast Mode Enabled notification should be hidden as the feature is
+  // disabled.
+  EXPECT_TRUE(ProcessInController(accelerator));
+  EXPECT_FALSE(ContainsHighContrastNotification());
+
+  // It should be shown again when toggled.
+  EXPECT_TRUE(ProcessInController(accelerator));
+  EXPECT_TRUE(ContainsHighContrastNotification());
 
   RemoveAllNotifications();
 }
