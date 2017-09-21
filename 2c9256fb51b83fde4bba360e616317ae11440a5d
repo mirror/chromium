@@ -46,6 +46,30 @@
       "revId": "2c9256fb51b83fde4bba360e616317ae11440a5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbac70c_0358b2d1",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-21T22:03:13Z",
+      "side": 1,
+      "message": "It simply does not have \"check-fuzzer\" target as well as \"check-all\" or anything with \"check\" or \"test\" in its name. I\u0027ve CC\u0027ed you on the email thread about that.\n\nGiven that we haven\u0027t been running all the other compiler-rt tests separately, that doesn\u0027t seem to be a blocker though.",
+      "parentUuid": "51ce6f8f_64372549",
+      "range": {
+        "startLine": 691,
+        "startChar": 26,
+        "endLine": 691,
+        "endChar": 38
+      },
+      "revId": "2c9256fb51b83fde4bba360e616317ae11440a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
