@@ -46,6 +46,7 @@ void NavigationHandleObserver::DidFinishNavigation(
   DCHECK_EQ(frame_tree_node_id_, navigation_handle->GetFrameTreeNodeId());
 
   was_redirected_ = navigation_handle->WasServerRedirect();
+  has_user_gesture_ = navigation_handle->HasUserGesture();
   net_error_code_ = navigation_handle->GetNetErrorCode();
 
   if (navigation_handle->HasCommitted()) {

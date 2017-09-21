@@ -27,6 +27,7 @@ class NavigationHandleObserver : public WebContentsObserver {
   bool is_renderer_initiated() { return is_renderer_initiated_; }
   bool is_same_document() { return is_same_document_; }
   bool was_redirected() { return was_redirected_; }
+  bool has_user_gesture() { return has_user_gesture_; }
   int frame_tree_node_id() { return frame_tree_node_id_; }
   const GURL& last_committed_url() { return last_committed_url_; }
   ui::PageTransition page_transition() { return page_transition_; }
@@ -44,6 +45,7 @@ class NavigationHandleObserver : public WebContentsObserver {
   bool is_renderer_initiated_ = true;
   bool is_same_document_ = false;
   bool was_redirected_ = false;
+  bool has_user_gesture_ = false;
   int frame_tree_node_id_ = -1;
   ui::PageTransition page_transition_ = ui::PAGE_TRANSITION_LINK;
   GURL expected_start_url_;
