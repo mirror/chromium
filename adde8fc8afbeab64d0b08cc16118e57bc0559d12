@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "c2f0cbf1_5f3cba4c",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T19:11:22Z",
+      "side": 1,
+      "message": "Nit: A function should return the same type from all its codepaths. Currently this returns either nothing (undefined), or a Promise.\n\nDo you need to return the promise below? It seems that this function does all the work Perhaps the following would make the code cleaner.\n\n - Rename this method name s/getPreviesEnabled/updatePreviewStatus.\n - Delete the \"return\" keyword from line 18 (nobody seems to use that promise).\n\nOr alternatively just return Promise.resolve() here.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1cb244_c3959dd4",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -133,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "8b956481_eb481f46",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T19:11:22Z",
+      "side": 1,
+      "message": "Tried your patch locally. The finishJob approach is not necessary. See comment below.",
+      "parentUuid": "81e6f681_8de490d8",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93ac5d7e_57355c47",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
@@ -144,6 +179,23 @@
       "writtenOn": "2017-09-21T18:39:54Z",
       "side": 1,
       "message": "nit: s/setup/Setup/ and s/behavior/behavior./",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e0c587_17fc7d81",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T19:11:22Z",
+      "side": 1,
+      "message": "You need to yield to the prod code to continue here, so that it has a chance to make progress. Essentially, you want to add yourself to the end of the callback chain of getPreviewsEnabled() returned Promise. Current code adds the assertion function (line 91 below) at the start of the chain, since prod code has not made progress yet.\n\nAchieved by waiting for\nsetupFnResolver.promise.then(...), see full patch at https://pastebin.com/3CVDeEWB.",
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
