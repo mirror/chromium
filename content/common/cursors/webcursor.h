@@ -57,7 +57,7 @@ class CONTENT_EXPORT WebCursor {
 
   // Serialization / De-serialization
   bool Deserialize(base::PickleIterator* iter);
-  bool Serialize(base::Pickle* pickle) const;
+  void Serialize(base::Pickle* pickle) const;
 
   // Returns true if GetCustomCursor should be used to allocate a platform
   // specific cursor object.  Otherwise GetCursor should be used.
@@ -104,7 +104,7 @@ class CONTENT_EXPORT WebCursor {
   void InitPlatformData();
 
   // Platform specific Serialization / De-serialization
-  bool SerializePlatformData(base::Pickle* pickle) const;
+  void SerializePlatformData(base::Pickle* pickle) const;
   bool DeserializePlatformData(base::PickleIterator* iter);
 
   // Returns true if the platform data in the current cursor object

@@ -112,22 +112,20 @@ bool WebCursor::Deserialize(base::PickleIterator* iter) {
   return DeserializePlatformData(iter);
 }
 
-bool WebCursor::Serialize(base::Pickle* pickle) const {
-  if (!pickle->WriteInt(type_) ||
-      !pickle->WriteInt(hotspot_.x()) ||
-      !pickle->WriteInt(hotspot_.y()) ||
-      !pickle->WriteInt(custom_size_.width()) ||
-      !pickle->WriteInt(custom_size_.height()) ||
-      !pickle->WriteFloat(custom_scale_))
-    return false;
+void WebCursor::Serialize(base::Pickle* pickle) const {
+  pickle->WriteInt(type_);
+  pickle->WriteInt(hotspot_.x());
+  pickle->WriteInt(hotspot_.y());
+  pickle->WriteInt(custom_size_.width());
+  pickle->WriteInt(custom_size_.height());
+  pickle->WriteFloat(custom_scale_);
 
   const char* data = NULL;
   if (!custom_data_.empty())
     data = &custom_data_[0];
-  if (!pickle->WriteData(data, custom_data_.size()))
-    return false;
+  pickle->WriteData(data, custom_data_.size());
 
-  return SerializePlatformData(pickle);
+  SerializePlatformData(pickle);
 }
 
 bool WebCursor::IsCustom() const {

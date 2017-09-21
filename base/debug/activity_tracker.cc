@@ -1132,12 +1132,8 @@ bool GlobalActivityTracker::ModuleInfoRecord::EncodeFrom(
     const GlobalActivityTracker::ModuleInfo& info,
     size_t record_size) {
   Pickle pickler;
-  bool okay =
-      pickler.WriteString(info.file) && pickler.WriteString(info.debug_file);
-  if (!okay) {
-    NOTREACHED();
-    return false;
-  }
+  pickler.WriteString(info.file);
+  pickler.WriteString(info.debug_file);
   if (offsetof(ModuleInfoRecord, pickle) + pickler.size() > record_size) {
     NOTREACHED();
     return false;
