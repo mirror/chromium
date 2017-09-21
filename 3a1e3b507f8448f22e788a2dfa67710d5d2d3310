@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae40d5b_5382f92e",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-21T16:37:18Z",
+      "side": 1,
+      "message": "Since you know the size of the vector in advance, it might be nice to do right before this for loop:\n  urls-\u003ereserve(url_ids.size());",
+      "range": {
+        "startLine": 986,
+        "startChar": 18,
+        "endLine": 986,
+        "endChar": 19
+      },
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a291e3_52cacced",
+        "filename": "components/history/core/browser/url_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-21T16:37:18Z",
+      "side": 1,
+      "message": "I don\u0027t see std::vector being used in this file.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f05041_6597fd84",
+        "filename": "components/history/core/browser/url_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-21T16:37:18Z",
+      "side": 1,
+      "message": "I would just type std::vector\u003cURLID\u003e everywhere instead of defining this. It\u0027s only trivially longer and it\u0027s more obvious what it means. (You were probably copying URLRows but I think that typedef was probably a bad idea.)",
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9676e32_fa03f973",
+        "filename": "components/history/core/browser/visit_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-21T16:37:18Z",
+      "side": 1,
+      "message": "Is this function actually called much? I\u0027m guessing we can avoid caching the parsing of it and just call GetUniqueStatement. If it is actually called a lot, we may want to be careful since this sql statement is a brute-force search through the whole database.",
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
