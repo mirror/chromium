@@ -22,6 +22,30 @@
       "revId": "e5f9ed4a52409170c59fc4a3961bb881913515cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02dff7a_c538ffc2",
+        "filename": "media/mojo/interfaces/media_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T21:51:52Z",
+      "side": 1,
+      "message": "It\u0027s the browser process, see MediaInterfaceProxy. The path is stored in the browser process in CdmRegistry.\n\nThe renderer process will only get a InterfaceFactoryPtr created by CreateInterfaceFactory() below. The renderer process don\u0027t even know that the CDM is backed by a library, let alone the path to it.",
+      "parentUuid": "aa6ed522_fc0d3f9b",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "e5f9ed4a52409170c59fc4a3961bb881913515cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
