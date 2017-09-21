@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ac8b0a_62c846f3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-21T21:09:58Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t want this to be \u003e\u003d1 instead? I thought the plan was to require this to have happened once?",
+      "range": {
+        "startLine": 1351,
+        "startChar": 118,
+        "endLine": 1351,
+        "endChar": 121
+      },
+      "revId": "c0b00be60d8412aea3a781236daad12d1dae6f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fece59f4_7b9cd8ce",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-21T21:09:58Z",
+      "side": 1,
+      "message": "Same here... \u003e\u003d1 ? or \u003e0 ?",
+      "range": {
+        "startLine": 1892,
+        "startChar": 100,
+        "endLine": 1892,
+        "endChar": 103
+      },
+      "revId": "c0b00be60d8412aea3a781236daad12d1dae6f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
