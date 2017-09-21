@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "0df6c5b4_eb81e831",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-21T16:31:57Z",
+      "side": 1,
+      "message": "We already have the \u0027sandbox\u0027 namespace in the windows sandbox. I think this could get confusing. Should one of them be renamed?",
+      "range": {
+        "startLine": 2801,
+        "startChar": 9,
+        "endLine": 2801,
+        "endChar": 16
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038f4abc_b82c2e96",
         "filename": "content/BUILD.gn",
         "patchSetId": 18
