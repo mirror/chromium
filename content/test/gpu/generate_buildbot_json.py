@@ -931,7 +931,7 @@ V8_FYI_WATERFALL = {
         "ppapi_unittests",
         "printing_unittests",
         "remoting_unittests",
-        "sandbox_linux_unittests",
+        "sandbox_unittests",
         "skia_unittests",
         "sql_unittests",
         "storage_unittests",

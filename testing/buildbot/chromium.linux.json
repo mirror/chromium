@@ -1182,7 +1182,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -1213,7 +1213,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -2741,7 +2741,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -2772,7 +2772,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -3290,7 +3290,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -3480,7 +3480,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -4019,7 +4019,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -4707,7 +4707,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -5122,7 +5122,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
