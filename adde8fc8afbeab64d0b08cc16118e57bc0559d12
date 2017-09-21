@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd0e90ab_7661e734",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93fa3b83_2701c1fe",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e1aa4ee_d3c7bbff",
         "filename": "chrome/browser/resources/interventions_internals/index.html",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54e532a_479477d7",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. Done.",
+      "parentUuid": "6e1aa4ee_d3c7bbff",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "4013df31_1a560a7a",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Thanks. I am not yet familiar with handling js promises :)",
+      "parentUuid": "c2f0cbf1_5f3cba4c",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1cb244_c3959dd4",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9c8ac9_06eb1386",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df1cb244_c3959dd4",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4d59acdb_de976572",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6bfb291_800c7037",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "083d3956_1dddc4b6",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "ad8c71ab_0f419259",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "083d3956_1dddc4b6",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a0d5a2_00ad3634",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -130,6 +250,24 @@
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0e2eca_3ab972c9",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Yeah, I think this approach is cleaner. Thanks!",
+      "parentUuid": "19a0d5a2_00ad3634",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "8f480101_11555a84",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b956481_eb481f46",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93ac5d7e_57355c47",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
@@ -185,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "2ef1fa7e_a26f57da",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ac5d7e_57355c47",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e0c587_17fc7d81",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
@@ -196,6 +370,24 @@
       "writtenOn": "2017-09-21T19:11:22Z",
       "side": 1,
       "message": "You need to yield to the prod code to continue here, so that it has a chance to make progress. Essentially, you want to add yourself to the end of the callback chain of getPreviewsEnabled() returned Promise. Current code adds the assertion function (line 91 below) at the start of the chain, since prod code has not made progress yet.\n\nAchieved by waiting for\nsetupFnResolver.promise.then(...), see full patch at https://pastebin.com/3CVDeEWB.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1059ade_7ea600e8",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. It does work in this case.\n\nI have a small question. After setupResolver.resolver(), what guarantees that the code in prod:\n   ...\n   interventions_internals.getPreviewsEnabled();\nis finished before the code in the test:\n   return window.testPageHandler.whenCalled(\u0027getPreviewsEnabled\u0027);\n\nIt seems like this is based on how the chaining of promises, because if we add another promise in the index.js like:\n  pageHandler_.getPreviewsEnabled()\n      .then(function() { return Promise.resolve(); }\n      .then(\n         let message \u003d ...\nthe test would fail.\n\nI am not sure how promise chains works, but if we have the setupFnComplete, it guarantees that the test is ran at after the prod\u0027s method is finished regardless of the implementation of promises chain.",
+      "parentUuid": "a5e0c587_17fc7d81",
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "075bf0ad_f67c0382",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcadcbbb_6a5795e1",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89943b32_e669ca84",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
@@ -233,6 +443,24 @@
       "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d374dcd_d26a8afd",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T20:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89943b32_e669ca84",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
