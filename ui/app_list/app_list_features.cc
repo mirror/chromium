@@ -24,8 +24,8 @@ const base::Feature kEnableAppListMaskLayer{"EnableAppListMaskLayer",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
 bool IsAnswerCardEnabled() {
-  static const bool enabled = base::FeatureList::IsEnabled(kEnableAnswerCard);
-  return enabled;
+  // Not using local static variable to allow tests to change this value.
+  return base::FeatureList::IsEnabled(kEnableAnswerCard);
 }
 
 bool IsAnswerCardDarkRunEnabled() {
