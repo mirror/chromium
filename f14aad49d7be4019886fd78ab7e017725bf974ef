@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "394606b9_7129dc1b",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T20:22:56Z",
+      "side": 1,
+      "message": "I was thinking about avoiding copying, but it seems that it doesn\u0027t matter for enum.\nI\u0027ll get rid of it to keep it simple.",
+      "parentUuid": "e98d86cb_8bc6583f",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb86ee1_f3074303",
         "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3f2c1c02_a51134c0",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T20:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb86ee1_f3074303",
+      "range": {
+        "startLine": 352,
+        "startChar": 29,
+        "endLine": 352,
+        "endChar": 57
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981feea9_edeaa27a",
         "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-21T19:49:41Z",
       "side": 1,
       "message": "Will it work if you remove this check?\nIf not, in which circumstances?",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 34
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0df9d7_f49db07d",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T20:22:56Z",
+      "side": 1,
+      "message": "It\u0027ll break as before.\n\nTL;DR: when AnswerCard is enabled, we should put a result there so that three containers have different relevance values, to make the their orders predictable. Otherwise some following selected index checks will fail.\n\n---------------------------------\nHere\u0027s what will happen if we remove this check and AnswerCard is enabled.\n\n(1) The |SetUpSearchResults| below will prepare these 2 kinds of results with descending relevance values, i.e. |DISPLAY_TILE| will have relevance 1, |DISPLAY_LIST| will have relevance 0.\n\n(2) SearchResultPageView now has three containers, for |DISPLAY_CARD|, |DISPLAY_TILE|, and |DISPLAY_LIST|, although there\u0027s no result of |DISPLAY_CARD| type.\n (See https://cs.chromium.org/chromium/src/ui/app_list/views/contents_view.cc?q\u003dcontents_view.cc\u0026sq\u003dpackage:chromium\u0026l\u003d90)\n\n(3) When results are ready, we will finally arrive at |SearchResultPageView::OnSearchResultContainerResultsChanged| and it sorts the three containers by their relevance values. (See https://cs.chromium.org/chromium/src/ui/app_list/views/search_result_page_view.cc?q\u003dsearch_result_page\u0026sq\u003dpackage:chromium\u0026l\u003d329)\n\n(4) As mentioned in (1), now the |DISPLAY_TILE| container has relevance 1, the |DISPLAY_LIST| has relevance 0. Because the |DISPLAY_CARD| container is empty, it has relevance 0 (See https://cs.chromium.org/chromium/src/ui/app_list/views/search_result_answer_card_view.cc?sq\u003dpackage:chromium\u0026l\u003d166)\n\n(5) So while in the sorting mentioned in (3), |DISPLAY_CARD| container will interfere the other two although it\u0027s empty. And it has a same relevance as the |DISPLAY_LIST| container, we cannot predict the order of them. Sometimes the empty |DISPLAY_CARD| container stills the focus from |DISPLAY_LIST|. And then the following selected (focused) index checks failed.",
+      "parentUuid": "981feea9_edeaa27a",
       "range": {
         "startLine": 357,
         "startChar": 4,
