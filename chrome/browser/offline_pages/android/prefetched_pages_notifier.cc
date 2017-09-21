@@ -19,4 +19,9 @@ void ShowPrefetchedContentNotification(const GURL& page_url) {
       env, base::android::ConvertUTF8ToJavaString(env, page_url.host()));
 }
 
+void OnPageAddedForPrefetchedContentNotification() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_PrefetchedPagesNotifier_onPageAdded(env);
+}
+
 }  // namespace offline_pages

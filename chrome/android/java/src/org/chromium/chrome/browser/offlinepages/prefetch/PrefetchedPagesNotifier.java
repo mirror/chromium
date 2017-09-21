@@ -119,6 +119,14 @@ public class PrefetchedPagesNotifier {
                 ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
     }
 
+    /**
+     * Called when new page has been added.
+     */
+    @CalledByNative
+    private static void onPageAdded() {
+        PrefetchPrefs.setHasNewPages(true);
+    }
+
     private static PendingIntent getPendingBroadcastFor(Context context, Class clazz) {
         return PendingIntent.getBroadcast(
                 context, 0 /* requestCode */, new Intent(context, clazz), 0 /* flags */);

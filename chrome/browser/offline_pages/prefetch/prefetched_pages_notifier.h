@@ -13,6 +13,10 @@ namespace offline_pages {
 // |origin|'s host, and that when clicked opens Chrome's download manager.
 void ShowPrefetchedContentNotification(const GURL& origin);
 
+// Notifies that new page has been added. A notification might be shown to
+// inform the user of offline content available.
+void OnPageAddedForPrefetchedContentNotification();
+
 }  // namespace offline_pages
 
 #endif  // CHROME_BROWSER_OFFLINE_PAGES_PREFETCH_PREFETCHED_PAGES_NOTIFIER_H_
