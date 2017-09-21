@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a4c81fe2_5479d7fc",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T15:55:03Z",
+      "side": 1,
+      "message": "Yes the rest of the members either have default initializer or are initialized in the initialization list of the class. In any case, POD members such as raw pointers, bools or ints must be initialized.",
+      "parentUuid": "3999278b_7318cb6b",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1317e750_c6cd48ed",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 26

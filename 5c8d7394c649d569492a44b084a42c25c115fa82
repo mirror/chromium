@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eee03c1a_d8ccd35c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T15:55:03Z",
+      "side": 1,
+      "message": "Move the comment inside the if clause.",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2883fcfa_f6b12848",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T15:55:03Z",
+      "side": 1,
+      "message": "You should also update the error code on the NavigationHandle here.",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4d6328_0aab30f9",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T15:55:03Z",
+      "side": 1,
+      "message": "If the net error is net::ERR_ABORTED, you need to reset the NavigationRequest here. Otherwise the load won\u0027t stop. Also shouldn\u0027t we check the ThrottleCheckResult action as well?",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
