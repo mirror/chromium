@@ -19,6 +19,7 @@
 #include "content/public/browser/devtools_manager_delegate.h"
 #include "net/base/host_port_pair.h"
 
+class BrowserHandler;
 class PageHandler;
 
 class ChromeDevToolsManagerDelegate :
@@ -63,23 +64,10 @@ class ChromeDevToolsManagerDelegate :
       int command_id,
       base::DictionaryValue* params);
 
-  std::unique_ptr<base::DictionaryValue> HandleBrowserCommand(
-      int id,
-      std::string method,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> GetWindowForTarget(
-      int id,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> GetWindowBounds(
-      int id,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> SetWindowBounds(
-      int id,
-      base::DictionaryValue* params);
-
   std::map<content::DevToolsAgentHost*, std::unique_ptr<HostData>> host_data_;
 
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
+  std::unique_ptr<BrowserHandler> browser_handler_;
   std::map<content::WebContents*, std::unique_ptr<PageHandler>> page_handlers_;
 
   std::unique_ptr<AndroidDeviceManager> device_manager_;
