@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "3e992e0e_f3ce3e8d",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T15:43:28Z",
+      "side": 1,
+      "message": "But we\u0027re presumably going to have to deal with those warts when opening back up a file we closed due to FD pressure?",
+      "parentUuid": "606ee4ca_423167b2",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93b58f6_32ba50c9",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -206,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "96566af4_926f01d3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T15:43:28Z",
+      "side": 1,
+      "message": "The first option works for me. Though it would make sense to wrap the File* in a std::unique_ptr with a custom deleter that calls Close so you don\u0027t have to remember to do that.",
+      "parentUuid": "e4f5a781_3106afad",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -241,6 +289,30 @@
       "side": 1,
       "message": "So my thought was that this would compute the new doom_generation, and the client would do the renaming.  I am honestly not sure why I chose that, though it does have an advantage of being a lot easier to unit test like that (the new ID choice is surprisingly annoying in the hopefully-never-happening cases of wraparound)",
       "parentUuid": "162d6148_bacaf69b",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 55
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce6e4c0_6a27fc6c",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-21T15:43:28Z",
+      "side": 1,
+      "message": "Let\u0027s add Doom() in the CL where something actually calls it?",
+      "parentUuid": "f9b91ba6_c22b1b5b",
       "range": {
         "startLine": 76,
         "startChar": 0,
