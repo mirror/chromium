@@ -94,6 +94,30 @@
       "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6e84ea_162717cf",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T10:18:43Z",
+      "side": 1,
+      "message": "ChromeHome.Processor is available to junit tests, but needs another mechanism for updating features flags. I\u0027ll send a proposal when the base CL lands.",
+      "parentUuid": "f976c58a_6a9bc970",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
