@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "986dd9c3_b03550dc",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "IsVisible() reimplements this, so that can be used here.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "913df6a4_19f445e8",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
         "patchSetId": 32
@@ -35,6 +58,122 @@
         "startChar": 17,
         "endLine": 46,
         "endChar": 21
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b52d4d_4a72fccc",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "More importantly, use std::make_unique\nhttp://crbug.com/755727",
+      "parentUuid": "913df6a4_19f445e8",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591c3cd1_c8e62af5",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "Optional:\n\nYou could switch this to\nif (animated)\n  ...\n  return;\n\nAnd then readers don\u0027t have to reason about the negation.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fab9066_1260fd65",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "Nit: Consistency - No braces for one line statements in the \"if\".",
+      "range": {
+        "startLine": 110,
+        "startChar": 41,
+        "endLine": 110,
+        "endChar": 43
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7720c13_6dc1d392",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "Nit: Either this should be control_view() or the instance variable should be |fullscreen_control_view_|.",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b407f9d7_02d2f81e",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "Nit: const goes at the beginning for std::unique_ptrs.",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 39
       },
       "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -70,6 +209,29 @@
       "writtenOn": "2017-09-20T01:17:53Z",
       "side": 1,
       "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ba8e91_64b65a3c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T05:08:44Z",
+      "side": 1,
+      "message": "Nit: You can declare these inline to the definition above.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 42
+      },
       "revId": "d5845e042418ec3158b90d91cfff3087b3312276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
