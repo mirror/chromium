@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7f2f9dc_51b2c679",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "Please initialize these in the member initializer list.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35559c6_4827272e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "Assuming you\u0027d address my comments at L161, you don\u0027t need these as dtor for members should run.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd95f42_d88d57a9",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "Nice comment :-).",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e16b113_55d2b696",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "nit/optional: To explicitly say this is setting current screen;\n\nwizard_controller_-\u003eSetCurrentScreenForTesting(\n   first_screen \u003d\u003d SCREEN_ARC_TERMS_OF_SERVICE\n       ? arc_tos_screen_.get()\n       : nullptr);\n\nmaybe?\n\nAt least, please remove .get() for wizard_controller_, which is just redundant.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5768bc61_a3b159fd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "Please declare in the order of initialization.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa5568a_d635823f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "nit s/Arc/ARC/.",
+      "range": {
+        "startLine": 871,
+        "startChar": 70,
+        "endLine": 871,
+        "endChar": 73
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef998ad8_ee5d4949",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "So, this switching should happen after user login, right?\nIf so, please move this to L919.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55610fd4_e8e9a2b6",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T04:27:51Z",
+      "side": 1,
+      "message": "Now, I don\u0027t think you need this copy. Instead, please consider to use\n\nWizardController(nullptr /* host */, nullptr /* oobe_ui */);\n\nin test code.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
