@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e0f500_9fc9ffa5",
+        "filename": "chrome/test/data/webui/cr_elements/cr_drawer_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:46:36Z",
+      "side": 1,
+      "message": "Nit (optional): Can we not mix let/var in the same file? Let\u0027s go with let everywhere.",
+      "revId": "ced6648f9307663ae85be5cdeed90c51e7936957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
