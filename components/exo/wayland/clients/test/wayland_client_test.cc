@@ -7,6 +7,7 @@
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/shell/toplevel_window.h"
 #include "ash/test/ash_test_environment.h"
 #include "ash/test/ash_test_helper.h"
 #include "ash/test/ash_test_views_delegate.h"
@@ -17,6 +18,7 @@
 #include "components/exo/file_helper.h"
 #include "components/exo/wayland/server.h"
 #include "components/exo/wm_helper_ash.h"
+#include "ui/aura/env.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/events/gesture_detection/gesture_configuration.h"
 #include "ui/wm/core/cursor_manager.h"
@@ -99,16 +101,42 @@ void WaylandClientTest::TearDown() {
   event.Wait();
 }
 
+void WaylandClientTest::OnWindowInitialized(aura::Window* window) {}
+
+void WaylandClientTest::OnHostInitialized(aura::WindowTreeHost* host) {
+  // AshTestBase outlives all the WindowTreeHosts. So RemoveObserver() is not
+  // necessary.
+  host->AddObserver(this);
+  OnHostResized(host);
+}
+
+void WaylandClientTest::OnHostResized(aura::WindowTreeHost* host) {
+  // The local surface id comes from the window server. However, there is no
+  // window server in tests. So a fake id is assigned so that the layer
+  // compositor can submit compositor frames.
+  viz::LocalSurfaceId id(1, base::UnguessableToken::Create());
+  host->compositor()->SetLocalSurfaceId(id);
+}
+
 void WaylandClientTest::SetUpOnUIThread(base::WaitableEvent* event) {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   // Disable window animation when running tests.
   command_line->AppendSwitch(wm::switches::kWindowAnimationsDisabled);
 
+  if (ash::AshTestHelper::config() != ash::Config::CLASSIC) {
+    CHECK(aura::Env::GetInstance());
+    aura::Env::GetInstance()->AddObserver(this);
+  }
+
   ash_test_environment_ = std::make_unique<AshTestEnvironmentWayland>();
   ash_test_helper_ =
       std::make_unique<ash::AshTestHelper>(ash_test_environment_.get());
 
-  ash_test_helper_->SetUp(false /* start_session */,
+  // Clears the saved state so that test doesn't use on the wrong
+  // default state.
+  ash::shell::ToplevelWindow::ClearSavedStateForTest();
+
+  ash_test_helper_->SetUp(true /* start_session */,
                           true /* provide_local_state */);
   ash::Shell::GetPrimaryRootWindow()->Show();
   ash::Shell::GetPrimaryRootWindow()->GetHost()->Show();
@@ -146,6 +174,9 @@ void WaylandClientTest::TearDownOnUIThread(base::WaitableEvent* event) {
   ash_test_helper_->TearDown();
   ash_test_helper_ = nullptr;
   ash_test_environment_ = nullptr;
+
+  if (ash::AshTestHelper::config() != ash::Config::CLASSIC)
+    aura::Env::GetInstance()->RemoveObserver(this);
   event->Signal();
 }
 

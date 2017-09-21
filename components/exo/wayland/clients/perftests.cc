@@ -22,7 +22,9 @@ TEST_F(WaylandClientPerfTests, Simple) {
   exo::wayland::clients::Simple client;
   EXPECT_TRUE(client.Init(params));
 
+  fprintf(stderr, "EEE WaylandClientPerfTests::Simple %d\n", __LINE__);
   client.Run(kWarmUpFrames);
+  fprintf(stderr, "EEE WaylandClientPerfTests::Simple %d\n", __LINE__);
 
   auto start_time = base::Time::Now();
   client.Run(kTestFrames);

@@ -7,6 +7,8 @@
 
 #include "base/macros.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/aura/env_observer.h"
+#include "ui/aura/window_tree_host_observer.h"
 
 namespace ash {
 class AshTestEnvironment;
@@ -26,7 +28,9 @@ class Server;
 class Display;
 class WMHelper;
 
-class WaylandClientTest : public testing::Test {
+class WaylandClientTest : public testing::Test,
+                          public aura::EnvObserver,
+                          public aura::WindowTreeHostObserver {
  public:
   WaylandClientTest();
   ~WaylandClientTest() override;
@@ -37,6 +41,13 @@ class WaylandClientTest : public testing::Test {
   // Overridden from AshTestBase:
   void SetUp() override;
   void TearDown() override;
+
+  // Overridden from aura::EnvObserver:
+  void OnWindowInitialized(aura::Window* window) override;
+  void OnHostInitialized(aura::WindowTreeHost* host) override;
+
+  // Overridden from aura::WindowTreeHostObserver:
+  void OnHostResized(aura::WindowTreeHost* host) override;
 
  private:
   class WaylandWatcher;

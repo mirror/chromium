@@ -31,6 +31,8 @@ void Simple::Run(int frames) {
   wl_callback_listener frame_listener = {FrameCallback};
   int frame_count = 0;
   do {
+    fprintf(stderr, "EEE Simple::Run %d pending=%d\n", __LINE__,
+            callback_pending);
     if (callback_pending)
       continue;
 
@@ -57,6 +59,8 @@ void Simple::Run(int frames) {
     frame_callback.reset(wl_surface_frame(surface_.get()));
     wl_callback_add_listener(frame_callback.get(), &frame_listener,
                              &callback_pending);
+
+    fprintf(stderr, "EEE Simple::Run %d\n", __LINE__);
     wl_surface_commit(surface_.get());
     wl_display_flush(display_.get());
   } while (wl_display_dispatch(display_.get()) != -1);
