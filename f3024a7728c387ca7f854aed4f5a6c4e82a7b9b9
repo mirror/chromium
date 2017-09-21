@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2983ea02_7b13378b",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "This could be an early out continue to avoid indenting the rest of this entire block.",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55deb365_1b4dc4a1",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "wdyt about having a RecordingImageProvider that has-a or is-a PlaybackImageProvider that behaves like the stash, in that every decoded image you ask for gets recorded and stored.  Then you don\u0027t need to plumb the stash around everywhere, and none of the raster code needs to know about anything more than image provider?",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df450f0_94223733",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "Are you using this after moving it?",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e6dd2e_d94bf0df",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "It would be nice to have some tests for this scale logic.\n\nCould you add some pixel tests or unit tests?\n\nMaybe also add a comment that this is replicating SkPictureShader::refBitmapShader?",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d67b5f_484df693",
+        "filename": "cc/paint/scoped_image_flags.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "\u003c_\u003c",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7c854e_03c5f4ed",
+        "filename": "cc/paint/scoped_image_flags.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-21T20:43:47Z",
+      "side": 1,
+      "message": "I think this needs a comment that this is only valid for flags that have discardable images?\n\nOr, alternatively, I think it\u0027d be less of a sharp corner to allow any paint flags to use this, and just have decoded_flags be null if there aren\u0027t images or images failed to decode?",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
