@@ -1170,7 +1170,7 @@
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -1509,7 +1509,7 @@
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -2153,7 +2153,7 @@
           ],
           "expiration": 14400
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -3295,7 +3295,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -3937,7 +3937,7 @@
         "swarming": {
           "can_use_on_swarming_builders": false
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -4359,7 +4359,7 @@
         "swarming": {
           "can_use_on_swarming_builders": false
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -5250,7 +5250,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -6062,7 +6062,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
