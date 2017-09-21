@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7fcf9a_27774f29",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-21T17:14:40Z",
+      "side": 1,
+      "message": "Prefer to write:\n\nauto image \u003d base::MakeRefCounted\u003cgl::GLImageDXGIHandle(...);",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16a801c_e0d3bb34",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-21T17:14:40Z",
+      "side": 1,
+      "message": "all_configs",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 36
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
