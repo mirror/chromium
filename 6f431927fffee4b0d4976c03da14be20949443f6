@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "387e29a0_40e783e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-21T21:58:15Z",
+      "side": 1,
+      "message": "You don\u0027t have to mess with it - you just need to convert insertion offsets to selection better using TextIterator. This comment is as far as IMG is concerned though, as it takes up one character space (note that it produces an invisible unicode character, not a space). In the case where markup does not take up a character at the border, however, there is no way to tell whether the markup should be included in the selection or not. You shouldn\u0027t pass around text offsets in the first place and that would require a complete design overhaul.",
+      "parentUuid": "a9ba60c4_cd3b60f5",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
