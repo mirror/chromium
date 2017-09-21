@@ -72,8 +72,6 @@ void BufferedSpdyFramer::OnHeaders(SpdyStreamId stream_id,
     control_frame_fields_->exclusive = exclusive;
   }
   control_frame_fields_->fin = fin;
-
-  DCHECK_NE(stream_id, SpdyFramer::kInvalidStream);
 }
 
 void BufferedSpdyFramer::OnDataFrameHeader(SpdyStreamId stream_id,
@@ -196,8 +194,6 @@ void BufferedSpdyFramer::OnPushPromise(SpdyStreamId stream_id,
   control_frame_fields_->type = SpdyFrameType::PUSH_PROMISE;
   control_frame_fields_->stream_id = stream_id;
   control_frame_fields_->promised_stream_id = promised_stream_id;
-
-  DCHECK_NE(stream_id, SpdyFramer::kInvalidStream);
 }
 
 void BufferedSpdyFramer::OnAltSvc(
@@ -312,7 +308,7 @@ std::unique_ptr<SpdySerializedFrame> BufferedSpdyFramer::CreatePriority(
 }
 
 SpdyPriority BufferedSpdyFramer::GetHighestPriority() const {
-  return spdy_framer_.GetHighestPriority();
+  return kV3HighestPriority;
 }
 
 size_t BufferedSpdyFramer::EstimateMemoryUsage() const {
