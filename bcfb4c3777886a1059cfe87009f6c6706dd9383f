@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "481517c0_9a475069",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2428,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-21T07:23:34Z",
+      "side": 1,
+      "message": "This can be:\nbool delegateFocus \u003d shadow_root_init_dict.hasDelegatesFocus() \u0026\u0026 shadow_root_init_dict.delegatesFocus();",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ca6723b_fb12763f",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -88,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "d6c0140b_c7412ea4",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-21T07:23:34Z",
+      "side": 1,
+      "message": "Yes, now we can remove AddShadowRootInternal().\nAlwaysCreateUserAgentShadowRoot() is only valid for v0. We should move it creteShadowRootInternal().",
+      "parentUuid": "89b232c0_7f4b0fd6",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42af7870_2dd82008",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -167,6 +202,23 @@
       "writtenOn": "2017-09-21T06:54:17Z",
       "side": 1,
       "message": "I prefer to call this function |AttachShadowRoot()|. Though, it is up to hayto@",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e908b6a_6dfd9fa5",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-21T07:23:34Z",
+      "side": 1,
+      "message": "- Don\u0027t omit the parameter name for bool.\n- We usually use just \"bool\", instead of \"const bool\".\n- This can have a default parameter value . eg. bool delegate_focus \u003d false.",
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
