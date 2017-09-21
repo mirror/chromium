@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aaf2bc0_b173a636",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "MarkDocumentDirty() here should not be necessary anymore.",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58d27d6_9e1fad4e",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "Likewise. Perhaps looks better with a MarkUserStyleDirty() method instead of setting a member variable directly?",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67addf20_a1ab8fb0",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "I\u0027d propose using an enum with something like:\n\nkInvalidateCurrentScope\nkInvalidateAllScopes",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ab035e_af9c1e03",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "How would this look like if we used the enum I\u0027ve proposed above (kInvalidateCurrentScope, kInvalidateAllScopes) as an argument instead and use a single method instead to avoid code duplication?",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a736c09_b2925c34",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "Keyframes rules are not allowed for user stylesheets?",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad2c2d2_2d835df9",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "Could we use AddUserSheet/RemoveUserSheet instead?",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4f229e_dcf5b2a8",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "bool with no name is not descriptive",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffe10f0_f570747b",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "If you add user stylesheet dirtiness check here, you can safely remove the MarkDocumentDirty() mentioned in other comments.",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848119b6_e184a19f",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "user_sheets_id_count_",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

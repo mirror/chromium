@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "d5889289_ac0354a3",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure about @keyframes rules. Not supporting @keyframes rules from user sheets in document scopes would be a regression from injected author sheets?",
+      "parentUuid": "62209e80_a61b0fad",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32460fcb_2f1c5c51",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
         "patchSetId": 8
@@ -64,6 +82,24 @@
       "writtenOn": "2017-09-20T13:42:57Z",
       "side": 1,
       "message": "I\u0027m not sure if this check belongs here or what it means for that matter.",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9895f616_7e0e3898",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-21T08:14:25Z",
+      "side": 1,
+      "message": "This should be correct. I think that placeholder style is only used when there are pending author stylesheets, so I think in that case the same code in ApplyRuleSetChanges will be hit when author sheets finishes loading. It might be that it\u0027s unnecessary, but I\u0027d say keep it.",
+      "parentUuid": "32460fcb_2f1c5c51",
       "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
