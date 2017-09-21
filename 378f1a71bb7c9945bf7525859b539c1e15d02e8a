@@ -22,6 +22,30 @@
       "revId": "378f1a71bb7c9945bf7525859b539c1e15d02e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f12762_312b8326",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-21T15:45:54Z",
+      "side": 1,
+      "message": "I thought CANVAS_DIMENSIONS, 16 in the icon file is doing the right thing and establishes the minimum size for the glyph which is then padded with INSETS_VECTOR_IMAGE_BUTTON to get to 24x24 button at 1x and proportionally larger at other scale factors. Am I getting this wrong?",
+      "parentUuid": "3500dd83_a33dafb0",
+      "range": {
+        "startLine": 339,
+        "startChar": 6,
+        "endLine": 339,
+        "endChar": 22
+      },
+      "revId": "378f1a71bb7c9945bf7525859b539c1e15d02e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
