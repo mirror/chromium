@@ -16,6 +16,24 @@
       "revId": "de9d1aa3349414ea715712c8b4c62840d67d5e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c8933a_b2f5148a",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-21T19:34:09Z",
+      "side": 1,
+      "message": "That does make it look cleaner, I changed it now. Thanks for the suggestion.",
+      "parentUuid": "f84d5df0_5dce0f90",
+      "revId": "de9d1aa3349414ea715712c8b4c62840d67d5e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
