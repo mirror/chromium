@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "1934665a_871bc767",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T21:35:03Z",
+      "side": 1,
+      "message": "Ah-oh, Dima, do you know why?\n\nI would go ahead and make https://cs.chromium.org/chromium/src/content/browser/devtools/devtools_agent_host_impl.h?sq\u003dpackage:chromium\u0026l\u003d83 static. There is no point for clients to suffer this way.",
+      "parentUuid": "b5410639_8984da56",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc236b6_8c60a54c",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 11

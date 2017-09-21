@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ed421e_9b6fbccf",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T21:35:03Z",
+      "side": 1,
+      "message": "Do you want to DCHECK the session before the call just in case?",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2646cc71_f92c7b09",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T21:35:03Z",
+      "side": 1,
+      "message": "Let\u0027s make session id unique instead.",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06e4192_0a3b785a",
+        "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T21:35:03Z",
+      "side": 1,
+      "message": "Make your session implement FrontendChannel and pass it into the dispatcher. You need a way to send the response to the client...\n\n@Dima, why is UberDispatcher responsible for sending the response? Looks like a layering issue to me...",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
