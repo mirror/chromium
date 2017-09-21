@@ -124,6 +124,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa2a960_fa8df2e8",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-21T20:48:53Z",
+      "side": 1,
+      "message": "Sure, ping me or schedule a vc anytime :)",
+      "parentUuid": "10d246c5_12989613",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
