@@ -13502,6 +13502,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1193" label="NETWORKINGPRIVATE_SELECTCELLULARMOBILENETWORK"/>
   <int value="1194" label="PASSWORDSPRIVATE_IMPORTPASSWORDS"/>
   <int value="1195" label="PASSWORDSPRIVATE_EXPORTPASSWORDS"/>
+  <int value="1196"
+      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
 </enum>
 
 <enum name="ExtensionIconState">
