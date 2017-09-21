@@ -16,6 +16,24 @@
       "revId": "79ab467af053eec6150365693f440d656fd7b02d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e415dc_db7748b1",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-09-21T13:00:37Z",
+      "side": 1,
+      "message": "Thanks for the information. I free the task now before the return. In addition I modified the tear-down protocol of the isolate. The isolate_data_ in the IsolateHolder is still cleared before the call to Isolate::Disposed, and the isolate_data_ is removed from the isolate, but the data of the isolate_data_ is deleted only after Isolate::Dispose. This means that in CallOnForegroundThread we can still acquire the access_mode() and the task_runner() from the PerIsolateData even when the tear-down process of the isolate has already started.",
+      "parentUuid": "c897da85_4927d5dc",
+      "revId": "79ab467af053eec6150365693f440d656fd7b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
