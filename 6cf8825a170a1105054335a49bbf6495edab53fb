@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "a3c9d6ae_9aa85a82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-21T00:00:27Z",
+      "side": 1,
+      "message": "This actually probably doesn\u0027t get called in this case since these are lazy load tabs.  To keep similar with the TODO above, we should just call finishTabCreation(tab.getId()); here and put the TODO that we need to listen for callbacks from the persistent store that it has been written to disk.",
+      "parentUuid": "c2b344b2_3a7666bf",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 15
+      },
+      "revId": "6cf8825a170a1105054335a49bbf6495edab53fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd8a32c5_b5f9b59b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
         "patchSetId": 4
