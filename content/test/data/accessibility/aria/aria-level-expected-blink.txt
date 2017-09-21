@@ -5,7 +5,7 @@ rootWebArea
 ++heading name='Level 9' hierarchicalLevel=9
 ++++staticText name='Level 9'
 ++++++inlineTextBox name='Level 9'
-++heading name='Level 1' hierarchicalLevel=1
+++heading name='Level 1' hierarchicalLevel=2
 ++++staticText name='Level 1'
 ++++++inlineTextBox name='Level 1'
 ++heading name='Level 3' hierarchicalLevel=3
