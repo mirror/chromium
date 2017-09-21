@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ae239cf_92c0b5ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-09-21T17:54:56Z",
+      "side": 1,
+      "message": "lgtm.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 123
+      },
+      "revId": "d85476002bd3cee17939c55f68b8fb4822da342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5481d8c9_80226b9d",
         "filename": "rules.pl",
         "patchSetId": 4
