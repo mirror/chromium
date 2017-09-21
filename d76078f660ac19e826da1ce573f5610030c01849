@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f59ff357_696454fe",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLaunchingActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-21T15:22:42Z",
+      "side": 1,
+      "message": "Can you change this class into a class with a static method HostBrowserClassLauncher#selectHostBrowserAndLaunch(Activity parentActivity, Bundle launchIntentExtras) {}\n\nI think that making this a static class will make the code slightly clearer\n\nMainActivity can finish itself in the cases that MainActivity#canHandleIntent() returns false in your CL",
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12daf2f0_525ab0ef",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 4
@@ -42,6 +59,23 @@
         "endLine": 48,
         "endChar": 36
       },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026b046a_8f7ecabb",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-21T15:22:42Z",
+      "side": 1,
+      "message": "Can you use WebApkUtils#readMetaDataFromManifest() instead?",
       "revId": "d76078f660ac19e826da1ce573f5610030c01849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
