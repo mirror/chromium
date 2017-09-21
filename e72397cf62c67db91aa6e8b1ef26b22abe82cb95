@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d6d4a7_8dc8413b",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-21T13:18:24Z",
+      "side": 1,
+      "message": "optional: you may use just std::pair (but this is fine too)",
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74723546_ae33842f",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-21T13:18:24Z",
+      "side": 1,
+      "message": "parent_cell\u0026",
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5719b1dd_fed261db",
+        "filename": "ui/display/unified_desktop_utils_unittests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-21T13:18:24Z",
+      "side": 1,
+      "message": "put tests in display namespace. They should have unique name anyway.",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56df80a0_bddb2a3d",
+        "filename": "ui/display/unified_desktop_utils_unittests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-21T13:18:24Z",
+      "side": 1,
+      "message": "nice tests!",
+      "range": {
+        "startLine": 179,
+        "startChar": 1,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
