@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05f13f2d_c556fc38",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "2983ea02_7b13378b",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55deb365_1b4dc4a1",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T20:43:47Z",
       "side": 1,
       "message": "wdyt about having a RecordingImageProvider that has-a or is-a PlaybackImageProvider that behaves like the stash, in that every decoded image you ask for gets recorded and stored.  Then you don\u0027t need to plumb the stash around everywhere, and none of the raster code needs to know about anything more than image provider?",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60094a34_19b1bece",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "That\u0027s an awesome idea. I did not like this plumbing at all. But if we are going to have a follow-up on https://chromium-review.googlesource.com/c/chromium/src/+/673826 coming soon, then I can wait on it. We wouldn\u0027t need this stashing of decodes after that.",
+      "parentUuid": "55deb365_1b4dc4a1",
       "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c8bdd78d_4e6b900e",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "I was. ._.\nFixed.",
+      "parentUuid": "2df450f0_94223733",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78e6dd2e_d94bf0df",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3531161e_f59ad5d9",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "I added a couple of unit-tests, and verified that the resulting bitmap shader that skia uses, and that we make here has the same values.",
+      "parentUuid": "78e6dd2e_d94bf0df",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e06c4a67_2f8e31f9",
+        "filename": "cc/paint/scoped_image_flags.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "Woopsie. Done.",
+      "parentUuid": "39d67b5f_484df693",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7c854e_03c5f4ed",
         "filename": "cc/paint/scoped_image_flags.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a3a3d1_ebb9c5af",
+        "filename": "cc/paint/scoped_image_flags.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T22:27:17Z",
+      "side": 1,
+      "message": "There is a difference in behavior at the places that use it. If the images failed to decode and decoded_flags is null then we skip executing the op but that shouldn\u0027t happen if the flags have no images. So the call-sites will end up having to check if flags have discardable images anyway.\n\nI added a comment about the condition that flags should have discardable images.",
+      "parentUuid": "cc7c854e_03c5f4ed",
+      "revId": "f3024a7728c387ca7f854aed4f5a6c4e82a7b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
