@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988e178a_1d8898da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-21T12:49:31Z",
+      "side": 1,
+      "message": "Can you add something to the commit message justifying the \"created with opener\" changes?",
+      "revId": "31146763d82cbdced33d0f36bd7e9dc78eb2765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17ec928_c3c1f184",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-21T12:49:31Z",
+      "side": 1,
+      "message": "Nit: Why? You\u0027re not otherwise touching this file, so I\u0027d just drop the newline.",
+      "revId": "31146763d82cbdced33d0f36bd7e9dc78eb2765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490d35c0_c18bc753",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-21T12:49:31Z",
+      "side": 1,
+      "message": "Why wasn\u0027t this enough?",
+      "revId": "31146763d82cbdced33d0f36bd7e9dc78eb2765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee735c6_283ee538",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-21T12:49:31Z",
+      "side": 1,
+      "message": "Why \"explicit\" here but not in //content?\n\nWhat does \"created with opener\" mean? Can you add dome detail to the comments?",
+      "revId": "31146763d82cbdced33d0f36bd7e9dc78eb2765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
