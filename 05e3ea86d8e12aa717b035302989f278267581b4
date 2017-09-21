@@ -16,6 +16,24 @@
       "revId": "05e3ea86d8e12aa717b035302989f278267581b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6d5ab7_8c8610c5",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-21T22:29:21Z",
+      "side": 1,
+      "message": "I think it\u0027s okay how you have it. We may not even need this anymore, it may date back to before we had stuff on the CQ.",
+      "parentUuid": "731aef70_e290dac1",
+      "revId": "05e3ea86d8e12aa717b035302989f278267581b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
