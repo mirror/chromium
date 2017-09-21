@@ -45,6 +45,30 @@
       "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150c4325_2d625a1b",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-21T22:22:49Z",
+      "side": 1,
+      "message": "BUG happens when: user presses volume down, ash::PowerButtonController receives key event and update |volume_down_pressed_| there; when user releases volume down, bubble view is still shown, but the |volume_down_pressed_| is still true (the stale state, not updated by key release).\n\nI see RerouteEventHandler is installed when bubble is showing and reset when bubble is closing. So it should be fine in other cases.\n\nWhat do you mean \"Why do we need to special case this, but not menus?\"? If you mean the event-\u003eStopPropagation() in MenuController::OnWillDisptachKeyEvent. I would take a look there.",
+      "parentUuid": "84034c18_ea60638d",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
