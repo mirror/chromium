@@ -5,6 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CELLS_CONTENT_SUGGESTIONS_MOST_VISITED_ITEM_H_
 #define IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CELLS_CONTENT_SUGGESTIONS_MOST_VISITED_ITEM_H_
 
+#include "components/ntp_tiles/tile_name_source.h"
 #include "components/ntp_tiles/tile_source.h"
 #include "components/ntp_tiles/tile_visual_type.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
@@ -23,6 +24,8 @@ class GURL;
 
 // URL of the Most Visited.
 @property(nonatomic, assign) GURL URL;
+// Source of the Most Visited tile's name.
+@property(nonatomic, assign) ntp_tiles::TileNameSource nameSource;
 // Source of the Most Visited tile.
 @property(nonatomic, assign) ntp_tiles::TileSource source;
 // Attributes for favicon.
