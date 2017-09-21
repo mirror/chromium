@@ -48,46 +48,40 @@ const uint8_t kNoFlags = 0;
 // Wire size of pad length field.
 const size_t kPadLengthFieldSize = 1;
 
+// The size of one parameter in SETTINGS frame.
+const size_t kOneSettingParameterSize = 6;
+
+// The maximum size for the payload of DATA frames to send.
+const size_t kMaxDataPayloadSendSize = kSpdyInitialFrameSizeLimit;
+
+size_t GetUncompressedSerializedLength(const SpdyHeaderBlock& headers) {
+  const size_t num_name_value_pairs_size = sizeof(uint32_t);
+  const size_t length_of_name_size = num_name_value_pairs_size;
+  const size_t length_of_value_size = num_name_value_pairs_size;
+
+  size_t total_length = num_name_value_pairs_size;
+  for (const auto& header : headers) {
+    // We add space for the length of the name and the length of the value as
+    // well as the length of the name and the length of the value.
+    total_length += length_of_name_size + header.first.size() +
+                    length_of_value_size + header.second.size();
+  }
+  return total_length;
+}
+
 }  // namespace
 
-const SpdyStreamId SpdyFramer::kInvalidStream = static_cast<SpdyStreamId>(-1);
-const size_t SpdyFramer::kHeaderDataChunkMaxSize = 1024;
 // Even though the length field is 24 bits, we keep this 16 kB
 // limit on control frame size for legacy reasons and to
 // mitigate DOS attacks.
-const size_t SpdyFramer::kMaxControlFrameSize = (1 << 14) - 1;
-const size_t SpdyFramer::kMaxDataPayloadSendSize = 1 << 14;
-// The size of the control frame buffer. Must be >= the minimum size of the
-// largest control frame.
-const size_t SpdyFramer::kControlFrameBufferSize = 19;
-const size_t SpdyFramer::kOneSettingParameterSize = 6;
-
-#ifdef DEBUG_SPDY_STATE_CHANGES
-#define CHANGE_STATE(newstate)                                  \
-  do {                                                          \
-    DVLOG(1) << "Changing state from: "                         \
-             << StateToString(state_)                           \
-             << " to " << StateToString(newstate) << "\n";      \
-    DCHECK(state_ != SPDY_ERROR);                               \
-    DCHECK_EQ(previous_state_, state_);                         \
-    previous_state_ = state_;                                   \
-    state_ = newstate;                                          \
-  } while (false)
-#else
-#define CHANGE_STATE(newstate)                                  \
-  do {                                                          \
-    DCHECK(state_ != SPDY_ERROR);                               \
-    DCHECK_EQ(previous_state_, state_);                         \
-    previous_state_ = state_;                                   \
-    state_ = newstate;                                          \
-  } while (false)
-#endif
+const size_t SpdyFramer::kMaxControlFrameSendSize =
+    kSpdyInitialFrameSizeLimit - 1;
 
 SpdyFramer::SpdyFramer(CompressionOption option)
     : debug_visitor_(nullptr), compression_option_(option) {
   static_assert(
-      kMaxControlFrameSize <= kSpdyInitialFrameSizeLimit + kFrameHeaderSize,
-      "Our send limit should be at most our receive limit");
+      kMaxControlFrameSendSize <= kSpdyInitialFrameSizeLimit + kFrameHeaderSize,
+      "Our send limit should be at most our receive limit.");
 }
 
 SpdyFramer::~SpdyFramer() {}
@@ -103,25 +97,8 @@ size_t SpdyFramer::GetFrameMaximumSize() const {
 
 size_t SpdyFramer::GetDataFrameMaximumPayload() const {
   return std::min(kMaxDataPayloadSendSize,
-                  GetFrameMaximumSize() - kDataFrameMinimumSize);
+                  GetFrameMaximumSize() - send_frame_size_limit_);
 }
-
-size_t SpdyFramer::GetUncompressedSerializedLength(
-    const SpdyHeaderBlock& headers) {
-  const size_t num_name_value_pairs_size = sizeof(uint32_t);
-  const size_t length_of_name_size = num_name_value_pairs_size;
-  const size_t length_of_value_size = num_name_value_pairs_size;
-
-  size_t total_length = num_name_value_pairs_size;
-  for (const auto& header : headers) {
-    // We add space for the length of the name and the length of the value as
-    // well as the length of the name and the length of the value.
-    total_length += length_of_name_size + header.first.size() +
-                    length_of_value_size + header.second.size();
-  }
-  return total_length;
-}
-
 
 SpdyFramer::SpdyFrameIterator::SpdyFrameIterator(SpdyFramer* framer)
     : framer_(framer), is_first_frame_(true), has_next_frame_(true) {}
@@ -139,14 +116,14 @@ size_t SpdyFramer::SpdyFrameIterator::NextFrame(ZeroCopyOutputBuffer* output) {
   const size_t size_without_block =
       is_first_frame_ ? GetFrameSizeSansBlock() : kContinuationFrameMinimumSize;
   auto encoding = SpdyMakeUnique<SpdyString>();
-  encoder_->Next(kMaxControlFrameSize - size_without_block, encoding.get());
+  encoder_->Next(kMaxControlFrameSendSize - size_without_block, encoding.get());
   has_next_frame_ = encoder_->HasNext();
 
   if (framer_->debug_visitor_ != nullptr) {
     const auto& header_block_frame_ir =
         static_cast<const SpdyFrameWithHeaderBlockIR&>(frame_ir);
-    const size_t header_list_size = framer_->GetUncompressedSerializedLength(
-        header_block_frame_ir.header_block());
+    const size_t header_list_size =
+        GetUncompressedSerializedLength(header_block_frame_ir.header_block());
     framer_->debug_visitor_->OnSendCompressedFrame(
         frame_ir.stream_id(),
         is_first_frame_ ? frame_ir.frame_type() : SpdyFrameType::CONTINUATION,
@@ -466,7 +443,7 @@ void SpdyFramer::SerializeHeadersBuilderHelper(const SpdyHeadersIR& headers,
 
   GetHpackEncoder()->EncodeHeaderSet(headers.header_block(), hpack_encoding);
   *size = *size + hpack_encoding->size();
-  if (*size > kMaxControlFrameSize) {
+  if (*size > kMaxControlFrameSendSize) {
     *size = *size + GetNumberRequiredContinuationFrames(*size) *
                         kContinuationFrameMinimumSize;
     *flags = *flags & ~HEADERS_FLAG_END_HEADERS;
@@ -485,7 +462,7 @@ void SpdyFramer::SerializeHeadersBuilderHelper(const SpdyHeadersIR& headers,
   // WritePayloadWithContinuation() will serialize CONTINUATION frames as
   // necessary.
   *length_field =
-      std::min(*length_field, kMaxControlFrameSize - kFrameHeaderSize);
+      std::min(*length_field, kMaxControlFrameSendSize - kFrameHeaderSize);
 }
 
 SpdySerializedFrame SpdyFramer::SerializeHeaders(const SpdyHeadersIR& headers) {
@@ -560,7 +537,7 @@ void SpdyFramer::SerializePushPromiseBuilderHelper(
   GetHpackEncoder()->EncodeHeaderSet(push_promise.header_block(),
                                      hpack_encoding);
   *size = *size + hpack_encoding->size();
-  if (*size > kMaxControlFrameSize) {
+  if (*size > kMaxControlFrameSendSize) {
     *size = *size + GetNumberRequiredContinuationFrames(*size) *
                         kContinuationFrameMinimumSize;
     *flags = *flags & ~PUSH_PROMISE_FLAG_END_PUSH_PROMISE;
@@ -576,7 +553,7 @@ SpdySerializedFrame SpdyFramer::SerializePushPromise(
                                     &size);
 
   SpdyFrameBuilder builder(size);
-  size_t length = std::min(size, kMaxControlFrameSize) - kFrameHeaderSize;
+  size_t length = std::min(size, kMaxControlFrameSendSize) - kFrameHeaderSize;
   builder.BeginNewFrame(*this, SpdyFrameType::PUSH_PROMISE, flags,
                         push_promise.stream_id(), length);
   int padding_payload_len = 0;
@@ -1046,7 +1023,7 @@ bool SpdyFramer::SerializePushPromise(const SpdyPushPromiseIR& push_promise,
 
   bool ok = true;
   SpdyFrameBuilder builder(size, output);
-  size_t length = std::min(size, kMaxControlFrameSize) - kFrameHeaderSize;
+  size_t length = std::min(size, kMaxControlFrameSendSize) - kFrameHeaderSize;
   ok = builder.BeginNewFrame(*this, SpdyFrameType::PUSH_PROMISE, flags,
                              push_promise.stream_id(), length);
 
@@ -1230,9 +1207,9 @@ size_t SpdyFramer::SerializeFrame(const SpdyFrameIR& frame,
 }
 
 size_t SpdyFramer::GetNumberRequiredContinuationFrames(size_t size) {
-  DCHECK_GT(size, kMaxControlFrameSize);
-  size_t overflow = size - kMaxControlFrameSize;
-  int payload_size = kMaxControlFrameSize - kContinuationFrameMinimumSize;
+  DCHECK_GT(size, kMaxControlFrameSendSize);
+  size_t overflow = size - kMaxControlFrameSendSize;
+  int payload_size = kMaxControlFrameSendSize - kContinuationFrameMinimumSize;
   // This is ceiling(overflow/payload_size) using integer arithmetics.
   return (overflow - 1) / payload_size + 1;
 }
@@ -1319,10 +1296,10 @@ bool SpdyFramer::WritePayloadWithContinuation(SpdyFrameBuilder* builder,
   // Write all the padding payload and as much of the data payload as possible
   // into the initial frame.
   size_t bytes_remaining = 0;
-  bytes_remaining =
-      hpack_encoding.size() -
-      std::min(hpack_encoding.size(),
-               kMaxControlFrameSize - builder->length() - padding_payload_len);
+  bytes_remaining = hpack_encoding.size() -
+                    std::min(hpack_encoding.size(), kMaxControlFrameSendSize -
+                                                        builder->length() -
+                                                        padding_payload_len);
   bool ret = builder->WriteBytes(&hpack_encoding[0],
                                  hpack_encoding.size() - bytes_remaining);
   if (padding_payload_len > 0) {
@@ -1332,8 +1309,9 @@ bool SpdyFramer::WritePayloadWithContinuation(SpdyFrameBuilder* builder,
 
   // Tack on CONTINUATION frames for the overflow.
   while (bytes_remaining > 0 && ret) {
-    size_t bytes_to_write = std::min(
-        bytes_remaining, kMaxControlFrameSize - kContinuationFrameMinimumSize);
+    size_t bytes_to_write =
+        std::min(bytes_remaining,
+                 kMaxControlFrameSendSize - kContinuationFrameMinimumSize);
     // Write CONTINUATION frame prefix.
     if (bytes_remaining == bytes_to_write) {
       flags |= end_flag;
@@ -1368,19 +1346,6 @@ size_t SpdyFramer::header_encoder_table_size() const {
     return kDefaultHeaderTableSizeSetting;
   } else {
     return hpack_encoder_->CurrentHeaderTableSizeSetting();
-  }
-}
-
-void SpdyFramer::SerializeHeaderBlockWithoutCompression(
-    SpdyFrameBuilder* builder,
-    const SpdyHeaderBlock& header_block) const {
-  // Serialize number of headers.
-  builder->WriteUInt32(header_block.size());
-
-  // Serialize each header.
-  for (const auto& header : header_block) {
-    builder->WriteStringPiece32(base::ToLowerASCII(header.first));
-    builder->WriteStringPiece32(header.second);
   }
 }
 

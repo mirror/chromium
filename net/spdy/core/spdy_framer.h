@@ -37,7 +37,6 @@ class SpdyStreamTest;
 
 namespace test {
 
-class TestSpdyVisitor;
 class SpdyFramerPeer;
 class SpdyFramerTest_MultipleContinuationFramesWithIterator_Test;
 class SpdyFramerTest_PushPromiseFramesWithIterator_Test;
@@ -66,19 +65,10 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
     DISABLE_COMPRESSION,
   };
 
-  // Constant for invalid (or unknown) stream IDs.
-  static const SpdyStreamId kInvalidStream;
-
-  // The maximum size of header data decompressed/delivered at once to the
-  // header block parser. (Exposed here for unit test purposes.)
-  static const size_t kHeaderDataChunkMaxSize;
-
-  void SerializeHeaderBlockWithoutCompression(
-      SpdyFrameBuilder* builder,
-      const SpdyHeaderBlock& header_block) const;
-
-  // Retrieve serialized length of SpdyHeaderBlock.
-  static size_t GetUncompressedSerializedLength(const SpdyHeaderBlock& headers);
+  // Create a SpdyFrameSequence to serialize |frame_ir|.
+  static std::unique_ptr<SpdyFrameSequence> CreateIterator(
+      SpdyFramer* framer,
+      std::unique_ptr<const SpdyFrameIR> frame_ir);
 
   // Gets the serialized flags for the given |frame|.
   static uint8_t GetSerializedFlags(const SpdyFrameIR& frame);
@@ -100,11 +90,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   // completely optional and need not be set in order for normal operation.
   // If this is called multiple times, only the last visitor will be used.
   void set_debug_visitor(SpdyFramerDebugVisitorInterface* debug_visitor);
-
-  // Create a SpdyFrameSequence to serialize |frame_ir|.
-  static std::unique_ptr<SpdyFrameSequence> CreateIterator(
-      SpdyFramer* framer,
-      std::unique_ptr<const SpdyFrameIR> frame_ir);
 
   // Serialize a data frame.
   SpdySerializedFrame SerializeData(const SpdyDataIR& data) const;
@@ -249,10 +234,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   // Returns the maximum payload size of a DATA frame.
   size_t GetDataFrameMaximumPayload() const;
 
-  SpdyPriority GetLowestPriority() const { return kV3LowestPriority; }
-
-  SpdyPriority GetHighestPriority() const { return kV3HighestPriority; }
-
   // Updates the maximum size of the header encoder compression table.
   void UpdateHeaderEncoderTableSize(uint32_t value);
 
@@ -275,7 +256,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
 
   void SetOverwriteLastFrame(bool value) { overwrite_last_frame_ = value; }
   void SetIsLastFrame(bool value) { is_last_frame_ = value; }
-  bool ShouldOverwriteLastFrame() const { return overwrite_last_frame_; }
 
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;
@@ -290,7 +270,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   friend class SpdyProxyClientSocketTest;
   friend class SpdySessionTest;
   friend class SpdyStreamTest;
-  friend class test::TestSpdyVisitor;
   friend class test::SpdyFramerPeer;
   friend class test::SpdyFramerTest_MultipleContinuationFramesWithIterator_Test;
   friend class test::SpdyFramerTest_PushPromiseFramesWithIterator_Test;
@@ -413,15 +392,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
                                     SpdyFrameType type,
                                     int padding_payload_len);
 
-  // Utility to copy the given data block to the current frame buffer, up
-  // to the given maximum number of bytes, and update the buffer
-  // data (pointer and length). Returns the number of bytes
-  // read, and:
-  //   *data is advanced the number of bytes read.
-  //   *len is reduced by the number of bytes read.
-  size_t UpdateCurrentFrameBuffer(const char** data, size_t* len,
-                                  size_t max_bytes);
-
   // Serializes a HEADERS frame from the given SpdyHeadersIR and encoded header
   // block. Does not need or use the SpdyHeaderBlock inside SpdyHeadersIR.
   // Return false if the serialization fails. |encoding| should not be empty.
@@ -471,30 +441,19 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
                                          SpdyString* hpack_encoding,
                                          size_t* size);
 
-  // The size of the control frame buffer.
-  // Since this is only used for control frame headers, the maximum control
-  // frame header size is sufficient; all remaining control
-  // frame data is streamed to the visitor.
-  static const size_t kControlFrameBufferSize;
-
   // The maximum size of the control frames that we send, including the size of
   // the header. This limit is arbitrary. We can enforce it here or at the
   // application layer. We chose the framing layer, but this can be changed (or
   // removed) if necessary later down the line.
-  // TODO(diannahu): Rename to make it clear that this limit is for sending.
-  static const size_t kMaxControlFrameSize;
-  // The maximum size for the payload of DATA frames to send.
-  static const size_t kMaxDataPayloadSendSize;
-  // The size of one parameter in SETTINGS frame.
-  static const size_t kOneSettingParameterSize;
-
-  // The limit on the size of sent HTTP/2 payloads as specified in the
-  // SETTINGS_MAX_FRAME_SIZE received from peer.
-  size_t send_frame_size_limit_ = kSpdyInitialFrameSizeLimit;
+  static const size_t kMaxControlFrameSendSize;
 
   std::unique_ptr<HpackEncoder> hpack_encoder_;
 
   SpdyFramerDebugVisitorInterface* debug_visitor_;
+
+  // The limit on the size of sent HTTP/2 payloads as specified in the
+  // SETTINGS_MAX_FRAME_SIZE received from peer.
+  size_t send_frame_size_limit_ = kSpdyInitialFrameSizeLimit;
 
   // Determines whether HPACK compression is used.
   const CompressionOption compression_option_;
