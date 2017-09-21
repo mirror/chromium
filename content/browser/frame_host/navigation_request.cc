@@ -258,7 +258,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       BeginNavigationParams(entry.extra_headers(), net::LOAD_NORMAL,
-                            false,  // has_user_gestures
+                            entry.has_user_gesture(),
                             false,  // skip_service_worker
                             REQUEST_CONTEXT_TYPE_LOCATION,
                             blink::WebMixedContentContextType::kBlockable,
