@@ -66,9 +66,21 @@ class ImeControllerClient
 
   void FlushMojoForTesting();
 
+  // Send the state of the extra input options to the ImeController. The overall
+  // state is toggle-able independently of the individual options.
+  void OnExtraInputEnabledStateChange(bool is_extra_input_options_enabled,
+                                      bool is_emoji_enabled,
+                                      bool is_handwriting_enabled,
+                                      bool is_voice_enabled) override;
+
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
+
+  // Some values are only propagated to the IME Controller when they change. In
+  // order to get a current state propagated, this method can be called to
+  // force propagation without a change.
+  void TickleObservedStateForDataPropagation();
 
   // Converts IME information from |descriptor| into the ash mojo format.
   ash::mojom::ImeInfoPtr GetAshImeInfo(
