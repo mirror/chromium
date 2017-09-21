@@ -15,15 +15,25 @@
 
 @protocol ApplicationCommands;
 @protocol FormInputAccessoryViewProvider;
+@class NotifyUserAutoSigninViewController;
 @protocol PasswordFormFiller;
 @class PasswordGenerationAgent;
 @protocol PasswordsUiDelegate;
+@class UIViewController;
 
 namespace password_manager {
 class PasswordGenerationManager;
 class PasswordManagerClient;
 class PasswordManagerDriver;
 }  // namespace password_manager
+
+@protocol PasswordControllerDelegate
+
+// Adds |viewController| as child controller in order to display auto sing-in
+// notification.
+- (void)displaySignInNotification:(UIViewController*)viewController;
+
+@end
 
 // Per-tab password controller. Handles password autofill and saving.
 @interface PasswordController : NSObject<CRWWebStateObserver,
@@ -57,6 +67,14 @@ class PasswordManagerDriver;
 // even after being set to a non-nil object.
 @property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 
+// Delegate used by this PasswordController to show UI on BVC.
+@property(assign, nonatomic) id<PasswordControllerDelegate> delegate;
+
+// View controller for auto sign-in notification, owned by this
+// PasswordController.
+@property(nonatomic, readonly)
+    NotifyUserAutoSigninViewController* notifyAutoSigninViewController;
+
 // |webState| should not be nil.
 - (instancetype)initWithWebState:(web::WebState*)webState
              passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate;
@@ -67,6 +85,9 @@ class PasswordManagerDriver;
 passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate
              client:(std::unique_ptr<password_manager::PasswordManagerClient>)
                         passwordManagerClient NS_DESIGNATED_INITIALIZER;
+
+// TODO(crbug.com/435048): Add WasHidden to WebStateObserverBridge instead.
+- (void)wasHidden;
 
 - (instancetype)init NS_UNAVAILABLE;
 
