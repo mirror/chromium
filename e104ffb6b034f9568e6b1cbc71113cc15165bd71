@@ -22,6 +22,30 @@
       "revId": "e104ffb6b034f9568e6b1cbc71113cc15165bd71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cdbb16_f9989b94",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-21T01:03:37Z",
+      "side": 1,
+      "message": "From chat offline, this is not necessarily due to switching from typedef-\u003eusing, rather it\u0027s from template-izing this class and then using a dependent type of the template parameter type (like ::iterator here). Compiler requires we inform it that we mean for RangeList::iterator to be a type, not a field, of the parameter type. Maybe a nested using (maybe with a typename inside that??) might work (unlikely), but that would need a new using for each dependent type.\n\nFor future reference, there\u0027s a good explainer at http://pages.cs.wisc.edu/~driscoll/typename.html",
+      "parentUuid": "0229c08e_a0229359",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 20
+      },
+      "revId": "e104ffb6b034f9568e6b1cbc71113cc15165bd71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
