@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "685500a4_5cc1682b",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-09-21T03:05:19Z",
+      "side": 1,
+      "message": "Originally, the \"internal\" here meant to only be used under ui/base/ime/...\nHowever, since https://codereview.chromium.org/1155013005, it was references by ui/aura so no longer \"internal\".\nI think we can simply remove \"internal\" here to avoid future confusion.",
+      "parentUuid": "6caca24b_0f8bcfe6",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 70
+      },
+      "revId": "118eb058aa98391ca12253690cd58619b84ba6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1f8ef0b_90805691",
         "filename": "ui/aura/mus/text_input_client_impl.h",
         "patchSetId": 9
