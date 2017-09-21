@@ -88,6 +88,24 @@
       "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe9e46f_f8c1452f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-21T01:38:32Z",
+      "side": 1,
+      "message": "Alternatively, remove verdict.set_cache_expression(\"/\");  and fix the VerifyUpdateSecurityState test case in c/b/safe_browsing/chrome_password_protection_service_unittest.cc by caching a verdict before updating security state.\n\nYou can copy\u0026paste the following code to replace the existing VerifyUpdateSecurityState test.\n\n\nTEST_F(ChromePasswordProtectionServiceTest, VerifyUpdateSecurityState) {\n  GURL url(\"http://password_reuse_url.com\");\n  NavigateAndCommit(url);\n  SBThreatType current_threat_type \u003d SB_THREAT_TYPE_UNUSED;\n  ASSERT_FALSE(service_-\u003eui_manager()-\u003eIsUrlWhitelistedOrPendingForWebContents(\n      url, false, web_contents()-\u003eGetController().GetLastCommittedEntry(),\n      web_contents(), false, \u0026current_threat_type));\n  EXPECT_EQ(SB_THREAT_TYPE_UNUSED, current_threat_type);\n\n  // Cache a verdict for this URL.\n  LoginReputationClientResponse verdict_proto;\n  verdict_proto.set_verdict_type(LoginReputationClientResponse::PHISHING);\n  verdict_proto.set_cache_duration_sec(600);\n  verdict_proto.set_cache_expression(\"password_reuse_url.com/\");\n  service_-\u003eCacheVerdict(url,\n                         LoginReputationClientRequest::PASSWORD_REUSE_EVENT,\n                         \u0026verdict_proto, base::Time::Now());\n\n  service_-\u003eUpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents());\n  ASSERT_TRUE(service_-\u003eui_manager()-\u003eIsUrlWhitelistedOrPendingForWebContents(\n      url, false, web_contents()-\u003eGetController().GetLastCommittedEntry(),\n      web_contents(), false, \u0026current_threat_type));\n  EXPECT_EQ(SB_THREAT_TYPE_PASSWORD_REUSE, current_threat_type);\n\n  service_-\u003eUpdateSecurityState(safe_browsing::SB_THREAT_TYPE_SAFE,\n                                web_contents());\n  current_threat_type \u003d SB_THREAT_TYPE_UNUSED;\n  service_-\u003eui_manager()-\u003eIsUrlWhitelistedOrPendingForWebContents(\n      url, false, web_contents()-\u003eGetController().GetLastCommittedEntry(),\n      web_contents(), false, \u0026current_threat_type);\n  EXPECT_EQ(SB_THREAT_TYPE_UNUSED, current_threat_type);\n  LoginReputationClientResponse verdict;\n  EXPECT_EQ(\n      LoginReputationClientResponse::SAFE,\n      service_-\u003eGetCachedVerdict(\n          url, LoginReputationClientRequest::PASSWORD_REUSE_EVENT, \u0026verdict));\n}",
+      "parentUuid": "a34b2943_9cda82d8",
+      "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
