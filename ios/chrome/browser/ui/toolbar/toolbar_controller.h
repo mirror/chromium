@@ -232,6 +232,9 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // |setStandardControlsVisible:NO|.
 - (CGRect)specificControlsArea;
 
+
+- (UILayoutGuide*)specificControlsLayoutGuide;
+
 // Sets the standard control set to be visible or invisible. Uses alpha, so it
 // can be animated if called from an animation context. Intended for use by
 // subclasses that need to temporarily take over the entire toolbar.
@@ -300,6 +303,8 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 
 // Triggers an animation on the tools menu button to draw the user's attention.
 - (void)triggerToolsMenuButtonAnimation;
+
+- (void)layoutSubviews;
 
 @end
 
