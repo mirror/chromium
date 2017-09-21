@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/i18n/number_formatting.h"
+#include "base/i18n/rtl.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -128,6 +129,11 @@ void AddCommonStrings(content::WebUIDataSource* html_source, Profile* profile) {
 #endif
 
   html_source->AddBoolean("isSupervised", profile->IsSupervised());
+
+  // TODO(dbeam): add to SetLoadTimeDataDefaults() if generically useful.
+  const bool is_rtl = base::i18n::IsRTL();
+  html_source->AddString("textAlign", is_rtl ? "right" : "left");
+  html_source->AddString("textReverseAlign", is_rtl ? "left" : "right");
 }
 
 void AddA11yStrings(content::WebUIDataSource* html_source) {

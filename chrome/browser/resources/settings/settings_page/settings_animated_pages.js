@@ -17,7 +17,7 @@
 Polymer({
   is: 'settings-animated-pages',
 
-  behaviors: [settings.RouteObserverBehavior],
+  behaviors: [I18nBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /**
@@ -150,13 +150,15 @@ Polymer({
 
     if (oldRoute) {
       if (oldRoute.isSubpage() && newRoute.depth > oldRoute.depth) {
-        // Slide left for a deeper subpage.
-        this.$.animatedPages.exitAnimation = 'slide-left-animation';
-        this.$.animatedPages.entryAnimation = 'slide-from-right-animation';
+        this.$.animatedPages.exitAnimation =
+            'slide-' + this.i18n('textAlign') + '-animation';
+        this.$.animatedPages.entryAnimation =
+            'slide-from-' + this.i18n('textReverseAlign') + '-animation';
       } else if (oldRoute.depth > newRoute.depth) {
-        // Slide right for a shallower subpage.
-        this.$.animatedPages.exitAnimation = 'slide-right-animation';
-        this.$.animatedPages.entryAnimation = 'slide-from-left-animation';
+        this.$.animatedPages.exitAnimation =
+            'slide-' + this.i18n('textReverseAlign') + '-animation';
+        this.$.animatedPages.entryAnimation =
+            'slide-from-' + this.i18n('textAlign') + '-animation';
       } else {
         // The old route is not a subpage or is at the same level, so just fade.
         this.$.animatedPages.exitAnimation = 'settings-fade-out-animation';
