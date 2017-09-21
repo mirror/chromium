@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe43848_1a12638b",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:21:50Z",
+      "side": 1,
+      "message": "How about UpdateOverflowIndicatorsVisibility?",
+      "range": {
+        "startLine": 805,
+        "startChar": 2,
+        "endLine": 805,
+        "endChar": 26
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59955ae_11544ff9",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:21:50Z",
+      "side": 1,
+      "message": "You\u0027ll need to turn on painting the indicators to layers here too.",
+      "range": {
+        "startLine": 816,
+        "startChar": 5,
+        "endLine": 816,
+        "endChar": 38
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fc5632_066b41a8",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:21:50Z",
+      "side": 1,
+      "message": "Do we really want this on the header and not beneath the header?\nAlso, it looks like this positions the indicators *over* the scrollbars. Is that intentional?",
+      "range": {
+        "startLine": 890,
+        "startChar": 2,
+        "endLine": 890,
+        "endChar": 43
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ab4bb2_a0fe71af",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:21:50Z",
+      "side": 1,
+      "message": "If there\u0027s a horizontal scrollbar shouldn\u0027t this be positioned above it? Similar comment for left/right.",
+      "range": {
+        "startLine": 892,
+        "startChar": 2,
+        "endLine": 892,
+        "endChar": 64
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba59d59e_4fb80b2f",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:21:50Z",
+      "side": 1,
+      "message": "I realize the code right above this isn\u0027t using a unique_ptr, but is there a reason not to put these in a unique_ptr?",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
