@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14b3d50b_dd395b8d",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T22:15:00Z",
+      "side": 1,
+      "message": "nit: no else after return.",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 216,
+        "endChar": 8
+      },
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b90355_5910c0cb",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T22:15:00Z",
+      "side": 1,
+      "message": "I imagine you copied some of this from an existing test. Let\u0027s not worry about what they did. For your test, can we check the return value here? Also lines 1570, 1576 (returns 0), etc.",
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6adb51_231f2f8b",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T22:15:00Z",
+      "side": 1,
+      "message": "This raises the same issue as before. Just running this test on the existing base/ impl results in CopyDirectory() returning true. How do we know there isn\u0027t an existing caller that\u0027s counting on this behavior?",
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926b2b6c_5d7ae8c0",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T22:15:00Z",
+      "side": 1,
+      "message": "nit: |var_name|",
+      "range": {
+        "startLine": 1623,
+        "startChar": 60,
+        "endLine": 1623,
+        "endChar": 74
+      },
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
