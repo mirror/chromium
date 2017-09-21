@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d38d1394_77fcd997",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T15:14:50Z",
+      "side": 1,
+      "message": "We should decide what we want to be the go-to source for extension state modification - the service or the registrar.  Right now, if someone else were to call ExtensionRegistrar::DeactivateExtension(), the service would *not* do the extra cleanup work of PostDeactivateExtension().\n\nTwo ideas:\n1. Give ExtensionRegistrar a delegate** with methods for PostDeactivateExtension, etc.  Make ExtensionService implement that delegate.  Then any time the extension is deactivated, extension service is called.\n2. Make ExtensionService directly (and privately) own ExtensionRegistrar so no one else can call these methods (and have it similarly privately owned in appshell by another object).\n\n(These aren\u0027t mutually exclusive).\n\nI think we should at least do 1, even long-term.  For 2, I think it would be helpful during this migration, so that everyone still calls into ExtensionService (which has special logic).  Once we move more of the logic to ExtensionRegistrar, we could change that so that objects could call ExtensionRegistrar instead of ExtensionService.\n\n**Why a delegate instead of an observer?  The delegate would be responsible for doing actions directly necessary to complete the deactivation (or other operation), rather than reacting to it.  These would need to be done first (before observers are notified), and there should likely only be one implementation per embedder.",
+      "revId": "27fb4d2fda18f5c5571c8988503d6f11355b2e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fad276_c22f0304",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T15:14:50Z",
+      "side": 1,
+      "message": "NotifyExtensionLoaded seems like a weird place to ActivateExtension().  It seems like this should happen as part of the loading process, rather than as part of the notification process.",
+      "revId": "27fb4d2fda18f5c5571c8988503d6f11355b2e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

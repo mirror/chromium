@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f504230b_91f734b4",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T15:14:50Z",
+      "side": 1,
+      "message": "\u003e LoadExtension is incredibly confusing -- we use it to mean:\nYes, LoadExtension is overloaded.  I think ActivateExtension (or similar) makes sense for the second case, because we\u0027re basically saying \"make this extension alive\".\n\n\u003e The registry uses \"load\" in the first sense, so let\u0027s not call the 2nd sense \"loading\" as well.\n\nWhich registry?  ExtensionRegistry uses \"loaded\" in the second sense, not the first - it triggers OnLoaded/OnUnloaded when the extension is added/removed from the enabled set, corresponding to when it\u0027s \"active\".\n\n\u003e We could use EnableExtension/DisableExtension, but these functions do more work than just adding the extension to ExtensionRegistry\u0027s enabled/disabled lists. There are also cases where we deactivate an extension without disabling it at all (terminated extensions), right? So re-using these terms seems more confusing than helpful.\n\nI\u0027m not sure I agree.  I think that we can reuse the same terminology as the registry and make activation/deactivation an internal detail of the registrar.  For instance,\n\n// Adds extension to the enabled set and activates it.\nEnableExtension()\n// Adds extension to the disabled set and deactivates it.\nDisableExtension()\n// Adds extension to the terminated set and deactivates it.\nTerminateExtension()\n// Deactivates the extension and removes it from all sets.\nRemoveExtension()\n\nThis way, we match terminology, and I think it\u0027s reasonably clear what each does.  Additionally, it ensures that we don\u0027t have enabled extensions that are deactivated, disabled extensions that are activated, etc.\n\nI agree that there are cases when we deactivate an extension without disabling it, as you said, but IMO that\u0027s a reason *not* to expose the method as \"deactivate\" :)",
+      "parentUuid": "fe7e2cbe_7dcb0583",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e0b7a6_bddbff24",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 3
