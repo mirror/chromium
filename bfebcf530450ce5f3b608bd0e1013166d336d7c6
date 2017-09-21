@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a621137e_a774591c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-21T20:55:44Z",
+      "side": 1,
+      "message": "Can you also check the suspend_ behavior that disables other actions etc?",
+      "revId": "bfebcf530450ce5f3b608bd0e1013166d336d7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
