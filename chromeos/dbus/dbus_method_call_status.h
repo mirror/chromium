@@ -50,6 +50,10 @@ typedef base::Callback<void(
 // doesn't get call status.
 typedef base::Callback<void(const dbus::ObjectPath& result)> ObjectPathCallback;
 
+// Called when service becomes available.
+using WaitForServiceToBeAvailableCallback =
+    base::OnceCallback<void(bool service_is_available)>;
+
 // Returns an empty callback that does nothing.
 CHROMEOS_EXPORT VoidDBusMethodCallback EmptyVoidDBusMethodCallback();
 
