@@ -95,9 +95,9 @@ class ArcVoiceInteractionFrameworkService
   void ToggleSessionFromUserInteraction();
 
   // Turn on / off voice interaction in ARC.
-  // TODO(muyuanli): We should also check on Chrome side once CrOS side settings
-  // are ready (tracked separately at crbug.com/727873).
-  void SetVoiceInteractionEnabled(bool enable);
+  void SetVoiceInteractionEnabled(
+      bool enable,
+      const base::Closure& setting_complete_callback);
 
   // Turn on / off voice interaction context (screenshot and structural data)
   // in ARC.
@@ -128,6 +128,8 @@ class ArcVoiceInteractionFrameworkService
   bool InitiateUserInteraction(bool is_toggle);
 
   void SetVoiceInteractionSetupCompletedInternal(bool completed);
+
+  void StartVoiceInteractionSetupWizardInternal();
 
   content::BrowserContext* context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager
