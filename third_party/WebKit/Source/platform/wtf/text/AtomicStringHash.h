@@ -30,6 +30,7 @@
 #define AtomicStringHash_h
 
 #include "platform/wtf/HashTraits.h"
+#include "platform/wtf/WTFExport.h"
 #include "platform/wtf/text/AtomicString.h"
 
 namespace WTF {
@@ -58,6 +59,14 @@ struct HashTraits<AtomicString> : SimpleClassHashTraits<AtomicString> {
 
   static const bool kHasIsEmptyValueFunction = true;
   static bool IsEmptyValue(const AtomicString& value) { return value.IsNull(); }
+
+  static bool IsDeletedValue(const AtomicString& value) {
+    return HashTraits<String>::IsDeletedValue(value.string_);
+  }
+
+  static void ConstructDeletedValue(AtomicString& slot, bool zero_value) {
+    HashTraits<String>::ConstructDeletedValue(slot.string_, zero_value);
+  }
 };
 
 }  // namespace WTF
