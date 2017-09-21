@@ -32,6 +32,7 @@
 #include "core/InputTypeNames.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/AccessibleNode.h"
+#include "core/dom/AccessibleNodeList.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/VisiblePosition.h"
@@ -61,6 +62,247 @@ namespace blink {
 using namespace HTMLNames;
 
 namespace {
+
+class SparseAttributeSetter {
+  USING_FAST_MALLOC(SparseAttributeSetter);
+
+ public:
+  virtual void Run(const AXObject&,
+                   AXSparseAttributeClient&,
+                   const AtomicString& value) = 0;
+};
+
+class BoolAttributeSetter : public SparseAttributeSetter {
+ public:
+  BoolAttributeSetter(AXBoolAttribute attribute) : attribute_(attribute) {}
+
+ private:
+  AXBoolAttribute attribute_;
+
+  void Run(const AXObject& obj,
+           AXSparseAttributeClient& attribute_map,
+           const AtomicString& value) override {
+    // ARIA booleans are true if not "false" and not specifically undefined.
+    bool is_true = !AccessibleNode::IsUndefinedAttrValue(value) &&
+                   !EqualIgnoringASCIICase(value, "false");
+    if (is_true)  // Not necessary to add if false
+      attribute_map.AddBoolAttribute(attribute_, true);
+  }
+};
+
+class StringAttributeSetter : public SparseAttributeSetter {
+ public:
+  StringAttributeSetter(AXStringAttribute attribute) : attribute_(attribute) {}
+
+ private:
+  AXStringAttribute attribute_;
+
+  void Run(const AXObject& obj,
+           AXSparseAttributeClient& attribute_map,
+           const AtomicString& value) override {
+    attribute_map.AddStringAttribute(attribute_, value);
+  }
+};
+
+class ObjectAttributeSetter : public SparseAttributeSetter {
+ public:
+  ObjectAttributeSetter(AXObjectAttribute attribute) : attribute_(attribute) {}
+
+ private:
+  AXObjectAttribute attribute_;
+
+  void Run(const AXObject& obj,
+           AXSparseAttributeClient& attribute_map,
+           const AtomicString& value) override {
+    if (value.IsNull() || value.IsEmpty())
+      return;
+
+    Node* node = obj.GetNode();
+    if (!node || !node->IsElementNode())
+      return;
+    Element* target = ToElement(node)->GetTreeScope().getElementById(value);
+    if (!target)
+      return;
+    AXObject* ax_target = obj.AxObjectCache().GetOrCreate(target);
+    if (ax_target)
+      attribute_map.AddObjectAttribute(attribute_, *ax_target);
+  }
+};
+
+class ObjectVectorAttributeSetter : public SparseAttributeSetter {
+ public:
+  ObjectVectorAttributeSetter(AXObjectVectorAttribute attribute)
+      : attribute_(attribute) {}
+
+ private:
+  AXObjectVectorAttribute attribute_;
+
+  void Run(const AXObject& obj,
+           AXSparseAttributeClient& attribute_map,
+           const AtomicString& value) override {
+    Node* node = obj.GetNode();
+    if (!node || !node->IsElementNode())
+      return;
+
+    String attribute_value = value.GetString();
+    if (attribute_value.IsEmpty())
+      return;
+
+    attribute_value.SimplifyWhiteSpace();
+    Vector<String> ids;
+    attribute_value.Split(' ', ids);
+    if (ids.IsEmpty())
+      return;
+
+    HeapVector<Member<AXObject>> objects;
+    TreeScope& scope = node->GetTreeScope();
+    for (const auto& id : ids) {
+      if (Element* id_element = scope.getElementById(AtomicString(id))) {
+        AXObject* ax_id_element = obj.AxObjectCache().GetOrCreate(id_element);
+        if (ax_id_element && !ax_id_element->AccessibilityIsIgnored())
+          objects.push_back(ax_id_element);
+      }
+    }
+
+    attribute_map.AddObjectVectorAttribute(attribute_, objects);
+  }
+};
+
+using AXSparseAttributeSetterMap =
+    HashMap<QualifiedName, SparseAttributeSetter*>;
+
+static AXSparseAttributeSetterMap& GetSparseAttributeSetterMap() {
+  // Use a map from attribute name to properties of that attribute.
+  // That way we only need to iterate over the list of attributes once,
+  // rather than calling getAttribute() once for each possible obscure
+  // accessibility attribute.
+  DEFINE_STATIC_LOCAL(AXSparseAttributeSetterMap,
+                      ax_sparse_attribute_setter_map, ());
+  if (ax_sparse_attribute_setter_map.IsEmpty()) {
+    ax_sparse_attribute_setter_map.Set(
+        aria_activedescendantAttr,
+        new ObjectAttributeSetter(AXObjectAttribute::kAriaActiveDescendant));
+    ax_sparse_attribute_setter_map.Set(
+        aria_controlsAttr, new ObjectVectorAttributeSetter(
+                               AXObjectVectorAttribute::kAriaControls));
+    ax_sparse_attribute_setter_map.Set(
+        aria_flowtoAttr,
+        new ObjectVectorAttributeSetter(AXObjectVectorAttribute::kAriaFlowTo));
+    ax_sparse_attribute_setter_map.Set(
+        aria_detailsAttr,
+        new ObjectAttributeSetter(AXObjectAttribute::kAriaDetails));
+    ax_sparse_attribute_setter_map.Set(
+        aria_errormessageAttr,
+        new ObjectAttributeSetter(AXObjectAttribute::kAriaErrorMessage));
+    ax_sparse_attribute_setter_map.Set(
+        aria_keyshortcutsAttr,
+        new StringAttributeSetter(AXStringAttribute::kAriaKeyShortcuts));
+    ax_sparse_attribute_setter_map.Set(
+        aria_roledescriptionAttr,
+        new StringAttributeSetter(AXStringAttribute::kAriaRoleDescription));
+    ax_sparse_attribute_setter_map.Set(
+        aria_busyAttr, new BoolAttributeSetter(AXBoolAttribute::kAriaBusy));
+  }
+  return ax_sparse_attribute_setter_map;
+}
+
+class AXSparseAttributeAOMPropertyClient : public AOMPropertyClient {
+ public:
+  AXSparseAttributeAOMPropertyClient(
+      AXObjectCacheImpl& ax_object_cache,
+      AXSparseAttributeClient& sparse_attribute_client)
+      : ax_object_cache_(ax_object_cache),
+        sparse_attribute_client_(sparse_attribute_client) {}
+
+  void AddStringProperty(AOMStringProperty property,
+                         const String& value) override {
+    AXStringAttribute attribute;
+    switch (property) {
+      case AOMStringProperty::kKeyShortcuts:
+        attribute = AXStringAttribute::kAriaKeyShortcuts;
+        break;
+      case AOMStringProperty::kRoleDescription:
+        attribute = AXStringAttribute::kAriaRoleDescription;
+        break;
+      default:
+        return;
+    }
+    sparse_attribute_client_.AddStringAttribute(attribute, value);
+  }
+
+  void AddBooleanProperty(AOMBooleanProperty property, bool value) override {
+    AXBoolAttribute attribute;
+    switch (property) {
+      case AOMBooleanProperty::kBusy:
+        attribute = AXBoolAttribute::kAriaBusy;
+        break;
+      default:
+        return;
+    }
+    sparse_attribute_client_.AddBoolAttribute(attribute, value);
+  }
+
+  void AddIntProperty(AOMIntProperty property, int32_t value) override {}
+
+  void AddUIntProperty(AOMUIntProperty property, uint32_t value) override {}
+
+  void AddFloatProperty(AOMFloatProperty property, float value) override {}
+
+  void AddRelationProperty(AOMRelationProperty property,
+                           const AccessibleNode& value) override {
+    AXObjectAttribute attribute;
+    switch (property) {
+      case AOMRelationProperty::kActiveDescendant:
+        attribute = AXObjectAttribute::kAriaActiveDescendant;
+        break;
+      case AOMRelationProperty::kDetails:
+        attribute = AXObjectAttribute::kAriaDetails;
+        break;
+      case AOMRelationProperty::kErrorMessage:
+        attribute = AXObjectAttribute::kAriaErrorMessage;
+        break;
+      default:
+        return;
+    }
+
+    Element* target_element = value.element();
+    AXObject* target_obj = ax_object_cache_->GetOrCreate(target_element);
+    if (target_element)
+      sparse_attribute_client_.AddObjectAttribute(attribute, *target_obj);
+  }
+
+  void AddRelationListProperty(AOMRelationListProperty property,
+                               const AccessibleNodeList& relations) override {
+    AXObjectVectorAttribute attribute;
+    switch (property) {
+      case AOMRelationListProperty::kControls:
+        attribute = AXObjectVectorAttribute::kAriaControls;
+        break;
+      case AOMRelationListProperty::kFlowTo:
+        attribute = AXObjectVectorAttribute::kAriaFlowTo;
+        break;
+      default:
+        return;
+    }
+
+    HeapVector<Member<AXObject>> objects;
+    for (size_t i = 0; i < relations.length(); ++i) {
+      AccessibleNode* accessible_node = relations.item(i);
+      if (accessible_node) {
+        Element* element = accessible_node->element();
+        AXObject* ax_element = ax_object_cache_->GetOrCreate(element);
+        if (ax_element && !ax_element->AccessibilityIsIgnored())
+          objects.push_back(ax_element);
+      }
+    }
+
+    sparse_attribute_client_.AddObjectVectorAttribute(attribute, objects);
+  }
+
+ private:
+  Persistent<AXObjectCacheImpl> ax_object_cache_;
+  AXSparseAttributeClient& sparse_attribute_client_;
+};
 
 struct AccessibilityRoleHashTraits : HashTraits<AccessibilityRole> {
   static const bool kEmptyValueIsZero = true;
@@ -483,6 +725,44 @@ bool AXObject::HasAOMPropertyOrARIAAttribute(AOMStringProperty property,
 
   result = AccessibleNode::GetPropertyOrARIAAttribute(element, property);
   return !result.IsNull();
+}
+
+AccessibleNode* AXObject::GetAccessibleNode() const {
+  Element* element = GetElement();
+  if (!element)
+    return nullptr;
+
+  return element->ExistingAccessibleNode();
+}
+
+void AXObject::GetSparseAXAttributes(
+    AXSparseAttributeClient& sparse_attribute_client) const {
+  AXSparseAttributeAOMPropertyClient property_client(*ax_object_cache_,
+                                                     sparse_attribute_client);
+  HashSet<QualifiedName> shadowed_aria_attributes;
+
+  AccessibleNode* accessible_node = GetAccessibleNode();
+  if (accessible_node) {
+    accessible_node->GetAllAOMProperties(&property_client,
+                                         shadowed_aria_attributes);
+  }
+
+  Element* element = GetElement();
+  if (!element)
+    return;
+
+  AXSparseAttributeSetterMap& ax_sparse_attribute_setter_map =
+      GetSparseAttributeSetterMap();
+  AttributeCollection attributes = element->AttributesWithoutUpdate();
+  for (const Attribute& attr : attributes) {
+    if (shadowed_aria_attributes.Contains(attr.GetName()))
+      continue;
+
+    SparseAttributeSetter* setter =
+        ax_sparse_attribute_setter_map.at(attr.GetName());
+    if (setter)
+      setter->Run(*this, sparse_attribute_client, attr.Value());
+  }
 }
 
 bool AXObject::IsARIATextControl() const {
@@ -1486,6 +1766,34 @@ bool AXObject::IsLiveRegion() const {
   return !live_region.IsEmpty() && !EqualIgnoringASCIICase(live_region, "off");
 }
 
+AXRestriction AXObject::Restriction() const {
+  // According to ARIA, all elements of the base markup can be disabled.
+  // According to CORE-AAM, any focusable descendant of aria-disabled
+  // ancestor is also disabled.
+  bool is_disabled;
+  if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kDisabled,
+                                    is_disabled)) {
+    // Has aria-disabled, overrides native markup determining disabled.
+    if (is_disabled)
+      return kDisabled;
+  } else if (CanSetFocusAttribute() && IsDescendantOfDisabledNode()) {
+    // No aria-disabled, but other markup says it's disabled.
+    return kDisabled;
+  }
+
+  // Check aria-readonly if supported by current role.
+  bool is_read_only;
+  if (CanSupportAriaReadOnly() &&
+      HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kReadOnly,
+                                    is_read_only)) {
+    // ARIA overrides other readonly state markup.
+    return is_read_only ? kReadOnly : kNone;
+  }
+
+  // This is a node that is not readonly and not disabled.
+  return kNone;
+}
+
 AccessibilityRole AXObject::DetermineAccessibilityRole() {
   aria_role_ = DetermineAriaRoleAttribute();
   return aria_role_;
@@ -1561,6 +1869,16 @@ bool AXObject::IsEditableRoot() const {
 AXObject* AXObject::LiveRegionRoot() const {
   UpdateCachedAttributeValuesIfNeeded();
   return cached_live_region_root_;
+}
+
+bool AXObject::LiveRegionAtomic() const {
+  bool atomic = false;
+  if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kAtomic, atomic))
+    return atomic;
+
+  // ARIA roles "alert" and "status" should have an implicit aria-atomic value
+  // of true.
+  return RoleValue() == kAlertRole || RoleValue() == kStatusRole;
 }
 
 const AtomicString& AXObject::ContainerLiveRegionStatus() const {
@@ -2344,6 +2662,38 @@ bool AXObject::NameFromContents(bool recursive) const {
   }
 
   return result;
+}
+
+bool AXObject::CanSupportAriaReadOnly() const {
+  switch (RoleValue()) {
+    case kCellRole:
+    case kCheckBoxRole:
+    case kColorWellRole:
+    case kColumnHeaderRole:
+    case kComboBoxRole:
+    case kDateRole:
+    case kDateTimeRole:
+    case kGridRole:
+    case kInputTimeRole:
+    case kListBoxRole:
+    case kMenuButtonRole:
+    case kMenuItemCheckBoxRole:
+    case kMenuItemRadioRole:
+    case kPopUpButtonRole:
+    case kRadioGroupRole:
+    case kRowHeaderRole:
+    case kSearchBoxRole:
+    case kSliderRole:
+    case kSpinButtonRole:
+    case kSwitchRole:
+    case kTextFieldRole:
+    case kToggleButtonRole:
+    case kTreeGridRole:
+      return true;
+    default:
+      break;
+  }
+  return false;
 }
 
 AccessibilityRole AXObject::ButtonRoleType() const {
