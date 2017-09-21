@@ -87,6 +87,24 @@
       "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a686c1_9b0ebcdc",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-21T12:14:46Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve renamed it to auto_sized_tracks_for_stretch_index_.",
+      "parentUuid": "9f500d13_f0e56fec",
+      "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
