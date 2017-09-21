@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f141993f_cd140651",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-21T01:11:33Z",
+      "side": 1,
+      "message": "Instead of calling static method, please call an instance one.",
+      "revId": "ea56f3696e0b8109f575449b9ae07fe26af5997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede47540_652796bd",
+        "filename": "chrome/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-21T01:11:33Z",
+      "side": 1,
+      "message": "I think we should have one PageHandler per DevToolsAgentHost (created lazily, removed in DevToolsAgentHostDetached). They do not share enabled_ state, so each one should have a field.",
+      "revId": "ea56f3696e0b8109f575449b9ae07fe26af5997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
