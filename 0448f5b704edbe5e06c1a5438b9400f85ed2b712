@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6837f9da_9fbe199e",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-21T21:40:02Z",
+      "side": 1,
+      "message": "Good point. This function doesn\u0027t do any work, so it\u0027s easier to just call it before calling into the delegate. Moved the calls to the top of the function.",
+      "parentUuid": "79c9836f_75cc5be1",
+      "range": {
+        "startLine": 801,
+        "startChar": 2,
+        "endLine": 801,
+        "endChar": 25
+      },
+      "revId": "0448f5b704edbe5e06c1a5438b9400f85ed2b712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e3b15c_9a7aab3a",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0448f5b704edbe5e06c1a5438b9400f85ed2b712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60e84ca_15403b53",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-21T21:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e3b15c_9a7aab3a",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 19
+      },
+      "revId": "0448f5b704edbe5e06c1a5438b9400f85ed2b712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
