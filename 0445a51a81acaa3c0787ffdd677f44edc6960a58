@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f714b9_f815bbba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-21T13:23:17Z",
+      "side": 1,
+      "message": "nit: Can we add a brief note explaining why it\u0027s OK to re-land?",
+      "revId": "0445a51a81acaa3c0787ffdd677f44edc6960a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
