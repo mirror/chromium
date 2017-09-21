@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "775cd55a_989b8cd4",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-21T09:31:05Z",
+      "side": 1,
+      "message": "I can\u0027t see how this ties into the two newly-introduced *WithRethrow methods.",
+      "revId": "98ecf1da2e6c8c41e764a5b8556fb3a98205880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2e01b5_07093a46",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-21T09:31:05Z",
+      "side": 1,
+      "message": "Note that the spec text is a bit different in https://github.com/whatwg/html/pull/3044 ; in particular we now have the fetch options struct.",
+      "revId": "98ecf1da2e6c8c41e764a5b8556fb3a98205880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00f3725d_050f94da",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 13
