@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12b1fb3e_282d37ac",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:56:08Z",
+      "side": 1,
+      "message": "There is a comment above VerifyAuthorizedResponderCert() on line 558. Do you think that is sufficient, or want it mentioned in here as well?",
+      "parentUuid": "3c32fb4e_8f89f0f6",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 52
+      },
+      "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c00661e1_20dc8739",
         "filename": "net/cert/internal/ocsp.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1db3b1_ec02f80b",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-21T17:56:08Z",
+      "side": 1,
+      "message": "Done.\n\nExtending that argument:\n\n (1) we would also want to do the OCSP signature checking in a loop\n (2) if the responder id matches issuer certificate, it might still be the case that we need to use a delegation certificate, so should fallback to searching certs if it fails.\n\nUpdated the code accordingly.",
+      "parentUuid": "c00661e1_20dc8739",
+      "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
