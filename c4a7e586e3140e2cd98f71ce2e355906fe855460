@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c11efd0_3c185f17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T03:16:57Z",
+      "side": 1,
+      "message": "You can also add\n\nTest: Covered by existing focus manager tests.",
+      "revId": "c4a7e586e3140e2cd98f71ce2e355906fe855460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb785870_47b888c1",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T03:16:57Z",
+      "side": 1,
+      "message": "We don\u0027t normally mention web_contents in the ui toolkit (outside of webview). I think we should say something like\n\n\n// Always refuse first responder. Note this does not prevent the view becoming\n// first responder via -[NSWindow makeFirstResponder:] when invoked during Init\n// or by FocusManager.",
+      "revId": "c4a7e586e3140e2cd98f71ce2e355906fe855460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6749e041_62f35e40",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T03:16:57Z",
+      "side": 1,
+      "message": "running this locally... it looks like there are some tests that don\u0027t have a Widget FocusManager :/. Just a few. But to fix I think we need to wrap this like\n\n  if (auto* focus_manager \u003d GetWidget()-\u003eGetFocusManager()) {\n    [window makeFirstResponder:bridge_-\u003ens_view()];\n    bridge_-\u003eSetFocusManager(focus_manager);\n  }\n\nI filed http://crbug.com/767295 to track",
+      "revId": "c4a7e586e3140e2cd98f71ce2e355906fe855460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
