@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86c61a9e_4d18eb1f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T19:34:27Z",
+      "side": 1,
+      "message": "It seems DoPartialNetworkReadCompleted is only handling completion of a range while this handles result \u003e 0 as well. Do you mean inlining its logic here?",
+      "parentUuid": "f4b0068a_f87b3791",
+      "range": {
+        "startLine": 2103,
+        "startChar": 11,
+        "endLine": 2103,
+        "endChar": 40
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50dccf2b_64ed229f",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 31
@@ -83,6 +107,30 @@
       "writtenOn": "2017-09-20T16:40:16Z",
       "side": 1,
       "message": "Once mode_ is NONE, will we really use the entry_-\u003ewriters object to read from the network? I don\u0027t think this will work.\n\nTransitionToReadingState() DCHECKS that if the transaction isn\u0027t in writers, that its mode has to be either READ or READ_WRITE \u0026\u0026 partial. But here we hope to read while in mode NONE.\n\nWe definitely need to test ContinueInNetworkReadOnlyMode behavior.",
+      "range": {
+        "startLine": 2914,
+        "startChar": 4,
+        "endLine": 2914,
+        "endChar": 16
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47b7842_d26b46ab",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T19:34:27Z",
+      "side": 1,
+      "message": "This is the case when we are in writers and TransitionToReadingState allows mode NONE when we are in writers.\nHttpCache.GET_IncompleteResourceWithAuth executes this path and then goes ahead and invokes TransitionToReadingState",
+      "parentUuid": "13a21120_64be3ca0",
       "range": {
         "startLine": 2914,
         "startChar": 4,
@@ -200,6 +248,30 @@
       "writtenOn": "2017-09-20T16:40:16Z",
       "side": 1,
       "message": "That description sounds a lot like DoneWritingToEntry. Need to clarify more what the purpose of this is.",
+      "range": {
+        "startLine": 432,
+        "startChar": 5,
+        "endLine": 432,
+        "endChar": 75
+      },
+      "revId": "eb750c8ff4453ed295aa35fd3dd010472cc3524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504c6323_5196abd6",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T19:34:27Z",
+      "side": 1,
+      "message": "Rephrased",
+      "parentUuid": "e08e80fb_0898f942",
       "range": {
         "startLine": 432,
         "startChar": 5,
