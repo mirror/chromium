@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d842a5_943d31f5",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-21T21:50:07Z",
+      "side": 1,
+      "message": "nit: This function does have anything to do with a scheme.  Please revise the comment.",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f50615_39f3b58e",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-21T21:50:07Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer \u003e\u003d here.  (The comment above makes it sound like the second test is for non-control characters.  For that to be true, it should be \u003e\u003d.  I know it doesn\u0027t make a difference in practice.)",
+      "range": {
+        "startLine": 30,
+        "startChar": 58,
+        "endLine": 30,
+        "endChar": 59
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab9172f_76d65189",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-21T21:50:07Z",
+      "side": 1,
+      "message": "You should be returning an empty string here, not the original string.\n\nPlease add a test for this situation.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c71bc9_d5ff3cca",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-21T21:50:07Z",
+      "side": 1,
+      "message": "This code makes the function StripJavascriptSchemas() always strip control characters, even if the text is not a javascript scheme.  That seems wrong, or at least an abuse of the function name.  Can you please revise the code and add a test for this situation?",
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
