@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18cc527a_ced7f91e",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-21T15:55:18Z",
+      "side": 1,
+      "message": "nit:\nif (!chromeos::CrosSettings::Get()-\u003eGetString(\n    chromeos::kCastReceiverName, \u0026name) || neme.empty()) {\n  return;\n}",
+      "revId": "7bfc405a9aa08f57f8d0be4c437fac074fdb5f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c061067_6d59ff91",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-21T15:55:18Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "7bfc405a9aa08f57f8d0be4c437fac074fdb5f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
