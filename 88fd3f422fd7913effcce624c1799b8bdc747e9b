@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a373d25_66efe661",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-21T16:45:56Z",
+      "side": 1,
+      "message": "This should go with Capacity related stuff.\nBut why were empty()/size() moved up?",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "88fd3f422fd7913effcce624c1799b8bdc747e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38117df_bc099f28",
+        "filename": "chrome/installer/zucchini/reloc_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-21T16:45:56Z",
+      "side": 1,
+      "message": "Units?",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "88fd3f422fd7913effcce624c1799b8bdc747e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

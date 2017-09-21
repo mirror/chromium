@@ -620,6 +620,30 @@
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b4ce63_d4112977",
+        "filename": "chrome/installer/zucchini/reloc_utils_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-21T16:45:56Z",
+      "side": 1,
+      "message": "Oh, I meant the latter, but that\u0027s fair.",
+      "parentUuid": "dcdba646_04ea1526",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
