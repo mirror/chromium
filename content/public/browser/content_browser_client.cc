@@ -507,4 +507,14 @@ mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(
   return network_context;
 }
 
+#if defined(OS_ANDROID)
+bool ContentBrowserClient::ShouldOverrideUrlLoading(int frame_tree_node_id,
+                                                    const GURL& gurl,
+                                                    bool has_user_gesture,
+                                                    bool is_redirect,
+                                                    bool is_main_frame) {
+  return false;
+}
+#endif
+
 }  // namespace content
