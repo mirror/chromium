@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97a2d0fc_3f47c9f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "nit: remove \"to\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649e7a93_a1d9fc01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "nit: align with \"Add\" on previous line.\ni.e.\n1. Add ...\n   given ...\n2. Add ...\n   alpha ...\n...",
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cb422b_3ce36b0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "nit: make -\u003e so that",
+      "range": {
+        "startLine": 14,
+        "startChar": 46,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5928b75d_149c4156",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "Instead of having a map and removing \"const\" from GetTargetValues, we should move the target_shelf_color_alpha and target_item_color_alpha calculation into a helper function and call it from GetTargetValues and GetBackgroundAlphaValue.",
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f297c61_4dca926a",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "Use a local var to cache GetIdealBounds() to avoid calling it twice.\ni.e.\n  const gfx::Rect shelf_bounds \u003d GetIdealBounds();",
+      "range": {
+        "startLine": 1109,
+        "startChar": 8,
+        "endLine": 1109,
+        "endChar": 24
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c569b56_629d0953",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "nit: Cache and save a call to GetIdealBounds().",
+      "range": {
+        "startLine": 1139,
+        "startChar": 51,
+        "endLine": 1139,
+        "endChar": 67
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e75faa_2430386b",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "Use static_cast\u003cfloat\u003e() instead.",
+      "range": {
+        "startLine": 1288,
+        "startChar": 24,
+        "endLine": 1288,
+        "endChar": 31
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6e4403_9d5ca064",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T22:11:52Z",
+      "side": 1,
+      "message": "Remove extra () and insert spaces before and after \u0027*\u0027",
+      "range": {
+        "startLine": 1295,
+        "startChar": 59,
+        "endLine": 1295,
+        "endChar": 61
+      },
+      "revId": "dda3c8d89000c76fac5da4cf8bd262eb4884340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
