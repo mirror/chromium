@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3b9eeeab_bb7db93f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T05:00:08Z",
+      "side": 1,
+      "message": "Considering this block is here, as well as extension_installed_notification.cc above, I think we can assume enable_extensions is always true for CrOS. And so...",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae68894c_c184c62b",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
@@ -47,6 +64,23 @@
       "writtenOn": "2017-09-21T04:57:44Z",
       "side": 1,
       "message": "Then this weird block can just be deleted",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4ec53a_5a37cd72",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T05:00:08Z",
+      "side": 1,
+      "message": "I think these two files can be merged with the block on line 1330",
       "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
