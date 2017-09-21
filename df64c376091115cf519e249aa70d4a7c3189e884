@@ -1036,6 +1036,30 @@
     },
     {
       "key": {
+        "uuid": "4aec52aa_ae21b887",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-21T01:54:56Z",
+      "side": 1,
+      "message": "Yep, that\u0027s exactly what I was asking for, and it looks like that\u0027s what you did!",
+      "parentUuid": "74bb53ac_f6b73ac2",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8b32c14_ac7c16e9",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -1365,6 +1389,30 @@
     },
     {
       "key": {
+        "uuid": "558fd37d_7a9ffc28",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-21T01:54:56Z",
+      "side": 1,
+      "message": "No, you just have to update FakeRemoteDeviceProvider.\n\nfake_remote_device_factory_\n    -\u003elast_instance()\n    -\u003eset_synced_remote_devices(first_list_of_devices);\n// Verify that GetSyncedDevices() returns first_list_of_devices.\nfake_remote_device_factory_\n    -\u003elast_instance()\n    -\u003eset_synced_remote_devices(second_list_of_devices);\n// Verify that GetSyncedDevices() returns second_list_of_devices.\n\nAlso, it doesn\u0027t look like you tested the observers here.",
+      "parentUuid": "b01d6e85_665a66f1",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50de4fe0_6daf910c",
         "filename": "components/multidevice/service/fake_device_sync.cc",
         "patchSetId": 11
@@ -1400,6 +1448,30 @@
       "side": 1,
       "message": "Should we still keep remote_devices_ static?",
       "parentUuid": "50de4fe0_6daf910c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b506223e_cb07eaa2",
+        "filename": "components/multidevice/service/fake_device_sync.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-21T01:54:56Z",
+      "side": 1,
+      "message": "No, that\u0027s not a good idea. If someone creates a test with multiple FakeDeviceSync objects, it could produce subtle bugs.",
+      "parentUuid": "6f63f6cc_447bf007",
       "range": {
         "startLine": 9,
         "startChar": 0,
