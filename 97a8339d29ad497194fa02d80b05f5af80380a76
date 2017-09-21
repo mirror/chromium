@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7587ddaa_e1428507",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee5ffca_db45dd1e",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f45cb7b_3abbeb1b",
         "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09cce27_d3823c9e",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f45cb7b_3abbeb1b",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e08e76c_02f825fc",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5643f6bf_db363aa2",
+      "range": {
+        "startLine": 192,
+        "startChar": 76,
+        "endLine": 192,
+        "endChar": 77
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e820ec31_1ab36979",
         "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0cf01cb3_d0ff7270",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 1,
+      "message": "Hmmm ... you mean // state \u003d\u003d DONT_BLOCK.\n\nThis isn\u0027t logically guaranteed but I\u0027ll say something about the state should be DONT_BLOCK.",
+      "parentUuid": "e820ec31_1ab36979",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea4caccc_b0212222",
         "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-21T03:24:52Z",
       "side": 1,
       "message": "This can just be \"true\".",
+      "range": {
+        "startLine": 217,
+        "startChar": 60,
+        "endLine": 217,
+        "endChar": 76
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f75bcb_b9845be7",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 1,
+      "message": "I think it should be left as is. If there is a bug that we\u0027ve missed, and this is called with BLOCK, we don\u0027t want to remember this as DONT_BLOCK.\n\nI\u0027ve explained it in a comment.",
+      "parentUuid": "ea4caccc_b0212222",
       "range": {
         "startLine": 217,
         "startChar": 60,

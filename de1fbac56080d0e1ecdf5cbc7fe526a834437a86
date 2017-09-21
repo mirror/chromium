@@ -22,6 +22,30 @@
       "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e09361_6fe84198",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T04:53:55Z",
+      "side": 0,
+      "message": "I can\u0027t see any reason why this was needed, and the tests run fine without it. The only reasoning I can think to have it is that there are no tasks to run if block state is BLOCK, but RunAllBlockingPoolTasksUntilIdle should just return in that case, so why make it complicated?",
+      "parentUuid": "71b9a051_f3577609",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 53
+      },
+      "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
