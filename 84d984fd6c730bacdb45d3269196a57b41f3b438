@@ -16,6 +16,24 @@
       "revId": "84d984fd6c730bacdb45d3269196a57b41f3b438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ee1907_78e0535e",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-21T23:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee99383c_727cc463",
+      "revId": "84d984fd6c730bacdb45d3269196a57b41f3b438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
