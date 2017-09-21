@@ -138,8 +138,12 @@ paper-button:focus:not(:active) {
 
 #buttons {
   display: flex;
-  position: absolute;
-  right: 0px;
+  margin-right: -16px; // get rid of empty space
+}
+
+#filePath {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :host-context(html[dir='rtl']) #buttons {
