@@ -61,6 +61,7 @@
 #include "components/bookmarks/managed/managed_bookmark_service.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/metrics/metrics_service.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "components/prefs/pref_service.h"
