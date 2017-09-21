@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1576d9_062733e9",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-21T16:43:22Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "bd3c468c6eaf6bdd103df46d0dd3c36071978318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
