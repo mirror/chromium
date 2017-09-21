@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "6ab031d7_60ed8045",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-21T17:16:37Z",
+      "side": 1,
+      "message": "Understood and agreed (and thanks for clarifying!). There\u0027s a DCHECK in ExclusiveAccessBubbleViews::ExclusiveAccessBubbleViews [1] that checks for this tho (should it be removed?).\n\nThe bubble is populated in ExclusiveAccessBubbleViews::UpdateViewContent [2], the else part that doesn\u0027t need the accelerator.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/exclusive_access_bubble_views.cc?rcl\u003d0461649f907fb15bcccea6c14cc4ba156ec2be77\u0026l\u003d64\n[2] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/exclusive_access_bubble_views.cc?rcl\u003db7c3b90b5587cf2e76cc57fa065d5a73fcff8653\u0026l\u003d189",
+      "parentUuid": "f9fe6b96_2c1e542b",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5fb7e20_ea48aed4",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 13
