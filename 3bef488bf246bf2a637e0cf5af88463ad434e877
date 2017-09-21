@@ -16,6 +16,24 @@
       "revId": "3bef488bf246bf2a637e0cf5af88463ad434e877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3fae0d_3055d58b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T06:33:56Z",
+      "side": 1,
+      "message": "Thank you for the information.\n\nI read the comments there and found that the check[1] in the ctor of ServiceWorkerScriptURLLoader is wrong because importScripts() can be called in any state in the current implementation[2] (Note that this implementation is not spec-conformant because the spec defines importScripts[2] returns an expected response only on the initial evaluation and install event.\n\nI\u0027ll change the check instead of this.\n\n[1] DCHECK_EQ(ServiceWorkerVersion::NEW, version-\u003estatus());\n[2] https://w3c.github.io/ServiceWorker/v1/#importscripts",
+      "parentUuid": "3190182f_287cfff3",
+      "revId": "3bef488bf246bf2a637e0cf5af88463ad434e877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
