@@ -46,6 +46,30 @@
       "revId": "378f1a71bb7c9945bf7525859b539c1e15d02e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180d20b9_4265f4a6",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T21:43:47Z",
+      "side": 1,
+      "message": "the default size of an icon is 48x48 unless it has a 1x definition, then it uses the canvas dimensions from the 1x.",
+      "parentUuid": "01f12762_312b8326",
+      "range": {
+        "startLine": 339,
+        "startChar": 6,
+        "endLine": 339,
+        "endChar": 22
+      },
+      "revId": "378f1a71bb7c9945bf7525859b539c1e15d02e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
