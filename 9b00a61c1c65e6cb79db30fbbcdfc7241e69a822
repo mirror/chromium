@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690fd060_3e140d11",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-21T00:07:04Z",
+      "side": 1,
+      "message": "Nit: can you add the variable name here? \"bool\" doesn\u0027t tell much.",
+      "revId": "9b00a61c1c65e6cb79db30fbbcdfc7241e69a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
