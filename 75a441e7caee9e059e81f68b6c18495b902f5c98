@@ -52,6 +52,24 @@
       "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3045dfb9_c272f15b",
+        "filename": "device/u2f/u2f_ble_frames_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-21T07:12:07Z",
+      "side": 1,
+      "message": "I see, perhaps I initially misunderstood the purpose of this kind of tests. Should it merely check that ANY input can be parsed without crashes?\n\nDo you think I should also check the serializer? E.g., leave lines 14-17 intact, and just in line 20 pass the (data, data + size) vector to Parse instead of |buffer|.",
+      "parentUuid": "46333055_841858ca",
+      "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
