@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e636305_900ce707",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:59:51Z",
+      "side": 1,
+      "message": "HTML IDs are usually named like-this or likeThis, but not LikeThis.",
+      "revId": "fc1576c1cef6ecc7d0155547050e7a610a884a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122eac03_c8c4fbf7",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:59:51Z",
+      "side": 1,
+      "message": "The tests no longer call this function explicitly, so there is no need to export it anymore. How about calling it internally from init() and also remove line 50 below?",
+      "revId": "fc1576c1cef6ecc7d0155547050e7a610a884a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6504861_d0720c62",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:59:51Z",
+      "side": 1,
+      "message": "Even if we don\u0027t type check the tests yet, let\u0027s add type annotation where possible\n\n/** @private {boolean} */\nthis.previewsEnabled_ \u003d false;",
+      "revId": "fc1576c1cef6ecc7d0155547050e7a610a884a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fae4ec_7da82c33",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:59:51Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "fc1576c1cef6ecc7d0155547050e7a610a884a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93c16a7_058ab9c5",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T22:59:51Z",
+      "side": 1,
+      "message": "Semicolon missing",
+      "revId": "fc1576c1cef6ecc7d0155547050e7a610a884a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
