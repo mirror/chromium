@@ -18,7 +18,7 @@ namespace {
 // The maximum number of video frame buffers in-flight at any one time.
 // If all buffers are still in use by consumers when new frames are produced
 // those frames get dropped.
-static const int kMaxBufferCount = 3;
+static const int kMaxBufferCount = 9;
 
 }  // anonymous namespace
 
