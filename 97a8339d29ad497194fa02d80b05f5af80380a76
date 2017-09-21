@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "39cae34c_8cd2c809",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T05:00:49Z",
+      "side": 1,
+      "message": "Yes. See below.",
+      "parentUuid": "0cf01cb3_d0ff7270",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea4caccc_b0212222",
         "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
         "patchSetId": 2
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I think it should be left as is. If there is a bug that we\u0027ve missed, and this is called with BLOCK, we don\u0027t want to remember this as DONT_BLOCK.\n\nI\u0027ve explained it in a comment.",
       "parentUuid": "ea4caccc_b0212222",
+      "range": {
+        "startLine": 217,
+        "startChar": 60,
+        "endLine": 217,
+        "endChar": 76
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e701e78_dfc8477d",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T05:00:49Z",
+      "side": 1,
+      "message": "OK I think you shouldn\u0027t do unnecessary work for a case that\u0027s already DCHECK\u0027d, but you are right that you need to not have a security issue after a DCHECK (which we would have if it was requested to block and we set it to false).\n\nSwap around the two if statements to have:\n\n    if (state \u003d\u003d DONT_BLOCK) {\n      ..\n    } else {  // UNKNOWN\n      ..\n    }\n\nThen in the DCHECK-failing BLOCK case, we fall into UNKNOWN and that is still safe.",
+      "parentUuid": "81f75bcb_b9845be7",
       "range": {
         "startLine": 217,
         "startChar": 60,
