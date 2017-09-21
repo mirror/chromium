@@ -5,9 +5,13 @@
 #include "third_party/leveldatabase/leveldb_chrome.h"
 
 #include <memory>
+
 #include "base/bind.h"
+#include "base/containers/flat_set.h"
 #include "base/memory/memory_pressure_listener.h"
 #include "base/sys_info.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
+#include "util/mutexlock.h"
 
 using MemoryPressureLevel = base::MemoryPressureListener::MemoryPressureLevel;
 using leveldb::Cache;
@@ -59,6 +63,23 @@ class Globals {
     web_block_cache()->Prune();
   }
 
+  void TrackInMemoryEnv(leveldb::Env* env) {
+    leveldb::MutexLock l(&mutex_);
+    DCHECK(in_memory_envs_.find(env) == in_memory_envs_.end());
+    in_memory_envs_.insert(env);
+  }
+
+  void UntrackInMemoryEnv(leveldb::Env* env) {
+    leveldb::MutexLock l(&mutex_);
+    DCHECK(in_memory_envs_.find(env) != in_memory_envs_.end());
+    in_memory_envs_.erase(env);
+  }
+
+  bool IsInMemoryEnv(const leveldb::Env* env) const {
+    leveldb::MutexLock l(&mutex_);
+    return in_memory_envs_.find(env) != in_memory_envs_.end();
+  }
+
  private:
   ~Globals() {}
 
@@ -66,8 +87,24 @@ class Globals {
   std::unique_ptr<Cache> browser_block_cache_;  // Never null.
   // Listens for the system being under memory pressure.
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
+  mutable leveldb::port::Mutex mutex_;  // For all class synchronization.
+  base::flat_set<leveldb::Env*> in_memory_envs_;
 
   DISALLOW_COPY_AND_ASSIGN(Globals);
+};
+
+class ChromeInMemoryEnv : public leveldb::EnvWrapper {
+ public:
+  ChromeInMemoryEnv(leveldb::Env* base_env) : EnvWrapper(base_env) {
+    Globals::GetInstance()->TrackInMemoryEnv(this);
+  }
+
+  ~ChromeInMemoryEnv() override {
+    Globals::GetInstance()->UntrackInMemoryEnv(this);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ChromeInMemoryEnv);
 };
 
 }  // namespace
@@ -83,6 +120,15 @@ Cache* GetSharedWebBlockCache() {
 
 Cache* GetSharedBrowserBlockCache() {
   return Globals::GetInstance()->browser_block_cache();
+}
+
+bool IsMemEnv(leveldb::Env* env) {
+  DCHECK(env);
+  return Globals::GetInstance()->IsInMemoryEnv(env);
+}
+
+leveldb::Env* NewMemEnv(leveldb::Env* base_env) {
+  return new ChromeInMemoryEnv(leveldb::NewMemEnv(base_env));
 }
 
 }  // namespace leveldb_chrome
