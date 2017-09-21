@@ -6,8 +6,11 @@
 
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
-#include "device/hid/hid_service.h"
 #include "device/usb/usb_service.h"
+
+#if !defined(OS_ANDROID)
+#include "device/hid/hid_service.h"
+#endif  // !defined(OS_ANDROID)
 
 using content::BrowserThread;
 
