@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/policy/off_hours/weekly_time.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "third_party/icu/source/common/unicode/unistr.h"
 #include "third_party/icu/source/common/unicode/utypes.h"
 #include "third_party/icu/source/i18n/unicode/gregocal.h"
@@ -203,11 +204,26 @@ std::unique_ptr<em::ChromeDeviceSettingsProto> ApplyOffHoursPolicyToProto(
   return policies;
 }
 
-DeviceOffHoursController::DeviceOffHoursController() {}
+DeviceOffHoursController::DeviceOffHoursController() {
+  chromeos::DBusThreadManager::Get()->GetSystemClockClient()->AddObserver(this);
+}
 
-DeviceOffHoursController::~DeviceOffHoursController() {}
+DeviceOffHoursController::~DeviceOffHoursController() {
+  chromeos::DBusThreadManager::Get()->GetSystemClockClient()->RemoveObserver(
+      this);
+}
+
+void DeviceOffHoursController::SystemClockUpdated() {
+  UpdateOffHoursMode();
+}
 
 void DeviceOffHoursController::UpdateOffHoursMode() {
+  if (!chromeos::DBusThreadManager::Get()
+           ->GetSystemClockClient()
+           ->IsNetworkSynchronized()) {
+    LOG(ERROR) << "Network isn't synchronized. OffHours mode is not available.";
+    off_hours_intervals_ = {};
+  }
   if (off_hours_intervals_.empty()) {
     StopOffHoursTimer();
     SetOffHoursMode(false);
