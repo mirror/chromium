@@ -130,6 +130,11 @@ ContentVerifierDelegate::Mode ChromeContentVerifierDelegate::ShouldBeVerified(
   if (!Manifest::IsAutoUpdateableLocation(extension.location()))
     return ContentVerifierDelegate::NONE;
 
+  if (ManifestURL::GetUpdateURL(&extension).is_empty()) {
+    NOTREACHED() << "An auto-updateable extension should have an update URL.";
+    return ContentVerifierDelegate::ENFORCE_STRICT;
+  }
+
   if (!ManifestURL::UpdatesFromGallery(&extension)) {
     // It's possible that the webstore update url was overridden for testing
     // so also consider extensions with the default (production) update url
