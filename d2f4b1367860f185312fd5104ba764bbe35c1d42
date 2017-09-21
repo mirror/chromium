@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e2d20e_dc043979",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-21T23:59:24Z",
+      "side": 1,
+      "message": "ok, I understand the Caveats.  Let\u0027s consider the following scenario:\n\nA malicious site has invisible \u003cinput value\u003d\"1\" autocomplete\u003d\"cc-number\" autofocus\u003e and asks a user to press Down arrow key, the site code can obtain a credit card number starting with \"1\".\n\nMaybe we need to check TextControlElement::LastChangeWasUserEdit() too.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 2,
+        "endLine": 1027,
+        "endChar": 31
+      },
+      "revId": "d2f4b1367860f185312fd5104ba764bbe35c1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
