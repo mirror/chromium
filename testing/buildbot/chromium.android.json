@@ -1827,7 +1827,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -1858,7 +1858,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -3273,7 +3273,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -3306,7 +3306,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -4553,7 +4553,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -4586,7 +4586,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -6088,7 +6088,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -6121,7 +6121,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -7840,7 +7840,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -7872,7 +7872,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {
@@ -9284,7 +9284,7 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "sandbox_linux_unittests"
+            "sandbox_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
@@ -9317,7 +9317,7 @@
             }
           ]
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "merge": {

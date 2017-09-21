@@ -12,7 +12,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "content/common/content_export.h"
-#include "content/public/common/sandbox_type.h"
+#include "content/public/common/content_sandbox_type.h"
 
 namespace base {
 class FilePath;
