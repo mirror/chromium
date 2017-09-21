@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37b16b7_da78d710",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-21T12:15:04Z",
+      "side": 0,
+      "message": "Does it work if an argument is left unbound?",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "7b0bfa078e3aff89974e6772cf2fa4e670e4f136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa2b25f_879ee96e",
+        "filename": "components/search_engines/keyword_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-21T12:15:04Z",
+      "side": 0,
+      "message": "How about leaving the comment until you drop the columns?",
+      "range": {
+        "startLine": 51,
+        "startChar": 32,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "7b0bfa078e3aff89974e6772cf2fa4e670e4f136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
