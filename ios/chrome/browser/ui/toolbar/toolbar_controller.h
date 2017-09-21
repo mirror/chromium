@@ -95,7 +95,7 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 - (void)windowDidChange;
 @end
 
-@interface ToolbarView : UIImageView<RelaxedBoundsConstraintsHitTestSupport> {
+@interface ToolbarView : UIView<RelaxedBoundsConstraintsHitTestSupport> {
   base::WeakNSProtocol<id<ToolbarFrameDelegate>> delegate_;
 }
 - (void)setDelegate:(id<ToolbarFrameDelegate>)delegate;
@@ -114,12 +114,7 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
                                         PopupMenuDelegate,
                                         BubbleViewAnchorPointProvider>
 
-// The top-level toolbar view. It is a |UIImageView| even though it does not
-// hold any image for testability: unlike |UIView|, a |UIImageView| that is
-// visible in the UI automation view hierarchy does not prevent its subviews
-// from also being visible.
-// TODO(crbug.com/228469): Figure out how to fix this and have the top-level
-// view be a UIView.
+// The top-level toolbar view.
 @property(nonatomic, readonly, strong) ToolbarView* view;
 // The view for the toolbar background image. This is a subview of |view| to
 // allow clients to alter the transparency of the background image without
