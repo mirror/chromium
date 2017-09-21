@@ -34,6 +34,24 @@
       "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74977a05_387c9648",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-09-21T10:50:28Z",
+      "side": 1,
+      "message": "We\u0027ll need this for https://bugs.chromium.org/p/chromium/issues/detail?id\u003d694304, so DMServer can now which users are still active, and can garbage collect accounts which are inactive for a long time.\n\nStoring this was important (if we don\u0027t store, we\u0027ll never know it later, and we would garbage collect accounts which are used), pinging DMServer was not that important (we don\u0027t have too much account for now, and we can start pinging anytime later).",
+      "parentUuid": "2f7d92c9_8e755e4d",
+      "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
