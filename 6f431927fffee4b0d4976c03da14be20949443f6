@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c27ea761_6c30dcc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-21T05:00:38Z",
+      "side": 1,
+      "message": "I don\u0027t think PlainTextRange counts replaced elements, since it doesn\u0027t set the EmitsObjectReplacementCharacter behavior when using TextIterator.\n\nRegarding TI, when EmitsObjectReplacementCharacter is enabled, object replacement characters are emitted regardless of the img src.",
+      "parentUuid": "5a5e075f_26ecd3ac",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
@@ -48,6 +66,29 @@
       "writtenOn": "2017-09-21T01:35:44Z",
       "side": 1,
       "message": "nit: s\"\u003cimg /\u003e\"\u003cimg\u003e\"",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e215e22_ff3a9fc9",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-21T05:00:38Z",
+      "side": 1,
+      "message": "Does the root editable have to be \u003ca\u003e? Does \u003cdiv\u003e work?",
+      "range": {
+        "startLine": 2368,
+        "startChar": 8,
+        "endLine": 2368,
+        "endChar": 9
+      },
       "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
