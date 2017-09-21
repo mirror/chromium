@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e78158_e9326855",
+        "filename": "ui/webui/resources/cr_elements/cr_icons_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T18:10:51Z",
+      "side": 1,
+      "message": ":any is not necessary in this particular instance.",
+      "revId": "3f832f766d15385302f25e7b0c40a65db8590f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
