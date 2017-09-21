@@ -9,17 +9,18 @@
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
-#include "base/time/tick_clock.h"
-#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/events/event_handler.h"
 
+namespace base {
+class TickClock;
+}  // namespace base
+
 namespace ash {
 
-class PowerButtonDisplayController;
 class LockStateController;
 class PowerButtonDisplayController;
 class TabletPowerButtonController;
