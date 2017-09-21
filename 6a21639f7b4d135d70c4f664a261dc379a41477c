@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "009f607a_f2f6b35c",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-21T02:17:35Z",
+      "side": 0,
+      "message": "the focusConfig set in appearance_page.js uses \u0027#customize-fonts-subpage-trigger .subpage-arrow\u0027 as a querySelector() but was not updated.  this is resulting in assert()ion errors when navigating out of the fonts page.",
+      "range": {
+        "startLine": 169,
+        "startChar": 33,
+        "endLine": 169,
+        "endChar": 38
+      },
+      "revId": "6a21639f7b4d135d70c4f664a261dc379a41477c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
