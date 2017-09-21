@@ -615,6 +615,30 @@
     },
     {
       "key": {
+        "uuid": "9df488b1_7f78242e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T20:37:18Z",
+      "side": 1,
+      "message": "Removed this condition because now Remove Transaction is always called before we invoke TruncateEntry so this is no longer a valid condition",
+      "parentUuid": "a912fbff_92ca24e6",
+      "range": {
+        "startLine": 202,
+        "startChar": 29,
+        "endLine": 202,
+        "endChar": 68
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b57197_8657b59a",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 26
