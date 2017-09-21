@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78688a7f_cbdb262c",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-21T06:06:08Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 170,
+        "startChar": 66,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "0a4c567b610a37570cc0822d10de8c5ae8df0c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d959de_98d4da2a",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-21T06:06:08Z",
+      "side": 1,
+      "message": "... (including |server_type_|)",
+      "range": {
+        "startLine": 174,
+        "startChar": 74,
+        "endLine": 174,
+        "endChar": 75
+      },
+      "revId": "0a4c567b610a37570cc0822d10de8c5ae8df0c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

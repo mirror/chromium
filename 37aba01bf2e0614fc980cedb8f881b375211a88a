@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ab00d84c_53135ca5",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-21T06:06:08Z",
+      "side": 1,
+      "message": "We have to describe the relationship between |autofill_type| and |predictions|.\nSuggestion for |predictions| (insert it before |message FieldPrediction|):\nDetailed list of all possible predictions (incl. |autofill_type|).",
+      "parentUuid": "5e5bf502_b0963931",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d27bcf8_82015061",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 7
@@ -253,6 +271,24 @@
       "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34c7e04_0eada411",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-21T06:06:08Z",
+      "side": 1,
+      "message": "\u003e \u003e Interesting.\n\u003e \u003e \n\u003e \u003e Do we have any insight as to the nature/breakdown of the suppressions? (i.e., username gets overridden to email vs something else?).\n\u003e \n\u003e Mostly, I think username gets overridden to email. And the second might be phone number.\n\nI will investigate that.",
+      "parentUuid": "682ecd56_cb2074a9",
+      "revId": "37aba01bf2e0614fc980cedb8f881b375211a88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

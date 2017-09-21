@@ -70,6 +70,30 @@
       "revId": "b6c7a9f6f9ce496378852888ebb726c0f10ab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b07cb0f_95a97b46",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-21T06:06:08Z",
+      "side": 0,
+      "message": "\u003e \u003e Ah wait... you handled that already in the parsing code.\n\u003e \u003e \n\u003e \u003e My comment above can be ignored, I think.\n\u003e \n\u003e Yes, indeed I think this is covered in the parsing code.\n\nAck.",
+      "parentUuid": "439d140e_a9cd32dd",
+      "range": {
+        "startLine": 922,
+        "startChar": 10,
+        "endLine": 922,
+        "endChar": 32
+      },
+      "revId": "b6c7a9f6f9ce496378852888ebb726c0f10ab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
