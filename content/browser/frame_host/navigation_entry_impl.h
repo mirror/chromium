@@ -395,6 +395,12 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   void set_ssl_error(bool error) { ssl_error_ = error; }
   bool ssl_error() const { return ssl_error_; }
 
+  bool has_user_gesture() const { return has_user_gesture_; }
+
+  void set_has_user_gesture(bool has_user_gesture) {
+    has_user_gesture_ = has_user_gesture;
+  }
+
 #if defined(OS_ANDROID)
   base::TimeTicks intent_received_timestamp() const {
     return intent_received_timestamp_;
@@ -403,14 +409,6 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   void set_intent_received_timestamp(
       const base::TimeTicks intent_received_timestamp) {
     intent_received_timestamp_ = intent_received_timestamp;
-  }
-
-  bool has_user_gesture() const {
-    return has_user_gesture_;
-  }
-
-  void set_has_user_gesture (bool has_user_gesture) {
-    has_user_gesture_ = has_user_gesture;
   }
 #endif
 
@@ -533,10 +531,10 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // The time at which Chrome received the Android Intent that triggered this
   // URL load operation. Reset at commit and not persisted.
   base::TimeTicks intent_received_timestamp_;
+#endif
 
   // Whether the URL load carries a user gesture.
   bool has_user_gesture_;
-#endif
 
   // Used to store ReloadType for the entry.  This is ReloadType::NONE for
   // non-reload navigations.  Reset at commit and not persisted.
