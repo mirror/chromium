@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11c7c7a7_886b6601",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T01:35:44Z",
+      "side": 1,
+      "message": "Is this happen on IMG element without valid image resource?\nIt seems IMG elements in sample case in the issue have \"src\" attributes.\n\nSince, |PlainTextRange| counts IMG element, only if valid resource(?),\nas Object Replacement Character.\n\nIs TextIterator emit Object Replacement Character for IMG elements\nevent if they don\u0027t have valid image resource?",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58585610_d72eeff0",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T01:35:44Z",
+      "side": 1,
+      "message": "nit: s\"\u003cimg /\u003e\"\u003cimg\u003e\"",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
