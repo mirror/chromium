@@ -134,18 +134,16 @@ class MessagingApiTest : public ExtensionApiTest {
   }
 };
 
-// Tests that message passing between extensions and content scripts works.
-#if defined(MEMORY_SANITIZER) || defined(OS_MACOSX) || defined(OS_WIN)
-// https://crbug.com/582185 - flakily times out on Linux/CrOS MSAN
-// https://crbug.com/681705 - flakily times out on mac_chromium_rel_ng
-// https://crbug.com/681705 - flakily times out on win_chromium_rel_ng
-#define MAYBE_Messaging DISABLED_Messaging
-#else
-#define MAYBE_Messaging Messaging
-#endif
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MAYBE_Messaging) {
+class ReenableMessagingTest
+    : public MessagingApiTest,
+      public testing::WithParamInterface<int> {};
+
+IN_PROC_BROWSER_TEST_P(ReenableMessagingTest, Messaging) {
   ASSERT_TRUE(RunExtensionTest("messaging/connect")) << message_;
 }
+
+INSTANTIATE_TEST_CASE_P(
+    ReenableTest, ReenableMessagingTest, testing::Range(0, 100));
 
 IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingCrash) {
   ExtensionTestMessageListener ready_to_crash("ready_to_crash", false);
