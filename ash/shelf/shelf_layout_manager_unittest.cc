@@ -1457,7 +1457,11 @@ TEST_F(ShelfLayoutManagerFullscreenAppListTest,
   app_list::test::TestAppListPresenter test_app_list_presenter;
   Shell::Get()->app_list()->SetAppListPresenter(
       test_app_list_presenter.CreateInterfacePtrAndBind());
-  gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
+  // Starts the drag from the center of the shelf's bottom.
+  gfx::Rect shelf_widget_bounds = GetShelfWidget()->GetWindowBoundsInScreen();
+  gfx::Point start =
+      gfx::Point(shelf_widget_bounds.x() + shelf_widget_bounds.width() / 2,
+                 shelf_widget_bounds.bottom());
 
   // Fling up that exceeds the velocity threshold should show the fullscreen app
   // list.
@@ -1542,7 +1546,11 @@ TEST_F(ShelfLayoutManagerFullscreenAppListTest,
   constexpr base::TimeDelta kTimeDelta = base::TimeDelta::FromMilliseconds(100);
   constexpr int kNumScrollSteps = 4;
 
-  gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
+  // Starts the drag from the center of the shelf's bottom.
+  gfx::Rect shelf_widget_bounds = GetShelfWidget()->GetWindowBoundsInScreen();
+  gfx::Point start =
+      gfx::Point(shelf_widget_bounds.x() + shelf_widget_bounds.width() / 2,
+                 shelf_widget_bounds.bottom());
   gfx::Vector2d delta;
 
   // Swiping up more than the threshold should show the app list.
@@ -1625,7 +1633,11 @@ TEST_F(ShelfLayoutManagerFullscreenAppListTest,
   constexpr base::TimeDelta kTimeDelta = base::TimeDelta::FromMilliseconds(100);
   constexpr int kNumScrollSteps = 4;
 
-  gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
+  // Starts the drag from the center of the shelf's bottom.
+  gfx::Rect shelf_widget_bounds = GetShelfWidget()->GetWindowBoundsInScreen();
+  gfx::Point start =
+      gfx::Point(shelf_widget_bounds.x() + shelf_widget_bounds.width() / 2,
+                 shelf_widget_bounds.bottom());
   gfx::Vector2d delta;
 
   // Swiping up less than the close threshold should close the app list.

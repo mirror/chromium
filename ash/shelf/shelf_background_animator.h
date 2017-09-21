@@ -85,6 +85,9 @@ class ASH_EXPORT ShelfBackgroundAnimator : public ShelfObserver,
   void AnimationProgressed(const gfx::Animation* animation) override;
   void AnimationEnded(const gfx::Animation* animation) override;
 
+  // Gets the alpha value of |background_type|.
+  int GetBackgroundAlphaValue(ShelfBackgroundType background_type) const;
+
  protected:
   // ShelfObserver:
   void OnBackgroundTypeChanged(ShelfBackgroundType background_type,
@@ -135,7 +138,7 @@ class ASH_EXPORT ShelfBackgroundAnimator : public ShelfObserver,
   // Returns true if the current |animator_| should be re-used to animate to the
   // given |background_type|.  This allows for pre-empted animations to take the
   // same amount of time to reverse to the |previous_background_type_|.
-  bool CanReuseAnimator(ShelfBackgroundType background_type) const;
+  bool CanReuseAnimator(ShelfBackgroundType background_type);
 
   // Creates a new |animator_| configured with the correct duration. If the
   // |animator_| is currently animating it will be stopped.
@@ -151,7 +154,7 @@ class ASH_EXPORT ShelfBackgroundAnimator : public ShelfObserver,
   // |item_background_values| according to |background_type|.
   void GetTargetValues(ShelfBackgroundType background_type,
                        AnimationValues* shelf_background_values,
-                       AnimationValues* item_background_values) const;
+                       AnimationValues* item_background_values);
 
   // Updates the animation values corresponding to the |t| value between 0 and
   // 1.
@@ -174,6 +177,9 @@ class ASH_EXPORT ShelfBackgroundAnimator : public ShelfObserver,
 
   // Drives the animtion.
   std::unique_ptr<gfx::SlideAnimation> animator_;
+
+  // Maps ShelfBackgroundType onto alpha value indices.
+  std::map<ShelfBackgroundType, int> background_type_to_alpha_;
 
   // Tracks the shelf background animation values.
   AnimationValues shelf_background_values_;
