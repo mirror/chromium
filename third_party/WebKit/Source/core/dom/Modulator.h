@@ -143,6 +143,8 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
       ScriptModule) = 0;
 
   virtual void ExecuteModule(const ModuleScript*) = 0;
+  virtual void ExecuteModuleWithRethrowError(const ModuleScript*,
+                                             ExceptionState&) = 0;
 
   virtual ModuleScriptFetcher* CreateModuleScriptFetcher() = 0;
 

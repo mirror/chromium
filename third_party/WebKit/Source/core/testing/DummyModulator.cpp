@@ -138,6 +138,11 @@ void DummyModulator::ExecuteModule(const ModuleScript*) {
   NOTREACHED();
 }
 
+void DummyModulator::ExecuteModuleWithRethrowError(const ModuleScript*,
+                                                   ExceptionState&) {
+  NOTREACHED();
+}
+
 ModuleScriptFetcher* DummyModulator::CreateModuleScriptFetcher() {
   NOTREACHED();
   return nullptr;
