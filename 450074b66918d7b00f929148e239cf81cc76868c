@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac6c159_a1f2a05f",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T21:09:48Z",
+      "side": 1,
+      "message": "There is nothing guaranteeing here that getPreviewsEnabled has completed, because your setupFnCompleted() call is not waiting on getPreviewsEnabled() promise. If you want proof,\n\nwrap lines 16-24 with\nsetTimeout(...., 3000);\nYou will observe that setupFnCompleted() fires before the UI has been updated.\n\nIf you really wanted to give a signal to the test that everything has been done, the page is idle, and that it should continue after that point only you would need to do the following (which IMO is NOT going to be scale-able, because your page eventually will be interactive, not static as it is now).\n\nwindow.setupFn().then(function() {\n  ...\n  interventions_internals.init(pageHandler);\n\n  return interventions_internals.getPreviewsEnabled(); // NOTE the \"return\" here\n}).then(function() {\n  // Assuming that getPreviewsEnabled() correctly resolves its Promise after everything has\n  // been updated, you can guarantee that the page is idle passed that point.\n  window.testPageHandler.setupFnCompleted();\n});",
+      "revId": "450074b66918d7b00f929148e239cf81cc76868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

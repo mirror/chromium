@@ -394,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "f4fdfd91_4046b922",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T21:09:48Z",
+      "side": 1,
+      "message": "See my other comment too.\n\nYes, it is based on how Promise chaining works, and it is a mature pattern, see for example [1]. As your page gets interactive, setupFnComplete will be meaningless.\n\nImagine trying to test a button that when clicked fetches more info from the C++ side, then updates the UI. setupFnComplete will be of no use. Where the suggested pattern would still hold as follows (pseudocode)\n\ntest(\u0027button updates UI\u0027, function() {\n ... setup fake data\n ... resolve setupFnResolver\n ... simulate clicking the button\n return testHandler.whenCalled(\u0027fetchMoreData\u0027).then(function() {\n      // safe to do assertions here, UI has already (guaranteed) been updated\n   });\n});\n\nYou can still shoot yourself in the foot by doing asynchronous stuff in the prod code that is not covered by a promise or within a setTimeout(), eventually leaving the test code with no good signal to wait for. But almost always (based on experience) you don\u0027t have to shoot yourself on the foot and there is a good deterministic way of testing your asynchronous code.\n\n[1] https://cs.chromium.org/search/?q\u003dwhenCalled+file:%5Esrc/chrome/test/data/webui/settings/+package:%5Echromium$\u0026type\u003dcs",
+      "parentUuid": "b1059ade_7ea600e8",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcadcbbb_6a5795e1",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
