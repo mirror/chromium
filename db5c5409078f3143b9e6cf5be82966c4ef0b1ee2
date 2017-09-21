@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "cf59a952_33506a08",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-21T19:47:12Z",
+      "side": 1,
+      "message": "For Layer compositor, this will be turned on by flag: \"enable-gpu-memory-buffer-compositor-resources\";\n\ncode:\nhttps://cs.chromium.org/chromium/src/content/renderer/gpu/render_widget_compositor.cc?type\u003dcs\u0026q\u003duse_gpu_memory_buffer_resources\u0026sq\u003dpackage:chromium\u0026l\u003d426\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_thread_impl.cc?gsn\u003dIsGpuMemoryBufferCompositorResourcesEnabled\u0026l\u003d808",
+      "parentUuid": "a55824b1_e905beb4",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c04dd01b_ad57c6e6",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
