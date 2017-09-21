@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "006e531d_68566dd7",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-21T22:09:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fbf5b08_7403650c",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97765a7_7c1d3cf3",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T19:00:38Z",
       "side": 1,
       "message": "Instead of changing logic based on |is_custom_touch_calibration_| can we have a delegate, and the invoker installs the delegate, so this class no longer has any idea of a \"custom\" vs \"non-custom\" setup? This should eliminate the special cases.\n\nI\u0027m not that familiar with this code so if that doesn\u0027t make sense lmk.",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faaef14_7c10925d",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-21T22:09:40Z",
+      "side": 1,
+      "message": "Discussed offline. This does make the code more straightforward and easier to understand but is not worth the overhead it adds to the codebase.",
+      "parentUuid": "d97765a7_7c1d3cf3",
       "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13e5d50a_e6da2775",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-21T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a435177f_a3d6fe98",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1306393e_54e392cb",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "00fae22f_5deb8d12",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-21T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1306393e_54e392cb",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1541ea2b_ec1e7e0c",
         "filename": "ui/display/manager/managed_display_info.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d08575_3d53a67e",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-21T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1541ea2b_ec1e7e0c",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
