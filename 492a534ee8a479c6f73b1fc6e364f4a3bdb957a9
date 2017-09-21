@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e46613ce_40f463eb",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-eg.json",
+        "patchSetId": 29
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "I think you are missing few places where to add your new target, as there is a new ios-simulator-eg target on the CQ. You might want to take a look at https://chromium-review.googlesource.com/c/chromium/src/+/671044 (it has not landed yet, so I am not sure it is the correct way to do it, but at least it does not add a target to the CQ :) )",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f609cbd5_1ef7911c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Why are those imports in the .h?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625c4b96_398c4e7a",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Use NS_DESIGNATED_INITIALIZER for this initializer if it is required to use it.\nUse NS_UNAVAILABLE for the initializer inherited from UIViewController.",
+      "range": {
+        "startLine": 18,
+        "startChar": 48,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1962c1cb_8facddf3",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Nit: s/Id/ID",
+      "range": {
+        "startLine": 18,
+        "startChar": 42,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cfc26b_facbae25",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "ivar should start with \"_\".\nAnd you should use properties instead of ivar. If you want to add private property, use class extension.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d634e430_47b2ebfa",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "This does not need to be an ivar. [self addSubview:textView] will retain the textView.",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc303fac_b344b2c1",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Move those to anonymous namespace.",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785bb6f7_21739e13",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Are you sure about having userInteractionEnabled \u003d NO on all your views? It means that if the user taps your view, the tap will go through and tap the WebView below if. Do you have something else to catch the tap?",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba5e8fd_2986b925",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Use [MDCTypography body1Font] (or another font if it is not the one you want, but use MDCTypography) instead.",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 14
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae7577e_fe612f59",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. Can you try removing it and changing the language to Arabic, or an other RTL language?",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fea4ec_64435698",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Remove this one from this block.",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 72
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b2d98f_43ee0e9a",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Add [contentView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].\nMaybe one day it will be relevant and we don\u0027t want to go through all classes to do it again :)",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 5
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeba80e_36c67ce3",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Replace this with AddSameConstraints(contentView, self.view).",
+      "range": {
+        "startLine": 110,
+        "startChar": 24,
+        "endLine": 110,
+        "endChar": 43
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbebd19_10dd20d1",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Is this needed? If not, you can probably move the constraints between self.view and self.contentView to -viewDidLoad. And if you do that, contentView does not need to be retained by the VC.",
+      "range": {
+        "startLine": 122,
+        "startChar": 24,
+        "endLine": 122,
+        "endChar": 45
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5276fcd_bec2ebf0",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Comment for all protocol declaration.",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c468a8a2_e2f62b9a",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Don\u0027t use assign with ARC. Use weak instead (I am surprised you did get a warning).",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d309c4_94fa1802",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "range": {
+        "startLine": 76,
+        "startChar": 40,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c34d174_71fd6e1f",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Please correct this to use leading underscore :)",
+      "range": {
+        "startLine": 293,
+        "startChar": 34,
+        "endLine": 293,
+        "endChar": 54
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d800eb6_7c216f5f",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T14:47:04Z",
+      "side": 1,
+      "message": "Leading underscore for ivar in Objective-C. (It should also be true for ivar in this file, but please don\u0027t fix it in this CL as it would become hard to read).",
+      "range": {
+        "startLine": 297,
+        "startChar": 45,
+        "endLine": 297,
+        "endChar": 76
+      },
+      "revId": "492a534ee8a479c6f73b1fc6e364f4a3bdb957a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
