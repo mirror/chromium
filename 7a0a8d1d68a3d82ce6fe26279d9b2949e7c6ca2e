@@ -56,6 +56,23 @@
       "revId": "7a0a8d1d68a3d82ce6fe26279d9b2949e7c6ca2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375de973_c8df3a1d",
+        "filename": "content/common/sandbox_policy_fuchsia.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-21T16:03:37Z",
+      "side": 1,
+      "message": "nit: UpdateLaunchOptionsForSandboxType? We aren\u0027t operating on a \"sandbox\" here, which I think is implied by the current name.",
+      "revId": "7a0a8d1d68a3d82ce6fe26279d9b2949e7c6ca2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
