@@ -15,6 +15,7 @@
 #include "ash/shell.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_util.h"
+#include "chrome/browser/extensions/bookmark_app_util.h"
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -86,6 +87,9 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (browser_view()->ShouldShowWindowIcon()) {
     window_icon_ = new TabIconView(this, nullptr);
     window_icon_->set_is_light(true);
+    window_icon_->set_show_default_favicon(
+        !extensions::IsExperimentalBookmarkAppBrowser(
+            browser_view()->browser()));
     AddChildView(window_icon_);
     window_icon_->Update();
   }
@@ -366,8 +370,11 @@ bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
   // This function is queried during the creation of the window as the
   // TabIconView we host is initialized, so we need to null check the selected
   // WebContents because in this condition there is not yet a selected tab.
+  // PWAs use their app icon and shouldn't show a throbber.
   content::WebContents* current_tab = browser_view()->GetActiveWebContents();
-  return current_tab && current_tab->IsLoading();
+  return !extensions::IsExperimentalBookmarkAppBrowser(
+             browser_view()->browser()) &&
+         current_tab && current_tab->IsLoading();
 }
 
 gfx::ImageSkia BrowserNonClientFrameViewAsh::GetFaviconForTabIconView() {
