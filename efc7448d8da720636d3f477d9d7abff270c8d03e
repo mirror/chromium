@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8415a8_a59392eb",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "I would still encourage you to manage the order via running more impactful audits first and via using severity level. Otherwise, this wrapper is just another indirection in your way that makes readers of the code think there is some semantics behind it.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324ef7e8_0e91ef91",
+        "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "You can land this separately.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5c3d83_17710e08",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "You no longer need to change this.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301933e1_9437010b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "All you need is this, you don\u0027t even need to check message.nodes.empty() above. Just map web nodes to nodes.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e743c20_d83827b5",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleTypes.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "You can introduce a k(Hint|Recommendation)MessageSource.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a77575_61870891",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "That\u0027s fine.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741011f2_340914f1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "dom_agent_-\u003eResolveNode could return nullptr.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34627b4_f895ff20",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 27
+      },
+      "lineNbr": 4970,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "Yes, this is what I meant.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b44243c_c38fa98e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 27
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T22:18:12Z",
+      "side": 1,
+      "message": "I was hoping you would not need this. Why is this necessary? Just go along with the regular code path and arguments will be formatted.",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
