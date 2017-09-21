@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c563e89_051f6e09",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-21T23:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422b49d8_45140ff7",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e222640_22ad9836",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T22:38:26Z",
       "side": 1,
       "message": "As a follow-up, we can update the C++ bindings to do this\nautomatically when you query note.state.invisible.",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094a4ec2_132c3dc6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-21T23:20:50Z",
+      "side": 1,
+      "message": "TODO added.",
+      "parentUuid": "3e222640_22ad9836",
       "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0cf1c94b_2ece65a4",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-21T23:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab97a3c_b025bf68",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a5b237_e9ebfc5c",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dc74ca5d_7a6664b6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-21T23:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a5b237_e9ebfc5c",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5649e25_b6592301",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01024848_aec143ff",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-21T23:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5649e25_b6592301",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
