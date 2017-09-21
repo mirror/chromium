@@ -49,11 +49,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
     return provider_.get();
   }
 
+  dbus::ObjectPath adapter_path_;
+
  private:
   ~BluetoothAdvertisementBlueZ() override;
 
   // Adapter this advertisement is advertising on.
-  dbus::ObjectPath adapter_path_;
   std::unique_ptr<bluez::BluetoothLEAdvertisementServiceProvider> provider_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothAdvertisementBlueZ);

@@ -194,6 +194,7 @@ component("bluetooth") {
   deps = [
     "//base",
     "//components/device_event_log",
+    "//components/proximity_auth/logging",
     "//crypto",
     "//device/bluetooth/strings",
     "//device/bluetooth/uribeacon",

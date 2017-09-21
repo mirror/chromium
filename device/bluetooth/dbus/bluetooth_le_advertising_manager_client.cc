@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "components/proximity_auth/logging/logging.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_manager.h"
@@ -62,6 +63,10 @@ class BluetoothAdvertisementManagerClientImpl
                              const dbus::ObjectPath& advertisement_object_path,
                              const base::Closure& callback,
                              const ErrorCallback& error_callback) override {
+    PA_LOG(INFO) << "BlueZ: RegisterAdvertisement() called."
+                 << "\nObject path: " << advertisement_object_path.value()
+                 << "\nManager path: " << manager_object_path.value();
+
     dbus::MethodCall method_call(
         bluetooth_advertising_manager::kBluetoothAdvertisingManagerInterface,
         bluetooth_advertising_manager::kRegisterAdvertisement);
@@ -84,6 +89,10 @@ class BluetoothAdvertisementManagerClientImpl
       const dbus::ObjectPath& advertisement_object_path,
       const base::Closure& callback,
       const ErrorCallback& error_callback) override {
+    PA_LOG(INFO) << "BlueZ: UnregisterAdvertisement() called."
+                 << "\nObject path: " << advertisement_object_path.value()
+                 << "\nManager path: " << manager_object_path.value();
+
     dbus::MethodCall method_call(
         bluetooth_advertising_manager::kBluetoothAdvertisingManagerInterface,
         bluetooth_advertising_manager::kUnregisterAdvertisement);

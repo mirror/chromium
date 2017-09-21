@@ -1,6 +1,7 @@
 include_rules = [
   "+chromeos/dbus",
   "+crypto",
+  "+components/proximity_auth/logging",
   "+dbus",
   "+jni",
   "+net/base",

@@ -11,6 +11,7 @@
 #include "components/cryptauth/remote_beacon_seed_fetcher.h"
 #include "components/proximity_auth/logging/logging.h"
 #include "device/bluetooth/bluetooth_advertisement.h"
+#include "device/bluetooth/bluez/bluetooth_advertisement_bluez.h"
 
 namespace chromeos {
 
@@ -173,10 +174,14 @@ void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegisteredCallback(
   advertisement_->AddObserver(this);
   active_advertisement_device_ids_set_->insert(device_id_);
 
-  PA_LOG(INFO) << "Advertisement registered. "
-               << "Device ID: \""
+  bluez::BluetoothAdvertisementBlueZ* bluez_adv =
+      static_cast<bluez::BluetoothAdvertisementBlueZ*>(advertisement.get());
+
+  PA_LOG(INFO) << "Tether: Advertisement callback complete."
+               << "\nDevice ID: \""
                << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id_)
-               << "\", Service data: " << advertisement_data_->DataInHex();
+               << "\"\nService data: " << advertisement_data_->DataInHex()
+               << "\nPath: " << bluez_adv->adapter_path_.value();
 }
 
 void BleAdvertiser::IndividualAdvertisement::OnAdvertisementErrorCallback(
