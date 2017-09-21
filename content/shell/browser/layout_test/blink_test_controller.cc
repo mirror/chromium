@@ -487,9 +487,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(BlinkTestController, message)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessage, OnPrintMessage)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessageToStderr,
-                        OnPrintMessageToStderr)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TextDump, OnTextDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_InitiateLayoutDump,
                         OnInitiateLayoutDump)
@@ -840,6 +837,7 @@ void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
 }
 
 void BlinkTestController::OnPrintMessage(const std::string& message) {
+  DCHECK(CalledOnValidThread());
   printer_->AddMessageRaw(message);
 }
 

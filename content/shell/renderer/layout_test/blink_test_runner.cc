@@ -291,7 +291,7 @@ void BlinkTestRunner::PrintMessageToStderr(const std::string& message) {
 }
 
 void BlinkTestRunner::PrintMessage(const std::string& message) {
-  Send(new ShellViewHostMsg_PrintMessage(routing_id(), message));
+  RenderThread::Get()->Send(new LayoutTestHostMsg_PrintMessage(message));
 }
 
 void BlinkTestRunner::PostTask(const base::Closure& task) {

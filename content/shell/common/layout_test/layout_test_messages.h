@@ -58,3 +58,5 @@ IPC_MESSAGE_CONTROL1(
 
 // Sent by secondary test window to notify the test has finished.
 IPC_MESSAGE_CONTROL0(LayoutTestHostMsg_TestFinishedInSecondaryRenderer)
+
+IPC_MESSAGE_CONTROL1(LayoutTestHostMsg_PrintMessage, std::string /* message */)

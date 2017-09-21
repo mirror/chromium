@@ -57,6 +57,7 @@ base::TaskRunner* LayoutTestMessageFilter::OverrideTaskRunnerForMessage(
     case LayoutTestHostMsg_ResetPermissions::ID:
     case LayoutTestHostMsg_LayoutTestRuntimeFlagsChanged::ID:
     case LayoutTestHostMsg_TestFinishedInSecondaryRenderer::ID:
+    case LayoutTestHostMsg_PrintMessage::ID:
       return BrowserThread::GetTaskRunnerForThread(BrowserThread::UI).get();
   }
   return nullptr;
@@ -84,6 +85,7 @@ bool LayoutTestMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnLayoutTestRuntimeFlagsChanged)
     IPC_MESSAGE_HANDLER(LayoutTestHostMsg_TestFinishedInSecondaryRenderer,
                         OnTestFinishedInSecondaryRenderer)
+    IPC_MESSAGE_HANDLER(LayoutTestHostMsg_PrintMessage, OnPrintMessage)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -214,6 +216,10 @@ void LayoutTestMessageFilter::OnLayoutTestRuntimeFlagsChanged(
 void LayoutTestMessageFilter::OnTestFinishedInSecondaryRenderer() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   BlinkTestController::Get()->OnTestFinishedInSecondaryRenderer();
+}
+
+void LayoutTestMessageFilter::OnPrintMessage(const std::string& message) {
+  BlinkTestController::Get()->OnPrintMessage(message);
 }
 
 }  // namespace content

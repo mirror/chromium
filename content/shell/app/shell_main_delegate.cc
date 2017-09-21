@@ -27,9 +27,7 @@
 #include "content/shell/browser/layout_test/layout_test_content_browser_client.h"
 #include "content/shell/browser/shell_browser_main.h"
 #include "content/shell/browser/shell_content_browser_client.h"
-#include "content/shell/common/layout_test/layout_test_content_client.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
-#include "content/shell/common/shell_content_client.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/shell/gpu/shell_content_gpu_client.h"
 #include "content/shell/renderer/layout_test/layout_test_content_renderer_client.h"
@@ -244,11 +242,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     command_line.AppendSwitchASCII(switches::kEnableFeatures, enabled_features);
   }
 
-  content_client_.reset(base::CommandLine::ForCurrentProcess()->HasSwitch(
-                            switches::kRunLayoutTest)
-                            ? new LayoutTestContentClient
-                            : new ShellContentClient);
-  SetContentClient(content_client_.get());
+  SetContentClient(&content_client_);
 
   return false;
 }

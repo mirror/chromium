@@ -77,6 +77,7 @@ class LayoutTestMessageFilter : public BrowserMessageFilter {
   void OnLayoutTestRuntimeFlagsChanged(
       const base::DictionaryValue& changed_layout_test_runtime_flags);
   void OnTestFinishedInSecondaryRenderer();
+  void OnPrintMessage(const std::string& message);
 
   int render_process_id_;
 
