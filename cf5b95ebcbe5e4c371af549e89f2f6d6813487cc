@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "066fc24d_9e911ca2",
+        "filename": "ui/message_center/views/message_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-21T17:25:20Z",
+      "side": 1,
+      "message": "Can you explain the need for this event here? As far as I understand, we alert in other places (e.g. message_popup_collection.cc).",
+      "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
