@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93fa3b83_2701c1fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "nit: Offline not LoFi.",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1aa4ee_d3c7bbff",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "I think you should expose the enabled state (which is session persistent) outside of the log, and put events that occur during the session within the log.\n\nEssentially, in the larger plan, the blacklist state will be in one place, and the events that relate to that state changing will also be in the log. This would be the same for enabled/disabled if it could be changed in the session, but it can\u0027t, so there is no need to put it in the log. Adding a new \u003cp\u003e everytime getPreviewsEnabled is called (Even though it is called once) seems off to me, and I would prefer if an existing \u003cp\u003e was modified instead.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1cb244_c3959dd4",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "I would create the node inside the promise where you add text to it. (don\u0027t add the node for errors).\n\nLog the error to console instead of to the UI.\n\nIf you take my suggestion from the html file, you can probably ignore the first part of this comment.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bfb291_800c7037",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "nit: s/Previews/Offline previews/ I know this will change shortly, but I think it should be correct every step of the way.",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083d3956_1dddc4b6",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "This might be necessary if you take my comment below.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a0d5a2_00ad3634",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "I\u0027d call this from a then clause based on the promise from GetPreviewsEnabled, since you want that promise to resolve first.\n\n Or even more preferable IMO, return the promise from getPreviewsEnabled and call it from outside the scope i.e.:\n\nsetupFn().then(function(){\n...\n}).then(function() {\n  if (window.testPageHandler \u0026\u0026 window.testPageHandler.setupFnComplete) { \n    window.testPageHandler.setupFnComplete(); \n  }\n});",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e6f681_8de490d8",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "This approach isn\u0027t too hacky for me, but I\u0027ll let dpapad weigh in. I think you should rename it  setupFnComplete and see related comment above.",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ac5d7e_57355c47",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "nit: s/setup/Setup/ and s/behavior/behavior./",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89943b32_e669ca84",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-21T18:39:54Z",
+      "side": 1,
+      "message": "nit: s/setup/Setup/ and s/behavior/behavior./",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
