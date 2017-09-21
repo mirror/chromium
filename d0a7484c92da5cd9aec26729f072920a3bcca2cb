@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b0e9e77_84465744",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-21T21:24:12Z",
+      "side": 1,
+      "message": "The BubbleManager thing is very confusing. It doesn\u0027t, thanks to the checks. I\u0027ll add a comment.",
+      "parentUuid": "79312b90_9ca18d5a",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 42
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "033b9bcb_5a2a4421",
         "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d0b243da_3ac75e6b",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-21T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "033b9bcb_5a2a4421",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 11
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2a1d3c_bbfa4171",
         "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-21T18:38:53Z",
       "side": 1,
       "message": "Isn\u0027t the bubble already closing by the time you get here?",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 344,
+        "endChar": 53
+      },
+      "revId": "d0a7484c92da5cd9aec26729f072920a3bcca2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a98c55d_e8bb8982",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-21T21:24:12Z",
+      "side": 1,
+      "message": "That\u0027s true, this is overkill, I\u0027ll just close the bubble reference",
+      "parentUuid": "9f2a1d3c_bbfa4171",
       "range": {
         "startLine": 344,
         "startChar": 2,
