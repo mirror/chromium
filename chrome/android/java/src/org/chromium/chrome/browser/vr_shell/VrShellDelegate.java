@@ -563,7 +563,7 @@ public class VrShellDelegate
             if (sInstance.mVrSupportLevel != VR_DAYDREAM) return false;
         }
 
-        if (Build.VERSION.SDK_INT < 23) return false;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
         Display display = DisplayAndroidManager.getDefaultDisplayForContext(
                 ContextUtils.getApplicationContext());
         Display.Mode[] modes = display.getSupportedModes();
@@ -573,8 +573,9 @@ public class VrShellDelegate
         for (int i = 1; i < modes.length; ++i) {
             if (modes[i].getPhysicalWidth() > vr_mode.getPhysicalWidth()) vr_mode = modes[i];
         }
-
-        // See if we're currently in the mode supported by VR.
+        // If we're currently in the mode supported by VR the density won't change.
+        // We actually can't use display.getMode() to get the current mode as that just always
+        // returns the same mode ignoring the override.
         DisplayMetrics metrics = new DisplayMetrics();
         display.getRealMetrics(metrics);
         if (vr_mode.getPhysicalWidth() != metrics.widthPixels
@@ -866,8 +867,7 @@ public class VrShellDelegate
         if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
             assert activitySupportsAutopresentation(activity);
             instance.mAutopresentWebVr = true;
-            if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
-                    || !isVrShellEnabled(instance.mVrSupportLevel)) {
+            if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)) {
                 instance.onAutopresentUnsupported();
                 return;
             }
