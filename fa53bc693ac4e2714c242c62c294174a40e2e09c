@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ab0532_96128702",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3773,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:19:07Z",
+      "side": 1,
+      "message": "nit: a same-document...",
+      "revId": "fa53bc693ac4e2714c242c62c294174a40e2e09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38c5981_76e5027c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:19:07Z",
+      "side": 1,
+      "message": "nit: a same-document navigation",
+      "revId": "fa53bc693ac4e2714c242c62c294174a40e2e09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3283838_34bb8c1c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T12:19:07Z",
+      "side": 1,
+      "message": "nit: s/claims same document navigation/claims the navigation was same-document",
+      "revId": "fa53bc693ac4e2714c242c62c294174a40e2e09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
