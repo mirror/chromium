@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23292ea6_3eaf8709",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-21T00:26:11Z",
+      "side": 1,
+      "message": "nit: packed extension installation or installing packed extensions.",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cc2ae0_db156690",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-21T00:26:11Z",
+      "side": 1,
+      "message": "Is this handling (delete with recursive\u003dtrue below) the case where unpacking produced a directory with the same name as index file?",
+      "range": {
+        "startLine": 519,
+        "startChar": 52,
+        "endLine": 519,
+        "endChar": 58
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f418a71_a5c299d0",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-21T00:26:11Z",
+      "side": 1,
+      "message": "nit: it\u0027s",
+      "range": {
+        "startLine": 519,
+        "startChar": 66,
+        "endLine": 519,
+        "endChar": 69
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03b7b32_8fc08969",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-21T00:26:11Z",
+      "side": 1,
+      "message": "Be consistent: either call both *DECLARATIVE* or *DNR*",
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b33d90_62215a46",
+        "filename": "extensions/utility/unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-21T00:26:11Z",
+      "side": 1,
+      "message": "Here and below, resort back to return std::move(parsed_manifest_)?",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 80
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
