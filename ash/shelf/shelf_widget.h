@@ -43,6 +43,12 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   ShelfWidget(aura::Window* shelf_container, Shelf* shelf);
   ~ShelfWidget() override;
 
+  // Returns true if the views-based login shelf is being shown.
+  static bool IsUsingMdLoginShelf();
+
+  // Returns shelf widget of the primary display.
+  static ShelfWidget* GetPrimaryShelfWidget();
+
   void CreateStatusAreaWidget(aura::Window* status_container);
 
   void OnShelfAlignmentChanged();
@@ -84,6 +90,8 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
 
   // Returns the ApplicationDragAndDropHost for this shelf.
   app_list::ApplicationDragAndDropHost* GetDragAndDropHostForAppList();
+
+  void set_default_last_focusable_child(bool default_last_focusable_child);
 
   // Overridden from views::WidgetObserver:
   void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
