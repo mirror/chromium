@@ -100,6 +100,15 @@ class ComponentLoader {
       const char* extension_id,
       const base::Closure& done_cb);
 
+  // Add a component extension from a specific directory. Assumes that the
+  // extension's manifest file lives in |root_directory| and its name is
+  // 'manifest.json'. Calls |done_cb| on success, unless the component loader is
+  // shut down during loading.
+  void AddWithNameAndDescriptionFromDir(const base::FilePath& root_directory,
+                                        const char* extension_id,
+                                        const std::string& name_string,
+                                        const std::string& description_string);
+
   void AddChromeOsSpeechSynthesisExtension();
 #endif
 
@@ -188,6 +197,16 @@ class ComponentLoader {
       const base::FilePath& root_directory,
       const char* extension_id,
       const base::Closure& done_cb,
+      std::unique_ptr<base::DictionaryValue> manifest);
+
+  // Used as a reply callback by |AddComponentFromDir|.
+  // Called with a |root_directory| and parsed |manifest| and invokes
+  // |done_cb| after adding the extension.
+  void FinishAddWithNameAndDescriptionFromDir(
+      const base::FilePath& root_directory,
+      const char* extension_id,
+      const std::string& name_string,
+      const std::string& description_string,
       std::unique_ptr<base::DictionaryValue> manifest);
 #endif
 
