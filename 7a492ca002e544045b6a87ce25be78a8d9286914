@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2897b4f1_168c74be",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParser.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-09-21T08:30:56Z",
+      "side": 1,
+      "message": "As far as I understand, this part of the CL is now independent of the second part, which adds the new constructor, is that right? In that case, I suggest to split this into two CLs. \n\nThis simplification looks good to me now, even though I find it surprising that we have two parser modes here: One kCSSFontFaceRuleMode going into the MutableStylePropertySet construction, and one as a member of context. I am curious, which one is used?",
+      "revId": "7a492ca002e544045b6a87ce25be78a8d9286914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
