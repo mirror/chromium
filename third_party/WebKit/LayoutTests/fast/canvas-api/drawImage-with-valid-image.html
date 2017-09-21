@@ -3,12 +3,6 @@
 
 <script>
 
-function ExpectedNotEnoughArgumentsMessage(num) {
-    return "\"TypeError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D': 3 arguments required, but only " + num + " present.\"";
-}
-
-var IndexSizeError = "IndexSizeError: Index or size was negative, or greater than the allowed value.";
-
 // Create image
 var myImage = new Image();
 var img_src = '../canvas/resources/apple.gif';
@@ -19,13 +13,28 @@ var ctx = document.createElement("canvas").getContext('2d');
 
 function draw() {
     // No arguments should get exception
-    assert_throws(null, function() {ctx.drawImage();}, ExpectedNotEnoughArgumentsMessage(0));
+    try {
+      ctx.drawImage();
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+      assert_equals(ex.message, "Failed to execute 'drawImage' on 'CanvasRenderingContext2D': 3 arguments required, but only 0 present.");
+    }
 
     // image argument only should get exception
-    assert_throws(null, function() {ctx.drawImage(myImage);}, ExpectedNotEnoughArgumentsMessage(1));
+    try {
+      ctx.drawImage(myImage);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+      assert_equals(ex.message, "Failed to execute 'drawImage' on 'CanvasRenderingContext2D': 3 arguments required, but only 1 present.");
+    }
 
     // image argument plus one number should get exception
-    assert_throws(null, function() {ctx.drawImage(myImage, 0);}, ExpectedNotEnoughArgumentsMessage(2));
+    try {
+      ctx.drawImage(myImage, 0);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+      assert_equals(ex.message, "Failed to execute 'drawImage' on 'CanvasRenderingContext2D': 3 arguments required, but only 2 present.");
+    }
 
     // image argument plus 2 numbers
     ctx.drawImage(myImage, 0, 0);
