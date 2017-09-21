@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422b49d8_45140ff7",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T22:38:26Z",
+      "side": 1,
+      "message": "nit: Maybe call this getNodeState, or call the enum NodeVisibilityState,\nfor consistency",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e222640_22ad9836",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T22:38:26Z",
+      "side": 1,
+      "message": "As a follow-up, we can update the C++ bindings to do this\nautomatically when you query note.state.invisible.",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab97a3c_b025bf68",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T22:38:26Z",
+      "side": 1,
+      "message": "How about either clearFocusRingAndNode, or something\nelse like clearHighlightAndNode, since \"clear focus\"\nimplies actually clearing input focus",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a5b237_e9ebfc5c",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T22:38:26Z",
+      "side": 1,
+      "message": "This would be important so the extension is\nas idle as possible when you\u0027re not using it.",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5649e25_b6592301",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T22:38:26Z",
+      "side": 1,
+      "message": "How about switch (getNodeVisibilityState(node))?",
+      "revId": "3e711c53aeee1976fc7924b54ac74464200da962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
