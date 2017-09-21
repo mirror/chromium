@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "198b0c93_f5d0aa03",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T16:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff4cc03c_d978b014",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe606b6_5cb22195",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 8
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Did you modify TestPageHandler to properly call methodCalled() when the method is called? In theory the prod code should always execute before your test\u0027s callback, such that you can do assertions.\n\nIt would help if you upload a patch or separate CL that showcases the problem you are facing.",
       "parentUuid": "f01c05d9_4c9a6836",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a765011_dcb978cd",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T16:00:23Z",
+      "side": 1,
+      "message": "I have uploaded a patch with the problem I\u0027m facing.\n\nIn index.js, testPageHandler.getPreviewsEnabled() is called when pageHandler_getPreviewsEnabled() is called. Once that method is resolved, the assertion is made while there are code that put the html text on the DOM. The log message prints the correct text is being rendered, but the test is saying that the content text is empty.\n\nThanks for helping out! I\u0027m not very familiar with Js and promises :)",
+      "parentUuid": "6f6794b9_f6748fd0",
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
