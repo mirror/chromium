@@ -16,6 +16,24 @@
       "revId": "ddf9d645ffe007df8cce7aadb8dc4a8df8340636",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6549b317_575b233d",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-21T17:38:18Z",
+      "side": 1,
+      "message": "You\u0027re right, this wouldn\u0027t work. Tried another solution; PTAL.",
+      "parentUuid": "4b64096e_66e0ac16",
+      "revId": "ddf9d645ffe007df8cce7aadb8dc4a8df8340636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
