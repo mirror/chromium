@@ -60,8 +60,6 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
                               bool return_status,
                               const std::string& data)>
       AsyncCallStatusWithDataHandler;
-  // A callback to handle responses of AsyncXXX methods.
-  typedef base::Callback<void(int async_id)> AsyncMethodCallback;
   // A callback for GetSystemSalt().
   typedef base::Callback<void(DBusMethodCallStatus call_status,
                               const std::vector<uint8_t>& system_salt)>
@@ -157,19 +155,19 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   // succeeds.
   virtual void AsyncCheckKey(const cryptohome::Identification& cryptohome_id,
                              const std::string& key,
-                             const AsyncMethodCallback& callback) = 0;
+                             DBusMethodCallback<int> callback) = 0;
 
   // Calls AsyncMigrateKey method.  |callback| is called after the method call
   // succeeds.
   virtual void AsyncMigrateKey(const cryptohome::Identification& cryptohome_id,
                                const std::string& from_key,
                                const std::string& to_key,
-                               const AsyncMethodCallback& callback) = 0;
+                               DBusMethodCallback<int> callback) = 0;
 
   // Calls AsyncRemove method.  |callback| is called after the method call
   // succeeds.
   virtual void AsyncRemove(const cryptohome::Identification& cryptohome_id,
-                           const AsyncMethodCallback& callback) = 0;
+                           DBusMethodCallback<int> callback) = 0;
 
   // Calls RenameCryptohome method. |callback| is called after the method
   // call succeeds.
@@ -209,7 +207,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   virtual void AsyncMount(const cryptohome::Identification& cryptohome_id,
                           const std::string& key,
                           int flags,
-                          const AsyncMethodCallback& callback) = 0;
+                          DBusMethodCallback<int> callback) = 0;
 
   // Calls the AsyncAddKey method to asynchronously add another |new_key| for
   // |username|, using |key| to unlock it first.
@@ -217,11 +215,11 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   virtual void AsyncAddKey(const cryptohome::Identification& cryptohome_id,
                            const std::string& key,
                            const std::string& new_key,
-                           const AsyncMethodCallback& callback) = 0;
+                           DBusMethodCallback<int> callback) = 0;
 
   // Calls AsyncMountGuest method.  |callback| is called after the method call
   // succeeds.
-  virtual void AsyncMountGuest(const AsyncMethodCallback& callback) = 0;
+  virtual void AsyncMountGuest(DBusMethodCallback<int> callback) = 0;
 
   // Calls the AsyncMount method to asynchronously mount the cryptohome for
   // |public_mount_id|. For supported |flags|, see the documentation of
@@ -230,7 +228,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   virtual void AsyncMountPublic(
       const cryptohome::Identification& public_mount_id,
       int flags,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Calls TpmIsReady method.
   virtual void TpmIsReady(const BoolDBusMethodCallback& callback) = 0;
@@ -339,7 +337,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   // AsyncTpmAttestationEnroll.
   virtual void AsyncTpmAttestationCreateEnrollRequest(
       chromeos::attestation::PrivacyCAType pca_type,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Asynchronously finishes an attestation enrollment operation.  The callback
   // will be called when the dbus call completes.  When the operation completes,
@@ -349,7 +347,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   virtual void AsyncTpmAttestationEnroll(
       chromeos::attestation::PrivacyCAType pca_type,
       const std::string& pca_response,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Asynchronously creates an attestation certificate request according to
   // |certificate_profile|.  Some profiles require that the |cryptohome_id| of
@@ -366,7 +364,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationCertificateProfile certificate_profile,
       const cryptohome::Identification& cryptohome_id,
       const std::string& request_origin,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Asynchronously finishes a certificate request operation.  The callback will
   // be called when the dbus call completes.  When the operation completes, the
@@ -382,7 +380,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationKeyType key_type,
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Checks if an attestation key already exists.  If the key specified by
   // |key_type| and |key_name| exists, then the result sent to the callback will
@@ -427,7 +425,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationKeyType key_type,
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Asynchronously signs an enterprise challenge with the key specified by
   // |key_type| and |key_name|.  |domain| and |device_id| will be included in
@@ -445,7 +443,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       const std::string& device_id,
       attestation::AttestationChallengeOptions options,
       const std::string& challenge,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Asynchronously signs a simple challenge with the key specified by
   // |key_type| and |key_name|.  |challenge| can be any set of arbitrary bytes.
@@ -460,7 +458,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
       const std::string& challenge,
-      const AsyncMethodCallback& callback) = 0;
+      DBusMethodCallback<int> callback) = 0;
 
   // Gets the payload associated with the key specified by |key_type| and
   // |key_name|.  The |callback| will be called when the operation completes.
