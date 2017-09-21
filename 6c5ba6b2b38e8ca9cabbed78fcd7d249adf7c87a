@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1048e2c7_a98af320",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-21T16:03:06Z",
+      "side": 1,
+      "message": "collections.defaultdict(set)",
+      "revId": "6c5ba6b2b38e8ca9cabbed78fcd7d249adf7c87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
