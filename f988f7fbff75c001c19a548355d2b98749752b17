@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25d5cf6c_cb116085",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Hm, no corresponding update for mac gn_all? But since the sandbox_type_unittest.cc runs on Windows, should this be now OS-agnostic?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038f4abc_b82c2e96",
+        "filename": "content/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Just \"//sandbox\" implies \"//sandbox:sandbox\".",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f8ed03_0175609f",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "\"//sandbox\"",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3908399d_f3f6ae6b",
+        "filename": "content/public/common/content_sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33495cb_d5735918",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Greg is working on something that will end up living in //sandbox/common in the nearish future. Do you envision other files living in //sandbox/policy, or do you think this file also could live in //sandbox/common?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a141373e_58b6f39d",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "We should document these functions. E.g., why would you need a string SandboxType?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418f9311_26a4ea91",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Might want to file a bug to start running sandbox_unittests on Windows too.",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed952895_ae62853d",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 18
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 1,
+      "message": "Delete the duplicate now?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

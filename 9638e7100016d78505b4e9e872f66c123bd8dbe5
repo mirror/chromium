@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18324f74_7aa3ee7c",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 0,
+      "message": "Can you not keep the libs and local deps on the source_set ? (You may need to switch to public_deps though).",
+      "revId": "9638e7100016d78505b4e9e872f66c123bd8dbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a7ffbe_90f1f3b8",
+        "filename": "sandbox/sandbox_export.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:04:13Z",
+      "side": 0,
+      "message": "You should provide the windows impl though. Copy-paste from this, basically: https://cs.chromium.org/chromium/src/base/base_export.h?q\u003dbase/base_export.h\u0026sq\u003dpackage:chromium\u0026dr",
+      "revId": "9638e7100016d78505b4e9e872f66c123bd8dbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
