@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "90a431b3_c0ff5d86",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1244450
+      },
+      "writtenOn": "2017-09-21T23:42:24Z",
+      "side": 1,
+      "message": "I hadn\u0027t thought about modifying the return type of GetTaskIdsList so that this was a flat_set. That\u0027s a good suggestion, though if we\u0027re keep |task_groups_| as as a parallel vector, it requires getting an offset from a flat_set iterator.\n\nAlternatively, we can go back to |task_groups_by_task_id_| and an unsorted |task_ids_| structure. The only reason that |task_ids_| is sorted so that it lets us avoid double-storing the TaskId keys.",
+      "parentUuid": "ee5d2db4_598ffd82",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4190925f_a27e0ce0",
         "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
         "patchSetId": 14
@@ -82,6 +106,30 @@
       "writtenOn": "2017-09-21T01:06:28Z",
       "side": 1,
       "message": "Hmmm, I\u0027m not fully sold on this `task_ids_` -\u003e `task_groups_` mapping architecture. I understand that you wanted `task_groups_` to contain multiple null-PID groups so that each group may have its own SortKey, correct?\n\nHow about moving the SortKey to the `Task` rather than the `TaskGroup`? This way we can have one null-PID group that contains all tasks in that state, but their sort keys are different? That null-PID group is still mapped by `task_groups_by_proc_id_` and then the signature of it can be kept as `std::map\u003cbase::ProcessId, std::unique_ptr\u003cTaskGroup\u003e\u003e`.\n\nWDYT?",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f72ceb7_3de4f518",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1244450
+      },
+      "writtenOn": "2017-09-21T23:42:24Z",
+      "side": 1,
+      "message": "The suggestion of moving SortKey to the Task, so that we can get back to unique_ptr\u003cTaskGroup\u003es, is definitely worth contemplating.\n\nHere are the considerations that drove me to putting it on the TaskGroup:\n - The first part of the SortKey needs to be uniform for same-process (assuming valid pid) tasks, but we could get sorting behavior by picking a Task in the TaskGroup, and sharing that part of they key.\n - AFAIK, TaskManagerImpl doesn\u0027t do much mutation of state on the Tasks it tracks, so a Task::set_sort_key() operation from TaskManagerImpl seemed a little funny. Whereas TaskGroup is more directly owned by TaskManagerImpl, and TaskGroups don\u0027t exist unless you\u0027re using TaskManagerImpl.\n - We definitely could store the Key in a parallel map, but I\u0027m preferring stashing it as a data member on Task/TaskGroup.\n - IsTaskFirstInGroup() and TaskManagerImpl::GetIdsOfTasksSharingSameProcess() are a factor if we want to special-case the pid-zero TaskGroup, but I think these are solvable.\n\nHere are some upsides to putting it on Task:\n - We can extend it with the Task-specific fields (which will allow some simplification inside of TaskManagerTableModel, we don\u0027t need the secondary comparator at all).\n\nI\u0027ll experiment with these and cycle back to you.",
+      "parentUuid": "4190925f_a27e0ce0",
       "range": {
         "startLine": 159,
         "startChar": 2,
