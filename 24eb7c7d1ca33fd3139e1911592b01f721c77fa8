@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de9a0fbc_ae2a749b",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T14:01:49Z",
+      "side": 1,
+      "message": "Well, kSimpleEntrySparseFileCount is clearly not it, since there is no constant for just that.\nBasically, we have one constant for _0 and _1, and one for _0, _1, and _s --- mostly because SimpleSynchronousEntry has loops for _0 and _1, and totally separate paths for _s (what with it having a different format!), while at file tracker level all 3 possibly files are identical.",
+      "parentUuid": "eacb683b_a3e41a42",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb84b1d0_7ec0efe7",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -111,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "606ee4ca_423167b2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T14:01:49Z",
+      "side": 1,
+      "message": "Hmm, the actual answer is: I didn\u0027t want to have SimpleFileTracker know about opening files at this change, and wanted to minimize the changes to existing codebase, so this didn\u0027t occur to me.\n\nIt\u0027s an elegant idea, but I don\u0027t know if it can fit in warts like this:\n\nhttps://cs.chromium.org/chromium/src/net/disk_cache/simple/simple_synchronous_entry.cc?rcl\u003d6bfe7378138d00ec380f2d1eafa8c7525d9a8660\u0026l\u003d877",
+      "parentUuid": "9c0f3739_e08765a2",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93b58f6_32ba50c9",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -134,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "e4f5a781_3106afad",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T14:01:49Z",
+      "side": 1,
+      "message": "I think I am missing how it would help.... the current design has two motivations:\n1) I don\u0027t have to pass through the file into helper methods, to reduce the changes to the code, and they don\u0027t have to worry about if they\u0027re the first ones opening or not. Maybe I should reconsider that. If I do that, I don\u0027t even need the refcount in the first place; and I don\u0027t see how a scoped_refptr would be involved if I don\u0027t pass it around?\n2) There is no need to grab the lock inside SimpleFileTracker inside the helpers re-grabbing the file, it can all be done locally.",
+      "parentUuid": "c93b58f6_32ba50c9",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -145,6 +217,30 @@
       "writtenOn": "2017-09-21T13:04:45Z",
       "side": 1,
       "message": "This comment is confusing. Do consumers really need to know about doom_generation? And file name changing? Let\u0027s remove this function from this CL as it\u0027s not actually doing anything yet anyway.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 55
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b91ba6_c22b1b5b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T14:01:49Z",
+      "side": 1,
+      "message": "So my thought was that this would compute the new doom_generation, and the client would do the renaming.  I am honestly not sure why I chose that, though it does have an advantage of being a lot easier to unit test like that (the new ID choice is surprisingly annoying in the hopefully-never-happening cases of wraparound)",
+      "parentUuid": "162d6148_bacaf69b",
       "range": {
         "startLine": 76,
         "startChar": 0,
