@@ -77,10 +77,10 @@ inline bool IsShadowInsertionPointFocusScopeOwner(Element& element) {
 
 class FocusNavigation : public GarbageCollected<FocusNavigation> {
  public:
-  virtual Element* Next(Element*) const = 0;
-  virtual Element* Previous(Element*) const = 0;
-  virtual Element* First() const = 0;
-  virtual Element* Last() const = 0;
+  virtual Element* Next(Element*) = 0;
+  virtual Element* Previous(Element*) = 0;
+  virtual Element* First() = 0;
+  virtual Element* Last() = 0;
 
   virtual Element* Owner() const = 0;
 
@@ -144,103 +144,13 @@ class ScopedFocusNavigation {
   Member<FocusNavigation> navigation_;
 };
 
-// The navigation in slot assigned scope.
-// The root node is slot.
-// This scope is not directly connected to slot node.
-class SlotFocusNavigation final : public FocusNavigation {
- public:
-  SlotFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
-
-  Element* Next(Element* current) const override {
-    DCHECK(current);
-    return SlotScopedTraversal::Next(*current);
-  }
-
-  Element* Previous(Element* current) const override {
-    DCHECK(current);
-    return SlotScopedTraversal::Previous(*current);
-  }
-
-  Element* First() const override {
-    return SlotScopedTraversal::FirstAssignedToSlot(*root_);
-  }
-
-  Element* Last() const override {
-    return SlotScopedTraversal::LastAssignedToSlot(*root_);
-  }
-
-  Element* Owner() const override { return root_; }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {
-    visitor->Trace(root_);
-    FocusNavigation::Trace(visitor);
-  }
-
- private:
-  Member<HTMLSlotElement> root_;
-};
-
-// The navigation in fallback contents for slot.
-// The root node is slot.
-// This scope is directly connected to slot node.
-class SlotFallbackContentsFocusNavigation final : public FocusNavigation {
- public:
-  SlotFallbackContentsFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
-
-  Element* Next(Element* current) const override {
-    DCHECK(current);
-    Element* next = ElementTraversal::Next(*current, root_);
-    while (next && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                       *root_, *next))
-      next = ElementTraversal::Next(*next, root_);
-    return next;
-  }
-
-  Element* Previous(Element* current) const override {
-    DCHECK(current);
-    Element* previous = ElementTraversal::Previous(*current, root_);
-    if (previous == root_)
-      previous = nullptr;
-    while (previous && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                           *root_, *previous))
-      previous = ElementTraversal::Previous(*previous, root_);
-    return previous;
-  }
-
-  Element* First() const override {
-    Element* first = ElementTraversal::FirstChild(*root_);
-    while (first && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                        *root_, *first))
-      first = ElementTraversal::Next(*first, root_);
-    return first;
-  }
-
-  Element* Last() const override {
-    Element* last = ElementTraversal::LastWithin(*root_);
-    while (last && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                       *root_, *last))
-      last = ElementTraversal::Previous(*last, root_);
-    return last;
-  }
-
-  Element* Owner() const override { return root_; }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {
-    visitor->Trace(root_);
-    FocusNavigation::Trace(visitor);
-  }
-
- private:
-  Member<HTMLSlotElement> root_;
-};
-
 // The navigation in tree scope.
 // The root node is ShadowRoot or Frame in this class.
 class TreeFocusNavigation final : public FocusNavigation {
  public:
   TreeFocusNavigation(ContainerNode& root) : root_(&root) {}
 
-  Element* Next(Element* current) const override {
+  Element* Next(Element* current) override {
     DCHECK(current);
     Element* next = ElementTraversal::Next(*current);
     while (next && (SlotScopedTraversal::IsSlotScoped(*next) ||
@@ -249,7 +159,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return next;
   }
 
-  Element* Previous(Element* current) const override {
+  Element* Previous(Element* current) override {
     DCHECK(current);
     Element* previous = ElementTraversal::Previous(*current);
     while (previous && (SlotScopedTraversal::IsSlotScoped(*previous) ||
@@ -258,7 +168,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return previous;
   }
 
-  Element* First() const override {
+  Element* First() override {
     Element* first = root_->IsElementNode() ? &ToElement(*root_)
                                             : ElementTraversal::Next(*root_);
     while (first && (SlotScopedTraversal::IsSlotScoped(*first) ||
@@ -267,7 +177,7 @@ class TreeFocusNavigation final : public FocusNavigation {
     return first;
   }
 
-  Element* Last() const override {
+  Element* Last() override {
     Element* last = ElementTraversal::LastWithin(*root_);
     while (last && (SlotScopedTraversal::IsSlotScoped(*last) ||
                     ScopedFocusNavigation::IsSlotFallbackScoped(*last)))
@@ -296,6 +206,125 @@ class TreeFocusNavigation final : public FocusNavigation {
 
  private:
   Member<ContainerNode> root_;
+};
+
+// The navigation in slot assigned scope.
+// The root node is slot.
+// This scope is not directly connected to slot node.
+class SlotFocusNavigation final : public FocusNavigation {
+ public:
+  SlotFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
+
+  Element* Next(Element* current) override {
+    DCHECK(current);
+    return SlotScopedTraversal::Next(*current);
+  }
+
+  Element* Previous(Element* current) override {
+    DCHECK(current);
+    return SlotScopedTraversal::Previous(*current);
+  }
+
+  Element* First() override {
+    return SlotScopedTraversal::FirstAssignedToSlot(*root_);
+  }
+
+  Element* Last() override {
+    return SlotScopedTraversal::LastAssignedToSlot(*root_);
+  }
+
+  Element* Owner() const override { return root_; }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(root_);
+    FocusNavigation::Trace(visitor);
+  }
+
+ private:
+  Member<HTMLSlotElement> root_;
+};
+
+// The navigation in fallback contents for slot.
+// The root node is slot.
+// This scope is directly connected to slot node.
+class SlotFallbackContentsFocusNavigation final : public FocusNavigation {
+ public:
+  SlotFallbackContentsFocusNavigation(HTMLSlotElement& slot) : root_(&slot) {}
+
+  Element* Next(Element* current) override {
+    DCHECK(current);
+    Element* next = ElementTraversal::Next(*current, root_);
+    while (next && !IsOwnedByRoot(next))
+      next = ElementTraversal::NextSkippingChildren(*next, root_);
+    return next;
+  }
+
+  Element* Previous(Element* current) override {
+    DCHECK(current);
+    Element* previous = ElementTraversal::Previous(*current, root_);
+    if (previous == root_)
+      previous = nullptr;
+    while (previous && !IsOwnedByRoot(previous))
+      previous = ElementTraversal::Previous(*previous, root_);
+    return previous;
+  }
+
+  Element* First() override {
+    Element* first = ElementTraversal::FirstChild(*root_);
+    while (first && !IsOwnedByRoot(first))
+      first = ElementTraversal::NextSkippingChildren(*first, root_);
+    return first;
+  }
+
+  Element* Last() override {
+    Element* last = ElementTraversal::LastWithin(*root_);
+    while (last && !IsOwnedByRoot(last))
+      last = ElementTraversal::Previous(*last, root_);
+    return last;
+  }
+
+  Element* Owner() const override { return root_; }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(root_);
+    visitor->Trace(owner_);
+    FocusNavigation::Trace(visitor);
+  }
+
+ private:
+  Member<HTMLSlotElement> root_;
+  HeapHashMap<Member<Node>, Member<Element>> owner_;
+
+  Element* FindOwner(Node* node) {
+    if (owner_.find(node) != owner_.end())
+      return owner_.find(node)->value;
+
+    // Fallback contents owner is set to nearest ancestor slot node even if
+    // the slot node have assigned nodes.
+    if (node == root_)
+      owner_.insert(node, root_);
+
+    else if (node == node->ContainingTreeScope().RootNode())
+      owner_.insert(node, TreeFocusNavigation(*ToContainerNode(node)).Owner());
+
+    else if (node->AssignedSlot())
+      owner_.insert(node, node->AssignedSlot());
+
+    else if (isHTMLSlotElement(node->ParentOrShadowHostElement()))
+      owner_.insert(node, node->ParentOrShadowHostElement());
+
+    else
+      owner_.insert(node, FindOwner(node->ParentOrShadowHostElement()));
+
+    return owner_.find(node)->value;
+  }
+
+  bool IsOwnedByRoot(Element* element) {
+    if (FindOwner(element) == root_)
+      return true;
+
+    return false;
+  }
 };
 
 ScopedFocusNavigation::ScopedFocusNavigation(TreeScope& tree_scope,
