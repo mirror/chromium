@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c897da85_4927d5dc",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-21T02:11:20Z",
+      "side": 1,
+      "message": "That leaks |task|, and it races with a deletion of data from the main thread.",
+      "revId": "79ab467af053eec6150365693f440d656fd7b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
