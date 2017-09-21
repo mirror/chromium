@@ -166,6 +166,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
                            CallsSchedulerWhenSignedIn);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
                            CallsSchedulerWhenSignedOut);
+  FRIEND_TEST_ALL_PREFIXES(
+      RemoteSuggestionsProviderImplTest,
+      ShouldNotSetExclusiveCategoryWhenFetchingSuggestions);
 
   // Possible state transitions:
   //       NOT_INITED --------+
@@ -381,8 +384,11 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void StoreCategoriesToPrefs();
 
   // Absence of fetched category corresponds to fetching all categories.
-  RequestParams BuildFetchParams(
-      base::Optional<Category> fetched_category) const;
+  // TODO(vitaliii): Do not ignore count_to_fetch when fetching all categories.
+  // Currently server does not support fetching a given number of suggestions
+  // from all categories.
+  RequestParams BuildFetchParams(base::Optional<Category> fetched_category,
+                                 int count_to_fetch) const;
 
   void MarkEmptyCategoriesAsLoading();
 

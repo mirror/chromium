@@ -85,7 +85,7 @@ bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
   // base/metrics/field_trial_params.h. GetVariationParamByFeature(As.*)? are
   // deprecated.
   return variations::GetVariationParamByFeatureAsBool(
-      ntp_snippets::kArticleSuggestionsFeature,
+      kArticleSuggestionsFeature,
       kOrderNewRemoteCategoriesBasedOnArticlesCategory,
       /*default_value=*/false);
 }
@@ -145,8 +145,7 @@ const char kEnableFetchedSuggestionsNotificationsParamName[] =
 
 bool IsFetchedSuggestionsNotificationsEnabled() {
   return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kNotificationsFeature,
-      kEnableFetchedSuggestionsNotificationsParamName,
+      kNotificationsFeature, kEnableFetchedSuggestionsNotificationsParamName,
       kEnableFetchedSuggestionsNotificationsDefault);
 }
 
@@ -159,8 +158,7 @@ const char kEnablePushedSuggestionsNotificationsParamName[] =
 
 bool IsPushedSuggestionsNotificationsEnabled() {
   return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kNotificationsFeature,
-      kEnablePushedSuggestionsNotificationsParamName,
+      kNotificationsFeature, kEnablePushedSuggestionsNotificationsParamName,
       kEnablePushedSuggestionsNotificationsDefault);
 }
 
@@ -171,7 +169,7 @@ const char kEnableSignedInUsersSubscriptionForPushedSuggestionsParamName[] =
 
 bool IsSignedInUsersSubscriptionForPushedSuggestionsEnabled() {
   return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kBreakingNewsPushFeature,
+      kBreakingNewsPushFeature,
       kEnableSignedInUsersSubscriptionForPushedSuggestionsParamName,
       kEnableSignedInUsersSubscriptionForPushedSuggestionsDefault);
 }
@@ -183,7 +181,7 @@ const char kEnableSignedOutUsersSubscriptionForPushedSuggestionsParamName[] =
 
 bool IsSignedOutUsersSubscriptionForPushedSuggestionsEnabled() {
   return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kBreakingNewsPushFeature,
+      kBreakingNewsPushFeature,
       kEnableSignedOutUsersSubscriptionForPushedSuggestionsParamName,
       kEnableSignedOutUsersSubscriptionForPushedSuggestionsDefault);
 }
@@ -197,9 +195,19 @@ const char kForceFetchedSuggestionsNotificationsParamName[] =
 
 bool ShouldForceFetchedSuggestionsNotifications() {
   return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kNotificationsFeature,
-      kForceFetchedSuggestionsNotificationsParamName,
+      kNotificationsFeature, kForceFetchedSuggestionsNotificationsParamName,
       kForceFetchedSuggestionsNotificationsDefault);
+}
+
+// Variation parameter for number of suggestions to request when fetching more.
+const char kFetchMoreSuggestionsCountParamName[] =
+    "fetch_more_suggestions_count";
+const int kFetchMoreSuggestionsCountDefault = 25;
+
+int GetFetchMoreSuggestionsCount() {
+  return base::GetFieldTrialParamByFeatureAsInt(
+      kArticleSuggestionsFeature, kFetchMoreSuggestionsCountParamName,
+      kFetchMoreSuggestionsCountDefault);
 }
 
 template <typename SuggestionPtrContainer>
@@ -459,7 +467,10 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
 
   MarkEmptyCategoriesAsLoading();
 
-  RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt);
+  // |count_to_fetch| is actually ignored, because the server does not support
+  // this functionality.
+  RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt,
+                                          /*count_to_fetch=*/10);
   params.interactive_request = interactive_request;
   suggestions_fetcher_->FetchSnippets(
       params, base::BindOnce(&RemoteSuggestionsProviderImpl::OnFetchFinished,
@@ -494,7 +505,8 @@ void RemoteSuggestionsProviderImpl::Fetch(
       },
       base::Unretained(remote_suggestions_scheduler_), std::move(callback));
 
-  RequestParams params = BuildFetchParams(category);
+  RequestParams params = BuildFetchParams(
+      category, /*count_to_fetch=*/GetFetchMoreSuggestionsCount());
   params.excluded_ids.insert(known_suggestion_ids.begin(),
                              known_suggestion_ids.end());
   params.interactive_request = true;
@@ -508,10 +520,11 @@ void RemoteSuggestionsProviderImpl::Fetch(
 
 // Builds default fetcher params.
 RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams(
-    base::Optional<Category> fetched_category) const {
+    base::Optional<Category> fetched_category,
+    int count_to_fetch) const {
   RequestParams result;
   result.language_code = application_language_code_;
-  result.count_to_fetch = kMaxSuggestionCount;
+  result.count_to_fetch = count_to_fetch;
   // If this is a fetch for a specific category, its dismissed suggestions are
   // added first to truncate them less.
   if (fetched_category.has_value()) {
