@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d851d4d7_bf27f33a",
+        "filename": "ui/app_list/app_list_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T20:21:46Z",
+      "side": 1,
+      "message": "nit: wrap",
+      "revId": "d2eb2ba9633137f5d71f7f6984bf94f9ac52e312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac3712e_398f9316",
+        "filename": "ui/app_list/app_list_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T20:21:46Z",
+      "side": 1,
+      "message": "nit: wrap",
+      "revId": "d2eb2ba9633137f5d71f7f6984bf94f9ac52e312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
