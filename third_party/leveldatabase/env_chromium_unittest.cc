@@ -440,7 +440,8 @@ TEST_F(ChromiumEnvDBTrackerTest, CheckInMemoryEnv) {
   ASSERT_TRUE(env != nullptr);
   EXPECT_FALSE(leveldb_chrome::IsMemEnv(env));
 
-  std::unique_ptr<leveldb::Env> memenv(leveldb_chrome::NewMemEnv(env));
+  std::unique_ptr<leveldb::Env> memenv =
+      leveldb_chrome::NewMemEnv(env, "CheckInMemoryEnv");
   EXPECT_TRUE(leveldb_chrome::IsMemEnv(memenv.get()));
 }
 
