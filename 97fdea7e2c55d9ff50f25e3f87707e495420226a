@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "80b5076a_089fc8da",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7daf3583_e3113848",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91bd9b9f_5be561c4",
         "filename": "ash/message_center/message_center_button_bar.h",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c905651_f0bab3e3",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bd9b9f_5be561c4",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "69167c19_a98a59ae",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0537fef_245ad442",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e6fb1b6_ef3448b0",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 1
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "ef26a599_5571e003",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6fb1b6_ef3448b0",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a7ddfe_8b1a4325",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 1
@@ -98,6 +170,24 @@
       "writtenOn": "2017-09-21T01:10:51Z",
       "side": 1,
       "message": "nit: make_unique\u003c\u003e while you\u0027re here",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427bb1d7_20756dcf",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "changed to a normal (non-pointer) member",
+      "parentUuid": "84a7ddfe_8b1a4325",
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "c3684000_cdb539df",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8db183bc_8d9d64fd",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe1cd16_19414698",
         "filename": "ash/message_center/message_center_view.h",
         "patchSetId": 1
@@ -135,6 +243,24 @@
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101ca172_4b1fd43a",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe1cd16_19414698",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "21554760_4a333ac2",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057a6e57_f74820b8",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c68acb_8a68d9f4",
         "filename": "ash/message_center/message_list_view.cc",
         "patchSetId": 1
@@ -166,6 +310,24 @@
       "writtenOn": "2017-09-21T01:10:51Z",
       "side": 1,
       "message": "Thanks.",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c318622_9241f223",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18c68acb_8a68d9f4",
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "7f7f1821_7b563d65",
+        "filename": "ash/message_center/message_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e73fab_adec80e4",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc1f3fb_43c612b3",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 1
@@ -200,6 +380,24 @@
       "writtenOn": "2017-09-21T01:10:51Z",
       "side": 1,
       "message": "optional: I\u0027m OK with \"namespace settings \u003d message_center::settings;\" too",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4626fc_a84f7ca9",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "I\u0027ll just go ahead and start moving these",
+      "parentUuid": "4bc1f3fb_43c612b3",
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +418,24 @@
       "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e82aca6_a6e26c62",
+        "filename": "ash/message_center/notifier_settings_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T16:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5a30a23_4f4410c3",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
