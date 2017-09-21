@@ -15,7 +15,6 @@
 #include "media/base/decoder_buffer.h"
 #include "media/base/video_codecs.h"
 #include "media/base/video_decoder_config.h"
-#include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/android/avda_codec_allocator.h"
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
@@ -99,9 +98,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
-    std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
-    AndroidOverlayMojoFactoryCB overlay_factory_cb,
-    RequestOverlayInfoCB request_overlay_info_cb,
+    std::unique_ptr<McvdSurfaceChooser> surface_chooser,
     std::unique_ptr<VideoFrameFactory> video_frame_factory,
     std::unique_ptr<service_manager::ServiceContextRef> context_ref)
     : state_(State::kInitializing),
@@ -109,10 +106,8 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       gpu_task_runner_(gpu_task_runner),
       get_stub_cb_(get_stub_cb),
       codec_allocator_(codec_allocator),
-      request_overlay_info_cb_(std::move(request_overlay_info_cb)),
       surface_chooser_(std::move(surface_chooser)),
       video_frame_factory_(std::move(video_frame_factory)),
-      overlay_factory_cb_(std::move(overlay_factory_cb)),
       device_info_(device_info),
       context_ref_(std::move(context_ref)),
       weak_factory_(this),
@@ -161,14 +156,6 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 
   decoder_config_ = config;
 
-  if (first_init) {
-    if (!codec_allocator_->StartThread(this)) {
-      LOG(ERROR) << "Unable to start thread";
-      bound_init_cb.Run(false);
-      return;
-    }
-  }
-
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   if (config.codec() == kCodecH264)
     ExtractSpsAndPps(config.extra_data(), &csd0_, &csd1_);
@@ -188,12 +175,39 @@ void MediaCodecVideoDecoder::OnKeyAdded() {
   StartTimer();
 }
 
-void MediaCodecVideoDecoder::StartLazyInit() {
+void MediaCodecVideoDecoder::DoNextLazyInitStep() {
   DVLOG(2) << __func__;
-  video_frame_factory_->Initialize(
-      gpu_task_runner_, get_stub_cb_,
-      base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
-                 weak_factory_.GetWeakPtr()));
+  DCHECK_EQ(state_, State::kInitializing);
+
+  // TODO(watk): Time these steps and parallelize them if it's worthwhile.
+  if (!lazy_init_started_) {
+    lazy_init_started_ = true;
+    if (!codec_allocator_->StartThread(this)) {
+      LOG(ERROR) << "Unable to start thread";
+      EnterTerminalState(State::kError);
+      return;
+    }
+    video_frame_factory_->Initialize(
+        gpu_task_runner_, get_stub_cb_,
+        base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
+                   weak_factory_.GetWeakPtr()));
+    return;
+  }
+  DCHECK(surface_texture_bundle_);
+
+  if (!target_surface_bundle_) {
+    // TODO(watk): Set these based on whether we're encrypted.
+    bool is_secure = false, is_required = false;
+    surface_chooser_->Initialize(
+        is_secure, is_required,
+        base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
+                   weak_factory_.GetWeakPtr()));
+    return;
+  }
+
+  // Initialization is complete.
+  state_ = State::kRunning;
+  CreateCodec();
 }
 
 void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
@@ -204,37 +218,12 @@ void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
     return;
   }
   surface_texture_bundle_ = new AVDASurfaceBundle(std::move(surface_texture));
-  InitializeSurfaceChooser();
-}
-
-void MediaCodecVideoDecoder::OnOverlayInfoChanged(
-    const OverlayInfo& overlay_info) {
-  DVLOG(2) << __func__;
-  bool overlay_changed = !overlay_info_.RefersToSameOverlayAs(overlay_info);
-  overlay_info_ = overlay_info;
-  // Only update surface chooser if it's initialized and the overlay changed.
-  if (state_ != State::kInitializing && overlay_changed)
-    surface_chooser_->UpdateState(CreateOverlayFactoryCb(), chooser_state_);
-}
-
-void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
-  DVLOG(2) << __func__;
-  DCHECK_EQ(state_, State::kInitializing);
-  // Initialize |surface_chooser_| and wait for its decision. Note: the
-  // callback may be reentrant.
-  surface_chooser_->Initialize(
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr()),
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr(), nullptr),
-      CreateOverlayFactoryCb(), chooser_state_);
+  DoNextLazyInitStep();
 }
 
 void MediaCodecVideoDecoder::OnSurfaceChosen(
     std::unique_ptr<AndroidOverlay> overlay) {
-  DVLOG(2) << __func__;
-  DCHECK(state_ == State::kInitializing ||
-         device_info_->IsSetOutputSurfaceSupported());
+  DVLOG(2) << __func__ << ": " << (overlay ? "Overlay" : "SurfaceTexture");
 
   if (overlay) {
     overlay->AddSurfaceDestroyedCallback(
@@ -245,12 +234,8 @@ void MediaCodecVideoDecoder::OnSurfaceChosen(
     target_surface_bundle_ = surface_texture_bundle_;
   }
 
-  // If we were waiting for our first surface during initialization, then
-  // proceed to create a codec.
-  if (state_ == State::kInitializing) {
-    state_ = State::kRunning;
-    CreateCodec();
-  }
+  if (state_ == State::kInitializing)
+    DoNextLazyInitStep();
 }
 
 void MediaCodecVideoDecoder::OnSurfaceDestroyed(AndroidOverlay* overlay) {
@@ -338,9 +323,8 @@ void MediaCodecVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   }
   pending_decodes_.emplace_back(buffer, std::move(decode_cb));
 
-  if (lazy_init_pending_) {
-    lazy_init_pending_ = false;
-    StartLazyInit();
+  if (!lazy_init_started_) {
+    DoNextLazyInitStep();
     return;
   }
 
@@ -603,8 +587,8 @@ void MediaCodecVideoDecoder::OnCodecDrained() {
 
 void MediaCodecVideoDecoder::EnterTerminalState(State state) {
   DVLOG(2) << __func__ << " " << static_cast<int>(state);
-  DCHECK(state == State::kError || state == State::kSurfaceDestroyed);
   state_ = state;
+  DCHECK(InTerminalState());
 
   // Cancel pending codec creation.
   codec_allocator_weak_factory_.InvalidateWeakPtrs();
@@ -616,6 +600,10 @@ void MediaCodecVideoDecoder::EnterTerminalState(State state) {
     ClearPendingDecodes(DecodeStatus::DECODE_ERROR);
   if (drain_type_)
     OnCodecDrained();
+}
+
+bool MediaCodecVideoDecoder::InTerminalState() {
+  return state_ == State::kError || state_ == State::kSurfaceDestroyed;
 }
 
 void MediaCodecVideoDecoder::ClearPendingDecodes(DecodeStatus status) {
@@ -633,14 +621,6 @@ void MediaCodecVideoDecoder::ReleaseCodec() {
   codec_ = nullptr;
   codec_allocator_->ReleaseMediaCodec(std::move(pair.first),
                                       std::move(pair.second));
-}
-
-AndroidOverlayFactoryCB MediaCodecVideoDecoder::CreateOverlayFactoryCb() {
-  DCHECK(!overlay_info_.HasValidSurfaceId());
-  if (overlay_info_.HasValidRoutingToken() && overlay_factory_cb_) {
-    return base::Bind(overlay_factory_cb_, *overlay_info_.routing_token);
-  }
-  return AndroidOverlayFactoryCB();
 }
 
 std::string MediaCodecVideoDecoder::GetDisplayName() const {

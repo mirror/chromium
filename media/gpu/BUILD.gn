@@ -230,6 +230,8 @@ component("gpu") {
         "android/codec_image.h",
         "android/codec_wrapper.cc",
         "android/codec_wrapper.h",
+        "android/mcvd_surface_chooser.cc",
+        "android/mcvd_surface_chooser.h",
         "android/media_codec_video_decoder.cc",
         "android/media_codec_video_decoder.h",
         "android/video_frame_factory.h",

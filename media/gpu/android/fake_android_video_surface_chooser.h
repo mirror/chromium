@@ -41,6 +41,7 @@ class FakeSurfaceChooser : public AndroidVideoSurfaceChooser {
   UseSurfaceTextureCB use_surface_texture_cb_;
   AndroidOverlayFactoryCB factory_;
   State current_state_;
+  bool initialized_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeSurfaceChooser);
