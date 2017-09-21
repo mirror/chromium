@@ -147,6 +147,9 @@ class CONTENT_EXPORT VideoCaptureImpl : public mojom::VideoCaptureObserver {
   // First captured frame reference time sent from browser process side.
   base::TimeTicks first_frame_ref_time_;
 
+  base::TimeDelta timestamp_of_last_frame_received_;
+  scoped_refptr<media::VideoFrame> stashed_color_frame_;
+
   VideoCaptureState state_;
 
   base::ThreadChecker io_thread_checker_;
