@@ -740,7 +740,7 @@ message ClientIncidentReport {
     optional BinaryIntegrityIncident binary_integrity = 3;
     optional BlacklistLoadIncident blacklist_load = 4;
     // Note: skip tag 5 because it was previously used.
-    optional VariationsSeedSignatureIncident variations_seed_signature = 6;
+    // Note: skip tag 6 because it was previously used.
     optional ResourceRequestIncident resource_request = 7;
     optional SuspiciousModuleIncident suspicious_module = 8;
   }
