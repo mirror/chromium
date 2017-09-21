@@ -70,6 +70,24 @@
       "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f6a7c3_02812e63",
+        "filename": "device/u2f/u2f_ble_frames_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-21T22:58:38Z",
+      "side": 1,
+      "message": "Yes, the goal is to check that if the device gives Chrome absolute garbage (or maliciously crafted garbage) our code that interprets that response is not vulnerable to exploitation.\n\nSerializing a packet containing |data| as well as checking that the serialized data can be reparsed is also useful as there have been bugs that only surface when passing data back through the parser after we have \"correctly\" serialized it.",
+      "parentUuid": "3045dfb9_c272f15b",
+      "revId": "75a441e7caee9e059e81f68b6c18495b902f5c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
