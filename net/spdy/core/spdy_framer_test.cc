@@ -217,9 +217,6 @@ MATCHER_P(IsFrameUnionOf, frame_list, "") {
 
 class SpdyFramerPeer {
  public:
-  static size_t ControlFrameBufferSize() {
-    return SpdyFramer::kControlFrameBufferSize;
-  }
   static size_t GetNumberRequiredContinuationFrames(SpdyFramer* framer,
                                                     size_t size) {
     return framer->GetNumberRequiredContinuationFrames(size);
@@ -368,6 +365,12 @@ class SpdyFramerPeer {
 
     EXPECT_THAT(serialized_headers_old_version, IsFrameUnionOf(&frame_list));
     return serialized_headers_old_version;
+  }
+
+  // Largest control frame that the SPDY implementation sends, including the
+  // size of the header.
+  static size_t sent_control_frame_max_size() {
+    return SpdyFramer::kMaxControlFrameSendSize;
   }
 };
 
@@ -616,7 +619,6 @@ class TestSpdyVisitor : public SpdyFramerVisitorInterface,
     header_stream_id_ = stream_id;
     header_control_type_ = header_control_type;
     header_buffer_valid_ = true;
-    DCHECK_NE(header_stream_id_, SpdyFramer::kInvalidStream);
   }
 
   void set_extension_visitor(ExtensionVisitorInterface* extension) {
@@ -627,22 +629,6 @@ class TestSpdyVisitor : public SpdyFramerVisitorInterface,
   void set_header_buffer_size(size_t header_buffer_size) {
     header_buffer_size_ = header_buffer_size;
     header_buffer_.reset(new char[header_buffer_size]);
-  }
-
-  // Largest control frame that the SPDY implementation sends, including the
-  // size of the header.
-  static size_t sent_control_frame_max_size() {
-    return SpdyFramer::kMaxControlFrameSize;
-  }
-
-  // Largest control frame that the SPDY implementation is willing to receive,
-  // excluding the size of the header.
-  static size_t received_control_frame_max_size() {
-    return kSpdyInitialFrameSizeLimit;
-  }
-
-  static size_t header_data_chunk_max_size() {
-    return SpdyFramer::kHeaderDataChunkMaxSize;
   }
 
   SpdyFramer framer_;
@@ -2582,7 +2568,7 @@ TEST_P(SpdyFramerTest, CreatePushPromiseThenContinuationUncompressed) {
     SpdyPushPromiseIR push_promise(/* stream_id = */ 42,
                                    /* promised_stream_id = */ 57);
     push_promise.set_padding_len(1);
-    SpdyString big_value(TestSpdyVisitor::sent_control_frame_max_size(), 'x');
+    SpdyString big_value(SpdyFramerPeer::sent_control_frame_max_size(), 'x');
     push_promise.SetHeader("xxx", big_value);
     SpdySerializedFrame frame(SpdyFramerPeer::SerializePushPromise(
         &framer, push_promise, use_output_ ? &output_ : nullptr));
@@ -2605,7 +2591,7 @@ TEST_P(SpdyFramerTest, CreatePushPromiseThenContinuationUncompressed) {
     // Length of everything listed above except big_value.
     int len_non_data_payload = 31;
     EXPECT_EQ(
-        TestSpdyVisitor::sent_control_frame_max_size() + len_non_data_payload,
+        SpdyFramerPeer::sent_control_frame_max_size() + len_non_data_payload,
         frame.size());
 
     // Partially compare the PUSH_PROMISE frame against the template.
@@ -2616,7 +2602,7 @@ TEST_P(SpdyFramerTest, CreatePushPromiseThenContinuationUncompressed) {
         kPartialPushPromiseFrameData, arraysize(kPartialPushPromiseFrameData));
 
     // Compare the CONTINUATION frame against the template.
-    frame_data += TestSpdyVisitor::sent_control_frame_max_size();
+    frame_data += SpdyFramerPeer::sent_control_frame_max_size();
     CompareCharArraysWithHexError(
         kDescription, frame_data, arraysize(kContinuationFrameData),
         kContinuationFrameData, arraysize(kContinuationFrameData));
@@ -2772,13 +2758,13 @@ TEST_P(SpdyFramerTest, TooLargeHeadersFrameUsesContinuation) {
 
   // Exact payload length will change with HPACK, but this should be long
   // enough to cause an overflow.
-  const size_t kBigValueSize = TestSpdyVisitor::sent_control_frame_max_size();
+  const size_t kBigValueSize = SpdyFramerPeer::sent_control_frame_max_size();
   SpdyString big_value(kBigValueSize, 'x');
   headers.SetHeader("aa", big_value);
   SpdySerializedFrame control_frame(SpdyFramerPeer::SerializeHeaders(
       &framer, headers, use_output_ ? &output_ : nullptr));
   EXPECT_GT(control_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   TestSpdyVisitor visitor(SpdyFramer::DISABLE_COMPRESSION);
   visitor.SimulateInFramer(
@@ -2798,7 +2784,7 @@ TEST_P(SpdyFramerTest, MultipleContinuationFramesWithIterator) {
 
   // Exact payload length will change with HPACK, but this should be long
   // enough to cause an overflow.
-  const size_t kBigValueSize = TestSpdyVisitor::sent_control_frame_max_size();
+  const size_t kBigValueSize = SpdyFramerPeer::sent_control_frame_max_size();
   SpdyString big_valuex(kBigValueSize, 'x');
   headers->SetHeader("aa", big_valuex);
   SpdyString big_valuez(kBigValueSize, 'z');
@@ -2810,7 +2796,7 @@ TEST_P(SpdyFramerTest, MultipleContinuationFramesWithIterator) {
   EXPECT_GT(frame_it.NextFrame(&output_), 0u);
   SpdySerializedFrame headers_frame(output_.Begin(), output_.Size(), false);
   EXPECT_EQ(headers_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   TestSpdyVisitor visitor(SpdyFramer::DISABLE_COMPRESSION);
   visitor.SimulateInFramer(
@@ -2827,7 +2813,7 @@ TEST_P(SpdyFramerTest, MultipleContinuationFramesWithIterator) {
   EXPECT_GT(frame_it.NextFrame(&output_), 0u);
   SpdySerializedFrame first_cont_frame(output_.Begin(), output_.Size(), false);
   EXPECT_EQ(first_cont_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   visitor.SimulateInFramer(
       reinterpret_cast<unsigned char*>(first_cont_frame.data()),
@@ -2843,7 +2829,7 @@ TEST_P(SpdyFramerTest, MultipleContinuationFramesWithIterator) {
   EXPECT_GT(frame_it.NextFrame(&output_), 0u);
   SpdySerializedFrame second_cont_frame(output_.Begin(), output_.Size(), false);
   EXPECT_LT(second_cont_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   visitor.SimulateInFramer(
       reinterpret_cast<unsigned char*>(second_cont_frame.data()),
@@ -2866,7 +2852,7 @@ TEST_P(SpdyFramerTest, PushPromiseFramesWithIterator) {
 
   // Exact payload length will change with HPACK, but this should be long
   // enough to cause an overflow.
-  const size_t kBigValueSize = TestSpdyVisitor::sent_control_frame_max_size();
+  const size_t kBigValueSize = SpdyFramerPeer::sent_control_frame_max_size();
   SpdyString big_valuex(kBigValueSize, 'x');
   push_promise->SetHeader("aa", big_valuex);
   SpdyString big_valuez(kBigValueSize, 'z');
@@ -2880,7 +2866,7 @@ TEST_P(SpdyFramerTest, PushPromiseFramesWithIterator) {
   SpdySerializedFrame push_promise_frame(output_.Begin(), output_.Size(),
                                          false);
   EXPECT_EQ(push_promise_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   TestSpdyVisitor visitor(SpdyFramer::DISABLE_COMPRESSION);
   visitor.SimulateInFramer(
@@ -2898,7 +2884,7 @@ TEST_P(SpdyFramerTest, PushPromiseFramesWithIterator) {
   SpdySerializedFrame first_cont_frame(output_.Begin(), output_.Size(), false);
 
   EXPECT_EQ(first_cont_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
   visitor.SimulateInFramer(
       reinterpret_cast<unsigned char*>(first_cont_frame.data()),
       first_cont_frame.size());
@@ -2913,7 +2899,7 @@ TEST_P(SpdyFramerTest, PushPromiseFramesWithIterator) {
   EXPECT_GT(frame_it.NextFrame(&output_), 0u);
   SpdySerializedFrame second_cont_frame(output_.Begin(), output_.Size(), false);
   EXPECT_LT(second_cont_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   visitor.SimulateInFramer(
       reinterpret_cast<unsigned char*>(second_cont_frame.data()),
@@ -2998,13 +2984,13 @@ TEST_P(SpdyFramerTest, TooLargePushPromiseFrameUsesContinuation) {
 
   // Exact payload length will change with HPACK, but this should be long
   // enough to cause an overflow.
-  const size_t kBigValueSize = TestSpdyVisitor::sent_control_frame_max_size();
+  const size_t kBigValueSize = SpdyFramerPeer::sent_control_frame_max_size();
   SpdyString big_value(kBigValueSize, 'x');
   push_promise.SetHeader("aa", big_value);
   SpdySerializedFrame control_frame(SpdyFramerPeer::SerializePushPromise(
       &framer, push_promise, use_output_ ? &output_ : nullptr));
   EXPECT_GT(control_frame.size(),
-            TestSpdyVisitor::sent_control_frame_max_size());
+            SpdyFramerPeer::sent_control_frame_max_size());
 
   TestSpdyVisitor visitor(SpdyFramer::DISABLE_COMPRESSION);
   visitor.SimulateInFramer(
@@ -3023,7 +3009,7 @@ TEST_P(SpdyFramerTest, TooLargePushPromiseFrameUsesContinuation) {
 TEST_P(SpdyFramerTest, ControlFrameMuchTooLarge) {
   const size_t kHeaderBufferChunks = 4;
   const size_t kHeaderBufferSize =
-      TestSpdyVisitor::header_data_chunk_max_size() * kHeaderBufferChunks;
+      kSpdyInitialFrameSizeLimit / kHeaderBufferChunks;
   const size_t kBigValueSize = kHeaderBufferSize * 2;
   SpdyString big_value(kBigValueSize, 'x');
   SpdyFramer framer(SpdyFramer::ENABLE_COMPRESSION);
@@ -3045,9 +3031,7 @@ TEST_P(SpdyFramerTest, ControlFrameMuchTooLarge) {
 
 TEST_P(SpdyFramerTest, ControlFrameSizesAreValidated) {
   // Create a GoAway frame that has a few extra bytes at the end.
-  // We create enough overhead to overflow the framer's control frame buffer.
-  ASSERT_LE(SpdyFramerPeer::ControlFrameBufferSize(), 250u);
-  const size_t length = SpdyFramerPeer::ControlFrameBufferSize() + 1;
+  const size_t length = kGoawayFrameMinimumSize + 3;
 
   // HTTP/2 GOAWAY frames are only bound by a minimal length, since they may
   // carry opaque data. Verify that minimal length is tested.
@@ -3125,7 +3109,7 @@ TEST_P(SpdyFramerTest, ReadBogusLenSettingsFrame) {
              visitor.deframer_.spdy_framer_error());
 }
 
-// Tests handling of SETTINGS frames larger than the frame buffer size.
+// Tests handling of larger SETTINGS frames.
 TEST_P(SpdyFramerTest, ReadLargeSettingsFrame) {
   SpdySettingsIR settings_ir;
   settings_ir.AddSetting(SETTINGS_HEADER_TABLE_SIZE, 5);
@@ -3138,7 +3122,6 @@ TEST_P(SpdyFramerTest, ReadLargeSettingsFrame) {
     control_frame = SpdySerializedFrame(output_.Begin(), output_.Size(), false);
   }
 
-  EXPECT_LT(SpdyFramerPeer::ControlFrameBufferSize(), control_frame.size());
   TestSpdyVisitor visitor(SpdyFramer::DISABLE_COMPRESSION);
 
   // Read all at once.
