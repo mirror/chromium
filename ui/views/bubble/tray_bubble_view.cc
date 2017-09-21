@@ -174,10 +174,15 @@ void TrayBubbleView::RerouteEventHandler::OnKeyEvent(ui::KeyEvent* event) {
       return;
   }
 
-  // Always consumes key event not to pass it to other widgets. Calling
-  // StopPropagation here to make this consistent with
+  // Do not consume volume down key event since it is needed for the volume down
+  // pressed state update for Chrome OS tablet screenshot accelerator.
+  // TODO(warx): Consider replacing if check with ash::IsSystemKey once
+  // TrayBubbleView is moved to ash/ (crbug.com/731748).
+  // Otherwise always consumes key event not to pass it to other widgets.
+  // Calling StopPropagation here to make this consistent with
   // MenuController::OnWillDispatchKeyEvent.
-  event->StopPropagation();
+  if (key_code != ui::VKEY_VOLUME_DOWN)
+    event->StopPropagation();
 
   // To provide consistent behavior with a menu, process accelerator as a menu
   // is open if the event is not handled by the widget.
