@@ -36,6 +36,7 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.LaunchIntentDispatcher;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.metrics.MemoryUma;
@@ -244,7 +245,19 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
     }
 
+    protected LaunchIntentDispatcher.Action maybeDispatchLaunchIntent(Intent intent) {
+        return LaunchIntentDispatcher.Action.CONTINUE;
+    }
+
     private final void onCreateInternal(Bundle savedInstanceState) {
+        LaunchIntentDispatcher.Action dispatchAction = maybeDispatchLaunchIntent(getIntent());
+        android.util.Log.w(
+                "LAUNCHER-DBG", "onCreate: maybeDispatchLaunchIntent returned " + dispatchAction);
+        if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
+            abortLaunch();
+            return;
+        }
+
         setIntent(validateIntent(getIntent()));
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             super.onCreate(null);
@@ -426,6 +439,13 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent == null) return;
+        LaunchIntentDispatcher.Action dispatchAction = maybeDispatchLaunchIntent(intent);
+        android.util.Log.w("LAUNCHER-DBG",
+                "onNewIntent: maybeDispatchLaunchIntent returned " + dispatchAction);
+        if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
+            // Consume the intent.
+            return;
+        }
         mNativeInitializationController.onNewIntent(intent);
         setIntent(intent);
     }
