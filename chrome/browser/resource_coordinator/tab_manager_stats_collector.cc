@@ -17,6 +17,8 @@
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "content/public/browser/swap_metrics_driver.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace resource_coordinator {
 
@@ -141,6 +143,21 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
     UMA_HISTOGRAM_TIMES(
         kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
         queueing_time);
+
+    if (base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
+      ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+      ukm::SourceId ukm_source_id =
+          ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+              .ukm_source_id();
+      if (ukm_recorder && ukm_source_id != -1) {
+        UKMBuilderClass ukm_builder(ukm_source_id);
+        ukm_builder.SetExpectedTaskQueueingDuration(queueing_time)
+            .SetBackgroundTabLoadingCount(g_browser_process->GetTabManager()
+                                              ->GetBackgroundTabLoadingCount())
+            .SetTabCount(g_browser_process->GetTabManager()->GetTabCount())
+            .Record(ukm_recorder);
+      }
+    }
   }
 }
 
