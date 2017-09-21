@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483b961f_3bf66cde",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "nit: add types i.e. -\u003e functions, events, types and properties...",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3c10c4_969d5b98",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "Are double spaces needed here and elsewhere?",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c248cf37_f5ac295c",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "This seems malformed. Maybe change to: - The schema compiler is implemented in src/tools/....",
+      "range": {
+        "startLine": 55,
+        "startChar": 58,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea04d2e_9fe921ba",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "Add extension function registration.",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6fb022_69af0b41",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "Maybe talk about whether to include the API at the chrome layer or the extension layer.",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 53
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6424730_da924e80",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-21T22:41:22Z",
+      "side": 1,
+      "message": "What does this refer to?",
+      "range": {
+        "startLine": 65,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 49
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
