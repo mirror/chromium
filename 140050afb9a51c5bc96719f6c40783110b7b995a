@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f08a2d42_950547df",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-21T18:16:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285b94b2_ce43915f",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14df73d6_f3cc5631",
         "filename": "base/metrics/dummy_histogram.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0da1632_4b52dad6",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-21T18:16:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14df73d6_f3cc5631",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc2639f8_46b1278e",
+        "filename": "base/metrics/dummy_histogram_samples.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-21T18:16:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d0146b9_39392bc8",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85619c5d_62740c46",
         "filename": "base/metrics/histogram.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-21T15:30:38Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 0
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739673ff_c3b3074c",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-21T18:16:51Z",
+      "side": 1,
+      "message": "Tests are still failing, so currently this CL doesn\u0027t return dummy objects for expired histograms. So I\u0027ll uncomment this line when we find a way to pass all the tests.",
+      "parentUuid": "85619c5d_62740c46",
       "range": {
         "startLine": 172,
         "startChar": 46,
@@ -114,6 +210,30 @@
       "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20210629_bc4d2cbd",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-21T18:16:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b395e95_c047afd7",
+      "range": {
+        "startLine": 258,
+        "startChar": 14,
+        "endLine": 258,
+        "endChar": 37
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
