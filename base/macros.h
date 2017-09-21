@@ -13,13 +13,17 @@
 #include <stddef.h>  // For size_t.
 
 // Distinguish mips32.
+#ifndef __mips32__
 #if defined(__mips__) && (_MIPS_SIM == _ABIO32)
 #define __mips32__
 #endif
+#endif
 
 // Distinguish mips64.
+#ifndef __mips64__
 #if defined(__mips__) && (_MIPS_SIM == _ABI64)
 #define __mips64__
+#endif
 #endif
 
 // Put this in the declarations for a class to be uncopyable.
