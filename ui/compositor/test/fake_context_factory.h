@@ -29,7 +29,7 @@ class FakeContextFactory : public ui::ContextFactory {
   FakeContextFactory();
   ~FakeContextFactory() override;
 
-  const cc::CompositorFrame& GetLastCompositorFrame() const;
+  const viz::CompositorFrame& GetLastCompositorFrame() const;
 
   // ui::ContextFactory:
   void CreateLayerTreeFrameSink(
