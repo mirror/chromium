@@ -9,9 +9,9 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "content/common/sandbox_mac.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandbox_type.h"
 #include "sandbox/mac/seatbelt.h"
 
 namespace content {
@@ -35,7 +35,7 @@ bool InitializeSandbox(int sandbox_type,
 // Fill in |sandbox_type| and |allowed_dir| based on the command line,  returns
 // false if the current process type doesn't need to be sandboxed or if the
 // sandbox was disabled from the command line.
-bool GetSandboxInfoFromCommandLine(SandboxType* sandbox_type,
+bool GetSandboxInfoFromCommandLine(sandbox::SandboxType* sandbox_type,
                                    base::FilePath* allowed_dir) {
   DCHECK(sandbox_type);
   DCHECK(allowed_dir);
@@ -59,7 +59,7 @@ bool GetSandboxInfoFromCommandLine(SandboxType* sandbox_type,
     return false;
   }
 
-  return *sandbox_type != SANDBOX_TYPE_INVALID;
+  return *sandbox_type != sandbox::SANDBOX_TYPE_INVALID;
 }
 
 }  // namespace
@@ -69,7 +69,7 @@ bool InitializeSandbox(int sandbox_type, const base::FilePath& allowed_dir) {
 }
 
 bool InitializeSandboxWithPostWarmupHook(base::OnceClosure hook) {
-  SandboxType sandbox_type = SANDBOX_TYPE_INVALID;
+  sandbox::SandboxType sandbox_type = sandbox::SANDBOX_TYPE_INVALID;
   base::FilePath allowed_dir;
   return !GetSandboxInfoFromCommandLine(&sandbox_type, &allowed_dir) ||
          InitializeSandbox(sandbox_type, allowed_dir, std::move(hook));

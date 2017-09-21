@@ -198,8 +198,8 @@
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
@@ -2801,13 +2801,13 @@ base::string16 ChromeContentBrowserClient::GetAppContainerSidForSandboxType(
 
   // TODO(wfh): Add support for more process types here. crbug.com/499523
   switch (sandbox_type) {
-    case content::SANDBOX_TYPE_RENDERER:
+    case sandbox::SANDBOX_TYPE_RENDERER:
       return sid + L"129201922";
-    case content::SANDBOX_TYPE_UTILITY:
+    case sandbox::SANDBOX_TYPE_UTILITY:
       return base::string16();
-    case content::SANDBOX_TYPE_GPU:
+    case sandbox::SANDBOX_TYPE_GPU:
       return base::string16();
-    case content::SANDBOX_TYPE_PPAPI:
+    case sandbox::SANDBOX_TYPE_PPAPI:
       return sid + L"129201925";
 #if BUILDFLAG(ENABLE_NACL)
     case PROCESS_TYPE_NACL_LOADER:
