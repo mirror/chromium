@@ -16,6 +16,24 @@
       "revId": "158527262556a5bc51aac6805d1a13a4565b727e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a96a320_eadb64b2",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-21T03:33:38Z",
+      "side": 1,
+      "message": "I think it works. We only tile masks if both filters and background filters are empty.",
+      "parentUuid": "50455865_33a2cc0f",
+      "revId": "158527262556a5bc51aac6805d1a13a4565b727e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

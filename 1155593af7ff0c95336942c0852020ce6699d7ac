@@ -124,6 +124,24 @@
       "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e56f25_64c4f53d",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-21T03:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b937f87c_3258e617",
+      "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
