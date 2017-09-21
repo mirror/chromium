@@ -22,6 +22,30 @@
       "revId": "9a1f20a3e98ba21ae003efaf285d79d52e19fc17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56bc79e_e57f209b",
+        "filename": "ui/app_list/app_list_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T19:23:05Z",
+      "side": 1,
+      "message": "Discussed offline: \nAs long as the board doesn\u0027t change while chrome is running, this will not be an issuue.",
+      "parentUuid": "a072da72_ce56913d",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "9a1f20a3e98ba21ae003efaf285d79d52e19fc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
