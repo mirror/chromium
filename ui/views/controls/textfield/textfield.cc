@@ -46,6 +46,7 @@
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/drag_utils.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/native_cursor.h"
 #include "ui/views/painter.h"
 #include "ui/views/style/platform_style.h"
@@ -236,7 +237,6 @@ bool IsControlKeyModifier(int flags) {
 
 // static
 const char Textfield::kViewClassName[] = "Textfield";
-const int Textfield::kTextPadding = 3;
 
 // static
 size_t Textfield::GetCaretBlinkMs() {
@@ -378,9 +378,8 @@ SkColor Textfield::GetTextColor() const {
   if (!use_default_text_color_)
     return text_color_;
 
-  int style = (read_only() || !enabled()) ? style::STYLE_DISABLED
-                                          : style::STYLE_PRIMARY;
-  return style::GetColor(style::CONTEXT_TEXTFIELD, style, GetNativeTheme());
+  return style::GetColor(style::CONTEXT_TEXTFIELD, GetTextStyle(),
+                         GetNativeTheme());
 }
 
 void Textfield::SetTextColor(SkColor color) {
@@ -573,7 +572,10 @@ void Textfield::SetAccessibleName(const base::string16& name) {
 
 gfx::Insets Textfield::GetInsets() const {
   gfx::Insets insets = View::GetInsets();
-  insets += gfx::Insets(kTextPadding, kTextPadding, kTextPadding, kTextPadding);
+  const LayoutProvider* provider = LayoutProvider::Get();
+  insets += gfx::Insets(
+      provider->GetDistanceMetric(DISTANCE_CONTROL_TEXT_VERTICAL_PADDING),
+      provider->GetDistanceMetric(DISTANCE_TEXTFIELD_TEXT_HORIZONTAL_PADDING));
   return insets;
 }
 
@@ -583,9 +585,11 @@ int Textfield::GetBaseline() const {
 
 gfx::Size Textfield::CalculatePreferredSize() const {
   const gfx::Insets& insets = GetInsets();
-  return gfx::Size(GetFontList().GetExpectedTextWidth(default_width_in_chars_) +
-                       insets.width(),
-                   GetFontList().GetHeight() + insets.height());
+  return gfx::Size(
+      GetFontList().GetExpectedTextWidth(default_width_in_chars_) +
+          insets.width(),
+      LayoutProvider::GetControlHeightForFont(style::CONTEXT_TEXTFIELD,
+                                              GetTextStyle(), GetFontList()));
 }
 
 const char* Textfield::GetClassName() const {
@@ -984,7 +988,8 @@ void Textfield::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   // beyond their legibility, or enlarging controls dynamically with content.
   gfx::Rect bounds = GetContentsBounds();
   // GetContentsBounds() does not actually use the local GetInsets() override.
-  bounds.Inset(gfx::Insets(0, kTextPadding, 0, kTextPadding));
+  bounds.Inset(gfx::Insets(0, LayoutProvider::Get()->GetDistanceMetric(
+                                  DISTANCE_TEXTFIELD_TEXT_HORIZONTAL_PADDING)));
   GetRenderText()->SetDisplayRect(bounds);
   OnCaretBoundsChanged();
   UpdateCursorViewPosition();
@@ -1986,6 +1991,11 @@ void Textfield::UpdateCursorViewPosition() {
       std::min(location.height(),
                GetContentsBounds().height() - location.y() - location.y()));
   cursor_view_.SetBoundsRect(location);
+}
+
+int Textfield::GetTextStyle() const {
+  return (read_only() || !enabled()) ? style::STYLE_DISABLED
+                                     : style::STYLE_PRIMARY;
 }
 
 void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
