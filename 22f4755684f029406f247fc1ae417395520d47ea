@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88759037_868c20bf",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T22:39:57Z",
+      "side": 1,
+      "message": "nit: s/#000/black/",
+      "revId": "22f4755684f029406f247fc1ae417395520d47ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fab2d3_76575a27",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T22:39:57Z",
+      "side": 1,
+      "message": "nit: s/#000/black/",
+      "revId": "22f4755684f029406f247fc1ae417395520d47ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18f9212_9c946022",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T22:39:57Z",
+      "side": 1,
+      "message": "nit(optional):\n(diff \u003c -4 \u0026\u0026 this.checked) || (diff \u003e 4 \u0026\u0026 !this.checked);",
+      "revId": "22f4755684f029406f247fc1ae417395520d47ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
