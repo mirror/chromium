@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b728b3ac_2a2d8253",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:53:05Z",
+      "side": 1,
+      "message": "- There will be a DevToolsSession, which has-a:\n  - UberDispatcher [YES]\n  - map\u003cWebContents \u003d\u003e PageHandler\u003e [NO, session has one handler of a kind, belonging to WC]\n- ChromeDevToolsManagerDelegate has-a\n  - map\u003csession_id \u003d\u003e DevToolsSession\u003e [YES, and this mapping dictates attribution to WC]",
+      "parentUuid": "7c1d58b6_f4cceb7c",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc236b6_8c60a54c",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 11
