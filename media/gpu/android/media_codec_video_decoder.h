@@ -18,6 +18,7 @@
 #include "media/gpu/android/avda_codec_allocator.h"
 #include "media/gpu/android/codec_wrapper.h"
 #include "media/gpu/android/device_info.h"
+#include "media/gpu/android/mcvd_surface_chooser.h"
 #include "media/gpu/android/video_frame_factory.h"
 #include "media/gpu/media_gpu_export.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -42,8 +43,8 @@ struct PendingDecode {
 //
 // This decoder initializes in two stages. Low overhead initialization is done
 // eagerly in Initialize(), but the rest is done lazily and is kicked off by the
-// first Decode() (see StartLazyInit()). We do this because there are cases in
-// our media pipeline where we'll initialize a decoder but never use it
+// first Decode() (see DoNextLazyInitStep()). We do this because there are cases
+// in our media pipeline where we'll initialize a decoder but never use it
 // (e.g., MSE with no media data appended), and if we eagerly allocator decoder
 // resources, like MediaCodecs and SurfaceTextures, we will block other
 // playbacks that need them.
@@ -59,9 +60,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
       VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
       DeviceInfo* device_info,
       AVDACodecAllocator* codec_allocator,
-      std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
-      AndroidOverlayMojoFactoryCB overlay_factory_cb,
-      RequestOverlayInfoCB request_overlay_info_cb,
+      std::unique_ptr<McvdSurfaceChooser> surface_chooser,
       std::unique_ptr<VideoFrameFactory> video_frame_factory,
       std::unique_ptr<service_manager::ServiceContextRef> connection_ref);
 
@@ -78,9 +77,6 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   bool NeedsBitstreamConversion() const override;
   bool CanReadWithoutStalling() const override;
   int GetMaxDecodeRequests() const override;
-
-  // Updates the current overlay info.
-  void OnOverlayInfoChanged(const OverlayInfo& overlay_info);
 
  protected:
   // Protected for testing.
@@ -111,8 +107,10 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Starts teardown.
   void Destroy() override;
 
-  // Finishes initialization.
-  void StartLazyInit();
+  // Does the next pending initialization step based on the current state.
+  // |state_| must be State::kInitializing. Each async initialization step calls
+  // this when it's done.
+  void DoNextLazyInitStep();
   void OnVideoFrameFactoryInitialized(
       scoped_refptr<SurfaceTextureGLOwner> surface_texture);
 
@@ -170,17 +168,15 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Sets |state_| and does common teardown for the terminal states. |state_|
   // must be either kSurfaceDestroyed or kError.
   void EnterTerminalState(State state);
+  bool InTerminalState();
 
   // Releases |codec_| if it's not null.
   void ReleaseCodec();
 
-  // Creates an overlay factory cb based on the value of overlay_info_.
-  AndroidOverlayFactoryCB CreateOverlayFactoryCb();
-
   State state_;
 
-  // Whether initialization still needs to be done on the first decode call.
-  bool lazy_init_pending_ = true;
+  // Whether we've started the lazy initialization steps.
+  bool lazy_init_started_ = false;
   base::circular_deque<PendingDecode> pending_decodes_;
 
   // Whether we've seen MediaCodec return MEDIA_CODEC_NO_KEY indicating that
@@ -226,25 +222,18 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // have to synchronously switch surfaces we always have one available.
   scoped_refptr<AVDASurfaceBundle> surface_texture_bundle_;
 
-  // A callback for requesting overlay info updates.
-  RequestOverlayInfoCB request_overlay_info_cb_;
-
   // The current overlay info, which possibly specifies an overlay to render to.
   OverlayInfo overlay_info_;
 
   // The surface chooser we use to decide which kind of surface to configure the
   // codec with.
-  std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
+  std::unique_ptr<McvdSurfaceChooser> surface_chooser_;
 
   // Current state for the chooser.
   AndroidVideoSurfaceChooser::State chooser_state_;
 
   // The factory for creating VideoFrames from CodecOutputBuffers.
   std::unique_ptr<VideoFrameFactory> video_frame_factory_;
-
-  // An optional factory callback for creating mojo AndroidOverlays. This must
-  // only be called on the GPU thread.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
   DeviceInfo* device_info_;
 

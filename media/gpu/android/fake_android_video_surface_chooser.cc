@@ -14,6 +14,7 @@ void FakeSurfaceChooser::Initialize(UseOverlayCB use_overlay_cb,
                                     AndroidOverlayFactoryCB initial_factory,
                                     const State& initial_state) {
   MockInitialize();
+  initialized_ = true;
   use_overlay_cb_ = std::move(use_overlay_cb);
   use_surface_texture_cb_ = std::move(use_surface_texture_cb);
   factory_ = std::move(initial_factory);
