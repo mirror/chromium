@@ -46,6 +46,7 @@ class IncognitoWindowTracker : public FeatureTracker {
                            TestOnSessionTimeMet);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldShowPromo);
+  FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerBrowserTest, TestShowPromo);
 
   // FeatureTracker:
   void OnSessionTimeMet() override;
