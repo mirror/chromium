@@ -60,6 +60,11 @@ namespace ui {
 class WebDialogDelegate;
 }
 
+namespace views {
+class View;
+class Widget;
+}  // namespace views
+
 namespace chrome {
 
 // Shows or hides the Task Manager. |browser| can be NULL when called from Ash.
@@ -282,9 +287,10 @@ using IntentPickerResponse =
 
 // Return a pointer to the IntentPickerBubbleView::ShowBubble method.
 using BubbleShowPtr =
-    void (*)(content::WebContents*,
-             const std::vector<arc::ArcNavigationThrottle::AppInfo>&,
-             const IntentPickerResponse&);
+    views::Widget* (*)(views::View*,
+                       content::WebContents*,
+                       const std::vector<arc::ArcNavigationThrottle::AppInfo>&,
+                       const IntentPickerResponse&);
 
 BubbleShowPtr ShowIntentPickerBubble();
 

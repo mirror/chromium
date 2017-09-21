@@ -278,7 +278,7 @@ void OnIntentPickerClosed(int render_process_host_id,
   }
 
   switch (close_reason) {
-    case ArcNavigationThrottle::CloseReason::ALWAYS_PRESSED: {
+    case ArcNavigationThrottle::CloseReason::ARC_APP_PREFERRED_PRESSED: {
       DCHECK(arc_service_manager);
       if (ARC_GET_INSTANCE_FOR_METHOD(
               arc_service_manager->arc_bridge_service()->intent_helper(),
@@ -288,12 +288,18 @@ void OnIntentPickerClosed(int render_process_host_id,
       }
       // fall through.
     }
-    case ArcNavigationThrottle::CloseReason::JUST_ONCE_PRESSED: {
+    case ArcNavigationThrottle::CloseReason::ARC_APP_PRESSED: {
       // Launch the selected app.
       HandleUrl(render_process_host_id, routing_id, url, false, handlers,
                 selected_app_index, nullptr);
       break;
     }
+    case ArcNavigationThrottle::CloseReason::CHROME_PREFERRED_PRESSED:
+    case ArcNavigationThrottle::CloseReason::CHROME_PRESSED:
+    // Chrome shouldn't be elegible here, deactive the Chrome button maybe?.
+    case ArcNavigationThrottle::CloseReason::ALWAYS_PRESSED:
+    case ArcNavigationThrottle::CloseReason::JUST_ONCE_PRESSED:
+    // ALWAYS and JUST_ONCE are deprecated.
     case ArcNavigationThrottle::CloseReason::PREFERRED_ACTIVITY_FOUND:
     case ArcNavigationThrottle::CloseReason::INVALID: {
       NOTREACHED();
@@ -344,7 +350,7 @@ void OnAppIconsReceived(
   auto show_bubble_cb = base::Bind(ShowIntentPickerBubble());
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
-  show_bubble_cb.Run(web_contents, app_info,
+  show_bubble_cb.Run(nullptr /* anchor_view */, web_contents, app_info,
                      base::Bind(OnIntentPickerClosed, render_process_host_id,
                                 routing_id, url, base::Passed(&handlers)));
 }
