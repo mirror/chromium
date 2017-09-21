@@ -493,7 +493,7 @@ Polymer({
             CrOnc.ConnectionState.NOT_CONNECTED) {
       return false;
     }
-    return this.isRemembered_(networkProperties);
+    return type != CrOnc.Type.CELLULAR;
   },
 
   /**
