@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a55824b1_e905beb4",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-21T15:39:31Z",
+      "side": 1,
+      "message": "Is that not for the layer compositor\u0027s rasterization?",
+      "parentUuid": "fb39ed2e_0188bc12",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c04dd01b_ad57c6e6",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
