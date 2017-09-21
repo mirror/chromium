@@ -46,6 +46,30 @@
       "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f976c58a_6a9bc970",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-21T00:03:34Z",
+      "side": 1,
+      "message": "The same tests were still failing for me on the trybots :( They all pass locally when I disable Chrome Home. When I enabled Chrome Home locally, the tests fail in the same way there were previously failing on the bots, so I suspect there\u0027s some issue with the static sIsChromeHomeEnabled saved in FeatureUtilities.\n\nI added a call to FeatureUtilities.resetChromeHomeEnabledForTests(); in this class\u0027s #setUp() and the bots are happy now. Does that seem like a reasonable fix?",
+      "parentUuid": "bbf04986_5575e5b9",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
