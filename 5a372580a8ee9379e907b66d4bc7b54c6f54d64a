@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b07b2047_faea9cc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-21T23:45:15Z",
+      "side": 1,
+      "message": "nit: doc",
+      "range": {
+        "startLine": 905,
+        "startChar": 4,
+        "endLine": 905,
+        "endChar": 40
+      },
+      "revId": "5a372580a8ee9379e907b66d4bc7b54c6f54d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18902091_f35625dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-21T23:45:15Z",
+      "side": 1,
+      "message": "Do you think it\u0027s worth checking current state to new state? This would avoid rerunning the code below. Or is this method not necessarily guaranteed to succeed?",
+      "range": {
+        "startLine": 906,
+        "startChar": 8,
+        "endLine": 907,
+        "endChar": 71
+      },
+      "revId": "5a372580a8ee9379e907b66d4bc7b54c6f54d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
