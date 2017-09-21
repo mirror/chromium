@@ -1446,6 +1446,7 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             NavigationPolicy navigation_policy,
                             HistoryItem* history_item) {
   DCHECK(Client()->HasWebView());
+  UserGestureIndicator::ConsumeUserGesture();
   ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
   NavigationType navigation_type = DetermineNavigationType(
       type, resource_request.HttpBody() || frame_load_request.Form(),
