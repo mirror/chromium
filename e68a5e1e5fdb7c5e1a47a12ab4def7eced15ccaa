@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "86ab1894_f8f395ad",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T06:47:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f67ad5e2_400e6cf8",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614dee38_2987ec69",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
         "patchSetId": 9
@@ -69,6 +87,24 @@
       "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e48d49a_8501cbfc",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T06:47:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "34e54a6d_1557456e",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "05da01da_6599b4bb",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fef257d7_49bea0a4",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-21T06:47:49Z",
+      "side": 1,
+      "message": "OK. I think this is a potential source of future bugs, as it is relying on specific implementation details of the class which uses it. For now it\u0027s OK but I think it should be addressed at some point.",
+      "parentUuid": "98b2b746_9376daa3",
       "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
