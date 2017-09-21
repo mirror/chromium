@@ -16,6 +16,24 @@
       "revId": "450074b66918d7b00f929148e239cf81cc76868c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab9bbd8_dbbb1847",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T22:41:47Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation! :)",
+      "parentUuid": "6ac6c159_a1f2a05f",
+      "revId": "450074b66918d7b00f929148e239cf81cc76868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

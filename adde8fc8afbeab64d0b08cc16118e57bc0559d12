@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "512c30bb_72a6bee5",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T22:41:47Z",
+      "side": 1,
+      "message": "Thank you for explaining :) I have switch to your suggested edit.\n\nSorry for bothering you so much, I am still very new at Js and Js\u0027s promises.",
+      "parentUuid": "f4fdfd91_4046b922",
+      "revId": "adde8fc8afbeab64d0b08cc16118e57bc0559d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcadcbbb_6a5795e1",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 10
