@@ -263,6 +263,7 @@ AutofillProfile& AutofillProfile::operator=(const AutofillProfile& profile) {
 
   server_id_ = profile.server_id();
   has_converted_ = profile.has_converted();
+  SetValidityFromBitfieldValue(profile.GetValidityBitfieldValue());
 
   return *this;
 }
@@ -363,6 +364,7 @@ int AutofillProfile::Compare(const AutofillProfile& profile) const {
 bool AutofillProfile::EqualsSansOrigin(const AutofillProfile& profile) const {
   return guid() == profile.guid() &&
          language_code() == profile.language_code() &&
+         GetValidityBitfieldValue() == profile.GetValidityBitfieldValue() &&
          Compare(profile) == 0;
 }
 
@@ -928,6 +930,7 @@ FormGroup* AutofillProfile::MutableFormGroupForType(const AutofillType& type) {
 bool AutofillProfile::EqualsSansGuid(const AutofillProfile& profile) const {
   return origin() == profile.origin() &&
          language_code() == profile.language_code() &&
+         GetValidityBitfieldValue() == profile.GetValidityBitfieldValue() &&
          Compare(profile) == 0;
 }
 
@@ -948,7 +951,8 @@ std::ostream& operator<<(std::ostream& os, const AutofillProfile& profile) {
             << UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_SORTING_CODE)) << " "
             << UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY)) << " "
             << profile.language_code() << " "
-            << UTF16ToUTF8(profile.GetRawInfo(PHONE_HOME_WHOLE_NUMBER));
+            << UTF16ToUTF8(profile.GetRawInfo(PHONE_HOME_WHOLE_NUMBER)) << " "
+            << profile.GetValidityBitfieldValue();
 }
 
 }  // namespace autofill
