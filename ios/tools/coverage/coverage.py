@@ -32,11 +32,11 @@
 import sys
 
 import argparse
-import collections
 import ConfigParser
 import json
 import os
 import subprocess
+import threading
 
 BUILD_DIRECTORY = 'out/Coverage-iphonesimulator'
 DEFAULT_GOMA_JOBS = 50
@@ -82,6 +82,17 @@ class _FileLineCoverageReport(object):
         'executed': executed_lines
     }
     self._coverage[path] = summary
+
+  def ContainsFile(self, path):
+    """Returns True if the path is in the report.
+
+    Args:
+      path: path to the file.
+
+    Returns:
+      True if the path is in the report.
+    """
+    return path in self._coverage
 
   def GetCoverageForFile(self, path):
     """Returns tuple representing coverage for a file.
@@ -143,46 +154,52 @@ class _FileLineCoverageReport(object):
 class _DirectoryLineCoverageReport(object):
   """Encapsulates coverage calculations for directories."""
 
-  def __init__(self, file_line_coverage_report):
+  def __init__(self, file_line_coverage_report, top_level_dir):
     """Initializes DirectoryLineCoverageReport object."""
     self._coverage = {}
-    self._subpaths = {}
+    self._CalculateCoverageForDirectory(top_level_dir, self._coverage,
+                                        file_line_coverage_report)
 
-    # Get line coverage data and list of sub-directories or files
-    # for each directory.
-    per_dir_line_coverage_report = collections.defaultdict(
-        lambda: collections.defaultdict(lambda: 0))
-    per_dir_subpaths = collections.defaultdict(set)
+  def _CalculateCoverageForDirectory(self, path, line_coverage_result,
+                                     file_line_coverage_report):
+    """Recursively calculate the line coverage for a directory.
 
-    # Imagine all dirctories and files are nodes in a tree, and files are the
-    # leaves. The following algorithm visits all nodes (including interior
-    # directories) in a layer-to-layer fashion from bottom to top.
-    paths_to_visit = collections.deque()
-    paths_to_visit.extend(file_line_coverage_report.GetListOfFiles())
-    visited = set()
+    Args:
+      path: path: path to the directory.
+      line_coverage_result: per directory line coverage result with format:
+                            dict => A dictionary containing line coverage data.
+                            -- dir_path: dict => Line coverage summary.
+                            ---- total: int => total number of lines.
+                            ---- executed: int => executed number of lines.
+      file_line_coverage_report: a FileLineCoverageReport object.
 
-    while paths_to_visit:
-      # Paths maybe added to the queue multiple times, skip if already visited.
-      path = paths_to_visit.popleft()
-      if path in visited:
+    Returns:
+      tuple with two integers (total number of lines, number of executed lines.)
+    """
+    if path in line_coverage_result:
+      return (line_coverage_result[path]['total'],
+              line_coverage_result[path]['executed'])
+
+    sum_total_lines = 0
+    sum_executed_lines = 0
+    for sub_name in os.listdir(path):
+      sub_path = os.path.join(path, sub_name)
+      if os.path.isdir(sub_path):
+        # Calculate coverage for sub-directories recursively.
+        total_lines, executed_lines = self._CalculateCoverageForDirectory(
+            sub_path, line_coverage_result, file_line_coverage_report)
+      elif file_line_coverage_report.ContainsFile(sub_path):
+        total_lines, executed_lines = (
+            file_line_coverage_report.GetCoverageForFile(sub_path))
+      else:
         continue
 
-      visited.add(path)
-      if os.path.isfile(path):
-        total, executed = file_line_coverage_report.GetCoverageForFile(path)
-      else:
-        total = per_dir_line_coverage_report[path]['total']
-        executed = per_dir_line_coverage_report[path]['executed']
+      sum_total_lines += total_lines
+      sum_executed_lines += executed_lines
 
-      dir_path = os.path.dirname(path)
-      per_dir_line_coverage_report[dir_path]['total'] += total
-      per_dir_line_coverage_report[dir_path]['executed'] += executed
-      per_dir_subpaths[dir_path].add(path)
-
-      paths_to_visit.append(dir_path)
-
-    self._coverage = per_dir_line_coverage_report
-    self._subpaths = per_dir_subpaths
+    line_coverage_result[path] = {'total': sum_total_lines,
+                                  'executed': sum_executed_lines}
+    return sum_total_lines, sum_executed_lines
 
   def GetCoverageForDirectory(self, path):
     """Returns tuple representing coverage for a directory.
@@ -561,31 +578,6 @@ def _FormatBuildTargetPaths(build_targets):
   return formatted_build_targets
 
 
-def _AssertBuildTargetsExist(build_targets):
-  """Asserts that the build targets specified in |build_targets| exist.
-
-  Args:
-    build_targets: A list of build targets.
-  """
-  # The returned json objec has the following format:
-  # Root: dict => A dictionary of sources of build targets.
-  # -- target: dict => A dictionary that describes the target.
-  # ---- sources: list => A list of source files.
-  #
-  # For example:
-  # {u'//url:url': {u'sources': [u'//url/gurl.cc', u'//url/url_canon_icu.cc']}}
-  #
-  target_source_descriptions = _GetSourcesDescriptionOfBuildTargets(
-      build_targets)
-  for build_target in build_targets:
-    assert build_target in target_source_descriptions, (('{} is not a valid '
-                                                         'build target. Please '
-                                                         'run \'gn desc {} '
-                                                         'sources\' to debug.')
-                                                        .format(build_target,
-                                                                build_target))
-
-
 def _AssertPathsExist(paths):
   """Asserts that the paths specified in |paths| exist.
 
@@ -603,47 +595,65 @@ def _AssertPathsExist(paths):
 
 
 def _GetSourcesOfBuildTargets(build_targets):
-  """Returns a list of paths corresponding to the sources of the build targets.
+  """Returns a dictionary of the sources of the build targets.
 
   Args:
     build_targets: A list of build targets.
 
   Returns:
-    A list of os paths relative to the root of checkout, and en empty list if
-    |build_targets| is empty.
+    A dictionary containing the sources of each build target as following:
+
+    dict => A dictionary of sources of build targets.
+    -- target: list => A list of os paths relative to the root of checkout.
   """
-  if not build_targets:
-    return []
+  def _GetSourcesOfBuildTarget(build_target, results):
+    """Returns the sources of the build target as a list.
 
-  target_sources_description = _GetSourcesDescriptionOfBuildTargets(
-      build_targets)
-  sources = []
+    Args:
+      build_target: Path to the build target.
+      results: A dictionary stores the sources of each build target:
+               dict => A dictionary of sources of build targets.
+               -- target: list => A list of os paths relative to the root of
+                          checkout.
+
+    Returns: A list of os paths relative to the root of checkout.
+    """
+    cmd = ['gn', 'desc', BUILD_DIRECTORY, build_target, 'sources',
+           '--format=json']
+
+    # The returned json objec has the following format:
+    # dict => A dictionary of sources of build targets.
+    # -- target: dict => A dictionary that describes the target.
+    # ---- sources: list => A list of source files.
+    #
+    # For example:
+    # {u'//url:url': {u'sources': [u'//url/gurl.cc']}}
+    #
+    # If the build target doesn't exist, the dictionary will be empty.
+    target_sources_description = json.loads(subprocess.check_output(cmd))
+    assert build_target in target_sources_description, (('{} is not a valid '
+                                                         'build target. Please '
+                                                         'run \'gn desc {} '
+                                                         'sources\' to debug.')
+                                                        .format(build_target,
+                                                                build_target))
+    sources = target_sources_description[build_target]['sources']
+    results[build_target] = sources
+
+  # It takes more than 5 seconds to run 'gn desc', and it only supports querying
+  # one target at a time, so running them in parallel.
+  build_targets_sources = {}
+  threads = []
   for build_target in build_targets:
-    sources.extend(_ConvertBuildFilePathsToOsPaths(
-        target_sources_description[build_target]['sources']))
+    thread = threading.Thread(target=_GetSourcesOfBuildTarget,
+                              args=(build_target, build_targets_sources))
+    thread.start()
+    threads.append(thread)
 
-  return sources
+  for thread in threads:
+    thread.join()
 
-
-def _GetSourcesDescriptionOfBuildTargets(build_targets):
-  """Returns the description of sources of the build targets using 'gn desc'.
-
-  Args:
-    build_targets: A list of build targets.
-
-  Returns:
-    A json object with the following format:
-
-    Root: dict => A dictionary of sources of build targets.
-    -- target: dict => A dictionary that describes the target.
-    ---- sources: list => A list of source files.
-  """
-  cmd = ['gn', 'desc', BUILD_DIRECTORY]
-  for build_target in build_targets:
-    cmd.append(build_target)
-  cmd.extend(['sources', '--format=json'])
-
-  return json.loads(subprocess.check_output(cmd))
+  return build_targets_sources
 
 
 def _ConvertBuildFilePathsToOsPaths(build_file_paths):
@@ -730,7 +740,6 @@ def Main():
   if not jobs and _IsGomaConfigured():
     jobs = DEFAULT_GOMA_JOBS
 
-  print 'Validating inputs'
   _AssertCoverageBuildDirectoryExists()
   _AssertPathsExist([args.top_level_dir])
 
@@ -745,13 +754,15 @@ def Main():
     _AssertPathsExist(include_paths)
   if exclude_paths:
     _AssertPathsExist(exclude_paths)
-  if include_targets:
-    _AssertBuildTargetsExist(include_targets)
-  if exclude_targets:
-    _AssertBuildTargetsExist(exclude_targets)
 
-  include_sources = include_paths + _GetSourcesOfBuildTargets(include_targets)
-  exclude_sources = exclude_paths + _GetSourcesOfBuildTargets(exclude_targets)
+  build_targets_sources = _GetSourcesOfBuildTargets(include_targets +
+                                                    exclude_targets)
+  include_sources = include_paths
+  for include_target in include_targets:
+    include_sources += build_targets_sources[include_target]
+  exclude_sources = exclude_paths
+  for exclude_target in exclude_targets:
+    exclude_sources += build_targets_sources[exclude_target]
 
   profdata_path = args.reuse_profdata
   if profdata_path:
@@ -768,13 +779,15 @@ def Main():
   file_line_coverage_report.FilterFiles(include_sources, exclude_sources)
   file_line_coverage_report.ExcludeTestFiles()
 
-  dir_line_coverage_report = _DirectoryLineCoverageReport(
-      file_line_coverage_report)
-
-  print '\nLine Coverage Report for: ' + str(args.top_level_dir)
   # ios/chrome and ios/chrome/ refer to the same directory.
-  norm_path = os.path.normpath(args.top_level_dir)
-  total, executed = dir_line_coverage_report.GetCoverageForDirectory(norm_path)
+  top_level_dir = os.path.normpath(args.top_level_dir)
+
+  dir_line_coverage_report = _DirectoryLineCoverageReport(
+      file_line_coverage_report, top_level_dir)
+
+  print '\nLine Coverage Report for: ' + top_level_dir
+  total, executed = dir_line_coverage_report.GetCoverageForDirectory(
+      top_level_dir)
   _PrintLineCoverageStats(total, executed)
 
 
