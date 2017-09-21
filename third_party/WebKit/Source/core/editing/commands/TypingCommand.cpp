@@ -55,29 +55,49 @@ namespace blink {
 namespace {
 
 String DispatchBeforeTextInsertedEvent(const String& text,
-                                       const VisibleSelection& selection) {
+                                       const VisibleSelection& selection,
+                                       EditingState* editing_state) {
   String new_text = text;
   if (Node* start_node = selection.Start().ComputeContainerNode()) {
     if (RootEditableElement(*start_node)) {
       // Send BeforeTextInsertedEvent. The event handler will update text if
       // necessary.
+      const Document& document = start_node->GetDocument();
       BeforeTextInsertedEvent* evt = BeforeTextInsertedEvent::Create(text);
       RootEditableElement(*start_node)->DispatchEvent(evt);
       new_text = evt->GetText();
+      if (!document.GetFrame() ||
+          document.GetFrame()->GetDocument() != &document ||
+          !selection.IsValidFor(document)) {
+        // editing/inserting/webkitBeforeTextInserted-removes-frame.html
+        // and
+        // editing/inserting/webkitBeforeTextInserted-disconnects-selection.html
+        // reaches here.
+        editing_state->Abort();
+      }
     }
   }
   return new_text;
 }
 
 DispatchEventResult DispatchTextInputEvent(LocalFrame* frame,
-                                           const String& text) {
-  if (Element* target = frame->GetDocument()->FocusedElement()) {
+                                           const String& text,
+                                           EditingState* editing_state) {
+  const Document& document = *frame->GetDocument();
+  if (Element* target = document.FocusedElement()) {
     // Send TextInputEvent. Unlike BeforeTextInsertedEvent, there is no need to
     // update text for TextInputEvent as it doesn't have the API to modify text.
     TextEvent* event = TextEvent::Create(frame->DomWindow(), text,
                                          kTextEventInputIncrementalInsertion);
     event->SetUnderlyingEvent(nullptr);
-    return target->DispatchEvent(event);
+    DispatchEventResult result = target->DispatchEvent(event);
+    if (!document.GetFrame() ||
+        document.GetFrame()->GetDocument() != &document) {
+      // editing/inserting/insert-text-remove-iframe-on-textInput-event.html
+      // reaches here.
+      editing_state->Abort();
+    }
+    return result;
   }
   return DispatchEventResult::kCanceledBeforeDispatch;
 }
@@ -115,7 +135,8 @@ SelectionInDOMTree CreateSelection(const size_t start,
   return selection;
 }
 
-bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection) {
+bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection,
+                                     EditingState* editing_state) {
   Element* element = selection.RootEditableElement();
   if (!element)
     return false;
@@ -125,17 +146,11 @@ bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection) {
       BeforeTextInsertedEvent::Create(String("\n"));
   element->DispatchEvent(event);
   // event may invalidate frame or selection
-  if (!document.GetFrame() || document.GetFrame()->GetDocument() != &document) {
-    // editing/inserting/insert-linebreak-remove-frame-on-webkitBeforeTextInserted.html
-    // and
-    // editing/inserting/insert-paragraph-remove-frame-on-webkitBeforeTextInserted.html
-    // reaches here.
-    return false;
-  }
-  if (!selection.IsValidFor(document)) {
-    // editing/inserting/insert-seperator-disconnect-nodes-on-webkitBeforeTextInserted.html
-    // reaches here.
-    return false;
+  if (!document.GetFrame() || document.GetFrame()->GetDocument() != &document ||
+      !selection.IsValidFor(document)) {
+    // editing/inserting/webkitBeforeTextInserted-removes-frame.html reaches
+    // here.
+    editing_state->Abort();
   }
   return event->GetText().length();
 }
@@ -283,9 +298,9 @@ void TypingCommand::InsertText(Document& document,
                                const bool is_incremental_insertion) {
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
-
+  EditingState editing_state;
   InsertText(document, text, frame->Selection().GetSelectionInDOMTree(),
-             options, composition, is_incremental_insertion);
+             options, &editing_state, composition, is_incremental_insertion);
 }
 
 void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
@@ -326,6 +341,7 @@ void TypingCommand::InsertText(
     const String& text,
     const SelectionInDOMTree& passed_selection_for_insertion,
     Options options,
+    EditingState* editing_state,
     TextCompositionType composition_type,
     const bool is_incremental_insertion,
     InputEvent::InputType input_type) {
@@ -339,33 +355,23 @@ void TypingCommand::InsertText(
 
   String new_text = text;
   if (composition_type != kTextCompositionUpdate) {
-    new_text = DispatchBeforeTextInsertedEvent(text, selection_for_insertion);
-    // event handler might destroy document.
-    if (!document.GetFrame() ||
-        document.GetFrame()->GetDocument() != &document) {
-      // editing/inserting/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html
-      // reaches here.
+    new_text = DispatchBeforeTextInsertedEvent(text, selection_for_insertion,
+                                               editing_state);
+    if (editing_state->IsAborted())
       return;
-    }
   }
 
   if (composition_type == kTextCompositionConfirm) {
-    if (DispatchTextInputEvent(frame, new_text) !=
+    if (DispatchTextInputEvent(frame, new_text, editing_state) !=
         DispatchEventResult::kNotCanceled)
       return;
     // event handler might destroy document.
-    if (!document.GetFrame() ||
-        document.GetFrame()->GetDocument() != &document) {
-      // editing/inserting/insert-text-remove-iframe-on-textInput-event.html
-      // reaches here.
+    if (editing_state->IsAborted())
       return;
-    }
   }
 
   if (!selection_for_insertion.IsValidFor(document)) {
     // editing/inserting/insert-text-nodes-disconnect-on-textinput-event.html
-    // and
-    // editing/inserting/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html
     // reaches here.
     return;
   }
@@ -661,7 +667,9 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
 }
 
 void TypingCommand::InsertLineBreak(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection(), editing_state))
+    return;
+  if (editing_state->IsAborted())
     return;
 
   ApplyCommandToComposite(InsertLineBreakCommand::Create(GetDocument()),
@@ -672,7 +680,9 @@ void TypingCommand::InsertLineBreak(EditingState* editing_state) {
 }
 
 void TypingCommand::InsertParagraphSeparator(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection(), editing_state))
+    return;
+  if (editing_state->IsAborted())
     return;
 
   ApplyCommandToComposite(
