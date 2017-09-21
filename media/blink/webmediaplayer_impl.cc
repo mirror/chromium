@@ -1139,12 +1139,16 @@ void WebMediaPlayerImpl::ComputeFrameUploadMetadata(
     int already_uploaded_id,
     VideoFrameUploadMetadata* out_metadata) {
   DCHECK(out_metadata);
-  out_metadata->frame_id = frame->unique_id();
-  out_metadata->visible_rect = frame->visible_rect();
-  out_metadata->timestamp = frame->timestamp();
-  bool skip_possible = already_uploaded_id != -1;
-  bool same_frame_id = frame->unique_id() == already_uploaded_id;
-  out_metadata->skipped = skip_possible && same_frame_id;
+  if (frame) {
+    out_metadata->frame_id = frame->unique_id();
+    out_metadata->visible_rect = frame->visible_rect();
+    out_metadata->timestamp = frame->timestamp();
+    bool skip_possible = already_uploaded_id != -1;
+    bool same_frame_id = frame->unique_id() == already_uploaded_id;
+    out_metadata->skipped = skip_possible && same_frame_id;
+  } else {
+    *out_metadata = {};
+  }
 }
 
 void WebMediaPlayerImpl::SetContentDecryptionModule(
