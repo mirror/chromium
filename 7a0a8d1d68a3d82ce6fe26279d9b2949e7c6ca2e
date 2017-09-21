@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a541ac_ae72860f",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-21T05:55:21Z",
+      "side": 1,
+      "message": "How about checking the switch and resetting |type| to NO_SANDBOX if kNoSandbox is set, and then just checking type !\u003d NO_SANDBOX below?",
+      "revId": "7a0a8d1d68a3d82ce6fe26279d9b2949e7c6ca2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba6608a_52d7e462",
+        "filename": "content/common/sandbox_policy_fuchsia.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-21T05:55:21Z",
+      "side": 1,
+      "message": "nit: This comment seems pretty much to reiterate what I can glean from the name and parameters, so perhaps reword to describe the intended usage, i.e. that the caller should use this, and then explicitly add any extra descriptors, handles, etc, as necessary to grant capabilities to the child process.",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "7a0a8d1d68a3d82ce6fe26279d9b2949e7c6ca2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
