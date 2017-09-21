@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "300cdc33_26f705ba",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de85a6f_e08215f0",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f2f9dc_51b2c679",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "47c1be67_dc3e868a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f2f9dc_51b2c679",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35559c6_4827272e",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7aa7d1e_22d41a67",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35559c6_4827272e",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "65bd4e1c_cdace072",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "The uniqueness is checked inside the dtor. It will fail if this line is removed.",
+      "parentUuid": "c2daa5be_7de522af",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26c04ab8_2909765b",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "0646f1ac_6623989b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26c04ab8_2909765b",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 35
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e16b113_55d2b696",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "d19c6c1a_5ed4108d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e16b113_55d2b696",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5768bc61_a3b159fd",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -153,6 +279,24 @@
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e812c09d_a41c1805",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5768bc61_a3b159fd",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "56f098a9_a37617ce",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa5568a_d635823f",
+      "range": {
+        "startLine": 871,
+        "startChar": 70,
+        "endLine": 871,
+        "endChar": 73
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef998ad8_ee5d4949",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -193,6 +361,24 @@
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcce049b_eab4f6bd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef998ad8_ee5d4949",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +411,24 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "55610fd4_e8e9a2b6",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926b992c_15f6d1f8",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:30:26Z",
+      "side": 1,
+      "message": "The AccessibilityManager has to exist in the WizardController(host, ui) ctor while the Test ctor check and return.\n\nChatted with xiyuan@ and he agree to update the WizardController(host, ui) ctor to early return if AccessibilityManager is nullptr.",
+      "parentUuid": "9c58fead_ad5ce6db",
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
