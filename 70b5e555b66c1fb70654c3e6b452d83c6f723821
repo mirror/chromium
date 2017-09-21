@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0455d8cf_c67ade91",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T20:23:37Z",
+      "side": 1,
+      "message": "Added Writers::TransactionDoneWithEntry.",
+      "parentUuid": "cbe6ae51_5a6f2721",
+      "range": {
+        "startLine": 898,
+        "startChar": 13,
+        "endLine": 898,
+        "endChar": 20
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3208809_3f04e711",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 26
