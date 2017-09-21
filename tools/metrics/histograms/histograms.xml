@@ -41704,6 +41704,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.QuicNetworkDegradingDurationTillDisconnected" units="ms">
+  <owner>zhongyi@chromium.org</owner>
+  <summary>
+    The time measured when QUIC detects network performance degradation until
+    after the network is disconnected.
+  </summary>
+</histogram>
+
+<histogram name="Net.QuicNetworkDegradingDurationTillNewNetworkMadeDefault"
+    units="ms">
+  <owner>zhongyi@chromium.org</owner>
+  <summary>
+    The time measured when QUIC detects network performance degradation until
+    after alternative network is made default.
+  </summary>
+</histogram>
+
+<histogram name="Net.QuicNetworkDisconnectionDuration" units="ms">
+  <owner>zhongyi@chromium.org</owner>
+  <summary>
+    The time measured before WiFi is disconnected until after Cellular is made
+    default.
+  </summary>
+</histogram>
+
 <histogram name="Net.QuicNumSentClientHellos">
   <owner>rch@chromium.org</owner>
   <summary>The number of client hello messages sent.</summary>
