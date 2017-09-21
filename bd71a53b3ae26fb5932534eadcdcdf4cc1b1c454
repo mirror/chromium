@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8493a8fb_a2d74834",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 6824,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-21T12:12:18Z",
+      "side": 1,
+      "message": "Add a comment about what this is doing.",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9dc5bc8_31aab5a2",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-21T12:12:18Z",
+      "side": 1,
+      "message": "It looks better to use UntracedMember\u003cT\u003e.",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bbe844_a9aa6e7a",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-21T12:12:18Z",
+      "side": 1,
+      "message": "Do we need to call this?",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3a9515_d1357bb1",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-21T12:12:18Z",
+      "side": 1,
+      "message": "Why does this need to be HeapVector? Will Vector\u003cEntry\u003e work?\n\nWhat happens if we simply use HashMap\u003cUntracedMember\u003cT\u003e, unsigned\u003e? I guess what matters would be the performance of MatchesMask, and the performance of Add and Remove doesn\u0027t really matter.",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
