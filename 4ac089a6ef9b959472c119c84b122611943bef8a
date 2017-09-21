@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b268daaa_e5d74d37",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T03:43:49Z",
+      "side": 1,
+      "message": "How about making nonce and parser_state the arguments of this ctor, and let ClassicPendingScript::GetSource() to supply those?\nCurrently nonce/parser_state are supplied from different sources (ResourceLoaderOptions and ScriptLoader). Although they should be the same (i.e. the nonce/parser state local variables in \"prepare a script\" spec), it\u0027s better to supply the values from the single source.",
+      "revId": "4ac089a6ef9b959472c119c84b122611943bef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f1ecba_34063065",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T03:43:49Z",
+      "side": 1,
+      "message": "Here we get |nonce| from the current nonce attribute, but the other code locations get the nonce from the nonce attribute at the time of \"prepare a script\".\nProbably we have to save the nonce in ScriptLoader and use ScriptLoader::Nonce() instead of element-\u003eGetNonceForElement().\n\n(I think the nonce plumbing is to be specced and it\u0027s better to save the nonce in a spec-compliant location, perhaps in ClassicPendingScript. But this will need additional refactoring, so I suggested ScriptLoader as an acceptable location that can be implemented immediately)",
+      "revId": "4ac089a6ef9b959472c119c84b122611943bef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
