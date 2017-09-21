@@ -1195,6 +1195,10 @@ String AXObject::AriaTextAlternative(bool recursive,
         name_sources->back().type = name_from;
       }
 
+      // Inform AXObjectCache of new relations. It will use this to ensure our
+      // name is updated if the aria-labelledby tree changes.
+      AxObjectCache().UpdateReverseRelations(this, elements);
+
       // Operate on a copy of |visited| so that if |nameSources| is not null,
       // the set of visited objects is preserved unmodified for future
       // calculations.

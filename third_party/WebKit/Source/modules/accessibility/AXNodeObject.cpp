@@ -2682,6 +2682,7 @@ void AXNodeObject::ComputeAriaOwnsChildren(
   // Case 2: AOM owns property
   HeapVector<Member<Element>> elements;
   if (HasAOMProperty(AOMRelationListProperty::kOwns, elements)) {
+    AxObjectCache().UpdateReverseRelations(this, elements);
     AxObjectCache().UpdateAriaOwns(this, id_vector, owned_children);
 
     for (const auto& element : elements) {
@@ -2698,6 +2699,7 @@ void AXNodeObject::ComputeAriaOwnsChildren(
 
   // Case 3: aria-owns attribute
   TokenVectorFromAttribute(id_vector, aria_ownsAttr);
+  AxObjectCache().UpdateReverseRelations(this, id_vector);
   AxObjectCache().UpdateAriaOwns(this, id_vector, owned_children);
 }
 
@@ -3225,6 +3227,10 @@ String AXNodeObject::Description(AXNameFrom name_from,
   // AOM version.
   HeapVector<Member<Element>> elements;
   if (HasAOMProperty(AOMRelationListProperty::kDescribedBy, elements)) {
+    // Inform AXObjectCache of new relations. It will use this to ensure our
+    // name is updated if the aria-labelledby tree changes.
+    AxObjectCache().UpdateReverseRelations(this, elements);
+
     AXObjectSet visited;
     description = TextFromElements(true, visited, elements, related_objects);
     if (!description.IsNull()) {
