@@ -1878,7 +1878,8 @@ int PepperPluginInstanceImpl::PrintBegin(const WebPrintParams& print_params) {
   print_settings.printable_area = PP_FromGfxRect(print_params.printable_area);
   print_settings.content_area = PP_FromGfxRect(print_params.print_content_area);
   print_settings.paper_size = PP_FromGfxSize(print_params.paper_size);
-  print_settings.dpi = print_params.printer_dpi;
+  print_settings.dpi =
+      std::max(print_params.printer_dpi.width, print_params.printer_dpi.height);
   print_settings.orientation = PP_PRINTORIENTATION_NORMAL;
   print_settings.grayscale = PP_FALSE;
   print_settings.print_scaling_option =
