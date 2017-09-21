@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6c251f0b_8ab0c1b8",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-21T05:59:56Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you\u0027d need to fix all call sites with overloaded functions.\n\nIf GetTargetLanguage(const TranslatePrefs* prefs) and GetTargetLanguage(const TranslatePrefs* prefs, language::LanguageModel* language_model) co-exist, the existing call sites use the former, right?",
+      "parentUuid": "16b509f5_9f630912",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
