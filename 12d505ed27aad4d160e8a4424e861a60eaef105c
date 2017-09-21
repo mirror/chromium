@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464f8182_de0d8099",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-21T14:06:48Z",
+      "side": 1,
+      "message": "this doesn\u0027t do anything though.. the espresso line above won\u0027t even return if ui thread doesn\u0027t become idle",
+      "revId": "12d505ed27aad4d160e8a4424e861a60eaef105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
