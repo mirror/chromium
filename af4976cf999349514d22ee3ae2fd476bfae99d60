@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab11fef6_39fb5ddc",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-21T04:04:59Z",
+      "side": 1,
+      "message": "Whoops, thank you. Removing @private since I\u0027m calling this from outside Route.",
+      "parentUuid": "cddc1c01_6b78a173",
+      "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57270b7e_591baa81",
         "filename": "chrome/test/data/webui/settings/route_tests.js",
         "patchSetId": 15
@@ -51,6 +69,24 @@
       "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f32b92_4c93aa8a",
+        "filename": "chrome/test/data/webui/settings/route_tests.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-21T04:04:59Z",
+      "side": 1,
+      "message": "Yup, the second one didn\u0027t print the log message. I realised there\u0027s a better way to test it works though - as-is now the test only checks it works from inside settings and checks getting the current route is correct, iiuc. I\u0027ve updated it to hopefully be more useful, thanks!",
+      "parentUuid": "c229b92e_c767f04f",
+      "revId": "af4976cf999349514d22ee3ae2fd476bfae99d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
