@@ -33,6 +33,24 @@
       "revId": "20f781f972a5803b181ebe9a1cec05205d972278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc345b0f_dca1675b",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-21T03:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7621ff_c9feac85",
+      "revId": "20f781f972a5803b181ebe9a1cec05205d972278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
