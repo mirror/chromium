@@ -33,6 +33,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
+#include "net/socket/ssl_client_socket.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -50,6 +51,21 @@ const char kDevToolsHttpServerAddress[] = "127.0.0.1";
 const char kDefaultScreenshotFileName[] = "screenshot.png";
 // Default file name for pdf. Can be overriden by "--print-to-pdf" switch.
 const char kDefaultPDFFileName[] = "output.pdf";
+
+// Gets file path into ssl_keylog_file from command line argument or
+// environment variable. Command line argument has priority when
+// both specified.
+base::FilePath GetSSLKeyLogFile(const base::CommandLine* command_line) {
+  if (command_line->HasSwitch(switches::kSSLKeyLogFile)) {
+    base::FilePath path =
+        command_line->GetSwitchValuePath(switches::kSSLKeyLogFile);
+    if (!path.empty())
+      return path;
+    LOG(WARNING) << "ssl-key-log-file argument missing";
+  }
+  std::string path_str;
+  return base::FilePath(path_str);
+}
 
 bool ParseWindowSize(std::string window_size, gfx::Size* parsed_window_size) {
   int width, height = 0;
@@ -86,6 +102,11 @@ void HeadlessShell::OnStart(HeadlessBrowser* browser) {
       browser_->CreateBrowserContextBuilder();
   // TODO(eseckler): These switches should also affect BrowserContexts that
   // are created via DevTools later.
+  base::FilePath ssl_keylog_file =
+      GetSSLKeyLogFile(base::CommandLine::ForCurrentProcess());
+  if (!ssl_keylog_file.empty())
+    net::SSLClientSocket::SetSSLKeyLogFile(ssl_keylog_file);
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(::switches::kLang)) {
     context_builder.SetAcceptLanguage(
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
