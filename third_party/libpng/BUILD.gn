@@ -83,6 +83,7 @@ source_set("libpng_sources") {
 
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [ "//build/config/compiler:no_chromium_code" ]
+  configs += [ "//build/config/compiler:setjmp" ]
 
   if (is_win) {
     # Unary minus applied to unsigned type.
