@@ -16,6 +16,24 @@
       "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110530d1_2437c449",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-21T19:45:54Z",
+      "side": 1,
+      "message": "It does; in the past the symlink would have been ignored. I can change it to ignore them instead.",
+      "parentUuid": "e64a82c3_122acd9f",
+      "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
