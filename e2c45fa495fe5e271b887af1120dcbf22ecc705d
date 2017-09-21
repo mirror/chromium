@@ -22,6 +22,30 @@
       "revId": "e2c45fa495fe5e271b887af1120dcbf22ecc705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f26522b_5189ef12",
+        "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T21:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e60d793_3941ce5a",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "e2c45fa495fe5e271b887af1120dcbf22ecc705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
