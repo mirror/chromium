@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a3c367_b255221f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "Probably need to mention \"PDF\" somewhere in here.",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131ee085_36afedfb",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "- |y| is in \"screen coordinates\".\n- JS uses \"viewport coordinates\" that are unscale, so values coming from JS that are used with \"screen coordinates\" need to be multiplied by |device_scale|. Here, the value is going to JS, so we are dividing.\n- |top_toolbar_height_| comes from JS. It\u0027s in \"viewport coordinates\".",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3d3ee9_144a6c09",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "|position| is in \"screen coordinates\".",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822e0ccd_f760528d",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "nit: |var_name|",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 52
+      },
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2192fd68_c75f53ab",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "|target.y_in_pixels| is in \"page coordinates\", so it has to be multiplied by |current_zoom_| to be converted to \"screen coordinates\".",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9825b2ef_beb32762",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "This call to GetScreenRects() is wonky because it passes a hard coded zoom value instead of |current_zoom_|. Which makes me think GetScreenRects() does not actually return values in \"screen coordinates\" so the code below has to multiply by |current_zoom_|.",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370a3642_390bd968",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T21:23:18Z",
+      "side": 1,
+      "message": "Need to check the return value before accessing the out-params.",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
