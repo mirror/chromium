@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "345321f0_bfcd2113",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T18:18:23Z",
+      "side": 1,
+      "message": "Document why the NOTREACHED here and line 500.",
+      "range": {
+        "startLine": 496,
+        "startChar": 2,
+        "endLine": 496,
+        "endChar": 15
+      },
+      "revId": "422775d80dc9308b86154566d7fc255f156fff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
