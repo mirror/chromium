@@ -52,6 +52,24 @@
       "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263b952b_c2432f73",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-21T00:34:24Z",
+      "side": 1,
+      "message": "If we do that, then cache_expression is NOT set at all in UpdateSecurityState().\nOn the other hand, we do not expect the cache expression to be empty. Correct?",
+      "parentUuid": "f9b92fac_f4d97860",
+      "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
