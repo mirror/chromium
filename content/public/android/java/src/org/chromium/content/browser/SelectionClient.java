@@ -4,12 +4,69 @@
 
 package org.chromium.content.browser;
 
-import android.view.textclassifier.TextClassifier;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.view.View.OnClickListener;
 
 /**
  * Interface to a content layer client that can process and modify selection text.
  */
 public interface SelectionClient {
+    /**
+     * The result of the text analysis.
+     */
+    public static class Result {
+        /**
+         * The number of characters that the left boundary of the original
+         * selection should be moved. Negative number means moving left.
+         */
+        public int startAdjust;
+
+        /**
+         * The number of characters that the right boundary of the original
+         * selection should be moved. Negative number means moving left.
+         */
+        public int endAdjust;
+
+        /**
+         * Label for the suggested menu item.
+         */
+        public CharSequence label;
+
+        /**
+         * Icon for the suggested menu item.
+         */
+        public Drawable icon;
+
+        /**
+         * Intent for the suggested menu item.
+         */
+        public Intent intent;
+
+        /**
+         * OnClickListener for the suggested menu item.
+         */
+        public OnClickListener onClickListener;
+
+        /**
+         * A helper method that returns true if the result has both visual info
+         * and an action so that, for instance, one can make a new menu item.
+         */
+        public boolean hasNamedAction() {
+            return (label != null || icon != null) && (intent != null || onClickListener != null);
+        }
+    }
+
+    /**
+     * The interface that returns the result of the selected text analysis.
+     */
+    public interface ResultCallback {
+        /**
+         * The result is delivered with this method.
+         */
+        void onClassified(Result result);
+    }
+
     /**
      * Notification that the web content selection has changed, regardless of the causal action.
      * @param selection The newly established selection.
@@ -58,17 +115,17 @@ public interface SelectionClient {
      * Sets TextClassifier for the Smart Text selection. Pass null argument to use the system
      * classifier
      */
-    public void setTextClassifier(TextClassifier textClassifier);
+    public void setTextClassifier(Object textClassifier);
 
     /**
      * Gets TextClassifier that is used for the Smart Text selection. If the custom classifier
      * has been set with setTextClassifier, returns that object, otherwise returns the system
      * classifier.
      */
-    public TextClassifier getTextClassifier();
+    public Object getTextClassifier();
 
     /**
      * Returns the TextClassifier which has been set with setTextClassifier(), or null.
      */
-    public TextClassifier getCustomTextClassifier();
+    public Object getCustomTextClassifier();
 }
