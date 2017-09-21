@@ -69,6 +69,8 @@ class MODULES_EXPORT AXObjectCacheImpl
   void SelectionChanged(Node*) override;
   void UpdateReverseRelations(const AXObject* relation_source,
                               const Vector<String>& target_ids);
+  void UpdateReverseRelations(const AXObject* relation_source,
+                              const HeapVector<Member<Element>>& target_elems);
   void ChildrenChanged(Node*) override;
   void ChildrenChanged(LayoutObject*) override;
   void ChildrenChanged(AccessibleNode*) override;

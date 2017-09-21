@@ -304,22 +304,22 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAOnclick) {
   RunHtmlTest(FILE_PATH_LITERAL("a-onclick.html"));
 }
 
-
-#if defined(THREAD_SANITIZER)
-// See (crbug.com/708759).
-#define MAYBE_AccessibilityAomBusy DISABLED_AccessibilityAomBusy
-#define MAYBE_AccessibilityAomChecked DISABLED_AccessibilityAomChecked
-#else
-#define MAYBE_AccessibilityAomBusy AccessibilityAomBusy
-#define MAYBE_AccessibilityAomChecked AccessibilityAomChecked
-#endif
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, MAYBE_AccessibilityAomBusy) {
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAomBusy) {
   RunAomTest(FILE_PATH_LITERAL("aom-busy.html"));
 }
 
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       MAYBE_AccessibilityAomChecked) {
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAomChecked) {
   RunAomTest(FILE_PATH_LITERAL("aom-checked.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       AccessibilityAomDescribedByUpdates) {
+  RunAomTest(FILE_PATH_LITERAL("aom-describedby-updates.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       AccessibilityAomLabeledByUpdates) {
+  RunAomTest(FILE_PATH_LITERAL("aom-labeledby-updates.html"));
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,

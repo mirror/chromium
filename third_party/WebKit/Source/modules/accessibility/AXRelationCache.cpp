@@ -62,6 +62,29 @@ void AXRelationCache::UpdateReverseRelations(const AXObject* relation_source,
   }
 }
 
+// Update reverse relation map, where relation_source is related to
+// target_elements.
+void AXRelationCache::UpdateReverseRelations(
+    const AXObject* relation_source,
+    const HeapVector<Member<Element>>& target_elements) {
+  AXID relation_source_axid = relation_source->AxObjectID();
+
+  // Add entries to reverse map.
+  for (const Member<Element>& target_element : target_elements) {
+    AXObject* target_object = GetOrCreate(target_element);
+    if (target_object) {
+      AXID target_axid = target_object->AxObjectID();
+      HashSet<AXID>* source_axids = axid_to_related_mapping_.at(target_axid);
+      if (!source_axids) {
+        source_axids = new HashSet<AXID>();
+        axid_to_related_mapping_.Set(target_axid,
+                                     WTF::WrapUnique(source_axids));
+      }
+      source_axids->insert(relation_source_axid);
+    }
+  }
+}
+
 static bool ContainsCycle(AXObject* owner, AXObject* child) {
   // Walk up the parents of the owner object, make sure that this child
   // doesn't appear there, as that would create a cycle.
@@ -154,9 +177,6 @@ void AXRelationCache::UpdateAriaOwns(
     const AXObject* owner,
     const Vector<String>& owned_id_vector,
     HeapVector<Member<AXObject>>& validated_owned_children_result) {
-  // Track reverse relations for future tree updates.
-  UpdateReverseRelations(owner, owned_id_vector);
-
   //
   // Figure out the ids that actually correspond to children that exist
   // and that we can legally own (not cyclical, not already owned, etc.) and
@@ -193,6 +213,15 @@ void AXRelationCache::UpdateAriaOwns(
                                       validated_owned_child_axids);
 }
 
+static void AddAxidSetTo(HashSet<AXID>* from_axids, HashSet<AXID>* to_axids) {
+  DCHECK(to_axids);
+  if (!from_axids)
+    return;
+  for (const auto& axid : *from_axids) {
+    to_axids->insert(axid);
+  }
+}
+
 // Return target AXObject and fill source_objects with AXObjects for
 // relations pointing to target.
 AXObject* AXRelationCache::GetReverseRelated(
@@ -201,25 +230,35 @@ AXObject* AXRelationCache::GetReverseRelated(
   if (!target || !target->IsElementNode())
     return nullptr;
 
-  Element* element = ToElement(target);
-  if (!element->HasID())
-    return nullptr;
+  // Get both kinds of reverse relations in one set -- ARIA and AOM.
+  // The ARIA map uses id attributes, whereas AOM uses AXIDs for the targets.
+  HashSet<AXID> source_axids;
 
-  String id = element->GetIdAttribute();
-  HashSet<AXID>* source_axids = id_attr_to_related_mapping_.at(id);
-  if (!source_axids)
-    return nullptr;
+  Element* target_element = ToElement(target);
+  AXObject* target_object = Get(target_element);
 
-  // Not safe to call GetOrCreate() as this method is called during layout
-  // changes such as AttributeChanged().
-  AXObject* ax_element = Get(element);
-  for (const auto& source_axid : *source_axids) {
+  // AOM reverse relations use the AXID of the relation target as the key.
+  if (target_object) {
+    AXID target_axid = target_object->AxObjectID();
+    HashSet<AXID>* aom_source_axids = axid_to_related_mapping_.at(target_axid);
+    AddAxidSetTo(aom_source_axids, &source_axids);
+  }
+
+  // ARIA reverse relations use the @id of the relation target as the key.
+  if (target_element->HasID()) {
+    String id = target_element->GetIdAttribute();
+    HashSet<AXID>* aria_source_axids = id_attr_to_related_mapping_.at(id);
+    AddAxidSetTo(aria_source_axids, &source_axids);
+  }
+
+  for (const auto& source_axid : source_axids) {
+    // TODO(aleventhal) should we check to see if this AXObject is now defunct?
     AXObject* source_object = ObjectFromAXID(source_axid);
     if (source_object)
       source_objects.push_back(source_object);
   }
 
-  return ax_element;
+  return target_object;
 }
 
 void AXRelationCache::UpdateRelatedTree(Node* node) {
