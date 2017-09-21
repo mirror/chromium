@@ -83,6 +83,7 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> metadata_decoder);
 
   friend class DeferredImageDecoderTest;
+  friend class BitmapImageTestWithMockDecoder;
   ImageFrameGenerator* FrameGenerator() { return frame_generator_.Get(); }
 
   void ActivateLazyDecoding();

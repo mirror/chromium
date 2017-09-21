@@ -350,8 +350,10 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
     BitmapImageTest::SetUp();
     auto decoder = MockImageDecoder::Create(this);
     decoder->SetSize(10, 10);
-    image_->SetDecoderForTesting(
-        DeferredImageDecoder::CreateForTesting(std::move(decoder)));
+    auto deferred_decoder =
+        DeferredImageDecoder::CreateForTesting(std::move(decoder));
+    decoder_ = deferred_decoder.get();
+    image_->SetDecoderForTesting(std::move(deferred_decoder));
   }
 
   void DecoderBeingDestroyed() override {}
@@ -365,7 +367,13 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
   int RepetitionCount() const override { return repetition_count_; }
   TimeDelta FrameDuration() const override { return duration_; }
 
+  void SetHasAlpha(size_t index, bool has_alpha) {
+    decoder_->FrameGenerator()->SetHasAlpha(index, has_alpha);
+  }
+
  protected:
+  DeferredImageDecoder* decoder_;
+
   TimeDelta duration_;
   int repetition_count_;
   size_t frame_count_;
@@ -416,6 +424,27 @@ TEST_F(BitmapImageTestWithMockDecoder, ImageMetadataTracking) {
     EXPECT_TRUE(data.complete);
   }
 };
+
+TEST_F(BitmapImageTestWithMockDecoder, ChangedIdOnAlphaChange) {
+  repetition_count_ = kAnimationNone;
+  frame_count_ = 1u;
+  last_frame_complete_ = true;
+  image_->SetData(SharedBuffer::Create("data", sizeof("data")), true);
+
+  // Completely loaded image should make the uniqueID constant for it. Start
+  // with alpha.
+  SetHasAlpha(0u, true);
+  auto image1 = image_->PaintImageForCurrentFrame();
+  DestroyDecodedData();
+  auto image2 = image_->PaintImageForCurrentFrame();
+  EXPECT_EQ(image1.unique_id(), image2.unique_id());
+
+  // Now change the alpha.
+  DestroyDecodedData();
+  SetHasAlpha(0u, false);
+  auto image3 = image_->PaintImageForCurrentFrame();
+  EXPECT_NE(image3.unique_id(), image2.unique_id());
+}
 
 template <typename HistogramEnumType>
 struct HistogramTestParams {

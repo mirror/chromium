@@ -118,6 +118,7 @@ class PLATFORM_EXPORT ImageFrameGenerator final
 
   friend class ImageFrameGeneratorTest;
   friend class DeferredImageDecoderTest;
+  friend class BitmapImageTestWithMockDecoder;
   // For testing. |factory| will overwrite the default ImageDecoder creation
   // logic if |factory->create()| returns non-zero.
   void SetImageDecoderFactory(std::unique_ptr<ImageDecoderFactory> factory) {
