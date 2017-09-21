@@ -34,6 +34,24 @@
       "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6ed5ec_4f9c8154",
+        "filename": "ui/message_center/views/message_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-21T20:23:20Z",
+      "side": 1,
+      "message": "OK.  It seems to me that since this is also fired by MessagePopupCollection, that we\u0027ll be getting duplicate events in some cases.  In addition this will be fired when the notification view is created, not when it is displayed.  So, I think I marginally prefer adding this to message_list_view.cc\u0027s UpdateNotification.  WDYT?\n\n+yoshiki since he\u0027s got context on ARC etc",
+      "parentUuid": "35a1ff25_3fd09cf3",
+      "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
