@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059b843f_c82c77a4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 67887,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-21T22:11:25Z",
+      "side": 1,
+      "message": "holte@ -- Please note that there already exist a number of histograms with prefix \"SafeBrowsing.V4UnusedStoreFileExists\".\nDoes this still look reasonable or should I pick a different metric name? Thanks.",
+      "range": {
+        "startLine": 67887,
+        "startChar": 17,
+        "endLine": 67887,
+        "endChar": 56
+      },
+      "revId": "f97acb782b948ba0b6be478d62471318269113ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
