@@ -138,6 +138,24 @@
       "revId": "7153807c0237b95398e7288c44091648f8963a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37dcd5f8_a71659c5",
+        "filename": "tools/perf/page_sets/key_idle_power_cases.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-21T19:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baaba778_5a4ee02e",
+      "revId": "7153807c0237b95398e7288c44091648f8963a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
