@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc3dff8_0b0fb060",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-21T08:18:00Z",
+      "side": 1,
+      "message": "This is making a copy of the string. Could we keep the old code or make a reference instead?\n\nWarning: I\u0027m not sure about the lifetime of |result|, as it may be destroyed during DeleteTokenFetcher(). If this is a concern, we might as well pass |result| by value to avoid subtle bugs.",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 27
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7a4e40_1f6b8a64",
+        "filename": "chrome/browser/signin/dice_response_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-21T08:18:00Z",
+      "side": 1,
+      "message": "Nit: maybe observer rather than delegate?",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397a5e96_af8e7f49",
+        "filename": "chrome/browser/signin/dice_response_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-21T08:18:00Z",
+      "side": 1,
+      "message": "Optional: Should this be a raw pointer here? I\u0027m not sure we need to transfer ownership at this point.\nNote: if you do this, make sure you don\u0027t use the delegate after it is deleted.",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 21
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1dcda6_c6c36c67",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-21T08:18:00Z",
+      "side": 1,
+      "message": "Did you check that these dependencies are allowed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1a3706_94d9e57a",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-21T08:18:00Z",
+      "side": 1,
+      "message": "Nit: add comment.",
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
