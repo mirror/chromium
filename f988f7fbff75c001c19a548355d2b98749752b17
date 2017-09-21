@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "6880273c_7a5d611f",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Strange.  Mac didn\u0027t have a pre-existing sandbox_mac_unittests in this file, so I didn\u0027t get a grep hit.\n\nMade OS agnostic.",
+      "parentUuid": "25d5cf6c_cb116085",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ea3385_aa28f353",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Do I still need this one given the change above to make OS independent?  I\u0027ve kept it for now.",
+      "range": {
+        "startLine": 821,
+        "startChar": 1,
+        "endLine": 821,
+        "endChar": 2
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0df6c5b4_eb81e831",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 18
@@ -162,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "6edba842_e218c156",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "The top-level directory is //sandbox, so by one convention, everything under here is namespace sandbox {}.  I\u0027m not sure we need sub-namespaces.",
+      "parentUuid": "9e707958_719c86b1",
+      "range": {
+        "startLine": 2801,
+        "startChar": 9,
+        "endLine": 2801,
+        "endChar": 16
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038f4abc_b82c2e96",
         "filename": "content/BUILD.gn",
         "patchSetId": 18
@@ -185,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "61c0c51d_87f1cd8f",
+        "filename": "content/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038f4abc_b82c2e96",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f8ed03_0175609f",
         "filename": "content/public/common/BUILD.gn",
         "patchSetId": 18
@@ -202,6 +291,24 @@
     },
     {
       "key": {
+        "uuid": "63b6eb5c_f613a7fb",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f8ed03_0175609f",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3908399d_f3f6ae6b",
         "filename": "content/public/common/content_sandbox_type.h",
         "patchSetId": 18
@@ -216,6 +323,24 @@
       "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad62b572_2da39067",
+        "filename": "content/public/common/content_sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3908399d_f3f6ae6b",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +379,24 @@
     },
     {
       "key": {
+        "uuid": "621eb1ef_50e709e8",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "\"common\" has kind of a specific meaning to me:  given a browser/renderer split, common has code that can run in either process.  Here, I think common would mean code that can run on any architecture, right?\n\nIf so, I\u0027d recommend just putting it in //sandbox itself.\n\nI\u0027ve added to the tracking bug that I\u0027d imagined that //sandbox/policy would have mac, win, and linux sub-directories and listed some files that go there in that bug.",
+      "parentUuid": "e33495cb_d5735918",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a141373e_58b6f39d",
         "filename": "sandbox/policy/sandbox_type.h",
         "patchSetId": 18
@@ -268,6 +411,24 @@
       "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428c07bd_a180a8b1",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a141373e_58b6f39d",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +449,24 @@
     },
     {
       "key": {
+        "uuid": "b5f07bdf_ce2297cd",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d767509",
+      "parentUuid": "418f9311_26a4ea91",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed952895_ae62853d",
         "filename": "testing/buildbot/gn_isolate_map.pyl",
         "patchSetId": 18
@@ -302,6 +481,24 @@
       "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917e41d1_ce52f6f1",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 18
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T17:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed952895_ae62853d",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
