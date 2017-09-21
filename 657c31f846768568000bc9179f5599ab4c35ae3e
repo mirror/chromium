@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f81175_a50a3d61",
+        "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "message",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dd21af_a528e2aa",
+        "filename": "extensions/common/api/virtual_keyboard.idl",
+        "patchSetId": 40
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "Comment on what an optional value represents; is the default to be enabled or restricted?",
+      "range": {
+        "startLine": 13,
+        "startChar": 69,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241de3d7_827d26bc",
+        "filename": "extensions/shell/browser/shell_extensions_api_client.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "Rebase error maybe? #include \u003cutility\u003e and use std::make_unique.",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bead1c_ede95298",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "Feel free to remove in this CL if you like. No one is using AppShell on Chrome OS yet (or anymore), so as long as things work similar to Chrome where possible you don\u0027t need to worry about maintaining backwards compatibility.",
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e68d00_5640e223",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\" for this",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c514087_f4c670d1",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "I think you mean \"true\" here?\n\nis_keyboard_restricted_ defaults to false, but is set to true if at least one feature is not enabled.",
+      "range": {
+        "startLine": 77,
+        "startChar": 35,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c933451f_319e136f",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "nit: std::string() instead of string literal",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da165e84_5133a619",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T21:04:03Z",
+      "side": 1,
+      "message": "Why this include?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
