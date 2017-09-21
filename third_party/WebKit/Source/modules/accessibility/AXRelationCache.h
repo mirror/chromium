@@ -76,6 +76,9 @@ class AXRelationCache {
   // UpdateRelatedTree.
   void UpdateReverseRelations(const AXObject* relation_source,
                               const Vector<String>& target_ids);
+  void UpdateReverseRelations(
+      const AXObject* relation_source,
+      const HeapVector<Member<Element>>& target_elements);
 
  private:
   // If any object is related to this object via <label for>, aria-owns,
@@ -113,6 +116,8 @@ class AXRelationCache {
   // - When text changes, we can recompute any label or description based on it
   //   and fire the appropriate change events.
   HashMap<String, std::unique_ptr<HashSet<AXID>>> id_attr_to_related_mapping_;
+  // Reverse map for AOM properties that can point to element without an id.
+  HashMap<AXID, std::unique_ptr<HashSet<AXID>>> axid_to_related_mapping_;
 
   // Helpers that call back into object cache
   AXObject* ObjectFromAXID(AXID) const;

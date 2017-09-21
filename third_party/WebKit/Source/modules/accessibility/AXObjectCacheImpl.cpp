@@ -649,6 +649,12 @@ void AXObjectCacheImpl::UpdateReverseRelations(
   relation_cache_->UpdateReverseRelations(relation_source, target_ids);
 }
 
+void AXObjectCacheImpl::UpdateReverseRelations(
+    const AXObject* relation_source,
+    const HeapVector<Member<Element>>& target_elements) {
+  relation_cache_->UpdateReverseRelations(relation_source, target_elements);
+}
+
 void AXObjectCacheImpl::TextChanged(Node* node) {
   TextChanged(Get(node), node);
 }
