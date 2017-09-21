@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "a142e6ed_56e5531b",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "no need for kEnableFullscreenAppList, it\u0027s enabled by default.",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4976cf_02a1804e",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "Not required if we are not testing the old app list.",
+      "range": {
+        "startLine": 331,
+        "startChar": 11,
+        "endLine": 331,
+        "endChar": 30
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc3dd99_e192e3dc",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "FYI if you call SetState(CLOSED) this will always fail.\n\nMaybe add a special case here to call AppListView::Dismiss when CLOSED is sent to this function?",
+      "range": {
+        "startLine": 353,
+        "startChar": 27,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7692424a_e0fec014",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -65,6 +128,23 @@
     },
     {
       "key": {
+        "uuid": "77c82282_cce30887",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "What happens when the AppListState changes from X to Y? Does the focus manager properly transition focus?\n\nWhat is the initially focused element when the AppListState changes (for example, focus the third search result, then delete the search query, where is the focus supposed to be now that we are in either FULLSCREEN_ALL_APPS or PEEKING? Do we needs test cases for that too?",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bac877c5_e57f79bc",
         "filename": "ui/app_list/views/search_result_tile_item_view.cc",
         "patchSetId": 1
@@ -105,6 +185,23 @@
     },
     {
       "key": {
+        "uuid": "55da0294_d2e0b3ed",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "Does this and the next function have to  be behind the is_app_list_focus_enabled_ flag?",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc7628dc_bb07ae05",
         "filename": "ui/app_list/views/suggestions_container_view.h",
         "patchSetId": 1
@@ -122,6 +219,23 @@
         "endLine": 56,
         "endChar": 25
       },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef07ab43_0f557b68",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-21T21:46:19Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
