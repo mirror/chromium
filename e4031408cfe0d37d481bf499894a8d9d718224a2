@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61717e1_e3840d9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-21T13:38:37Z",
+      "side": 1,
+      "message": "Could you expand this last sentence a bit to just mention that this change has an implication for embedders: if you were previously using the default URL, you were also getting google_apis::GetAPIKey(). To preserve that behavior, you\u0027ll have to override the ContentBrowserClient method to return google_apis::GetAPIKey(), as the default now will be no API key. You can then mention that this CL does that for Chrome and Chromecast, the only two embedders in Chromium that are using NetworkLocationProvider (and were using it with the default URL).",
+      "revId": "e4031408cfe0d37d481bf499894a8d9d718224a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
