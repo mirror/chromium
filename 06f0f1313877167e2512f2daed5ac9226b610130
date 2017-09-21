@@ -16,6 +16,24 @@
       "revId": "06f0f1313877167e2512f2daed5ac9226b610130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403b33fa_a58192ac",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-21T21:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea28738_f73f1b49",
+      "revId": "06f0f1313877167e2512f2daed5ac9226b610130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
