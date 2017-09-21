@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2480ba32_031d42d0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "Arrgh, this is not an init method, this should really not be called init anything. And it should be a function anyway, not a method as it doesn\u0027t use self at all except to call another method that should also be a function.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "651c945f198b6add2f3ed31f11d8bee7ab6af007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f9a1f5_246d6a07",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "Doing things with self in init methods always make me uncomfortable. Can this be moved to be done at layout time instead?",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "651c945f198b6add2f3ed31f11d8bee7ab6af007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74c78c3_ef138cda",
+        "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "This one is far from ideal as well…",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 21
+      },
+      "revId": "651c945f198b6add2f3ed31f11d8bee7ab6af007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
