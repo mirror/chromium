@@ -277,7 +277,7 @@ std::ostream& operator<<(
     const autofill::AutofillQueryResponseContents& response) {
   out << "upload_required: " << response.upload_required();
   for (const auto& field : response.field()) {
-    out << "\nautofill_type: " << field.autofill_type();
+    out << "\nautofill_type: " << field.overall_type_prediction();
   }
   return out;
 }
@@ -500,8 +500,8 @@ void FormStructure::ParseQueryResponse(
       if (current_field == response.field().end())
         break;
 
-      ServerFieldType field_type =
-          static_cast<ServerFieldType>(current_field->autofill_type());
+      ServerFieldType field_type = static_cast<ServerFieldType>(
+          current_field->overall_type_prediction());
       query_response_has_no_server_data &= field_type == NO_SERVER_DATA;
 
       // UNKNOWN_TYPE is reserved for use by the client.
@@ -512,6 +512,18 @@ void FormStructure::ParseQueryResponse(
         heuristics_detected_fillable_field = true;
 
       field->set_server_type(field_type);
+      std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+          server_predictions;
+      if (current_field->predictions_size() == 0) {
+        AutofillQueryResponseContents::Field::FieldPrediction field_prediction;
+        field_prediction.set_type(field_type);
+        server_predictions.push_back(field_prediction);
+      } else {
+        server_predictions.assign(current_field->predictions().begin(),
+                                  current_field->predictions().end());
+      }
+      field->set_server_predictions(std::move(server_predictions));
+
       if (heuristic_type != field->Type().GetStorableType())
         query_response_overrode_heuristics = true;
 

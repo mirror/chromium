@@ -3768,10 +3768,17 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
   forms.push_back(&form_structure2);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(7);
-  response.add_field()->set_autofill_type(30);
-  response.add_field()->set_autofill_type(9);
-  response.add_field()->set_autofill_type(0);
+  AutofillQueryResponseContents_Field* field0 = response.add_field();
+  field0->set_overall_type_prediction(7);
+  AutofillQueryResponseContents_Field_FieldPrediction* field_prediction0 =
+      field0->add_predictions();
+  field_prediction0->set_type(7);
+  AutofillQueryResponseContents_Field_FieldPrediction* field_prediction1 =
+      field0->add_predictions();
+  field_prediction1->set_type(22);
+  response.add_field()->set_overall_type_prediction(30);
+  response.add_field()->set_overall_type_prediction(9);
+  response.add_field()->set_overall_type_prediction(0);
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -3780,9 +3787,18 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
   ASSERT_GE(forms[0]->field_count(), 2U);
   ASSERT_GE(forms[1]->field_count(), 2U);
   EXPECT_EQ(7, forms[0]->field(0)->server_type());
+  ASSERT_EQ(2U, forms[0]->field(0)->server_predictions().size());
+  EXPECT_EQ(7U, forms[0]->field(0)->server_predictions()[0].type());
+  EXPECT_EQ(22U, forms[0]->field(0)->server_predictions()[1].type());
   EXPECT_EQ(30, forms[0]->field(1)->server_type());
+  ASSERT_EQ(1U, forms[0]->field(1)->server_predictions().size());
+  EXPECT_EQ(30U, forms[0]->field(1)->server_predictions()[0].type());
   EXPECT_EQ(9, forms[1]->field(0)->server_type());
+  ASSERT_EQ(1U, forms[1]->field(0)->server_predictions().size());
+  EXPECT_EQ(9U, forms[1]->field(0)->server_predictions()[0].type());
   EXPECT_EQ(0, forms[1]->field(1)->server_type());
+  ASSERT_EQ(1U, forms[1]->field(1)->server_predictions().size());
+  EXPECT_EQ(0U, forms[1]->field(1)->server_predictions()[0].type());
 }
 
 TEST_F(FormStructureTest, ParseQueryResponseAuthorDefinedTypes) {
@@ -3808,8 +3824,8 @@ TEST_F(FormStructureTest, ParseQueryResponseAuthorDefinedTypes) {
   forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(EMAIL_ADDRESS);
-  response.add_field()->set_autofill_type(ACCOUNT_CREATION_PASSWORD);
+  response.add_field()->set_overall_type_prediction(EMAIL_ADDRESS);
+  response.add_field()->set_overall_type_prediction(ACCOUNT_CREATION_PASSWORD);
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -3852,10 +3868,11 @@ TEST_F(FormStructureTest, ParseQueryResponse_RationalizeLoneField) {
   forms.push_back(&form_structure);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(NAME_FULL);
-  response.add_field()->set_autofill_type(ADDRESS_HOME_LINE1);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_MONTH);  // Uh-oh!
-  response.add_field()->set_autofill_type(EMAIL_ADDRESS);
+  response.add_field()->set_overall_type_prediction(NAME_FULL);
+  response.add_field()->set_overall_type_prediction(ADDRESS_HOME_LINE1);
+  response.add_field()->set_overall_type_prediction(
+      CREDIT_CARD_EXP_MONTH);  // Uh-oh!
+  response.add_field()->set_overall_type_prediction(EMAIL_ADDRESS);
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -3914,9 +3931,9 @@ TEST_F(FormStructureTest, ParseQueryResponse_RationalizeCCName) {
   forms.push_back(&form_structure);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(CREDIT_CARD_NAME_FIRST);
-  response.add_field()->set_autofill_type(CREDIT_CARD_NAME_LAST);
-  response.add_field()->set_autofill_type(EMAIL_ADDRESS);
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NAME_FIRST);
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NAME_LAST);
+  response.add_field()->set_overall_type_prediction(EMAIL_ADDRESS);
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -3981,11 +3998,13 @@ TEST_F(FormStructureTest, ParseQueryResponse_RationalizeMultiMonth_1) {
   forms.push_back(&form_structure);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(CREDIT_CARD_NAME_FULL);
-  response.add_field()->set_autofill_type(CREDIT_CARD_NUMBER);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_MONTH);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_2_DIGIT_YEAR);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_MONTH);  // Uh-oh!
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NAME_FULL);
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NUMBER);
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_EXP_MONTH);
+  response.add_field()->set_overall_type_prediction(
+      CREDIT_CARD_EXP_2_DIGIT_YEAR);
+  response.add_field()->set_overall_type_prediction(
+      CREDIT_CARD_EXP_MONTH);  // Uh-oh!
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -4050,10 +4069,12 @@ TEST_F(FormStructureTest, ParseQueryResponse_RationalizeMultiMonth_2) {
   forms.push_back(&form_structure);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(CREDIT_CARD_NAME_FULL);
-  response.add_field()->set_autofill_type(CREDIT_CARD_NUMBER);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR);
-  response.add_field()->set_autofill_type(CREDIT_CARD_EXP_MONTH);  // Uh-oh!
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NAME_FULL);
+  response.add_field()->set_overall_type_prediction(CREDIT_CARD_NUMBER);
+  response.add_field()->set_overall_type_prediction(
+      CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR);
+  response.add_field()->set_overall_type_prediction(
+      CREDIT_CARD_EXP_MONTH);  // Uh-oh!
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
