@@ -34,6 +34,23 @@
       "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafb72cd_96777290",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-21T10:02:06Z",
+      "side": 1,
+      "message": "Hmm I am not sure this is the right fix. Why don\u0027t you change GridTrackSize.h instead so it returns false for fit-content tracks?",
+      "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
