@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3426ded2_83de57bd",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T04:57:44Z",
+      "side": 1,
+      "message": "Can we move these two lines? They look really out of place here anyway.",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae68894c_c184c62b",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T04:57:44Z",
+      "side": 1,
+      "message": "I think it belongs in this list",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a61e60_84f1cf0f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3074,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T04:57:44Z",
+      "side": 1,
+      "message": "Then this weird block can just be deleted",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
