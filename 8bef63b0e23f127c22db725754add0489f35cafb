@@ -22,6 +22,30 @@
       "revId": "8bef63b0e23f127c22db725754add0489f35cafb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897e19d9_50b12b69",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T18:48:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd5724b_7774143e",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 31
+      },
+      "revId": "8bef63b0e23f127c22db725754add0489f35cafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
