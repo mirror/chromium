@@ -1,0 +1,365 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89946b7_44e3ae06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "s/name/title/ everywhere? To me, \"title\" sounds like something we display in the UI, while \"name\" could really be anything.\nI\u0027d suggest also discussing with someone else before going to the trouble of renaming everything ;)",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e708419a_1258d703",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "That bug doesn\u0027t really seem to cover this change..?",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf26508_8f55139c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSuggestion.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "Unrelated to this CL, but this method and hashCode below should probably also consider the sectionType?",
+      "range": {
+        "startLine": 53,
+        "startChar": 64,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b471014_6ed354d7",
+        "filename": "chrome/browser/search/instant_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068ccbe8_b0545da5",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "Wow, this test has become impossible to follow. Maybe it can be improved by re-creating the HistogramTester at some points (so we start counting everything from 0 again), or maybe it just needs splitting up. Mind putting in a TODO for me, or file a bug?",
+      "range": {
+        "startLine": 246,
+        "startChar": 41,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df13d778_08710d06",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "Out of curiosity, any reason for using UNKNOWN as the \"default value\" around here? Why not TITLE instead - that should be the most common case, no?",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768cdc9c_ba4a6129",
+        "filename": "chrome/common/search/instant_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "+1 for \"title_source\" :)",
+      "range": {
+        "startLine": 131,
+        "startChar": 38,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea2c3e3_46e5696b",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "s/MostVisitedURLs are/MostVisitedURL.title is/ ?",
+      "range": {
+        "startLine": 294,
+        "startChar": 79,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85ea778_7d331e3d",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "What does \"unless we submit it\" mean?",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6138a84c_86c6cd92",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "What\u0027s an aggregated title?",
+      "range": {
+        "startLine": 346,
+        "startChar": 52,
+        "endLine": 346,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e750fdc4_51f8e5c8",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "Is history guaranteed to use the title tag?",
+      "range": {
+        "startLine": 516,
+        "startChar": 76,
+        "endLine": 516,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc5ba41_8dd7856b",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "nit: It\u0027s just an enum, fine to pass by value",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6c3666_7198118d",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "nit: To avoid this \"invisible cast\", maybe rewrite as:\nTileNameSource source \u003d UNKNOWN;\nint source_int;\nif (Get(\u0026source_int) \u0026\u0026 is valid)\n  source \u003d cast(source_int);",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f51c62_08c190d3",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "nit: Check the return value, just to be sure",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e053a4ef_f70a84c2",
+        "filename": "components/ntp_tiles/tile_name_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "\"enum class\" to be consistent with TileSource? (Though TileVisualType is not an enum class, so.. eh)",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1c0b2a_431b7323",
+        "filename": "components/ntp_tiles/tile_name_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "Just LAST_NAME_SOURCE, since there are no non-recorded ones. Or if you make it an enum class, even just LAST.",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7b2161_1f38d668",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 27961,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T08:58:39Z",
+      "side": 1,
+      "message": "TitleTag (consistent with MetaTag below)?",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
