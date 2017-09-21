@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d2c4372_93ffb2b7",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T22:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c56f4059_f9130d00",
+      "revId": "44159fb94e72ddba61367d72ee96c1316d2b1752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1606018b_e38968d4",
         "filename": "chrome/browser/notifications/notification_handler.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T14:51:23Z",
       "side": 1,
       "message": "Maybe add NOTREACHED() in this block? I don\u0027t see why we\u0027d ever want a notification that does nothing when you click on it.",
+      "revId": "44159fb94e72ddba61367d72ee96c1316d2b1752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2205e415_ba42b736",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T22:57:24Z",
+      "side": 1,
+      "message": "in that case we can make it pure virtual.",
+      "parentUuid": "1606018b_e38968d4",
       "revId": "44159fb94e72ddba61367d72ee96c1316d2b1752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
