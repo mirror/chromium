@@ -39,6 +39,7 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/NetworkUtils.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -699,7 +700,16 @@ void FetchManager::Loader::PerformHTTPFetch() {
       break;
   }
 
-  request.SetFetchCredentialsMode(request_->Credentials());
+  // If we have an Origin Manifest with CORS for our origin, use it
+  // TODO(dhausknecht): Is this really needed here? Where is the request object
+  // coming from? Maybe it always went throught procedure already?
+  OriginManifestStoreClient origin_manifest_store;
+  if (origin_manifest_store.DefinesCORSPreflight(request)) {
+    origin_manifest_store.SetCORSFetchModes(request);
+  } else {
+    request.SetFetchCredentialsMode(request_->Credentials());
+  }
+
   for (const auto& header : request_->HeaderList()->List()) {
     // Since |request_|'s headers are populated with either of the "request"
     // guard or "request-no-cors" guard, we can assume that none of the headers

@@ -1,0 +1,214 @@
+// Copyright 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/origin_manifest/origin_manifest_store_impl.h"
+#include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
+#include "testing/gmock/include/gmock/gmock.h"
+#include "testing/gtest/include/gtest/gtest.h"
+
+namespace origin_manifest {
+
+class OriginManifestStoreImplTest : public testing::Test {
+  // This is black magic, voodoo, call it what you want
+  // https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?l=26
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+};
+
+// Note that we do not initialize the persistent store here since that
+// is subject to testing the persistent store itself.
+
+TEST_F(OriginManifestStoreImplTest, QueryOriginManifest) {
+  OriginManifestStoreImpl store(nullptr);
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
+  om->origin = "https://a.com";
+  om->version = "version1";
+
+  EXPECT_TRUE(store.Get(om->origin).Equals(nullptr));
+
+  // Add origin manifest
+  base::RunLoop run_loop;
+  store.Add(om.Clone(), run_loop.QuitClosure());
+  run_loop.Run();
+
+  // get with same origin -> the equivalent OM
+  mojom::OriginManifestPtr om2 = store.Get(om->origin);
+  EXPECT_FALSE(om2.Equals(nullptr));
+  EXPECT_TRUE(om->version == om2->version);
+
+  // get with different origin -> nothing
+  om2 = store.Get("https://b.com");
+  EXPECT_TRUE(om2.Equals(nullptr));
+
+  // remove origin
+  base::RunLoop run_loop2;
+  store.Remove(om->origin, run_loop2.QuitClosure());
+  run_loop2.Run();
+
+  // get with same origin -> nothing
+  om2 = store.Get(om->origin);
+  EXPECT_TRUE(om2.Equals(nullptr));
+}
+
+namespace {
+
+void CheckEmptyCORSPreflights(base::Closure quit_closure,
+                              mojom::CORSPreflightPtr corspreflights) {
+  EXPECT_TRUE(corspreflights.Equals(nullptr));
+  std::move(quit_closure).Run();
+}
+
+void CheckHasCORSPreflights(base::Closure quit_closure,
+                            mojom::CORSPreflightPtr corspreflights) {
+  EXPECT_FALSE(corspreflights.Equals(nullptr));
+
+  EXPECT_EQ(corspreflights->nocredentials->origins.size(), 1ul);
+  EXPECT_TRUE(corspreflights->nocredentials->origins[0] == "https://a.com");
+
+  EXPECT_EQ(corspreflights->withcredentials->origins.size(), 1ul);
+  EXPECT_TRUE(corspreflights->withcredentials->origins[0] == "https://b.com");
+
+  std::move(quit_closure).Run();
+}
+
+}  // namespace
+
+TEST_F(OriginManifestStoreImplTest, QueryCORSPreflight) {
+  OriginManifestStoreImpl store(nullptr);
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
+  om->origin = "https://a.com";
+  std::vector<std::string> nocredentials;
+  nocredentials.push_back("https://a.com");
+  std::vector<std::string> withcredentials;
+  withcredentials.push_back("https://b.com");
+  om->corspreflights = mojom::CORSPreflight::New(
+      mojom::CORSNoCredentials::New(nocredentials),
+      mojom::CORSWithCredentials::New(withcredentials));
+
+  // get on empty store -> nothing
+  base::RunLoop run_loop;
+  store.GetCORSPreflight(om->origin, base::BindOnce(&CheckEmptyCORSPreflights,
+                                                    run_loop.QuitClosure()));
+  run_loop.Run();
+
+  // Add origin manifest
+  base::RunLoop run_loop2;
+  store.Add(om.Clone(), run_loop2.QuitClosure());
+  run_loop2.Run();
+
+  // get with same origin -> the OM (don't test for object equality, but
+  // equivalence)
+  base::RunLoop run_loop3;
+  store.GetCORSPreflight(om->origin, base::BindOnce(&CheckHasCORSPreflights,
+                                                    run_loop3.QuitClosure()));
+  run_loop3.Run();
+
+  // get with different origin -> nothing
+  base::RunLoop run_loop4;
+  store.GetCORSPreflight(
+      "https://b.com",
+      base::BindOnce(&CheckEmptyCORSPreflights, run_loop4.QuitClosure()));
+  run_loop4.Run();
+
+  // remove origin
+  base::RunLoop run_loop5;
+  store.Remove(om->origin, run_loop5.QuitClosure());
+  run_loop5.Run();
+
+  // get with same origin -> nothing
+  base::RunLoop run_loop6;
+  store.GetCORSPreflight(om->origin, base::BindOnce(&CheckEmptyCORSPreflights,
+                                                    run_loop6.QuitClosure()));
+  run_loop6.Run();
+}
+
+namespace {
+
+void CheckEmptyContentSecurityPolicies(
+    base::Closure quit_closure,
+    std::vector<mojom::ContentSecurityPolicyPtr> csps) {
+  ASSERT_EQ(csps.size(), 0ul);
+  std::move(quit_closure).Run();
+}
+
+void CheckHasContentSecurityPolicies(
+    base::Closure quit_closure,
+    std::vector<mojom::ContentSecurityPolicyPtr> csps) {
+  ASSERT_EQ(csps.size(), 1ul);
+
+  EXPECT_TRUE(csps[0]->policy == "default-src 'none'");
+  EXPECT_EQ(csps[0]->disposition, mojom::Disposition::REPORT_ONLY);
+  EXPECT_TRUE(csps[0]->allowOverride);
+
+  std::move(quit_closure).Run();
+}
+
+}  // namespace
+
+TEST_F(OriginManifestStoreImplTest, QueryContentSecurityPolicies) {
+  OriginManifestStoreImpl store(nullptr);
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
+  om->origin = "https://a.com";
+  om->csps.push_back(mojom::ContentSecurityPolicy::New(
+      "default-src 'none'", mojom::Disposition::REPORT_ONLY, true));
+
+  // get on empty store -> nothing
+  base::RunLoop run_loop;
+  store.GetContentSecurityPolicies(
+      om->origin, base::BindOnce(&CheckEmptyContentSecurityPolicies,
+                                 run_loop.QuitClosure()));
+  run_loop.Run();
+
+  // Add origin manifest
+  base::RunLoop run_loop2;
+  store.Add(om.Clone(), run_loop2.QuitClosure());
+  run_loop2.Run();
+
+  // get with same origin -> the OM (don't test for object equality, but
+  // equivalence)
+  base::RunLoop run_loop3;
+  store.GetContentSecurityPolicies(
+      om->origin, base::BindOnce(&CheckHasContentSecurityPolicies,
+                                 run_loop3.QuitClosure()));
+  run_loop3.Run();
+
+  // get with different origin -> nothing
+  base::RunLoop run_loop4;
+  store.GetContentSecurityPolicies(
+      "https://b.com", base::BindOnce(&CheckEmptyContentSecurityPolicies,
+                                      run_loop4.QuitClosure()));
+  run_loop4.Run();
+
+  // remove origin
+  base::RunLoop run_loop5;
+  store.Remove(om->origin, run_loop5.QuitClosure());
+  run_loop5.Run();
+
+  // get with same origin -> nothing
+  base::RunLoop run_loop6;
+  store.GetContentSecurityPolicies(
+      om->origin, base::BindOnce(&CheckEmptyContentSecurityPolicies,
+                                 run_loop6.QuitClosure()));
+  run_loop6.Run();
+}
+
+TEST_F(OriginManifestStoreImplTest, OnInitialLoadHandler) {
+  OriginManifestStoreImpl store(nullptr);
+  mojom::OriginManifestPtr om1 = mojom::OriginManifest::New();
+  om1->origin = "https://a.com/";
+  mojom::OriginManifestPtr om2 = mojom::OriginManifest::New();
+  om2->origin = "https://b.com/";
+  std::vector<mojom::OriginManifestPtr> oms;
+  oms.push_back(om1.Clone());
+  oms.push_back(om2.Clone());
+
+  store.OnInitialLoad(std::move(oms));
+
+  mojom::OriginManifestPtr om3 = store.Get(om1->origin);
+  EXPECT_FALSE(om3.Equals(nullptr));
+  om3 = store.Get(om2->origin);
+  EXPECT_FALSE(om3.Equals(nullptr));
+}
+
+}  // namespace origin_manifest
