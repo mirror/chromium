@@ -29,10 +29,33 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   PdfMetafileSkia metafile(params.params.printed_doc_type);
   CHECK(metafile.Init());
 
+  PrintMsg_PrintPages_Params page_params;
+  page_params.params = params.params;
+
+  int dpi_x = params.params.dpi.width();
+  int dpi_y = params.params.dpi.height();
+  int dpi = std::min(dpi_x, dpi_y);  // to convert size back correctly.
   for (size_t i = 0; i < printed_pages.size(); ++i) {
     PrintPageInternal(params.params, printed_pages[i], page_count, frame,
                       &metafile, &page_size_in_dpi[i], &content_area_in_dpi[i],
                       &printable_area_in_dpi[i]);
+    // Scale the page size back to the size in DPI. Because Blink cannot scale
+    // differently in different dimensions, we pass in the page size based on
+    // the minimum dpi for in printing/print_settings_initializer_win.cc. Need
+    // to now scale it back for the printer. Note: if dpi_x == dpi_y (true for
+    // most printers), this has no effect.
+    page_size_in_dpi[i] = gfx::Size(page_size_in_dpi[i].width() * dpi_x / dpi,
+                                    page_size_in_dpi[i].height() * dpi_y / dpi);
+    content_area_in_dpi[i] =
+        gfx::Rect(content_area_in_dpi[i].x() * dpi_x / dpi,
+                  content_area_in_dpi[i].y() * dpi_y / dpi,
+                  content_area_in_dpi[i].width() * dpi_x / dpi,
+                  content_area_in_dpi[i].height() * dpi_y / dpi);
+    printable_area_in_dpi[i] =
+        gfx::Rect(printable_area_in_dpi[i].x() * dpi_x / dpi,
+                  printable_area_in_dpi[i].y() * dpi_y / dpi,
+                  printable_area_in_dpi[i].width() * dpi_x / dpi,
+                  printable_area_in_dpi[i].height() * dpi_y / dpi);
   }
 
   // blink::printEnd() for PDF should be called before metafile is closed.

@@ -49,7 +49,7 @@ struct WebPrintParams {
   WebSize paper_size;
 
   // Specifies user selected DPI for printing.
-  int printer_dpi;
+  WebSize printer_dpi;
 
   // Specifies whether to print PDFs as image.
   bool rasterize_pdf = false;
@@ -59,14 +59,14 @@ struct WebPrintParams {
   WebPrintScalingOption print_scaling_option;
 
   WebPrintParams()
-      : printer_dpi(72),
+      : printer_dpi(72, 72),
         print_scaling_option(kWebPrintScalingOptionFitToPrintableArea) {}
 
   WebPrintParams(const WebSize& paper_size)
       : print_content_area(WebRect(0, 0, paper_size.width, paper_size.height)),
         printable_area(WebRect(0, 0, paper_size.width, paper_size.height)),
         paper_size(paper_size),
-        printer_dpi(72),
+        printer_dpi(72, 72),
         print_scaling_option(kWebPrintScalingOptionSourceSize) {}
 
   WebPrintParams(const WebRect& print_content_area,
@@ -77,7 +77,7 @@ struct WebPrintParams {
       : print_content_area(print_content_area),
         printable_area(printable_area),
         paper_size(paper_size),
-        printer_dpi(printer_dpi),
+        printer_dpi(printer_dpi, printer_dpi),
         print_scaling_option(print_scaling_option) {}
 };
 

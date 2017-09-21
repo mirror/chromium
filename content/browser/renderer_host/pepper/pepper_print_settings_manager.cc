@@ -85,7 +85,8 @@ PepperPrintSettingsManager::Result ComputeDefaultPrintSettings() {
       PrintAreaToPPPrintArea(page_setup.content_area(), device_units_per_inch);
   settings.paper_size =
       PrintSizeToPPPrintSize(page_setup.physical_size(), device_units_per_inch);
-  settings.dpi = print_settings.dpi();
+  settings.dpi.width = print_settings.dpi_horizontal();
+  settings.dpi.height = print_settings.dpi_vertical();
 
   // The remainder of the attributes are hard-coded to the defaults as set
   // elsewhere.
