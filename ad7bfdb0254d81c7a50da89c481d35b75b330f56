@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41b41a7a_93edcd87",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-21T14:43:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this forward declaration is necessary.",
+      "revId": "ad7bfdb0254d81c7a50da89c481d35b75b330f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6efea9_94d0f024",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-21T14:43:50Z",
+      "side": 1,
+      "message": "nit: const\u0026 as it removes a copy",
+      "revId": "ad7bfdb0254d81c7a50da89c481d35b75b330f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7579bb4f_46b084cd",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-21T14:43:50Z",
+      "side": 1,
+      "message": "Can we move this to be in the private section of StubNotificationDisplayService? It\u0027d a bit unfortunate to add something generic like \"NotificationData\" to the global scope.",
+      "revId": "ad7bfdb0254d81c7a50da89c481d35b75b330f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
