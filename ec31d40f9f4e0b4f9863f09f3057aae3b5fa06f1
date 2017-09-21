@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "548cb013_5be3de89",
+        "filename": "chrome/browser/resources/extensions/chromeos/kiosk_apps.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T23:31:11Z",
+      "side": 1,
+      "message": "every time.",
+      "parentUuid": "2aa46b19_823fe2cb",
+      "revId": "ec31d40f9f4e0b4f9863f09f3057aae3b5fa06f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94ea5c23_1af27aa5",
         "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ec31d40f9f4e0b4f9863f09f3057aae3b5fa06f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f050263_9f2e66fd",
+        "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-21T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ea5c23_1af27aa5",
+      "revId": "ec31d40f9f4e0b4f9863f09f3057aae3b5fa06f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
