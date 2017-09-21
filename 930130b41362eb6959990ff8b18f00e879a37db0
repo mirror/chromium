@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "25984947_c2ea02ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:46:57Z",
+      "side": 1,
+      "message": "No, I think method references are supposed to not use spaces, but clang-format gets that wrong.",
+      "parentUuid": "ca42f7e9_da615959",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f3cd50_31a50877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:46:57Z",
+      "side": 1,
+      "message": "This one should also be @Nullable. Thanks!",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3d1dbaa_54e0c662",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 5
@@ -42,6 +89,46 @@
         "endLine": 116,
         "endChar": 9
       },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75783f1_5373d892",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:46:57Z",
+      "side": 1,
+      "message": "This seems to be where the tests fail, but I\u0027m not really sure why FeatureUtilities.isChromeHomeEnabled() would suddenly return something different from what it did in the constructor...",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 28
+      },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82db6cac_45e402d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContentSuggestionPlaceholder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-21T14:46:57Z",
+      "side": 1,
+      "message": "If I understand the latest comments on https://crbug.com/762932 correctly, we _don\u0027t_ want the blind text for now.",
       "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
