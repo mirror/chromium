@@ -1461,6 +1461,30 @@
     },
     {
       "key": {
+        "uuid": "1e790570_a5625b3f",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-21T17:37:57Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right. Please implement that and add a test for it. It should be as simple as adding DeviceSyncImpl as an observer of RemoteDeviceProvider and just forwarding events out as needed.",
+      "parentUuid": "5bb63e7e_b6c6e66d",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50de4fe0_6daf910c",
         "filename": "components/multidevice/service/fake_device_sync.cc",
         "patchSetId": 11
