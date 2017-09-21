@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea2bdfa3_e2371d53",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T04:45:28Z",
+      "side": 1,
+      "message": "Can you move this after the anonymous namespace?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf26cf5_cdfd6125",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 11
@@ -30,6 +53,92 @@
       "writtenOn": "2017-09-21T04:19:17Z",
       "side": 1,
       "message": "nit: line break before \"Step 6\".",
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b2d106_357a7c8e",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T04:45:28Z",
+      "side": 1,
+      "message": "Can you add a class-level comment about the behavior of this function?",
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f83c18_7102170b",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T04:45:28Z",
+      "side": 1,
+      "message": "Ditto(class-level comment)",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737790d8_343680be",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T04:45:28Z",
+      "side": 1,
+      "message": "(Optional) auto? (here and elsewhere we create new instances w/ type names in the right side of statements)",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 36
+      },
+      "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d210320_1394aa7f",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-21T04:45:28Z",
+      "side": 1,
+      "message": "\"EvaluateFailure\" sounds like a module script is ill-formed. How about renaming this to \"ExceptionThrown\" or something, and adding another test case for an ill-formed script?",
+      "range": {
+        "startLine": 261,
+        "startChar": 32,
+        "endLine": 261,
+        "endChar": 47
+      },
       "revId": "a063fe1db59db91dad0cc890468af82eca3dc752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
