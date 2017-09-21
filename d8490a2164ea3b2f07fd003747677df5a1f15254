@@ -33,6 +33,24 @@
       "revId": "d8490a2164ea3b2f07fd003747677df5a1f15254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5765d7a1_f49fefd7",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T09:15:19Z",
+      "side": 1,
+      "message": "The bug is triggered by the deletion of a speculative RFH created at the beginning of the navigation and not used at commit time. So only the redirecting URL needs to be cross-site, the redirected URL can be same site with the current URL.",
+      "parentUuid": "eeaf266c_7ff0079e",
+      "revId": "d8490a2164ea3b2f07fd003747677df5a1f15254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
