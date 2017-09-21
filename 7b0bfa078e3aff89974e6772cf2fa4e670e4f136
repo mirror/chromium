@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "822d2262_6f122bb2",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T13:02:35Z",
+      "side": 0,
+      "message": "Apparently, yes - I guess since they\u0027re all VARCHARs, it\u0027s okay for them to be left empty.\nAnyway, it is kinda weird and non-obvious, so I\u0027ve reverted to explicitly binding empty strings.",
+      "parentUuid": "b37b16b7_da78d710",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "7b0bfa078e3aff89974e6772cf2fa4e670e4f136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa2b25f_879ee96e",
         "filename": "components/search_engines/keyword_table.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7b0bfa078e3aff89974e6772cf2fa4e670e4f136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a19e11_cb0dad00",
+        "filename": "components/search_engines/keyword_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T13:02:35Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "caa2b25f_879ee96e",
+      "range": {
+        "startLine": 51,
+        "startChar": 32,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "7b0bfa078e3aff89974e6772cf2fa4e670e4f136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
