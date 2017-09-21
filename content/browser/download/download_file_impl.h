@@ -30,7 +30,6 @@
 #include "content/public/common/download_stream.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
-#include "net/log/net_log_with_source.h"
 
 namespace content {
 class ByteStreamReader;
@@ -39,7 +38,6 @@ class DownloadDestinationObserver;
 class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
  public:
   // Takes ownership of the object pointed to by |save_info|.
-  // |net_log| will be used for logging the download file's events.
   // May be constructed on any thread.  All methods besides the constructor
   // (including destruction) must occur in the same sequence.
   //
@@ -49,7 +47,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   DownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
                    const base::FilePath& default_downloads_directory,
                    std::unique_ptr<DownloadManager::InputStream> stream,
-                   const net::NetLogWithSource& net_log,
                    base::WeakPtr<DownloadDestinationObserver> observer);
 
   ~DownloadFileImpl() override;
@@ -95,7 +92,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
   DownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
                    const base::FilePath& default_downloads_directory,
-                   const net::NetLogWithSource& net_log,
                    base::WeakPtr<DownloadDestinationObserver> observer);
 
   // Wrapper of a ByteStreamReader or ScopedDataPipeConsumerHandle, and the meta
@@ -304,8 +300,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
   // Print the internal states for debugging.
   void DebugStates() const;
-
-  net::NetLogWithSource net_log_;
 
   // The base file instance.
   BaseFile file_;
