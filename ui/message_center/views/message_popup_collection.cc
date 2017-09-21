@@ -221,7 +221,7 @@ void MessagePopupCollection::UpdateWidgets() {
     ToastContentsView* toast = new ToastContentsView(
         (*iter)->id(), alignment_delegate_, weak_factory_.GetWeakPtr());
     // There will be no contents already since this is a new ToastContentsView.
-    toast->SetContents(view, /*a11y_feedback_for_updates=*/false);
+    toast->SetContents(view);
     toasts_.push_back(toast);
     view->set_controller(toast);
 

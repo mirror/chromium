@@ -57,10 +57,8 @@ class MESSAGE_CENTER_EXPORT ToastContentsView
                     base::WeakPtr<MessagePopupCollection> collection);
   ~ToastContentsView() override;
 
-  // Sets the inner view of the toast. If it has contents already,
-  // |a11y_feedback_for_updates| causes the view to notify that the
-  // accessibility message should be read after this update.
-  void SetContents(MessageView* view, bool a11y_feedback_for_updates);
+  // Sets the inner view of the toast.
+  void SetContents(MessageView* view);
 
   void UpdateContents(const Notification& notification,
                       bool a11y_feedback_for_updates);

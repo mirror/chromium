@@ -81,8 +81,7 @@ ToastContentsView::~ToastContentsView() {
     collection_->ForgetToast(this);
 }
 
-void ToastContentsView::SetContents(MessageView* view,
-                                    bool a11y_feedback_for_updates) {
+void ToastContentsView::SetContents(MessageView* view) {
   bool already_has_contents = child_count() > 0;
   RemoveAllChildViews(true);
   AddChildView(view);
@@ -92,7 +91,7 @@ void ToastContentsView::SetContents(MessageView* view,
   // popup toast, and the new contents should be read through a11y feature.
   // The notification type should be ALERT, otherwise the accessibility message
   // won't be read for this view which returns ROLE_WINDOW.
-  if (already_has_contents && a11y_feedback_for_updates)
+  if (already_has_contents)
     NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
 }
 
