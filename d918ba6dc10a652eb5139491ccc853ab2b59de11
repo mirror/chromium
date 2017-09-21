@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c499f483_f1b28f6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0144d953_74e32ec1",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40a5fd9c_d4c65edc",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb512bc_f54d0c02",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "It should not be nullable.",
+      "parentUuid": "40a5fd9c_d4c65edc",
+      "range": {
+        "startLine": 319,
+        "startChar": 57,
+        "endLine": 319,
+        "endChar": 76
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a40837e3_3b9ec25c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54aa1126_2e1d787d",
+      "range": {
+        "startLine": 401,
+        "startChar": 23,
+        "endLine": 401,
+        "endChar": 39
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2a78188_e816e1ee",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-09-21T17:08:07Z",
       "side": 1,
       "message": "Wouldn\u0027t we lost the callback here?",
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b95b16_78bc61c8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "Add documentation to function noting the condition under which the callback will not be called.",
+      "parentUuid": "c2a78188_e816e1ee",
       "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +215,48 @@
       "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4ff142_1f57bd9f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd3d1662_9049c896",
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58b4c695_2c904b6a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-21T20:30:23Z",
+      "side": 1,
+      "message": "Seems like ARC callbacks does not accept OnceClosure",
+      "parentUuid": "a17f4e01_dc61535c",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
