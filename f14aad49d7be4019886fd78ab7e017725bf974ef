@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "75367624_e48a23db",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T21:55:24Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "24c858ce_944009bb",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb86ee1_f3074303",
         "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
         "patchSetId": 5
@@ -188,6 +212,30 @@
       "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961efda2_8b09749e",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T21:55:24Z",
+      "side": 1,
+      "message": "Oh I thought you meant removing the whole \"if(){}\" block.\n\nYes removing the if itself won\u0027t break, and everything makes sense too, since |kCardResultNum| will be 0. Otherwise it looks weird.\n\nThe most important thing is to put a |DISPLAY_CARD| in |result_types| when CARD is on. It doesn\u0027t matter very much when CARD is off. I\u0027ll remove those checks.",
+      "parentUuid": "8a4c22ac_6241b3d4",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 34
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
