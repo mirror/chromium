@@ -19,6 +19,8 @@
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
 #include "chromeos/dbus/fake_update_engine_client.h"
+#include "chromeos/system/fake_statistics_provider.h"
+#include "chromeos/system/statistics_provider.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/test/browser_test_utils.h"
 
@@ -36,8 +38,13 @@ class ResetTest : public LoginManagerTest {
       update_engine_client_(NULL),
       session_manager_client_(NULL),
       power_manager_client_(NULL) {
+    system::StatisticsProvider::SetTestProvider(&fake_statistics_provider_);
+    fake_statistics_provider_.SetMachineStatistic(system::kCheckEnrollmentKey,
+                                                  "0");
   }
-  ~ResetTest() override {}
+  ~ResetTest() override {
+    system::StatisticsProvider::SetTestProvider(nullptr);
+  }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     LoginManagerTest::SetUpCommandLine(command_line);
@@ -70,7 +77,9 @@ class ResetTest : public LoginManagerTest {
   }
 
   void InvokeResetScreen() {
+    LOG(ERROR) << "Invoking reset screen";
     ASSERT_TRUE(JSExecuted("cr.ui.Oobe.handleAccelerator('reset');"));
+    LOG(ERROR) << "waiting for reset screen";
     OobeScreenWaiter(OobeScreen::SCREEN_OOBE_RESET).Wait();
   }
 
@@ -103,6 +112,7 @@ class ResetTest : public LoginManagerTest {
   FakeUpdateEngineClient* update_engine_client_;
   FakeSessionManagerClient* session_manager_client_;
   FakePowerManagerClient* power_manager_client_;
+  system::FakeStatisticsProvider fake_statistics_provider_;
 };
 
 class ResetFirstAfterBootTest : public ResetTest {
@@ -121,6 +131,7 @@ IN_PROC_BROWSER_TEST_F(ResetTest, PRE_ShowAndCancel) {
 
 IN_PROC_BROWSER_TEST_F(ResetTest, ShowAndCancel) {
   JSExpect("!!document.querySelector('#reset.hidden')");
+
   InvokeResetScreen();
   JSExpect("!document.querySelector('#reset.hidden')");
   CloseResetScreen();
