@@ -16,6 +16,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
+#include "cc/paint/image_provider.h"
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/resources/platform_color.h"

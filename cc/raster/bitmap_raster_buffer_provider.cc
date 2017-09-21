@@ -14,6 +14,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/paint/image_provider.h"
 #include "cc/raster/raster_source.h"
 #include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource.h"
