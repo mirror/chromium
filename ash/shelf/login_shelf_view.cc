@@ -5,14 +5,20 @@
 #include "ash/shelf/login_shelf_view.h"
 
 #include "ash/ash_constants.h"
+#include "ash/focus_cycler.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shutdown_controller.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/status_area_widget.h"
+#include "ash/system/status_area_widget_delegate.h"
+#include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
@@ -21,6 +27,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
 
 using session_manager::SessionState;
@@ -45,6 +52,7 @@ class LoginShelfButton : public views::LabelButton {
       : LabelButton(listener, text) {
     SetAccessibleName(text);
     SetImage(views::Button::STATE_NORMAL, image);
+    SetFocusBehavior(FocusBehavior::ALWAYS);
     SetFocusPainter(views::Painter::CreateSolidFocusPainter(
         kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF()));
     SetInkDropMode(views::InkDropHostView::InkDropMode::ON);
@@ -83,7 +91,12 @@ class LoginShelfButton : public views::LabelButton {
 
 LoginShelfView::LoginShelfView()
     : tray_action_observer_(this), shutdown_controller_observer_(this) {
+  // We reuse the focusable state on this view as a signal that focus should
+  // switch to the lock screen or status area. This view should otherwise not
+  // be focusable.
+  SetFocusBehavior(FocusBehavior::ALWAYS);
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
+
   auto add_button = [this](ButtonId id, int text_resource_id,
                            const gfx::VectorIcon& icon) {
     const base::string16 text = l10n_util::GetStringUTF16(text_resource_id);
@@ -92,7 +105,6 @@ LoginShelfView::LoginShelfView()
     button->set_id(id);
     AddChildView(button);
   };
-
   add_button(kShutdown, IDS_ASH_SHELF_SHUTDOWN_BUTTON,
              kShelfShutdownButtonIcon);
   add_button(kRestart, IDS_ASH_SHELF_RESTART_BUTTON, kShelfShutdownButtonIcon);
@@ -111,6 +123,26 @@ LoginShelfView::~LoginShelfView() = default;
 
 void LoginShelfView::UpdateAfterSessionStateChange(SessionState state) {
   UpdateUi();
+}
+
+void LoginShelfView::OnFocus() {
+  LOG(WARNING) << "The login shelf view itself should never get focus. Forward "
+                  "focus to the shelf widget, but the direction is unknown.";
+  Shell::Get()->focus_cycler()->FocusWidget(
+      ShelfWidget::GetPrimaryShelfWidget());
+}
+
+void LoginShelfView::AboutToRequestFocusFromTabTraversal(bool reverse) {
+  if (reverse) {
+    // Focus goes to login/lock screen.
+    Shell::Get()->system_tray_notifier()->NotifyFocusOut(reverse);
+    return;
+  }
+  // Focus goes to status area.
+  StatusAreaWidgetDelegate::GetPrimaryInstance()
+      ->set_default_last_focusable_child(reverse);
+  Shell::Get()->focus_cycler()->FocusWidget(
+      Shell::Get()->GetPrimaryRootWindowController()->GetStatusAreaWidget());
 }
 
 void LoginShelfView::ButtonPressed(views::Button* sender,
