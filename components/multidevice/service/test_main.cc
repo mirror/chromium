@@ -17,8 +17,13 @@ class FakeDeviceSyncFactory : public multidevice::DeviceSyncImpl::Factory {
 
   // DeviceSyncImpl::Factory:
   std::unique_ptr<device_sync::mojom::DeviceSync> BuildInstance(
-      std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-      override {
+      std::unique_ptr<service_manager::ServiceContextRef> service_ref,
+      identity::mojom::IdentityManager* identity_manager,
+      cryptauth::CryptAuthGCMManager* gcm_manager,
+      cryptauth::CryptAuthDeviceManager* device_manager,
+      cryptauth::CryptAuthEnrollmentManager* enrollment_manager,
+      cryptauth::SecureMessageDelegateFactory* secure_message_delegate_factory,
+      cryptauth::GcmDeviceInfo gcm_device_info) override {
     return base::MakeUnique<multidevice::FakeDeviceSync>();
   }
 };
