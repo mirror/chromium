@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b3c01b_7f2691a7",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-21T10:23:20Z",
+      "side": 1,
+      "message": "Might need some help with the exact pixel value here - the problem with position:absolute is that it will cause overflow with the file name :/",
+      "revId": "9887f96c8e0fbb21741e89f4bdc4589949cf6899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
