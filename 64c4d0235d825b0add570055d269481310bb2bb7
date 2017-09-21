@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21467bf3_55db30ec",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-21T20:43:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e30ffd_1561a4cd",
+      "revId": "64c4d0235d825b0add570055d269481310bb2bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4267503e_d8bd28cd",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "58e5f012_560139ee",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-21T20:43:04Z",
+      "side": 1,
+      "message": "Yes, good catch. Filed crbug.com/767584 for that purpose.",
+      "parentUuid": "4267503e_d8bd28cd",
+      "revId": "64c4d0235d825b0add570055d269481310bb2bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be07797e_51898c04",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-21T18:22:50Z",
       "side": 1,
       "message": "Nice test",
+      "revId": "64c4d0235d825b0add570055d269481310bb2bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4332f8e4_1f54ddcd",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-21T20:43:04Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "be07797e_51898c04",
       "revId": "64c4d0235d825b0add570055d269481310bb2bb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
