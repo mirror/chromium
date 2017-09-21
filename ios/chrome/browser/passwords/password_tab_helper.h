@@ -13,6 +13,7 @@
 @protocol FormInputAccessoryViewProvider;
 @protocol FormSuggestionProvider;
 @class PasswordController;
+@protocol PasswordControllerDelegate;
 @protocol PasswordFormFiller;
 @protocol PasswordsUiDelegate;
 
@@ -47,6 +48,11 @@ class PasswordTabHelper : public web::WebStateObserver,
 
   // Returns the PasswordGenerationManager owned by the PasswordController.
   password_manager::PasswordGenerationManager* GetPasswordGenerationManager();
+
+  // web::WebStateObserver implementation.
+  void WasHidden() override;
+
+  void SetPasswordControllerDelegate(id<PasswordControllerDelegate> delegate);
 
  private:
   PasswordTabHelper(web::WebState* web_state,

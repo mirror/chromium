@@ -211,7 +211,7 @@ void PasswordManager::RegisterProfilePrefs(
                                std::string(),
                                PrefRegistry::NO_REGISTRATION_FLAGS);
   registry->RegisterBooleanPref(
-      prefs::kWasAutoSignInFirstRunExperienceShown, false,
+      prefs::kWasAutoSignInFirstRunExperienceShown, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
 #if defined(OS_MACOSX)
   registry->RegisterIntegerPref(
