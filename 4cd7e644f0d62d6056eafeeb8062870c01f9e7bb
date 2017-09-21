@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ecfeba9_d1028e84",
+        "filename": "build/config/ios/hardlink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-21T16:40:12Z",
+      "side": 1,
+      "message": "The \"copy_bundle_data\" tool (the one responsible for copying data into the application bundle, including copying application extension in the application PlugIns/ directory) already uses hardlinks (via pax command-line tool, see https://cs.chromium.org/chromium/src/build/toolchain/mac/BUILD.gn?q\u003dfile:build/toolchain/mac/BUILD.gn\u0026sq\u003dpackage:chromium\u0026l\u003d401).\n\nSo this is mostly for consistency with the tool and because hardlinking is faster than copying.",
+      "parentUuid": "a80612dc_dc106028",
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51327543_29a6c49e",
         "filename": "build/config/ios/hardlink.py",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "38e98721_75f22d5c",
+        "filename": "build/config/ios/hardlink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-21T16:40:12Z",
+      "side": 1,
+      "message": "Good point!\n\nWe do not have symlinks in our bundle on iOS, but this would convert them to directories. Fixed.",
+      "parentUuid": "51327543_29a6c49e",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85c1d81_19a6c48c",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7049539d_e123d1b3",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-21T16:40:12Z",
+      "side": 1,
+      "message": "This is difficult to do as the code use get_target_outputs() which requires the target to be defined in the same file. I guess it would be possible to add extra parameters in variant scope that will be passed to generate_info_plist target). I\u0027d prefer to do this in a followup though.",
+      "parentUuid": "c85c1d81_19a6c48c",
+      "range": {
+        "startLine": 819,
+        "startChar": 21,
+        "endLine": 819,
+        "endChar": 41
+      },
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
