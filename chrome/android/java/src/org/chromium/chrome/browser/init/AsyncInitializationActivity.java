@@ -34,6 +34,7 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LoaderErrors;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ActivityDispatcher;
 import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.WarmupManager;
@@ -244,7 +245,17 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
     }
 
+    protected boolean maybeDispatchToAnotherActivity(Bundle savedInstanceState) {
+        return false;
+    }
+
     private final void onCreateInternal(Bundle savedInstanceState) {
+        if (maybeDispatchToAnotherActivity(savedInstanceState)) {
+            android.util.Log.w("LAUNCHER-DBG", "maybeDispatchToAnotherActivity: returned true");
+            return;
+        } else {
+            android.util.Log.w("LAUNCHER-DBG", "maybeDispatchToAnotherActivity: returned false");
+        }
         setIntent(validateIntent(getIntent()));
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             super.onCreate(null);
@@ -706,6 +717,22 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
                     }
                 });
                 return true;
+            }
+        };
+    }
+
+    protected ActivityDispatcher.OnCreateFinisher createActivityDispatcherFinisher() {
+        return new ActivityDispatcher.OnCreateFinisher() {
+            @Override
+            public void finishOnCreate(Bundle savedInstanceState) {
+                AsyncInitializationActivity.super.onCreate(savedInstanceState);
+                AsyncInitializationActivity.this.finish();
+            }
+
+            @Override
+            public void finishOnCreateRemoveTask(Bundle savedInstanceState) {
+                AsyncInitializationActivity.super.onCreate(savedInstanceState);
+                ApiCompatibilityUtils.finishAndRemoveTask(AsyncInitializationActivity.this);
             }
         };
     }

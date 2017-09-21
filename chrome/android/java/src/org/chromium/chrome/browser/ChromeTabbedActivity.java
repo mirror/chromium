@@ -217,6 +217,9 @@ public class ChromeTabbedActivity
      */
     private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
 
+    private static final String MAIN_LAUNCHER_ACTIVITY_NAME =
+            "com.google.android.apps.chrome.LauncherMain";
+
     private final ActivityStopMetrics mActivityStopMetrics;
     private final MainIntentBehaviorMetrics mMainIntentMetrics;
 
@@ -372,6 +375,17 @@ public class ChromeTabbedActivity
         mActivityStopMetrics = new ActivityStopMetrics();
         mMainIntentMetrics = new MainIntentBehaviorMetrics(this);
         mAppIndexingUtil = new AppIndexingUtil();
+    }
+
+    @Override
+    protected boolean maybeDispatchToAnotherActivity(Bundle savedInstanceState) {
+        android.util.Log.w("LAUNCHER-DBG",
+                "maybeDispatchToAnotherActivity: componentName: " + getComponentName());
+        if (!getComponentName().getClassName().equals(MAIN_LAUNCHER_ACTIVITY_NAME)) {
+            return false;
+        }
+        return new ActivityDispatcher(this, createActivityDispatcherFinisher())
+                .maybeDispatch(savedInstanceState);
     }
 
     @Override
@@ -1300,8 +1314,8 @@ public class ChromeTabbedActivity
          */
         private void openNewTab(String url, String referer, String headers,
                 String externalAppId, Intent intent, boolean forceNewTab) {
-            boolean isAllowedToReturnToExternalApp = IntentUtils.safeGetBooleanExtra(intent,
-                    ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, true);
+            boolean isAllowedToReturnToExternalApp = IntentUtils.safeGetBooleanExtra(
+                    intent, ActivityDispatcher.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, true);
 
             // Create a new tab.
             Tab newTab =

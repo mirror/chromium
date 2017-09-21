@@ -32,6 +32,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ActivityDispatcher;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.IntentHandler;
@@ -599,7 +600,7 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
             Intent resolvedIntent = new Intent(intent);
             resolvedIntent.setData(Uri.parse(url));
             return handler.handleIncomingIntent(getAvailableContext(), resolvedIntent,
-                    ChromeLauncherActivity.isCustomTabIntent(resolvedIntent), true);
+                    ActivityDispatcher.isCustomTabIntent(resolvedIntent), true);
         } else if (!isIncomingRedirect) {
             // Check if the navigation is coming from SERP and skip instant app handling.
             if (isSerpReferrer(tab)) return false;

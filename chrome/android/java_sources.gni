@@ -6,6 +6,7 @@ import("//components/offline_pages/features/features.gni")
 
 chrome_java_sources = [
   "java/src/com/google/android/apps/chrome/appwidget/bookmarks/BookmarkThumbnailWidgetProvider.java",
+  "java/src/org/chromium/chrome/browser/ActivityDispatcher.java",
   "java/src/org/chromium/chrome/browser/ActivityTabTaskDescriptionHelper.java",
   "java/src/org/chromium/chrome/browser/ActivityTaskDescriptionIconGenerator.java",
   "java/src/org/chromium/chrome/browser/AfterStartupTaskUtils.java",

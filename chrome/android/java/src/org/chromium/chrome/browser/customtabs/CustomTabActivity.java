@@ -44,6 +44,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ActivityDispatcher;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.IntentHandler.ExternalAppId;
@@ -1161,7 +1162,7 @@ public class CustomTabActivity extends ChromeActivity {
         if (TextUtils.isEmpty(url)) url = getUrlToLoad();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+        intent.putExtra(ActivityDispatcher.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
 
         boolean willChromeHandleIntent = getIntentDataProvider().isOpenedByChrome();
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
@@ -1280,7 +1281,7 @@ public class CustomTabActivity extends ChromeActivity {
                 .build();
         customTabIntent.intent.setData(Uri.parse(url));
 
-        Intent intent = ChromeLauncherActivity.createCustomTabActivityIntent(
+        Intent intent = ActivityDispatcher.createCustomTabActivityIntent(
                 context, customTabIntent.intent, false);
         intent.setPackage(context.getPackageName());
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_INFO_PAGE);

@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.provider.Browser;
 import android.text.TextUtils;
 
+import org.chromium.chrome.browser.ActivityDispatcher;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
@@ -73,7 +74,7 @@ public class TabRedirectHandler {
             return;
         }
 
-        mIsCustomTabIntent = ChromeLauncherActivity.isCustomTabIntent(intent);
+        mIsCustomTabIntent = ActivityDispatcher.isCustomTabIntent(intent);
         boolean checkIsToChrome = true;
         // All custom tabs VIEW intents are by design explicit intents, so the presence of package
         // name doesn't imply they have to be handled by Chrome explicitly. Check if external apps

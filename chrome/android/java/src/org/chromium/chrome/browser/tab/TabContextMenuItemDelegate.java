@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.tab;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.MailTo;
@@ -13,6 +14,7 @@ import android.provider.ContactsContract;
 import android.support.customtabs.CustomTabsIntent;
 
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.ActivityDispatcher;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
@@ -228,7 +230,7 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
         chromeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // For "Open in Chrome" from the context menu in FullscreenActivity we want to bypass
         // CustomTab, and this flag ensures we open in TabbedChrome.
-        chromeIntent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+        chromeIntent.putExtra(ActivityDispatcher.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
 
         boolean activityStarted = false;
         if (pageUrl != null) {
@@ -257,7 +259,7 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setClass(mTab.getApplicationContext(), ChromeLauncherActivity.class);
-        intent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+        intent.putExtra(ActivityDispatcher.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
         if (isIncognito) {
             intent.putExtra(IntentHandler.EXTRA_OPEN_NEW_INCOGNITO_TAB, true);
             intent.putExtra(
