@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "85565e05_b7ab8669",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-21T01:12:37Z",
+      "side": 1,
+      "message": "Ok, I see, thanks -- fixed.",
+      "parentUuid": "e0e446f9_e6b9bbf3",
+      "revId": "d03b6612c44105556cf2ba607a2d34a1a08411e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ef692d_da2bc88d",
         "filename": "content/browser/ssl/ssl_manager.cc",
         "patchSetId": 3
