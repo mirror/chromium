@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f336ddd_9f99b6e6",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-21T21:57:39Z",
+      "side": 1,
+      "message": "Not used; please remove.",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 28
+      },
+      "revId": "13995eaeaaf6ecb21f33b87795fec6327bbf3dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
