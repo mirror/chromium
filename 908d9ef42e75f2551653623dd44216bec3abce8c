@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "f9fe6b96_2c1e542b",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-21T07:54:21Z",
+      "side": 1,
+      "message": "If this isn\u0027t being used to populate the bubble text, then we shouldn\u0027t have to implement ui::AcceleratorProvider at all, and GetAcceleratorProvider() should be implemented as NOTREACHED().\n\nBut what _is_ populating the bubble then? It suggests the ExclusiveAccessBubbleViewsContext could be coming from somewhere else, and we don\u0027t need all the plumbing here (which is a lot! it would be good to avoid as much as we can, and use NOTREACHED() for the codepaths we know can not happen - e.g. the way ExclusiveAccessController does for the things it knows are not used for the Cocoa browser.)\n\n(generally, it\u0027s very rare to add code to chrome \"just in case\" - anyone who sees it later then has to ensure they don\u0027t accidentally break the \"just in case\" code, and they will get annoyed when it turns out to be unreachable).",
+      "parentUuid": "e6e91997_80fd9209",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5fb7e20_ea48aed4",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 13
