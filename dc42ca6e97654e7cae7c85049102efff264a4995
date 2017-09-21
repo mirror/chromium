@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d2e707_30969af3",
+        "filename": "chrome/browser/android/vr_shell/gl_browser_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-21T18:46:56Z",
+      "side": 1,
+      "message": "This is kinda interesting. This interface is how VrShellGl talks to VrShell, but if we break up VrShellGl a bit (eg, I think the VrShellGl should have-a ContentInputDelegate rather than being-a CID), we could split this interface further.\n\nPerhaps in this class level comment we could just say that this is how VrShellGl talks to VrShell (rather than mentioning GL subsystem), and intimate that this could be broken into smaller interfaces if VrShellGl is refactored?",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577340f6_f1a1083f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-21T18:46:56Z",
+      "side": 1,
+      "message": "Since this arg is currently null, should scrap this for now.",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c772e950_00d73c75",
+        "filename": "chrome/browser/vr/ui_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-21T18:46:56Z",
+      "side": 1,
+      "message": "Platform-specific?",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
