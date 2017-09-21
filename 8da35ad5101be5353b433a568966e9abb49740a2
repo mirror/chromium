@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbbdd157_d0cae0bc",
+        "filename": "services/ui/public/cpp/gpu/command_buffer_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T17:20:27Z",
+      "side": 1,
+      "message": "This is unrelated to cc CompositorWorker so it should stay as it was.",
+      "range": {
+        "startLine": 142,
+        "startChar": 14,
+        "endLine": 142,
+        "endChar": 27
+      },
+      "revId": "8da35ad5101be5353b433a568966e9abb49740a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

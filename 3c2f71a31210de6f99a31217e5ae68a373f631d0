@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8ab0a1_b223fdc5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerThreadTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T17:20:27Z",
+      "side": 0,
+      "message": "Initially I was concerned about removing this test but looking more closely \nwe do have similar test coverage for AnimationWorkletThread already. So it\nis good to remove!",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507262b5_25adabbf",
+        "filename": "tools/perf/page_sets/key_idle_power_cases.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-21T17:20:27Z",
+      "side": 0,
+      "message": "Why is this removed? Seems unrelated.",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
