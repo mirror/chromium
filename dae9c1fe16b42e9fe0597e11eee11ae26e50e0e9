@@ -70,6 +70,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0826a9_34ab5929",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-21T16:24:47Z",
+      "side": 1,
+      "message": "IMO, a better design would add a getSocket(id) method whose implementation would call AddObserver to allow the extension to be explicit that it wants to become an observer of a socket (and verify that the socket exists).  This would also prevent the problem of dropping messages that are received before the first send() is called.  WDYT?",
+      "parentUuid": "92e7a524_6e217623",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
