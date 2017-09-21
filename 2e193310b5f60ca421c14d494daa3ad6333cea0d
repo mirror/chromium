@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2bd1be8_21ed046c",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-21T17:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9840e033_94949d76",
+      "revId": "2e193310b5f60ca421c14d494daa3ad6333cea0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02b55a43_bdb45db5",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T16:54:10Z",
       "side": 1,
       "message": "I understand wanting to allow more time for the process to start up, but the logic here confuses me. The longer it\u0027s been since the process started, the more time we give it to time out? That seems inverted -- I\u0027d think you\u0027d want to give the process more time to start if it recently started.",
+      "revId": "2e193310b5f60ca421c14d494daa3ad6333cea0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5016173a_014cd937",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-21T17:04:09Z",
+      "side": 1,
+      "message": "Doh! Yeah, maybe I should try actually using the new constant... Done.",
+      "parentUuid": "02b55a43_bdb45db5",
       "revId": "2e193310b5f60ca421c14d494daa3ad6333cea0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
