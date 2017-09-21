@@ -166,6 +166,7 @@ group("gn_all") {
       "//mojo/edk/system:mojo_system_unittests",
       "//mojo/edk/test:mojo_public_bindings_unittests",
       "//mojo/edk/test:mojo_public_system_unittests",
+      "//sandbox:sandbox_unittests",
       "//ui/gl:gl_unittests",
     ]
   }
@@ -400,7 +401,6 @@ group("gn_all") {
       "//net:quic_client",
       "//net:quic_server",
       "//sandbox/linux:chrome_sandbox",
-      "//sandbox/linux:sandbox_linux_unittests",
     ]
 
     if (use_dbus) {
@@ -818,8 +818,8 @@ if (is_chromeos) {
       "//chrome/test/chromedriver",
       "//media:media_unittests",
       "//ppapi/examples/video_decode",
+      "//sandbox:sandbox_unittests",
       "//sandbox/linux:chrome_sandbox",
-      "//sandbox/linux:sandbox_linux_unittests",
 
       # Blocked on https://github.com/catapult-project/catapult/issues/2297
       #"//third_party/catapult/telemetry:bitmaptools",

@@ -392,7 +392,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
@@ -805,7 +805,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sandbox_linux_unittests"
+        "test": "sandbox_unittests"
       },
       {
         "swarming": {
