@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcd07463_42b7a005",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T03:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3851c0_5028aaa2",
+      "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2067846d_90372fcd",
         "filename": "ui/display/unified_desktop_utils.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c557c6fc_d4b20212",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T03:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2067846d_90372fcd",
+      "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d7aad52_25d87108",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T03:06:09Z",
+      "side": 1,
+      "message": "That condition used to be handled by the ValidateMatrix() function, which used to assert that there are no empty holes. But this is a good condition to early out here.\n\nDone.",
+      "parentUuid": "6b33016e_9d7183c6",
+      "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0c820b6_b684970f",
         "filename": "ui/display/unified_desktop_utils.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cd9555_0c36ece8",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T03:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0c820b6_b684970f",
+      "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2ac130_d3ea0c0b",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T03:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e563fa00_64759c6b",
+      "range": {
+        "startLine": 143,
+        "startChar": 32,
+        "endLine": 143,
+        "endChar": 33
+      },
+      "revId": "cc1e77b362dad8e844ad4d0797e07e5606461cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
