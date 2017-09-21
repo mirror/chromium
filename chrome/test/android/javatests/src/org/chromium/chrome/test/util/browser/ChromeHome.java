@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.annotation.Nullable;
+
 /**
  * Utility annotation and rule to enable or disable ChromeHome. Handles setting and resetting the
  * feature flag and the preference.
@@ -45,16 +47,32 @@ public @interface ChromeHome {
      * or by using the {@link ChromeHome} annotation on tests.
      */
     class Processor extends AnnotationProcessor<ChromeHome> {
+        /**
+         * Rule responsible for features in unit tests, will be used instead of {@link CommandLine}
+         * if available.
+         */
+        private final @Nullable Features.Processor mFeaturesProcessor;
+
         private Boolean mOldState;
 
         public Processor() {
+            this(null);
+        }
+
+        public Processor(@Nullable Features.Processor featuresProcessor) {
             super(ChromeHome.class);
+            mFeaturesProcessor = featuresProcessor;
         }
 
         @Override
         protected void before() throws Throwable {
             boolean enabled = getRequestedState();
-            if (enabled) updateCommandLine();
+            if (mFeaturesProcessor != null) {
+                mFeaturesProcessor.registerFeature(ChromeFeatureList.CHROME_HOME, enabled);
+            } else if (enabled) {
+                updateCommandLine();
+            }
+
             setPrefs(enabled);
         }
 
@@ -86,6 +104,7 @@ public @interface ChromeHome {
 
         public void clearTestState() {
             assertNotNull(mOldState);
+            FeatureUtilities.resetChromeHomeEnabledForTests();
             ChromePreferenceManager.getInstance().setChromeHomeEnabled(mOldState);
         }
 

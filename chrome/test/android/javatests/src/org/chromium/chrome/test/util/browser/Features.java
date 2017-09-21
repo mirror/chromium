@@ -52,16 +52,17 @@ public @interface Features {
      * features.
      */
     class Processor extends AnnotationProcessor<Features> {
+        private Map<String, Boolean> mRegisteredFeatures = new HashMap<>();
+
         public Processor() {
             super(Features.class);
         }
 
         @Override
         protected void before() throws Throwable {
-            Map<String, Boolean> registeredFeatures = new HashMap<>();
-            registerFeatures(registeredFeatures, getClassAnnotation());
-            registerFeatures(registeredFeatures, getTestAnnotation());
-            ChromeFeatureList.setTestFeatures(registeredFeatures);
+            registerFeatures(getClassAnnotation());
+            registerFeatures(getTestAnnotation());
+            ChromeFeatureList.setTestFeatures(mRegisteredFeatures);
         }
 
         @Override
@@ -69,11 +70,15 @@ public @interface Features {
             ChromeFeatureList.setTestFeatures(null);
         }
 
-        private void registerFeatures(Map<String, Boolean> registeredFeatures, Features feature) {
+        private void registerFeatures(Features feature) {
             if (feature == null) return;
             for (Register featureState : feature.value()) {
-                registeredFeatures.put(featureState.value(), featureState.enabled());
+                registerFeature(featureState.value(), featureState.enabled());
             }
+        }
+
+        public void registerFeature(String featureName, boolean enabled) {
+            mRegisteredFeatures.put(featureName, enabled);
         }
     }
 }

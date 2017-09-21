@@ -43,7 +43,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.base.test.util.Feature;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.DisableHistogramsRule;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
@@ -55,6 +54,7 @@ import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
+import org.chromium.chrome.test.util.browser.ChromeHome;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.CategoryInfoBuilder;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
@@ -74,16 +74,16 @@ import java.util.TreeSet;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 // TODO(bauerb): Enable these tests with the modern layout.
-@Features({
-        @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
-        @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT, enabled = false)
-})
+@ChromeHome(false)
 public class SuggestionsSectionTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
 
     @Rule
     public Features.Processor mFeatureProcessor = new Features.Processor();
+
+    @Rule
+    public ChromeHome.Processor mChromeHomeProcessor = new ChromeHome.Processor(mFeatureProcessor);
 
     private static final int TEST_CATEGORY_ID = 42;
 
@@ -101,11 +101,14 @@ public class SuggestionsSectionTest {
 
     private FakeOfflinePageBridge mBridge;
 
+    public SuggestionsSectionTest() {
+        ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
+    }
+
     @Before
     public void setUp() {
         RecordUserAction.setDisabledForTests(true);
         MockitoAnnotations.initMocks(this);
-        ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
 
         mBridge = new FakeOfflinePageBridge();
 
