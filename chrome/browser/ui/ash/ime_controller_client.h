@@ -66,9 +66,19 @@ class ImeControllerClient
 
   void FlushMojoForTesting();
 
+  void OnEhvStateChange(bool is_ehv_enabled,
+                        bool emoji_enabled,
+                        bool handwriting_enabled,
+                        bool voice_enabled) override;
+
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
+
+  // Some values are only propagated to the IME Controller when they change. In
+  // order to get a current state propagated, this method can be called to
+  // force propagation without a change.
+  void TickleObservedStateForDataPropagation();
 
   // Converts IME information from |descriptor| into the ash mojo format.
   ash::mojom::ImeInfoPtr GetAshImeInfo(

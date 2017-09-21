@@ -136,6 +136,16 @@ void ImeController::SetCapsLockState(bool caps_enabled) {
     observer.OnCapsLockChanged(caps_enabled);
 }
 
+void ImeController::SetEhvState(bool is_ehv_enabled,
+                                bool emoji,
+                                bool handwriting,
+                                bool voice) {
+  is_ehv_enabled_ = is_ehv_enabled;
+  emoji_state_ = emoji;
+  handwriting_state_ = handwriting;
+  voice_state_ = voice;
+}
+
 void ImeController::SetCapsLockFromTray(bool caps_enabled) {
   if (client_)
     client_->SetCapsLockFromTray(caps_enabled);

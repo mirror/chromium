@@ -153,6 +153,14 @@ void ImeControllerClient::BindAndSetClient() {
   ash::mojom::ImeControllerClientPtr client;
   binding_.Bind(mojo::MakeRequest(&client));
   ime_controller_ptr_->SetClient(std::move(client));
+
+  // Now that the bridge is established, flush state from observed objects to
+  // the ImeController, now that it will hear it.
+  TickleObservedStateForDataPropagation();
+}
+
+void ImeControllerClient::TickleObservedStateForDataPropagation() {
+  input_method_manager_->NotifyObserversEhvChange();
 }
 
 ash::mojom::ImeInfoPtr ImeControllerClient::GetAshImeInfo(
@@ -201,4 +209,13 @@ void ImeControllerClient::RefreshIme() {
   }
   ime_controller_ptr_->RefreshIme(current_ime_id, std::move(available_imes),
                                   std::move(ash_menu_items));
+}
+
+void ImeControllerClient::OnEhvStateChange(bool is_ehv_enabled,
+                                           bool emoji_enabled,
+                                           bool handwriting_enabled,
+                                           bool voice_enabled) {
+  if (ime_controller_ptr_)
+    ime_controller_ptr_->SetEhvState(is_ehv_enabled, emoji_enabled,
+                                     handwriting_enabled, voice_enabled);
 }

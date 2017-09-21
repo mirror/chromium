@@ -897,6 +897,11 @@ void InputMethodManagerImpl::RecordInputMethodUsage(
 void InputMethodManagerImpl::AddObserver(
     InputMethodManager::Observer* observer) {
   observers_.AddObserver(observer);
+  observer->OnEhvStateChange(
+      base::FeatureList::IsEnabled(features::kEHVInputOnImeMenu),
+      features_enabled_state_ & InputMethodManager::FEATURE_EMOJI,
+      features_enabled_state_ & InputMethodManager::FEATURE_HANDWRITING,
+      features_enabled_state_ & InputMethodManager::FEATURE_VOICE);
 }
 
 void InputMethodManagerImpl::AddCandidateWindowObserver(
@@ -1281,15 +1286,37 @@ bool InputMethodManagerImpl::IsEmojiHandwritingVoiceOnImeMenuEnabled() {
 
 void InputMethodManagerImpl::SetImeMenuFeatureEnabled(ImeMenuFeature feature,
                                                       bool enabled) {
+  const uint32_t original_state = features_enabled_state_;
   if (enabled)
     features_enabled_state_ |= feature;
   else
     features_enabled_state_ &= ~feature;
+  if (original_state != features_enabled_state_) {
+    NotifyObserversEhvChange();
+  }
 }
 
 bool InputMethodManagerImpl::GetImeMenuFeatureEnabled(
     ImeMenuFeature feature) const {
   return features_enabled_state_ & feature;
+}
+
+void InputMethodManagerImpl::NotifyObserversEhvChange() {
+  for (auto& observer : observers_) {
+    const bool is_ehv_enabled =
+        base::FeatureList::IsEnabled(features::kEHVInputOnImeMenu);
+    const bool is_emoji_enabled =
+        is_ehv_enabled &&
+        (features_enabled_state_ & InputMethodManager::FEATURE_EMOJI);
+    const bool is_handwriting_enabled =
+        is_ehv_enabled &&
+        (features_enabled_state_ & InputMethodManager::FEATURE_HANDWRITING);
+    const bool is_voice_enabled =
+        is_ehv_enabled &&
+        (features_enabled_state_ & InputMethodManager::FEATURE_VOICE);
+    observer.OnEhvStateChange(is_ehv_enabled, is_emoji_enabled,
+                              is_handwriting_enabled, is_voice_enabled);
+  }
 }
 
 }  // namespace input_method
