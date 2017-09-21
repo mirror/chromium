@@ -133,10 +133,10 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
   void ShowFragmentTree() const;
 #endif
 
-  // Override RefCounted's deref() to ensure operator delete is called on the
+  // Override RefCounted's Release() to ensure operator delete is called on the
   // appropriate subclass type.
-  void Deref() const {
-    if (DerefBase())
+  void Release() const {
+    if (base::subtle::RefCountedBase::Release())
       Destroy();
   }
 

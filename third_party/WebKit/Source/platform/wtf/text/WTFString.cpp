@@ -38,6 +38,11 @@
 #include <algorithm>
 #include <stdarg.h>
 
+static_assert(sizeof(void*) == sizeof(WTF::String),
+              "Unexpected String size."
+              " String must be consiste of single pointer to support deleted"
+              " value.");
+
 namespace WTF {
 
 using namespace Unicode;

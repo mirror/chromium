@@ -505,7 +505,7 @@ class CORE_EXPORT WebViewImpl final
 
   friend class WebView;  // So WebView::Create can call our constructor
   friend class WebViewFrameWidget;
-  friend class WTF::RefCounted<WebViewImpl>;
+  friend class base::RefCounted<WebViewImpl>;
 
   explicit WebViewImpl(WebViewClient*, WebPageVisibilityState);
   ~WebViewImpl() override;
