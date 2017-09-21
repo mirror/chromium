@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15022b6f_d3691804",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/propagate-nonce-external.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-21T09:18:35Z",
+      "side": 1,
+      "message": "I would add a comment at the top of this file that it can be loaded as both a module and classic script.",
+      "revId": "a231c8e9eef31f4cf4e7dbb43c3b51e28c2f88a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f493075_4624a430",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/propagate-nonce-external.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-21T09:18:35Z",
+      "side": 1,
+      "message": "You can just do ../ if you want",
+      "revId": "a231c8e9eef31f4cf4e7dbb43c3b51e28c2f88a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
