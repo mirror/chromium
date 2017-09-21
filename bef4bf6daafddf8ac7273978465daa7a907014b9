@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b001d16_6a4145a4",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "I\u0027d like to understand this comment/pattern better, possibly in an f2f.  Why do we go through DoneWithEntry() in the writer failed case, but not in the writer success completely written case?",
+      "range": {
+        "startLine": 901,
+        "startChar": 15,
+        "endLine": 901,
+        "endChar": 28
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac5837b_b9c4d8ff",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "Why call it \"did_finish\"?  Wouldn\u0027t \"success\" make more sense?  It finished either way.",
+      "range": {
+        "startLine": 416,
+        "startChar": 11,
+        "endLine": 416,
+        "endChar": 23
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c0f1a7_b99ddb8f",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "nit: \"it\u0027s\" (contraction of \"it is\")",
+      "range": {
+        "startLine": 416,
+        "startChar": 30,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80232430_e74699ed",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "This isn\u0027t called from outside http_cache.cc, is not much implementation, and is only called inside of http_cache.cc from DoneWithEntry(), and the functionality is ever needed from outside HttpCache in the future it\u0027s pretty easy to put into DoneWithEntry (because it\u0027s easy to tell if an incoming transaction is a reader).  I\u0027d suggest inlining it into DoneWithEntry, but at a minimum I\u0027d like it to be a private method now?",
+      "range": {
+        "startLine": 445,
+        "startChar": 7,
+        "endLine": 445,
+        "endChar": 27
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618396fb_276a2c09",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d just inline the definition of \"it\".",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6574919_658d68bc",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "Confirming: There\u0027s no way that we could be in this state on entry to this function?  Because if there is, then we\u0027re presumably going to be entering DoLoop() twice.  Maybe a DCHECK that we\u0027re not in this state before TruncateEntryInternal()?  Or return a boolean from TruncateEntryInternal as to whether DoLoop() should be called?  Actually, what about just calling DoLoop() at the end of TruncateEntryInternal(), maybe with a DCHECK() that we weren\u0027t already in a state in which it would be called before we assigned the new state?",
+      "range": {
+        "startLine": 269,
+        "startChar": 28,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb367b1_ea7f86dd",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "What about when the transaction has been destroyed in a race with writing to cache?  I know reading from network will destroy the network transaction, so we\u0027ll never get a callback, but we can\u0027t do that with the cache, can we?",
+      "range": {
+        "startLine": 446,
+        "startChar": 5,
+        "endLine": 446,
+        "endChar": 16
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec298f3d_ba684415",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "Usually this kid of comment refers to a method argument--what response_info are you referring to?",
+      "range": {
+        "startLine": 90,
+        "startChar": 17,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadd7ed5_f2f5d052",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "Update comment?  This isn\u0027t returning a value.",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 56
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fe7973_a96aa6c7",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "My preference would be for this not to have \"Partial\" as part of the name.  Conceptually from the perspective of the writers, it doesn\u0027t have anything to do with partial requests, it\u0027s just that currently this is only used for partial requests.\n\nIf I was going from a pure API point of view, I\u0027d make the interface contract be that there must be only a single transaction on the writers (i.e. an exclusive relationship) rather than specifying at this level that we\u0027re being driven by a partial request; that seems like a detail that this level of the code doesn\u0027t need.  But I don\u0027t want to give up DCHECK coverage for the sake of clean interfaces, at least in this case :-}.  But could we change the name and just have the comment indicate that this is only valid for partial requests?",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd68635d_6a010138",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "nit: \"else an attempt\"",
+      "range": {
+        "startLine": 151,
+        "startChar": 10,
+        "endLine": 151,
+        "endChar": 17
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

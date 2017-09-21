@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb04ded2_4a96a60a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 0,
+      "message": "Why were these removed?  I\u0027m not following the motivation.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 17,
+        "endLine": 1130,
+        "endChar": 0
+      },
+      "revId": "07ea99d7e17fb423850453e72795646d9c9bc82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

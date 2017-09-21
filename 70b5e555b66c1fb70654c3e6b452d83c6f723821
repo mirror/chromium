@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "31b67ac0_141cf860",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-21T21:53:15Z",
+      "side": 1,
+      "message": "This issue looks like it\u0027s become moot, which is great, but could you sketch out to me where the path that used to go through the mode() \u003d\u003d NONE switch here now goes?",
+      "parentUuid": "8d7df545_a6f5078f",
+      "range": {
+        "startLine": 840,
+        "startChar": 19,
+        "endLine": 840,
+        "endChar": 23
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ee6c22e_48805e4f",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 26
