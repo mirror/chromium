@@ -257,6 +257,30 @@
       "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3a48669_283238bc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T20:45:50Z",
+      "side": 1,
+      "message": "mojo should accept OnceClosure. You should pass it by value for OnceClosure and std::move it around.\n\nDid you pass by const-ref?",
+      "parentUuid": "58b4c695_2c904b6a",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
