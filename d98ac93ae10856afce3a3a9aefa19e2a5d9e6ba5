@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e2c2b53_eb7fe08d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-21T18:30:10Z",
+      "side": 1,
+      "message": "Would be good to add comments here to explain that we post to ensure that these functions don\u0027t break assumptions of the currently-in-progress frame.\n\nWe might be able to do something fancier in future once we\u0027ve formalized the frame lifecycle, but since that\u0027s so speculative, I wouldn\u0027t even add a TODO about it.",
+      "revId": "d98ac93ae10856afce3a3a9aefa19e2a5d9e6ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae0c1b1_910a8644",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-21T18:30:10Z",
+      "side": 1,
+      "message": "nit: Since this is an abstract base class, perhaps we could phrase this as \"The browser communicates state changes with the VR UI via this interface\"?",
+      "revId": "d98ac93ae10856afce3a3a9aefa19e2a5d9e6ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
