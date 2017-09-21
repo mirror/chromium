@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0144d953_74e32ec1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "nit: invoke -\u003e invocation",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a5fd9c_d4c65edc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "Can we use base::Closure() ?",
+      "range": {
+        "startLine": 319,
+        "startChar": 57,
+        "endLine": 319,
+        "endChar": 76
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54aa1126_2e1d787d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "Use a WeakPtr and avoid Unretained if possible.",
+      "range": {
+        "startLine": 401,
+        "startChar": 23,
+        "endLine": 401,
+        "endChar": 39
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a78188_e816e1ee",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we lost the callback here?",
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3d1662_9049c896",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "Document the callback arg. As a user of the call, it would be useful to find out when the callback will be called and whether caller can expect it always to be called etc.",
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17f4e01_dc61535c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T17:08:07Z",
+      "side": 1,
+      "message": "This probably should be a base::OnceClosure if the callback is intended to be called only once.",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
