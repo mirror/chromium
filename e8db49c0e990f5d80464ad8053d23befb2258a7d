@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "4aab0add_d5be5a6f",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-21T11:53:26Z",
+      "side": 1,
+      "message": "Is this really a useful API, to take a snapshot without ever returning it?",
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0060945_f32b0136",
         "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
         "patchSetId": 8
@@ -65,6 +82,40 @@
         "endLine": 41,
         "endChar": 4
       },
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b40eda_df883650",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-21T11:53:26Z",
+      "side": 1,
+      "message": "Why is TabCoordinator registering as a snapshot provider?  Why doesn\u0027t the standard WebState implementation work?\n\nIndividual pages like the NTP can register as snapshot providers because they need special handling, but TabCoordinator is generic enough that it shouldn\u0027t need to override snapshotting.",
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b3ed5e_14823303",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-21T11:53:26Z",
+      "side": 1,
+      "message": "FYI this registration/deregistration currently doesn\u0027t handle cases where the active tab changes, since we only set the provider in start and stop.",
       "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
