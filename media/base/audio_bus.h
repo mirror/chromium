@@ -14,8 +14,19 @@
 #include "base/memory/aligned_memory.h"
 #include "media/base/media_shmem_export.h"
 
+namespace mojo {
+template <typename T, typename U>
+struct TypeConverter;
+template <typename T>
+class StructPtr;
+};  // namespace mojo
+
 namespace media {
 class AudioParameters;
+
+namespace mojom {
+class AudioBus;
+}
 
 // Represents a sequence of audio frames containing frames() audio samples for
 // each of channels() channels. The data is stored as a set of contiguous
@@ -197,6 +208,10 @@ class MEDIA_SHMEM_EXPORT AudioBus {
   explicit AudioBus(int channels);
 
  private:
+  // mojo::TypeConverter added as a friend so that AudioBus can be
+  // transferred across a mojo connection.
+  friend struct mojo::TypeConverter<mojo::StructPtr<mojom::AudioBus>, AudioBus>;
+
   // Helper method for building |channel_data_| from a block of memory.  |data|
   // must be at least CalculateMemorySize(...) bytes in size.
   void BuildChannelData(int channels, int aligned_frame, float* data);
@@ -219,6 +234,7 @@ class MEDIA_SHMEM_EXPORT AudioBus {
 
   // Contiguous block of channel memory.
   std::unique_ptr<float, base::AlignedFreeDeleter> data_;
+  size_t data_size_;
 
   // Whether the data is compressed bitstream or not.
   bool is_bitstream_format_ = false;

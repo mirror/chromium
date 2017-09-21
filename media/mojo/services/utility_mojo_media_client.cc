@@ -11,6 +11,7 @@
 #include "media/mojo/common/mojo_shared_buffer_video_frame.h"
 #include "media/mojo/common/mojo_video_frame_provider.h"
 #include "media/mojo/common/mojo_video_frame_provider_factory.h"
+#include "media/mojo/services/mojo_audio_renderer_sink_adapter.h"
 #include "media/mojo/services/mojo_video_renderer_sink_adapter.h"
 #include "media/renderers/default_renderer_factory.h"
 
@@ -38,8 +39,8 @@ void UtilityMojoMediaClient::Initialize(
 
 scoped_refptr<AudioRendererSink>
 UtilityMojoMediaClient::CreateAudioRendererSink(
-    const std::string& /* audio_device_id */) {
-  return new NullAudioSink(utility_task_runner_);
+    const std::string& audio_device_id) {
+  return new MojoAudioRendererSinkAdapter(audio_device_id);
 }
 
 std::unique_ptr<VideoRendererSink>

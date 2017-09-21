@@ -4,6 +4,7 @@
 
 module media.mojom;
 
+import "media/mojo/interfaces/audio_renderer_sink.mojom";
 import "media/mojo/interfaces/demuxer_stream.mojom";
 import "media/mojo/interfaces/media_types.mojom";
 import "media/mojo/interfaces/video_renderer_sink.mojom";
@@ -18,6 +19,7 @@ interface Renderer {
   // succeeded.
   Initialize(associated RendererClient client,
              array<DemuxerStream>? streams,
+             AudioRendererSink? audio_renderer_sink,
              VideoRendererSink? video_renderer_sink,
              url.mojom.Url? media_url,
              url.mojom.Url? first_party_for_cookies) => (bool success);
