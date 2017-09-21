@@ -3342,6 +3342,10 @@ void RenderFrameImpl::SetHasReceivedUserGesture() {
   Send(new FrameHostMsg_SetHasReceivedUserGesture(routing_id_));
 }
 
+void RenderFrameImpl::SetHasReceivedUserGestureBeforeNavigation() {
+  Send(new FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation(routing_id_));
+}
+
 void RenderFrameImpl::SetDevToolsFrameId(
     const blink::WebString& devtools_frame_id) {
   Send(new FrameHostMsg_SetDevToolsFrameId(routing_id_,

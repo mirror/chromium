@@ -188,6 +188,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
+  void OnSetHasReceivedUserGestureBeforeNavigation();
 
   // The routing ID by which this RenderFrameProxy is known.
   const int routing_id_;
