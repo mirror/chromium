@@ -48,6 +48,11 @@ PasswordTabHelper::GetPasswordGenerationManager() {
   return controller_.passwordGenerationManager;
 }
 
+void PasswordTabHelper::SetPasswordControllerDelegate(
+    id<PasswordControllerDelegate> delegate) {
+  controller_.delegate = delegate;
+}
+
 PasswordTabHelper::PasswordTabHelper(
     web::WebState* web_state,
     id<PasswordsUiDelegate> passwords_ui_delegate)
