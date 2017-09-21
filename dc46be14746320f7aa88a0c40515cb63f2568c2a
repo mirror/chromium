@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a1da5c1_118d81bc",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:28:59Z",
+      "side": 1,
+      "message": "\"Sets up\"\n\n\"now starting up\" seems strange now for this helper function. all it\u0027s doing is populating registration_ and version_.",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81922a3_2bcb8bdb",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:28:59Z",
+      "side": 1,
+      "message": "Does this CL exercise RESOURCE_TYPE_SCRIPT yet? If not, I vote we just add it when it\u0027s needed.",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed9c48c_5c0be101",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:28:59Z",
+      "side": 1,
+      "message": "easier to understand as: \"The client should have received the response\"?",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed37f9f_ea7e980c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:28:59Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f82200_e12dd2af",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T14:28:59Z",
+      "side": 1,
+      "message": "delete now",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
