@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfec5bb0_7bd52473",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-21T19:36:10Z",
+      "side": 1,
+      "message": "(CLA confirmed)",
+      "range": {
+        "startLine": 686,
+        "startChar": 14,
+        "endLine": 686,
+        "endChar": 36
+      },
+      "revId": "f8bf43800b6ce4a26cb982260baf3a58932ad17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7176821b_d8bcd093",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-21T19:36:10Z",
+      "side": 1,
+      "message": "This only does the flag and not the environment variable.\n\n(I\u0027d probably suggest doing both, just to keep everything consistent.)",
+      "revId": "f8bf43800b6ce4a26cb982260baf3a58932ad17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
