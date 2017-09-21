@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "cc18e1f5_f715e9de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T22:05:36Z",
+      "side": 1,
+      "message": "To clarify, this is a \"select all\" as performed by long-pressing and tapping the \"select all\" option, which is applied in Blink by FrameSelection:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/FrameSelection.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d639\n\nThis isn\u0027t something where the IME is trying to select a range of text using a pair of offsets.",
+      "parentUuid": "63633386_ca059b28",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
