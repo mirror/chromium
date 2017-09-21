@@ -26,7 +26,7 @@ void PreviewModeClient::ScrollToX(int position) {
   NOTREACHED();
 }
 
-void PreviewModeClient::ScrollToY(int position) {
+void PreviewModeClient::ScrollToY(int position, bool compensate_for_toolbar) {
   NOTREACHED();
 }
 
