@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef476bed_dd2d5682",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-21T21:46:57Z",
+      "side": 1,
+      "message": "in my CL i removed this comment because i wasn\u0027t really sure it was helpful (as the code uses \u0027left\u0027 and \u0027right\u0027 everywhere and it\u0027s basically just copying the surrounding code, i.e. new depth \u003e old depth, \u0027slide-left-animation\u0027)",
+      "range": {
+        "startLine": 155,
+        "startChar": 46,
+        "endLine": 155,
+        "endChar": 49
+      },
+      "revId": "78798ff7b520720a47f3d49193e9ee6ac8a62890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
