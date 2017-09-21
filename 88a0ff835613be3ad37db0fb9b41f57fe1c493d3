@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c59b207_5f90cb10",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T08:08:32Z",
+      "side": 1,
+      "message": "We are localizing manifest in LoadManifestOnFileThread. This can be confusing for caller of AddWithNameAndDescriptionFromDir as the caller is trying to localize the manifest with passed name and description.\n\nTo make the behavior consistent with AddWithNameAndDescription, can we add a bool argument to LoadManifestOnFileThread whether to localize manifest here or not? Set false to it when we are calling this function from AddWithNameAndDescriptionFromDir.",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4126f07f_262a854a",
+        "filename": "chrome/browser/extensions/component_loader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T08:08:32Z",
+      "side": 1,
+      "message": "optional: done_cb isn\u0027t necessary as we are not using it. We can add it when it becomes necessary.",
+      "range": {
+        "startLine": 111,
+        "startChar": 40,
+        "endLine": 111,
+        "endChar": 68
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b647d1_9132e906",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T08:08:32Z",
+      "side": 1,
+      "message": "Do we still need to include this? File manager is not including this anymore.",
+      "range": {
+        "startLine": 4,
+        "startChar": 39,
+        "endLine": 4,
+        "endChar": 56
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
