@@ -31,43 +31,41 @@ class UiScene;
 class UrlBar;
 class ExitPrompt;
 
-class UiSceneManager {
+class UiSceneManager : public UiInterface {
  public:
   UiSceneManager(UiBrowserInterface* browser,
                  UiScene* scene,
                  ContentInputDelegate* content_input_delegate,
-                 bool in_cct,
-                 bool in_web_vr,
-                 bool web_vr_autopresentation_expected);
-  ~UiSceneManager();
+                 const UiInitialState& ui_initial_state);
+  ~UiSceneManager() override;
 
   base::WeakPtr<UiSceneManager> GetWeakPtr();
 
-  void SetFullscreen(bool fullscreen);
-  void SetIncognito(bool incognito);
-  void SetToolbarState(const ToolbarState& state);
-  void SetWebVrSecureOrigin(bool secure);
-  void SetWebVrMode(bool web_vr, bool show_toast);
-  void SetLoading(bool loading);
-  void SetLoadProgress(float progress);
-  void SetIsExiting();
-  void SetVideoCapturingIndicator(bool enabled);
-  void SetScreenCapturingIndicator(bool enabled);
-  void SetAudioCapturingIndicator(bool enabled);
-  void SetLocationAccessIndicator(bool enabled);
-  void SetBluetoothConnectedIndicator(bool enabled);
+  // UiBrowserInterface.
+  void SetFullscreen(bool fullscreen) override;
+  void SetIncognito(bool incognito) override;
+  void SetToolbarState(const ToolbarState& state) override;
+  void SetWebVrSecureOrigin(bool secure) override;
+  void SetWebVrMode(bool web_vr, bool show_toast) override;
+  void SetLoading(bool loading) override;
+  void SetLoadProgress(float progress) override;
+  void SetIsExiting() override;
+  void SetVideoCapturingIndicator(bool enabled) override;
+  void SetScreenCapturingIndicator(bool enabled) override;
+  void SetAudioCapturingIndicator(bool enabled) override;
+  void SetLocationAccessIndicator(bool enabled) override;
+  void SetBluetoothConnectedIndicator(bool enabled) override;
+  void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
 
-  // These methods are currently stubbed.
-  void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
+  // UiInterface.
+  void OnGlInitialized(unsigned int content_texture_id) override;
+  void OnAppButtonClicked() override;
+  void OnAppButtonGesturePerformed(UiInterface::Direction direction) override;
+  void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;
+  void OnWebVrFrameAvailable() override;
+  void OnWebVrTimedOut() override;
 
-  void OnGlInitialized(unsigned int content_texture_id);
-  void OnAppButtonClicked();
-  void OnAppButtonGesturePerformed(UiInterface::Direction direction);
-  void OnWebVrFrameAvailable();
-  void OnWebVrTimedOut();
-  void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
-
-  void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
+  void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
 
   void OnSecurityIconClickedForTesting();
   void OnExitPromptChoiceForTesting(bool chose_exit);
