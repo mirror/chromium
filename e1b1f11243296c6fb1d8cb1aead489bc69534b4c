@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11680ad4_6277028c",
+        "filename": "components/ntp_snippets/time_serialization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-21T11:27:11Z",
+      "side": 1,
+      "message": "Does TimeDelta support negative values?",
+      "revId": "e1b1f11243296c6fb1d8cb1aead489bc69534b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
