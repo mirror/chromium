@@ -8,6 +8,7 @@
 #include "net/quic/core/quic_server_session_base.h"
 #include "net/tools/quic/quic_dispatcher.h"
 #include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_http_response_proxy.h"
 
 namespace net {
 
@@ -22,6 +23,16 @@ class QuicSimpleDispatcher : public QuicDispatcher {
       std::unique_ptr<QuicAlarmFactory> alarm_factory,
       QuicHttpResponseCache* response_cache);
 
+  QuicSimpleDispatcher(
+      const QuicConfig& config,
+      const QuicCryptoServerConfig* crypto_config,
+      QuicVersionManager* version_manager,
+      std::unique_ptr<QuicConnectionHelperInterface> helper,
+      std::unique_ptr<QuicCryptoServerStream::Helper> session_helper,
+      std::unique_ptr<QuicAlarmFactory> alarm_factory,
+      QuicHttpResponseCache* response_cache,
+      QuicHttpResponseProxy* quic_proxy_context);
+
   ~QuicSimpleDispatcher() override;
 
   int GetRstErrorCount(QuicRstStreamErrorCode rst_error_code) const;
@@ -35,9 +46,11 @@ class QuicSimpleDispatcher : public QuicDispatcher {
       QuicStringPiece alpn) override;
 
   QuicHttpResponseCache* response_cache() { return response_cache_; }
+  QuicHttpResponseProxy* quic_proxy_context() { return quic_proxy_context_; }
 
  private:
-  QuicHttpResponseCache* response_cache_;  // Unowned.
+  QuicHttpResponseCache* response_cache_;      // Unowned.
+  QuicHttpResponseProxy* quic_proxy_context_;  // Unowned.
 
   // The map of the reset error code with its counter.
   std::map<QuicRstStreamErrorCode, int> rst_error_map_;

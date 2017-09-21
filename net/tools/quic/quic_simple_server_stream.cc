@@ -21,21 +21,47 @@
 using std::string;
 
 namespace net {
-
 QuicSimpleServerStream::QuicSimpleServerStream(
     QuicStreamId id,
     QuicSpdySession* session,
     QuicHttpResponseCache* response_cache)
+    : QuicSimpleServerStream(id, session, response_cache, nullptr) {}
+
+QuicSimpleServerStream::QuicSimpleServerStream(
+    QuicStreamId id,
+    QuicSpdySession* session,
+    QuicHttpResponseCache* response_cache,
+    QuicHttpResponseProxy* proxy_context)
     : QuicSpdyServerStreamBase(id, session),
       content_length_(-1),
-      response_cache_(response_cache) {}
+      response_cache_(response_cache),
+      proxy_context_(proxy_context),
+      proxy_url_request_handler_(nullptr) {}
 
-QuicSimpleServerStream::~QuicSimpleServerStream() {}
+QuicSimpleServerStream::~QuicSimpleServerStream() {
+  // Destoy the backend request handler
+  if (proxy_url_request_handler_ != nullptr) {
+    // if (proxy_url_request_handler() != nullptr) {
+    proxy_url_request_handler_->reset_delegate();
+    proxy_context_->DestroyQuicProxyRequestHandler(proxy_url_request_handler_);
+  }
+}
 
 void QuicSimpleServerStream::OnInitialHeadersComplete(
     bool fin,
     size_t frame_len,
     const QuicHeaderList& header_list) {
+  // initialize the backend handler to enable proxy functionality
+  if (proxy_context_ != nullptr) {
+    if (proxy_context_->Initialized()) {
+      proxy_url_request_handler_ =
+          proxy_context_->CreateQuicProxyRequestHandler();
+      proxy_url_request_handler_->set_delegate(this);
+      proxy_url_request_handler_->Initialize(
+          spdy_session()->connection_id(), id(),
+          spdy_session()->peer_address().host().ToString());
+    }
+  }
   QuicSpdyStream::OnInitialHeadersComplete(fin, frame_len, header_list);
   if (!SpdyUtils::CopyAndValidateHeaders(header_list, &content_length_,
                                          &request_headers_)) {
@@ -127,6 +153,19 @@ void QuicSimpleServerStream::SendResponse() {
     return;
   }
 
+  if (proxy_url_request_handler() != nullptr) {
+    QUIC_DVLOG(1)
+        << " Forwarding QUIC request to the Backend Thread Asynchronously.";
+    if (proxy_url_request_handler()->SendRequestToBackend(request_headers(),
+                                                          body()) != true) {
+      SendErrorResponse();
+    }
+  } else {
+    SendResponseFromCache();
+  }
+}
+
+void QuicSimpleServerStream::SendResponseFromCache() {
   // Find response in cache. If not found, send error response.
   const QuicHttpResponseCache::Response* response = nullptr;
   auto authority = request_headers_.find(":authority");
@@ -202,6 +241,21 @@ void QuicSimpleServerStream::SendResponse() {
                                 response->trailers().Clone());
 }
 
+void QuicSimpleServerStream::OnResponseBackendComplete() {
+  DCHECK(proxy_url_request_handler() != nullptr);
+  QuicProxyBackendUrlRequest::Response* quic_response =
+      proxy_url_request_handler()->GetResponse();
+  if (quic_response->response_status() ==
+      QuicProxyBackendUrlRequest::BACKEND_ERR_RESPONSE) {
+    SendErrorResponse(quic_response->response_code());
+    return;
+  }
+  QUIC_DVLOG(1) << "QUIC Proxy Writing Headers Stream " << id() << " "
+                << quic_response->headers().DebugString()
+                << " with body of size: " << quic_response->body().size();
+  SendHeadersAndBody(quic_response->headers().Clone(), quic_response->body());
+}
+
 void QuicSimpleServerStream::SendNotFoundResponse() {
   QUIC_DVLOG(1) << "Stream " << id() << " sending not found response.";
   SpdyHeaderBlock headers;
@@ -212,9 +266,17 @@ void QuicSimpleServerStream::SendNotFoundResponse() {
 }
 
 void QuicSimpleServerStream::SendErrorResponse() {
+  SendErrorResponse(0);
+}
+
+void QuicSimpleServerStream::SendErrorResponse(int resp_code) {
   QUIC_DVLOG(1) << "Stream " << id() << " sending error response.";
   SpdyHeaderBlock headers;
-  headers[":status"] = "500";
+  if (resp_code <= 0) {
+    headers[":status"] = "500";
+  } else {
+    headers[":status"] = QuicTextUtils::Uint64ToString(resp_code);
+  }
   headers["content-length"] =
       QuicTextUtils::Uint64ToString(strlen(kErrorResponseBody));
   SendHeadersAndBody(std::move(headers), kErrorResponseBody);
@@ -257,6 +319,11 @@ void QuicSimpleServerStream::SendHeadersAndBodyAndTrailers(
   QUIC_DLOG(INFO) << "Stream " << id() << " writing trailers (fin = true): "
                   << response_trailers.DebugString();
   WriteTrailers(std::move(response_trailers), nullptr);
+}
+
+QuicProxyBackendUrlRequest* QuicSimpleServerStream::proxy_url_request_handler()
+    const {
+  return proxy_url_request_handler_;
 }
 
 const char* const QuicSimpleServerStream::kErrorResponseBody = "bad";

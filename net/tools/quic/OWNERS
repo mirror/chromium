@@ -1,0 +1,6 @@
+per-file quic_http_response_proxy.cc=rmahindra@uber.com yjames@uber.com vinoth@uber.com
+per-file quic_proxy_backend_url_request.cc=rmahindra@uber.com yjames@uber.com vinoth@uber.com
+per-file quic_http_response_proxy.h=rmahindra@uber.com yjames@uber.com vinoth@uber.com
+per-file quic_proxy_backend_url_request.h=rmahindra@uber.com yjames@uber.com vinoth@uber.com
+per-file quic_http_response_proxy_test.cc=rmahindra@uber.com yjames@uber.com vinoth@uber.com
+per-file quic_proxy_backend_url_request_test.cc=rmahindra@uber.com yjames@uber.com vinoth@uber.com

@@ -7,7 +7,6 @@
 #include "net/tools/quic/quic_simple_server_session.h"
 
 namespace net {
-
 QuicSimpleDispatcher::QuicSimpleDispatcher(
     const QuicConfig& config,
     const QuicCryptoServerConfig* crypto_config,
@@ -16,13 +15,32 @@ QuicSimpleDispatcher::QuicSimpleDispatcher(
     std::unique_ptr<QuicCryptoServerStream::Helper> session_helper,
     std::unique_ptr<QuicAlarmFactory> alarm_factory,
     QuicHttpResponseCache* response_cache)
+    : QuicSimpleDispatcher(config,
+                           crypto_config,
+                           version_manager,
+                           std::move(helper),
+                           std::move(session_helper),
+                           std::move(alarm_factory),
+                           response_cache,
+                           nullptr) {}
+
+QuicSimpleDispatcher::QuicSimpleDispatcher(
+    const QuicConfig& config,
+    const QuicCryptoServerConfig* crypto_config,
+    QuicVersionManager* version_manager,
+    std::unique_ptr<QuicConnectionHelperInterface> helper,
+    std::unique_ptr<QuicCryptoServerStream::Helper> session_helper,
+    std::unique_ptr<QuicAlarmFactory> alarm_factory,
+    QuicHttpResponseCache* response_cache,
+    QuicHttpResponseProxy* quic_proxy_context)
     : QuicDispatcher(config,
                      crypto_config,
                      version_manager,
                      std::move(helper),
                      std::move(session_helper),
                      std::move(alarm_factory)),
-      response_cache_(response_cache) {}
+      response_cache_(response_cache),
+      quic_proxy_context_(quic_proxy_context) {}
 
 QuicSimpleDispatcher::~QuicSimpleDispatcher() {}
 
@@ -58,7 +76,7 @@ QuicServerSessionBase* QuicSimpleDispatcher::CreateQuicSession(
 
   QuicServerSessionBase* session = new QuicSimpleServerSession(
       config(), connection, this, session_helper(), crypto_config(),
-      compressed_certs_cache(), response_cache_);
+      compressed_certs_cache(), response_cache_, quic_proxy_context_);
   session->Initialize();
   return session;
 }

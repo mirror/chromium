@@ -23,6 +23,7 @@
 #include "net/quic/core/quic_server_session_base.h"
 #include "net/quic/core/quic_spdy_session.h"
 #include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_http_response_proxy.h"
 #include "net/tools/quic/quic_simple_server_stream.h"
 
 namespace net {
@@ -59,6 +60,15 @@ class QuicSimpleServerSession : public QuicServerSessionBase {
                           const QuicCryptoServerConfig* crypto_config,
                           QuicCompressedCertsCache* compressed_certs_cache,
                           QuicHttpResponseCache* response_cache);
+
+  QuicSimpleServerSession(const QuicConfig& config,
+                          QuicConnection* connection,
+                          QuicSession::Visitor* visitor,
+                          QuicCryptoServerStream::Helper* helper,
+                          const QuicCryptoServerConfig* crypto_config,
+                          QuicCompressedCertsCache* compressed_certs_cache,
+                          QuicHttpResponseCache* response_cache,
+                          QuicHttpResponseProxy* quic_proxy_context);
 
   ~QuicSimpleServerSession() override;
 
@@ -100,6 +110,7 @@ class QuicSimpleServerSession : public QuicServerSessionBase {
       QuicCompressedCertsCache* compressed_certs_cache) override;
 
   QuicHttpResponseCache* response_cache() { return response_cache_; }
+  QuicHttpResponseProxy* quic_proxy_context() { return quic_proxy_context_; }
 
  private:
   friend class test::QuicSimpleServerSessionPeer;
@@ -147,6 +158,7 @@ class QuicSimpleServerSession : public QuicServerSessionBase {
   std::deque<PromisedStreamInfo> promised_streams_;
 
   QuicHttpResponseCache* response_cache_;  // Not owned.
+  QuicHttpResponseProxy* quic_proxy_context_;  // Not owned.
 
   DISALLOW_COPY_AND_ASSIGN(QuicSimpleServerSession);
 };

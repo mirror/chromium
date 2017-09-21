@@ -19,6 +19,8 @@
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/test/gtest_util.h"
 #include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_http_response_proxy.h"
+#include "net/tools/quic/quic_proxy_backend_url_request.h"
 #include "net/tools/quic/quic_simple_server_session.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,28 +32,105 @@ using testing::Invoke;
 using testing::InSequence;
 using testing::Return;
 using testing::StrictMock;
+using testing::NiceMock;
 
 namespace net {
 namespace test {
 
 size_t kFakeFrameLen = 60;
 
+class MockQuicHttpResponseProxy : public QuicHttpResponseProxy {
+ public:
+  explicit MockQuicHttpResponseProxy() : QuicHttpResponseProxy() {
+    ON_CALL(*this, Initialized()).WillByDefault(testing::Return(true));
+  }
+
+  ~MockQuicHttpResponseProxy() {}
+
+  MOCK_CONST_METHOD0(Initialized, bool());
+
+  DISALLOW_COPY_AND_ASSIGN(MockQuicHttpResponseProxy);
+};
+
+class MockBackendResponse : public QuicProxyBackendUrlRequest::Response {
+ public:
+  explicit MockBackendResponse() : QuicProxyBackendUrlRequest::Response() {}
+  ~MockBackendResponse() {}
+  void set_test_headers(SpdyHeaderBlock* headers) {
+    set_headers(headers->Clone());
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(MockBackendResponse);
+};
+
+class MockQuicProxyBackendUrlRequest : public QuicProxyBackendUrlRequest {
+ public:
+  // explicit
+  MockQuicProxyBackendUrlRequest(QuicHttpResponseProxy* context)
+      : QuicProxyBackendUrlRequest(context), quic_response_(nullptr) {}
+
+  ~MockQuicProxyBackendUrlRequest() override {}
+
+  // Matchers cannot be used on non-copyable types like SpdyHeaderBlock.
+  bool SendRequestToBackend(SpdyHeaderBlock* incoming_request_headers,
+                            const std::string& incoming_body) override {
+    return SendRequestToBackendMock(incoming_request_headers, incoming_body);
+  }
+
+  MOCK_METHOD2(SendRequestToBackendMock,
+               bool(SpdyHeaderBlock*, const std::string&));
+
+  QuicProxyBackendUrlRequest::Response* GetResponse() const {
+    return quic_response_;
+  }
+
+  void SetResponse(QuicProxyBackendUrlRequest::Response* response) {
+    quic_response_ = response;
+  }
+
+  MOCK_METHOD0(Destroy, void());
+
+ protected:
+  QuicProxyBackendUrlRequest::Response* quic_response_;
+};
+
 class QuicSimpleServerStreamPeer : public QuicSimpleServerStream {
  public:
   QuicSimpleServerStreamPeer(QuicStreamId stream_id,
                              QuicSpdySession* session,
                              QuicHttpResponseCache* response_cache)
-      : QuicSimpleServerStream(stream_id, session, response_cache) {}
+      : QuicSimpleServerStreamPeer(stream_id,
+                                   session,
+                                   response_cache,
+                                   nullptr) {}
+
+  QuicSimpleServerStreamPeer(
+      QuicStreamId stream_id,
+      QuicSpdySession* session,
+      QuicHttpResponseCache* response_cache,
+      NiceMock<MockQuicHttpResponseProxy>* quic_proxy_context)
+      : QuicSimpleServerStream(stream_id,
+                               session,
+                               response_cache,
+                               quic_proxy_context),
+        mock_proxy_context_(quic_proxy_context),
+        mock_backend_request_handler_(nullptr) {}
 
   ~QuicSimpleServerStreamPeer() override {}
 
   using QuicSimpleServerStream::SendResponse;
   using QuicSimpleServerStream::SendErrorResponse;
+  using QuicSimpleServerStream::OnResponseBackendComplete;
 
   SpdyHeaderBlock* mutable_headers() { return &request_headers_; }
+  void set_body(std::string body) { body_ = std::move(body); }
 
   static void SendResponse(QuicSimpleServerStream* stream) {
     stream->SendResponse();
+  }
+
+  static void OnResponseBackendComplete(QuicSimpleServerStream* stream) {
+    stream->OnResponseBackendComplete();
   }
 
   static void SendErrorResponse(QuicSimpleServerStream* stream) {
@@ -69,6 +148,24 @@ class QuicSimpleServerStreamPeer : public QuicSimpleServerStream {
   static SpdyHeaderBlock& headers(QuicSimpleServerStream* stream) {
     return stream->request_headers_;
   }
+
+  QuicProxyBackendUrlRequest* proxy_url_request_handler() const override {
+    if (mock_proxy_context_ != nullptr) {
+      if (mock_proxy_context_->Initialized()) {
+        return mock_backend_request_handler_;
+      }
+    }
+    return nullptr;
+  }
+
+  void set_backend_url_request_handler(
+      StrictMock<MockQuicProxyBackendUrlRequest>* handler) {
+    mock_backend_request_handler_ = handler;
+  }
+
+ protected:
+  NiceMock<MockQuicHttpResponseProxy>* mock_proxy_context_;
+  StrictMock<MockQuicProxyBackendUrlRequest>* mock_backend_request_handler_;
 };
 
 namespace {
@@ -83,14 +180,16 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
       MockQuicCryptoServerStreamHelper* helper,
       QuicCryptoServerConfig* crypto_config,
       QuicCompressedCertsCache* compressed_certs_cache,
-      QuicHttpResponseCache* response_cache)
+      QuicHttpResponseCache* response_cache,
+      QuicHttpResponseProxy* context)
       : QuicSimpleServerSession(DefaultQuicConfig(),
                                 connection,
                                 owner,
                                 helper,
                                 crypto_config,
                                 compressed_certs_cache,
-                                response_cache) {
+                                response_cache,
+                                context) {
     set_max_open_incoming_streams(kMaxStreamsForTest);
     set_max_open_outgoing_streams(kMaxStreamsForTest);
     ON_CALL(*this, WritevData(_, _, _, _, _, _))
@@ -185,7 +284,10 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<QuicVersion> {
                  &session_helper_,
                  crypto_config_.get(),
                  &compressed_certs_cache_,
-                 &response_cache_),
+                 &response_cache_,
+                 &context_),
+        quic_backend_request_handler_(&context_),
+        quic_response_(new StrictMock<MockBackendResponse>()),
         body_("hello world") {
     header_list_.OnHeaderBlockStart();
     header_list_.OnHeader(":authority", "www.google.com");
@@ -206,6 +308,16 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<QuicVersion> {
         &session_, &response_cache_);
     // Register stream_ in dynamic_stream_map_ and pass ownership to session_.
     session_.ActivateStream(QuicWrapUnique(stream_));
+
+    // Stream to test the reverse proxy
+    stream_proxy_ = new QuicSimpleServerStreamPeer(
+        QuicSpdySessionPeer::GetNthClientInitiatedStreamId(session_, 1),
+        &session_, &response_cache_, &context_);
+    stream_proxy_->set_backend_url_request_handler(
+        &quic_backend_request_handler_);
+    // Register stream_proxy_ in dynamic_stream_map_ and pass ownership to
+    // session_.
+    session_.ActivateStream(QuicWrapUnique(stream_proxy_));
   }
 
   const string& StreamBody() {
@@ -227,6 +339,10 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<QuicVersion> {
   QuicHttpResponseCache response_cache_;
   StrictMock<MockQuicSimpleServerSession> session_;
   QuicSimpleServerStreamPeer* stream_;  // Owned by session_.
+  NiceMock<MockQuicHttpResponseProxy> context_;
+  StrictMock<MockQuicProxyBackendUrlRequest> quic_backend_request_handler_;
+  QuicSimpleServerStreamPeer* stream_proxy_;  // Owned by session_.
+  StrictMock<MockBackendResponse>* quic_response_;
   string headers_string_;
   string body_;
   QuicHeaderList header_list_;
@@ -412,6 +528,58 @@ TEST_P(QuicSimpleServerStreamTest, SendResponseWithValidHeaders) {
   QuicSimpleServerStreamPeer::SendResponse(stream_);
   EXPECT_FALSE(QuicStreamPeer::read_side_closed(stream_));
   EXPECT_TRUE(stream_->write_side_closed());
+}
+
+// The proxy tests do not send test against a mock http server
+// The tests against a mock server are contained in the proxy test files
+TEST_P(QuicSimpleServerStreamTest, SendResponseToProxy) {
+  // Tests that SendResponse() calls the quic proxy back url handler
+  // to fetch response from a backend server, instead of cache
+  SpdyHeaderBlock* request_headers = stream_proxy_->mutable_headers();
+  (*request_headers)[":path"] = "/bar";
+  (*request_headers)[":authority"] = "www.google.com";
+  (*request_headers)[":version"] = "HTTP/1.1";
+  (*request_headers)[":method"] = "GET";
+  stream_proxy_->set_fin_received(true);
+
+  InSequence s;
+  EXPECT_CALL(quic_backend_request_handler_, SendRequestToBackendMock(_, _))
+      .Times(1)
+      .WillOnce(Return(true));
+  EXPECT_CALL(session_, WriteHeadersMock(stream_proxy_->id(), _, false, _, _))
+      .Times(0);
+  EXPECT_CALL(session_, WritevData(_, _, _, _, _, _)).Times(0);
+  QuicSimpleServerStreamPeer::SendResponse(stream_proxy_);
+  EXPECT_FALSE(QuicStreamPeer::read_side_closed(stream_proxy_));
+  // Write should not be closed yet
+  EXPECT_FALSE(stream_proxy_->write_side_closed());
+}
+
+TEST_P(QuicSimpleServerStreamTest, GetResponseFromProxy) {
+  // Tests that GetResponseFromProxy() writes the response from the backend
+  // correctly
+  stream_proxy_->set_fin_received(true);
+  quic_response_->set_response_status(
+      QuicProxyBackendUrlRequest::SUCCESSFUL_RESPONSE);
+  quic_response_->set_response_code(200);
+  response_headers_[":version"] = "HTTP/1.1";
+  response_headers_[":status"] = "200";
+  response_headers_["content-length"] = "5";
+  QuicStringPiece body("Hello");
+  quic_response_->set_test_headers(&response_headers_);
+  quic_response_->set_body(body);
+
+  quic_backend_request_handler_.SetResponse(quic_response_);
+
+  InSequence s;
+  EXPECT_CALL(session_, WriteHeadersMock(stream_proxy_->id(), _, false, _, _));
+  EXPECT_CALL(session_, WritevData(_, _, _, _, _, _))
+      .Times(1)
+      .WillOnce(Return(QuicConsumedData(body.length(), true)));
+
+  QuicSimpleServerStreamPeer::OnResponseBackendComplete(stream_proxy_);
+  EXPECT_FALSE(QuicStreamPeer::read_side_closed(stream_proxy_));
+  EXPECT_TRUE(stream_proxy_->write_side_closed());
 }
 
 TEST_P(QuicSimpleServerStreamTest, SendReponseWithPushResources) {

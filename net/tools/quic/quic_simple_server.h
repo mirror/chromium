@@ -21,6 +21,7 @@
 #include "net/quic/core/quic_version_manager.h"
 #include "net/quic/platform/impl/quic_chromium_clock.h"
 #include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_http_response_proxy.h"
 
 namespace net {
 
@@ -41,6 +42,14 @@ class QuicSimpleServer {
       const QuicCryptoServerConfig::ConfigOptions& crypto_config_options,
       const QuicVersionVector& supported_versions,
       QuicHttpResponseCache* response_cache);
+
+  QuicSimpleServer(
+      std::unique_ptr<ProofSource> proof_source,
+      const QuicConfig& config,
+      const QuicCryptoServerConfig::ConfigOptions& crypto_config_options,
+      const QuicVersionVector& supported_versions,
+      QuicHttpResponseCache* response_cache,
+      QuicHttpResponseProxy* quic_proxy_context);
 
   virtual ~QuicSimpleServer();
 
@@ -115,6 +124,7 @@ class QuicSimpleServer {
   NetLog net_log_;
 
   QuicHttpResponseCache* response_cache_;
+  QuicHttpResponseProxy* quic_proxy_context_;
 
   base::WeakPtrFactory<QuicSimpleServer> weak_factory_;
 

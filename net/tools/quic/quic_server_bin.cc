@@ -17,10 +17,16 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_http_response_proxy.h"
 #include "net/tools/quic/quic_server.h"
 
 // The port the quic server will listen on.
 int32_t FLAGS_port = 6121;
+// Mode of operations: Quic reverse proxy (proxy) or cached response (cache)
+std::string FLAGS_quic_mode = "cache";
+// URL with http/https, IP address or host name and the port number of the
+// backend server
+std::string FLAGS_quic_proxy_backend_url;
 
 std::unique_ptr<net::ProofSource> CreateProofSource(
     const base::FilePath& cert_path,
@@ -44,23 +50,53 @@ int main(int argc, char* argv[]) {
 
   if (line->HasSwitch("h") || line->HasSwitch("help")) {
     const char* help_str =
-        "Usage: quic_server [options]\n"
+        "Usage: epoll_quic_server [options]\n"
         "\n"
         "Options:\n"
-        "-h, --help                  show this help message and exit\n"
-        "--port=<port>               specify the port to listen on\n"
-        "--quic_response_cache_dir  directory containing response data\n"
-        "                            to load\n"
-        "--certificate_file=<file>   path to the certificate chain\n"
-        "--key_file=<file>           path to the pkcs8 private key\n";
+        "-h, --help                  Show this help message and exit\n"
+        "--port=<port>               Specify the port to listen on\n"
+        "--mode=<cache|proxy>        Default: cache\n"
+        "                           Specify mode of operation: Proxy will "
+        "serve response from\n"
+        "                            a backend server and Cache will serve it "
+        "from a cache dir\n"
+        "--quic_response_cache_dir=<directory>\n"
+        "                            The directory containing cached response "
+        "data to load\n"
+        "--quic_proxy_backend_url=<http/https>://<hostname_ip>:<port_number>\n"
+        "                            The URL for the single backend server "
+        "hostname\n"
+        "                            For example, \"http://xyz.com:80\"\n"
+        "--certificate_file=<file>   The path to the certificate chain\n"
+        "--key_file=<file>           The path to the pkcs8 private key\n";
     std::cout << help_str;
     exit(0);
   }
 
+  // Serve from local cache or function as a reverse proxy
   net::QuicHttpResponseCache response_cache;
-  if (line->HasSwitch("quic_response_cache_dir")) {
-    response_cache.InitializeFromDirectory(
-        line->GetSwitchValueASCII("quic_response_cache_dir"));
+  net::QuicHttpResponseProxy quic_proxy_context;
+  if (line->HasSwitch("mode")) {
+    FLAGS_quic_mode = line->GetSwitchValueASCII("mode");
+  }
+  if (FLAGS_quic_mode.compare("cache") == 0) {
+    if (line->HasSwitch("quic_response_cache_dir")) {
+      response_cache.InitializeFromDirectory(
+          line->GetSwitchValueASCII("quic_response_cache_dir"));
+    }
+  } else if (FLAGS_quic_mode.compare("proxy") == 0) {
+    if (line->HasSwitch("quic_proxy_backend_url")) {
+      FLAGS_quic_proxy_backend_url =
+          line->GetSwitchValueASCII("quic_proxy_backend_url");
+      if (quic_proxy_context.Initialize(FLAGS_quic_proxy_backend_url) != true) {
+        LOG(ERROR) << "--quic_proxy_backend_url "
+                   << FLAGS_quic_proxy_backend_url << " is not valid !";
+        return 1;
+      }
+    }
+  } else {
+    LOG(ERROR) << "unknown --mode. cache or proxy are valid modes of operation";
+    return 1;
   }
 
   if (line->HasSwitch("port")) {
@@ -85,7 +121,7 @@ int main(int argc, char* argv[]) {
       CreateProofSource(line->GetSwitchValuePath("certificate_file"),
                         line->GetSwitchValuePath("key_file")),
       config, net::QuicCryptoServerConfig::ConfigOptions(),
-      net::AllSupportedVersions(), &response_cache);
+      net::AllSupportedVersions(), &response_cache, &quic_proxy_context);
 
   int rc = server.CreateUDPSocketAndListen(
       net::QuicSocketAddress(net::QuicIpAddress::Any6(), FLAGS_port));
@@ -94,6 +130,6 @@ int main(int argc, char* argv[]) {
   }
 
   while (1) {
-    server.WaitForEvents();
+    server.Start();
   }
 }

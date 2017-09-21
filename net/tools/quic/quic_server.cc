@@ -53,11 +53,17 @@ const size_t kNumSessionsToCreatePerSocketEvent = 16;
 
 QuicServer::QuicServer(std::unique_ptr<ProofSource> proof_source,
                        QuicHttpResponseCache* response_cache)
+    : QuicServer(std::move(proof_source), response_cache, nullptr) {}
+
+QuicServer::QuicServer(std::unique_ptr<ProofSource> proof_source,
+                       QuicHttpResponseCache* response_cache,
+                       QuicHttpResponseProxy* quic_proxy_context)
     : QuicServer(std::move(proof_source),
                  QuicConfig(),
                  QuicCryptoServerConfig::ConfigOptions(),
                  AllSupportedVersions(),
-                 response_cache) {}
+                 response_cache,
+                 quic_proxy_context) {}
 
 QuicServer::QuicServer(
     std::unique_ptr<ProofSource> proof_source,
@@ -65,6 +71,20 @@ QuicServer::QuicServer(
     const QuicCryptoServerConfig::ConfigOptions& crypto_config_options,
     const QuicVersionVector& supported_versions,
     QuicHttpResponseCache* response_cache)
+    : QuicServer(std::move(proof_source),
+                 config,
+                 crypto_config_options,
+                 supported_versions,
+                 response_cache,
+                 nullptr) {}
+
+QuicServer::QuicServer(
+    std::unique_ptr<ProofSource> proof_source,
+    const QuicConfig& config,
+    const QuicCryptoServerConfig::ConfigOptions& crypto_config_options,
+    const QuicVersionVector& supported_versions,
+    QuicHttpResponseCache* response_cache,
+    QuicHttpResponseProxy* quic_proxy_context)
     : port_(0),
       fd_(-1),
       packets_dropped_(0),
@@ -77,7 +97,9 @@ QuicServer::QuicServer(
       crypto_config_options_(crypto_config_options),
       version_manager_(supported_versions),
       packet_reader_(new QuicPacketReader()),
-      response_cache_(response_cache) {
+      response_cache_(response_cache),
+      quic_proxy_context_(quic_proxy_context),
+      weak_factory_(this) {
   Initialize();
 }
 
@@ -86,6 +108,7 @@ void QuicServer::Initialize() {
   // sensible value for a server: 1 MB for session, 64 KB for each stream.
   const uint32_t kInitialSessionFlowControlWindow = 1 * 1024 * 1024;  // 1 MB
   const uint32_t kInitialStreamFlowControlWindow = 64 * 1024;         // 64 KB
+
   if (config_.GetInitialStreamFlowControlWindowToSend() ==
       kMinimumFlowControlSendWindow) {
     config_.SetInitialStreamFlowControlWindowToSend(
@@ -156,11 +179,22 @@ QuicDispatcher* QuicServer::CreateQuicDispatcher() {
           new QuicSimpleCryptoServerStreamHelper(QuicRandom::GetInstance())),
       std::unique_ptr<QuicEpollAlarmFactory>(
           new QuicEpollAlarmFactory(&epoll_server_)),
-      response_cache_);
+      response_cache_, quic_proxy_context_);
 }
 
 void QuicServer::WaitForEvents() {
   epoll_server_.WaitForEventsAndExecuteCallbacks();
+}
+
+void QuicServer::Start() {
+  Run();
+  base::RunLoop().Run();
+}
+
+void QuicServer::Run() {
+  WaitForEvents();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&QuicServer::Run, weak_factory_.GetWeakPtr()));
 }
 
 void QuicServer::Shutdown() {

@@ -16,7 +16,6 @@
 using std::string;
 
 namespace net {
-
 QuicSimpleServerSession::QuicSimpleServerSession(
     const QuicConfig& config,
     QuicConnection* connection,
@@ -25,6 +24,24 @@ QuicSimpleServerSession::QuicSimpleServerSession(
     const QuicCryptoServerConfig* crypto_config,
     QuicCompressedCertsCache* compressed_certs_cache,
     QuicHttpResponseCache* response_cache)
+    : QuicSimpleServerSession(config,
+                              connection,
+                              visitor,
+                              helper,
+                              crypto_config,
+                              compressed_certs_cache,
+                              response_cache,
+                              nullptr) {}
+
+QuicSimpleServerSession::QuicSimpleServerSession(
+    const QuicConfig& config,
+    QuicConnection* connection,
+    QuicSession::Visitor* visitor,
+    QuicCryptoServerStream::Helper* helper,
+    const QuicCryptoServerConfig* crypto_config,
+    QuicCompressedCertsCache* compressed_certs_cache,
+    QuicHttpResponseCache* response_cache,
+    QuicHttpResponseProxy* quic_proxy_context)
     : QuicServerSessionBase(config,
                             connection,
                             visitor,
@@ -32,7 +49,8 @@ QuicSimpleServerSession::QuicSimpleServerSession(
                             crypto_config,
                             compressed_certs_cache),
       highest_promised_stream_id_(0),
-      response_cache_(response_cache) {}
+      response_cache_(response_cache),
+      quic_proxy_context_(quic_proxy_context) {}
 
 QuicSimpleServerSession::~QuicSimpleServerSession() {
   delete connection();
@@ -95,8 +113,8 @@ QuicSpdyStream* QuicSimpleServerSession::CreateIncomingDynamicStream(
     return nullptr;
   }
 
-  QuicSpdyStream* stream =
-      new QuicSimpleServerStream(id, this, response_cache_);
+  QuicSpdyStream* stream = new QuicSimpleServerStream(id, this, response_cache_,
+                                                      quic_proxy_context_);
   ActivateStream(QuicWrapUnique(stream));
   return stream;
 }
@@ -108,7 +126,7 @@ QuicSimpleServerStream* QuicSimpleServerSession::CreateOutgoingDynamicStream(
   }
 
   QuicSimpleServerStream* stream = new QuicSimpleServerStream(
-      GetNextOutgoingStreamId(), this, response_cache_);
+      GetNextOutgoingStreamId(), this, response_cache_, quic_proxy_context_);
   stream->SetPriority(priority);
   ActivateStream(QuicWrapUnique(stream));
   return stream;

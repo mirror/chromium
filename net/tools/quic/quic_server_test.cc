@@ -54,7 +54,8 @@ class TestQuicServer : public QuicServer {
  public:
   TestQuicServer()
       : QuicServer(crypto_test_utils::ProofSourceForTesting(),
-                   &response_cache_) {}
+                   &response_cache_,
+                   &response_proxy_) {}
 
   ~TestQuicServer() override {}
 
@@ -77,6 +78,7 @@ class TestQuicServer : public QuicServer {
 
   MockQuicSimpleDispatcher* mock_dispatcher_ = nullptr;
   QuicHttpResponseCache response_cache_;
+  QuicHttpResponseProxy response_proxy_;
 };
 
 class QuicServerEpollInTest : public QuicTest {
