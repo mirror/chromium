@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c56cc4b4_108e2ab7",
+        "filename": "chrome/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:13:47Z",
+      "side": 1,
+      "message": "Maybe mimic the DevToolsSession::AddHandler pattern?",
+      "revId": "01d98e5194ba45c860c263cda98bae15317ab88c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
