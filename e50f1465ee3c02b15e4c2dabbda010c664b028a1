@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15941d28_9a2fbde1",
+        "filename": "chrome/browser/ui/views/tabs/tab_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T21:32:37Z",
+      "side": 0,
+      "message": "I believe this code handles the case of:\n. initial window maximized with multiple tabs.\n. drag one tab to a position that snaps.\n. release mouse.\nResulting window should be snapped, not maximized.\nWhat happens after this change?",
+      "range": {
+        "startLine": 1481,
+        "startChar": 10,
+        "endLine": 1481,
+        "endChar": 39
+      },
+      "revId": "e50f1465ee3c02b15e4c2dabbda010c664b028a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
