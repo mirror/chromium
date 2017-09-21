@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9543f229_262e63d2",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T23:26:36Z",
+      "side": 1,
+      "message": "Yes, I have an ExtensionRegistrar::Delegate in a follow-up CL I\u0027ll upload. It does (1) to allow an ExtensionService spin-off implement the Post* actions whenever the * happens.\n\nI did look into observing ExtensionRegistrar, and I think we actually could move in that direction, but there are subtle timing issues we would have to investigate first and verify existing behavior doesn\u0027t depend on. So I agree here that there should be a single embedder-provided delegate that runs the relevant code at the same time ExtensionService runs it today -- it\u0027d really suck to introduce different behavior during this move.",
+      "parentUuid": "d38d1394_77fcd997",
+      "revId": "27fb4d2fda18f5c5571c8988503d6f11355b2e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37fad276_c22f0304",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T15:14:50Z",
       "side": 1,
       "message": "NotifyExtensionLoaded seems like a weird place to ActivateExtension().  It seems like this should happen as part of the loading process, rather than as part of the notification process.",
+      "revId": "27fb4d2fda18f5c5571c8988503d6f11355b2e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc83a28_ee721ec9",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T23:26:36Z",
+      "side": 1,
+      "message": "NotifyExtensionLoaded has always been a crappy name IMO. What it does today is notify about the fact that the extension has been *enabled* and finish setting up dependencies to use the now-enabled extension. (As further evidence that \"Load\" is not being used consistently here, NotifyExtensionLoaded doesn\u0027t even run when an extension is successfully loaded but not enabled.) But you had comments on my previous patch splitting the non-notifying stuff out so I kept the name here...",
+      "parentUuid": "37fad276_c22f0304",
       "revId": "27fb4d2fda18f5c5571c8988503d6f11355b2e28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

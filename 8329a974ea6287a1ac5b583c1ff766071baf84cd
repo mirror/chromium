@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "849e8f9c_a1cae3dd",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T23:26:36Z",
+      "side": 1,
+      "message": "\u003e \u003e LoadExtension is incredibly confusing -- we use it to mean:\n\u003e Yes, LoadExtension is overloaded.  I think ActivateExtension (or similar) makes sense for the second case, because we\u0027re basically saying \"make this extension alive\".\n\u003e \n\u003e \u003e The registry uses \"load\" in the first sense, so let\u0027s not call the 2nd sense \"loading\" as well.\n\u003e \n\u003e Which registry?  ExtensionRegistry uses \"loaded\" in the second sense, not the first - it triggers OnLoaded/OnUnloaded when the extension is added/removed from the enabled set, corresponding to when it\u0027s \"active\".\n\nAh, you\u0027re right, it conflates \"loaded\" with \"enabled\". And I guess that makes sense from the perspective of the browser. But from the extension system\u0027s perspective loading and enabling are two different things. \n\n\u003e \n\u003e \u003e We could use EnableExtension/DisableExtension, but these functions do more work than just adding the extension to ExtensionRegistry\u0027s enabled/disabled lists. There are also cases where we deactivate an extension without disabling it at all (terminated extensions), right? So re-using these terms seems more confusing than helpful.\n\u003e \n\u003e I\u0027m not sure I agree.  I think that we can reuse the same terminology as the registry and make activation/deactivation an internal detail of the registrar.  For instance,\n\u003e \n\u003e // Adds extension to the enabled set and activates it.\n\u003e EnableExtension()\n\u003e // Adds extension to the disabled set and deactivates it.\n\u003e DisableExtension()\n\u003e // Adds extension to the terminated set and deactivates it.\n\u003e TerminateExtension()\n\u003e // Deactivates the extension and removes it from all sets.\n\u003e RemoveExtension()\n\u003e \n\u003e This way, we match terminology, and I think it\u0027s reasonably clear what each does.  Additionally, it ensures that we don\u0027t have enabled extensions that are deactivated, disabled extensions that are activated, etc.\n\nI\u0027m OK with this.\n\n\u003e \n\u003e I agree that there are cases when we deactivate an extension without disabling it, as you said, but IMO that\u0027s a reason *not* to expose the method as \"deactivate\" :)",
+      "parentUuid": "f504230b_91f734b4",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e0b7a6_bddbff24",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 3
