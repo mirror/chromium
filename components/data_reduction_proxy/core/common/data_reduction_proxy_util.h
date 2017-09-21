@@ -87,6 +87,10 @@ bool ApplyProxyConfigToProxyInfo(const net::ProxyConfig& proxy_config,
                                  const GURL& url,
                                  net::ProxyInfo* data_reduction_proxy_info);
 
+// Calculates the original content length (OCL) of the |request|, from the OFCL
+// value in the Chrome-Proxy header.
+int64_t CalculateOCLFromOFCL(const net::URLRequest& request);
+
 // Calculates the effective original content length of the |request|, accounting
 // for partial responses if necessary.
 int64_t CalculateEffectiveOCL(const net::URLRequest& request);
