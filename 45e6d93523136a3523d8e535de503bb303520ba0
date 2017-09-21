@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64a82c3_122acd9f",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T19:33:13Z",
+      "side": 1,
+      "message": "I tried applying only the tests from this CL and running it locally. This and the checks below failed. Does your CL intentionally change the behavior w.r.t. CopyDirectory() and symlinks? Shouldn\u0027t this be expected to not exist, like the FIFO below?",
+      "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
