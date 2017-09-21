@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ce5807d_b2fda2a8",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-21T23:54:48Z",
+      "side": 1,
+      "message": "Hmm, what\u0027s the reason to just increment a local count, as opposed to recording the histogram immediately?",
+      "range": {
+        "startLine": 111,
+        "startChar": 54,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "fdc1c11866f712ef339fe130c6a9d343e014307b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
