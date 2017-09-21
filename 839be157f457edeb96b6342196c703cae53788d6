@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8cbbd4cb_e78d9bb2",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T17:38:07Z",
+      "side": 1,
+      "message": "Can you remove settings_animated_pages related changes from this CL? I prefer to land them separately from the DirectionDelegate cleanup CL.",
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5acdc8a4_2981f42c",
         "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
         "patchSetId": 4
@@ -19,6 +36,23 @@
         "endLine": 92,
         "endChar": 58
       },
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502dc709_78588c1a",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T17:38:07Z",
+      "side": 1,
+      "message": "I am not keen on this approach for the following reasons:\n - textAlign and textReverseAlign semantics are not clear in this context. They only make sense if someone looks in settings_animated_pages and how these are used.\n - we are passing redundant information just to avoid a trivial line of JS.\n\nCan we stick to using the already existing \u0027textdirection\u0027 and leave inference based on that boolean to the UI side?",
       "revId": "839be157f457edeb96b6342196c703cae53788d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
