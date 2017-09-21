@@ -16,6 +16,24 @@
       "revId": "12a34593321cf37e8da93e45f88fe9517d92a2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfc9fba_cbe0a365",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/path_finder.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-21T00:49:07Z",
+      "side": 1,
+      "message": "It looks smarter.  Done.",
+      "parentUuid": "21d9b1d5_8a50f1bb",
+      "revId": "12a34593321cf37e8da93e45f88fe9517d92a2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
