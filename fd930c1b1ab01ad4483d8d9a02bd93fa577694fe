@@ -22,6 +22,30 @@
       "revId": "fd930c1b1ab01ad4483d8d9a02bd93fa577694fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0286b3_28951b26",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-21T05:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e05af3_e5158593",
+      "range": {
+        "startLine": 52,
+        "startChar": 46,
+        "endLine": 52,
+        "endChar": 59
+      },
+      "revId": "fd930c1b1ab01ad4483d8d9a02bd93fa577694fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
