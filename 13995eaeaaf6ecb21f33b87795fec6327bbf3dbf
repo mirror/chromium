@@ -22,6 +22,30 @@
       "revId": "13995eaeaaf6ecb21f33b87795fec6327bbf3dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e21da40_c6255fdb",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T22:02:37Z",
+      "side": 1,
+      "message": "Done. Also moved |test_with_answer_card_| to local.",
+      "parentUuid": "4f336ddd_9f99b6e6",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 28
+      },
+      "revId": "13995eaeaaf6ecb21f33b87795fec6327bbf3dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
