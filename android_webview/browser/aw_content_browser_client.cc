@@ -36,6 +36,7 @@
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
 #include "components/cdm/browser/cdm_message_filter_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
@@ -78,6 +79,7 @@
 
 using content::BrowserThread;
 using content::ResourceType;
+using content::WebContents;
 
 namespace android_webview {
 namespace {
@@ -602,6 +604,29 @@ AwContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
   }
 
   return safe_browsing_url_checker_delegate_.get();
+}
+
+bool AwContentBrowserClient::ShouldOverrideUrlLoading(int frame_tree_node_id,
+                                                      const GURL& gurl,
+                                                      bool has_user_gesture,
+                                                      bool is_redirect,
+                                                      bool is_main_frame) {
+  WebContents* web_contents =
+      WebContents::FromFrameTreeNodeId(frame_tree_node_id);
+  if (web_contents == nullptr)
+    return false;
+  AwContentsClientBridge* client_bridge =
+      AwContentsClientBridge::FromWebContents(web_contents);
+  if (client_bridge == nullptr)
+    return false;
+
+  LOG(WARNING) << "SELIM AwContentBrowserClient::ShouldOverrideUrlLoading "
+               << gurl.spec() << " " << has_user_gesture << " " << is_redirect
+               << " " << is_main_frame;
+  base::string16 url = base::UTF8ToUTF16(gurl.possibly_invalid_spec());
+  return client_bridge->ShouldOverrideUrlLoading(url, has_user_gesture,
+                                                 is_redirect, is_main_frame);
+  ;
 }
 
 }  // namespace android_webview
