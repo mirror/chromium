@@ -16,6 +16,24 @@
       "revId": "3fc7f38fbf427d8da398d7856bfff58c97db3d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32707fe_64434c41",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-21T22:38:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "24e61f1f_5b99fb1f",
+      "revId": "3fc7f38fbf427d8da398d7856bfff58c97db3d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
