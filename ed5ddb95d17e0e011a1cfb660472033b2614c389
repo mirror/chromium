@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93943cf_2785aa60",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-21T13:07:46Z",
+      "side": 1,
+      "message": "What is this diff?\nIs this intentional?",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78c4b57_163c6dd9",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-21T13:07:46Z",
+      "side": 1,
+      "message": "We have a new style of copyright, and should use it.\n\n----\nCopyright 2017 The Chromium Authors. All rights reserved.\nUse of this source code is governed by a BSD-style license that can be\nfound in the LICENSE file.\n----",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19df3211_91f42ef4",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-21T13:07:46Z",
+      "side": 1,
+      "message": "I\u0027d like to have a case of non-readonly attribute, which should cause an error.",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
