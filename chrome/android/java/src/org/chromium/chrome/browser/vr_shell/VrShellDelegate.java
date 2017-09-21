@@ -573,9 +573,11 @@ public class VrShellDelegate
         for (int i = 1; i < modes.length; ++i) {
             if (modes[i].getPhysicalWidth() > vr_mode.getPhysicalWidth()) vr_mode = modes[i];
         }
+
         // If we're currently in the mode supported by VR the density won't change.
         // We actually can't use display.getMode() to get the current mode as that just always
-        // returns the same mode ignoring the override.
+        // returns the same mode ignoring the override, so we just check that our current display
+        // size is not equal to the vr mode size.
         DisplayMetrics metrics = new DisplayMetrics();
         display.getRealMetrics(metrics);
         if (vr_mode.getPhysicalWidth() != metrics.widthPixels
