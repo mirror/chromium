@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "base/barrier_closure.h"
+#include "base/logging.h"
 #include "components/multidevice/service/public/interfaces/constants.mojom.h"
 #include "components/multidevice/service/public/interfaces/device_sync.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -43,8 +44,8 @@ class MultiDeviceServiceTest : public service_manager::test::ServiceTest {
       on_callback_invoked_->Run();
     }
 
-    void OnDevicesSynced(bool success) override {
-      if (success) {
+    void OnDevicesSynced(bool success, bool device_list_changed) override {
+      if (success && device_list_changed) {
         num_times_device_synced_.success_count++;
       } else {
         num_times_device_synced_.failure_count++;
