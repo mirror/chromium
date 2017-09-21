@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651a2ff9_356451fd",
+        "filename": "components/history/core/browser/typed_url_sync_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Why is this call here?",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 26
+      },
+      "revId": "5fa10798a7010bf0ada88888f4f11315123c2d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08111d98_aff4f57f",
+        "filename": "components/history/core/browser/typed_url_sync_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Why is this call here?",
+      "revId": "5fa10798a7010bf0ada88888f4f11315123c2d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

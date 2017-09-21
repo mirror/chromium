@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900a519b_b1696ad4",
+        "filename": "components/sync/driver/model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 0,
+      "message": "Seeing this kind of makes me wonder, are we currently doing abstraction correctly? Maybe we should be subclassing differently? Maybe we should compose this class with a mechanism that facilitates thread hops?",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "43f6451668312441a0d9909454e1a4002962e394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

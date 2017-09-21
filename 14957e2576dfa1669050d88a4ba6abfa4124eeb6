@@ -1,0 +1,335 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eff1413_c78b1a5a",
+        "filename": "components/browser_sync/profile_sync_components_factory_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "I don\u0027t get it, why do none of the other USS controllers have to take an error_callback, but this one does?",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58371955_e7af0b30",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Can this be a base::OnceClosure instead?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0fbc2e_158b91d8",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a const std::sting\u0026?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bc620b_3ca6c3f8",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "syncer::? Also, why is this implementation public while the ModelTypeController is private? Just seems odd.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accc94af_fdf670a2",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "But, we\u0027re not dumping stack traces... Right?",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2570303c_1bde87a1",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "This already exists in the ModelTypeController.",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855eeb4f_2ab11590",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Will be deleted below? Where?",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdfcc7c_81128df2",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "...This is a really old closed bug. In bridge code? What? Isn\u0027t this thing like \u003c 1 year old?",
+      "range": {
+        "startLine": 144,
+        "startChar": 68,
+        "endLine": 144,
+        "endChar": 71
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c404112_37d3468c",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "... I have no idea what this function does. Too confusing to follow.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503710f7_be2c4c3b",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "I\u0027m unable to follow what this method is doing. Tried and failed. I cannot figure out why you\u0027ve moved this loop, can you explain your thought process to me?",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee89501_056e4bc0",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d remove this newline.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55a25f2_3fa2dc16",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "The indentation seems off here. Also, I\u0027d personally put the comments above the if, but up to you.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b511e1d_c05ebf5e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Again, indentation.",
+      "range": {
+        "startLine": 370,
+        "startChar": 12,
+        "endLine": 370,
+        "endChar": 13
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16509744_c6164029",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Again, indentation.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a437bfee_da880dc2",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Period at the end of sentence.",
+      "range": {
+        "startLine": 930,
+        "startChar": 46,
+        "endLine": 930,
+        "endChar": 47
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d419571_6c79d180",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "Should we DCHECK that this bool is false when we enter? We wouldn\u0027t want this function to be re-entered.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44668b7_6af8b28f",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-21T00:25:59Z",
+      "side": 1,
+      "message": "nit: I would use \"sync\", not \"syncer\". Not sure what would syncer mean here.\n\nAlso, can you add a test that covers the logic here?",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
