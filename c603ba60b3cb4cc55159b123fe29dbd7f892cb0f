@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64133b0a_ee58390d",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-21T20:40:58Z",
+      "side": 1,
+      "message": "Can we add DCHECKS to all of these functions to verify they\u0027re called from the thread we expect them to be called from? Would make this all much easier to follow.",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a0e127_e3ad9490",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-21T20:40:58Z",
+      "side": 1,
+      "message": "Browser is quite a confusing and overloaded term. We should come up with something clearer I think. Feel free to do in a followup.",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36d502f_331da03a",
+        "filename": "chrome/browser/vr/ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-21T20:40:58Z",
+      "side": 1,
+      "message": "GlUiInterface to be clearer? Feel free to do in a followup.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
