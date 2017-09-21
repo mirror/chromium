@@ -461,6 +461,7 @@ component("skia") {
     ":skia_config",
     ":skia_library_config",
     "//build/config/compiler:no_chromium_code",
+    "//build/config/compiler:setjmp",
   ]
   public_configs = [ ":skia_config" ]
 

@@ -176,6 +176,9 @@ config("compiler") {
   # smaller.
   if (is_win) {
     configs += [ "//build/config/win:compiler" ]
+    if (guard_cf_always) {
+      configs += [ ":setjmp" ]
+    }
   } else if (is_android) {
     configs += [ "//build/config/android:compiler" ]
   } else if (is_linux) {
@@ -1348,7 +1351,29 @@ config("no_chromium_code") {
     ]
   }
 
-  configs = [ ":default_warnings" ]
+  configs = [
+    ":default_warnings",
+    #":setjmp",
+  ]
+}
+
+# setjmp ----------------------------------------------------------------------
+#
+# Allows enabling/disabling setjmp, necessary because setjmp requires /guard:cf
+# in order to avoid having longjmp crash when building with VS 2017. See
+# crbug.com/766236 for details.
+
+config("setjmp") {
+  if (!is_clang) {
+    if (is_win && (guard_cf_sometimes || guard_cf_always)) {
+      cflags = [ "/guard:cf" ]
+    }
+  }
+
+  # This define indicates that setjmp is allowed and it is enforced through a
+  # modified setjmp.h. This must be defined outside of the conditional so that
+  # code compiled with clang can call setjmp.
+  defines = [ "SET_JMP_ALLOWED" ]
 }
 
 # rtti ------------------------------------------------------------------------

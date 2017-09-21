@@ -1493,6 +1493,7 @@ jumbo_component("platform") {
     ":blink_platform_implementation",
     "//third_party/WebKit/Source:non_test_config",
   ]
+  configs += [ "//build/config/compiler:setjmp" ]
 
   include_dirs = []
 

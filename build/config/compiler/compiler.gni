@@ -64,6 +64,12 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Testing of compiling always with /guard:cf
+  guard_cf_always = false
+
+  # Testing of on-demand compiling with /guard:cf
+  guard_cf_sometimes = false
 }
 
 # Determine whether to enable or disable frame pointers, based on the platform

@@ -435,6 +435,7 @@ if (current_toolchain == host_toolchain) {
     defines = [ "WEBP_HAVE_PNG" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     if (set_opt_level) {
       configs -= [ "//build/config/compiler:default_optimization" ]
       configs += [ "//build/config/compiler:optimize_max" ]

@@ -128,6 +128,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (!is_win) {
       cflags = [ "-mmmx" ]
@@ -143,6 +144,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (!is_win || is_clang) {
       cflags = [ "-msse2" ]
@@ -158,6 +160,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (!is_win || is_clang) {
       cflags = [ "-mssse3" ]
@@ -173,6 +176,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (!is_win || is_clang) {
       cflags = [ "-msse4.1" ]
@@ -188,6 +192,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (is_win) {
       cflags = [ "/arch:AVX" ]
@@ -205,6 +210,7 @@ if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
     configs += [ ":libvpx_config" ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (is_win) {
       cflags = [ "/arch:AVX2" ]
@@ -223,6 +229,7 @@ if (cpu_arch_full == "arm-neon-cpu-detect") {
   static_library("libvpx_intrinsics_neon") {
     configs -= [ "//build/config/compiler:compiler_arm_fpu" ]
     configs += [ ":libvpx_config" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     cflags = [ "-mfpu=neon" ]
     sources = libvpx_srcs_arm_neon_cpu_detect_neon
@@ -271,6 +278,7 @@ if (current_cpu == "arm" && arm_assembly_sources != []) {
     sources = get_target_outputs(":convert_arm_assembly")
     configs -= [ "//build/config/compiler:compiler_arm_fpu" ]
     configs += [ ":libvpx_config" ]
+    configs += [ "//build/config/compiler:setjmp" ]
     configs += [ ":libvpx_warnings" ]
     if (cpu_arch_full == "arm-neon" || cpu_arch_full == "arm-neon-cpu-detect") {
       asmflags = [ "-mfpu=neon" ]
@@ -319,6 +327,7 @@ static_library("libvpx") {
   configs += [ ":libvpx_config" ]
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [ "//build/config/compiler:no_chromium_code" ]
+  configs += [ "//build/config/compiler:setjmp" ]
   configs += [ ":libvpx_warnings" ]
   deps = []
   if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {

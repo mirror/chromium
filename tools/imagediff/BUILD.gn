@@ -14,6 +14,7 @@ if (current_toolchain == host_toolchain) {
     ]
 
     configs += [ "//build/config/compiler:wexit_time_destructors" ]
+    configs += [ "//build/config/compiler:setjmp" ]
 
     deps = [
       "//base",
