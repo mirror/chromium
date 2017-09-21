@@ -45,10 +45,10 @@ class ExtensionActivityDataService final
 };
 
 // Calculates the value to use for the ping days parameter.
-int CalculatePingDays(const base::Time& last_ping_day) {
+int CalculatePingDays(const base::TimeTicks& last_ping_day) {
   return last_ping_day.is_null()
              ? update_client::kDaysFirstTime
-             : std::max((base::Time::Now() - last_ping_day).InDays(), 0);
+             : std::max((base::TimeTicks::Now() - last_ping_day).InDays(), 0);
 }
 
 ExtensionActivityDataService::ExtensionActivityDataService(

@@ -659,8 +659,9 @@ void ExtensionDownloader::HandleManifestResults(
   // that value for any extensions which had sent a ping in the request.
   if (fetch_data->base_url().DomainIs(kGoogleDotCom) &&
       results->daystart_elapsed_seconds >= 0) {
-    Time day_start =
-        Time::Now() - TimeDelta::FromSeconds(results->daystart_elapsed_seconds);
+    base::TimeTicks day_start =
+        base::TimeTicks::Now() -
+        TimeDelta::FromSeconds(results->daystart_elapsed_seconds);
 
     const std::set<std::string>& extension_ids = fetch_data->extension_ids();
     std::set<std::string>::const_iterator i;

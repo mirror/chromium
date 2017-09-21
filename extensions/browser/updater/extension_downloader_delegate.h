@@ -53,7 +53,7 @@ class ExtensionDownloaderDelegate {
 
     // The start of day, from the server's perspective. This is only valid
     // when |did_ping| is true.
-    base::Time day_start;
+    base::TimeTicks day_start;
   };
 
   // A callback that is called to indicate if ExtensionDownloader should ignore

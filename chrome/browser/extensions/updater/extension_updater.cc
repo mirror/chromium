@@ -74,21 +74,21 @@ int SanitizeDays(int days) {
 }
 
 // Calculates the value to use for the ping days parameter.
-int CalculatePingDays(const Time& last_ping_day) {
+int CalculatePingDays(const base::TimeTicks& last_ping_day) {
   int days = extensions::ManifestFetchData::kNeverPinged;
   if (!last_ping_day.is_null()) {
-    days = SanitizeDays((Time::Now() - last_ping_day).InDays());
+    days = SanitizeDays((base::TimeTicks::Now() - last_ping_day).InDays());
   }
   return days;
 }
 
-int CalculateActivePingDays(const Time& last_active_ping_day,
+int CalculateActivePingDays(const base::TimeTicks& last_active_ping_day,
                             bool hasActiveBit) {
   if (!hasActiveBit)
     return 0;
   if (last_active_ping_day.is_null())
     return extensions::ManifestFetchData::kNeverPinged;
-  return SanitizeDays((Time::Now() - last_active_ping_day).InDays());
+  return SanitizeDays((base::TimeTicks::Now() - last_active_ping_day).InDays());
 }
 
 }  // namespace

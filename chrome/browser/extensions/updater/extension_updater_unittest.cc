@@ -84,7 +84,6 @@
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #endif
 
-using base::Time;
 using base::TimeDelta;
 using content::BrowserThread;
 using update_client::UpdateQueryParams;
@@ -1697,13 +1696,13 @@ class ExtensionUpdaterTest : public testing::Test {
 
     ExtensionPrefs* prefs = service.extension_prefs();
     const std::string& id = tmp[0]->id();
-    Time now = Time::Now();
+    base::TimeTicks now = base::TimeTicks::Now();
     if (rollcall_ping_days == 0) {
       prefs->SetLastPingDay(id, now - TimeDelta::FromSeconds(15));
     } else if (rollcall_ping_days > 0) {
-      Time last_ping_day = now -
-                           TimeDelta::FromDays(rollcall_ping_days) -
-                           TimeDelta::FromSeconds(15);
+      base::TimeTicks last_ping_day = now -
+                                      TimeDelta::FromDays(rollcall_ping_days) -
+                                      TimeDelta::FromSeconds(15);
       prefs->SetLastPingDay(id, last_ping_day);
     }
 
@@ -1711,9 +1710,9 @@ class ExtensionUpdaterTest : public testing::Test {
     if (active_ping_days == 0) {
       prefs->SetLastActivePingDay(id, now - TimeDelta::FromSeconds(15));
     } else if (active_ping_days > 0) {
-      Time last_active_ping_day = now -
-                                  TimeDelta::FromDays(active_ping_days) -
-                                  TimeDelta::FromSeconds(15);
+      base::TimeTicks last_active_ping_day =
+          now - TimeDelta::FromDays(active_ping_days) -
+          TimeDelta::FromSeconds(15);
       prefs->SetLastActivePingDay(id, last_active_ping_day);
     }
     if (active_bit)
@@ -1847,10 +1846,10 @@ class ExtensionUpdaterTest : public testing::Test {
     results.daystart_elapsed_seconds = 750;
 
     updater.downloader_->HandleManifestResults(fetch_data.get(), &results);
-    Time last_ping_day =
+    base::TimeTicks last_ping_day =
         service.extension_prefs()->LastPingDay(extension->id());
     EXPECT_FALSE(last_ping_day.is_null());
-    int64_t seconds_diff = (Time::Now() - last_ping_day).InSeconds();
+    int64_t seconds_diff = (base::TimeTicks::Now() - last_ping_day).InSeconds();
     EXPECT_LT(seconds_diff - results.daystart_elapsed_seconds, 5);
   }
 

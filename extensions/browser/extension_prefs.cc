@@ -861,52 +861,54 @@ bool ReadInt64(const base::DictionaryValue* dictionary,
 // Serializes |time| as a string value mapped to |key| in |dictionary|.
 void SaveTime(prefs::DictionaryValueUpdate* dictionary,
               const char* key,
-              const base::Time& time) {
+              const base::TimeTicks& time) {
   SaveInt64(dictionary, key, time.ToInternalValue());
 }
 
 // The opposite of SaveTime. If |key| is not found, this returns an empty Time
 // (is_null() will return true).
-base::Time ReadTime(const base::DictionaryValue* dictionary, const char* key) {
+base::TimeTicks ReadTime(const base::DictionaryValue* dictionary,
+                         const char* key) {
   int64_t value;
   if (ReadInt64(dictionary, key, &value))
-    return base::Time::FromInternalValue(value);
+    return base::TimeTicks::FromInternalValue(value);
 
-  return base::Time();
+  return base::TimeTicks();
 }
 
 }  // namespace
 
-base::Time ExtensionPrefs::LastPingDay(const std::string& extension_id) const {
+base::TimeTicks ExtensionPrefs::LastPingDay(
+    const std::string& extension_id) const {
   DCHECK(crx_file::id_util::IdIsValid(extension_id));
   return ReadTime(GetExtensionPref(extension_id), kLastPingDay);
 }
 
 void ExtensionPrefs::SetLastPingDay(const std::string& extension_id,
-                                    const base::Time& time) {
+                                    const base::TimeTicks& time) {
   DCHECK(crx_file::id_util::IdIsValid(extension_id));
   ScopedExtensionPrefUpdate update(prefs_, extension_id);
   SaveTime(update.Get().get(), kLastPingDay, time);
 }
 
-base::Time ExtensionPrefs::BlacklistLastPingDay() const {
+base::TimeTicks ExtensionPrefs::BlacklistLastPingDay() const {
   return ReadTime(prefs_->GetDictionary(kExtensionsBlacklistUpdate),
                   kLastPingDay);
 }
 
-void ExtensionPrefs::SetBlacklistLastPingDay(const base::Time& time) {
+void ExtensionPrefs::SetBlacklistLastPingDay(const base::TimeTicks& time) {
   prefs::ScopedDictionaryPrefUpdate update(prefs_, kExtensionsBlacklistUpdate);
   SaveTime(update.Get().get(), kLastPingDay, time);
 }
 
-base::Time ExtensionPrefs::LastActivePingDay(
+base::TimeTicks ExtensionPrefs::LastActivePingDay(
     const std::string& extension_id) const {
   DCHECK(crx_file::id_util::IdIsValid(extension_id));
   return ReadTime(GetExtensionPref(extension_id), kLastActivePingDay);
 }
 
 void ExtensionPrefs::SetLastActivePingDay(const std::string& extension_id,
-                                          const base::Time& time) {
+                                          const base::TimeTicks& time) {
   DCHECK(crx_file::id_util::IdIsValid(extension_id));
   ScopedExtensionPrefUpdate update(prefs_, extension_id);
   SaveTime(update.Get().get(), kLastActivePingDay, time);
@@ -1499,23 +1501,23 @@ bool ExtensionPrefs::DoNotSync(const std::string& extension_id) const {
   return do_not_sync;
 }
 
-base::Time ExtensionPrefs::GetLastLaunchTime(
+base::TimeTicks ExtensionPrefs::GetLastLaunchTime(
     const std::string& extension_id) const {
   const base::DictionaryValue* extension = GetExtensionPref(extension_id);
   if (!extension)
-    return base::Time();
+    return base::TimeTicks();
 
   std::string launch_time_str;
   if (!extension->GetString(kPrefLastLaunchTime, &launch_time_str))
-    return base::Time();
+    return base::TimeTicks();
   int64_t launch_time_i64 = 0;
   if (!base::StringToInt64(launch_time_str, &launch_time_i64))
-    return base::Time();
-  return base::Time::FromInternalValue(launch_time_i64);
+    return base::TimeTicks();
+  return base::TimeTicks::FromInternalValue(launch_time_i64);
 }
 
 void ExtensionPrefs::SetLastLaunchTime(const std::string& extension_id,
-                                       const base::Time& time) {
+                                       const base::TimeTicks& time) {
   DCHECK(crx_file::id_util::IdIsValid(extension_id));
   ScopedExtensionPrefUpdate update(prefs_, extension_id);
   SaveTime(update.Get().get(), kPrefLastLaunchTime, time);

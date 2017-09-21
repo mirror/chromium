@@ -34,6 +34,7 @@
 #include "extensions/common/permissions/permissions_info.h"
 
 using base::Time;
+using base::TimeTicks;
 using base::TimeDelta;
 
 namespace extensions {
@@ -73,8 +74,8 @@ void ExtensionPrefsTest::TearDown() {
 class ExtensionPrefsLastPingDay : public ExtensionPrefsTest {
  public:
   ExtensionPrefsLastPingDay()
-      : extension_time_(Time::Now() - TimeDelta::FromHours(4)),
-        blacklist_time_(Time::Now() - TimeDelta::FromHours(2)) {}
+      : extension_time_(TimeTicks::Now() - TimeDelta::FromHours(4)),
+        blacklist_time_(TimeTicks::Now() - TimeDelta::FromHours(2)) {}
 
   void Initialize() override {
     extension_id_ = prefs_.AddExtensionAndReturnId("last_ping_day");
@@ -84,7 +85,7 @@ class ExtensionPrefsLastPingDay : public ExtensionPrefsTest {
   }
 
   void Verify() override {
-    Time result = prefs()->LastPingDay(extension_id_);
+    base::TimeTicks result = prefs()->LastPingDay(extension_id_);
     EXPECT_FALSE(result.is_null());
     EXPECT_TRUE(result == extension_time_);
     result = prefs()->BlacklistLastPingDay();
@@ -93,8 +94,8 @@ class ExtensionPrefsLastPingDay : public ExtensionPrefsTest {
   }
 
  private:
-  Time extension_time_;
-  Time blacklist_time_;
+  TimeTicks extension_time_;
+  TimeTicks blacklist_time_;
   std::string extension_id_;
 };
 TEST_F(ExtensionPrefsLastPingDay, LastPingDay) {}
@@ -894,8 +895,8 @@ class ExtensionPrefsClearLastLaunched : public ExtensionPrefsTest {
 
   void Verify() override {
     // Set last launched times for each extension.
-    prefs()->SetLastLaunchTime(extension_a_->id(), base::Time::Now());
-    prefs()->SetLastLaunchTime(extension_b_->id(), base::Time::Now());
+    prefs()->SetLastLaunchTime(extension_a_->id(), base::TimeTicks::Now());
+    prefs()->SetLastLaunchTime(extension_b_->id(), base::TimeTicks::Now());
 
     // Also set some other preference for one of the extensions.
     prefs()->SetAllowFileAccess(extension_a_->id(), true);
@@ -904,8 +905,8 @@ class ExtensionPrefsClearLastLaunched : public ExtensionPrefsTest {
     prefs()->ClearLastLaunchTimes();
 
     // All launch times should be gone.
-    EXPECT_EQ(base::Time(), prefs()->GetLastLaunchTime(extension_a_->id()));
-    EXPECT_EQ(base::Time(), prefs()->GetLastLaunchTime(extension_b_->id()));
+    EXPECT_TRUE(prefs()->GetLastLaunchTime(extension_a_->id()).is_null());
+    EXPECT_TRUE(prefs()->GetLastLaunchTime(extension_b_->id()).is_null());
 
     // Other preferences should be untouched.
     EXPECT_TRUE(prefs()->AllowFileAccess(extension_a_->id()));
