@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4e94898e_49e3edc7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "nit: maybe we can get away with shorter names. \"in the background\" might even be misleading, because the user sees this request. Staleness is something the provider doesn\u0027t care about (it\u0027s a concept of the scheduler). What I think is important is:\n-- we try to refresh -- no guarantee it succeeds\n-- the user is waiting for this.\nMaybe something like:\nTryRefreshSuggestionsForDisplay()\nor \nRefreshForDisplay()?",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97f9c100_63cf7b30",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6
@@ -41,6 +64,52 @@
         "startChar": 69,
         "endLine": 206,
         "endChar": 28
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482155b3_c3e28104",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "might be a lame question but why bother with milliseconds? Would we ever need a finer granularity than seconds? i\u0027d suggest seconds to keep things simpler and reduce the risk of ridiculously high or low timeouts.",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3339fedc_b8976c5c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "seems like we have the implict assumption that the status is \"available\".\nEither we enforce this, or we capture the old state to return to.",
+      "range": {
+        "startLine": 446,
+        "startChar": 37,
+        "endLine": 446,
+        "endChar": 0
       },
       "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -65,6 +134,40 @@
         "endLine": 451,
         "endChar": 49
       },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c409eb8d_a2a0bedf",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "please document why the weakptr factory is needed.\nAlso, please remove some implementation details from the comment. It\u0027s sufficient to say that we want to signal the loading status to the surfaces via the category status and we\u0027ll fall back to the available suggestions when the timeout hits.",
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f4d7e2_acddd306",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "let\u0027s simplify the comment. You already explained the exceptional case above. Let\u0027s drop that comment and move it into the lambda.\n-- rename timeout to timeout_deleter which should make clear that this is just cleaning up an unused callback.\n-- the comment about the successful case goes best at the corresponding if statement.",
       "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +220,29 @@
     },
     {
       "key": {
+        "uuid": "8bb5310f_f7362133",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "this is a bit confusing; given that the user sees the display, it could actually be considered interactive. maybe add a comment explaining the decision?",
+      "range": {
+        "startLine": 479,
+        "startChar": 43,
+        "endLine": 479,
+        "endChar": 48
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e57bbc2_293976df",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6
@@ -133,6 +259,29 @@
         "startChar": 36,
         "endLine": 528,
         "endChar": 42
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2decbee5_6272fb24",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "debug log? (same in line 618).",
+      "range": {
+        "startLine": 607,
+        "startChar": 64,
+        "endLine": 607,
+        "endChar": 0
       },
       "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -202,6 +351,29 @@
         "startChar": 35,
         "endLine": 146,
         "endChar": 37
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea7aa45_ae1d7e99",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "nit: why not hours? \nMaybe we can find a more intuitive name. When you configure the feature, I\u0027m not convinced that \"stale suggestions\" are intuitive. We should make sure that\u0027s the term everyone understands (maybe it is).",
+      "range": {
+        "startLine": 147,
+        "startChar": 5,
+        "endLine": 147,
+        "endChar": 42
       },
       "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -370,6 +542,29 @@
     },
     {
       "key": {
+        "uuid": "2669b826_60e88121",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "nit: Signal? Also, drop the comment in parenthesis -- its\u0027 not adding real value here.\n(ideally this comment wouldn\u0027t be needed as it should get clear from the helper function names. So drop it?).",
+      "range": {
+        "startLine": 776,
+        "startChar": 5,
+        "endLine": 776,
+        "endChar": 14
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ca10bb_59a7c846",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 6
@@ -386,6 +581,29 @@
         "startChar": 2,
         "endLine": 884,
         "endChar": 28
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5283ce83_c600dbe6",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-21T09:27:10Z",
+      "side": 1,
+      "message": "IMO this is breaking abstractions. Just say that you update the last successful fetch?\n(background fetches don\u0027t care about staleness).",
+      "range": {
+        "startLine": 884,
+        "startChar": 2,
+        "endLine": 884,
+        "endChar": 25
       },
       "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
