@@ -94,6 +94,30 @@
       "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58254531_2f624631",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-21T18:54:09Z",
+      "side": 0,
+      "message": "Opps, missed this one.",
+      "parentUuid": "34f73ab8_ebeaed03",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 47
+      },
+      "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "95355161_41850d4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-21T18:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6762388_1686cceb",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c964ef_d2e6b145",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
         "patchSetId": 2
