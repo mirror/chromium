@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7de85a6f_e08215f0",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T18:30:25Z",
+      "side": 1,
+      "message": "I think we should fake the screen instead, e.g. FakeOobeScreen extends chromeos::BaseScreen. Inside FakeOobeScreen you only need to keep track of the screen_id which is already done by BaseScreen.\n\nThen later on in your StartWizard(first_screen) call below, you can just create new FakeOobeScreen(first_screen).  No need to special case ArcTermsOfServiceScreen.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7f2f9dc_51b2c679",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -47,6 +70,52 @@
       "writtenOn": "2017-09-21T04:27:51Z",
       "side": 1,
       "message": "Nice comment :-).",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2daa5be_7de522af",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T18:30:25Z",
+      "side": 1,
+      "message": "why do we need to reset()? the next line should destruct the previous pointer it there is one.",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c04ab8_2909765b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T18:30:25Z",
+      "side": 1,
+      "message": "nit: s/Arc/ARC/",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 35
+      },
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +207,24 @@
       "writtenOn": "2017-09-21T04:27:51Z",
       "side": 1,
       "message": "Now, I don\u0027t think you need this copy. Instead, please consider to use\n\nWizardController(nullptr /* host */, nullptr /* oobe_ui */);\n\nin test code.",
+      "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c58fead_ad5ce6db",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-21T18:30:25Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "55610fd4_e8e9a2b6",
       "revId": "b33e8b21b853ad3a9dc44ff17149074ffbddb0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
