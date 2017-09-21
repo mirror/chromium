@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5bde190_c9231f10",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46345,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-21T19:02:27Z",
+      "side": 1,
+      "message": "I would suggest creating separate metrics for each protocol.  If you browse the existing Shill metrics, most of them are pretty detailed.\n\nAlso, does it make sense to break down individual features from (say) k and v, or is the protocol support all-or-nothing?  I was under the impression that some of these standards combined a couple of different features, and that implementations might support a subset of them.",
+      "revId": "2818c931769d1cb744335acf6d29efb11575b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
