@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "chromeos/dbus/system_clock_client.h"
 
 namespace policy {
 
@@ -52,7 +53,7 @@ ApplyOffHoursPolicyToProto(
 // policies in PrefValueMap and PolicyMap. The system will revert to the default
 // behavior for the removed policies. And behavior of policies is handled during
 // decoding process from proto to PolicyMap.
-class DeviceOffHoursController {
+class DeviceOffHoursController : public chromeos::SystemClockClient::Observer {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
@@ -66,6 +67,10 @@ class DeviceOffHoursController {
   void UpdateOffHoursPolicy(
       const enterprise_management::ChromeDeviceSettingsProto&
           device_settings_proto);
+
+  // system::SystemClockClient::Observer:
+  // Triggered when device time is changed.
+  void SystemClockUpdated() override;
 
  private:
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to
