@@ -80,6 +80,15 @@ public class Tile implements OfflinableSuggestion {
     }
 
     /**
+     * @return The source of this tile's name. Used for metrics tracking. Valid values are listed in
+     * {@code TileNameSource}.
+     */
+    @TileNameSource
+    public int getNameSource() {
+        return mSiteData.nameSource;
+    }
+
+    /**
      * @return The source of this tile. Used for metrics tracking. Valid values are listed in
      * {@code TileSource}.
      */
