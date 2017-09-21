@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "874aa434_3a2e06de",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T07:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a31d535_0f5e079b",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 331,
+        "endChar": 64
+      },
+      "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "890cf164_4fcad1bc",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase.html",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6646d557_f32e1e8a",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T07:20:58Z",
+      "side": 1,
+      "message": "I needed to include that because otherwise Polymer component were not inside shadow tags.\nFile manager uses similar approach: https://codesearch.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/elements_importer.js?type\u003dcs\u0026q\u003dui/file_manager/file_manager/foreground/js/elements_importer.js\u0026sq\u003dpackage:chromium\u0026l\u003d1\n\n\u0027Polymer_config.js\u0027 is used by Gallery as well.",
+      "parentUuid": "890cf164_4fcad1bc",
+      "range": {
+        "startLine": 4,
+        "startChar": 17,
+        "endLine": 4,
+        "endChar": 56
+      },
+      "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e1ffd914_edd942cc",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/manifest.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T07:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09097032_23946e3d",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 25
+      },
+      "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1154b68_e1f46bfe",
         "filename": "ui/file_manager/file_manager_resources.grd",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639112c5_edae3418",
+        "filename": "ui/file_manager/file_manager_resources.grd",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-09-21T07:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1154b68_e1f46bfe",
+      "range": {
+        "startLine": 189,
+        "startChar": 48,
+        "endLine": 189,
+        "endChar": 121
+      },
+      "revId": "742eb97762a828c3f787b6aad9df373eba32e418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
