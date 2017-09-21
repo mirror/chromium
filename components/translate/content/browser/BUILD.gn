@@ -17,6 +17,7 @@ static_library("browser") {
     "//components/translate/core/common",
   ]
   deps = [
+    "//components/language/content/util",
     "//content/public/browser",
     "//content/public/common",
     "//net",
