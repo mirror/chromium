@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c46c30_909e8163",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-21T03:36:18Z",
+      "side": 1,
+      "message": "I\u0027ll change this to get a better unit test if answer cards always have higher priority (bigger relevance value) than tile list and list results.\nPlease let me know if you think it\u0027s necessary.",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 5
+      },
+      "revId": "caa0cf3446ab45364ee99731419618daffadeb1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
