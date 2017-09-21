@@ -146,7 +146,8 @@ class CC_EXPORT ResourceProvider
   viz::ResourceId CreateResource(const gfx::Size& size,
                                  TextureHint hint,
                                  viz::ResourceFormat format,
-                                 const gfx::ColorSpace& color_space);
+                                 const gfx::ColorSpace& color_space,
+                                 bool local = false);
 
   // Creates a resource for a particular texture target (the distinction between
   // texture targets has no effect in software mode).
@@ -430,12 +431,14 @@ class CC_EXPORT ResourceProvider
              GLenum filter,
              TextureHint hint,
              ResourceType type,
-             viz::ResourceFormat format);
+             viz::ResourceFormat format,
+             bool local = false);
     Resource(uint8_t* pixels,
              viz::SharedBitmap* bitmap,
              const gfx::Size& size,
              Origin origin,
-             GLenum filter);
+             GLenum filter,
+             bool local = false);
     Resource(const viz::SharedBitmapId& bitmap_id,
              const gfx::Size& size,
              Origin origin,
@@ -477,6 +480,7 @@ class CC_EXPORT ResourceProvider
     bool read_lock_fences_enabled : 1;
     bool has_shared_bitmap_id : 1;
     bool is_overlay_candidate : 1;
+    bool local : 1;
 #if defined(OS_ANDROID)
     // Indicates whether this resource may not be overlayed on Android, since
     // it's not backed by a SurfaceView.  This may be set in combination with
@@ -555,6 +559,7 @@ class CC_EXPORT ResourceProvider
   };
   void DeleteResourceInternal(ResourceMap::iterator it, DeleteStyle style);
 
+  void CreateTexture(Resource* resource);
   void CreateMailbox(Resource* resource);
 
   bool ReadLockFenceHasPassed(const Resource* resource) {
@@ -617,11 +622,11 @@ class CC_EXPORT ResourceProvider
                                     ResourceType type,
                                     viz::ResourceFormat format,
                                     gfx::BufferUsage usage,
-                                    const gfx::ColorSpace& color_space);
+                                    const gfx::ColorSpace& color_space,
+                                    bool local = false);
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
-                                       const gfx::ColorSpace& color_space);
-
-  void CreateTexture(Resource* resource);
+                                       const gfx::ColorSpace& color_space,
+                                       bool local = false);
 
   bool IsGLContextLost() const;
 
