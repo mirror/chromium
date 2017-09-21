@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d182717_9b350a4e",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-21T00:27:27Z",
+      "side": 1,
+      "message": "might also be nice to have the delta between degrading and disconnected to see how much faster OnPathDegrading is than Android.\n\nOh, that\u0027s down below. I see",
+      "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79ff2a55_107ac8ad",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-21T00:27:27Z",
+      "side": 1,
+      "message": "I don\u0027t think there is any guarantee that this is Wifi so I\u0027d drop this from the name and replace it with Network",
+      "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd696b0_52ec7562",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-21T00:27:27Z",
+      "side": 1,
+      "message": "Should we perhaps only do thiss if the timestamp is empty? we could have several connections which are independently detecting that wifi isn\u0027t working and i *think* we probably care about the first.",
+      "revId": "56c3383ad6eb04481a74ba6d6c1721d656924782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
