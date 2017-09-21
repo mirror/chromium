@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0f0e00_164c57fb",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "nit: Clears -\u003e Clear",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af04527_3d8784c2",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "I\u0027m still curious why we can\u0027t always do url_loader_.reset(). Is checking |default_loader_used_| purely an optimization, or do we need to keep url_loader_ in order for MaybeStartLoader to call FollowRedirect? It\u0027d be ideal for the comment to capture the answer to that question.",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b499f1_276def58",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "super nit: the other functions set response_mode_ first, then the response mode specific fields.",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d599496_bf46baa1",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "optional: using \"auto\" with MakeUnique is consistent with the rest of the file",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea324585_b1f7f953",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "nit: probably should keep these field in the same order as the ResponseMode enum, so move these under line 388.",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a0d1cc_9dfc2082",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "nit: the redirect response -\u003e a redirect response",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ced96d9_a2c99344",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T13:40:26Z",
+      "side": 1,
+      "message": "thanks for the unit test!",
+      "revId": "95ef96ca1825a4b6f3279e0742e039d79f84abc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
