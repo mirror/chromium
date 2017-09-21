@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e4569f2_28fcf47c",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-21T19:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae40d5b_5382f92e",
+      "range": {
+        "startLine": 986,
+        "startChar": 18,
+        "endLine": 986,
+        "endChar": 19
+      },
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45a291e3_52cacced",
         "filename": "components/history/core/browser/url_database.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "68b37b99_907c2b05",
+        "filename": "components/history/core/browser/url_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-21T19:16:53Z",
+      "side": 1,
+      "message": "Two functions (GetKeywordSearchTermRows, GetMostRecentKeywordSearchTerms) take vector* as parameters. I think adding #include \u003cvector\u003e was suggested by git cl lint.",
+      "parentUuid": "45a291e3_52cacced",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f05041_6597fd84",
         "filename": "components/history/core/browser/url_row.h",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "4e5aefa7_35e25d31",
+        "filename": "components/history/core/browser/url_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-21T19:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f05041_6597fd84",
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9676e32_fa03f973",
         "filename": "components/history/core/browser/visit_database.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a099ba7d_9a249a4b",
+        "filename": "components/history/core/browser/visit_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-21T19:16:53Z",
+      "side": 1,
+      "message": "You are right, this function is only called once.",
+      "parentUuid": "d9676e32_fa03f973",
+      "revId": "3a1e3b507f8448f22e788a2dfa67710d5d2d3310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
