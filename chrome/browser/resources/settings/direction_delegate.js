@@ -22,8 +22,25 @@ cr.define('settings', function() {
     }
   }
 
+  // A singleton instance to be shared among any UI elements that need RTL/LTR
+  // information.
+  var instance = null;
+
+  function getDirectionDelegate() {
+    if (instance === null)
+      instance = new DirectionDelegateImpl();
+
+    return instance;
+  }
+
+  /** @param {!settings.DirectionDelegate} delegate */
+  function setDirectionDelegateForTesting(delegate) {
+    instance = delegate;
+  }
+
   return {
     DirectionDelegate: DirectionDelegate,
-    DirectionDelegateImpl: DirectionDelegateImpl,
+    getDirectionDelegate: getDirectionDelegate,
+    setDirectionDelegateForTesting: setDirectionDelegateForTesting,
   };
 });
