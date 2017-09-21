@@ -140,6 +140,30 @@
       "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e333e442_7b7fe0b9",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T14:39:37Z",
+      "side": 1,
+      "message": "After a more attentive study of the code, it seems that both the old change and the current CL are safe. This piece of code here in DeviceLocalAccountPolicyService::UpdateAccountList() seems to be only racing with the file operations from ResourceCache\u0027s owned by DeviceLocalAccountPolicyBroker\u0027s (via ComponentCloudPolicyService -\u003e ComponentCloudPolicyStore), and Ivan\u0027s change guarantees that all of those run on the same task runner.",
+      "parentUuid": "d898f22b_218da0f7",
+      "range": {
+        "startLine": 538,
+        "startChar": 66,
+        "endLine": 539,
+        "endChar": 35
+      },
+      "revId": "ee57cada055c3a28bec0b0ca768e6834e5c0c3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

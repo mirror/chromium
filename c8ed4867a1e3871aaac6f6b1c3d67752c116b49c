@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c169d2c_00fa8155",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T14:39:37Z",
+      "side": 1,
+      "message": "nit: Please document this new parameter in the constructor\u0027s comment.",
+      "range": {
+        "startLine": 70,
+        "startChar": 10,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "c8ed4867a1e3871aaac6f6b1c3d67752c116b49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
