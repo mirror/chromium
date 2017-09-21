@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b867788_0e1ce503",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-virtual-bool-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T20:28:17Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s confusing here since we have the two interfaces\ntogether.\n\nI changed this to accessibleNode throughout.",
+      "parentUuid": "c33ac20b_cba237e2",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "263787fd_c8ca35ea",
         "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
         "patchSetId": 2
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "05ec2c5f_66adde49",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T20:28:17Z",
+      "side": 1,
+      "message": "I think this is just temporary because this whole set of them\nwill migrate from static to non-static over a series of changes.",
+      "parentUuid": "7d1c18da_007b1fbf",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dba7499c_bdaf0ece",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 2
@@ -70,6 +112,24 @@
       "writtenOn": "2017-09-21T15:37:40Z",
       "side": 1,
       "message": "Can we put these classes in their own .cpp file(s) to avoid bloating AXObject even more?\n\nIn general, is AXObject.cpp going to become huge now? What\u0027s the long game on what will still exist in AXNodeObject? I\u0027m thinking we\u0027ll want to work to keep AXObject reasonably-sized. It\u0027s arguably too large already.",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508e2c9d_91601b84",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T20:28:17Z",
+      "side": 1,
+      "message": "Good idea, split into another file.\n\nYes, I think more stuff will end up in AXObject and we should\nfind things like this to split out.\n\nAll of the role maps look like great candidates to split out\ninto a different file too.",
+      "parentUuid": "dba7499c_bdaf0ece",
       "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
