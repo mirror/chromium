@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1361a69c_cc169b3a",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-21T17:47:34Z",
+      "side": 1,
+      "message": "Is there a bug that can be reference here?",
+      "revId": "4d06c9db758aab586ff7c868e3f64a93a458ed48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
