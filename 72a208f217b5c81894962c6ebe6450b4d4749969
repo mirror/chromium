@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124fde32_b444cd89",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:49:28Z",
+      "side": 1,
+      "message": "no (c) (see style guide).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40efdacf_2bf3950f",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:49:28Z",
+      "side": 1,
+      "message": "I would expect this to match the name of the file, e.g. WasmTrapHandler.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fae5bc_827af2f7",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:49:28Z",
+      "side": 1,
+      "message": "Wrap in ASSERT_NO_FATAL_FAILURE (see comment that follows for details).",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31e7a75_17f11c62",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:49:28Z",
+      "side": 1,
+      "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691e80b0_94126b6d",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T23:49:28Z",
+      "side": 1,
+      "message": "Are you sure you want to continue if one of the earlier assertions fails? Should you wrap each of these calls in ASSERT_NO_FATAL_FAILURE?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
