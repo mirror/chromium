@@ -44,11 +44,6 @@ typedef std::unique_ptr<
                          CERT_DestroyCertificatePoliciesExtension>>
     ScopedCERTCertificatePolicies;
 
-typedef std::unique_ptr<
-    CERTCertList,
-    crypto::NSSDestroyer<CERTCertList, CERT_DestroyCertList>>
-    ScopedCERTCertList;
-
 // ScopedCERTValOutParam manages destruction of values in the CERTValOutParam
 // array that cvout points to.  cvout must be initialized as passed to
 // CERT_PKIXVerifyCert, so that the array must be terminated with
