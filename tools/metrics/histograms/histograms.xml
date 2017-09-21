@@ -706,6 +706,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Android.CompressedResources.ExtractionBlockingTime" units="ms">
+  <owner>estevenson@chromium.org</owner>
+  <owner>agrieve@chromium.org</owner>
+  <summary>
+    The amount of time chrome spends blocked on resource extraction.
+  </summary>
+</histogram>
+
+<histogram name="Android.CompressedResources.ExtractionTime" units="ms">
+  <owner>estevenson@chromium.org</owner>
+  <owner>agrieve@chromium.org</owner>
+  <summary>The amount of time spent on resource extraction.</summary>
+</histogram>
+
 <histogram name="Android.CustomFeedback.Category"
     enum="AndroidFeedbackCategory">
   <owner>jwanda@chromium.org</owner>
