@@ -16,6 +16,24 @@
       "revId": "44766c85d4fc10e1847e7628091b1b3972e36155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3620582f_ef34492e",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-21T22:15:50Z",
+      "side": 1,
+      "message": "Sure :).",
+      "parentUuid": "3c699f5f_0661af2c",
+      "revId": "44766c85d4fc10e1847e7628091b1b3972e36155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
