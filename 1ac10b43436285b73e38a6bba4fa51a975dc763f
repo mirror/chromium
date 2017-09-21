@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "88aa5116_44c5503c",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-21T06:36:16Z",
+      "side": 1,
+      "message": "In case it\u0027s not clear:\n\nThere is logic in the LanguageModelFactory to either provide a valid model or nullptr depending on the value of kUseBaselineLanguageModel.",
+      "parentUuid": "7f38614f_5ea68416",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
