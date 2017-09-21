@@ -16,16 +16,19 @@
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_otr_state.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/app_menu_model.h"
 #include "chrome/browser/ui/views/extensions/browser_action_drag_data.h"
 #include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
+#include "components/feature_engagement/features.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -36,6 +39,11 @@
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/controls/menu/menu_listener.h"
 #include "ui/views/metrics.h"
+
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
+#endif
 
 namespace {
 
@@ -48,7 +56,9 @@ bool AppMenuButton::g_open_app_immediately_for_testing = false;
 
 AppMenuButton::AppMenuButton(ToolbarView* toolbar_view)
     : views::MenuButton(base::string16(), toolbar_view, false),
-      toolbar_view_(toolbar_view) {
+      toolbar_view_(toolbar_view),
+      incognito_window_promo_(nullptr),
+      incognito_window_promo_observer_(this) {
   SetInkDropMode(InkDropMode::ON);
   SetFocusPainter(nullptr);
 
@@ -230,15 +240,21 @@ void AppMenuButton::AnimateIconIfPossible() {
   new_icon_->Animate(views::AnimatedIconView::END);
 }
 
+// static
+void AppMenuButton::ShowPromoForLastActiveBrowser() {
+  BrowserView* browser = static_cast<BrowserView*>(
+      BrowserList::GetInstance()->GetLastActive()->window());
+  browser->toolbar()->app_menu_button()->ShowPromo();
+}
+
 void AppMenuButton::ShowPromo() {
   // Owned by its native widget. Will be destroyed when its widget is destroyed.
-  IncognitoWindowPromoBubbleView* incognito_window_promo =
-      IncognitoWindowPromoBubbleView::CreateOwned(this);
-  views::Widget* widget = incognito_window_promo->GetWidget();
+  incognito_window_promo_ = IncognitoWindowPromoBubbleView::CreateOwned(this);
+  views::Widget* widget = incognito_window_promo_->GetWidget();
   if (!incognito_window_promo_observer_.IsObserving(widget)) {
     incognito_window_promo_observer_.Add(widget);
     AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
-    AppMenuButton::SchedulePaint();
+    SchedulePaint();
   }
 }
 
@@ -308,6 +324,11 @@ int AppMenuButton::OnPerformDrop(const ui::DropTargetEvent& event) {
 }
 
 void AppMenuButton::OnWidgetDestroying(views::Widget* widget) {
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
+  feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
+      ->GetForProfile(toolbar_view_->browser()->profile())
+      ->OnPromoClosed();
+#endif
   if (incognito_window_promo_observer_.IsObserving(widget)) {
     incognito_window_promo_observer_.Remove(widget);
     AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
