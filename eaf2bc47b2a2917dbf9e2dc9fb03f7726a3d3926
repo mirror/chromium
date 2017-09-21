@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06f572b9_11589a88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Not necessarily, could be used for other things (e.g. declarations.)",
+      "parentUuid": "23bc30a1_1b0497e6",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58b45932_81c4b3f2",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 5
@@ -30,6 +48,23 @@
       "writtenOn": "2017-09-21T03:12:11Z",
       "side": 1,
       "message": "yup you call it prelude_buffer why not name it that?",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba73353_6332c99d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "change comment",
       "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "ff4313f6_5a47641b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "we need to release the prelude_buffer before calling ConsumeRuleList. This means that the prelude range will become invalid, so we can\u0027t use it on L755. Hence, we need to do the whitespace stripping before we release the buffer.",
+      "parentUuid": "a91e24e6_41a23412",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e336552_a33d38fc",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 5
@@ -70,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "cba17f0a_a5a2b610",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e336552_a33d38fc",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2f06fc_8df35a62",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 5
@@ -81,6 +152,92 @@
       "writtenOn": "2017-09-21T03:12:11Z",
       "side": 1,
       "message": "nit: remoe",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc6ae93_093dba2e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da2f06fc_8df35a62",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbebb4d1_1fb8e1d0",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserRangeBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Is this name ok?",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89efc5b9_404720d8",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserRangeBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "const. Also, this should be moved to CSSTokenizerBuffer.",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da381c8e_5f4aa9fa",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizerBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Is this name ok? I don\u0027t like it as much.",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b940b23_242f3e29",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizerBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-21T03:40:02Z",
+      "side": 1,
+      "message": "Should not expose this method, since it leaks the implementation detail of not destroying cleared elements.",
       "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
