@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7c1d58b6_f4cceb7c",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T16:30:51Z",
+      "side": 1,
+      "message": "My understanding from your comments about sessions is:\n\n  . There will be a DevToolsSession, which has-a:\n      - UberDispatcher\n      - map\u003cWebContents \u003d\u003e PageHandler\u003e\n  . ChromeDevToolsManagerDelegate has-a:\n      - map\u003csession_id \u003d\u003e DevToolsSession\u003e\n\nSo we will still need the lookup from WebContents, right?",
+      "parentUuid": "79e6f199_ab5ae1ad",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc236b6_8c60a54c",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 11
@@ -98,6 +116,24 @@
       "writtenOn": "2017-09-21T16:11:02Z",
       "side": 1,
       "message": "Will this forgive you zero contents?",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e515432_9b5e0e55",
+        "filename": "chrome/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T16:30:51Z",
+      "side": 1,
+      "message": "We DCHECK() in the ctor that |web_contents_| is non-null.",
+      "parentUuid": "2964b76f_68ceeeda",
       "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
