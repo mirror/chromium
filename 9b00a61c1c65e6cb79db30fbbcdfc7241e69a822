@@ -16,6 +16,24 @@
       "revId": "9b00a61c1c65e6cb79db30fbbcdfc7241e69a822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a571649_e6706155",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-21T11:24:24Z",
+      "side": 1,
+      "message": "Certainly, thanks!",
+      "parentUuid": "690fd060_3e140d11",
+      "revId": "9b00a61c1c65e6cb79db30fbbcdfc7241e69a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
