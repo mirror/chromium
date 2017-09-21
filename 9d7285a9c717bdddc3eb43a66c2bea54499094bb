@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70250122_84d940a9",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T02:20:43Z",
+      "side": 1,
+      "message": "nit: missing a semicolon at the end of this line.",
+      "revId": "9d7285a9c717bdddc3eb43a66c2bea54499094bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222c2adf_5a5da553",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T02:20:43Z",
+      "side": 1,
+      "message": "nit: space here",
+      "range": {
+        "startLine": 20,
+        "startChar": 52,
+        "endLine": 20,
+        "endChar": 54
+      },
+      "revId": "9d7285a9c717bdddc3eb43a66c2bea54499094bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddaeb137_8afd7d47",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T02:20:43Z",
+      "side": 1,
+      "message": "nit: indentation off (should be four spaces total)",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "9d7285a9c717bdddc3eb43a66c2bea54499094bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc26022_e0e4336e",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T02:20:43Z",
+      "side": 1,
+      "message": "nit:\nset({minutes: minutes});\n(spacing and no quotes around the \u0027minutes\u0027 key)",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "9d7285a9c717bdddc3eb43a66c2bea54499094bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
