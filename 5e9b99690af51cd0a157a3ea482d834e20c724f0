@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2d1ec93d_74b3e1ef",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T17:31:57Z",
+      "side": 1,
+      "message": "Should the UI decide what happens when clicking the app button or the browser?",
+      "parentUuid": "4623b706_43c8a53f",
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257e9e6a_784fc21b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -136,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "360c7bda_22f538ea",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T17:31:57Z",
+      "side": 1,
+      "message": "Or just UiHost?",
+      "parentUuid": "d0dcca55_506f183b",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1389ded_264f33bc",
         "filename": "chrome/browser/vr/browser_ui_interface.h",
         "patchSetId": 1
@@ -170,6 +212,24 @@
       "writtenOn": "2017-09-21T15:07:43Z",
       "side": 1,
       "message": "This was formerly UiInterface.  UiInterface is now a superset of this interface.",
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe683c17_af2b5a90",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T17:31:57Z",
+      "side": 1,
+      "message": "Or just Ui?",
+      "parentUuid": "e130dd2c_fd1d904f",
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -211,6 +271,30 @@
       "side": 1,
       "message": "In a previous chat with Michael, we elected to keep this around.  Are you suggesting we purge all the tab stuff here?",
       "parentUuid": "33e8a210_ce1bfe95",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18872a75_358cba4d",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T17:31:57Z",
+      "side": 1,
+      "message": "This function in particular is not used. That\u0027s why we can remove it. We can keep the other tab related functions (they will likely change when we add support for tabs again but we will see that then) but they are currently called by VrShell.",
+      "parentUuid": "caa5483d_f3019a77",
       "range": {
         "startLine": 54,
         "startChar": 15,
