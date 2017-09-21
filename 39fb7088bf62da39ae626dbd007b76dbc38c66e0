@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c783caed_afa08d59",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T01:36:36Z",
+      "side": 1,
+      "message": "Use Array.isArray() instead, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray",
+      "revId": "39fb7088bf62da39ae626dbd007b76dbc38c66e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1252782_3d02adff",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T01:36:36Z",
+      "side": 1,
+      "message": "This logic is a bit hard to read. Could we do something like follows ? I believe it is equivalent.\n\ninserted \u003d destination.reduce(soFar, d) {\n  return this.insertIntoStore_(d) || soFar;\n}, false);\n\nThis way we don\u0027t need to treat the array knowing that it has 1 or 2 elements, we just treat it as any array, and the logic seems simpler to understand.",
+      "revId": "39fb7088bf62da39ae626dbd007b76dbc38c66e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ff8109_061abcb1",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T01:36:36Z",
+      "side": 1,
+      "message": "@param is missing here. I am wondering how this is passing compilation.",
+      "revId": "39fb7088bf62da39ae626dbd007b76dbc38c66e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
