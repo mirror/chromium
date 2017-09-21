@@ -16,6 +16,24 @@
       "revId": "07cc4244cb17847ec833c2e59756e12b86a980aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bcb88c_2a9dadf5",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-21T07:39:07Z",
+      "side": 1,
+      "message": "Sure, but to focus on the removing State here, let me work on another CL.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/676689",
+      "parentUuid": "937c2db0_7dbfda77",
+      "revId": "07cc4244cb17847ec833c2e59756e12b86a980aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
