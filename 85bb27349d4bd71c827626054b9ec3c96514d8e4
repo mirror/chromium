@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5527f9f6_99da26d1",
+        "filename": "base/pickle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-21T18:08:51Z",
+      "side": 1,
+      "message": "This was the major change in this CL (pretty much everything else unconditionally returns true)\n\nI supposed I could change it to return a bool still... but it seemed nice to be consistent. There were a few callers that actually checked the return value... and a few that randomly didn\u0027t. I guess I could go either way on this one?",
+      "revId": "85bb27349d4bd71c827626054b9ec3c96514d8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
