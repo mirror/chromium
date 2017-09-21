@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4754f87_db145b1c",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T04:25:21Z",
+      "side": 1,
+      "message": "How about to use std::string rather than c string? Also how about to use scoped_ptr\u003cstd::string\u003e for password_cache_ not to forget to delete it? I think volume_archive_functions::GetPassphrase has used c string as it directly passes the value to the library which gets c string. But with the new CL, we hold the value for a while.",
+      "range": {
+        "startLine": 337,
+        "startChar": 10,
+        "endLine": 337,
+        "endChar": 20
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b58c0f_fa03f61d",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T04:25:21Z",
+      "side": 1,
+      "message": "What happens if user presses cancel in the passphrase dialog? Can this code handle the case?",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 45
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffd5af6_7c961211",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T04:25:21Z",
+      "side": 1,
+      "message": "?string as we are passing null.",
+      "range": {
+        "startLine": 238,
+        "startChar": 13,
+        "endLine": 238,
+        "endChar": 19
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3111dc02_05bb4b37",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/decompressor.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T04:25:21Z",
+      "side": 1,
+      "message": "saveState_ is a private method. Add a public method for this, and use it.",
+      "range": {
+        "startLine": 300,
+        "startChar": 21,
+        "endLine": 300,
+        "endChar": 31
+      },
+      "revId": "cfa993b39f2216ed4da3b2a68bdbfd9409873914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
