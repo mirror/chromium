@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df953ccc_f1021699",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T14:49:01Z",
+      "side": 1,
+      "message": "Take this by value (probably preferred, from an API point of view) or by rvalue-ref (exactly matches intended usage)",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 79
+      },
+      "revId": "13732e8b692d11bc57ac215f647da2da1412d30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecec1afe_6b18d015",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T14:49:01Z",
+      "side": 1,
+      "message": "std::move(predictions)\n\nRequires that predictions be taken by value or rvalue-ref... not const-ref",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "13732e8b692d11bc57ac215f647da2da1412d30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
