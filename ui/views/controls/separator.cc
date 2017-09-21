@@ -40,10 +40,6 @@ gfx::Size Separator::CalculatePreferredSize() const {
   return size;
 }
 
-void Separator::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_SPLITTER;
-}
-
 void Separator::OnPaint(gfx::Canvas* canvas) {
   SkColor color = overridden_color_
                       ? *overridden_color_
