@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "16a5b796_e97ee34e",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-21T22:17:23Z",
+      "side": 1,
+      "message": "We don\u0027t, but this is a potential security issue I was trying to patch out along with the TOC-TOU issue.",
+      "parentUuid": "7e6adb51_231f2f8b",
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "926b2b6c_5d7ae8c0",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 4
