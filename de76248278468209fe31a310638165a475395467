@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e919af2b_bf6b6607",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "One disadvantage I didn\u0027t think of before is that this won\u0027t participate in --enable-logging\u003d/path/to/file, but I think that\u0027s probably OK.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "439c1cb7_a0bb06d2",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "naming: SendASLLog",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab2fd3e_d6bcf4cf",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "Will this also log to stderr?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c1d25f_c1cee8cc",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "naming: DoLogging",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8158328b_9de6e05a",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "I was kind of envisioning just a slimmed-down version of base/logging.h, but this printf style works too.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7564e15b_189c22b1",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "Why does this need to be in the header?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b2fd69_9d5c5c8b",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "namespace should be sandbox::logging.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba23a64_c4ef8020",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "Rather than passing the LogLevel as an argument, since this is all within a namespace, why not:\n\nsandbox::logging::Error()\nsandbox::logging::Info()\netc",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00e708c_d09ccf31",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "L",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26658d8_d45a81f5",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T15:27:24Z",
+      "side": 1,
+      "message": "I think having a log function equivalent to PCHECK/PLOG would be handy.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
