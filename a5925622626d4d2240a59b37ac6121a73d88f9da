@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e9d379a_a784b4ec",
+        "filename": "content/browser/accessibility/dump_accessibility_tree_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T17:32:14Z",
+      "side": 1,
+      "message": "I just dug into this and I don\u0027t think we need to disable\nthese in tsan anymore.\n\nCould you try un-disabling all of those?\n\nBug 708759 was filed when we tried to enable AOM dynamically\nbefore each test. Soon after we changed it to set the\ncommand-line flag, which should solve the problem.",
+      "revId": "a5925622626d4d2240a59b37ac6121a73d88f9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525ddd31_af021f37",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T17:32:14Z",
+      "side": 1,
+      "message": "What if the target of the relationship is another AOM node with\nno backing Element? Shouldn\u0027t we handle that case?\n\nRight now AccessibleNode::NotifyAttributeChanged is\njust triggering AXObjectCacheImpl::HandleAttributeChanged,\nbut perhaps we should have a more general mechanism for this\nthat works even when there\u0027s no Element.",
+      "revId": "a5925622626d4d2240a59b37ac6121a73d88f9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
