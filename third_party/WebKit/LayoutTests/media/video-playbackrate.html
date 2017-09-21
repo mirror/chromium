@@ -23,6 +23,8 @@ async_test(function(t) {
     });
 
     video.onended = t.step_func_done(function() {
+        var initialRate = video.playbackRate;
+
         assert_equals(video.playbackRate, 1);
         assert_equals(video.defaultPlaybackRate, 2);
 
@@ -33,11 +35,13 @@ async_test(function(t) {
         video.defaultPlaybackRate = Number.MAX_VALUE;
         assert_equals(video.defaultPlaybackRate, Number.MAX_VALUE);
 
-        video.playbackRate = Number.MIN_VALUE;
-        assert_equals(video.playbackRate, Number.MIN_VALUE);
+        assert_throws('NOT_SUPPORTED_ERR', function() {
+            video.playbackRate = Number.MIN_VALUE;
+        });
 
-        video.playbackRate = Number.MAX_VALUE;
-        assert_equals(video.playbackRate, Number.MAX_VALUE);
+        assert_throws('NOT_SUPPORTED_ERR', function() {
+            video.playbackRate = Number.MAX_VALUE;
+        });
 
         // Test non-finite playback rates.
         assert_throws(new TypeError, function() { video.defaultPlaybackRate = -Infinity; });
