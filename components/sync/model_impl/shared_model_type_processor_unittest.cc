@@ -711,10 +711,10 @@ TEST_F(SharedModelTypeProcessorTest, CommitOnlySimple) {
   InitializeToReadyState();
 
   bridge()->WriteItem(kKey1, kValue1);
+  worker()->VerifyPendingCommits({kHash1});
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
-  worker()->VerifyPendingCommits({kHash1});
   worker()->AckOnePendingCommit();
   EXPECT_EQ(0U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
@@ -741,8 +741,8 @@ TEST_F(SharedModelTypeProcessorTest, CommitOnlyUnsyncedChanges) {
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
-  worker()->AckOnePendingCommit();
-  worker()->VerifyPendingCommits(std::vector<std::string>());
+  worker()->AckOnePendingCommit(0 /* version_offset */);
+  worker()->VerifyPendingCommits({});
   EXPECT_EQ(0U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
 }
