@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3108fdd7_ada8f129",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T21:40:32Z",
+      "side": 1,
+      "message": "Rather than this update testing/buildbot/filters/ash_unittests_mash.filter",
+      "range": {
+        "startLine": 1174,
+        "startChar": 6,
+        "endLine": 1174,
+        "endChar": 43
+      },
+      "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84034c18_ea60638d",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T21:40:32Z",
+      "side": 1,
+      "message": "I *knew* this code was going to cause problems.\n\nThe bug you referenced doesn\u0027t mention the tray being visible. Is it possible this code is getting enabled when it shouldn\u0027t?\n\nWhy do we need to special case this, but not menus?",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
