@@ -10,7 +10,7 @@
 
 namespace {
 // The CookieStoreIOSClient.
-net::CookieStoreIOSClient* g_client;
+static net::CookieStoreIOSClient* g_client;
 }  // namespace
 
 namespace net {
@@ -26,10 +26,6 @@ CookieStoreIOSClient* GetCookieStoreIOSClient() {
 CookieStoreIOSClient::CookieStoreIOSClient() {}
 
 CookieStoreIOSClient::~CookieStoreIOSClient() {}
-
-void CookieStoreIOSClient::WillChangeCookieStorage() const {}
-
-void CookieStoreIOSClient::DidChangeCookieStorage() const {}
 
 scoped_refptr<base::SequencedTaskRunner>
 CookieStoreIOSClient::GetTaskRunner() const {

@@ -9,6 +9,8 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/task_scheduler/post_task.h"
+#include "ios/net/cookies/cookie_store_ios_client.h"
 #include "net/cookies/cookie_monster.h"
 #include "net/cookies/cookie_store.h"
 #include "url/gurl.h"
@@ -64,6 +66,13 @@ class GetCookieCallback {
  private:
   bool did_run_;
   std::string cookie_line_;
+};
+
+class TestCookieStoreIOSClient : public CookieStoreIOSClient {
+ public:
+  TestCookieStoreIOSClient();
+  // CookieStoreIOSClient implementation.
+  scoped_refptr<base::SequencedTaskRunner> GetTaskRunner() const override;
 };
 
 void RecordCookieChanges(std::vector<net::CanonicalCookie>* out_cookies,

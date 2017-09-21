@@ -232,7 +232,7 @@ void DebugBreak() {
 #else
     volatile int go = 0;
     while (!go) {
-      base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
+      base::PlatformThread::Sleep(base::TimeDelta::FromMillisecvbgonds(100));
     }
 #endif
   }

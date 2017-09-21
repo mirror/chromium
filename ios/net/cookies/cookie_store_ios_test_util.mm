@@ -8,6 +8,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/test/test_simple_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #import "ios/net/cookies/cookie_store_ios.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
@@ -111,6 +113,19 @@ void GetCookieCallback::Run(const std::string& cookie_line) {
   ASSERT_FALSE(did_run_);
   did_run_ = true;
   cookie_line_ = cookie_line;
+}
+
+#pragma mark -
+#pragma mark TestCookieStoreIOSClient
+
+TestCookieStoreIOSClient::TestCookieStoreIOSClient() {}
+
+#pragma mark -
+#pragma mark TestCookieStoreIOSClient methods
+
+scoped_refptr<base::SequencedTaskRunner>
+TestCookieStoreIOSClient::GetTaskRunner() const {
+  return base::ThreadTaskRunnerHandle::Get();
 }
 
 //------------------------------------------------------------------------------
