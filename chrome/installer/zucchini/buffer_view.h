@@ -11,6 +11,7 @@
 #include <type_traits>
 
 #include "base/logging.h"
+#include "chrome/installer/zucchini/algorithm.h"
 
 namespace zucchini {
 
@@ -18,15 +19,21 @@ namespace zucchini {
 struct BufferRegion {
   // size_t is used to match BufferViewBase::size_type, which is used when
   // indexing in a buffer view.
-  size_t offset;
-  size_t size;
-
+  size_t lo() const { return offset; }
+  size_t hi() const { return offset + size; }
+  // Returns |v| clipped to the inclusive range |[lo(), hi()]|.
+  size_t InclusiveClamp(size_t v) const {
+    return zucchini::InclusiveClamp(v, lo(), hi());
+  }
   friend bool operator==(const BufferRegion& a, const BufferRegion& b) {
     return a.offset == b.offset && a.size == b.size;
   }
   friend bool operator!=(const BufferRegion& a, const BufferRegion& b) {
     return !(a == b);
   }
+
+  size_t offset;
+  size_t size;
 };
 
 namespace internal {
@@ -72,6 +79,11 @@ class BufferViewBase {
   const_iterator cbegin() const { return begin(); }
   const_iterator cend() const { return end(); }
 
+  // Capacity
+
+  bool empty() const { return first_ == last_; }
+  size_type size() const { return last_ - first_; }
+
   // Element access
 
   // Returns the raw value at specified location |pos|.
@@ -99,11 +111,6 @@ class BufferViewBase {
     CHECK_LE(pos + sizeof(U), size());
     *reinterpret_cast<U*>(begin() + pos) = value;
   }
-
-  // Capacity
-
-  bool empty() const { return first_ == last_; }
-  size_type size() const { return last_ - first_; }
 
   // Returns a BufferRegion describing the full view.
   BufferRegion region() const { return BufferRegion{0, size()}; }
