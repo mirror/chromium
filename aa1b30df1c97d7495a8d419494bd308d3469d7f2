@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4949383_fd6e5809",
+        "filename": "chrome/browser/lifetime/application_lifetime_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T00:15:19Z",
+      "side": 1,
+      "message": "nit: Can you update the DEPS file in this directory to reference this bug and/or say that the directory has been audited?",
+      "revId": "aa1b30df1c97d7495a8d419494bd308d3469d7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
