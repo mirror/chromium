@@ -297,6 +297,10 @@ public class MinidumpUploadService extends IntentService {
      */
     public static void tryUploadCrashDump(File minidumpFile) throws SecurityException {
         assert !shouldUseJobSchedulerForUploads();
+        tryUploadCrashDumpNow(minidumpFile);
+    }
+
+    static void tryUploadCrashDumpNow(File minidumpFile) throws SecurityException {
         CrashFileManager fileManager =
                 new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
         Intent intent =
