@@ -776,6 +776,7 @@ mojom("mojo_bindings") {
     "platform/address_space.mojom",
     "platform/content_security_policy.mojom",
     "platform/display_mode.mojom",
+    "platform/file_utilities.mojom",
     "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
     "platform/mime_registry.mojom",
