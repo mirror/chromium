@@ -2,6 +2,24 @@
   "comments": [
     {
       "key": {
+        "uuid": "076d1cd1_50d0d325",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-21T03:51:45Z",
+      "side": 1,
+      "message": "ping",
+      "parentUuid": "516c6cd5_d7daa2a0",
+      "revId": "32605ba335405a4c6d6cab30c19461051c66fe31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cbf7ddc_32d24788",
         "filename": "base/threading/thread_restrictions.cc",
         "patchSetId": 6
