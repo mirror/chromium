@@ -89,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "d6d13854_daa25950",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c99ea27b_c69752a3",
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "499f5af0_2f835398",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb84b1d0_7ec0efe7",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "436d4cde_3c0cf277",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -100,6 +142,30 @@
       "writtenOn": "2017-09-21T13:04:45Z",
       "side": 1,
       "message": "This comment needs thread safety information about this class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 75,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1a5fe7_2b63391d",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Done... maybe.",
+      "parentUuid": "436d4cde_3c0cf277",
       "range": {
         "startLine": 26,
         "startChar": 75,
@@ -373,6 +439,30 @@
     },
     {
       "key": {
+        "uuid": "2f011570_fdd1cc24",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Removed. I suppose that CL would be a better place to decide where the boundary is, anyway.",
+      "parentUuid": "9ce6e4c0_6a27fc6c",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 55
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9a7334_3da7b4f1",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
         "patchSetId": 14
@@ -396,6 +486,30 @@
     },
     {
       "key": {
+        "uuid": "4fd21f2c_8b4e94f9",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b9a7334_3da7b4f1",
+      "range": {
+        "startLine": 432,
+        "startChar": 14,
+        "endLine": 432,
+        "endChar": 29
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151187e9_21a0337d",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
         "patchSetId": 14
@@ -416,6 +530,30 @@
       "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e14eed_22b37d6c",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T18:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151187e9_21a0337d",
+      "range": {
+        "startLine": 472,
+        "startChar": 36,
+        "endLine": 472,
+        "endChar": 37
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
