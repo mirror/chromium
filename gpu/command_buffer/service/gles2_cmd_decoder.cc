@@ -20156,7 +20156,7 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
 
   SkCanvas* canvas = sk_surface_->getCanvas();
   SkMatrix original_ctm;
-  cc::PlaybackParams playback_params(nullptr, original_ctm);
+  cc::PlaybackParams playback_params(nullptr, nullptr, original_ctm);
 
   int op_idx = 0;
   while (size > 4) {

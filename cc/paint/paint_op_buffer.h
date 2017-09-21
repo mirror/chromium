@@ -15,6 +15,7 @@
 #include "base/memory/aligned_memory.h"
 #include "base/optional.h"
 #include "cc/base/math_util.h"
+#include "cc/paint/image_provider.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"
@@ -29,7 +30,6 @@
 
 namespace cc {
 class ImageDecodeCache;
-class ImageProvider;
 
 class CC_PAINT_EXPORT ThreadsafeMatrix : public SkMatrix {
  public:
@@ -87,9 +87,25 @@ enum class PaintOpType : uint8_t {
 
 CC_PAINT_EXPORT std::string PaintOpTypeToString(PaintOpType type);
 
+class CC_PAINT_EXPORT DecodedImageStash {
+ public:
+  DecodedImageStash();
+  ~DecodedImageStash();
+
+  void AddDecodedImage(ImageProvider::ScopedDecodedDrawImage decoded_image);
+
+ private:
+  std::vector<ImageProvider::ScopedDecodedDrawImage> decoded_images_;
+
+  DISALLOW_COPY_AND_ASSIGN(DecodedImageStash);
+};
+
 struct CC_PAINT_EXPORT PlaybackParams {
-  PlaybackParams(ImageProvider* image_provider, const SkMatrix& original_ctm);
+  PlaybackParams(ImageProvider* image_provider,
+                 DecodedImageStash* decoded_image_stash,
+                 const SkMatrix& original_ctm);
   ImageProvider* image_provider;
+  DecodedImageStash* decoded_image_stash;
   const SkMatrix original_ctm;
 };
 
@@ -195,14 +211,7 @@ class CC_PAINT_EXPORT PaintOpWithFlags : public PaintOp {
 
   int CountSlowPathsFromFlags() const { return flags.getPathEffect() ? 1 : 0; }
   bool HasNonAAPaint() const { return !flags.isAntiAlias(); }
-  bool HasDiscardableImagesFromFlags() const {
-    if (!IsDrawOp())
-      return false;
-
-    SkShader* shader = flags.getSkShader();
-    SkImage* image = shader ? shader->isAImage(nullptr, nullptr) : nullptr;
-    return image && image->isLazyGenerated();
-  }
+  bool HasDiscardableImagesFromFlags() const;
 
   void RasterWithFlags(SkCanvas* canvas,
                        const PaintFlags* flags,
@@ -762,6 +771,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   // Replays the paint op buffer into the canvas.
   void Playback(SkCanvas* canvas,
                 ImageProvider* image_provider = nullptr,
+                DecodedImageStash* decoded_image_stash = nullptr,
                 SkPicture::AbortCallback* callback = nullptr) const;
 
   // Returns the size of the paint op buffer. That is, the number of ops
@@ -981,12 +991,14 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   friend class DisplayItemList;
   friend class PaintOpBufferOffsetsTest;
   friend class SolidColorAnalyzer;
+  friend class ScopedImageFlags;
 
   // Replays the paint op buffer into the canvas. If |indices| is specified, it
   // contains indices in an increasing order and only the indices specified in
   // the vector will be replayed.
   void Playback(SkCanvas* canvas,
                 ImageProvider* image_provider,
+                DecodedImageStash* decoded_image_stash,
                 SkPicture::AbortCallback* callback,
                 const std::vector<size_t>* indices) const;
 

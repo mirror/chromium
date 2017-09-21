@@ -702,7 +702,7 @@ class PaintOpBufferOffsetsTest : public ::testing::Test {
   }
 
   void Playback(SkCanvas* canvas, const std::vector<size_t>& offsets) {
-    buffer_.Playback(canvas, nullptr, nullptr, &offsets);
+    buffer_.Playback(canvas, nullptr, nullptr, nullptr, &offsets);
   }
 
  protected:
