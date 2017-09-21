@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742018a6_2fba9181",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-21T18:24:33Z",
+      "side": 1,
+      "message": "nit: remove here and below.",
+      "range": {
+        "startLine": 402,
+        "startChar": 50,
+        "endLine": 402,
+        "endChar": 78
+      },
+      "revId": "e5c2c24238ebf6b3863c4ab1034822c8ca25b937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb99b99_993fbf3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-21T18:24:33Z",
+      "side": 1,
+      "message": "Is this ever false?",
+      "range": {
+        "startLine": 725,
+        "startChar": 12,
+        "endLine": 725,
+        "endChar": 42
+      },
+      "revId": "e5c2c24238ebf6b3863c4ab1034822c8ca25b937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7a3d2f_aa15a4fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-21T18:24:33Z",
+      "side": 1,
+      "message": "A possible alternative to doing this is overriding onMeasure to always include mToolbarShadow in the height. Can you give this a shot?",
+      "range": {
+        "startLine": 758,
+        "startChar": 20,
+        "endLine": 767,
+        "endChar": 21
+      },
+      "revId": "e5c2c24238ebf6b3863c4ab1034822c8ca25b937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
