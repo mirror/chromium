@@ -263,7 +263,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
     examples = self._AddStyledElement(parent, 'dl', ['dd dl'])
     if self.IsPolicySupportedOnPlatform(policy, 'win'):
       self._AddListExampleWindowsChromeOS(examples, policy, True)
-    if self.IsPolicySupportedOnPlatform(policy, 'chrome_os'):
+    if self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad'):
       self._AddListExampleWindowsChromeOS(examples, policy, False)
     if (self.IsPolicySupportedOnPlatform(policy, 'android') or
         self.IsPolicySupportedOnPlatform(policy, 'linux')):
@@ -375,7 +375,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
     examples = self._AddStyledElement(parent, 'dl', ['dd dl'])
     if self.IsPolicySupportedOnPlatform(policy, 'win'):
       self._AddDictionaryExampleWindowsChromeOS(examples, policy, True)
-    if self.IsPolicySupportedOnPlatform(policy, 'chrome_os'):
+    if self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad'):
       self._AddDictionaryExampleWindowsChromeOS(examples, policy, False)
     if (self.IsPolicySupportedOnPlatform(policy, 'android') or
         self.IsPolicySupportedOnPlatform(policy, 'linux')):
@@ -403,7 +403,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
     if policy_type == 'main':
       pieces = []
       if self.IsPolicySupportedOnPlatform(policy, 'win') or \
-         self.IsPolicySupportedOnPlatform(policy, 'chrome_os'):
+         self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad'):
         value = '0x00000001' if example_value else '0x00000000'
         pieces.append(value + ' (Windows)')
       if self.IsPolicySupportedOnPlatform(policy, 'linux'):
@@ -421,7 +421,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
     elif policy_type in ('int', 'int-enum'):
       pieces = []
       if self.IsPolicySupportedOnPlatform(policy, 'win') or \
-         self.IsPolicySupportedOnPlatform(policy, 'chrome_os'):
+         self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad'):
         pieces.append('0x%08x (Windows)' % example_value)
       if self.IsPolicySupportedOnPlatform(policy, 'linux'):
         pieces.append('%d (Linux)' % example_value)
@@ -513,7 +513,8 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
       if policy['type'] in ('dict', 'list'):
         is_complex_policy = True
     if ((self.IsPolicySupportedOnPlatform(policy, 'win') or
-         self.IsPolicySupportedOnPlatform(policy, 'chrome_os')) and
+        self.IsPolicySupportedOnPlatform( \
+            policy, 'chrome_os', management='ad')) and
         self._REG_TYPE_MAP.get(policy['type'], None)):
       qualified_types.append('Windows:%s' % self._REG_TYPE_MAP[policy['type']])
       if policy['type'] == 'dict':
@@ -533,7 +534,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
             'win_reg_loc',
             key_name + '\\' + policy['name'],
             ['.monospace'])
-      if self.IsPolicySupportedOnPlatform(policy, 'chrome_os'):
+      if self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad'):
         key_name = self._GetRegistryKeyName(policy, False)
         self._AddPolicyAttribute(
             dl,
@@ -547,13 +548,13 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
             'mac_linux_pref_name',
             policy['name'],
             ['.monospace'])
-      if self.IsPolicySupportedOnPlatform(policy, 'android', 'chrome'):
+      if self.IsPolicySupportedOnPlatform(policy, 'android', product='chrome'):
         self._AddPolicyAttribute(
             dl,
             'android_restriction_name',
             policy['name'],
             ['.monospace'])
-      if self.IsPolicySupportedOnPlatform(policy, 'android', 'webview'):
+      if self.IsPolicySupportedOnPlatform(policy, 'android', product='webview'):
         restriction_prefix = self.config['android_webview_restriction_prefix']
         self._AddPolicyAttribute(
             dl,
@@ -572,8 +573,9 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
     if (self.IsPolicySupportedOnPlatform(policy, 'win') or
         self.IsPolicySupportedOnPlatform(policy, 'linux') or
         self.IsPolicySupportedOnPlatform(policy, 'android') or
-        self.IsPolicySupportedOnPlatform(policy, 'mac')):
-      # Don't add an example for ChromeOS-only policies.
+        self.IsPolicySupportedOnPlatform(policy, 'mac') or
+        self.IsPolicySupportedOnPlatform(policy, 'chrome_os', management='ad')):
+      # Don't add an example for Google cloud managed ChromeOS policies.
       if policy['type'] != 'external':
         # All types except 'external' can be set through platform policy.
         dd = self._AddPolicyAttribute(dl, 'example_value')
