@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "bd141321_98fa5bed",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-21T07:39:26Z",
+      "side": 1,
+      "message": "Yep - next patch I\u0027ll remove the default value, and once the experiment is verified to be working I\u0027ll remove the first arg entirely.",
+      "parentUuid": "d6cf2c9b_f384dc93",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
