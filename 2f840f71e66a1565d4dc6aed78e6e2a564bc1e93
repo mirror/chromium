@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70531152_e1314aa7",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-21T13:30:48Z",
+      "side": 1,
+      "message": "nit: we don\u0027t use const for local variables that are not compile time constants in exo code",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 7
+      },
+      "revId": "2f840f71e66a1565d4dc6aed78e6e2a564bc1e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ace4ad_0e21c6c9",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-21T13:30:48Z",
+      "side": 1,
+      "message": "nit: \"sub_surface_it\" or just \"it\" to be consistent with other iterator usage in this file",
+      "range": {
+        "startLine": 299,
+        "startChar": 13,
+        "endLine": 299,
+        "endChar": 29
+      },
+      "revId": "2f840f71e66a1565d4dc6aed78e6e2a564bc1e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb82c993_4301c416",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-21T13:30:48Z",
+      "side": 1,
+      "message": "please use pending_damage_.op() directly as Damage has trace events make it looks like this was a client request when it\u0027s not.",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 8
+      },
+      "revId": "2f840f71e66a1565d4dc6aed78e6e2a564bc1e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
