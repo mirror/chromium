@@ -159,8 +159,10 @@ class ArcSettingsServiceImpl
   void SyncLocationServiceEnabled() const;
   void SyncProxySettings() const;
   void SyncReportingConsent() const;
+  void SyncSelectToSpeakEnabled() const;
   void SyncSmsConnectEnabled() const;
   void SyncSpokenFeedbackEnabled() const;
+  void SyncSwitchAccessEnabled() const;
   void SyncTimeZone() const;
   void SyncTimeZoneByGeolocation() const;
   void SyncUse24HourClock() const;
@@ -248,8 +250,12 @@ void ArcSettingsServiceImpl::OnPrefChanged(const std::string& pref_name) const {
     SyncFocusHighlightEnabled();
   } else if (pref_name == ash::prefs::kAccessibilityLargeCursorEnabled) {
     SyncAccessibilityLargeMouseCursorEnabled();
+  } else if (pref_name == ash::prefs::kAccessibilitySelectToSpeakEnabled) {
+    SyncSelectToSpeakEnabled();
   } else if (pref_name == ash::prefs::kAccessibilitySpokenFeedbackEnabled) {
     SyncSpokenFeedbackEnabled();
+  } else if (pref_name == ash::prefs::kAccessibilitySwitchAccessEnabled) {
+    SyncSwitchAccessEnabled();
   } else if (pref_name == ash::prefs::kAccessibilityVirtualKeyboardEnabled) {
     SyncAccessibilityVirtualKeyboardEnabled();
   } else if (pref_name == prefs::kArcBackupRestoreEnabled) {
@@ -304,7 +310,9 @@ void ArcSettingsServiceImpl::StartObservingSettingsChanges() {
   // Keep these lines ordered lexicographically.
   AddPrefToObserve(ash::prefs::kAccessibilityFocusHighlightEnabled);
   AddPrefToObserve(ash::prefs::kAccessibilityLargeCursorEnabled);
+  AddPrefToObserve(ash::prefs::kAccessibilitySelectToSpeakEnabled);
   AddPrefToObserve(ash::prefs::kAccessibilitySpokenFeedbackEnabled);
+  AddPrefToObserve(ash::prefs::kAccessibilitySwitchAccessEnabled);
   AddPrefToObserve(ash::prefs::kAccessibilityVirtualKeyboardEnabled);
   AddPrefToObserve(prefs::kArcBackupRestoreEnabled);
   AddPrefToObserve(prefs::kArcLocationServiceEnabled);
@@ -353,7 +361,9 @@ void ArcSettingsServiceImpl::SyncBootTimeSettings() const {
   SyncProxySettings();
   SyncReportingConsent();
   SyncSmsConnectEnabled();
+  SyncSelectToSpeakEnabled();
   SyncSpokenFeedbackEnabled();
+  SyncSwitchAccessEnabled();
   SyncTimeZone();
   SyncTimeZoneByGeolocation();
   SyncUse24HourClock();
@@ -530,10 +540,22 @@ void ArcSettingsServiceImpl::SyncSmsConnectEnabled() const {
       "org.chromium.arc.intent_helper.SET_SMS_CONNECT_ENABLED");
 }
 
+void ArcSettingsServiceImpl::SyncSelectToSpeakEnabled() const {
+  SendBoolPrefSettingsBroadcast(
+      ash::prefs::kAccessibilitySelectToSpeakEnabled,
+      "org.chromium.arc.intent_helper.SET_SELECT_TO_SPEAK_ENABLED");
+}
+
 void ArcSettingsServiceImpl::SyncSpokenFeedbackEnabled() const {
   SendBoolPrefSettingsBroadcast(
       ash::prefs::kAccessibilitySpokenFeedbackEnabled,
       "org.chromium.arc.intent_helper.SET_SPOKEN_FEEDBACK_ENABLED");
+}
+
+void ArcSettingsServiceImpl::SyncSwitchAccessEnabled() const {
+  SendBoolPrefSettingsBroadcast(
+      ash::prefs::kAccessibilitySwitchAccessEnabled,
+      "org.chromium.arc.intent_helper.SET_SWITCH_ACCESS_ENABLED");
 }
 
 void ArcSettingsServiceImpl::SyncTimeZone() const {
