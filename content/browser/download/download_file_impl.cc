@@ -18,7 +18,6 @@
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_destination_observer.h"
 #include "content/browser/download/download_interrupt_reasons_impl.h"
-#include "content/browser/download/download_net_log_parameters.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_utils.h"
 #include "content/browser/download/parallel_download_utils.h"
@@ -27,10 +26,6 @@
 #include "crypto/sha2.h"
 #include "mojo/public/c/system/types.h"
 #include "net/base/io_buffer.h"
-#include "net/log/net_log.h"
-#include "net/log/net_log_event_type.h"
-#include "net/log/net_log_source.h"
-#include "net/log/net_log_source_type.h"
 
 namespace content {
 
@@ -200,11 +195,9 @@ DownloadFileImpl::DownloadFileImpl(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<DownloadManager::InputStream> stream,
-    const net::NetLogWithSource& download_item_net_log,
     base::WeakPtr<DownloadDestinationObserver> observer)
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
-                       download_item_net_log,
                        observer) {
   source_streams_[save_info_->offset] = base::MakeUnique<SourceStream>(
       save_info_->offset, save_info_->length, std::move(stream));
@@ -213,13 +206,8 @@ DownloadFileImpl::DownloadFileImpl(
 DownloadFileImpl::DownloadFileImpl(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
-    const net::NetLogWithSource& download_item_net_log,
     base::WeakPtr<DownloadDestinationObserver> observer)
-    : net_log_(
-          net::NetLogWithSource::Make(download_item_net_log.net_log(),
-                                      net::NetLogSourceType::DOWNLOAD_FILE)),
-      file_(net_log_),
-      save_info_(std::move(save_info)),
+    : save_info_(std::move(save_info)),
       default_download_directory_(default_download_directory),
       potential_file_length_(kUnknownContentLength),
       bytes_seen_(0),
@@ -229,20 +217,11 @@ DownloadFileImpl::DownloadFileImpl(
       bytes_seen_without_parallel_streams_(0),
       observer_(observer),
       weak_factory_(this) {
-  download_item_net_log.AddEvent(
-      net::NetLogEventType::DOWNLOAD_FILE_CREATED,
-      net_log_.source().ToEventParametersCallback());
-  net_log_.BeginEvent(
-      net::NetLogEventType::DOWNLOAD_FILE_ACTIVE,
-      download_item_net_log.source().ToEventParametersCallback());
-
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 DownloadFileImpl::~DownloadFileImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  net_log_.EndEvent(net::NetLogEventType::DOWNLOAD_FILE_ACTIVE);
 }
 
 void DownloadFileImpl::Initialize(
@@ -594,12 +573,6 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream,
     OnStreamCompleted(source_stream);
   else
     NotifyObserver(source_stream, reason, state, should_terminate);
-
-  if (net_log_.IsCapturing()) {
-    net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_STREAM_DRAINED,
-                      base::Bind(&FileStreamDrainedNetLogCallback,
-                                 total_incoming_data_size, num_buffers));
-  }
 }
 
 void DownloadFileImpl::OnStreamCompleted(SourceStream* source_stream) {
