@@ -114,6 +114,30 @@
     },
     {
       "key": {
+        "uuid": "9aa1a30c_6a58cbd5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-21T17:07:12Z",
+      "side": 1,
+      "message": "ack. I don\u0027t feel strongly about this. I don\u0027t mind so much about win/linux/mac mixing with each other, I\u0027m more just worried about the abstraction between the platform-agnostic parts in content and the platform specific parts in each platform\u0027s implementation (I think this is what you are saying too).",
+      "parentUuid": "9e707958_719c86b1",
+      "range": {
+        "startLine": 2801,
+        "startChar": 9,
+        "endLine": 2801,
+        "endChar": 16
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038f4abc_b82c2e96",
         "filename": "content/BUILD.gn",
         "patchSetId": 18
