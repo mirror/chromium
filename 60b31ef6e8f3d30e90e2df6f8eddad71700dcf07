@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c33ac20b_cba237e2",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-virtual-bool-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T15:37:40Z",
+      "side": 1,
+      "message": "Optional nit: no biggie, but if we could start a clearer naming convention for the various types of nodes it would be helpful for readability. When I see node I immediately think DOM node.",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263787fd_c8ca35ea",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T15:37:40Z",
+      "side": 1,
+      "message": "Side note, looking at Element.h, I think it bears a comment what the difference between these two methods is:\n  AccessibleNode* ExistingAccessibleNode() const;\n  AccessibleNode* accessibleNode();\nI believe the second method will create an accessibleNode if it doesn\u0027t exist yet.",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1c18da_007b1fbf",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T15:37:40Z",
+      "side": 1,
+      "message": "Optional nit: personally I\u0027d prefer to see all of the non-static getters together in the same place, unless there are a bunch of AOMBooleanProperty related methods to keep together.",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba7499c_bdaf0ece",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T15:37:40Z",
+      "side": 1,
+      "message": "Can we put these classes in their own .cpp file(s) to avoid bloating AXObject even more?\n\nIn general, is AXObject.cpp going to become huge now? What\u0027s the long game on what will still exist in AXNodeObject? I\u0027m thinking we\u0027ll want to work to keep AXObject reasonably-sized. It\u0027s arguably too large already.",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cb2c80_322e1756",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T15:37:40Z",
+      "side": 1,
+      "message": "Nit: should we rename this ExistingAccessibleNode() to match?",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
