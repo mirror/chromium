@@ -16,6 +16,24 @@
       "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a1ff25_3fd09cf3",
+        "filename": "ui/message_center/views/message_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-21T17:52:00Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a ToastContentsView and I\u0027m alerting in MessageView. Unless I\u0027m mistaken, MessageView does not inherit from ToastContentsView (and vice versa).\n\nI added the alert because the notification doesn\u0027t alert anymore -- this is a regression.",
+      "parentUuid": "066fc24d_9e911ca2",
+      "revId": "cf5b95ebcbe5e4c371af549e89f2f6d6813487cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
