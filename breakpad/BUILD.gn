@@ -12,8 +12,8 @@ if (is_win) {
 
 config("tools_config") {
   include_dirs = [
-    "src",
-    "src/third_party",
+    "breakpad/src",
+    "breakpad/src/third_party",
   ]
   if (is_android) {
     defines = [ "__ANDROID__" ]
@@ -24,7 +24,7 @@ config("tools_config") {
 }
 
 config("internal_config") {
-  include_dirs = [ "src" ]
+  include_dirs = [ "breakpad/src" ]
   defines = []
   if (is_debug) {
     # This is needed for GTMLogger to work correctly.
@@ -36,9 +36,9 @@ config("internal_config") {
 }
 
 config("client_config") {
-  include_dirs = [ "src" ]
+  include_dirs = [ "breakpad/src" ]
   if (is_android) {
-    include_dirs += [ "src/common/android/include" ]
+    include_dirs += [ "breakpad/src/common/android/include" ]
   }
   if (is_chromeos) {
     defines = [ "__CHROMEOS__" ]
@@ -46,11 +46,11 @@ config("client_config") {
 }
 
 config("handler_config") {
-  include_dirs = [ "src" ]
+  include_dirs = [ "breakpad/src" ]
 }
 
 config("sender_config") {
-  include_dirs = [ "src" ]
+  include_dirs = [ "breakpad/src" ]
 }
 
 config("breakpad_unittest_config") {
@@ -68,76 +68,76 @@ if (!is_win) {
       # Always want these files included regardless of platform.
       set_sources_assignment_filter([])
       sources = [
-        "src/processor/basic_code_module.h",
-        "src/processor/basic_code_modules.cc",
-        "src/processor/basic_code_modules.h",
-        "src/processor/basic_source_line_resolver.cc",
-        "src/processor/call_stack.cc",
-        "src/processor/cfi_frame_info.cc",
-        "src/processor/cfi_frame_info.h",
-        "src/processor/disassembler_x86.cc",
-        "src/processor/disassembler_x86.h",
-        "src/processor/dump_context.cc",
-        "src/processor/dump_object.cc",
-        "src/processor/logging.cc",
-        "src/processor/logging.h",
-        "src/processor/pathname_stripper.cc",
-        "src/processor/pathname_stripper.h",
-        "src/processor/proc_maps_linux.cc",
-        "src/processor/process_state.cc",
-        "src/processor/simple_symbol_supplier.cc",
-        "src/processor/simple_symbol_supplier.h",
-        "src/processor/source_line_resolver_base.cc",
-        "src/processor/stack_frame_cpu.cc",
-        "src/processor/stack_frame_symbolizer.cc",
-        "src/processor/stackwalk_common.cc",
-        "src/processor/stackwalker.cc",
-        "src/processor/stackwalker_amd64.cc",
-        "src/processor/stackwalker_amd64.h",
-        "src/processor/stackwalker_arm.cc",
-        "src/processor/stackwalker_arm.h",
-        "src/processor/stackwalker_arm64.cc",
-        "src/processor/stackwalker_arm64.h",
-        "src/processor/stackwalker_mips.cc",
-        "src/processor/stackwalker_mips.h",
-        "src/processor/stackwalker_ppc.cc",
-        "src/processor/stackwalker_ppc.h",
-        "src/processor/stackwalker_ppc64.cc",
-        "src/processor/stackwalker_ppc64.h",
-        "src/processor/stackwalker_sparc.cc",
-        "src/processor/stackwalker_sparc.h",
-        "src/processor/stackwalker_x86.cc",
-        "src/processor/stackwalker_x86.h",
-        "src/processor/tokenize.cc",
-        "src/processor/tokenize.h",
+        "breakpad/src/processor/basic_code_module.h",
+        "breakpad/src/processor/basic_code_modules.cc",
+        "breakpad/src/processor/basic_code_modules.h",
+        "breakpad/src/processor/basic_source_line_resolver.cc",
+        "breakpad/src/processor/call_stack.cc",
+        "breakpad/src/processor/cfi_frame_info.cc",
+        "breakpad/src/processor/cfi_frame_info.h",
+        "breakpad/src/processor/disassembler_x86.cc",
+        "breakpad/src/processor/disassembler_x86.h",
+        "breakpad/src/processor/dump_context.cc",
+        "breakpad/src/processor/dump_object.cc",
+        "breakpad/src/processor/logging.cc",
+        "breakpad/src/processor/logging.h",
+        "breakpad/src/processor/pathname_stripper.cc",
+        "breakpad/src/processor/pathname_stripper.h",
+        "breakpad/src/processor/proc_maps_linux.cc",
+        "breakpad/src/processor/process_state.cc",
+        "breakpad/src/processor/simple_symbol_supplier.cc",
+        "breakpad/src/processor/simple_symbol_supplier.h",
+        "breakpad/src/processor/source_line_resolver_base.cc",
+        "breakpad/src/processor/stack_frame_cpu.cc",
+        "breakpad/src/processor/stack_frame_symbolizer.cc",
+        "breakpad/src/processor/stackwalk_common.cc",
+        "breakpad/src/processor/stackwalker.cc",
+        "breakpad/src/processor/stackwalker_amd64.cc",
+        "breakpad/src/processor/stackwalker_amd64.h",
+        "breakpad/src/processor/stackwalker_arm.cc",
+        "breakpad/src/processor/stackwalker_arm.h",
+        "breakpad/src/processor/stackwalker_arm64.cc",
+        "breakpad/src/processor/stackwalker_arm64.h",
+        "breakpad/src/processor/stackwalker_mips.cc",
+        "breakpad/src/processor/stackwalker_mips.h",
+        "breakpad/src/processor/stackwalker_ppc.cc",
+        "breakpad/src/processor/stackwalker_ppc.h",
+        "breakpad/src/processor/stackwalker_ppc64.cc",
+        "breakpad/src/processor/stackwalker_ppc64.h",
+        "breakpad/src/processor/stackwalker_sparc.cc",
+        "breakpad/src/processor/stackwalker_sparc.h",
+        "breakpad/src/processor/stackwalker_x86.cc",
+        "breakpad/src/processor/stackwalker_x86.h",
+        "breakpad/src/processor/tokenize.cc",
+        "breakpad/src/processor/tokenize.h",
 
         # libdisasm
-        "src/third_party/libdisasm/ia32_implicit.c",
-        "src/third_party/libdisasm/ia32_implicit.h",
-        "src/third_party/libdisasm/ia32_insn.c",
-        "src/third_party/libdisasm/ia32_insn.h",
-        "src/third_party/libdisasm/ia32_invariant.c",
-        "src/third_party/libdisasm/ia32_invariant.h",
-        "src/third_party/libdisasm/ia32_modrm.c",
-        "src/third_party/libdisasm/ia32_modrm.h",
-        "src/third_party/libdisasm/ia32_opcode_tables.c",
-        "src/third_party/libdisasm/ia32_opcode_tables.h",
-        "src/third_party/libdisasm/ia32_operand.c",
-        "src/third_party/libdisasm/ia32_operand.h",
-        "src/third_party/libdisasm/ia32_reg.c",
-        "src/third_party/libdisasm/ia32_reg.h",
-        "src/third_party/libdisasm/ia32_settings.c",
-        "src/third_party/libdisasm/ia32_settings.h",
-        "src/third_party/libdisasm/libdis.h",
-        "src/third_party/libdisasm/qword.h",
-        "src/third_party/libdisasm/x86_disasm.c",
-        "src/third_party/libdisasm/x86_format.c",
-        "src/third_party/libdisasm/x86_imm.c",
-        "src/third_party/libdisasm/x86_imm.h",
-        "src/third_party/libdisasm/x86_insn.c",
-        "src/third_party/libdisasm/x86_misc.c",
-        "src/third_party/libdisasm/x86_operand_list.c",
-        "src/third_party/libdisasm/x86_operand_list.h",
+        "breakpad/src/third_party/libdisasm/ia32_implicit.c",
+        "breakpad/src/third_party/libdisasm/ia32_implicit.h",
+        "breakpad/src/third_party/libdisasm/ia32_insn.c",
+        "breakpad/src/third_party/libdisasm/ia32_insn.h",
+        "breakpad/src/third_party/libdisasm/ia32_invariant.c",
+        "breakpad/src/third_party/libdisasm/ia32_invariant.h",
+        "breakpad/src/third_party/libdisasm/ia32_modrm.c",
+        "breakpad/src/third_party/libdisasm/ia32_modrm.h",
+        "breakpad/src/third_party/libdisasm/ia32_opcode_tables.c",
+        "breakpad/src/third_party/libdisasm/ia32_opcode_tables.h",
+        "breakpad/src/third_party/libdisasm/ia32_operand.c",
+        "breakpad/src/third_party/libdisasm/ia32_operand.h",
+        "breakpad/src/third_party/libdisasm/ia32_reg.c",
+        "breakpad/src/third_party/libdisasm/ia32_reg.h",
+        "breakpad/src/third_party/libdisasm/ia32_settings.c",
+        "breakpad/src/third_party/libdisasm/ia32_settings.h",
+        "breakpad/src/third_party/libdisasm/libdis.h",
+        "breakpad/src/third_party/libdisasm/qword.h",
+        "breakpad/src/third_party/libdisasm/x86_disasm.c",
+        "breakpad/src/third_party/libdisasm/x86_format.c",
+        "breakpad/src/third_party/libdisasm/x86_imm.c",
+        "breakpad/src/third_party/libdisasm/x86_imm.h",
+        "breakpad/src/third_party/libdisasm/x86_insn.c",
+        "breakpad/src/third_party/libdisasm/x86_misc.c",
+        "breakpad/src/third_party/libdisasm/x86_operand_list.c",
+        "breakpad/src/third_party/libdisasm/x86_operand_list.h",
       ]
 
       defines = [ "BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR" ]
@@ -150,9 +150,9 @@ if (!is_win) {
     fuzzer_test("minidump_fuzzer") {
       sources = [
         "minidump_fuzzer.cc",
-        "src/processor/exploitability.cc",
-        "src/processor/minidump.cc",
-        "src/processor/minidump_processor.cc",
+        "breakpad/src/processor/exploitability.cc",
+        "breakpad/src/processor/minidump.cc",
+        "breakpad/src/processor/minidump_processor.cc",
       ]
 
       deps = [
@@ -161,7 +161,7 @@ if (!is_win) {
       ]
 
       defines = [ "BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR" ]
-      include_dirs = [ "src" ]
+      include_dirs = [ "breakpad/src" ]
       dict = "minidump_fuzzer.dict"
 
       libfuzzer_options = [
@@ -172,20 +172,20 @@ if (!is_win) {
       # Always want these files included regardless of platform.
       set_sources_assignment_filter([])
       sources += [
-        "src/processor/exploitability_linux.cc",
-        "src/processor/exploitability_linux.h",
-        "src/processor/exploitability_win.cc",
-        "src/processor/exploitability_win.h",
-        "src/processor/symbolic_constants_win.cc",
-        "src/processor/symbolic_constants_win.h",
+        "breakpad/src/processor/exploitability_linux.cc",
+        "breakpad/src/processor/exploitability_linux.h",
+        "breakpad/src/processor/exploitability_win.cc",
+        "breakpad/src/processor/exploitability_win.h",
+        "breakpad/src/processor/symbolic_constants_win.cc",
+        "breakpad/src/processor/symbolic_constants_win.h",
       ]
     }
 
     executable("microdump_stackwalk") {
       sources = [
-        "src/processor/microdump.cc",
-        "src/processor/microdump_processor.cc",
-        "src/processor/microdump_stackwalk.cc",
+        "breakpad/src/processor/microdump.cc",
+        "breakpad/src/processor/microdump_processor.cc",
+        "breakpad/src/processor/microdump_stackwalk.cc",
       ]
 
       deps = [
@@ -202,10 +202,10 @@ if (!is_win) {
 
     executable("minidump_stackwalk") {
       sources = [
-        "src/processor/exploitability.cc",
-        "src/processor/minidump.cc",
-        "src/processor/minidump_processor.cc",
-        "src/processor/minidump_stackwalk.cc",
+        "breakpad/src/processor/exploitability.cc",
+        "breakpad/src/processor/minidump.cc",
+        "breakpad/src/processor/minidump_processor.cc",
+        "breakpad/src/processor/minidump_stackwalk.cc",
       ]
 
       deps = [
@@ -222,30 +222,30 @@ if (!is_win) {
       # Always want these files included regardless of platform.
       set_sources_assignment_filter([])
       sources += [
-        "src/processor/exploitability_linux.cc",
-        "src/processor/exploitability_linux.h",
-        "src/processor/exploitability_win.cc",
-        "src/processor/exploitability_win.h",
-        "src/processor/symbolic_constants_win.cc",
-        "src/processor/symbolic_constants_win.h",
+        "breakpad/src/processor/exploitability_linux.cc",
+        "breakpad/src/processor/exploitability_linux.h",
+        "breakpad/src/processor/exploitability_win.cc",
+        "breakpad/src/processor/exploitability_win.h",
+        "breakpad/src/processor/symbolic_constants_win.cc",
+        "breakpad/src/processor/symbolic_constants_win.h",
       ]
     }
 
     executable("minidump_dump") {
       set_sources_assignment_filter([])
       sources = [
-        "src/processor/basic_code_module.h",
-        "src/processor/basic_code_modules.cc",
-        "src/processor/basic_code_modules.h",
-        "src/processor/dump_context.cc",
-        "src/processor/dump_object.cc",
-        "src/processor/logging.cc",
-        "src/processor/logging.h",
-        "src/processor/minidump.cc",
-        "src/processor/minidump_dump.cc",
-        "src/processor/pathname_stripper.cc",
-        "src/processor/pathname_stripper.h",
-        "src/processor/proc_maps_linux.cc",
+        "breakpad/src/processor/basic_code_module.h",
+        "breakpad/src/processor/basic_code_modules.cc",
+        "breakpad/src/processor/basic_code_modules.h",
+        "breakpad/src/processor/dump_context.cc",
+        "breakpad/src/processor/dump_object.cc",
+        "breakpad/src/processor/logging.cc",
+        "breakpad/src/processor/logging.h",
+        "breakpad/src/processor/minidump.cc",
+        "breakpad/src/processor/minidump_dump.cc",
+        "breakpad/src/processor/pathname_stripper.cc",
+        "breakpad/src/processor/pathname_stripper.h",
+        "breakpad/src/processor/proc_maps_linux.cc",
       ]
 
       configs += [ ":tools_config" ]
@@ -283,33 +283,33 @@ if (is_mac) {
     # 32-bit files.
     executable("dump_syms") {
       sources = [
-        "src/common/dwarf/bytereader.cc",
-        "src/common/dwarf/dwarf2diehandler.cc",
-        "src/common/dwarf/dwarf2reader.cc",
-        "src/common/dwarf/elf_reader.cc",
-        "src/common/dwarf/elf_reader.h",
-        "src/common/dwarf_cfi_to_module.cc",
-        "src/common/dwarf_cu_to_module.cc",
-        "src/common/dwarf_line_to_module.cc",
-        "src/common/language.cc",
-        "src/common/mac/arch_utilities.cc",
-        "src/common/mac/arch_utilities.h",
-        "src/common/mac/dump_syms.cc",
-        "src/common/mac/file_id.cc",
-        "src/common/mac/macho_id.cc",
-        "src/common/mac/macho_reader.cc",
-        "src/common/mac/macho_utilities.cc",
-        "src/common/mac/macho_walker.cc",
-        "src/common/md5.cc",
-        "src/common/module.cc",
-        "src/common/stabs_reader.cc",
-        "src/common/stabs_to_module.cc",
-        "src/tools/mac/dump_syms/dump_syms_tool.cc",
+        "breakpad/src/common/dwarf/bytereader.cc",
+        "breakpad/src/common/dwarf/dwarf2diehandler.cc",
+        "breakpad/src/common/dwarf/dwarf2reader.cc",
+        "breakpad/src/common/dwarf/elf_reader.cc",
+        "breakpad/src/common/dwarf/elf_reader.h",
+        "breakpad/src/common/dwarf_cfi_to_module.cc",
+        "breakpad/src/common/dwarf_cu_to_module.cc",
+        "breakpad/src/common/dwarf_line_to_module.cc",
+        "breakpad/src/common/language.cc",
+        "breakpad/src/common/mac/arch_utilities.cc",
+        "breakpad/src/common/mac/arch_utilities.h",
+        "breakpad/src/common/mac/dump_syms.cc",
+        "breakpad/src/common/mac/file_id.cc",
+        "breakpad/src/common/mac/macho_id.cc",
+        "breakpad/src/common/mac/macho_reader.cc",
+        "breakpad/src/common/mac/macho_utilities.cc",
+        "breakpad/src/common/mac/macho_walker.cc",
+        "breakpad/src/common/md5.cc",
+        "breakpad/src/common/module.cc",
+        "breakpad/src/common/stabs_reader.cc",
+        "breakpad/src/common/stabs_to_module.cc",
+        "breakpad/src/tools/mac/dump_syms/dump_syms_tool.cc",
       ]
 
-      # For src/common/stabs_reader.h.
+      # For breakpad/src/common/stabs_reader.h.
       defines = [ "HAVE_MACH_O_NLIST_H" ]
-      include_dirs = [ "src/common/mac" ]
+      include_dirs = [ "breakpad/src/common/mac" ]
 
       # The DWARF utilities require -funsigned-char.
       cflags = [ "-funsigned-char" ]
@@ -341,11 +341,11 @@ if (is_mac) {
 
     executable("symupload") {
       sources = [
-        "src/common/mac/HTTPMultipartUpload.m",
-        "src/tools/mac/symupload/symupload.m",
+        "breakpad/src/common/mac/HTTPMultipartUpload.m",
+        "breakpad/src/tools/mac/symupload/symupload.m",
       ]
 
-      include_dirs = [ "src/common/mac" ]
+      include_dirs = [ "breakpad/src/common/mac" ]
 
       libs = [ "Foundation.framework" ]
 
@@ -378,24 +378,24 @@ if (is_ios) {
 if (is_mac) {
   static_library("utilities") {
     sources = [
-      "src/client/mac/crash_generation/ConfigFile.mm",
-      "src/client/mac/handler/breakpad_nlist_64.cc",
-      "src/client/mac/handler/dynamic_images.cc",
-      "src/client/mac/handler/minidump_generator.cc",
-      "src/client/minidump_file_writer.cc",
-      "src/common/convert_UTF.c",
-      "src/common/mac/MachIPC.mm",
-      "src/common/mac/arch_utilities.cc",
-      "src/common/mac/bootstrap_compat.cc",
-      "src/common/mac/file_id.cc",
-      "src/common/mac/launch_reporter.cc",
-      "src/common/mac/macho_id.cc",
-      "src/common/mac/macho_utilities.cc",
-      "src/common/mac/macho_walker.cc",
-      "src/common/mac/string_utilities.cc",
-      "src/common/md5.cc",
-      "src/common/simple_string_dictionary.cc",
-      "src/common/string_conversion.cc",
+      "breakpad/src/client/mac/crash_generation/ConfigFile.mm",
+      "breakpad/src/client/mac/handler/breakpad_nlist_64.cc",
+      "breakpad/src/client/mac/handler/dynamic_images.cc",
+      "breakpad/src/client/mac/handler/minidump_generator.cc",
+      "breakpad/src/client/minidump_file_writer.cc",
+      "breakpad/src/common/convert_UTF.c",
+      "breakpad/src/common/mac/MachIPC.mm",
+      "breakpad/src/common/mac/arch_utilities.cc",
+      "breakpad/src/common/mac/bootstrap_compat.cc",
+      "breakpad/src/common/mac/file_id.cc",
+      "breakpad/src/common/mac/launch_reporter.cc",
+      "breakpad/src/common/mac/macho_id.cc",
+      "breakpad/src/common/mac/macho_utilities.cc",
+      "breakpad/src/common/mac/macho_walker.cc",
+      "breakpad/src/common/mac/string_utilities.cc",
+      "breakpad/src/common/md5.cc",
+      "breakpad/src/common/simple_string_dictionary.cc",
+      "breakpad/src/common/string_conversion.cc",
     ]
 
     configs += [ ":internal_config" ]
@@ -407,16 +407,16 @@ if (is_mac) {
 
   executable("crash_inspector") {
     sources = [
-      "src/client/mac/crash_generation/Inspector.mm",
-      "src/client/mac/crash_generation/InspectorMain.mm",
+      "breakpad/src/client/mac/crash_generation/Inspector.mm",
+      "breakpad/src/client/mac/crash_generation/InspectorMain.mm",
     ]
 
     # TODO(GYP): 'mac_real_dsym': 1,
 
     include_dirs = [
-      "src/client/apple/Framework",
-      "src/common/mac",
-      "src",
+      "breakpad/src/client/apple/Framework",
+      "breakpad/src/common/mac",
+      "breakpad/src",
     ]
     libs = [
       "CoreServices.framework",
@@ -436,24 +436,24 @@ if (is_mac) {
   }
 
   config("breakpad_config") {
-    include_dirs = [ "src/client/apple/Framework" ]
+    include_dirs = [ "breakpad/src/client/apple/Framework" ]
   }
 
   static_library("breakpad") {
     sources = [
-      "src/client/mac/Framework/Breakpad.mm",
-      "src/client/mac/Framework/OnDemandServer.mm",
-      "src/client/mac/crash_generation/crash_generation_client.cc",
-      "src/client/mac/crash_generation/crash_generation_client.h",
-      "src/client/mac/handler/exception_handler.cc",
-      "src/client/mac/handler/protected_memory_allocator.cc",
+      "breakpad/src/client/mac/Framework/Breakpad.mm",
+      "breakpad/src/client/mac/Framework/OnDemandServer.mm",
+      "breakpad/src/client/mac/crash_generation/crash_generation_client.cc",
+      "breakpad/src/client/mac/crash_generation/crash_generation_client.h",
+      "breakpad/src/client/mac/handler/exception_handler.cc",
+      "breakpad/src/client/mac/handler/protected_memory_allocator.cc",
     ]
 
     configs += [ ":internal_config" ]
     public_configs = [ ":breakpad_config" ]
 
     defines = [ "USE_PROTECTED_ALLOCATIONS=1" ]
-    include_dirs = [ "src/client/apple/Framework" ]
+    include_dirs = [ "breakpad/src/client/apple/Framework" ]
 
     deps = [
       ":crash_inspector",
@@ -471,16 +471,16 @@ if (is_linux || is_android) {
   if (current_toolchain == host_toolchain) {
     executable("symupload") {
       sources = [
-        "src/common/linux/http_upload.cc",
-        "src/common/linux/http_upload.h",
-        "src/common/linux/symbol_upload.cc",
-        "src/common/linux/symbol_upload.h",
-        "src/tools/linux/symupload/sym_upload.cc",
+        "breakpad/src/common/linux/http_upload.cc",
+        "breakpad/src/common/linux/http_upload.h",
+        "breakpad/src/common/linux/symbol_upload.cc",
+        "breakpad/src/common/linux/symbol_upload.h",
+        "breakpad/src/tools/linux/symupload/sym_upload.cc",
       ]
 
       include_dirs = [
-        "src",
-        "src/third_party",
+        "breakpad/src",
+        "breakpad/src/third_party",
       ]
 
       configs += [ ":tools_config" ]
@@ -495,41 +495,41 @@ if (is_linux || is_android) {
     # dump_syms is a host tool, so only compile it for the host system.
     executable("dump_syms") {
       sources = [
-        "src/common/dwarf/bytereader.cc",
-        "src/common/dwarf/dwarf2diehandler.cc",
-        "src/common/dwarf/dwarf2reader.cc",
-        "src/common/dwarf/elf_reader.cc",
-        "src/common/dwarf/elf_reader.h",
-        "src/common/dwarf_cfi_to_module.cc",
-        "src/common/dwarf_cfi_to_module.h",
-        "src/common/dwarf_cu_to_module.cc",
-        "src/common/dwarf_cu_to_module.h",
-        "src/common/dwarf_line_to_module.cc",
-        "src/common/dwarf_line_to_module.h",
-        "src/common/language.cc",
-        "src/common/language.h",
-        "src/common/linux/crc32.cc",
-        "src/common/linux/crc32.h",
-        "src/common/linux/dump_symbols.cc",
-        "src/common/linux/dump_symbols.h",
-        "src/common/linux/elf_symbols_to_module.cc",
-        "src/common/linux/elf_symbols_to_module.h",
-        "src/common/linux/elfutils.cc",
-        "src/common/linux/elfutils.h",
-        "src/common/linux/file_id.cc",
-        "src/common/linux/file_id.h",
-        "src/common/linux/guid_creator.h",
-        "src/common/linux/linux_libc_support.cc",
-        "src/common/linux/linux_libc_support.h",
-        "src/common/linux/memory_mapped_file.cc",
-        "src/common/linux/memory_mapped_file.h",
-        "src/common/module.cc",
-        "src/common/module.h",
-        "src/common/stabs_reader.cc",
-        "src/common/stabs_reader.h",
-        "src/common/stabs_to_module.cc",
-        "src/common/stabs_to_module.h",
-        "src/tools/linux/dump_syms/dump_syms.cc",
+        "breakpad/src/common/dwarf/bytereader.cc",
+        "breakpad/src/common/dwarf/dwarf2diehandler.cc",
+        "breakpad/src/common/dwarf/dwarf2reader.cc",
+        "breakpad/src/common/dwarf/elf_reader.cc",
+        "breakpad/src/common/dwarf/elf_reader.h",
+        "breakpad/src/common/dwarf_cfi_to_module.cc",
+        "breakpad/src/common/dwarf_cfi_to_module.h",
+        "breakpad/src/common/dwarf_cu_to_module.cc",
+        "breakpad/src/common/dwarf_cu_to_module.h",
+        "breakpad/src/common/dwarf_line_to_module.cc",
+        "breakpad/src/common/dwarf_line_to_module.h",
+        "breakpad/src/common/language.cc",
+        "breakpad/src/common/language.h",
+        "breakpad/src/common/linux/crc32.cc",
+        "breakpad/src/common/linux/crc32.h",
+        "breakpad/src/common/linux/dump_symbols.cc",
+        "breakpad/src/common/linux/dump_symbols.h",
+        "breakpad/src/common/linux/elf_symbols_to_module.cc",
+        "breakpad/src/common/linux/elf_symbols_to_module.h",
+        "breakpad/src/common/linux/elfutils.cc",
+        "breakpad/src/common/linux/elfutils.h",
+        "breakpad/src/common/linux/file_id.cc",
+        "breakpad/src/common/linux/file_id.h",
+        "breakpad/src/common/linux/guid_creator.h",
+        "breakpad/src/common/linux/linux_libc_support.cc",
+        "breakpad/src/common/linux/linux_libc_support.h",
+        "breakpad/src/common/linux/memory_mapped_file.cc",
+        "breakpad/src/common/linux/memory_mapped_file.h",
+        "breakpad/src/common/module.cc",
+        "breakpad/src/common/module.h",
+        "breakpad/src/common/stabs_reader.cc",
+        "breakpad/src/common/stabs_reader.h",
+        "breakpad/src/common/stabs_to_module.cc",
+        "breakpad/src/common/stabs_to_module.h",
+        "breakpad/src/tools/linux/dump_syms/dump_syms.cc",
       ]
 
       # There are some warnings in this code.
@@ -548,7 +548,7 @@ if (is_linux || is_android) {
       # build on Linux.
       defines = [ "HAVE_A_OUT_H" ]
 
-      include_dirs = [ "src" ]
+      include_dirs = [ "breakpad/src" ]
 
       deps = [
         "//build/config:exe_and_shlib_deps",
@@ -568,61 +568,61 @@ if (is_linux || is_android) {
     # Want all these sources for both Linux and Android.
     set_sources_assignment_filter([])
     sources = [
-      "src/client/linux/crash_generation/crash_generation_client.cc",
-      "src/client/linux/crash_generation/crash_generation_client.h",
-      "src/client/linux/dump_writer_common/mapping_info.h",
-      "src/client/linux/dump_writer_common/thread_info.cc",
-      "src/client/linux/dump_writer_common/thread_info.h",
-      "src/client/linux/dump_writer_common/ucontext_reader.cc",
-      "src/client/linux/dump_writer_common/ucontext_reader.h",
-      "src/client/linux/handler/exception_handler.cc",
-      "src/client/linux/handler/exception_handler.h",
-      "src/client/linux/handler/minidump_descriptor.cc",
-      "src/client/linux/handler/minidump_descriptor.h",
-      "src/client/linux/log/log.cc",
-      "src/client/linux/log/log.h",
-      "src/client/linux/microdump_writer/microdump_writer.cc",
-      "src/client/linux/microdump_writer/microdump_writer.h",
-      "src/client/linux/minidump_writer/cpu_set.h",
-      "src/client/linux/minidump_writer/directory_reader.h",
-      "src/client/linux/minidump_writer/line_reader.h",
-      "src/client/linux/minidump_writer/linux_core_dumper.cc",
-      "src/client/linux/minidump_writer/linux_core_dumper.h",
-      "src/client/linux/minidump_writer/linux_dumper.cc",
-      "src/client/linux/minidump_writer/linux_dumper.h",
-      "src/client/linux/minidump_writer/linux_ptrace_dumper.cc",
-      "src/client/linux/minidump_writer/linux_ptrace_dumper.h",
-      "src/client/linux/minidump_writer/minidump_writer.cc",
-      "src/client/linux/minidump_writer/minidump_writer.h",
-      "src/client/linux/minidump_writer/proc_cpuinfo_reader.h",
-      "src/client/minidump_file_writer-inl.h",
-      "src/client/minidump_file_writer.cc",
-      "src/client/minidump_file_writer.h",
-      "src/common/convert_UTF.c",
-      "src/common/convert_UTF.h",
-      "src/common/linux/elf_core_dump.cc",
-      "src/common/linux/elf_core_dump.h",
-      "src/common/linux/elfutils.cc",
-      "src/common/linux/elfutils.h",
-      "src/common/linux/file_id.cc",
-      "src/common/linux/file_id.h",
-      "src/common/linux/google_crashdump_uploader.cc",
-      "src/common/linux/google_crashdump_uploader.h",
-      "src/common/linux/guid_creator.cc",
-      "src/common/linux/guid_creator.h",
-      "src/common/linux/libcurl_wrapper.cc",
-      "src/common/linux/libcurl_wrapper.h",
-      "src/common/linux/linux_libc_support.cc",
-      "src/common/linux/linux_libc_support.h",
-      "src/common/linux/memory_mapped_file.cc",
-      "src/common/linux/memory_mapped_file.h",
-      "src/common/linux/safe_readlink.cc",
-      "src/common/linux/safe_readlink.h",
-      "src/common/memory.h",
-      "src/common/simple_string_dictionary.cc",
-      "src/common/simple_string_dictionary.h",
-      "src/common/string_conversion.cc",
-      "src/common/string_conversion.h",
+      "breakpad/src/client/linux/crash_generation/crash_generation_client.cc",
+      "breakpad/src/client/linux/crash_generation/crash_generation_client.h",
+      "breakpad/src/client/linux/dump_writer_common/mapping_info.h",
+      "breakpad/src/client/linux/dump_writer_common/thread_info.cc",
+      "breakpad/src/client/linux/dump_writer_common/thread_info.h",
+      "breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc",
+      "breakpad/src/client/linux/dump_writer_common/ucontext_reader.h",
+      "breakpad/src/client/linux/handler/exception_handler.cc",
+      "breakpad/src/client/linux/handler/exception_handler.h",
+      "breakpad/src/client/linux/handler/minidump_descriptor.cc",
+      "breakpad/src/client/linux/handler/minidump_descriptor.h",
+      "breakpad/src/client/linux/log/log.cc",
+      "breakpad/src/client/linux/log/log.h",
+      "breakpad/src/client/linux/microdump_writer/microdump_writer.cc",
+      "breakpad/src/client/linux/microdump_writer/microdump_writer.h",
+      "breakpad/src/client/linux/minidump_writer/cpu_set.h",
+      "breakpad/src/client/linux/minidump_writer/directory_reader.h",
+      "breakpad/src/client/linux/minidump_writer/line_reader.h",
+      "breakpad/src/client/linux/minidump_writer/linux_core_dumper.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_core_dumper.h",
+      "breakpad/src/client/linux/minidump_writer/linux_dumper.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_dumper.h",
+      "breakpad/src/client/linux/minidump_writer/linux_ptrace_dumper.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_ptrace_dumper.h",
+      "breakpad/src/client/linux/minidump_writer/minidump_writer.cc",
+      "breakpad/src/client/linux/minidump_writer/minidump_writer.h",
+      "breakpad/src/client/linux/minidump_writer/proc_cpuinfo_reader.h",
+      "breakpad/src/client/minidump_file_writer-inl.h",
+      "breakpad/src/client/minidump_file_writer.cc",
+      "breakpad/src/client/minidump_file_writer.h",
+      "breakpad/src/common/convert_UTF.c",
+      "breakpad/src/common/convert_UTF.h",
+      "breakpad/src/common/linux/elf_core_dump.cc",
+      "breakpad/src/common/linux/elf_core_dump.h",
+      "breakpad/src/common/linux/elfutils.cc",
+      "breakpad/src/common/linux/elfutils.h",
+      "breakpad/src/common/linux/file_id.cc",
+      "breakpad/src/common/linux/file_id.h",
+      "breakpad/src/common/linux/google_crashdump_uploader.cc",
+      "breakpad/src/common/linux/google_crashdump_uploader.h",
+      "breakpad/src/common/linux/guid_creator.cc",
+      "breakpad/src/common/linux/guid_creator.h",
+      "breakpad/src/common/linux/libcurl_wrapper.cc",
+      "breakpad/src/common/linux/libcurl_wrapper.h",
+      "breakpad/src/common/linux/linux_libc_support.cc",
+      "breakpad/src/common/linux/linux_libc_support.h",
+      "breakpad/src/common/linux/memory_mapped_file.cc",
+      "breakpad/src/common/linux/memory_mapped_file.h",
+      "breakpad/src/common/linux/safe_readlink.cc",
+      "breakpad/src/common/linux/safe_readlink.h",
+      "breakpad/src/common/memory.h",
+      "breakpad/src/common/simple_string_dictionary.cc",
+      "breakpad/src/common/simple_string_dictionary.h",
+      "breakpad/src/common/string_conversion.cc",
+      "breakpad/src/common/string_conversion.h",
     ]
 
     configs -= [ "//build/config/compiler:chromium_code" ]
@@ -641,39 +641,39 @@ if (is_linux || is_android) {
     configs -= [ "//build/config/compiler:clang_stackrealign" ]
 
     if (is_android) {
-      sources += [ "src/common/android/breakpad_getcontext.S" ]
+      sources += [ "breakpad/src/common/android/breakpad_getcontext.S" ]
     }
 
     libs = [ "dl" ]
 
     include_dirs = [
       ".",
-      "src",
-      "src/client",
-      "src/third_party/linux/include",
+      "breakpad/src",
+      "breakpad/src/client",
+      "breakpad/src/third_party/linux/include",
     ]
   }
 
   static_library("processor_support") {
     set_sources_assignment_filter([])
     sources = [
-      "src/common/scoped_ptr.h",
-      "src/processor/basic_code_modules.cc",
-      "src/processor/basic_code_modules.h",
-      "src/processor/dump_context.cc",
-      "src/processor/dump_object.cc",
-      "src/processor/logging.cc",
-      "src/processor/logging.h",
-      "src/processor/minidump.cc",
-      "src/processor/pathname_stripper.cc",
-      "src/processor/pathname_stripper.h",
-      "src/processor/proc_maps_linux.cc",
+      "breakpad/src/common/scoped_ptr.h",
+      "breakpad/src/processor/basic_code_modules.cc",
+      "breakpad/src/processor/basic_code_modules.h",
+      "breakpad/src/processor/dump_context.cc",
+      "breakpad/src/processor/dump_object.cc",
+      "breakpad/src/processor/logging.cc",
+      "breakpad/src/processor/logging.h",
+      "breakpad/src/processor/minidump.cc",
+      "breakpad/src/processor/pathname_stripper.cc",
+      "breakpad/src/processor/pathname_stripper.h",
+      "breakpad/src/processor/proc_maps_linux.cc",
     ]
 
     include_dirs = [
-      "src",
-      "src/client",
-      "src/third_party/linux/include",
+      "breakpad/src",
+      "breakpad/src/client",
+      "breakpad/src/third_party/linux/include",
       ".",
     ]
 
@@ -686,30 +686,30 @@ if (is_linux || is_android) {
     set_sources_assignment_filter([])
     sources = [
       "linux/breakpad_googletest_includes.h",
-      "src/client/linux/handler/exception_handler_unittest.cc",
-      "src/client/linux/minidump_writer/cpu_set_unittest.cc",
-      "src/client/linux/minidump_writer/directory_reader_unittest.cc",
-      "src/client/linux/minidump_writer/line_reader_unittest.cc",
-      "src/client/linux/minidump_writer/linux_core_dumper_unittest.cc",
-      "src/client/linux/minidump_writer/linux_ptrace_dumper_unittest.cc",
-      "src/client/linux/minidump_writer/minidump_writer_unittest.cc",
-      "src/client/linux/minidump_writer/minidump_writer_unittest_utils.cc",
-      "src/client/linux/minidump_writer/proc_cpuinfo_reader_unittest.cc",
-      "src/common/linux/elf_core_dump_unittest.cc",
-      "src/common/linux/file_id_unittest.cc",
-      "src/common/linux/linux_libc_support_unittest.cc",
-      "src/common/linux/synth_elf.cc",
-      "src/common/linux/tests/auto_testfile.h",
-      "src/common/linux/tests/crash_generator.cc",
-      "src/common/linux/tests/crash_generator.h",
-      "src/common/memory_range.h",
-      "src/common/memory_unittest.cc",
-      "src/common/simple_string_dictionary_unittest.cc",
-      "src/common/test_assembler.cc",
-      "src/common/tests/file_utils.cc",
-      "src/common/tests/file_utils.h",
-      "src/tools/linux/md2core/minidump_memory_range.h",
-      "src/tools/linux/md2core/minidump_memory_range_unittest.cc",
+      "breakpad/src/client/linux/handler/exception_handler_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/cpu_set_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/directory_reader_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/line_reader_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_core_dumper_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_ptrace_dumper_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/minidump_writer_unittest.cc",
+      "breakpad/src/client/linux/minidump_writer/minidump_writer_unittest_utils.cc",
+      "breakpad/src/client/linux/minidump_writer/proc_cpuinfo_reader_unittest.cc",
+      "breakpad/src/common/linux/elf_core_dump_unittest.cc",
+      "breakpad/src/common/linux/file_id_unittest.cc",
+      "breakpad/src/common/linux/linux_libc_support_unittest.cc",
+      "breakpad/src/common/linux/synth_elf.cc",
+      "breakpad/src/common/linux/tests/auto_testfile.h",
+      "breakpad/src/common/linux/tests/crash_generator.cc",
+      "breakpad/src/common/linux/tests/crash_generator.h",
+      "breakpad/src/common/memory_range.h",
+      "breakpad/src/common/memory_unittest.cc",
+      "breakpad/src/common/simple_string_dictionary_unittest.cc",
+      "breakpad/src/common/test_assembler.cc",
+      "breakpad/src/common/tests/file_utils.cc",
+      "breakpad/src/common/tests/file_utils.h",
+      "breakpad/src/tools/linux/md2core/minidump_memory_range.h",
+      "breakpad/src/tools/linux/md2core/minidump_memory_range_unittest.cc",
     ]
 
     deps = [
@@ -741,7 +741,7 @@ if (is_linux || is_android) {
 
     if (is_android) {
       use_raw_android_executable = true
-      sources += [ "src/common/android/breakpad_getcontext_unittest.cc" ]
+      sources += [ "breakpad/src/common/android/breakpad_getcontext_unittest.cc" ]
       libs = [ "log" ]
       extra_dist_files = [ "$root_out_dir/linux_dumper_unittest_helper" ]
     }
@@ -759,7 +759,7 @@ if (is_linux || is_android) {
     set_sources_assignment_filter([])
     testonly = true
     sources = [
-      "src/client/linux/minidump_writer/linux_dumper_unittest_helper.cc",
+      "breakpad/src/client/linux/minidump_writer/linux_dumper_unittest_helper.cc",
     ]
     deps = [
       ":processor_support",
@@ -803,10 +803,10 @@ if (is_linux || is_android) {
   executable("minidump-2-core") {
     set_sources_assignment_filter([])
     sources = [
-      "src/tools/linux/md2core/minidump-2-core.cc",
+      "breakpad/src/tools/linux/md2core/minidump-2-core.cc",
     ]
 
-    include_dirs = [ "src" ]
+    include_dirs = [ "breakpad/src" ]
 
     deps = [
       ":client",
@@ -817,7 +817,7 @@ if (is_linux || is_android) {
   executable("core-2-minidump") {
     set_sources_assignment_filter([])
     sources = [
-      "src/tools/linux/core2md/core2md.cc",
+      "breakpad/src/tools/linux/core2md/core2md.cc",
     ]
 
     deps = [
@@ -825,7 +825,7 @@ if (is_linux || is_android) {
       "//build/config:exe_and_shlib_deps",
     ]
 
-    include_dirs = [ "src" ]
+    include_dirs = [ "breakpad/src" ]
   }
 }
 
@@ -835,21 +835,21 @@ if (is_win) {
     # https://crbug.com/696671
     include_dirs = [
       "$visual_studio_path/DIA SDK/include",
-      "src",
+      "breakpad/src",
     ]
 
     sources = [
-      "src/common/windows/dia_util.cc",
-      "src/common/windows/dia_util.h",
-      "src/common/windows/guid_string.cc",
-      "src/common/windows/guid_string.h",
-      "src/common/windows/omap.cc",
-      "src/common/windows/omap.h",
-      "src/common/windows/pdb_source_line_writer.cc",
-      "src/common/windows/pdb_source_line_writer.h",
-      "src/common/windows/string_utils-inl.h",
-      "src/common/windows/string_utils.cc",
-      "src/tools/windows/dump_syms/dump_syms.cc",
+      "breakpad/src/common/windows/dia_util.cc",
+      "breakpad/src/common/windows/dia_util.h",
+      "breakpad/src/common/windows/guid_string.cc",
+      "breakpad/src/common/windows/guid_string.h",
+      "breakpad/src/common/windows/omap.cc",
+      "breakpad/src/common/windows/omap.h",
+      "breakpad/src/common/windows/pdb_source_line_writer.cc",
+      "breakpad/src/common/windows/pdb_source_line_writer.h",
+      "breakpad/src/common/windows/string_utils-inl.h",
+      "breakpad/src/common/windows/string_utils.cc",
+      "breakpad/src/tools/windows/dump_syms/dump_syms.cc",
     ]
 
     lib_dirs = []
@@ -875,56 +875,56 @@ if (is_ios) {
   static_library("client") {
     set_sources_assignment_filter([])
     sources = [
-      "src/client/ios/Breakpad.h",
-      "src/client/ios/Breakpad.mm",
-      "src/client/ios/BreakpadController.h",
-      "src/client/ios/BreakpadController.mm",
-      "src/client/ios/handler/ios_exception_minidump_generator.h",
-      "src/client/ios/handler/ios_exception_minidump_generator.mm",
-      "src/client/mac/crash_generation/ConfigFile.h",
-      "src/client/mac/crash_generation/ConfigFile.mm",
-      "src/client/mac/handler/breakpad_nlist_64.cc",
-      "src/client/mac/handler/breakpad_nlist_64.h",
-      "src/client/mac/handler/dynamic_images.cc",
-      "src/client/mac/handler/dynamic_images.h",
-      "src/client/mac/handler/exception_handler.cc",
-      "src/client/mac/handler/exception_handler.h",
-      "src/client/mac/handler/minidump_generator.cc",
-      "src/client/mac/handler/minidump_generator.h",
-      "src/client/mac/handler/protected_memory_allocator.cc",
-      "src/client/mac/handler/protected_memory_allocator.h",
-      "src/client/mac/sender/uploader.h",
-      "src/client/mac/sender/uploader.mm",
-      "src/client/minidump_file_writer-inl.h",
-      "src/client/minidump_file_writer.cc",
-      "src/client/minidump_file_writer.h",
-      "src/common/convert_UTF.c",
-      "src/common/convert_UTF.h",
-      "src/common/mac/HTTPMultipartUpload.m",
-      "src/common/mac/file_id.cc",
-      "src/common/mac/file_id.h",
-      "src/common/mac/macho_id.cc",
-      "src/common/mac/macho_id.h",
-      "src/common/mac/macho_utilities.cc",
-      "src/common/mac/macho_utilities.h",
-      "src/common/mac/macho_walker.cc",
-      "src/common/mac/macho_walker.h",
-      "src/common/mac/string_utilities.cc",
-      "src/common/mac/string_utilities.h",
-      "src/common/md5.cc",
-      "src/common/md5.h",
-      "src/common/simple_string_dictionary.cc",
-      "src/common/simple_string_dictionary.h",
-      "src/common/string_conversion.cc",
-      "src/common/string_conversion.h",
-      "src/google_breakpad/common/minidump_format.h",
+      "breakpad/src/client/ios/Breakpad.h",
+      "breakpad/src/client/ios/Breakpad.mm",
+      "breakpad/src/client/ios/BreakpadController.h",
+      "breakpad/src/client/ios/BreakpadController.mm",
+      "breakpad/src/client/ios/handler/ios_exception_minidump_generator.h",
+      "breakpad/src/client/ios/handler/ios_exception_minidump_generator.mm",
+      "breakpad/src/client/mac/crash_generation/ConfigFile.h",
+      "breakpad/src/client/mac/crash_generation/ConfigFile.mm",
+      "breakpad/src/client/mac/handler/breakpad_nlist_64.cc",
+      "breakpad/src/client/mac/handler/breakpad_nlist_64.h",
+      "breakpad/src/client/mac/handler/dynamic_images.cc",
+      "breakpad/src/client/mac/handler/dynamic_images.h",
+      "breakpad/src/client/mac/handler/exception_handler.cc",
+      "breakpad/src/client/mac/handler/exception_handler.h",
+      "breakpad/src/client/mac/handler/minidump_generator.cc",
+      "breakpad/src/client/mac/handler/minidump_generator.h",
+      "breakpad/src/client/mac/handler/protected_memory_allocator.cc",
+      "breakpad/src/client/mac/handler/protected_memory_allocator.h",
+      "breakpad/src/client/mac/sender/uploader.h",
+      "breakpad/src/client/mac/sender/uploader.mm",
+      "breakpad/src/client/minidump_file_writer-inl.h",
+      "breakpad/src/client/minidump_file_writer.cc",
+      "breakpad/src/client/minidump_file_writer.h",
+      "breakpad/src/common/convert_UTF.c",
+      "breakpad/src/common/convert_UTF.h",
+      "breakpad/src/common/mac/HTTPMultipartUpload.m",
+      "breakpad/src/common/mac/file_id.cc",
+      "breakpad/src/common/mac/file_id.h",
+      "breakpad/src/common/mac/macho_id.cc",
+      "breakpad/src/common/mac/macho_id.h",
+      "breakpad/src/common/mac/macho_utilities.cc",
+      "breakpad/src/common/mac/macho_utilities.h",
+      "breakpad/src/common/mac/macho_walker.cc",
+      "breakpad/src/common/mac/macho_walker.h",
+      "breakpad/src/common/mac/string_utilities.cc",
+      "breakpad/src/common/mac/string_utilities.h",
+      "breakpad/src/common/md5.cc",
+      "breakpad/src/common/md5.h",
+      "breakpad/src/common/simple_string_dictionary.cc",
+      "breakpad/src/common/simple_string_dictionary.h",
+      "breakpad/src/common/string_conversion.cc",
+      "breakpad/src/common/string_conversion.h",
+      "breakpad/src/google_breakpad/common/minidump_format.h",
     ]
     set_sources_assignment_filter(sources_assignment_filter)
 
     include_dirs = [
-      "src",
-      "src/client/mac/Framework",
-      "src/common/mac",
+      "breakpad/src",
+      "breakpad/src/client/mac/Framework",
+      "breakpad/src/common/mac",
     ]
 
     deps = [
@@ -962,30 +962,30 @@ if (is_win) {
     defines = [ "BREAKPAD_NO_TERMINATE_THREAD" ]
 
     sources = [
-      "src/client/windows/crash_generation/client_info.cc",
-      "src/client/windows/crash_generation/client_info.h",
-      "src/client/windows/crash_generation/crash_generation_client.cc",
-      "src/client/windows/crash_generation/crash_generation_client.h",
-      "src/client/windows/crash_generation/crash_generation_server.cc",
-      "src/client/windows/crash_generation/crash_generation_server.h",
-      "src/client/windows/crash_generation/minidump_generator.cc",
-      "src/client/windows/crash_generation/minidump_generator.h",
-      "src/client/windows/handler/exception_handler.cc",
-      "src/client/windows/handler/exception_handler.h",
-      "src/common/windows/guid_string.cc",
-      "src/common/windows/guid_string.h",
-      "src/common/windows/string_utils-inl.h",
-      "src/google_breakpad/common/minidump_format.h",
+      "breakpad/src/client/windows/crash_generation/client_info.cc",
+      "breakpad/src/client/windows/crash_generation/client_info.h",
+      "breakpad/src/client/windows/crash_generation/crash_generation_client.cc",
+      "breakpad/src/client/windows/crash_generation/crash_generation_client.h",
+      "breakpad/src/client/windows/crash_generation/crash_generation_server.cc",
+      "breakpad/src/client/windows/crash_generation/crash_generation_server.h",
+      "breakpad/src/client/windows/crash_generation/minidump_generator.cc",
+      "breakpad/src/client/windows/crash_generation/minidump_generator.h",
+      "breakpad/src/client/windows/handler/exception_handler.cc",
+      "breakpad/src/client/windows/handler/exception_handler.h",
+      "breakpad/src/common/windows/guid_string.cc",
+      "breakpad/src/common/windows/guid_string.h",
+      "breakpad/src/common/windows/string_utils-inl.h",
+      "breakpad/src/google_breakpad/common/minidump_format.h",
     ]
     configs += [ ":breakpad_handler_warnings" ]
   }
 
   source_set("breakpad_sender") {
     sources = [
-      "src/client/windows/sender/crash_report_sender.cc",
-      "src/client/windows/sender/crash_report_sender.h",
-      "src/common/windows/http_upload.cc",
-      "src/common/windows/http_upload.h",
+      "breakpad/src/client/windows/sender/crash_report_sender.cc",
+      "breakpad/src/client/windows/sender/crash_report_sender.h",
+      "breakpad/src/common/windows/http_upload.cc",
+      "breakpad/src/common/windows/http_upload.h",
     ]
     configs += [ ":sender_config" ]
     public_configs = [ ":sender_config" ]
