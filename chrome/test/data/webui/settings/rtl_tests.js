@@ -14,16 +14,20 @@ cr.define('settings_rtl_tests', function() {
       PolymerTest.clearBody();
     });
 
-    test('test i18n processing flips drawer panel', function() {
+    test('test drawer respects loadTimeData LTR', function() {
+      settings.setDirectionDelegateForTesting(
+          new TestDirectionDelegate(false /* isRtl */));
       var ui = document.createElement('settings-ui');
-      var appDrawer = ui.$.drawer;
-      assertEquals('left', appDrawer.align);
+      document.body.appendChild(ui);
+      assertEquals('left', ui.$.drawer.align);
+    });
 
-      ui.directionDelegate = new TestDirectionDelegate(true /* isRtl */);
-      assertEquals('right', appDrawer.align);
-
-      ui.directionDelegate = new TestDirectionDelegate(false /* isRtl */);
-      assertEquals('left', appDrawer.align);
+    test('test drawer respects loadTimeData RTL', function() {
+      settings.setDirectionDelegateForTesting(
+          new TestDirectionDelegate(true /* isRtl */));
+      var ui = document.createElement('settings-ui');
+      document.body.appendChild(ui);
+      assertEquals('right', ui.$.drawer.align);
     });
   });
 });
