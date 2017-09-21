@@ -68,6 +68,30 @@
       "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b2d27d_1512538d",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T08:58:24Z",
+      "side": 1,
+      "message": "Sorry, I missed your reply. Got it. Thank you!",
+      "parentUuid": "78b647d1_9132e906",
+      "range": {
+        "startLine": 4,
+        "startChar": 39,
+        "endLine": 4,
+        "endChar": 56
+      },
+      "revId": "88a0ff835613be3ad37db0fb9b41f57fe1c493d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
