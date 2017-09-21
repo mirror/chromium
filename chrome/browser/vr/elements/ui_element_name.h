@@ -40,6 +40,8 @@ enum UiElementName {
   kWebVrUrlToast,
   kExclusiveScreenToast,
   kExclusiveScreenToastViewportAware,
+  kSplashScreenRoot,
+  kSplashScreenViewportAwareRoot,
   kSplashScreenText,
   kSplashScreenBackground,
   kBackgroundFront,
