@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "098142e4_d597bda5",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T22:29:35Z",
+      "side": 1,
+      "message": "Okay, took another pass at this and made the entirety of the promise tracking significantly simpler. (Previous code was copied from WebVR 1 path which I did when I was young and stupid a whole ~1.5 years ago.)",
+      "parentUuid": "59d95233_e4ce18f2",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53cc052c_52959ed8",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
         "patchSetId": 1
