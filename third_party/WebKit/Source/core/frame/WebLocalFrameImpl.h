@@ -275,6 +275,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   bool IsNavigationScheduledWithin(double interval) const override;
   void SetCommittedFirstRealLoad() override;
   void SetHasReceivedUserGesture() override;
+  void SetHasReceivedUserGestureBeforeNavigation() override;
   void BlinkFeatureUsageReport(const std::set<int>& features) override;
   void MixedContentFound(const WebURL& main_resource_url,
                          const WebURL& mixed_content_url,

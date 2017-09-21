@@ -444,6 +444,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::FrameReplicationState)
   IPC_STRUCT_TRAITS_MEMBER(scope)
   IPC_STRUCT_TRAITS_MEMBER(insecure_request_policy)
   IPC_STRUCT_TRAITS_MEMBER(has_potentially_trustworthy_unique_origin)
+  IPC_STRUCT_TRAITS_MEMBER(has_received_user_gesture_before_nav)
 IPC_STRUCT_TRAITS_END()
 
 // Parameters included with an OpenURL request.
@@ -1064,6 +1065,10 @@ IPC_MESSAGE_ROUTED0(FrameMsg_SuppressFurtherDialogs)
 // on a user gesture processed in a different process).
 IPC_MESSAGE_ROUTED0(FrameMsg_SetHasReceivedUserGesture)
 
+// Tells the frame to mark that the previous document on that frame had recieved
+// a user gesture on the same eTLD+1.
+IPC_MESSAGE_ROUTED0(FrameMsg_SetHasReceivedUserGestureBeforeNavigation)
+
 IPC_MESSAGE_ROUTED1(FrameMsg_RunFileChooserResponse,
                     std::vector<content::FileChooserFileInfo>)
 
@@ -1464,6 +1469,10 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_SetIsInert, bool /* inert */)
 // Indicates that this frame recieved a user gesture, so that the state can be
 // propagated to any remote frames.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_SetHasReceivedUserGesture)
+
+// Indicates that this frame recieved a user gesture on a previous navigation on
+// the same eTLD+1. This ensures the state is propagated to any remote frames.
+IPC_MESSAGE_ROUTED0(FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation)
 
 // Used to tell the browser what the DevTools FrameId is. Needed by Headless
 // Chrome.
