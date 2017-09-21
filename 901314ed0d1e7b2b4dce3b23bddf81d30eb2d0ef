@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64ccb54a_d94b7e86",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-21T22:26:56Z",
+      "side": 1,
+      "message": "probably use something based on e.g.\n\nos.path.dirname(os.path.abspath(__file__))\n\nto get to the user\u0027s third_party/llvm-build/Release+Asserts/bin/",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "901314ed0d1e7b2b4dce3b23bddf81d30eb2d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df2d2a_327451bc",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-21T22:26:56Z",
+      "side": 1,
+      "message": "nit: per https://www.chromium.org/chromium-os/python-style-guidelines use CapsStyle for functions and methods.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "901314ed0d1e7b2b4dce3b23bddf81d30eb2d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e7c8a1_bdda87ca",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-21T22:26:56Z",
+      "side": 1,
+      "message": "nit: use subprocess.check_output\n\nos.popen is obsolete according to https://docs.python.org/2/library/os.html#os.popen",
+      "revId": "901314ed0d1e7b2b4dce3b23bddf81d30eb2d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
