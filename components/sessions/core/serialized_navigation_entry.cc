@@ -22,17 +22,7 @@ const char kSearchTermsKey[] = "search_terms";
 // The previous referrer policy value corresponding to |Never|.
 const int kObsoleteReferrerPolicyNever = 2;
 
-SerializedNavigationEntry::SerializedNavigationEntry()
-    : index_(-1),
-      unique_id_(0),
-      transition_type_(ui::PAGE_TRANSITION_TYPED),
-      has_post_data_(false),
-      post_id_(-1),
-      is_overriding_user_agent_(false),
-      http_status_code_(0),
-      is_restored_(false),
-      blocked_state_(STATE_INVALID),
-      password_state_(PASSWORD_STATE_UNKNOWN) {
+SerializedNavigationEntry::SerializedNavigationEntry() {
   referrer_policy_ =
       SerializedNavigationDriver::Get()->GetDefaultReferrerPolicy();
 }
@@ -40,7 +30,16 @@ SerializedNavigationEntry::SerializedNavigationEntry()
 SerializedNavigationEntry::SerializedNavigationEntry(
     const SerializedNavigationEntry& other) = default;
 
-SerializedNavigationEntry::~SerializedNavigationEntry() {}
+SerializedNavigationEntry::SerializedNavigationEntry(
+    SerializedNavigationEntry&& other) noexcept = default;
+
+SerializedNavigationEntry::~SerializedNavigationEntry() = default;
+
+SerializedNavigationEntry& SerializedNavigationEntry::operator=(
+    const SerializedNavigationEntry& other) = default;
+
+SerializedNavigationEntry& SerializedNavigationEntry::operator=(
+    SerializedNavigationEntry&& other) = default;
 
 SerializedNavigationEntry SerializedNavigationEntry::FromSyncData(
     int index,
