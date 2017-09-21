@@ -271,7 +271,8 @@ void ProxyImpl::NotifyReadyToCommitOnImpl(
     bool hold_commit_for_activation) {
   TRACE_EVENT0("cc", "ProxyImpl::NotifyReadyToCommitOnImpl");
   DCHECK(!commit_completion_event_);
-  DCHECK(IsImplThread() && IsMainThreadBlocked());
+  DCHECK(IsImplThread());
+  // DCHECK(IsMainThreadBlocked());
   DCHECK(scheduler_);
   DCHECK(scheduler_->CommitPending());
 
@@ -279,6 +280,9 @@ void ProxyImpl::NotifyReadyToCommitOnImpl(
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NoLayerTree",
                          TRACE_EVENT_SCOPE_THREAD);
     completion->Signal();
+    MainThreadTaskRunner()->PostTask(
+        FROM_HERE, base::BindOnce(&ProxyMain::ImplCommitCompleteSignaled,
+                                  proxy_main_weak_ptr_));
     return;
   }
 
@@ -542,7 +546,7 @@ DrawResult ProxyImpl::ScheduledActionDrawForced() {
 void ProxyImpl::ScheduledActionCommit() {
   TRACE_EVENT0("cc", "ProxyImpl::ScheduledActionCommit");
   DCHECK(IsImplThread());
-  DCHECK(IsMainThreadBlocked());
+  // DCHECK(IsMainThreadBlocked());
   DCHECK(commit_completion_event_);
 
   // Relax the cross-thread access restriction to non-thread-safe RefCount.
@@ -570,6 +574,9 @@ void ProxyImpl::ScheduledActionCommit() {
     activation_completion_event_ = commit_completion_event_;
   } else {
     commit_completion_event_->Signal();
+    MainThreadTaskRunner()->PostTask(
+        FROM_HERE, base::BindOnce(&ProxyMain::ImplCommitCompleteSignaled,
+                                  proxy_main_weak_ptr_));
   }
   commit_completion_event_ = nullptr;
 
@@ -700,7 +707,8 @@ bool ProxyImpl::IsMainThreadBlocked() const {
 }
 
 ProxyImpl::BlockedMainCommitOnly& ProxyImpl::blocked_main_commit() {
-  DCHECK(IsMainThreadBlocked() && commit_completion_event_);
+  // DCHECK(IsMainThreadBlocked());
+  DCHECK(commit_completion_event_);
   return main_thread_blocked_commit_vars_unsafe_;
 }
 

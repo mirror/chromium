@@ -29,6 +29,7 @@ ProxyMain::ProxyMain(LayerTreeHost* layer_tree_host,
     : layer_tree_host_(layer_tree_host),
       task_runner_provider_(task_runner_provider),
       layer_tree_host_id_(layer_tree_host->GetId()),
+      max_pending_request_pipeline_stage_(NO_PIPELINE_STAGE),
       max_requested_pipeline_stage_(NO_PIPELINE_STAGE),
       current_pipeline_stage_(NO_PIPELINE_STAGE),
       final_pipeline_stage_(NO_PIPELINE_STAGE),
@@ -189,6 +190,8 @@ void ProxyMain::BeginMainFrame(
   // what this does.
   layer_tree_host_->BeginMainFrame(begin_main_frame_state->begin_frame_args);
 
+  layer_tree_host_->BlockIfInsideCommit();
+
   // Updates cc animations on the main-thread. This appears to be entirely
   // duplicated by work done in LayerTreeHost::BeginMainFrame. crbug.com/762717.
   layer_tree_host_->AnimateLayers(
@@ -265,6 +268,7 @@ void ProxyMain::BeginMainFrame(
     // detected to be a no-op.  From the perspective of an embedder, this commit
     // went through, and input should no longer be throttled, etc.
     current_pipeline_stage_ = NO_PIPELINE_STAGE;
+    layer_tree_host_->CommitOnImplThreadComplete();
     layer_tree_host_->CommitComplete();
     layer_tree_host_->DidBeginMainFrame();
     return;
@@ -274,32 +278,73 @@ void ProxyMain::BeginMainFrame(
   // begin the commit process, which is blocking from the main thread's
   // point of view, but asynchronously performed on the impl thread,
   // coordinated by the Scheduler.
-  {
-    TRACE_EVENT0("cc", "ProxyMain::BeginMainFrame::commit");
+  if (commit_waits_for_activation_) {
+    {
+      TRACE_EVENT0("cc", "ProxyMain::BeginMainFrame::commit");
+      base::TimeTicks start = base::TimeTicks::Now();
 
-    DebugScopedSetMainThreadBlocked main_thread_blocked(task_runner_provider_);
+      DebugScopedSetMainThreadBlocked main_thread_blocked(
+          task_runner_provider_);
 
-    // This CapturePostTasks should be destroyed before CommitComplete() is
-    // called since that goes out to the embedder, and we want the embedder
-    // to receive its callbacks before that.
-    BlockingTaskRunner::CapturePostTasks blocked(
-        task_runner_provider_->blocking_main_thread_task_runner());
+      // This CapturePostTasks should be destroyed before CommitComplete() is
+      // called since that goes out to the embedder, and we want the embedder
+      // to receive its callbacks before that.
+      BlockingTaskRunner::CapturePostTasks blocked(
+          task_runner_provider_->blocking_main_thread_task_runner());
 
-    bool hold_commit_for_activation = commit_waits_for_activation_;
-    commit_waits_for_activation_ = false;
-    CompletionEvent completion;
+      impl_commit_completion_ = std::make_unique<CompletionEvent>();
+      commit_waits_for_activation_ = false;
+      ImplThreadTaskRunner()->PostTask(
+          FROM_HERE,
+          base::BindOnce(&ProxyImpl::NotifyReadyToCommitOnImpl,
+                         base::Unretained(proxy_impl_.get()),
+                         impl_commit_completion_.get(), layer_tree_host_,
+                         begin_main_frame_start_time, true));
+      impl_commit_completion_->Wait();
+      impl_commit_completion_.reset();
+
+      base::TimeTicks end = base::TimeTicks::Now();
+      UMA_HISTOGRAM_TIMES("Commit.Blocked", end - start);
+    }
+
+    layer_tree_host_->CommitOnImplThreadComplete();
+    current_pipeline_stage_ = NO_PIPELINE_STAGE;
+    layer_tree_host_->CommitComplete();
+    layer_tree_host_->DidBeginMainFrame();
+  } else {
+    impl_commit_completion_ = std::make_unique<CompletionEvent>();
     ImplThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&ProxyImpl::NotifyReadyToCommitOnImpl,
-                       base::Unretained(proxy_impl_.get()), &completion,
-                       layer_tree_host_, begin_main_frame_start_time,
-                       hold_commit_for_activation));
-    completion.Wait();
+                       base::Unretained(proxy_impl_.get()),
+                       impl_commit_completion_.get(), layer_tree_host_,
+                       begin_main_frame_start_time, false));
+    current_pipeline_stage_ = NO_PIPELINE_STAGE;
+    layer_tree_host_->CommitComplete();
+    layer_tree_host_->DidBeginMainFrame();
   }
+}
 
-  current_pipeline_stage_ = NO_PIPELINE_STAGE;
-  layer_tree_host_->CommitComplete();
-  layer_tree_host_->DidBeginMainFrame();
+void ProxyMain::WaitForImplCommit() {
+  // Is null when ImplCommitCompleteSignaled() happened.
+  if (impl_commit_completion_) {
+    impl_commit_completion_->Wait();
+    impl_commit_completion_.reset();
+  }
+  layer_tree_host_->CommitOnImplThreadComplete();
+  if (max_pending_request_pipeline_stage_ != NO_PIPELINE_STAGE) {
+    SendCommitRequestToImplThreadIfNeeded(max_pending_request_pipeline_stage_);
+    max_pending_request_pipeline_stage_ = NO_PIPELINE_STAGE;
+  }
+}
+
+void ProxyMain::ImplCommitCompleteSignaled() {
+  if (!impl_commit_completion_)
+    return;
+  CHECK(impl_commit_completion_->IsSignaled());
+  impl_commit_completion_.reset();
+  WaitForImplCommit();
+  layer_tree_host_->AfterImplCommit();
 }
 
 bool ProxyMain::IsStarted() const {
@@ -339,6 +384,13 @@ void ProxyMain::SetNeedsAnimate() {
 
 void ProxyMain::SetNeedsUpdateLayers() {
   DCHECK(IsMainThread());
+
+  if (0 && impl_commit_completion_) {
+    // Will abort and postpone.
+    SendCommitRequestToImplThreadIfNeeded(UPDATE_LAYERS_PIPELINE_STAGE);
+    return;
+  }
+
   // If we are currently animating, make sure we also update the layers.
   if (current_pipeline_stage_ == ANIMATE_PIPELINE_STAGE) {
     final_pipeline_stage_ =
@@ -353,6 +405,13 @@ void ProxyMain::SetNeedsUpdateLayers() {
 
 void ProxyMain::SetNeedsCommit() {
   DCHECK(IsMainThread());
+
+  if (0 && impl_commit_completion_) {
+    // Will abort and postpone.
+    SendCommitRequestToImplThreadIfNeeded(COMMIT_PIPELINE_STAGE);
+    return;
+  }
+
   // If we are currently animating, make sure we don't skip the commit. Note
   // that requesting a commit during the layer update stage means we need to
   // schedule another full commit.
@@ -529,6 +588,15 @@ void ProxyMain::RequestBeginMainFrameNotExpected(bool new_state) {
 bool ProxyMain::SendCommitRequestToImplThreadIfNeeded(
     CommitPipelineStage required_stage) {
   DCHECK(IsMainThread());
+
+  if (0 && impl_commit_completion_) {
+    bool already_posted =
+        max_pending_request_pipeline_stage_ != NO_PIPELINE_STAGE;
+    max_pending_request_pipeline_stage_ =
+        std::max(max_pending_request_pipeline_stage_, required_stage);
+    return !already_posted;
+  }
+
   DCHECK_NE(NO_PIPELINE_STAGE, required_stage);
   bool already_posted = max_requested_pipeline_stage_ != NO_PIPELINE_STAGE;
   max_requested_pipeline_stage_ =

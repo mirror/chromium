@@ -142,7 +142,7 @@ void TextureLayer::SetTextureMailboxInternal(
   UpdateDrawsContent(HasDrawableContent());
   // The active frame needs to be replaced and the mailbox returned before the
   // commit is called complete.
-  SetNextCommitWaitsForActivation();
+  // SetNextCommitWaitsForActivation();
 }
 
 void TextureLayer::SetTextureMailbox(
@@ -171,7 +171,7 @@ void TextureLayer::SetLayerTreeHost(LayerTreeHost* host) {
     needs_set_mailbox_ = true;
     // The active frame needs to be replaced and the mailbox returned before the
     // commit is called complete.
-    SetNextCommitWaitsForActivation();
+    // SetNextCommitWaitsForActivation();
   }
   Layer::SetLayerTreeHost(host);
 }

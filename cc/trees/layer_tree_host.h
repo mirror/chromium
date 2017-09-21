@@ -304,7 +304,12 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   float min_page_scale_factor() const { return min_page_scale_factor_; }
   float max_page_scale_factor() const { return max_page_scale_factor_; }
 
-  void set_background_color(SkColor color) { background_color_ = color; }
+  void set_background_color(SkColor color) {
+    if (background_color_ == color)
+      return;
+    BlockIfInsideCommit();
+    background_color_ = color;
+  }
   SkColor background_color() const { return background_color_; }
 
   void StartPageScaleAnimation(const gfx::Vector2d& target_offset,
@@ -382,10 +387,14 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   bool needs_surface_ids_sync() const { return needs_surface_ids_sync_; }
   void set_needs_surface_ids_sync(bool needs_surface_ids_sync) {
+    BlockIfInsideCommit();
     needs_surface_ids_sync_ = needs_surface_ids_sync;
   }
 
   void SetPropertyTreesNeedRebuild();
+
+  void BlockIfInsideCommit();
+  void AfterImplCommit();
 
   void PushPropertyTreesTo(LayerTreeImpl* tree_impl);
   void PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl);
@@ -420,6 +429,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   void FinishCommitOnImplThread(LayerTreeHostImpl* host_impl);
   void WillCommit();
   void CommitComplete();
+  void CommitOnImplThreadComplete();
   void RequestNewLayerTreeFrameSink();
   void DidInitializeLayerTreeFrameSink();
   void DidFailToInitializeLayerTreeFrameSink();
@@ -661,6 +671,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   bool has_copy_request_ = false;
 
   MutatorHost* mutator_host_;
+
+  bool in_commit_ = false;
 
   std::vector<std::pair<PaintImage, base::Callback<void(bool)>>>
       queued_image_decodes_;
