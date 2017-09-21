@@ -70,6 +70,24 @@
       "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34b2943_9cda82d8",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-21T01:01:52Z",
+      "side": 1,
+      "message": "Ah. I see. This is because in VerifyUpdateSeurityState unit test, there is no cached verdict before changing security state.  For regular cases, GetCachedVerdict in line 437 should propagate the correct cache_expression. \n\nLet\u0027s do following the circumvent this issue. \n \nif (verdict.cache_expression().empty())\n  verdict.set_cache_expression(\"/\");",
+      "parentUuid": "263b952b_c2432f73",
+      "revId": "60e667c323436e7ef5c83b1b3115d090412a44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
