@@ -360,7 +360,8 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
                       HeapVector<Member<Element>>& result) const;
   bool HasAOMPropertyOrARIAAttribute(AOMRelationListProperty,
                                      HeapVector<Member<Element>>& result) const;
-  bool HasAOMPropertyOrARIAAttribute(AOMBooleanProperty, bool& result) const;
+  virtual bool HasAOMPropertyOrARIAAttribute(AOMBooleanProperty,
+                                             bool& result) const;
   bool AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty) const;
   bool AOMPropertyOrARIAAttributeIsFalse(AOMBooleanProperty) const;
   bool HasAOMPropertyOrARIAAttribute(AOMUIntProperty, uint32_t& result) const;
@@ -368,8 +369,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool HasAOMPropertyOrARIAAttribute(AOMFloatProperty, float& result) const;
   bool HasAOMPropertyOrARIAAttribute(AOMStringProperty,
                                      AtomicString& result) const;
+  virtual AccessibleNode* GetAccessibleNode() const;
 
-  virtual void GetSparseAXAttributes(AXSparseAttributeClient&) const {}
+  virtual void GetSparseAXAttributes(AXSparseAttributeClient&) const;
 
   // Determine subclass type.
   virtual bool IsAXNodeObject() const { return false; }
@@ -632,7 +634,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual bool MaxValueForRange(float* out_value) const { return false; }
   virtual bool MinValueForRange(float* out_value) const { return false; }
   virtual String StringValue() const { return String(); }
-  virtual AXRestriction Restriction() const { return kNone; }
+  virtual AXRestriction Restriction() const;
 
   // ARIA attributes.
   virtual AccessibilityRole DetermineAccessibilityRole();
@@ -674,7 +676,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   AXObject* LiveRegionRoot() const;
   virtual const AtomicString& LiveRegionStatus() const { return g_null_atom; }
   virtual const AtomicString& LiveRegionRelevant() const { return g_null_atom; }
-  virtual bool LiveRegionAtomic() const { return false; }
+  bool LiveRegionAtomic() const;
 
   const AtomicString& ContainerLiveRegionStatus() const;
   const AtomicString& ContainerLiveRegionRelevant() const;
@@ -874,6 +876,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
 
   bool CanReceiveAccessibilityFocus() const;
   bool NameFromContents(bool recursive) const;
+  bool CanSupportAriaReadOnly() const;
 
   AccessibilityRole ButtonRoleType() const;
 
