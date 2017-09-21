@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c32fb4e_8f89f0f6",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-21T15:15:28Z",
+      "side": 1,
+      "message": "We should probably have a TODO about checking the Responder certificate revocation status.",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 52
+      },
+      "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00661e1_20dc8739",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-21T15:15:28Z",
+      "side": 1,
+      "message": "Since more than one cert could match the ResponderID, we should checking if they are authorized (issuer signature/EKU check) inside the loop, and then breaking out once we run out of certs or find a valid cert.\n\nA questionable OCSP responder could send back CertA (Key 1, signed by CA Foo) and CertB (Key 1, signed by CA Bar (the issuer)), and we should probably be selecting the second certificate and continuing rather than failing on the first certificate.",
+      "revId": "8791be9b7f3f6aba2c6df53ec2114908d276c8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "331fae4b_d5ab640f",
         "filename": "net/cert/internal/ocsp.cc",
         "patchSetId": 1
