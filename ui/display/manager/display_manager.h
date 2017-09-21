@@ -29,6 +29,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/events/devices/touchscreen_device.h"
 #endif
 
 namespace gfx {
@@ -183,14 +184,14 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |overscan_insets| is null if the display has no custom overscan insets.
   // |touch_calibration_data| is null if the display has no touch calibration
   // associated data.
-  void RegisterDisplayProperty(
-      int64_t display_id,
-      Display::Rotation rotation,
-      float ui_scale,
-      const gfx::Insets* overscan_insets,
-      const gfx::Size& resolution_in_pixels,
-      float device_scale_factor,
-      const TouchCalibrationData* touch_calibration_data);
+  void RegisterDisplayProperty(int64_t display_id,
+                               Display::Rotation rotation,
+                               float ui_scale,
+                               const gfx::Insets* overscan_insets,
+                               const gfx::Size& resolution_in_pixels,
+                               float device_scale_factor,
+                               std::map<uint32_t, TouchCalibrationData>*
+                                   touch_calibration_data_map = nullptr);
 
   // Register stored rotation properties for the internal display.
   void RegisterDisplayRotationProperties(bool rotation_lock,
@@ -319,8 +320,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   void SetTouchCalibrationData(
       int64_t display_id,
       const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
-      const gfx::Size& display_bounds);
-  void ClearTouchCalibrationData(int64_t display_id);
+      const gfx::Size& display_bounds,
+      uint32_t touch_device_identifier);
+  void ClearTouchCalibrationData(int64_t display_id,
+                                 uint32_t touch_device_identifier = 0);
 #endif
 
   // Sets/gets default multi display mode.

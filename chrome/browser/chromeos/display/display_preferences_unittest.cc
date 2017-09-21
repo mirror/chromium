@@ -50,6 +50,7 @@ const char kPositionKey[] = "position";
 const char kOffsetKey[] = "offset";
 const char kPlacementDisplayIdKey[] = "placement.display_id";
 const char kPlacementParentDisplayIdKey[] = "placement.parent_display_id";
+const char kTouchCalibrationMap[] = "touch_calibration_map";
 const char kTouchCalibrationWidth[] = "touch_calibration_width";
 const char kTouchCalibrationHeight[] = "touch_calibration_height";
 const char kTouchCalibrationPointPairs[] = "touch_calibration_point_pairs";
@@ -288,13 +289,26 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
                    .SetDisplayUIScale(id2, 1.25f));
 
   // Set touch calibration data for display |id2|.
-  display::TouchCalibrationData::CalibrationPointPairQuad point_pair_quad = {
+  uint32_t touch_device_identifier_1 = 1234;
+  display::TouchCalibrationData::CalibrationPointPairQuad point_pair_quad_1 = {
       {std::make_pair(gfx::Point(10, 10), gfx::Point(11, 12)),
        std::make_pair(gfx::Point(190, 10), gfx::Point(195, 8)),
        std::make_pair(gfx::Point(10, 90), gfx::Point(12, 94)),
        std::make_pair(gfx::Point(190, 90), gfx::Point(189, 88))}};
-  gfx::Size touch_size(200, 150);
-  display_manager()->SetTouchCalibrationData(id2, point_pair_quad, touch_size);
+  gfx::Size touch_size_1(200, 150);
+
+  uint32_t touch_device_identifier_2 = 2345;
+  display::TouchCalibrationData::CalibrationPointPairQuad point_pair_quad_2 = {
+      {std::make_pair(gfx::Point(10, 10), gfx::Point(11, 12)),
+       std::make_pair(gfx::Point(190, 10), gfx::Point(195, 8)),
+       std::make_pair(gfx::Point(10, 90), gfx::Point(12, 94)),
+       std::make_pair(gfx::Point(190, 90), gfx::Point(189, 88))}};
+  gfx::Size touch_size_2(150, 150);
+
+  display_manager()->SetTouchCalibrationData(
+      id2, point_pair_quad_1, touch_size_1, touch_device_identifier_1);
+  display_manager()->SetTouchCalibrationData(
+      id2, point_pair_quad_2, touch_size_2, touch_device_identifier_2);
 
   const base::DictionaryValue* displays =
       local_state()->GetDictionary(prefs::kSecondaryDisplays);
@@ -360,23 +374,51 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_FALSE(property->GetInteger("insets_right", &right));
 
   display::TouchCalibrationData::CalibrationPointPairQuad stored_pair_quad;
+  const base::DictionaryValue* map_dictionary;
+  const base::DictionaryValue* data_dict;
 
-  EXPECT_TRUE(property->GetString(kTouchCalibrationPointPairs, &touch_str));
+  EXPECT_TRUE(property->GetDictionary(kTouchCalibrationMap, &map_dictionary));
+  EXPECT_TRUE(map_dictionary->GetDictionary(
+      base::UintToString(touch_device_identifier_1), &data_dict));
+  EXPECT_TRUE(data_dict->GetString(kTouchCalibrationPointPairs, &touch_str));
   EXPECT_TRUE(ParseTouchCalibrationStringForTest(touch_str, &stored_pair_quad));
 
-  for (std::size_t row = 0; row < point_pair_quad.size(); row++) {
-    EXPECT_EQ(point_pair_quad[row].first.x(), stored_pair_quad[row].first.x());
-    EXPECT_EQ(point_pair_quad[row].first.y(), stored_pair_quad[row].first.y());
-    EXPECT_EQ(point_pair_quad[row].second.x(),
+  for (std::size_t row = 0; row < point_pair_quad_1.size(); row++) {
+    EXPECT_EQ(point_pair_quad_1[row].first.x(),
+              stored_pair_quad[row].first.x());
+    EXPECT_EQ(point_pair_quad_1[row].first.y(),
+              stored_pair_quad[row].first.y());
+    EXPECT_EQ(point_pair_quad_1[row].second.x(),
               stored_pair_quad[row].second.x());
-    EXPECT_EQ(point_pair_quad[row].second.y(),
+    EXPECT_EQ(point_pair_quad_1[row].second.y(),
               stored_pair_quad[row].second.y());
   }
   width = height = 0;
-  EXPECT_TRUE(property->GetInteger(kTouchCalibrationWidth, &width));
-  EXPECT_TRUE(property->GetInteger(kTouchCalibrationHeight, &height));
-  EXPECT_EQ(width, touch_size.width());
-  EXPECT_EQ(height, touch_size.height());
+  EXPECT_TRUE(data_dict->GetInteger(kTouchCalibrationWidth, &width));
+  EXPECT_TRUE(data_dict->GetInteger(kTouchCalibrationHeight, &height));
+  EXPECT_EQ(width, touch_size_1.width());
+  EXPECT_EQ(height, touch_size_1.height());
+
+  EXPECT_TRUE(map_dictionary->GetDictionary(
+      base::UintToString(touch_device_identifier_2), &data_dict));
+  EXPECT_TRUE(data_dict->GetString(kTouchCalibrationPointPairs, &touch_str));
+  EXPECT_TRUE(ParseTouchCalibrationStringForTest(touch_str, &stored_pair_quad));
+
+  for (std::size_t row = 0; row < point_pair_quad_2.size(); row++) {
+    EXPECT_EQ(point_pair_quad_2[row].first.x(),
+              stored_pair_quad[row].first.x());
+    EXPECT_EQ(point_pair_quad_2[row].first.y(),
+              stored_pair_quad[row].first.y());
+    EXPECT_EQ(point_pair_quad_2[row].second.x(),
+              stored_pair_quad[row].second.x());
+    EXPECT_EQ(point_pair_quad_2[row].second.y(),
+              stored_pair_quad[row].second.y());
+  }
+  width = height = 0;
+  EXPECT_TRUE(data_dict->GetInteger(kTouchCalibrationWidth, &width));
+  EXPECT_TRUE(data_dict->GetInteger(kTouchCalibrationHeight, &height));
+  EXPECT_EQ(width, touch_size_2.width());
+  EXPECT_EQ(height, touch_size_2.height());
 
   // Resolution is saved only when the resolution is set
   // by DisplayManager::SetDisplayMode
