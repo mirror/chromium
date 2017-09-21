@@ -16,6 +16,24 @@
       "revId": "01b28422bcb168e52fc1039112f1329937c85321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beae0a23_bea107da",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-21T01:15:47Z",
+      "side": 0,
+      "message": "Yes.  Previously all test classes in the urlconnection/ directory called CronetTestBase.setStreamHandlerFactory() and then the value then got transferred to URL.setURLStreamHandlerFactory() here when the tests were run a second time.  Now it\u0027s one step simpler: test classes call mTestRule.setStreamHandlerFactory() which directly calls URL.setURLStreamHandlerFactory() when the tests are being run for the second time.",
+      "parentUuid": "3a00eead_95a1c283",
+      "revId": "01b28422bcb168e52fc1039112f1329937c85321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
