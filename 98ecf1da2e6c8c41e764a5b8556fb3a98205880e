@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f3725d_050f94da",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-21T08:35:20Z",
+      "side": 1,
+      "message": "Is Get() needed?",
+      "range": {
+        "startLine": 164,
+        "startChar": 43,
+        "endLine": 164,
+        "endChar": 53
+      },
+      "revId": "98ecf1da2e6c8c41e764a5b8556fb3a98205880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede866f0_bd1f2bce",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-21T08:35:20Z",
+      "side": 1,
+      "message": "Why is this not a KURL? According to the DCHECK in the function, this should be a valid url.",
+      "range": {
+        "startLine": 34,
+        "startChar": 40,
+        "endLine": 34,
+        "endChar": 52
+      },
+      "revId": "98ecf1da2e6c8c41e764a5b8556fb3a98205880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
