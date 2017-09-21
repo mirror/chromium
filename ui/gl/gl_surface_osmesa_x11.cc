@@ -121,7 +121,8 @@ bool GLSurfaceOSMesaX11::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceOSMesaX11::SwapBuffers() {
+gfx::SwapResult GLSurfaceOSMesaX11::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   TRACE_EVENT2("gpu", "GLSurfaceOSMesaX11:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
 
@@ -142,6 +143,8 @@ gfx::SwapResult GLSurfaceOSMesaX11::SwapBuffers() {
   // Copy the pixmap to the window.
   XCopyArea(xdisplay_, pixmap_, window_, window_graphics_context_, 0, 0,
             size.width(), size.height(), 0, 0);
+
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
 
   return gfx::SwapResult::SWAP_ACK;
 }

@@ -47,13 +47,15 @@ class GL_EXPORT NativeViewGLSurfaceWGL : public GLSurfaceWGL {
               bool has_alpha) override;
   bool Recreate() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   GLSurfaceFormat GetFormat() override;
 
  private:
   ~NativeViewGLSurfaceWGL() override;
+  gfx::SwapResult SwapBuffersInternal();
 
   GLSurfaceFormat format_;
 
@@ -74,7 +76,8 @@ class GL_EXPORT PbufferGLSurfaceWGL : public GLSurfaceWGL {
   bool Initialize(GLSurfaceFormat format) override;
   void Destroy() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   GLSurfaceFormat GetFormat() override;

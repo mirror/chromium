@@ -1217,14 +1217,10 @@ bool DirectCompositionSurfaceWin::Resize(const gfx::Size& size,
   return RecreateRootSurface();
 }
 
-gfx::SwapResult DirectCompositionSurfaceWin::SwapBuffers() {
-  {
-    ui::ScopedReleaseCurrent release_current(this);
-    root_surface_->SwapBuffers();
-
-    layer_tree_->CommitAndClearPendingOverlays();
-  }
-  child_window_.ClearInvalidContents();
+gfx::SwapResult DirectCompositionSurfaceWin::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  SwapBuffersInternal();
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -1234,7 +1230,18 @@ gfx::SwapResult DirectCompositionSurfaceWin::PostSubBuffer(int x,
                                                            int height) {
   // The arguments are ignored because SetDrawRectangle specified the area to
   // be swapped.
-  return SwapBuffers();
+  SwapBuffersInternal();
+  return gfx::SwapResult::SWAP_ACK;
+}
+
+void DirectCompositionSurfaceWin::SwapBuffersInternal() {
+  {
+    ui::ScopedReleaseCurrent release_current(this);
+    root_surface_->SwapBuffers();
+
+    layer_tree_->CommitAndClearPendingOverlays();
+  }
+  child_window_.ClearInvalidContents();
 }
 
 gfx::VSyncProvider* DirectCompositionSurfaceWin::GetVSyncProvider() {

@@ -615,10 +615,12 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
   glXSwapBuffers(g_display, GetDrawableHandle());
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -718,7 +720,8 @@ bool UnmappedNativeViewGLSurfaceGLX::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   NOTREACHED() << "Attempted to call SwapBuffers on an unmapped window.";
   return gfx::SwapResult::SWAP_FAILED;
 }

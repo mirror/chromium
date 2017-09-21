@@ -61,11 +61,14 @@ bool GLSurfaceOSMesaWin::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceOSMesaWin::SwapBuffers() {
+gfx::SwapResult GLSurfaceOSMesaWin::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   DCHECK(device_context_);
 
   gfx::Size size = GetSize();
-  return PostSubBuffer(0, 0, size.width(), size.height());
+  gfx::SwapResult result = PostSubBuffer(0, 0, size.width(), size.height());
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
+  return result;
 }
 
 bool GLSurfaceOSMesaWin::SupportsPostSubBuffer() {

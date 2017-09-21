@@ -22,6 +22,7 @@
 #include "ui/gl/gl_image.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface_format.h"
+#include "ui/latency/latency_info.h"
 
 namespace gfx {
 class VSyncProvider;
@@ -83,7 +84,10 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
 
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts.
-  virtual gfx::SwapResult SwapBuffers() = 0;
+  // |latency_info_swap| is an in/out parameter.
+  // It queues new LatencyInfos and receives completed latency infos.
+  virtual gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) = 0;
 
   // Get the size of the surface.
   virtual gfx::Size GetSize() = 0;
@@ -270,7 +274,8 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool Recreate() override;
   bool DeferDraws() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
