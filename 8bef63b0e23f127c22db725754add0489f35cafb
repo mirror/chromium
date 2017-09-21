@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd5724b_7774143e",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-21T18:39:12Z",
+      "side": 1,
+      "message": "Remove the observer on |remote_device_provider_| here.\n\nAlso, not all of these objects are created during construction (the managers, as well as the provider). Please check to see if these pointers are null before calling RemoveObserver().",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 31
+      },
+      "revId": "8bef63b0e23f127c22db725754add0489f35cafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
