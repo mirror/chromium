@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1c6650_130b71c6",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-21T02:56:03Z",
+      "side": 1,
+      "message": "Are you sure this actually works? I asked Ken and he said bindings code doesn\u0027t check the callback is valid, it always runs it.",
+      "range": {
+        "startLine": 177,
+        "startChar": 42,
+        "endLine": 177,
+        "endChar": 74
+      },
+      "revId": "566bb7560ee1f94ad68c1440811efad4475f4c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
