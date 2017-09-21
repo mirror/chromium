@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ea28738_f73f1b49",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-21T21:29:19Z",
+      "side": 1,
+      "message": "Maybe clear out idb_task_runner_ here too, alternative you could have a TaskRunner() getter on the IndexedDBObserver object and not have an extra refptr at all.\n\nTaskRunner() { return context_-\u003eTaskRunner(); }",
+      "revId": "06f0f1313877167e2512f2daed5ac9226b610130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
