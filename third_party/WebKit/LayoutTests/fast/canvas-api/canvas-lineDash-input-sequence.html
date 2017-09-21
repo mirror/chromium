@@ -48,7 +48,11 @@ test(function(t) {
         ctx.setLineDash([]);
         // Set line dash.
         if (shouldFail) {
-            assert_throws(null, function() {ctx.setLineDash(inputArray);}, "'TypeError: Failed to execute \\'setLineDash\\' on \\'CanvasRenderingContext2D\\': The 1st argument is neither an array, nor does it have indexed properties.'");
+          try {
+            ctx.setLineDash(inputArray);
+          } catch (ex) {
+            assert_equals(ex.name, "TypeError");
+          }
         } else {
             ctx.setLineDash(inputArray);
             lineDash = ctx.getLineDash();

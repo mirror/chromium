@@ -10,19 +10,63 @@ invalidImage.src = 'resources/shadow-offset.js';
 var ctx = document.createElement("canvas").getContext('2d');
 function draw() {
     // null and undefined images should throw TypeError
-    assert_throws(null, function() {ctx.drawImage(null, 0, 0)});
-    assert_throws(null, function() {ctx.drawImage(null, 0, 0, 20, 20)});
-    assert_throws(null, function() {ctx.drawImage(null, 0, 0, 20, 20, 0, 0, 20, 20)});
-    assert_throws(null, function() {ctx.drawImage(undefined, 0, 0)});
-    assert_throws(null, function() {ctx.drawImage(undefined, 0, 0, 20, 20)});
-    assert_throws(null, function() {ctx.drawImage(undefined, 0, 0, 20, 20, 0, 0, 20, 20)});
+    try {
+      ctx.drawImage(null, 0, 0);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.drawImage(null, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.drawImage(null, 0, 0, 20, 20, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.drawImage(undefined, 0, 0);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.drawImage(undefined, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.drawImage(undefined, 0, 0, 20, 20, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
 
-    // broken images should not throw
-    assert_throws(null, function() {ctx.drawImage(invalidImage, 0, 0)});
-    assert_throws(null, function() {ctx.drawImage(invalidImage, 0, 0, 20, 20)});
-    assert_throws(null, function() {ctx.drawImage(invalidImage, 0, 0, 20, 20, 0, 0, 20, 20)});
-    assert_throws(null, function() {ctx.drawImage(invalidImage, 0, 0, 0, 20)});
-    assert_throws(null, function() {ctx.drawImage(invalidImage, 0, 0, 0, 20, 0, 0, 20, 20)});
+    // broken images should throw InvalidStateError
+    try {
+      ctx.drawImage(invalidImage, 0, 0);
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
+    try {
+      ctx.drawImage(invalidImage, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
+    try {
+      ctx.drawImage(invalidImage, 0, 0, 20, 20, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
+    try {
+      ctx.drawImage(invalidImage, 0, 0, 0, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
+    try {
+      ctx.drawImage(invalidImage, 0, 0, 0, 20, 0, 0, 20, 20);
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
 }
     
 async_test(t => {

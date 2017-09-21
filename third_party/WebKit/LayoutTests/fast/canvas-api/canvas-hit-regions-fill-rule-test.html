@@ -51,7 +51,11 @@ test(function(t) {
 
   context.removeHitRegion('nonzero');
 
-  assert_throws(null, function() {context.addHitRegion({id : 'nonzero', fillRule : null });});
+  try {
+    context.addHitRegion({id : 'nonzero', fillRule : null});
+  } catch (ex) {
+    assert_equals(ex.name, "TypeError");
+  }
 
   context.addHitRegion({
     id : 'nonzero',

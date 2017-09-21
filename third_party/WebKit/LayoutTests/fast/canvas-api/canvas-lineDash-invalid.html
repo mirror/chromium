@@ -40,7 +40,11 @@ test(function(t) {
     assert_array_equals(trySettingLineDash([1, -Infinity]), initialLineDash);
     assert_array_equals(trySettingLineDash([1, NaN]), initialLineDash);
     assert_array_equals(trySettingLineDash([1, 'string']), initialLineDash);
-    assert_throws(null, function() {trySettingLineDashWithNoArgs();}, '"TypeError: Failed to execute \'setLineDash\' on \'CanvasRenderingContext2D\': 1 argument required, but only 0 present."');
+    try {
+      trySettingLineDashWithNoArgs();
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     
     assert_array_equals(trySettingLineDashOffset(Infinity), initialLineDashOffset);
     assert_array_equals(trySettingLineDashOffset(-Infinity), initialLineDashOffset);
