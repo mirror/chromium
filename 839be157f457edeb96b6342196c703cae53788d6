@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acdc8a4_2981f42c",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-21T03:40:35Z",
+      "side": 1,
+      "message": "this is the easiest and fastest i could think of :)",
+      "range": {
+        "startLine": 92,
+        "startChar": 57,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f793e48f_5c820931",
+        "filename": "chrome/test/data/webui/settings/rtl_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-21T03:40:35Z",
+      "side": 0,
+      "message": "i didn\u0027t really find a good way to test now that new impl is so simple and cross-lang",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
