@@ -16,6 +16,24 @@
       "revId": "ffff72ecc6485ac43475d6b41f338a635b9e9875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50185489_3ffe8ea6",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-21T23:00:24Z",
+      "side": 1,
+      "message": "Sorry, added in https://chromium-review.googlesource.com/c/chromium/src/+/677859.",
+      "parentUuid": "772ae89d_126d27e0",
+      "revId": "ffff72ecc6485ac43475d6b41f338a635b9e9875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
