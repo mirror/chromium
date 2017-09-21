@@ -16,6 +16,24 @@
       "revId": "cf32df1de600aa580956125dca5d2580be463bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2afa4b_c74a7b4f",
+        "filename": "chrome/browser/sync/test/integration/two_client_uss_sync_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-21T00:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc62dcc_46a6ac92",
+      "revId": "cf32df1de600aa580956125dca5d2580be463bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
