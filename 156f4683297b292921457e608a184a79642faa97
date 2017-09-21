@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1294338_6a206970",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-21T07:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68019b69_f3f500e5",
+      "range": {
+        "startLine": 763,
+        "startChar": 39,
+        "endLine": 763,
+        "endChar": 60
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8ff4d0_64d22223",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "156f4683297b292921457e608a184a79642faa97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aed4271_47087104",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-21T07:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8ff4d0_64d22223",
+      "range": {
+        "startLine": 553,
+        "startChar": 5,
+        "endLine": 553,
+        "endChar": 6
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1fb7f941_cd664d70",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-21T07:15:52Z",
+      "side": 1,
+      "message": "Yes. 206 response needs to be scaled.\n\nThis codepath is used to log UMA histograms via RecordContentLength.\nCalculateEffectiveOCL does other calculations if OFCL/XOCL are not present (if any intermediate routers strip chrome-proxy, xocl headers ?).\nI do not want to change the meaning of these UMA, when OFCL/XOCL are not present.\nSo created a separate function.",
+      "parentUuid": "2ad450d8_3c5decfe",
+      "range": {
+        "startLine": 554,
+        "startChar": 10,
+        "endLine": 554,
+        "endChar": 33
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "446cb94f_bfa4d44d",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-20T00:34:55Z",
       "side": 1,
       "message": "Before this, can we capture/error when the compression ratio doesn\u0027t make sense, i.e., range_content_length \u003e OFCL? Your call, I feel we should capture this, though it should not happen from the server side,",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 66
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e299c69_fcd65097",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-21T07:15:52Z",
+      "side": 1,
+      "message": "I do not think new UMA histogram is needed here.\nAny significant deviation could be seen in the following UMA\nNet.HttpOriginalContentLengthWithValidOCL, Net.HttpContentLengthDifferenceWithValidOCL\n\nwdyt",
+      "parentUuid": "446cb94f_bfa4d44d",
       "range": {
         "startLine": 199,
         "startChar": 6,
@@ -114,6 +210,30 @@
       "revId": "156f4683297b292921457e608a184a79642faa97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efec3b2d_d07110db",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-21T07:15:52Z",
+      "side": 1,
+      "message": "Yes. Added a TODO.\nThis will be removed after all instances of XOCL are removed.",
+      "parentUuid": "3658ea81_ef050173",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "156f4683297b292921457e608a184a79642faa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
