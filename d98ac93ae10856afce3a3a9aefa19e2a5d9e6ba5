@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d5a6070_8b8406ff",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T19:20:58Z",
+      "side": 1,
+      "message": "Done, on the first call.  Too close together for a duplicate comment.",
+      "parentUuid": "2e2c2b53_eb7fe08d",
+      "revId": "d98ac93ae10856afce3a3a9aefa19e2a5d9e6ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ae0c1b1_910a8644",
         "filename": "chrome/browser/vr/browser_ui_interface.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d98ac93ae10856afce3a3a9aefa19e2a5d9e6ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eea0337_a265a365",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T19:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ae0c1b1_910a8644",
+      "revId": "d98ac93ae10856afce3a3a9aefa19e2a5d9e6ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

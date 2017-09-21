@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09d03f0e_5e4c9cd9",
+        "filename": "chrome/browser/android/vr_shell/gl_browser_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T19:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d2e707_30969af3",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "577340f6_f1a1083f",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T18:46:56Z",
       "side": 1,
       "message": "Since this arg is currently null, should scrap this for now.",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696fae98_8bb20bf9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T19:20:58Z",
+      "side": 1,
+      "message": "Done.  I missed this, thanks.",
+      "parentUuid": "577340f6_f1a1083f",
       "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bd38a1_2347eb6e",
+        "filename": "chrome/browser/vr/ui_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T19:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c772e950_00d73c75",
+      "revId": "dc42ca6e97654e7cae7c85049102efff264a4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
