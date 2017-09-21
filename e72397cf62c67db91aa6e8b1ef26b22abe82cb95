@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33627e66_036a32cd",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T16:26:23Z",
+      "side": 1,
+      "message": "I used std::pair initially, but then found that Cell::row and Cell::column are more readable.",
+      "parentUuid": "29d6d4a7_8dc8413b",
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74723546_ae33842f",
         "filename": "ui/display/unified_desktop_utils.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89441c63_0116a91f",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74723546_ae33842f",
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7c405602_547b751d",
+        "filename": "ui/display/unified_desktop_utils_unittests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5719b1dd_fed261db",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56df80a0_bddb2a3d",
         "filename": "ui/display/unified_desktop_utils_unittests.cc",
         "patchSetId": 2
@@ -79,6 +139,30 @@
       "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c26c78_da418618",
+        "filename": "ui/display/unified_desktop_utils_unittests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T16:26:23Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "56df80a0_bddb2a3d",
+      "range": {
+        "startLine": 179,
+        "startChar": 1,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "e72397cf62c67db91aa6e8b1ef26b22abe82cb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
