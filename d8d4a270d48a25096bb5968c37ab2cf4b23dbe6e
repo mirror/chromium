@@ -1,0 +1,340 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a05c26_e246cddf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Move this block into BUILDFLAG(ENABLE_LIBRARY_CDMS) and remove the TODO above.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0074bb8a_f5b19859",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need anything in chrome/, can we move this file to content/ instead? If you move it, please address all comments in one PS, then do the move in another PS, for easier tracking. Thanks!\n\nThen you can move the registration to media_interface_proxy.cc directly, similar to how we register ProvisionFetcherImpl::Create() on Android: https://cs.chromium.org/chromium/src/content/browser/media/media_interface_proxy.cc?rcl\u003dc3c3f343acf536583cdc8d25ae694837b6590c02\u0026l\u003d135\n\nWith that, we should be able to get the CdmType easily, so that we can bind the CdmType to CdmStorageImpl. Then we can eliminate the Initialize() call.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9fce6d_5c4e9003",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Previously this was true because the lock was in the PPAPI process. Now the lock is in the browser process and this is not true anymore.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bed63d7_b704908e",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Please provide comments about how the locks work. Without looking at the impl, it\u0027s hard to understand e.g. what UpdateFileLock does.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8595e6_6ac93d39",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "We want to get rid of these if blocks. Maybe we should also register the MimeType in CdmRegistry. We can do this later though. WDYT?",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4963b206_ef9e69e0",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Do we support calling Open() twice with two different file names? It seems we don\u0027t because there\u0027s only one |file_name_| in this class, but in the test we actually test MultipleFiles. or is it that we don\u0027t support parallel Open()? In any case, we should document it here and in the mojom file.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2f67ee_49350d9d",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "It\u0027s hard to understand what this callback is without looking at AsyncFileUtil. How about add a comment like:\n\n// |on_close_callback| should be called after the |file| is closed in the\n// child process. See AsyncFileUtil for details.",
+      "range": {
+        "startLine": 267,
+        "startChar": 34,
+        "endLine": 267,
+        "endChar": 72
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca463392_f47b445c",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Add a comment about how we\u0027ll implement the CdmStorage, e.g. using PluginPrivateFileSystem",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493feb6e_abb0e7c5",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "This is not accurate now. It seems everything is running on the UI thread IIUIC. Can you add a ThreadChecker to make sure we only access this class on one thread?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f852bb7_9844de52",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "This seems to be a dummy CdmFileReleaser implementation, and doesn\u0027t track \"in-use\" status. Maybe name it something like MockCdmFileReleaser?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fef53f_82120f24",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Some general thoughts:\n1. Can we test that we can actually read/write the file?\n2. Can we test that when the the Releaser is released, that we actually unlock the file?",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff61d10_c9e87db1",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Please document meaning of these statuses.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca83355a_541c147c",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Please add a TODO that the CDM type should be bound at the browser side so that we can remove this method entirely.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7436f110_1d1cfd72",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "What will be returned for bad |file_name|s?",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4777c351_c31c30ba",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "This should go to the general description above, e.g. after line 24. All other items in this list is about various failure/abnormal cases.",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d954aa_a7218895",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "Do we support calling Open() twice on two different |file_name|s? We should clarify on that.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 6
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262c1668_930cae70",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "It\u0027s odd that the caller passes a |releaser| to the service. For example, if Open() failed, the |releaser| will be dropped immediately. Does it make sense to return a nullable |releaser| in the callback? It seems more natural to pass the CdmFileReleaser along with the |cdm_file|. Actually, on line 36, you said \"[the releaser] ... returned by Open()\"",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd444993_0f4e7f3b",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-21T07:58:17Z",
+      "side": 1,
+      "message": "nit: opened",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
