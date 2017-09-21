@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "978a451f_72783092",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-21T11:27:15Z",
+      "side": 1,
+      "message": "Setting this is up is causing other ChromeNavigationBrowserTests to fail, so I\u0027m going to leave it this way for now.",
+      "parentUuid": "2366bb8b_a09477e3",
+      "revId": "d8490a2164ea3b2f07fd003747677df5a1f15254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeaf266c_7ff0079e",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 2
