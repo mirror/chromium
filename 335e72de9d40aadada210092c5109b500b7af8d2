@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c41582e9_bd352c26",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-21T00:43:02Z",
+      "side": 1,
+      "message": "ack, thanks!",
+      "parentUuid": "4c60f0ea_017a5340",
+      "revId": "335e72de9d40aadada210092c5109b500b7af8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35888e41_168eb064",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "ah, got it. sorry, i missed the change to the comment just above this. :-)",
       "parentUuid": "94c8817a_77633234",
+      "revId": "335e72de9d40aadada210092c5109b500b7af8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c309fa0_49e924b7",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-21T00:43:02Z",
+      "side": 1,
+      "message": "np",
+      "parentUuid": "fce394d1_79a1eba2",
       "revId": "335e72de9d40aadada210092c5109b500b7af8d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
