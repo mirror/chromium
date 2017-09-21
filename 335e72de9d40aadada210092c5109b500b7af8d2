@@ -33,6 +33,24 @@
       "revId": "335e72de9d40aadada210092c5109b500b7af8d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c8817a_77633234",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-21T00:24:32Z",
+      "side": 1,
+      "message": "I understand we should use 2ms. However, line 837 has a power button release. The line 844 will be ignored because they are too close (just 2ms). The only way to fix this is to make changes in production code, which probably doesn\u0027t need. wdyt?",
+      "parentUuid": "35888e41_168eb064",
+      "revId": "335e72de9d40aadada210092c5109b500b7af8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
