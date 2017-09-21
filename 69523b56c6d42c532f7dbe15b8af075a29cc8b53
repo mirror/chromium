@@ -16,6 +16,24 @@
       "revId": "69523b56c6d42c532f7dbe15b8af075a29cc8b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab99dbb_655273be",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-09-21T00:58:40Z",
+      "side": 1,
+      "message": "Actually, I have decided to remove the publicly visible flag from this change. Given that this change is part of a larger change, it\u0027s not good practice to create a flag that any user can enable and put Chrome into a \"un-finished\" state.\nI will keep the feature and add the flag only when all the changes are in.",
+      "parentUuid": "6613a861_7c1eb0b0",
+      "revId": "69523b56c6d42c532f7dbe15b8af075a29cc8b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
