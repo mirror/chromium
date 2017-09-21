@@ -13,10 +13,10 @@
 #include "build/build_config.h"
 #include "content/child/child_process.h"
 #include "content/common/content_switches_internal.h"
+#include "content/public/common/content_sandbox_type.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/utility/utility_thread_impl.h"
 
 #if defined(OS_LINUX)
