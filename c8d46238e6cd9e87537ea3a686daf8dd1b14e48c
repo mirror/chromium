@@ -34,6 +34,24 @@
       "revId": "c8d46238e6cd9e87537ea3a686daf8dd1b14e48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec05f3d9_91232bc5",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-21T00:01:21Z",
+      "side": 1,
+      "message": "How about a todo()? A todo() saying this could get further evaluation.\n\nWill the subsequent CLs build on this style/pattern? If not, I\u0027m more willing to LG for now. If so, I\u0027d like to push for this to change soon rather than later (so this doesn\u0027t get cemented it).\n\nTrivia: this overall pattern (taking a param to switch on; to run different code) is something that polymorphism in OOP was said to solve/prevent (this style was the anti-pattern presented (twenty years ago) about why polymorphism is useful).",
+      "parentUuid": "a8bbaf2f_d4ea5a36",
+      "revId": "c8d46238e6cd9e87537ea3a686daf8dd1b14e48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
