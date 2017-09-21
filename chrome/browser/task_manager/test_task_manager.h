@@ -52,7 +52,9 @@ class TestTaskManager : public TaskManagerInterface {
   const gfx::ImageSkia& GetIcon(TaskId task_id) const override;
   const base::ProcessHandle& GetProcessHandle(TaskId task_id) const override;
   const base::ProcessId& GetProcessId(TaskId task_id) const override;
+  const ProcessSortKey& GetProcessSortKey(TaskId task_id) const override;
   Task::Type GetType(TaskId task_id) const override;
+  bool HasParentTask(TaskId task_id) const override;
   int GetTabId(TaskId task_id) const override;
   int GetChildProcessUniqueId(TaskId task_id) const override;
   void GetTerminationStatus(TaskId task_id,
@@ -87,6 +89,7 @@ class TestTaskManager : public TaskManagerInterface {
 
   base::ProcessHandle handle_;
   base::ProcessId pid_;
+  ProcessSortKey sort_key_;
   base::string16 title_;
   std::string rappor_sample_;
   gfx::ImageSkia icon_;
