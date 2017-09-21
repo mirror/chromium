@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9906b57_9a78bdd4",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e615b4b6_c34aabd9",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03485780_46911478",
         "filename": "ash/ime/ime_controller.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7ff596_cc1ef502",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03485780_46911478",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9461f0a3_5398f09a",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "OUCH. I had a bunch of these comments littered throughout and did a final pass-through to make sure I got rid of all of them before committing. Apparently this one fell through the cracks.",
+      "parentUuid": "a522a04e_fd8e1175",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78604418_50a4e954",
         "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1afcdb0_964ebbc9",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78604418_50a4e954",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7289283_8089e19c",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "A little pre-emptive over-refactoring, perhaps.",
+      "parentUuid": "8a0895ad_3e9a3946",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73532dc_0023c780",
         "filename": "chrome/browser/ui/ash/ime_controller_client.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce1baac_d1508dfc",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-21T14:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73532dc_0023c780",
+      "revId": "43ad3637a62431b5eb371be92939b08496066fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
