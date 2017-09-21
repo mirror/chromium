@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/message_center/views/message_center_view.h"
+#include "ash/message_center/message_center_view.h"
 
 #include <map>
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_center_button_bar.h"
+#include "ash/message_center/message_list_view.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -18,24 +20,32 @@
 #include "ui/message_center/notification_list.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
-#include "ui/message_center/views/message_center_button_bar.h"
 #include "ui/message_center/views/message_center_controller.h"
-#include "ui/message_center/views/message_list_view.h"
 #include "ui/message_center/views/notification_view.h"
 #include "ui/views/test/views_test_base.h"
 
-namespace message_center {
+namespace ash {
 
-static const char* kNotificationId1 = "notification id 1";
-static const char* kNotificationId2 = "notification id 2";
+using message_center::FakeMessageCenter;
+using message_center::kMarginBetweenItems;
+using message_center::MessageCenter;
+using message_center::MessageCenterController;
+using message_center::MessageCenterTray;
+using message_center::MessageView;
+using message_center::Notification;
+using message_center::NotificationList;
+using message_center::NotificationView;
+using message_center::NotifierId;
+using message_center::NOTIFICATION_TYPE_SIMPLE;
+
+namespace {
+
+const char* kNotificationId1 = "notification id 1";
+const char* kNotificationId2 = "notification id 2";
 
 /* Types **********************************************************************/
 
-enum CallType {
-  GET_PREFERRED_SIZE,
-  GET_HEIGHT_FOR_WIDTH,
-  LAYOUT
-};
+enum CallType { GET_PREFERRED_SIZE, GET_HEIGHT_FOR_WIDTH, LAYOUT };
 
 class DummyEvent : public ui::Event {
  public:
@@ -70,12 +80,9 @@ class MockNotificationView : public NotificationView {
 MockNotificationView::MockNotificationView(MessageCenterController* controller,
                                            const Notification& notification,
                                            Test* test)
-    : NotificationView(controller, notification),
-      test_(test) {
-}
+    : NotificationView(controller, notification), test_(test) {}
 
-MockNotificationView::~MockNotificationView() {
-}
+MockNotificationView::~MockNotificationView() {}
 
 gfx::Size MockNotificationView::CalculatePreferredSize() const {
   test_->RegisterCall(GET_PREFERRED_SIZE);
@@ -151,6 +158,8 @@ void MockMessageCenterView::PreferredSizeChanged() {
   MessageCenterView::PreferredSizeChanged();
 }
 
+}  // namespace
+
 /* Test fixture ***************************************************************/
 
 class MessageCenterViewTest : public views::ViewsTestBase,
@@ -213,16 +222,14 @@ class MessageCenterViewTest : public views::ViewsTestBase,
   std::unique_ptr<views::Widget> widget_;
   std::unique_ptr<MockMessageCenterView> message_center_view_;
   std::unique_ptr<FakeMessageCenterImpl> message_center_;
-  std::map<CallType,int> callCounts_;
+  std::map<CallType, int> callCounts_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageCenterViewTest);
 };
 
-MessageCenterViewTest::MessageCenterViewTest() {
-}
+MessageCenterViewTest::MessageCenterViewTest() {}
 
-MessageCenterViewTest::~MessageCenterViewTest() {
-}
+MessageCenterViewTest::~MessageCenterViewTest() {}
 
 void MessageCenterViewTest::SetUp() {
   views::ViewsTestBase::SetUp();
@@ -413,8 +420,8 @@ void MessageCenterViewTest::LogBounds(int depth, views::View* view) {
   for (int i = 0; i < depth; ++i)
     inset.append(base::UTF8ToUTF16("  "));
   gfx::Rect bounds = view->bounds();
-  DVLOG(0) << inset << bounds.width() << " x " << bounds.height()
-           << " @ " << bounds.x() << ", " << bounds.y();
+  DVLOG(0) << inset << bounds.width() << " x " << bounds.height() << " @ "
+           << bounds.x() << ", " << bounds.y();
   for (int i = 0; i < view->child_count(); ++i)
     LogBounds(depth + 1, view->child_at(i));
 }
@@ -437,9 +444,9 @@ TEST_F(MessageCenterViewTest, CallTest) {
   // large number corresponding to the current reality. That number will be
   // ratcheted down over time as the code improves.
   EXPECT_LE(GetCallCount(LAYOUT), GetNotificationCount() * 2);
-  EXPECT_LE(GetCallCount(GET_PREFERRED_SIZE) +
-            GetCallCount(GET_HEIGHT_FOR_WIDTH),
-            GetNotificationCount() * 20);
+  EXPECT_LE(
+      GetCallCount(GET_PREFERRED_SIZE) + GetCallCount(GET_HEIGHT_FOR_WIDTH),
+      GetNotificationCount() * 20);
 }
 
 TEST_F(MessageCenterViewTest, Size) {
@@ -952,4 +959,4 @@ TEST_F(MessageCenterViewTest, NoNotification) {
   EXPECT_NE(kEmptyMessageCenterViewHeight, GetMessageCenterView()->height());
 }
 
-}  // namespace message_center
+}  // namespace ash
