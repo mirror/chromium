@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a9ba60c4_cd3b60f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T21:34:17Z",
+      "side": 1,
+      "message": "I don\u0027t know that messing with the TextIterator behavior is the right solution here. I\u0027m kind of imagining a case where we have some markup selected that produces a space as an output, and then someone types a space, and the current logic decides that the markup that produced the space shouldn\u0027t be replaced since it\u0027s part of a common prefix with the new text. I think we probably need the fix here regardless.",
+      "parentUuid": "0981b526_031a7a78",
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58585610_d72eeff0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
         "patchSetId": 1
@@ -101,6 +119,30 @@
       "writtenOn": "2017-09-21T05:00:38Z",
       "side": 1,
       "message": "Does the root editable have to be \u003ca\u003e? Does \u003cdiv\u003e work?",
+      "range": {
+        "startLine": 2368,
+        "startChar": 8,
+        "endLine": 2368,
+        "endChar": 9
+      },
+      "revId": "6f431927fffee4b0d4976c03da14be20949443f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f35778_fd73a0aa",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T21:34:17Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t. Div also works.",
+      "parentUuid": "1e215e22_ff3a9fc9",
       "range": {
         "startLine": 2368,
         "startChar": 8,
