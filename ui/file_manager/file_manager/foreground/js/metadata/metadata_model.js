@@ -25,6 +25,11 @@ function MetadataModel(rawProvider) {
    * @const
    */
   this.callbackRequests_ = [];
+
+  /**
+   * @private {boolean}
+   */
+  this.useModificationByMeTime_ = false;
 }
 
 /**
@@ -54,6 +59,8 @@ MetadataModel.prototype.getProvider = function() {
  * @return {!Promise<!Array<!MetadataItem>>}
  */
 MetadataModel.prototype.get = function(entries, names) {
+  names = this.rewriteRequestedNames_(names);
+
   this.rawProvider_.checkPropertyNames(names);
 
   // Check if the results are cached or not.
@@ -71,7 +78,7 @@ MetadataModel.prototype.get = function(entries, names) {
   // Register callback.
   var promise = new Promise(function(fulfill) {
     this.callbackRequests_.push(new MetadataProviderCallbackRequest(
-        entries, names, snapshot, fulfill));
+        this, entries, names, snapshot, fulfill));
   }.bind(this));
 
   // If the requests are not empty, call the requests.
@@ -110,15 +117,56 @@ MetadataModel.prototype.get = function(entries, names) {
 };
 
 /**
+ * Rewrites requested metadata property names if needed.
+ * @param {!Array<string>} names Metadata property names.
+ * @return {!Array<string>} names Rewritten metadata property names.
+ */
+MetadataModel.prototype.rewriteRequestedNames_ = function(names) {
+  // When modificationTime is requested, always request modificationByMeTime
+  // regardless of this.useModificationByMeTime_ because the result of
+  // this request can be cached and reused later.
+  if (names.indexOf('modificationTime') >= 0 &&
+      names.indexOf('modificationByMeTime') < 0) {
+    names = names.slice();
+    names.push('modificationByMeTime');
+  }
+  return names;
+};
+
+/**
+ * Rewrites modificationDate of MetadataItems if needed.
+ * @param {!Array<!MetadataItem>} items Items.
+ * @return {!Array<!MetadataItem>} Rewritten items.
+ */
+MetadataModel.prototype.rewriteModificationDate = function(items) {
+  if (!this.useModificationByMeTime_)
+    return items;
+
+  var newItems = [];
+  for (var i = 0; i < items.length; ++i) {
+    var item = items[i];
+    if (item.modificationByMeTime &&
+        item.modificationByMeTime !== item.modificationTime) {
+      item = item.clone();
+      item.modificationTime = item.modificationByMeTime;
+    }
+    newItems.push(item);
+  }
+  return newItems;
+};
+
+/**
  * Obtains metadata cache for entries.
  * @param {!Array<!Entry>} entries Entries.
  * @param {!Array<string>} names Metadata property names to be obtained.
  * @return {!Array<!MetadataItem>}
  */
 MetadataModel.prototype.getCache = function(entries, names) {
+  names = this.rewriteRequestedNames_(names);
+
   // Check if the property name is correct or not.
   this.rawProvider_.checkPropertyNames(names);
-  return this.cache_.get(entries, names);
+  return this.rewriteModificationDate(this.cache_.get(entries, names));
 };
 
 /**
@@ -163,6 +211,15 @@ MetadataModel.prototype.addEventListener = function(type, callback) {
 };
 
 /**
+ * Sets whether to use modificationByMeTime as "Last Modified" time.
+ * @param {boolean} useModificationByMeTime
+ */
+MetadataModel.prototype.setUseModificationByMeTime = function(
+    useModificationByMeTime) {
+  this.useModificationByMeTime_ = useModificationByMeTime;
+};
+
+/**
  * @param {!Array<!Entry>} entries
  * @param {!Array<string>} names
  * @param {!MetadataCacheSet} cache
@@ -170,7 +227,14 @@ MetadataModel.prototype.addEventListener = function(type, callback) {
  * @constructor
  * @struct
  */
-function MetadataProviderCallbackRequest(entries, names, cache, fulfill) {
+function MetadataProviderCallbackRequest(
+    metadataModel, entries, names, cache, fulfill) {
+  /**
+   * @private {!MetadataModel}
+   * @const
+   */
+  this.metadataModel_ = metadataModel;
+
   /**
    * @private {!Array<!Entry>}
    * @const
@@ -190,7 +254,7 @@ function MetadataProviderCallbackRequest(entries, names, cache, fulfill) {
   this.cache_ = cache;
 
   /**
-   * @private {function(!MetadataItem):undefined}
+   * @private {function(!Array<!MetadataItem>):undefined}
    * @const
    */
   this.fulfill_ = fulfill;
@@ -208,7 +272,8 @@ MetadataProviderCallbackRequest.prototype.storeProperties = function(
     requestId, entries, objects) {
   this.cache_.storeProperties(requestId, entries, objects);
   if (this.cache_.hasFreshCache(this.entries_, this.names_)) {
-    this.fulfill_(this.cache_.get(this.entries_, this.names_));
+    this.fulfill_(this.metadataModel_.rewriteModificationDate(
+        this.cache_.get(this.entries_, this.names_)));
     return true;
   }
   return false;
