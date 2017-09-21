@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "f67fe73d_9c696a22",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "uber-nit: align these? or whatever git cl format does.",
+      "range": {
+        "startLine": 441,
+        "startChar": 30,
+        "endLine": 441,
+        "endChar": 32
+      },
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e21d512_36cd4fc1",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "Maybe change the flow of this slightly to update the pref first, then do the cleanup, so you can early exit on no data?\n\nie...\n\n  prefs-\u003eSetIngeter(...)\n\n  // Deletion of expired server masked and unmasked cards is triggered by their\n  // removal from the sync stream by Google Payments. Only local cards need to\n  // be handled here.\n  std::vector\u003cCreditCard*\u003e local_cards \u003d GetLocalCreditCards();\n  if (local_cards.empty())\n    return true;\n\nthis will also help to avoid logging spurious 0-entries in UMA for the number of cards deleted. See comments below.",
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ab8698_578fcccc",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "deletion_threshold",
+      "range": {
+        "startLine": 2300,
+        "startChar": 19,
+        "endLine": 2300,
+        "endChar": 32
+      },
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111a4d2a_3f185caf",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2317,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "optimization: you can skip the refresh if there were no cards removed.\n\nalso, plz add tome UMA logging of the number of cards deleted.\n\ni.e.,\n\nsize_t num_deleted_cards \u003d guids_to_delete.size()\nfor (... : guids_to_delete) { ... Remove ... }\n\nUMA_HISTOGRAM...(..., num_deleted_cards);",
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3fda3f_df015d40",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "optional-nit: maybe put this next to the suppression code?",
+      "range": {
+        "startLine": 604,
+        "startChar": 7,
+        "endLine": 604,
+        "endChar": 31
+      },
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68912902_dd88f632",
         "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
         "patchSetId": 4
@@ -19,6 +122,47 @@
         "endLine": 248,
         "endChar": 64
       },
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4fc845_b3d19101",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "Food for thought:\n\nYou could also enable AutofillCreateDataForTest and let it to the creation for you. You would need to be somewhat thoughtful about how you formulate the test so as not to introduce false dependencies on the created data that doesn\u0027t concern your particular test, or you\u0027ll add additional maintenance burden.\n\nHmm... I\u0027m not sure if the cleanup will end up running before or after the creation code. That\u0027s worth investigating.",
+      "parentUuid": "68912902_dd88f632",
+      "range": {
+        "startLine": 248,
+        "startChar": 50,
+        "endLine": 248,
+        "endChar": 64
+      },
+      "revId": "3611cd104b10b064014996388c682d9ad12047a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53e387e_7aebfebd",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7485,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "I think you should expect both use date and expiry date to be less then the deletion threshold (new local constant)",
       "revId": "3611cd104b10b064014996388c682d9ad12047a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

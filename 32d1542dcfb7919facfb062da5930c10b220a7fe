@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04fad99a_6e730327",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "plz keep these in sorted order.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "32d1542dcfb7919facfb062da5930c10b220a7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f604a3_84caa38d",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "plz try to keep this in sorted order",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 60
+      },
+      "revId": "32d1542dcfb7919facfb062da5930c10b220a7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

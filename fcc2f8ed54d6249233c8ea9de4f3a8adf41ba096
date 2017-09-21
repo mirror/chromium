@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b66490d7_08520f73",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "please pluralize guids",
+      "parentUuid": "6591617f_88f2c20d",
+      "range": {
+        "startLine": 2185,
+        "startChar": 27,
+        "endLine": 2185,
+        "endChar": 39
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c3207c_00c6d71a",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 2
@@ -249,6 +273,30 @@
       "side": 1,
       "message": "Interesting, that\u0027s pretty conservative. Roger, is that what you intended?",
       "parentUuid": "5b2b113b_11287cdc",
+      "range": {
+        "startLine": 2188,
+        "startChar": 60,
+        "endLine": 2188,
+        "endChar": 73
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0019ac46_7fc79033",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T15:55:27Z",
+      "side": 1,
+      "message": "Hmm... yeah. I was pretty conservative in the design doc.\n\nServer cards will be removed from the sync stream a year post expiry, so this matches local to server deletion behaviour.\n\nIn principle you could compare use_date to the suppression delta and expiry to the deletion delta and if both are surpassed I\u0027d be comfortable with the deletion.\n\nI.e., delete a 13-month expired card that hasn\u0027t been used in the last 6 months.\n\nI would suspect that if the card has lasted 13-months post expiry without being updated, it also hasn\u0027t been used for at least as long... and the resulting behaviour will be the same either way.",
+      "parentUuid": "42757c9d_cb6ac293",
       "range": {
         "startLine": 2188,
         "startChar": 60,
