@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d35f89b_4ed24396",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "please add bug and good description of this issue.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddaa99f_ad7f3ccd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this can be negative, which means the next line is always false.",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3c7c0f_a6a2d271",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "nit: why not inline this one like the one above?",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2ece55_59283502",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "tpyo",
+      "range": {
+        "startLine": 82,
+        "startChar": 74,
+        "endLine": 82,
+        "endChar": 79
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9644ba2a_2d88c281",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "did you miss putting that assert above as well or is this on purpose?",
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db404497_574dd2d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "is there a 3rd detection mode coming, or could we use a boolean at least for now?",
+      "range": {
+        "startLine": 169,
+        "startChar": 17,
+        "endLine": 169,
+        "endChar": 38
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ad2ab7_35c3e8ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "nit: earliest...",
+      "range": {
+        "startLine": 198,
+        "startChar": 13,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e468794_e3b90b14",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTaskUnitTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-21T23:24:09Z",
+      "side": 1,
+      "message": "please add messages to the asserts.\nAlso there should be something like assertFalse for boolean cases I think.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 20
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
