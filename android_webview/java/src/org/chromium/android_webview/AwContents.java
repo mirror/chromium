@@ -109,7 +109,7 @@ import java.util.concurrent.Callable;
 @JNINamespace("android_webview")
 public class AwContents implements SmartClipProvider {
     private static final String TAG = "AwContents";
-    private static final boolean TRACE = false;
+    private static final boolean TRACE = true;
     private static final int NO_WARN = 0;
     private static final int WARN = 1;
     private static final String PRODUCT_VERSION = AwContentsStatics.getProductVersion();
