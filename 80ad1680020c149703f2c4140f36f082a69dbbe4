@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbf5b08_7403650c",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T19:00:38Z",
+      "side": 1,
+      "message": "nit: touch_device_identifier2",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97765a7_7c1d3cf3",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T19:00:38Z",
+      "side": 1,
+      "message": "Instead of changing logic based on |is_custom_touch_calibration_| can we have a delegate, and the invoker installs the delegate, so this class no longer has any idea of a \"custom\" vs \"non-custom\" setup? This should eliminate the special cases.\n\nI\u0027m not that familiar with this code so if that doesn\u0027t make sense lmk.",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a435177f_a3d6fe98",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T19:00:38Z",
+      "side": 1,
+      "message": "nit: touch_device_id_",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1306393e_54e392cb",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T19:00:38Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1541ea2b_ec1e7e0c",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T19:00:38Z",
+      "side": 1,
+      "message": "nit: if this ever gets logged it might be easier to read if the items were joined with - or some other non-space character.",
+      "revId": "80ad1680020c149703f2c4140f36f082a69dbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
