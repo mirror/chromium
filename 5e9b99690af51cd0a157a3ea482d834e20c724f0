@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f956db1_e982a0ab",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "I recall discussing something like this, but according to WeakPtr\u0027s docs, the restriction is simply that the pointer needs to be dereferenced and invalidated on the same thread.  Maybe this wasn\u0027t always the case?",
+      "parentUuid": "a1714a91_b02eb30f",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4623b706_43c8a53f",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2017-09-21T14:25:38Z",
       "side": 1,
       "message": "Are you raising a concern here, or just curious?\n\nWe call back to the browser because that\u0027s where gamepads can be toggled, and the gl thread needs to decide when to toggle based on current mode.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 66
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9bd943_714da285",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "Okay.  vr_shell.cc also knows about cardboard, but I guess it doesn\u0027t have a \u0027cardboard_\u0027 equivalent.",
+      "parentUuid": "257e9e6a_784fc21b",
       "range": {
         "startLine": 1066,
         "startChar": 4,
@@ -151,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "caa5483d_f3019a77",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "In a previous chat with Michael, we elected to keep this around.  Are you suggesting we purge all the tab stuff here?",
+      "parentUuid": "33e8a210_ce1bfe95",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7fbc8b2_1c00ed0c",
         "filename": "chrome/browser/vr/elements/exclusive_screen_toast_texture.cc",
         "patchSetId": 1
@@ -171,6 +243,30 @@
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a44efe1_5a2919c4",
+        "filename": "chrome/browser/vr/elements/exclusive_screen_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7fbc8b2_1c00ed0c",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +298,30 @@
       "writtenOn": "2017-09-21T14:25:38Z",
       "side": 1,
       "message": "Is this refactor somehow related to splitting out common code? This feels like a separate refactor of debatable value.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e971cbb9_b9846ddc",
+        "filename": "chrome/browser/vr/string_resource.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "Every time we compile anything on Linux we hit resource manager failures and have to link in more resource paks.  In production, it does nothing, but a thin wrapper means less frustration when strings aren\u0027t available.  Personally I\u0027d like a fakeable VR resource manager, but Ian\u0027s very valid point is that our tests should reflect the real strings.",
+      "parentUuid": "c4359798_0fc1b9c5",
       "range": {
         "startLine": 12,
         "startChar": 15,
@@ -248,6 +368,30 @@
       "writtenOn": "2017-09-21T15:07:43Z",
       "side": 1,
       "message": "Oops.",
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50508aa8_37ba0ed6",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:22:29Z",
+      "side": 1,
+      "message": "Haha, nice eyes.  Yeah, I\u0027d pointed this out then not published my comment.  :)",
+      "parentUuid": "fb88e985_82ba0cf8",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 44
+      },
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
