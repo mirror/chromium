@@ -16,6 +16,24 @@
       "revId": "5b85abdac5a530830f2a58f7efaad0104154e4f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca506fe_73bdf195",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T01:12:08Z",
+      "side": 1,
+      "message": "We do that in the ctor. I realize that with that change, we should actually send an error response here for kError. I will update the first patch to do that (and add you as a reviewer there: https://chromium-review.googlesource.com/c/chromium/src/+/674263).",
+      "parentUuid": "1643d509_1ee21933",
+      "revId": "5b85abdac5a530830f2a58f7efaad0104154e4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
