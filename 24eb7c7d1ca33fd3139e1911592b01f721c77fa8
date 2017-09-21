@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "d7b48495_429a8d02",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T17:54:26Z",
+      "side": 1,
+      "message": "Well, this particular thing only matters for creation, so no.\n\nIt does actually raises an interesting point: if someone clears the cache via android UI while cache ops are going on and we are low on FDs, the cache ops will fail. That seems unavoidable, and probably OK?",
+      "parentUuid": "3e992e0e_f3ce3e8d",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93b58f6_32ba50c9",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -242,6 +266,30 @@
       "side": 1,
       "message": "The first option works for me. Though it would make sense to wrap the File* in a std::unique_ptr with a custom deleter that calls Close so you don\u0027t have to remember to do that.",
       "parentUuid": "e4f5a781_3106afad",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468e819a_b3d364d6",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T17:54:26Z",
+      "side": 1,
+      "message": "Hmm, might still want a separate FileHandle type simply because of combining the null and IsValid checks.",
+      "parentUuid": "96566af4_926f01d3",
       "range": {
         "startLine": 62,
         "startChar": 2,
