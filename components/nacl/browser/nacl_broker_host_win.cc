@@ -30,8 +30,8 @@ class NaClBrokerSandboxedProcessLauncherDelegate
  public:
   NaClBrokerSandboxedProcessLauncherDelegate() {}
 
-  content::SandboxType GetSandboxType() override {
-    return content::SANDBOX_TYPE_NO_SANDBOX;
+  sandbox::SandboxType GetSandboxType() override {
+    return sandbox::SANDBOX_TYPE_NO_SANDBOX;
   }
 
  private:

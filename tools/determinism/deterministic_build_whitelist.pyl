@@ -134,7 +134,7 @@
     'remoting_perftests',
     'remoting_start_host',
     'remoting_unittests',
-    'sandbox_mac_unittests',
+    'sandbox_unittests',
     'service_manager_unittests',
     'shell_dialogs_unittests',
     'skia_unittests',
