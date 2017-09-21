@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a80612dc_dc106028",
+        "filename": "build/config/ios/hardlink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "even in debug, Chromium.app is about 1% or the out/XXX directory. Do we really care hardlinking instead of copying?\nOr is there another reason?",
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51327543_29a6c49e",
+        "filename": "build/config/ios/hardlink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "or os.path.islink(target)",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85c1d81_19a6c48c",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-21T16:17:28Z",
+      "side": 1,
+      "message": "would it make sense to have a _variant.generate_info_plist?",
+      "range": {
+        "startLine": 819,
+        "startChar": 21,
+        "endLine": 819,
+        "endChar": 41
+      },
+      "revId": "4cd7e644f0d62d6056eafeeb8062870c01f9e7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
