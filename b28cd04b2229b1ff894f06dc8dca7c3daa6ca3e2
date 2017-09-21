@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3472c74_0d864f48",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-21T18:19:25Z",
+      "side": 1,
+      "message": "Done. This happens when URLLoaderClient::OnStartLoadingResponseBody() is immediately followed by a OnComplete(). Both calls are posting a task to UI thread. The first call results in interception and cancels the request. And when the latter call gets its chance to execute, it finds that the request has already failed.",
+      "parentUuid": "a2020ff5_f79f33bf",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b5c637_612bb974",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T12:49:26Z",
       "side": 1,
       "message": "Couldn\u0027t you just integrate what\u0027s happening in OnNavigationIntercepted inside the call to ProceedWithResponse below? This way when asked to proceed with navigation, the URLLoader determines that it should be handed to the DownloadService instead?",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cacc498_d986d643",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-21T18:19:25Z",
+      "side": 1,
+      "message": "see designdocs here: https://docs.google.com/document/d/1X3jbrtZ9U_KotktjsfU5gjhKEEC1LlGA6W_CFfKr12w/edit?ts\u003d59a87fe9#\n\nBoth options are discussed, and we choose the option to make the logic stay in NavigationRequest so that later on we can use the same code for both network-service and regular case.",
+      "parentUuid": "72b5c637_612bb974",
       "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a2657ae_0f340e7c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-21T18:19:25Z",
+      "side": 1,
+      "message": "Done, removed",
+      "parentUuid": "bf7c0286_bc45c3ec",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3200d8f_80161f0c",
         "filename": "content/browser/loader/navigation_url_loader.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7c65c2_64a50ef4",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-21T18:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3200d8f_80161f0c",
+      "revId": "b28cd04b2229b1ff894f06dc8dca7c3daa6ca3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
