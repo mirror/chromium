@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca42f7e9_da615959",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-21T07:17:29Z",
+      "side": 1,
+      "message": "I am new to :: operator in chromium code, is the space intentional?",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d1dbaa_54e0c662",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-21T07:17:29Z",
+      "side": 1,
+      "message": "nit: kind of orthogonal to this change but why not merging these two if - else statements?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "930130b41362eb6959990ff8b18f00e879a37db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
