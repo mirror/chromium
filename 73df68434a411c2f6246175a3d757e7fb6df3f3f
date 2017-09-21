@@ -70,6 +70,30 @@
       "revId": "73df68434a411c2f6246175a3d757e7fb6df3f3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31dcc88_759bc2c4",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-21T15:51:53Z",
+      "side": 1,
+      "message": "Yes, sorry, I forgot to pass --gerrit to the upload command and the new patchset ended up on the old Rietveld issue. Apologies for the confusion.\n\nPatchset 8 contains the latest change.",
+      "parentUuid": "540a6cae_ad93944e",
+      "range": {
+        "startLine": 406,
+        "startChar": 11,
+        "endLine": 406,
+        "endChar": 34
+      },
+      "revId": "73df68434a411c2f6246175a3d757e7fb6df3f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
