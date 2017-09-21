@@ -73,8 +73,11 @@ class PDFEngine {
     virtual void Scroll(const pp::Point& point) = 0;
 
     // Scroll the horizontal/vertical scrollbars to a given position.
+    // Coordinates are in pixels. 0 is the top of the document.
+    // For ScrollToY, setting compensate_for_toolbar will align the position
+    // with the bottom of the toolbar so the given position is always visible.
     virtual void ScrollToX(int position) = 0;
-    virtual void ScrollToY(int position) = 0;
+    virtual void ScrollToY(int position, bool compensate_for_toolbar) = 0;
 
     // Scroll to zero-based |page|.
     virtual void ScrollToPage(int page) = 0;
