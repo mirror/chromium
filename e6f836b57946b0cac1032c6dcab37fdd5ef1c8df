@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df5de004_f21db106",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-21T09:00:23Z",
+      "side": 1,
+      "message": "I think this can be \"mutable\", then you have to avoid removing all \"const\"s for methods.",
+      "revId": "e6f836b57946b0cac1032c6dcab37fdd5ef1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ba1bf7_214ef737",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-21T09:00:23Z",
+      "side": 1,
+      "message": "Is there any possibility that the key can be a \"Node\", not \"Element\"?\nIf it\u0027s possible to be a Document or ShadowRoot (other than Element),\nthis should be ContainerNode (the least common base class for all).",
+      "range": {
+        "startLine": 206,
+        "startChar": 21,
+        "endLine": 206,
+        "endChar": 25
+      },
+      "revId": "e6f836b57946b0cac1032c6dcab37fdd5ef1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339e7fc5_542b2c04",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-21T09:00:23Z",
+      "side": 1,
+      "message": "The same comment as for line 206 - should be ContainerNode.\nAlso you can take const ContainerNode\u0026 as an argument and remove DCHECK() on the following line.",
+      "range": {
+        "startLine": 208,
+        "startChar": 21,
+        "endLine": 208,
+        "endChar": 25
+      },
+      "revId": "e6f836b57946b0cac1032c6dcab37fdd5ef1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43fe8c9_75448cd4",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-21T09:00:23Z",
+      "side": 1,
+      "message": "nit: you can write the whole function body as\nreturn FindOwner(element) \u003d\u003d Owner();",
+      "revId": "e6f836b57946b0cac1032c6dcab37fdd5ef1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2516bd3_dd73264e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-21T09:00:23Z",
+      "side": 1,
+      "message": "Hmm... if this function (and definition of owner_) moves to the base class, then\nSlotFocusNavigation won\u0027t use it, that\u0027s why you duplicate this function in\nTreeFocusNavigation and SlotFallbackContentsFocusNavigation?\n\nOne way to deduplicate this function is to take node and owner_ as arguments, and\nmake this out of class declaration.",
+      "revId": "e6f836b57946b0cac1032c6dcab37fdd5ef1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
