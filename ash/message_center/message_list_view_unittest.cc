@@ -6,6 +6,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_list_view.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -15,18 +16,22 @@
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_list.h"
 #include "ui/message_center/views/message_center_controller.h"
-#include "ui/message_center/views/message_list_view.h"
 #include "ui/message_center/views/notification_view.h"
 #include "ui/views/test/views_test_base.h"
 
 using ::testing::ElementsAre;
+using message_center::MessageCenterController;
+using message_center::Notification;
+using message_center::NotificationView;
+using message_center::NotifierId;
+using message_center::NOTIFICATION_TYPE_SIMPLE;
 
-namespace message_center {
-
-static const char* kNotificationId1 = "notification id 1";
-static const char* kNotificationId2 = "notification id 2";
+namespace ash {
 
 namespace {
+
+const char* kNotificationId1 = "notification id 1";
+const char* kNotificationId2 = "notification id 2";
 
 /* Types **********************************************************************/
 
@@ -85,7 +90,7 @@ void MockNotificationView::Layout() {
   NotificationView::Layout();
 }
 
-}  // anonymous namespace
+}  // namespace
 
 /* Test fixture ***************************************************************/
 
@@ -489,4 +494,4 @@ TEST_F(MessageListViewTest, RemoveWhileClearAll) {
   EXPECT_EQ(0, message_list_view()->child_count());
 }
 
-}  // namespace
+}  // namespace ash
