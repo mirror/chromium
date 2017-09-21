@@ -17,6 +17,7 @@
 #include "skia/ext/image_operations.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/layer.h"
+#include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
@@ -24,6 +25,7 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skbitmap_operations.h"
+#include "ui/gfx/transform_util.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/controls/image_view.h"
@@ -46,6 +48,15 @@ const int kInkDropLargeSize = 60;
 // is horizontally and vertically aligned, respectively.
 const int kIconPaddingHorizontal = 7;
 const int kIconPaddingVertical = 8;
+
+// The time threshold before an item can be dragged by touch events.
+const int kTouchDragTimeThresholdMs = 300;
+
+// The drag and drop app icon should get scaled by this factor.
+const float kAppIconScale = 1.2f;
+
+// The drag and drop app icon scaling up or down animation transition duration.
+const int kDragDropAppIconScaleTransitionMs = 20;
 
 // Simple AnimationDelegate that owns a single ThrobAnimation instance to
 // keep all Draw Attention animations in sync.
@@ -442,24 +453,41 @@ void ShelfButton::OnBlur() {
 
 void ShelfButton::OnGestureEvent(ui::GestureEvent* event) {
   switch (event->type()) {
-    case ui::ET_GESTURE_TAP_DOWN:
+    case ui::ET_GESTURE_TAP_DOWN: {
       AddState(STATE_HOVERED);
+      touch_drag_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kTouchDragTimeThresholdMs),
+          base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+      event->SetHandled();
       return Button::OnGestureEvent(event);
-    case ui::ET_GESTURE_END:
+    }
+    case ui::ET_GESTURE_END: {
+      ScaleAppIcon(false);
       ClearState(STATE_HOVERED);
       return Button::OnGestureEvent(event);
+    }
     case ui::ET_GESTURE_SCROLL_BEGIN:
-      shelf_view_->PointerPressedOnButton(this, ShelfView::TOUCH, *event);
-      event->SetHandled();
+      if (touch_dragging_) {
+        shelf_view_->PointerPressedOnButton(this, ShelfView::TOUCH, *event);
+        event->SetHandled();
+      } else {
+        touch_drag_timer_.Stop();
+      }
       return;
     case ui::ET_GESTURE_SCROLL_UPDATE:
-      shelf_view_->PointerDraggedOnButton(this, ShelfView::TOUCH, *event);
-      event->SetHandled();
+      if (touch_dragging_ && shelf_view_->IsDraggedView(this)) {
+        shelf_view_->PointerDraggedOnButton(this, ShelfView::TOUCH, *event);
+        event->SetHandled();
+      }
       return;
     case ui::ET_GESTURE_SCROLL_END:
     case ui::ET_SCROLL_FLING_START:
-      shelf_view_->PointerReleasedOnButton(this, ShelfView::TOUCH, false);
-      event->SetHandled();
+      if (touch_dragging_) {
+        touch_dragging_ = false;
+        shelf_view_->PointerReleasedOnButton(this, ShelfView::TOUCH, false);
+        event->SetHandled();
+      }
       return;
     case ui::ET_GESTURE_LONG_TAP:
       // Handle LONG_TAP to avoid opening the context menu twice.
@@ -512,6 +540,27 @@ void ShelfButton::UpdateState() {
   icon_view_->SetVerticalAlignment(is_horizontal_shelf
                                        ? views::ImageView::LEADING
                                        : views::ImageView::CENTER);
+  SchedulePaint();
+}
+
+void ShelfButton::OnTouchDragTimer() {
+  touch_dragging_ = true;
+  ScaleAppIcon(true);
+}
+
+void ShelfButton::ScaleAppIcon(bool scale_up) {
+  const gfx::Rect bounds(layer()->bounds().size());
+  gfx::Transform transform =
+      gfx::GetScaleTransform(bounds.CenterPoint(), kAppIconScale);
+  ui::ScopedLayerAnimationSettings settings(layer()->GetAnimator());
+  settings.SetTransitionDuration(
+      base::TimeDelta::FromMilliseconds(kDragDropAppIconScaleTransitionMs));
+
+  if (scale_up)
+    layer()->SetTransform(transform);
+  else
+    layer()->SetTransform(gfx::Transform());
+
   SchedulePaint();
 }
 
