@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "426281de_68263ff3",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:28:49Z",
+      "side": 1,
+      "message": "So that we don\u0027t have to be sending messages to an id instance, the usual pattern for crb_protocol_observers is to define a simple subclass that conforms to the desired protocol -- see, for example, https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/broadcaster/chrome_broadcaster.mm?rcl\u003d63affba4c2c186db775774f9c401d647cb564936\u0026l\u003d50",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "e66fca00ad4b6542cc2131387d6ec28eb38a45e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd6c75b_50bfe697",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:28:49Z",
+      "side": 1,
+      "message": "nit: \"Tells the observing object that the |snapshot_cache| ... \"",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "e66fca00ad4b6542cc2131387d6ec28eb38a45e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
