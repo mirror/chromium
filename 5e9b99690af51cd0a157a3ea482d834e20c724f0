@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "f1389ded_264f33bc",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T14:26:35Z",
+      "side": 1,
+      "message": "Remove HTML",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e8a210_ce1bfe95",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-21T14:26:35Z",
+      "side": 1,
+      "message": "This can be removed.",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7fbc8b2_1c00ed0c",
         "filename": "chrome/browser/vr/elements/exclusive_screen_toast_texture.cc",
         "patchSetId": 1
