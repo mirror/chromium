@@ -27,6 +27,7 @@ class RemoteDeviceProviderImpl : public RemoteDeviceProvider,
  public:
   class Factory {
    public:
+    virtual ~Factory();
     static std::unique_ptr<RemoteDeviceProvider> NewInstance(
         CryptAuthDeviceManager* device_manager,
         const std::string& user_id,
