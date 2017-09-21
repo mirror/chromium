@@ -51,6 +51,7 @@
 class BookmarkBarView;
 class Browser;
 class BrowserViewLayout;
+class ClusterManagerView;
 class ContentsLayoutManager;
 class DownloadShelfView;
 class ExclusiveAccessBubbleViews;
@@ -634,6 +635,8 @@ class BrowserView : public BrowserWindow,
   //     positioned on top of the bar while the tab's contents are placed below
   //     the bar.  This allows the find bar to always align with the top of
   //     contents_container_ regardless if there's bookmark or info bars.
+  
+  ClusterManagerView* cluster_manager_ = nullptr;
 
   // The view that manages the tab strip, toolbar, and sometimes the bookmark
   // bar. Stacked top in the view hiearachy so it can be used to slide out

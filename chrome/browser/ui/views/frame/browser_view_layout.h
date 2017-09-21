@@ -45,6 +45,7 @@ class BrowserViewLayout : public views::LayoutManager {
   void Init(BrowserViewLayoutDelegate* delegate,
             Browser* browser,
             views::ClientView* browser_view,
+            views::View* cluster_manager,
             views::View* top_container,
             TabStrip* tab_strip,
             views::View* toolbar,
@@ -94,14 +95,14 @@ class BrowserViewLayout : public views::LayoutManager {
   // of the bottom of the control, for laying out the next control.
   int LayoutTabStripRegion(int top);
   int LayoutToolbar(int top);
-  int LayoutBookmarkAndInfoBars(int top, int browser_view_y);
-  int LayoutBookmarkBar(int top);
-  int LayoutInfoBar(int top);
+  int LayoutBookmarkAndInfoBars(int left, int top, int browser_view_y);
+  int LayoutBookmarkBar(int left, int top);
+  int LayoutInfoBar(int left, int top);
 
   // Layout the |contents_container_| view between the coordinates |top| and
   // |bottom|. See browser_view.h for details of the relationship between
   // |contents_container_| and other views.
-  void LayoutContentsContainerView(int top, int bottom);
+  void LayoutContentsContainerView(int left, int top, int bottom);
 
   // Updates |top_container_|'s bounds. The new bounds depend on the size of
   // the bookmark bar and the toolbar.
@@ -118,7 +119,7 @@ class BrowserViewLayout : public views::LayoutManager {
 
   // Layout the Download Shelf, returns the coordinate of the top of the
   // control, for laying out the previous control.
-  int LayoutDownloadShelf(int bottom);
+  int LayoutDownloadShelf(int left, int bottom);
 
   // Returns true if an infobar is showing.
   bool InfobarVisible() const;
@@ -135,6 +136,7 @@ class BrowserViewLayout : public views::LayoutManager {
   // Child views that the layout manager manages.
   // NOTE: If you add a view, try to add it as a views::View, which makes
   // testing much easier.
+  views::View* cluster_manager_;
   views::View* top_container_;
   TabStrip* tab_strip_;
   views::View* toolbar_;

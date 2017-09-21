@@ -61,6 +61,7 @@
 #include "chrome/browser/ui/views/accessibility/invert_bubble_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
+#include "chrome/browser/ui/views/cluster/cluster_manager_view.h"
 #include "chrome/browser/ui/views/download/download_in_progress_dialog_view.h"
 #include "chrome/browser/ui/views/download/download_shelf_view.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
@@ -2072,6 +2073,10 @@ void BrowserView::InitViews() {
   AddChildView(contents_container_);
   set_contents_view(contents_container_);
 
+  cluster_manager_ = new ClusterManagerView;
+  cluster_manager_->Init();
+  AddChildView(cluster_manager_);
+
   // Top container holds tab strip and toolbar and lives at the front of the
   // view hierarchy.
   top_container_ = new TopContainerView(this);
@@ -2106,6 +2111,7 @@ void BrowserView::InitViews() {
   browser_view_layout->Init(new BrowserViewLayoutDelegateImpl(this),
                             browser(),
                             this,
+                            cluster_manager_,
                             top_container_,
                             tabstrip_,
                             toolbar_,

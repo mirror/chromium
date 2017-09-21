@@ -118,6 +118,7 @@ class BrowserViewLayout::WebContentsModalDialogHostViews
 BrowserViewLayout::BrowserViewLayout()
     : browser_(nullptr),
       browser_view_(nullptr),
+      cluster_manager_(nullptr),
       top_container_(nullptr),
       tab_strip_(nullptr),
       toolbar_(nullptr),
@@ -137,6 +138,7 @@ void BrowserViewLayout::Init(
     BrowserViewLayoutDelegate* delegate,
     Browser* browser,
     views::ClientView* browser_view,
+    views::View* cluster_manager,
     views::View* top_container,
     TabStrip* tab_strip,
     views::View* toolbar,
@@ -147,6 +149,7 @@ void BrowserViewLayout::Init(
   delegate_.reset(delegate);
   browser_ = browser;
   browser_view_ = browser_view;
+  cluster_manager_ = cluster_manager;
   top_container_ = top_container;
   tab_strip_ = tab_strip;
   toolbar_ = toolbar;
@@ -329,18 +332,22 @@ void BrowserViewLayout::Layout(views::View* browser_view) {
   }
   top = LayoutToolbar(top);
 
-  top = LayoutBookmarkAndInfoBars(top, browser_view->y());
+  int left = cluster_manager_->GetPreferredSize().width();
+  cluster_manager_->SetBounds(vertical_layout_rect_.x(), top,
+                              left, browser_view->height());
+
+  top = LayoutBookmarkAndInfoBars(left, top, browser_view->y());
 
   // Top container requires updated toolbar and bookmark bar to compute bounds.
   UpdateTopContainerBounds();
 
-  int bottom = LayoutDownloadShelf(browser_view->height());
+  int bottom = LayoutDownloadShelf(left, browser_view->height());
   // Treat a detached bookmark bar as if the web contents container is shifted
   // upwards and overlaps it.
   int active_top_margin = GetContentsOffsetForBookmarkBar();
   contents_layout_manager_->SetActiveTopMargin(active_top_margin);
   top -= active_top_margin;
-  LayoutContentsContainerView(top, bottom);
+  LayoutContentsContainerView(left, top, bottom);
 
   // This must be done _after_ we lay out the WebContents since this
   // code calls back into us to find the bounding box the find bar
@@ -403,7 +410,7 @@ int BrowserViewLayout::LayoutToolbar(int top) {
   return toolbar_->bounds().bottom();
 }
 
-int BrowserViewLayout::LayoutBookmarkAndInfoBars(int top, int browser_view_y) {
+int BrowserViewLayout::LayoutBookmarkAndInfoBars(int left, int top, int browser_view_y) {
   web_contents_modal_dialog_top_y_ =
       top + browser_view_y - kConstrainedWindowOverlap;
 
@@ -414,31 +421,31 @@ int BrowserViewLayout::LayoutBookmarkAndInfoBars(int top, int browser_view_y) {
     if (bookmark_bar_->IsDetached()) {
       web_contents_modal_dialog_top_y_ =
           top + browser_view_y - kConstrainedWindowOverlap;
-      return LayoutBookmarkBar(LayoutInfoBar(top));
+      return LayoutBookmarkBar(left, LayoutInfoBar(left, top));
     }
     // Otherwise, Bookmark bar first, Info bar second.
-    top = std::max(toolbar_->bounds().bottom(), LayoutBookmarkBar(top));
+    top = std::max(toolbar_->bounds().bottom(), LayoutBookmarkBar(left, top));
   }
 
-  return LayoutInfoBar(top);
+  return LayoutInfoBar(left, top);
 }
 
-int BrowserViewLayout::LayoutBookmarkBar(int top) {
+int BrowserViewLayout::LayoutBookmarkBar(int left, int top) {
   int y = top;
   if (!delegate_->IsBookmarkBarVisible()) {
     bookmark_bar_->SetVisible(false);
     // TODO(jamescook): Don't change the bookmark bar height when it is
     // invisible, so we can use its height for layout even in that state.
-    bookmark_bar_->SetBounds(0, y, browser_view_->width(), 0);
+    bookmark_bar_->SetBounds(left, y, browser_view_->width() - left, 0);
     return y;
   }
 
   bookmark_bar_->set_infobar_visible(InfobarVisible());
   int bookmark_bar_height = bookmark_bar_->GetPreferredSize().height();
   y -= bookmark_bar_->GetToolbarOverlap();
-  bookmark_bar_->SetBounds(vertical_layout_rect_.x(),
+  bookmark_bar_->SetBounds(vertical_layout_rect_.x() + left,
                            y,
-                           vertical_layout_rect_.width(),
+                           vertical_layout_rect_.width() - left,
                            bookmark_bar_height);
   // Set visibility after setting bounds, as the visibility update uses the
   // bounds to determine if the mouse is hovering over a button.
@@ -446,7 +453,7 @@ int BrowserViewLayout::LayoutBookmarkBar(int top) {
   return y + bookmark_bar_height;
 }
 
-int BrowserViewLayout::LayoutInfoBar(int top) {
+int BrowserViewLayout::LayoutInfoBar(int left, int top) {
   // In immersive fullscreen, the infobar always starts near the top of the
   // screen.
   if (immersive_mode_controller_->IsEnabled())
@@ -454,17 +461,17 @@ int BrowserViewLayout::LayoutInfoBar(int top) {
 
   infobar_container_->SetVisible(InfobarVisible());
   infobar_container_->SetBounds(
-      vertical_layout_rect_.x(), top, vertical_layout_rect_.width(),
+      vertical_layout_rect_.x() + left, top, vertical_layout_rect_.width() - left,
       infobar_container_->GetPreferredSize().height());
   return top + infobar_container_->height();
 }
 
-void BrowserViewLayout::LayoutContentsContainerView(int top, int bottom) {
+void BrowserViewLayout::LayoutContentsContainerView(int left, int top, int bottom) {
   // |contents_container_| contains web page contents and devtools.
   // See browser_view.h for details.
-  gfx::Rect contents_container_bounds(vertical_layout_rect_.x(),
+  gfx::Rect contents_container_bounds(vertical_layout_rect_.x() + left,
                                       top,
-                                      vertical_layout_rect_.width(),
+                                      vertical_layout_rect_.width() - left,
                                       std::max(0, bottom - top));
   contents_container_->SetBoundsRect(contents_container_bounds);
 }
@@ -515,14 +522,14 @@ int BrowserViewLayout::GetContentsOffsetForBookmarkBar() {
   return bookmark_bar_->height();
 }
 
-int BrowserViewLayout::LayoutDownloadShelf(int bottom) {
+int BrowserViewLayout::LayoutDownloadShelf(int left, int bottom) {
   if (delegate_->DownloadShelfNeedsLayout()) {
     bool visible = browser()->SupportsWindowFeature(
         Browser::FEATURE_DOWNLOADSHELF);
     DCHECK(download_shelf_);
     int height = visible ? download_shelf_->GetPreferredSize().height() : 0;
     download_shelf_->SetVisible(visible);
-    download_shelf_->SetBounds(vertical_layout_rect_.x(), bottom - height,
+    download_shelf_->SetBounds(vertical_layout_rect_.x() + left, bottom - height,
                                vertical_layout_rect_.width(), height);
     download_shelf_->Layout();
     bottom -= height;
