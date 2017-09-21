@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82cbb0e4_b933f96a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T16:56:38Z",
+      "side": 1,
+      "message": "Are you sure we want to introduce new chrome-ipc messages? An alternative could be:\n\n  interface RendererWindowTreeClient {\n    Embed(routing_id, WindowTreeClient);\n  };\n\n  interface RenderWidgetWindowTreeClientFactory {\n    CreateWindowTreeClientForRenderWidget(routing_id,\n                                          WindowTreeClientRequest,\n               /* This is the new part */ RendererWindowTreeClientRequest);\n  };\n\nThe parent RWHVAura has a RendererWindowTreeClientPtr, and calls Embed() on it here.\nWe call RenderWidgetWindowTreeClientFactory::CreateWindowTreeClientForRenderWidget() here.\n\nI think that will be cleaner?",
+      "revId": "43c09b0fd0388dcb4f21851a0963a383ffeab0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
