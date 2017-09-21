@@ -57,6 +57,9 @@ class WizardController : public BaseScreenDelegate,
                          public NetworkScreen::Delegate,
                          public HIDDetectionScreen::Delegate {
  public:
+  // Default constructor. For Test use only.
+  WizardController();
+
   WizardController(LoginDisplayHost* host, OobeUI* oobe_ui);
   ~WizardController() override;
 
@@ -128,6 +131,9 @@ class WizardController : public BaseScreenDelegate,
   // Allocate a given BaseScreen for the given |Screen|. Used by
   // |screen_manager_|.
   BaseScreen* CreateScreen(OobeScreen screen);
+
+  // Set the current screen. For Test use only.
+  void SetCurrentScreenForTesting(BaseScreen* screen);
 
  private:
   // Show specific screen.

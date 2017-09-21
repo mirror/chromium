@@ -257,6 +257,27 @@ bool WizardController::zero_delay_enabled_ = false;
 
 PrefService* WizardController::local_state_for_testing_ = nullptr;
 
+// For Test use only.
+WizardController::WizardController()
+    : host_(nullptr), oobe_ui_(nullptr), weak_factory_(this) {
+  DCHECK(default_controller_ == nullptr);
+  default_controller_ = this;
+  screen_manager_ = base::MakeUnique<ScreenManager>(this);
+  // In session OOBE was initiated from voice interaction keyboard shortcuts.
+  is_in_session_oobe_ =
+      session_manager::SessionManager::Get()->IsSessionStarted();
+  if (!ash_util::IsRunningInMash()) {
+    AccessibilityManager* accessibility_manager = AccessibilityManager::Get();
+    if (!accessibility_manager)
+      return;
+    accessibility_subscription_ = accessibility_manager->RegisterCallback(
+        base::Bind(&WizardController::OnAccessibilityStatusChanged,
+                   base::Unretained(this)));
+  } else {
+    NOTIMPLEMENTED();
+  }
+}
+
 WizardController::WizardController(LoginDisplayHost* host, OobeUI* oobe_ui)
     : host_(host), oobe_ui_(oobe_ui), weak_factory_(this) {
   DCHECK(default_controller_ == nullptr);
@@ -447,6 +468,10 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   }
 
   return nullptr;
+}
+
+void WizardController::SetCurrentScreenForTesting(BaseScreen* screen) {
+  current_screen_ = screen;
 }
 
 void WizardController::ShowNetworkScreen() {
