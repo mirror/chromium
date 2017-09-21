@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5c171c1_fd306a5c",
+        "filename": "ios/web_view/internal/signin/web_view_oauth2_token_service_factory.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Please add a methond ProfileOAuth2TokenService::RegisterPrefs that only on iOS adds these prefs and call it from here, and from |ios::OAuth2TokenServiceFactory::RegisterBrowserStatePrefs| and from ProfileOAuth2TokenServiceFactory for completeness (add a similar method to register prefs in https://cs.chromium.org/chromium/src/chrome/browser/signin/profile_oauth2_token_service_factory.h)",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933defc7_7bc9e124",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Agreed to duplicate this code and keep it as is now.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc84ad23_d9763b4b",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Here and everywhere else possible:\nFor constructor and destructor, pleas use \"\u003d default\" and remove the implementation.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d713553e_6e999691",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
         "patchSetId": 21
@@ -25,6 +94,52 @@
     },
     {
       "key": {
+        "uuid": "82402d29_38c27d03",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "I think this comment is wrong.",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e981a5d7_8266e199",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "As explained in the design document, it would be good to extract the common part of SigninErrorControllers and SigninClientImpl ( https://cs.corp.google.com/clankium/src/ios/chrome/browser/signin/signin_client_impl.h) in a SigninClientIOS that lives in //components/signin/ios/browser.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "523de3e5_9d5e2ec4",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -41,6 +156,190 @@
         "startChar": 25,
         "endLine": 37,
         "endChar": 48
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b33b9f9_fb027539",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Move to SigninClientIOS.",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9c91b6_9d2ae5ed",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "If possible, pass cookie_settings on constructor and move this to SigninClientIOS.",
+      "range": {
+        "startLine": 59,
+        "startChar": 39,
+        "endLine": 59,
+        "endChar": 52
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1776d2d_8de2075c",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Pass prefs on constructor and move to SigninClientIOS.",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe6e98c_c5979ccc",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Move to SigninClientIOS.",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae0e038_6252924c",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Move this to SigninClientIOS.",
+      "range": {
+        "startLine": 136,
+        "startChar": 30,
+        "endLine": 136,
+        "endChar": 40
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1794b8_40ebd354",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Pass request context on constructor and move  oauth_client_ and corresponding methods to SigninClientIOS.",
+      "range": {
+        "startLine": 161,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45167138_b06ef779",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Move this to SigninClientIOS if possible.",
+      "range": {
+        "startLine": 192,
+        "startChar": 34,
+        "endLine": 192,
+        "endChar": 43
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32300ae5_1cbfcbd8",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T10:51:05Z",
+      "side": 1,
+      "message": "Move this to SigninClientIOS is possible.",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 41
       },
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
