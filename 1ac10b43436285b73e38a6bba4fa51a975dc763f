@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "d6cf2c9b_f384dc93",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-21T07:25:09Z",
+      "side": 1,
+      "message": "Sorry but the link should be https://chromium-review.googlesource.com/c/chromium/src/+/676923/2/components/translate/core/browser/translate_manager.h",
+      "parentUuid": "5b836524_b68dae1e",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507a925_6136ecf0",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 7
