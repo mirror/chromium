@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9c14892_203e1e5c",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-21T14:30:00Z",
+      "side": 1,
+      "message": "The conversion will be most likely happening in the backend, so adding a todo() there.",
+      "parentUuid": "f85e67c7_e1b27942",
+      "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de55353_1e87cfab",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Thanks. Hey let\u0027s update the @param then. Maybe:\n@param {!Object|string}\nThat says it must be either a non-null Object or a string.",
       "parentUuid": "174e336f_52f4f180",
+      "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46947891_7c18983b",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-21T14:30:00Z",
+      "side": 1,
+      "message": "I don\u0027t want to restrict it to only an object and a string, as it should accept whatever is sent from the backend. Rather, I\u0027d prefer to list all the possible policy types. WDYT?",
+      "parentUuid": "cff2c3f7_f4d30929",
       "revId": "2b1c48bcd0ed30bdfadaccb1c2fe9143c716988d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
