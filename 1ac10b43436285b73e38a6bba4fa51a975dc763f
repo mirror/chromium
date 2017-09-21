@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c4a4296_6fc95683",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-21T04:45:38Z",
+      "side": 1,
+      "message": "I\u0027d create an overload version of GetTargetLanguage instead of adding an argument with a default value, and comment on it that this is for testing.",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c507a925_6136ecf0",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-21T04:45:38Z",
+      "side": 1,
+      "message": "Is it really needed to pass nullptr explicitly here?",
+      "revId": "1ac10b43436285b73e38a6bba4fa51a975dc763f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
