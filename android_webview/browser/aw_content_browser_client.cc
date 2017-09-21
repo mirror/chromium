@@ -442,10 +442,6 @@ void AwContentBrowserClient::ResourceDispatcherHostCreated() {
   AwResourceDispatcherHostDelegate::ResourceDispatcherHostCreated();
 }
 
-net::NetLog* AwContentBrowserClient::GetNetLog() {
-  return browser_context_->GetAwURLRequestContext()->GetNetLog();
-}
-
 base::FilePath AwContentBrowserClient::GetDefaultDownloadDirectory() {
   // Android WebView does not currently use the Chromium downloads system.
   // Download requests are cancelled immedately when recognized; see

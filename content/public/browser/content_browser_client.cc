@@ -328,10 +328,6 @@ SpeechRecognitionManagerDelegate*
   return nullptr;
 }
 
-net::NetLog* ContentBrowserClient::GetNetLog() {
-  return nullptr;
-}
-
 base::FilePath ContentBrowserClient::GetDefaultDownloadDirectory() {
   return base::FilePath();
 }

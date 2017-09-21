@@ -298,8 +298,4 @@ void HeadlessContentBrowserClient::ResourceDispatcherHostCreated() {
       resource_dispatcher_host_delegate_.get());
 }
 
-net::NetLog* HeadlessContentBrowserClient::GetNetLog() {
-  return browser_->browser_main_parts()->net_log();
-}
-
 }  // namespace headless
