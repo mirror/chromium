@@ -25,6 +25,64 @@
     },
     {
       "key": {
+        "uuid": "52b4fcad_b48d53aa",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerThreadTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-21T18:39:32Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "1c8ab0a1_b223fdc5",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8acb9f6_d7f554b5",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-21T18:39:32Z",
+      "side": 0,
+      "message": "Sneaky!  Was hidden in gerrit - this list needs to be modified too.",
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05dc919_d98b117e",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-21T18:39:32Z",
+      "side": 0,
+      "message": "Sneaky!  Was hidden in gerrit - this list needs to be modified too.",
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "507262b5_25adabbf",
         "filename": "tools/perf/page_sets/key_idle_power_cases.py",
         "patchSetId": 6
@@ -36,6 +94,30 @@
       "writtenOn": "2017-09-21T17:20:27Z",
       "side": 0,
       "message": "Why is this removed? Seems unrelated.",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "3c2f71a31210de6f99a31217e5ae68a373f631d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539b5fc6_4954874a",
+        "filename": "tools/perf/page_sets/key_idle_power_cases.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-21T18:39:32Z",
+      "side": 0,
+      "message": "Oops, I thought it referenced third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/request-animation-frame.html which is deleted above.\n\nOn the upside, this made me find more files to delete.",
+      "parentUuid": "507262b5_25adabbf",
       "range": {
         "startLine": 76,
         "startChar": 66,
