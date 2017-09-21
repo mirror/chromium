@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4338c083_1c6f071e",
+        "filename": "ash/message_center/message_center_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "nit: Does this have to move? Usually I put \"using\" outside the ash namespace.",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7daf3583_e3113848",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "remove block, and all the other !chromeos stuff below",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bd9b9f_5be561c4",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "optional cleanup: \"// Weak reference\" doesn\u0027t mean much in a world where owned things default to unique_ptr\u003c\u003e, I would kill them if you have to touch the lines",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0537fef_245ad442",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "Remove all this, since ash implies chromeos.",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6fb1b6_ef3448b0",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "nit: move above 41",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a7ddfe_8b1a4325",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "nit: make_unique\u003c\u003e while you\u0027re here",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db183bc_8d9d64fd",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "optional: message_center is a long and ungainly namespace. I would be OK with \"namespace mc \u003d message_center\" if it made line wrapping better. I\u0027m also OK with aggressive use of \"using message_center::Foo\", especially if more code is going to move into the ash namespace in the future. And I\u0027m also OK with exactly what you\u0027re doing now. :-)",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe1cd16_19414698",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "optional ditto",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057a6e57_f74820b8",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c68acb_8a68d9f4",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "Thanks.",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2e73fab_adec80e4",
+        "filename": "ash/message_center/message_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc1f3fb_43c612b3",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "optional: I\u0027m OK with \"namespace settings \u003d message_center::settings;\" too",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a30a23_4f4410c3",
+        "filename": "ash/message_center/notifier_settings_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T01:10:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "97fdea7e2c55d9ff50f25e3f87707e495420226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
