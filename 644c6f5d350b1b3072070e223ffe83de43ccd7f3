@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0041782_33e6a8ac",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "a85a26bc_0ccdd399",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd5d684_d229f0a1",
         "filename": "chrome/browser/permissions/permission_manager.cc",
         "patchSetId": 1

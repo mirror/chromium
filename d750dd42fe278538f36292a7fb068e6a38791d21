@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6549a169_988b35fb",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e1f53d_0aab29be",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efdc25e7_62d1c03c",
         "filename": "chrome/browser/permissions/permission_manager.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d976c90_662a6d4e",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I\u0027m trying to say. Reformulated a bit to hopefully make it clearer.",
+      "parentUuid": "efdc25e7_62d1c03c",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da7b214_1befba03",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-21T02:03:59Z",
       "side": 1,
       "message": "nit: the embedding origin should just be the local NTP URL too I think. Though it won\u0027t have any impact.",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e3e425_f4f74533",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "No, if the local NTP is enabled by default (--enable-features\u003dUseGoogleLocalNtp), then the embedding origin is actually \"chrome://newtab\". URL rewriting FTL :-/\nSince local-NTP-enabled is where we\u0027re going, I\u0027d like the test to cover that. If you want, I could add another test to also cover the other case?",
+      "parentUuid": "6da7b214_1befba03",
       "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e0ec9bf_c2573a26",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "Indeed it does, thanks!",
+      "parentUuid": "ec53fe1c_5014ac0c",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089122f3_9e1b3ecd",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caafceba_b4750dd1",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-21T10:27:26Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "089122f3_9e1b3ecd",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
