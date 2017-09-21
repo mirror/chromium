@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a9c4f5d7_98b5330c",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T18:38:03Z",
+      "side": 1,
+      "message": "The subpage animation fix can be as simple as https://chromium-review.googlesource.com/c/chromium/src/+/677413, which just uses\n\nvar isRtl \u003d loadTimeData.getString(\u0027textdirection\u0027) \u003d\u003d \u0027rtl\u0027;\n\nwhere needed.",
+      "parentUuid": "f96fb7fb_92ff256a",
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5acdc8a4_2981f42c",
         "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
         "patchSetId": 4
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "\u003e I am not keen on this approach for the following reasons:\n\u003e  - textAlign and textReverseAlign semantics are not clear in this context. They only make sense if someone looks in settings_animated_pages and how these are used.\n\nif we agree that using C++ to do this (which seems legit to me), I\u0027m happy to come up with other (better) names.  do you have a concrete suggestion?\n\n\u003e  - we are passing redundant information just to avoid a trivial line of JS.\n\nwell\n\n1) align\u003d\"$i18n{thingFromCpp}\" is going to be simplest and fastest, and will have the greatest chance of rendering correctly the earliest (i.e. the first frame).\n\n2) yes, doing this in the C++ does reduce duplication.  I originally had:\n\nvar align \u003d this.i18n(\u0027textdirection\u0027) \u003d\u003d \u0027rtl\u0027 ? \u0027right\u0027 : \u0027left\u0027;\nvar reverse \u003d align \u003d\u003d \u0027left\u0027 ? \u0027right\u0027 : \u0027left\u0027;\n\nwhich is kinda confusing and I had to duplicate this in the code.  yes, we could make a new method in the settings.* global name space in JS, either by appending to an existing .js file or creating a new direction.js\n\ncr.define(\u0027settings\u0027, function() {\n  function isRTL() {\n    return loadTimeData.getString(\u0027textdirection\u0027) \u003d\u003d \u0027rtl\u0027;\n  }\n  function getTextAlign() {\n    return isRtl() ? \u0027left\u0027 : \u0027right\u0027;\n  }\n  function getTextReverseAlign() {\n    return getTextAlign() \u003d\u003d \u0027left\u0027 ? \u0027right\u0027 : \u0027left\u0027;\n  }\n  return {\n    isRTL: isRTL,\n    getTextAlign: getTextAlign,\n    getTextReverseAlign: getTextReverseAlign,\n  },\n});\n\nand set up a new .grd entry, a new compiled_resources2.gyp target, and direction.html to import, and then import direction.html from those pages etc. etc.\n\nbut jeez that\u0027s so much more effort for less benefit, IMO (again: because this code now lives in JS and isn\u0027t available to use as early).\n\n\u003e \n\u003e Can we stick to using the already existing \u0027textdirection\u0027 and leave inference based on that boolean to the UI side?\n\nC++ is also UI.  chrome/browser/UI/webui/",
       "parentUuid": "502dc709_78588c1a",
+      "revId": "839be157f457edeb96b6342196c703cae53788d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6e296c_c0122d15",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T18:38:03Z",
+      "side": 1,
+      "message": "1) The drawer is not open on startup, so the argument is academic. Even if we do show the sidebar by default, Polymer happily executes bindings before attached(). When ready() fires, before attached(), all local DOM has been properly prepared/populated.\n\n2) I don\u0027t see the need to share the getTextAlign/getTextReverseAlign anywhere outside settings_animated_pages, whether it is C++, or a settings.* helper method. Why should that information be generi-fied?\n\n\u003e so much more effort for less benefit\n\nBasically, I don\u0027t see a reason for the effort you are describing.\n\nThe left/right usage in this context has nothing to do with text direction, it only has to do with where do we want to slide-in/out subpages in LTR/RTL, which is only relevant within settings_animated_pages.",
+      "parentUuid": "8f5f936e_7039f430",
       "revId": "839be157f457edeb96b6342196c703cae53788d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
