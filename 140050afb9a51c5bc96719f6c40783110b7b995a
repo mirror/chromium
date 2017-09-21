@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285b94b2_ce43915f",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-21T15:30:38Z",
+      "side": 1,
+      "message": "Please add a comment describing the purpose of this.",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14df73d6_f3cc5631",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-21T15:30:38Z",
+      "side": 1,
+      "message": "Override methods should all be in a single section (no blank new lines) and reference the class they\u0027re overriding from in a comment like this:\n\n// HistogramBase:",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0146b9_39392bc8",
+        "filename": "base/metrics/dummy_histogram_samples.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-21T15:30:38Z",
+      "side": 1,
+      "message": "Do these need to be in in a separate file or can they just be in dummy_histogram.cc in the anon namespace? If the latter works (i.e. no other classes needed to refer to these objects by their type), do that instead.",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85619c5d_62740c46",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-21T15:30:38Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 0
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b395e95_c047afd7",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-21T15:30:38Z",
+      "side": 1,
+      "message": "Comment",
+      "range": {
+        "startLine": 258,
+        "startChar": 14,
+        "endLine": 258,
+        "endChar": 37
+      },
+      "revId": "140050afb9a51c5bc96719f6c40783110b7b995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
