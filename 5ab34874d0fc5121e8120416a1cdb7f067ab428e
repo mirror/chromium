@@ -46,6 +46,30 @@
       "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5344ed6_0b387a82",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-21T21:06:18Z",
+      "side": 1,
+      "message": "I mean the selection. I cannot think of a case where they have different root editable except nested contenteditable cases such as:\n\u003cdiv contenteditable\u003eab\u003cspan contenteditable\u003ecd\u003c/span\u003eef\u003c/div\u003e\nwhere composition is \u0027bc\u0027 and selection is right after \u0027c\u0027.\n\nIIRC we aren\u0027t handling them correctly, anyways.\n\nAlso, composition may have an invalid root editable while selection may have a valid one - but it shouldn\u0027t matter in this case.\n\nI am not sure about when tree scope root is used, though.",
+      "parentUuid": "8bdcd067_584bfb6d",
+      "range": {
+        "startLine": 298,
+        "startChar": 23,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
