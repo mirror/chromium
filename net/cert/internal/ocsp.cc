@@ -516,7 +516,6 @@ OCSPRevocationStatus CheckOCSPNoSignatureCheck(
     base::StringPiece certificate_der,
     base::StringPiece issuer_certificate_der,
     const base::Time& verify_time,
-    bool skip_time_check,
     OCSPVerifyResult::ResponseStatus* response_details) {
   // The maximum age for an OCSP response, implemented as time since the
   // |this_update| field in OCSPSingleResponse. Responses older than |max_age|
@@ -578,12 +577,10 @@ OCSPRevocationStatus CheckOCSPNoSignatureCheck(
 
   // If producedAt is outside of the certificate validity period, reject the
   // response.
-  if (!skip_time_check) {
-    if (response_data.produced_at < certificate->tbs().validity_not_before ||
-        response_data.produced_at > certificate->tbs().validity_not_after) {
-      *response_details = OCSPVerifyResult::BAD_PRODUCED_AT;
-      return OCSPRevocationStatus::UNKNOWN;
-    }
+  if (response_data.produced_at < certificate->tbs().validity_not_before ||
+      response_data.produced_at > certificate->tbs().validity_not_after) {
+    *response_details = OCSPVerifyResult::BAD_PRODUCED_AT;
+    return OCSPRevocationStatus::UNKNOWN;
   }
 
   OCSPRevocationStatus result = OCSPRevocationStatus::UNKNOWN;
@@ -612,8 +609,7 @@ OCSPRevocationStatus CheckOCSPNoSignatureCheck(
     // serial numbers. If an OCSP responder provides both an up to date response
     // and an expired response, the up to date response takes precedence
     // (PROVIDED > INVALID_DATE).
-    if (!skip_time_check &&
-        !CheckOCSPDateValid(single_response, verify_time, max_age)) {
+    if (!CheckOCSPDateValid(single_response, verify_time, max_age)) {
       if (*response_details != OCSPVerifyResult::PROVIDED)
         *response_details = OCSPVerifyResult::INVALID_DATE;
       continue;
