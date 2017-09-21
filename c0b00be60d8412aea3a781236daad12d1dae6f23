@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c106d666_ac4bb278",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-21T22:07:52Z",
+      "side": 1,
+      "message": "Returned back to original",
+      "parentUuid": "86ac8b0a_62c846f3",
+      "range": {
+        "startLine": 1351,
+        "startChar": 118,
+        "endLine": 1351,
+        "endChar": 121
+      },
+      "revId": "c0b00be60d8412aea3a781236daad12d1dae6f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fece59f4_7b9cd8ce",
         "filename": "testing/variations/fieldtrial_testing_config.json",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-21T21:09:58Z",
       "side": 1,
       "message": "Same here... \u003e\u003d1 ? or \u003e0 ?",
+      "range": {
+        "startLine": 1892,
+        "startChar": 100,
+        "endLine": 1892,
+        "endChar": 103
+      },
+      "revId": "c0b00be60d8412aea3a781236daad12d1dae6f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51bcd81_57a4a728",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-21T22:07:52Z",
+      "side": 1,
+      "message": "Returned back to original",
+      "parentUuid": "fece59f4_7b9cd8ce",
       "range": {
         "startLine": 1892,
         "startChar": 100,
