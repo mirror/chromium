@@ -114,15 +114,15 @@ class MockPrinter {
   // Helper function to fill the fields in |params|.
   void SetPrintParams(PrintMsg_Print_Params* params);
 
-  // In pixels according to dpi_x and dpi_y.
+  // In pixels according to dpi_
   gfx::Size page_size_;
   gfx::Size content_size_;
   int margin_left_;
   int margin_top_;
   gfx::Rect printable_area_;
 
-  // Specifies dots per inch.
-  double dpi_;
+  // Specifies dots per inch in x and y.
+  gfx::Size dpi_;
 
   // Print selection.
   bool selection_only_;

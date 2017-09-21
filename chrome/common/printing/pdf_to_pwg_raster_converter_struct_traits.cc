@@ -13,11 +13,10 @@ bool StructTraits<printing::mojom::PDFRenderSettingsDataView,
                   printing::PdfRenderSettings>::
     Read(printing::mojom::PDFRenderSettingsDataView data,
          printing::PdfRenderSettings* out) {
-  out->dpi = data.dpi();
   out->autorotate = data.autorotate();
 
   return data.ReadArea(&out->area) && data.ReadOffsets(&out->offsets) &&
-         data.ReadMode(&out->mode);
+         data.ReadDpi(&out->dpi) && data.ReadMode(&out->mode);
 }
 
 bool StructTraits<printing::mojom::PWGRasterSettingsDataView,

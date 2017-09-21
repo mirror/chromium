@@ -69,8 +69,6 @@ std::unique_ptr<base::DictionaryValue> PrinterSemanticCapsAndDefaultsToCdd(
     bool is_default_set = false;
     for (size_t i = 0; i < semantic_info.papers.size(); ++i) {
       gfx::Size paper_size = semantic_info.papers[i].size_um;
-      if (paper_size.width() > paper_size.height())
-        paper_size.SetSize(paper_size.height(), paper_size.width());
       Media new_media(semantic_info.papers[i].display_name,
                       semantic_info.papers[i].vendor_id,
                       paper_size.width(),
