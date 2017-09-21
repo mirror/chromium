@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9ac621_b1d74d7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-21T17:56:28Z",
+      "side": 1,
+      "message": "My CL to remove this flag landed earlier this morning, so compilation is broken on this line :(",
+      "range": {
+        "startLine": 404,
+        "startChar": 28,
+        "endLine": 404,
+        "endChar": 56
+      },
+      "revId": "3761901e7e3ed79142dc1a90f2b21a8e54100a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
