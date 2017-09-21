@@ -57,6 +57,24 @@
       "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f8ff81_bdafee1d",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-21T20:38:02Z",
+      "side": 1,
+      "message": "Please keep the old behavior. Let\u0027s focus on only fixing the TOC-TOU issue here. Thanks for adding these new tests, BTW.",
+      "parentUuid": "110530d1_2437c449",
+      "revId": "45e6d93523136a3523d8e535de503bb303520ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
