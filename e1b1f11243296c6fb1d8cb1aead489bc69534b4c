@@ -16,6 +16,24 @@
       "revId": "e1b1f11243296c6fb1d8cb1aead489bc69534b4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f37dd4_6ad470ac",
+        "filename": "components/ntp_snippets/time_serialization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T12:11:06Z",
+      "side": 1,
+      "message": "Done.\n\nYes, I\u0027ve added FromHours(-1) to the test.",
+      "parentUuid": "11680ad4_6277028c",
+      "revId": "e1b1f11243296c6fb1d8cb1aead489bc69534b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
