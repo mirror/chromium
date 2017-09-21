@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16839c2a_b43bc6a8",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T21:01:17Z",
+      "side": 1,
+      "message": "This may need to become a public_deps.",
+      "revId": "7ae34bed514bfb8016404b1b764968f623672216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b46c828_f10d4cb8",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T21:01:17Z",
+      "side": 1,
+      "message": "Not necessary (I think).",
+      "revId": "7ae34bed514bfb8016404b1b764968f623672216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
