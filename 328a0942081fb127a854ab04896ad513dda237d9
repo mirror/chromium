@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b987eff_bd5360bc",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e sounds like TODO.\n\nOk. I removed this comment and wrote on future improvements list.",
+      "parentUuid": "5e4056e4_bd9900c5",
+      "range": {
+        "startLine": 24,
+        "startChar": 58,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5b7ada_c24b9bde",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5e85da9a_f4e4bfb3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e \u003e string16 We work with non-latin languages as well.\n\u003e \n\u003e std::string can encode non-latin characters, but we use string16 for label, names/ ids, placeholder (https://cs.chromium.org/chromium/src/components/autofill/core/common/form_field_data.h?rcl\u003dbbebe805f0e24f6cb7dd909559a8a6ed3e94e380\u0026l\u003d77). Let\u0027s follow it.\n\nOk, done.",
+      "parentUuid": "b6d1178b_518d8b86",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34fb7aa4_0831291f",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -83,6 +131,30 @@
       "writtenOn": "2017-09-19T10:34:27Z",
       "side": 1,
       "message": "My suggestion about treating short words and two-word sentences:\n* |developer_group| and |user_group| will contain NO special symbols.\n* all special words/sentences have NO spaces.\n* In |PossibleUsername| we will also store a set of short tokens. \n* When you check a string and dictionary: if a word from dictionary is short, then check the set. Otherwise, search non-short word in the string.\n\nSketch: \nvector\u003cStringPiece16\u003e tokens \u003d SplitString(name + \"$\" + id);\ndeveloper_group \u003d JoinString(tokens, \"\");\nset\u003cstring16\u003e short_tokens_in_developer_group (or so);\nstd::copy_if(tokens.begin(), tokens.end(), std::inserter(short_tokens), IfTokenIsShort);",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 2
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454d4d96_1e9700d7",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e My suggestion about treating short words and two-word sentences:\n\u003e * |developer_group| and |user_group| will contain NO special symbols.\n\u003e * all special words/sentences have NO spaces.\n\u003e * In |PossibleUsername| we will also store a set of short tokens. \n\u003e * When you check a string and dictionary: if a word from dictionary is short, then check the set. Otherwise, search non-short word in the string.\n\u003e \n\u003e Sketch: \n\u003e vector\u003cStringPiece16\u003e tokens \u003d SplitString(name + \"$\" + id);\n\u003e developer_group \u003d JoinString(tokens, \"\");\n\u003e set\u003cstring16\u003e short_tokens_in_developer_group (or so);\n\u003e std::copy_if(tokens.begin(), tokens.end(), std::inserter(short_tokens), IfTokenIsShort);\n\nDone.",
+      "parentUuid": "34fb7aa4_0831291f",
       "range": {
         "startLine": 38,
         "startChar": 0,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3d55f6cf_f0536822",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e Please format these arrays as well. Formatted arrays look nicer :)\n\nI also like formatted arrays more, but with git cl format, I cannot. Even if I use the Colab script, it wouldn\u0027t work.\n\nThe only solution would be to manually arrange them. Do you suggest I do that?",
+      "parentUuid": "ff5aa722_80a0b641",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 36
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1272a7a_0fd4a471",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -129,6 +225,30 @@
       "writtenOn": "2017-09-19T08:34:12Z",
       "side": 1,
       "message": "Sounds like TODO. \n\nLet\u0027s keep issues we need to re-consider in a file. We will add them to the source code at the end if neede.",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 15
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a654cdf0_c2e19e8a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e Sounds like TODO. \n\u003e \n\u003e Let\u0027s keep issues we need to re-consider in a file. We will add them to the source code at the end if neede.\n\nOk. I removed this comment and wrote on future improvements list.",
+      "parentUuid": "e1272a7a_0fd4a471",
       "range": {
         "startLine": 268,
         "startChar": 0,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "25c9f05b_398a8d0a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e always work with string16, non-latin letter will be lost on standard string.\n\nDone.",
+      "parentUuid": "15047466_90a5e3a6",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 11
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62379ed7_e2250567",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -175,6 +319,30 @@
       "writtenOn": "2017-09-19T08:34:12Z",
       "side": 1,
       "message": "It should be a constant outside the method.",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 26
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d166b4c0_75589b53",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e It should be a constant outside the method.\n\nDone.",
+      "parentUuid": "62379ed7_e2250567",
       "range": {
         "startLine": 314,
         "startChar": 2,
@@ -233,6 +401,54 @@
     },
     {
       "key": {
+        "uuid": "fa7e6439_33ac38c8",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e Sounds like we remove non-latin letters.\n\nYes. I changed these functions.",
+      "parentUuid": "f6834186_216f8bd9",
+      "range": {
+        "startLine": 322,
+        "startChar": 9,
+        "endLine": 322,
+        "endChar": 34
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f1f8c4_d1e9a376",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e why to create method that only forward a call to another function. The function are not called anywhere else.\n\nRemoved them.",
+      "parentUuid": "da304700_dd6056a4",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 8
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba0a491f_c4a10604",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -244,6 +460,30 @@
       "writtenOn": "2017-09-19T08:34:12Z",
       "side": 1,
       "message": "why? there may be neither name nor id attributes, but there may be label that we will use for classification.",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 326,
+        "endChar": 75
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3c6b91_0a3d4b28",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e why? there may be neither name nor id attributes, but there may be label that we will use for classification.\n\nBecause we don\u0027t have how to match form field data to control element.",
+      "parentUuid": "ba0a491f_c4a10604",
       "range": {
         "startLine": 325,
         "startChar": 34,
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "c3bf7e7b_a01ac2ee",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e I would clarify the main function of this method - extracting USER and DEVELOPER groups for further processing. In the comment to |current_index|, I would mention that we have to match |all_possible_usernames| and |form_data|.\n\u003e \n\u003e My suggestions.\n\u003e Method description\n\u003e Extracts values of user and developer groups from |WebInputElement|s to |PossibleUsername|s.\n\u003e \n\u003e To |current_index| and the loop:\n\u003e |all_possible_usernames| and |form_data.fields| may have different set of fields. Match them based on |WebInputElement.NameForAutofill| and |FormFieldData.name|.\n\nDone.",
+      "parentUuid": "9960d485_7a1b8122",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 66
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ee90200_e46d8eaa",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -290,6 +554,30 @@
       "writtenOn": "2017-09-19T08:34:12Z",
       "side": 1,
       "message": "must be a pointer. It is output parameter.",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 53
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a893b52_dd2f1b60",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e must be a pointer. It is output parameter.\n\nDone.",
+      "parentUuid": "9ee90200_e46d8eaa",
       "range": {
         "startLine": 332,
         "startChar": 4,
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "b3d343ab_799b28c5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e const and reference (\u0026). \n\u003e \n\u003e Always try to avoid copying, use references or pointers.\n\nDone.",
+      "parentUuid": "49eff96f_0ce1a378",
+      "range": {
+        "startLine": 339,
+        "startChar": 7,
+        "endLine": 339,
+        "endChar": 47
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e49636_0eb30779",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -336,6 +648,30 @@
       "writtenOn": "2017-09-19T08:34:12Z",
       "side": 1,
       "message": "Good point, but nit: convert to \nif (possible_username.NameForAutofill().IsEmpty()) continue;\n\nit will shorten the ladder of curly braces at the end of function.",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 343,
+        "endChar": 59
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e1c154_54b213e8",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e Good point, but nit: convert to \n\u003e if (possible_username.NameForAutofill().IsEmpty()) continue;\n\u003e \n\u003e it will shorten the ladder of curly braces at the end of function.\n\nDone.",
+      "parentUuid": "b0e49636_0eb30779",
       "range": {
         "startLine": 343,
         "startChar": 6,
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "47938be3_ff93cbe1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e I guess that check whether a string contains one of terms from some dictionary is common operation here. Consider make a method for that purpose.\n\nIt is not that used, in my opinion. And anyways, it would be hard to generalize, because we check different conditions in the for loop. I would leave it like this.",
+      "parentUuid": "b346793d_e1992c2b",
+      "range": {
+        "startLine": 386,
+        "startChar": 4,
+        "endLine": 386,
+        "endChar": 61
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "513aebb8_8e0c7af5",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -382,6 +742,30 @@
       "writtenOn": "2017-09-19T09:36:53Z",
       "side": 1,
       "message": "OMG, you re-use the same variable name in a nested loop. It is very bad for readability and error-prone.",
+      "range": {
+        "startLine": 398,
+        "startChar": 18,
+        "endLine": 398,
+        "endChar": 19
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8be6e5_1740579e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e OMG, you re-use the same variable name in a nested loop. It is very bad for readability and error-prone.\n\nFortunately, they are not nested loops.",
+      "parentUuid": "513aebb8_8e0c7af5",
       "range": {
         "startLine": 398,
         "startChar": 18,
@@ -417,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "57cdf152_4d80647a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e It is not nice that you iterate over an vector and remove elements within the loop. \n\u003e \n\u003e Consider erase-remove_if pattern for excluding negative elements.  https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_classifier.cc?rcl\u003d435a341a77e06530162229c0cee93b65be300a38\u0026l\u003d50\n\nDone.",
+      "parentUuid": "4b1fecd9_e6bb901c",
+      "range": {
+        "startLine": 401,
+        "startChar": 10,
+        "endLine": 401,
+        "endChar": 27
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e033bc9e_014b2e6b",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -428,6 +836,30 @@
       "writtenOn": "2017-09-19T09:36:53Z",
       "side": 1,
       "message": "Initialize the variable once you declare it.\n\nIf you need to re-initialize at every iteration, then declare the variable within the loop.",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 15
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5aa363b_0424a5aa",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e Initialize the variable once you declare it.\n\u003e \n\u003e If you need to re-initialize at every iteration, then declare the variable within the loop.\n\nDone. I moved it within the loop.",
+      "parentUuid": "e033bc9e_014b2e6b",
       "range": {
         "startLine": 428,
         "startChar": 2,
@@ -463,6 +895,30 @@
     },
     {
       "key": {
+        "uuid": "03ea5f7f_bbf1a536",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e strange using of ternary operator :)\n\u003e \n\u003e std::string analyzed_group \u003d group \u003d\u003d DEVELOPER_GROUP ? ...\n\nDone.",
+      "parentUuid": "9e86b76b_4d520fd9",
+      "range": {
+        "startLine": 433,
+        "startChar": 6,
+        "endLine": 437,
+        "endChar": 0
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdaed759_3cc25d80",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -474,6 +930,30 @@
       "writtenOn": "2017-09-19T09:36:53Z",
       "side": 1,
       "message": "|count| is not a bool. Use explicit comparison with zero. Don\u0027t add hacks/tricks. Try to reduce mental load of code readers.",
+      "range": {
+        "startLine": 439,
+        "startChar": 12,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c63a19_9d7b94fe",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e |count| is not a bool. Use explicit comparison with zero. Don\u0027t add hacks/tricks. Try to reduce mental load of code readers.\n\nDone.",
+      "parentUuid": "fdaed759_3cc25d80",
       "range": {
         "startLine": 439,
         "startChar": 12,
@@ -509,6 +989,30 @@
     },
     {
       "key": {
+        "uuid": "91b4f0d5_af74c7e4",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e DCHECK(username_element);\n\u003e \n\u003e We have to check that the pointer is not nullptr.\n\nDone.",
+      "parentUuid": "2f6fba0b_92f34763",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 37
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db963b57_4f5fdc5e",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -532,6 +1036,30 @@
     },
     {
       "key": {
+        "uuid": "32178fc1_394233bd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e the variable should be static. Feel free to declare struct outside the method.\n\nDone.",
+      "parentUuid": "db963b57_4f5fdc5e",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 20
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "034cdcbb_438ccd1f",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -543,6 +1071,30 @@
       "writtenOn": "2017-09-19T09:36:53Z",
       "side": 1,
       "message": "const reference would fine here. \n\nAlso try to set as many |const|s as possible (for methods, for variables). On the other side, don\u0027t be crazy about that :)",
+      "range": {
+        "startLine": 491,
+        "startChar": 7,
+        "endLine": 491,
+        "endChar": 26
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e376c9_e185ed79",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e const reference would fine here. \n\u003e \n\u003e Also try to set as many |const|s as possible (for methods, for variables). On the other side, don\u0027t be crazy about that :)\n\nDone.",
+      "parentUuid": "034cdcbb_438ccd1f",
       "range": {
         "startLine": 491,
         "startChar": 7,
@@ -601,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "df32e600_21f13a8a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99038fc7_3d26ecc0",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 69
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b44fecc4_427f5b97",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 15
@@ -624,6 +1200,30 @@
     },
     {
       "key": {
+        "uuid": "c90b746d_41a6860c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e definition is needed or simply say that you are looking in name and id attributes.\n\nDone.",
+      "parentUuid": "b44fecc4_427f5b97",
+      "range": {
+        "startLine": 345,
+        "startChar": 46,
+        "endLine": 345,
+        "endChar": 62
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f70c46_77fede2f",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 15
@@ -635,6 +1235,30 @@
       "writtenOn": "2017-09-19T15:03:14Z",
       "side": 1,
       "message": "I would remove \"we\".",
+      "range": {
+        "startLine": 354,
+        "startChar": 9,
+        "endLine": 354,
+        "endChar": 16
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96f2383_cfd4dc57",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-21T10:09:57Z",
+      "side": 1,
+      "message": "\u003e I would remove \"we\".\n\nDone.",
+      "parentUuid": "b6f70c46_77fede2f",
       "range": {
         "startLine": 354,
         "startChar": 9,
