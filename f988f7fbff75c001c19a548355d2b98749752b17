@@ -138,6 +138,30 @@
     },
     {
       "key": {
+        "uuid": "29214f05_f2b84ebf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T17:16:12Z",
+      "side": 1,
+      "message": "Yeah I think we\u0027re on the same page: stuff that previously lived in //content probably should remain separate from the stuff currently in //sandbox, so that the sandbox remains a mostly-standalone component.",
+      "parentUuid": "9aa1a30c_6a58cbd5",
+      "range": {
+        "startLine": 2801,
+        "startChar": 9,
+        "endLine": 2801,
+        "endChar": 16
+      },
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038f4abc_b82c2e96",
         "filename": "content/BUILD.gn",
         "patchSetId": 18
@@ -206,6 +230,24 @@
       "writtenOn": "2017-09-21T15:04:13Z",
       "side": 1,
       "message": "Greg is working on something that will end up living in //sandbox/common in the nearish future. Do you envision other files living in //sandbox/policy, or do you think this file also could live in //sandbox/common?",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70f5f92_b4e159ae",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T17:16:12Z",
+      "side": 1,
+      "message": "Based on the discussion here: https://chromium-review.googlesource.com/c/chromium/src/+/676191/18/chrome/browser/chrome_content_browser_client.cc#2801, I think we may want to use //sandbox/policy for the stuff moving in from content, and //sandbox/common would be for shared implementation. (I.e., ignore this).",
+      "parentUuid": "e33495cb_d5735918",
       "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
