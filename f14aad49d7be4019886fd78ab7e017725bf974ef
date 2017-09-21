@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98d86cb_8bc6583f",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-21T19:49:41Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of \u0027\u0026\u0027?",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb86ee1_f3074303",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-21T19:49:41Z",
+      "side": 1,
+      "message": "Please don\u0027t use implicit conversion from bool to int.",
+      "range": {
+        "startLine": 352,
+        "startChar": 29,
+        "endLine": 352,
+        "endChar": 57
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981feea9_edeaa27a",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-21T19:49:41Z",
+      "side": 1,
+      "message": "Will it work if you remove this check?\nIf not, in which circumstances?",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 34
+      },
+      "revId": "f14aad49d7be4019886fd78ab7e017725bf974ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
