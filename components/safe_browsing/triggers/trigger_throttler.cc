@@ -135,7 +135,7 @@ bool TriggerThrottler::TriggerCanFire(const TriggerType trigger_type) const {
   // Nth-from-last entry (where N is the quota) to see if it happened within
   // the current day or earlier.
   base::Time min_timestamp = clock_->Now() - kOneDayTimeDelta;
-  const size_t pos = timestamps.size() - trigger_quota + 1;
+  const size_t pos = timestamps.size() - trigger_quota;
   return timestamps[pos] < min_timestamp.ToTimeT();
 }
 
