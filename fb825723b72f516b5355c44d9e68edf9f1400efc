@@ -34,6 +34,24 @@
       "revId": "fb825723b72f516b5355c44d9e68edf9f1400efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce744ddb_68191694",
+        "filename": "chromecast/media/cdm/cast_cdm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-21T02:58:47Z",
+      "side": 1,
+      "message": "I agree, I prefer not having a default. But some compiler settings may give an error here since you don\u0027t have a return statement for the fall-through case.  You can add an assert + default return value after the switch to prevent that.",
+      "parentUuid": "da781e46_0c87131b",
+      "revId": "fb825723b72f516b5355c44d9e68edf9f1400efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
