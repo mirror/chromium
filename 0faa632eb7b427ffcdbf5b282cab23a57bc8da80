@@ -45,6 +45,30 @@
       "revId": "0faa632eb7b427ffcdbf5b282cab23a57bc8da80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154d5886_2611054c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-21T01:01:55Z",
+      "side": 1,
+      "message": "Yes, crbug/761120. It implies moving the glue between MetalayerMode and HighlighterController from PaletteDelegateChromeOS to somewhere in ash. This should make metalayer-related interaction between ash and ArcVoiceInteractionFrameworkService much more straighforward (probably even  one-way), and this is when this particular problem will be fixed in a cleaner way.\n\nRe sequence: you are right, the sequence is wrong right now.",
+      "parentUuid": "bedd8c6b_2d3318a7",
+      "range": {
+        "startLine": 504,
+        "startChar": 58,
+        "endLine": 504,
+        "endChar": 61
+      },
+      "revId": "0faa632eb7b427ffcdbf5b282cab23a57bc8da80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
