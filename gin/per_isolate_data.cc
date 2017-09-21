@@ -35,7 +35,13 @@ PerIsolateData::PerIsolateData(
 }
 
 PerIsolateData::~PerIsolateData() {
+  // Check that RemoveDataFromIsolate() has been called.
+  CHECK(!isolate_);
+}
+
+void PerIsolateData::RemoveDataFromIsolate() {
   isolate_->SetData(kEmbedderNativeGin, NULL);
+  isolate_ = NULL;
 }
 
 PerIsolateData* PerIsolateData::From(Isolate* isolate) {

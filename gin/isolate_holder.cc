@@ -106,7 +106,10 @@ IsolateHolder::~IsolateHolder() {
   }
 #endif
   isolate_memory_dump_provider_.reset();
-  isolate_data_.reset();
+  isolate_data_->RemoveDataFromIsolate();
+  // Clear {isolate_data_}, but deallocate it only after the isolate has been
+  // disposed.
+  std::unique_ptr<PerIsolateData> data = std::move(isolate_data_);
   isolate_->Dispose();
   isolate_ = nullptr;
 }
