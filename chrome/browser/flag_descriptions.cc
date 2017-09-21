@@ -1638,23 +1638,17 @@ const char kEnableAndroidSpellcheckerDescription[] =
     "Enables use of the Android spellchecker.";
 const char kEnableAndroidSpellcheckerName[] = "Enable spell checking";
 
-const char kEnableContentSuggestionsNewFaviconServerName[] =
-    "Get favicons for content suggestions from a new server.";
-const char kEnableContentSuggestionsNewFaviconServerDescription[] =
-    "If enabled, the content suggestions (on the NTP) will get favicons from a "
-    "new favicon server.";
-
 const char kEnableContentSuggestionsLargeThumbnailName[] =
     "Large thumbnails layout for content suggestions cards.";
 const char kEnableContentSuggestionsLargeThumbnailDescription[] =
     "If enabled, the content suggestions cards will use large thumbnails and "
     "some related adjustments.";
 
-const char kEnableContentSuggestionsVideoOverlayName[] =
-    "Video icon overlay on thumbnails for content suggestions cards.";
-const char kEnableContentSuggestionsVideoOverlayDescription[] =
-    "If enabled, the content suggestions cards for suggestions with a video "
-    "will show a video play icon overlay on the thumbnail.";
+const char kEnableContentSuggestionsNewFaviconServerName[] =
+    "Get favicons for content suggestions from a new server.";
+const char kEnableContentSuggestionsNewFaviconServerDescription[] =
+    "If enabled, the content suggestions (on the NTP) will get favicons from a "
+    "new favicon server.";
 
 const char kEnableContentSuggestionsSettingsName[] =
     "Show content suggestions settings.";
@@ -1666,6 +1660,18 @@ const char kEnableContentSuggestionsShowSummaryName[] =
     "Show content suggestions summaries.";
 const char kEnableContentSuggestionsShowSummaryDescription[] =
     "If enabled, the content suggestions summaries will be shown.";
+
+const char kEnableContentSuggestionsThumbnailDominantColorName[] =
+    "Use content suggestions thumbnail dominant color.";
+const char kEnableContentSuggestionsThumbnailDominantColorDescription[] =
+    "Use content suggestions thumbnail dominant color as a placeholder before "
+    "the real thumbnail is fetched.";
+
+const char kEnableContentSuggestionsVideoOverlayName[] =
+    "Video icon overlay on thumbnails for content suggestions cards.";
+const char kEnableContentSuggestionsVideoOverlayDescription[] =
+    "If enabled, the content suggestions cards for suggestions with a video "
+    "will show a video play icon overlay on the thumbnail.";
 
 const char kEnableCopylessPasteName[] = "App Indexing (Copyless Paste)";
 const char kEnableCopylessPasteDescription[] =
