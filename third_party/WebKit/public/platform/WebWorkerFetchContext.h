@@ -27,7 +27,7 @@ class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() {}
 
-  virtual void InitializeOnWorkerThread(SingleThreadTaskRunnerRefPtr) = 0;
+  virtual void InitializeOnWorkerThread(SingleThreadTaskRunnerRefPtr) {}
 
   // Returns a new WebURLLoader instance which is associated with the worker
   // thread.
@@ -38,14 +38,14 @@ class WebWorkerFetchContext {
   // Called when a request is about to be sent out to modify the request to
   // handle the request correctly in the loading stack later. (Example: service
   // worker)
-  virtual void WillSendRequest(WebURLRequest&) = 0;
+  virtual void WillSendRequest(WebURLRequest&) {}
 
   // Whether the fetch context is controlled by a service worker.
-  virtual bool IsControlledByServiceWorker() const = 0;
+  virtual bool IsControlledByServiceWorker() const { return false; }
 
   // The flag for Data Saver.
-  virtual void SetDataSaverEnabled(bool) = 0;
-  virtual bool IsDataSaverEnabled() const = 0;
+  virtual void SetDataSaverEnabled(bool) {}
+  virtual bool IsDataSaverEnabled() const { return false; }
 
   // This flag is used to block all mixed content in subframes.
   virtual void SetIsOnSubframe(bool) {}
@@ -55,7 +55,7 @@ class WebWorkerFetchContext {
   // policy, as defined in Section 2.1.1 and 2.1.2 of
   // https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site.
   // See content::URLRequest::site_for_cookies() for details.
-  virtual WebURL SiteForCookies() const = 0;
+  virtual WebURL SiteForCookies() const { return WebURL(); }
 
   // Reports the certificate error to the browser process.
   virtual void DidRunContentWithCertificateErrors(const WebURL& url) {}

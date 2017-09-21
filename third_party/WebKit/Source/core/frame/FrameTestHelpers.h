@@ -434,6 +434,15 @@ class TestWebRemoteFrameClient : public WebRemoteFrameClient {
   WebRemoteFrame* frame_ = nullptr;
 };
 
+class TestWebWorkerFetchContext : public WebWorkerFetchContext {
+ public:
+  ~TestWebWorkerFetchContext() override {}
+
+  std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const WebURLRequest&,
+      SingleThreadTaskRunnerRefPtr) override;
+};
+
 }  // namespace FrameTestHelpers
 }  // namespace blink
 
