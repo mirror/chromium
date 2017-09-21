@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c699f5f_0661af2c",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T18:07:31Z",
+      "side": 1,
+      "message": "Nit: requestServiceState is currently a one line function that is only called once. Can we simply inline it at line 28? The separate function does not seem to add any value currently.",
+      "revId": "44766c85d4fc10e1847e7628091b1b3972e36155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
