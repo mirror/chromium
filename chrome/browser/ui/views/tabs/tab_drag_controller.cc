@@ -41,9 +41,8 @@
 #include "ui/views/widget/widget.h"
 
 #if defined(USE_ASH)
-#include "ash/shell.h"                   // nogncheck
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"  // nogncheck
 #include "ash/wm/window_state.h"  // nogncheck
+#include "chrome/browser/ui/ash/tablet_mode_client.h"  // nogncheck
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
@@ -298,11 +297,8 @@ void TabDragController::Init(
     source_tabstrip_->GetWidget()->SetCapture(source_tabstrip_);
 
 #if defined(USE_ASH)
-  if (ash::Shell::HasInstance() && ash::Shell::Get()
-                                       ->tablet_mode_controller()
-                                       ->IsTabletModeWindowManagerEnabled()) {
+  if (TabletModeClient::Get()->tablet_mode_enabled())
     detach_behavior_ = NOT_DETACHABLE;
-  }
 #endif
 }
 
