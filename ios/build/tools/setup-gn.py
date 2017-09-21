@@ -97,6 +97,13 @@ class GnGenerator(object):
     args.append(('is_chrome_branded', 'is_official_build'))
     args.append(('use_xcode_clang', 'is_official_build'))
     args.append(('ios_enable_coverage', self._config == 'Coverage'))
+
+    # Chrome for iOS compiles with the tip of clang, but uses llvm-cov that is
+    # shipped with Xcode, so the versions mismatch and fails to generate code
+    # coverage data. To work this around, switch to use Xcode's clang.
+    # TODO(crbug.com/759794): Remove this once Chrome ships llvm-cov.
+    args.append(('use_xcode_clang', self._config == 'Coverage'))
+
     if os.environ.get('FORCE_MAC_TOOLCHAIN', '0') == '1':
       args.append(('use_system_xcode', False))
 
