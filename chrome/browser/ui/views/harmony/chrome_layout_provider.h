@@ -82,6 +82,9 @@ class ChromeLayoutProvider : public views::LayoutProvider {
   // TODO(pkasting): Fix callers and remove this.
   virtual bool IsHarmonyMode() const;
 
+  // Returns preferred width for modal text dialogs.
+  virtual int GetPreferredModalTextDialogWidth() const;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ChromeLayoutProvider);
 };

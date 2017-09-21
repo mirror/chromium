@@ -25,6 +25,7 @@ class HarmonyLayoutProvider : public ChromeLayoutProvider {
   bool IsHarmonyMode() const override;
   const views::TypographyProvider& GetTypographyProvider() const override;
   int GetSnappedDialogWidth(int min_width) const override;
+  int GetPreferredModalTextDialogWidth() const override;
 
  private:
   const HarmonyTypographyProvider typography_provider_;

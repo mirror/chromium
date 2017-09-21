@@ -122,6 +122,10 @@ int HarmonyLayoutProvider::GetSnappedDialogWidth(int min_width) const {
          kHarmonyLayoutUnit;
 }
 
+int HarmonyLayoutProvider::GetPreferredModalTextDialogWidth() const {
+  return 448;
+}
+
 const views::TypographyProvider& HarmonyLayoutProvider::GetTypographyProvider()
     const {
   return typography_provider_;
