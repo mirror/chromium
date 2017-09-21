@@ -319,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "88b594f9_46eb55ec",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T22:13:54Z",
+      "side": 1,
+      "message": "I assume you mean hpkp-part? Yes, that\u0027s good, I just forgot to mention it. :-)",
+      "parentUuid": "2551dd16_04a6debc",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e9e632_1c09fb5e",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3

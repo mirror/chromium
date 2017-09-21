@@ -34,6 +34,24 @@
       "revId": "2726c25d276a4b8b9484af28b0c288b57902a223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19d6e4d3_78a497a5",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T22:13:54Z",
+      "side": 1,
+      "message": "Thanks!\n\n(I realize I wrote up some wrong values in my comment, but your update looks good.)",
+      "parentUuid": "dff97bb0_63e86d8e",
+      "revId": "2726c25d276a4b8b9484af28b0c288b57902a223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
