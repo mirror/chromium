@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4361ecfe_e323cde3",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-09-21T13:50:24Z",
+      "side": 1,
+      "message": "I read Drew\u0027s description but I still have more questions. I will try to catch you offline to sort these.",
+      "revId": "17629f8e69f4824b34626c38297ae32f2a611cb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0b7b40_4ba52587",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-09-21T13:50:24Z",
+      "side": 1,
+      "message": "Nit: A forward-declaration is sufficient here.",
+      "revId": "17629f8e69f4824b34626c38297ae32f2a611cb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
