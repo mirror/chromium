@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaea7ab9_afce1867",
+        "filename": "ash/accelerators/accelerator_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T14:26:45Z",
+      "side": 1,
+      "message": "I think this needs ASH_EXPORT for the test to compile.\n\nOr you could just copy/paste the string id into the test -- I\u0027m OK with that too.",
+      "revId": "97035ecde01fa0dc91b041ca8bfa187b5a5f0b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8170dc_959364e7",
+        "filename": "ash/accelerators/accelerator_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T14:26:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this accelerator is deprecated. Can this just be a AcceleratorControllerTest?\n\nFeel free to move utility methods into AcceleratorControllerTest if you need to, or just inline them in the test.",
+      "revId": "97035ecde01fa0dc91b041ca8bfa187b5a5f0b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
