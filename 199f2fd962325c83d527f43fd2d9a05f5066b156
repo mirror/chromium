@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b2eec40_e1dbc806",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScheduledAction.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-21T04:03:35Z",
+      "side": 1,
+      "message": "How about leaving a TODO for updating the spec link once the proposal is merged?",
+      "revId": "199f2fd962325c83d527f43fd2d9a05f5066b156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
