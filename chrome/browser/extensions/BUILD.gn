@@ -593,6 +593,8 @@ static_library("extensions") {
     "extension_migrator.h",
     "extension_reenabler.cc",
     "extension_reenabler.h",
+    "extension_registrar_delegate.cc",
+    "extension_registrar_delegate.h",
     "extension_service.cc",
     "extension_service.h",
     "extension_special_storage_policy.cc",
