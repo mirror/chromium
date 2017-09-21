@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "45cb3438_a598950f",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_deviceconnect.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8051a3_cfd12d0b",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb62d5f_600191cc",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac50abd2_13213b5c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb62d5f_600191cc",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 29
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "59d95233_e4ce18f2",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T21:59:51Z",
+      "side": 1,
+      "message": "Ah, missed this in my last pass. I\u0027ll refactor it out before landing.",
+      "parentUuid": "ce6e0e50_d4db521c",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53cc052c_52959ed8",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
         "patchSetId": 1
@@ -186,6 +258,30 @@
       "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9718e20f_aee65553",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-21T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53cc052c_52959ed8",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
