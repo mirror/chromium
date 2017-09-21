@@ -1001,7 +1001,7 @@ void Node::ConvertToProxy(Port* port,
 
 int Node::AcceptPort(const PortName& port_name,
                      const Event::PortDescriptor& port_descriptor) {
-  scoped_refptr<Port> port = make_scoped_refptr(
+  scoped_refptr<Port> port = base::WrapRefCounted(
       new Port(port_descriptor.next_sequence_num_to_send,
                port_descriptor.next_sequence_num_to_receive));
   port->state = Port::kReceiving;

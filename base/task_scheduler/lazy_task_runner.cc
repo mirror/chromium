@@ -64,15 +64,15 @@ LazyTaskRunner<SingleThreadTaskRunner, true>::Create() {
 
 template <typename TaskRunnerType, bool com_sta>
 scoped_refptr<TaskRunnerType> LazyTaskRunner<TaskRunnerType, com_sta>::Get() {
-  return make_scoped_refptr(static_cast<TaskRunnerType*>(GetOrCreateLazyPointer(
+  return WrapRefCounted(static_cast<TaskRunnerType*>(GetOrCreateLazyPointer(
       &state_,
       [this]() {
         scoped_refptr<TaskRunnerType> task_runner = Create();
 
         // Acquire a reference to the TaskRunner. The reference will either
         // never be released or be released in Reset(). The reference is not
-        // managed by a scoped_refptr because adding a scoped_refptr member to
-        // LazyTaskRunner would prevent its static initialization.
+        // managed by a scoped_refptr because adding a scoped_refptr member
+        // to LazyTaskRunner would prevent its static initialization.
         task_runner->AddRef();
 
         // Reset this instance when the current

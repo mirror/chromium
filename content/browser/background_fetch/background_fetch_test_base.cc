@@ -80,7 +80,7 @@ BackgroundFetchTestBase::TestResponse::~TestResponse() = default;
 BackgroundFetchTestBase::TestResponseBuilder::TestResponseBuilder(
     int response_code)
     : response_(base::MakeUnique<BackgroundFetchTestBase::TestResponse>()) {
-  response_->headers = make_scoped_refptr(new net::HttpResponseHeaders(
+  response_->headers = base::WrapRefCounted(new net::HttpResponseHeaders(
       "HTTP/1.1 " + std::to_string(response_code)));
 }
 

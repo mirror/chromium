@@ -386,9 +386,10 @@ void StartPnaclUpdateRegistration(
 void PnaclComponentInstaller::RegisterPnaclComponent(
     ComponentUpdateService* cus) {
   cus_ = cus;
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
-      base::BindOnce(&StartPnaclUpdateRegistration, make_scoped_refptr(this)));
+  base::PostTaskWithTraits(FROM_HERE,
+                           {base::TaskPriority::BACKGROUND, base::MayBlock()},
+                           base::BindOnce(&StartPnaclUpdateRegistration,
+                                          base::WrapRefCounted(this)));
 }
 
 }  // namespace component_updater

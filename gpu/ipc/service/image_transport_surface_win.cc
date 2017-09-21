@@ -52,7 +52,7 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
 
     if (gl::GLSurfaceEGL::IsDirectCompositionSupported()) {
       scoped_refptr<DirectCompositionSurfaceWin> egl_surface =
-          make_scoped_refptr(new DirectCompositionSurfaceWin(
+          base::WrapRefCounted(new DirectCompositionSurfaceWin(
               std::move(vsync_provider), delegate, surface_handle));
       if (!egl_surface->Initialize())
         return nullptr;

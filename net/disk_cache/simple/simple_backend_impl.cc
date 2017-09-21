@@ -703,7 +703,7 @@ scoped_refptr<SimpleEntryImpl> SimpleBackendImpl::CreateOrFindActiveEntry(
     DCHECK_EQ(0U, active_entries_.count(entry_hash));
     return CreateOrFindActiveEntry(entry_hash, key);
   }
-  return make_scoped_refptr(it->second);
+  return base::WrapRefCounted(it->second);
 }
 
 int SimpleBackendImpl::OpenEntryFromHash(uint64_t entry_hash,

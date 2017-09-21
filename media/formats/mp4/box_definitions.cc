@@ -739,7 +739,7 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
           avcConfig->profile_indication);
 
       frame_bitstream_converter =
-          make_scoped_refptr(new AVCBitstreamConverter(std::move(avcConfig)));
+          base::WrapRefCounted(new AVCBitstreamConverter(std::move(avcConfig)));
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
       // It can be Dolby Vision stream if there is DVCC box.
       DolbyVisionConfiguration dvccConfig;
@@ -762,8 +762,8 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
       RCHECK(reader->ReadChild(hevcConfig.get()));
       video_codec = kCodecHEVC;
       video_codec_profile = hevcConfig->GetVideoProfile();
-      frame_bitstream_converter =
-          make_scoped_refptr(new HEVCBitstreamConverter(std::move(hevcConfig)));
+      frame_bitstream_converter = base::WrapRefCounted(
+          new HEVCBitstreamConverter(std::move(hevcConfig)));
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
       // It can be Dolby Vision stream if there is DVCC box.
       DolbyVisionConfiguration dvccConfig;
@@ -784,7 +784,7 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
           new AVCDecoderConfigurationRecord());
       RCHECK(reader->ReadChild(avcConfig.get()));
       frame_bitstream_converter =
-          make_scoped_refptr(new AVCBitstreamConverter(std::move(avcConfig)));
+          base::WrapRefCounted(new AVCBitstreamConverter(std::move(avcConfig)));
       DVLOG(2) << __func__ << " reading DolbyVisionConfiguration (dvcC)";
       DolbyVisionConfiguration dvccConfig;
       RCHECK(reader->ReadChild(&dvccConfig));
@@ -799,8 +799,8 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
       std::unique_ptr<HEVCDecoderConfigurationRecord> hevcConfig(
           new HEVCDecoderConfigurationRecord());
       RCHECK(reader->ReadChild(hevcConfig.get()));
-      frame_bitstream_converter =
-          make_scoped_refptr(new HEVCBitstreamConverter(std::move(hevcConfig)));
+      frame_bitstream_converter = base::WrapRefCounted(
+          new HEVCBitstreamConverter(std::move(hevcConfig)));
       DVLOG(2) << __func__ << " reading DolbyVisionConfiguration (dvcC)";
       DolbyVisionConfiguration dvccConfig;
       RCHECK(reader->ReadChild(&dvccConfig));

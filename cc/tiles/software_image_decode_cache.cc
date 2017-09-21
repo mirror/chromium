@@ -317,7 +317,7 @@ bool SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
   // Actually create the task. RefImage will account for memory on the first
   // ref.
   RefImage(key);
-  existing_task = make_scoped_refptr(
+  existing_task = base::WrapRefCounted(
       new ImageDecodeTaskImpl(this, key, image, task_type, tracing_info));
   *task = existing_task;
   return true;

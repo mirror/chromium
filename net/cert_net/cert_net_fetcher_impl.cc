@@ -816,7 +816,7 @@ class CertNetFetcherImpl : public CertNetFetcher {
 }  // namespace
 
 scoped_refptr<CertNetFetcher> CreateCertNetFetcher(URLRequestContext* context) {
-  return make_scoped_refptr(new CertNetFetcherImpl(context));
+  return base::WrapRefCounted(new CertNetFetcherImpl(context));
 }
 
 }  // namespace net

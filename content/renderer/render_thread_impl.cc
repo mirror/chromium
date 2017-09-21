@@ -394,7 +394,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
   attributes.enable_oop_rasterization = support_oop_rasterization;
 
   const bool automatic_flushes = false;
-  return make_scoped_refptr(new ui::ContextProviderCommandBuffer(
+  return base::WrapRefCounted(new ui::ContextProviderCommandBuffer(
       std::move(gpu_channel_host), stream_id, stream_priority,
       gpu::kNullSurfaceHandle,
       GURL("chrome://gpu/RenderThreadImpl::CreateOffscreenContext/" +
@@ -1080,7 +1080,7 @@ void RenderThreadImpl::RegisterPendingFrameCreate(
     mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
   std::pair<PendingFrameCreateMap::iterator, bool> result =
       pending_frame_creates_.insert(std::make_pair(
-          routing_id, make_scoped_refptr(new PendingFrameCreate(
+          routing_id, base::WrapRefCounted(new PendingFrameCreate(
                           browser_info, routing_id, std::move(frame_request),
                           std::move(frame_host_interface_broker)))));
   CHECK(result.second) << "Inserting a duplicate item.";

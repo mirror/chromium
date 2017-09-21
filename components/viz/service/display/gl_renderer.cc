@@ -318,7 +318,7 @@ class GLRenderer::SyncQuery {
     // Note: In case the set of drawing commands issued before End() do not
     // depend on the query, defer BeginQueryEXT call until Set() is called and
     // query is required.
-    return make_scoped_refptr<cc::ResourceProvider::Fence>(
+    return base::WrapRefCounted<cc::ResourceProvider::Fence>(
         new Fence(weak_ptr_factory_.GetWeakPtr()));
   }
 
@@ -566,7 +566,7 @@ void GLRenderer::BeginDrawingFrame() {
     read_lock_fence = current_sync_query_->Begin();
   } else {
     read_lock_fence =
-        make_scoped_refptr(new cc::ResourceProvider::SynchronousFence(gl_));
+        base::WrapRefCounted(new cc::ResourceProvider::SynchronousFence(gl_));
   }
   resource_provider_->SetReadLockFence(read_lock_fence.get());
 

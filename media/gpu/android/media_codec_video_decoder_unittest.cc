@@ -93,7 +93,7 @@ class MediaCodecVideoDecoderTest : public testing::Test {
     auto surface_chooser = base::MakeUnique<NiceMock<FakeSurfaceChooser>>();
     surface_chooser_ = surface_chooser.get();
 
-    auto surface_texture = make_scoped_refptr(
+    auto surface_texture = base::WrapRefCounted(
         new NiceMock<MockSurfaceTextureGLOwner>(0, nullptr, nullptr));
     surface_texture_ = surface_texture.get();
 
