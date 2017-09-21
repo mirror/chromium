@@ -43,7 +43,6 @@
 #if defined(USE_ASH)
 #include "ash/shell.h"                   // nogncheck
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"  // nogncheck
-#include "ash/wm/window_state.h"  // nogncheck
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
@@ -95,20 +94,6 @@ const int kStackedDistance = 36;
 // creation and makes it easier to drag tabs out of a restored window that had
 // maximized size.
 const int kMaximizedWindowInset = 10;  // DIPs.
-
-#if defined(USE_ASH)
-// Returns true if |tab_strip| browser window is snapped.
-bool IsSnapped(const TabStrip* tab_strip) {
-  DCHECK(tab_strip);
-  ash::wm::WindowState* window_state =
-      ash::wm::GetWindowState(tab_strip->GetWidget()->GetNativeWindow());
-  return window_state->IsSnapped();
-}
-#else
-bool IsSnapped(const TabStrip* tab_strip) {
-  return false;
-}
-#endif
 
 #if defined(USE_AURA)
 gfx::NativeWindow GetModalTransient(gfx::NativeWindow window) {
@@ -1478,11 +1463,6 @@ void TabDragController::CompleteDrag() {
 
   if (attached_tabstrip_) {
     if (is_dragging_new_browser_ || did_restore_window_) {
-      if (IsSnapped(attached_tabstrip_)) {
-        was_source_maximized_ = false;
-        was_source_fullscreen_ = false;
-      }
-
       // If source window was maximized - maximize the new window as well.
       if (was_source_maximized_ || was_source_fullscreen_)
         MaximizeAttachedWindow();
