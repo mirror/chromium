@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4545ba6d_2fdef90f",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-21T18:33:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981cc8c9_a6a69cd0",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15e53940_61325b84",
         "filename": "net/data/ocsp_unittest/make_ocsp.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "021c4311_9cccc7da",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-21T18:33:29Z",
+      "side": 1,
+      "message": "Actually the Chromium style guide says to use camel case:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md",
+      "parentUuid": "15e53940_61325b84",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9ad8e5_b4ec301f",
         "filename": "net/data/ocsp_unittest/make_ocsp.py",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb93311_1d492797",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-21T18:33:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9ad8e5_b4ec301f",
+      "revId": "526e98b5e39af8e138b4e83fb11f2d8b53967c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
