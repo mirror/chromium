@@ -12,6 +12,7 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+//#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extensions_test.h"
 #include "extensions/browser/test_extension_registry_observer.h"
@@ -64,7 +65,8 @@ TEST_F(ExtensionRegistrarTest, ActivateAndRemove) {
 
   scoped_refptr<const Extension> extension =
       ExtensionBuilder("extension").Build();
-  ExtensionRegistrar registrar(browser_context());
+  ExtensionRegistrar registrar(browser_context() /*,
+                               ExtensionPrefs::Get(browser_context())*/);
 
   registrar.ActivateExtension(extension);
   EXPECT_TRUE(
