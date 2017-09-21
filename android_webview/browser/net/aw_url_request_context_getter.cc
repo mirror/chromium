@@ -17,13 +17,17 @@
 #include "android_webview/browser/net/init_native_callback.h"
 #include "android_webview/browser/net/token_binding_manager.h"
 #include "android_webview/common/aw_content_client.h"
+
+#include "base/base_paths_android.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
+#include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "components/net_log/chrome_net_log.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
@@ -42,7 +46,7 @@
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_stream_factory.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_capture_mode.h"
 #include "net/net_features.h"
 #include "net/proxy/proxy_service.h"
 #include "net/socket/next_proto.h"
@@ -54,6 +58,7 @@
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_interceptor.h"
 
+using base::FilePath;
 using content::BrowserThread;
 
 namespace android_webview {
@@ -172,7 +177,7 @@ AwURLRequestContextGetter::AwURLRequestContextGetter(
     std::unique_ptr<net::ProxyConfigService> config_service,
     PrefService* user_pref_service)
     : cache_path_(cache_path),
-      net_log_(new net::NetLog()),
+      net_log_(new net_log::ChromeNetLog()),
       proxy_config_service_(std::move(config_service)),
       http_user_agent_settings_(new AwHttpUserAgentSettings()) {
   // CreateSystemProxyConfigService for Android must be called on main thread.
@@ -193,6 +198,27 @@ AwURLRequestContextGetter::AwURLRequestContextGetter(
           &AwURLRequestContextGetter::UpdateAndroidAuthNegotiateAccountType,
           base::Unretained(this)));
   auth_android_negotiate_account_type_.MoveToThread(io_thread_proxy);
+
+  // For net-log, pass empty string as channel info and default capture mode.
+  // WebView can enable net-log only using commandline in userdebug
+  // devices so there is no need to complicate things here. The net_log
+  // file is written under app_webview directory with default name net_log.json
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  if (command_line.HasSwitch(switches::kLogNetLog)) {
+    FilePath net_log_path;
+    PathService::Get(base::DIR_ANDROID_APP_DATA, &net_log_path);
+    FilePath log_name = command_line.GetSwitchValuePath(switches::kLogNetLog);
+    if (log_name.empty()) {
+      net_log_path = net_log_path.Append(FILE_PATH_LITERAL("net_log.json"));
+    } else {
+      net_log_path = net_log_path.Append(log_name);
+    }
+
+    net_log_->StartWritingToFile(net_log_path,
+                                 net::NetLogCaptureMode::Default(),
+                                 command_line.GetCommandLineString(), "");
+  }
 }
 
 AwURLRequestContextGetter::~AwURLRequestContextGetter() {
