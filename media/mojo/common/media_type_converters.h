@@ -16,8 +16,12 @@ namespace media {
 class AudioBuffer;
 class AudioBus;
 class AudioDecoderConfig;
+class DataBuffer;
 class DecoderBuffer;
 class DecryptConfig;
+class MediaTracks;
+template <class T>
+class Ranges;
 struct CdmKeyInformation;
 }
 
@@ -35,6 +39,43 @@ struct TypeConverter<std::unique_ptr<media::DecryptConfig>,
                      media::mojom::DecryptConfigPtr> {
   static std::unique_ptr<media::DecryptConfig> Convert(
       const media::mojom::DecryptConfigPtr& input);
+};
+
+template <>
+struct TypeConverter<media::mojom::MediaTracksPtr, media::MediaTracks> {
+  static media::mojom::MediaTracksPtr Convert(const media::MediaTracks& input);
+};
+template <>
+struct TypeConverter<std::unique_ptr<media::MediaTracks>,
+                     media::mojom::MediaTracksPtr> {
+  static std::unique_ptr<media::MediaTracks> Convert(
+      const media::mojom::MediaTracksPtr& input);
+};
+
+template <>
+struct TypeConverter<media::mojom::RangesTimeDeltaPtr,
+                     media::Ranges<base::TimeDelta>> {
+  static media::mojom::RangesTimeDeltaPtr Convert(
+      const media::Ranges<base::TimeDelta>& input);
+};
+template <>
+struct TypeConverter<media::Ranges<base::TimeDelta>,
+                     media::mojom::RangesTimeDeltaPtr> {
+  static media::Ranges<base::TimeDelta> Convert(
+      const media::mojom::RangesTimeDeltaPtr& input);
+};
+
+template <>
+struct TypeConverter<media::mojom::DataBufferPtr,
+                     scoped_refptr<media::DataBuffer>> {
+  static media::mojom::DataBufferPtr Convert(
+      const scoped_refptr<media::DataBuffer>& input);
+};
+template <>
+struct TypeConverter<scoped_refptr<media::DataBuffer>,
+                     media::mojom::DataBufferPtr> {
+  static scoped_refptr<media::DataBuffer> Convert(
+      const media::mojom::DataBufferPtr& input);
 };
 
 template <>

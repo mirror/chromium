@@ -134,7 +134,8 @@ static VideoDecoderConfig GetTestConfig(VideoCodec codec,
   return VideoDecoderConfig(
       codec, VIDEO_CODEC_PROFILE_UNKNOWN, PIXEL_FORMAT_YV12, COLOR_SPACE_JPEG,
       coded_size, visible_rect, natural_size, EmptyExtraData(),
-      is_encrypted ? AesCtrEncryptionScheme() : Unencrypted());
+      is_encrypted ? AesCtrEncryptionScheme() : Unencrypted(),
+      VIDEO_ROTATION_0);
 }
 
 static const gfx::Size kNormalSize(320, 240);

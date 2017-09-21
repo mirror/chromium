@@ -31,7 +31,9 @@ class AudioRendererSink;
 class MediaResourceShim;
 class ContentDecryptionModule;
 class MojoCdmServiceContext;
+class MojoDemuxerServiceContext;
 class Renderer;
+class MediaUrlDemuxer;
 class VideoRendererSink;
 
 // A mojom::Renderer implementation that use a media::Renderer to render
@@ -44,6 +46,7 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
   // Helper function to bind MojoRendererService with a StrongBinding,
   // which is safely accessible via the returned StrongBindingPtr.
   static mojo::StrongBindingPtr<mojom::Renderer> Create(
+      base::WeakPtr<MojoDemuxerServiceContext> mojo_demuxer_service_context,
       base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context,
       scoped_refptr<AudioRendererSink> audio_sink,
       std::unique_ptr<VideoRendererSink> video_sink,
@@ -54,6 +57,7 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
   // |mojo_cdm_service_context| can be used to find the CDM to support
   // encrypted media. If null, encrypted media is not supported.
   MojoRendererService(
+      base::WeakPtr<MojoDemuxerServiceContext> mojo_demuxer_service_context,
       base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context,
       scoped_refptr<AudioRendererSink> audio_sink,
       std::unique_ptr<VideoRendererSink> video_sink,
@@ -64,6 +68,7 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
 
   // mojom::Renderer implementation.
   void Initialize(mojom::RendererClientAssociatedPtrInfo client,
+                  int32_t demuxer_id,
                   base::Optional<std::vector<mojom::DemuxerStreamPtr>> streams,
                   mojom::AudioRendererSinkPtr audio_renderer_sink_ptr,
                   mojom::VideoRendererSinkPtr video_renderer_sink_ptr,
@@ -127,12 +132,15 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
                      base::OnceCallback<void(bool)> callback,
                      bool success);
 
+  base::WeakPtr<MojoDemuxerServiceContext> mojo_demuxer_service_context_;
   base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context_;
 
   State state_;
   double playback_rate_;
 
-  std::unique_ptr<MediaResource> media_resource_;
+  std::unique_ptr<MediaResourceShim> media_resource_shim_;
+  std::unique_ptr<MediaUrlDemuxer> media_url_demuxer_;
+  MediaResource* media_resource_;
 
   base::RepeatingTimer time_update_timer_;
   base::TimeDelta last_media_time_;

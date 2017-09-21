@@ -10,7 +10,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "media/base/audio_renderer_sink.h"
+#include "media/base/bind_to_current_loop.h"
 #include "media/base/content_decryption_module.h"
+#include "media/base/media_log.h"
 #include "media/base/media_url_demuxer.h"
 #include "media/base/renderer.h"
 #include "media/base/video_renderer_sink.h"
@@ -18,6 +20,7 @@
 #include "media/mojo/services/media_resource_shim.h"
 #include "media/mojo/services/mojo_audio_renderer_sink_adapter.h"
 #include "media/mojo/services/mojo_cdm_service_context.h"
+#include "media/mojo/services/mojo_demuxer_service_context.h"
 #include "media/mojo/services/mojo_video_renderer_sink_adapter.h"
 
 namespace media {
@@ -37,6 +40,7 @@ const int kTimeUpdateIntervalMs = 50;
 
 // static
 mojo::StrongBindingPtr<mojom::Renderer> MojoRendererService::Create(
+    base::WeakPtr<MojoDemuxerServiceContext> mojo_demuxer_service_context,
     base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context,
     scoped_refptr<AudioRendererSink> audio_sink,
     std::unique_ptr<VideoRendererSink> video_sink,
@@ -44,8 +48,9 @@ mojo::StrongBindingPtr<mojom::Renderer> MojoRendererService::Create(
     InitiateSurfaceRequestCB initiate_surface_request_cb,
     mojo::InterfaceRequest<mojom::Renderer> request) {
   MojoRendererService* service = new MojoRendererService(
-      mojo_cdm_service_context, std::move(audio_sink), std::move(video_sink),
-      std::move(renderer), initiate_surface_request_cb);
+      mojo_demuxer_service_context, mojo_cdm_service_context,
+      std::move(audio_sink), std::move(video_sink), std::move(renderer),
+      initiate_surface_request_cb);
 
   mojo::StrongBindingPtr<mojom::Renderer> binding =
       mojo::MakeStrongBinding<mojom::Renderer>(base::WrapUnique(service),
@@ -57,14 +62,19 @@ mojo::StrongBindingPtr<mojom::Renderer> MojoRendererService::Create(
 }
 
 MojoRendererService::MojoRendererService(
+    base::WeakPtr<MojoDemuxerServiceContext> mojo_demuxer_service_context,
     base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context,
     scoped_refptr<AudioRendererSink> audio_sink,
     std::unique_ptr<VideoRendererSink> video_sink,
     std::unique_ptr<media::Renderer> renderer,
     InitiateSurfaceRequestCB initiate_surface_request_cb)
-    : mojo_cdm_service_context_(mojo_cdm_service_context),
+    : mojo_demuxer_service_context_(mojo_demuxer_service_context),
+      mojo_cdm_service_context_(mojo_cdm_service_context),
       state_(STATE_UNINITIALIZED),
       playback_rate_(0),
+      media_resource_shim_(nullptr),
+      media_url_demuxer_(nullptr),
+      media_resource_(nullptr),
       audio_sink_(std::move(audio_sink)),
       video_sink_(std::move(video_sink)),
       renderer_(std::move(renderer)),
@@ -80,6 +90,7 @@ MojoRendererService::~MojoRendererService() {}
 
 void MojoRendererService::Initialize(
     mojom::RendererClientAssociatedPtrInfo client,
+    int32_t demuxer_id,
     base::Optional<std::vector<mojom::DemuxerStreamPtr>> streams,
     mojom::AudioRendererSinkPtr audio_renderer_sink_ptr,
     mojom::VideoRendererSinkPtr video_renderer_sink_ptr,
@@ -104,20 +115,33 @@ void MojoRendererService::Initialize(
         ->Initialize(std::move(video_renderer_sink_ptr));
   }
 
+  if (demuxer_id != MediaResource::kInvalidRemoteId) {
+    media_resource_ = mojo_demuxer_service_context_->GetDemuxer(demuxer_id);
+    CHECK(media_resource_);
+    renderer_->Initialize(
+        media_resource_, this,
+        base::Bind(&MojoRendererService::OnRendererInitializeDone, weak_this_,
+                   base::Passed(&callback)));
+    return;
+  }
+
   if (media_url == base::nullopt) {
     DCHECK(streams.has_value());
-    media_resource_.reset(new MediaResourceShim(
+    media_resource_shim_.reset(new MediaResourceShim(
         std::move(*streams), base::Bind(&MojoRendererService::OnStreamReady,
                                         weak_this_, base::Passed(&callback))));
+    media_resource_ = media_resource_shim_.get();
     return;
   }
 
   DCHECK(!media_url.value().is_empty());
   DCHECK(site_for_cookies);
-  media_resource_.reset(new MediaUrlDemuxer(nullptr, media_url.value(),
-                                            site_for_cookies.value()));
+  media_url_demuxer_.reset(new MediaUrlDemuxer(nullptr, media_url.value(),
+                                               site_for_cookies.value()));
+  media_resource_ = media_url_demuxer_.get();
+
   renderer_->Initialize(
-      media_resource_.get(), this,
+      media_resource_, this,
       base::Bind(&MojoRendererService::OnRendererInitializeDone, weak_this_,
                  base::Passed(&callback)));
 }
@@ -234,7 +258,7 @@ void MojoRendererService::OnStreamReady(
   DCHECK_EQ(state_, STATE_INITIALIZING);
 
   renderer_->Initialize(
-      media_resource_.get(), this,
+      media_resource_, this,
       base::Bind(&MojoRendererService::OnRendererInitializeDone, weak_this_,
                  base::Passed(&callback)));
 }

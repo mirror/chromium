@@ -9,6 +9,10 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
+#include "media/base/bind_to_current_loop.h"
+#include "media/base/media_log.h"
+#include "media/base/media_tracks.h"
+#include "media/mojo/common/media_type_converters.h"
 
 namespace media {
 

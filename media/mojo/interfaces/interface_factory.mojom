@@ -6,12 +6,17 @@ module media.mojom;
 
 import "media/mojo/interfaces/audio_decoder.mojom";
 import "media/mojo/interfaces/content_decryption_module.mojom";
+import "media/mojo/interfaces/demuxer.mojom";
 import "media/mojo/interfaces/renderer.mojom";
+import "media/mojo/interfaces/source_buffer.mojom";
 import "media/mojo/interfaces/video_decoder.mojom";
 
 // A factory for creating media mojo interfaces. Renderers can only access
 // ContentDecryptionModules created with the same factory.
 interface InterfaceFactory {
+  CreateDemuxer(Demuxer& demuxer);
+  CreateSourceBuffer(SourceBuffer& source_buffer);
+
   CreateAudioDecoder(AudioDecoder& audio_decoder);
   CreateVideoDecoder(VideoDecoder& video_decoder, string decoder_name);
 

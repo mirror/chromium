@@ -24,6 +24,7 @@
 #include "base/timer/elapsed_timer.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "media/base/demuxer_factory.h"
 #include "media/base/media_observer.h"
 #include "media/base/media_tracks.h"
 #include "media/base/overlay_info.h"
@@ -74,7 +75,7 @@ class GLES2Interface;
 }
 
 namespace media {
-class ChunkDemuxer;
+class SourceBuffer;
 class ContentDecryptionModule;
 class VideoDecodeStatsReporter;
 class MediaLog;
@@ -102,6 +103,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       blink::WebMediaPlayerClient* client,
       blink::WebMediaPlayerEncryptedMediaClient* encrypted_client,
       WebMediaPlayerDelegate* delegate,
+      std::unique_ptr<DemuxerFactory> demuxer_factory,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
       std::unique_ptr<WebMediaPlayerParams> params);
@@ -332,6 +334,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnOverlayInfoRequested(
       bool decoder_requires_restart_for_overlay,
       const ProvideOverlayInfoCB& provide_overlay_info_cb);
+
+  std::unique_ptr<Demuxer> CreateDemuxer();
 
   // Creates a Renderer via the |renderer_factory_selector_|.
   std::unique_ptr<Renderer> CreateRenderer();
@@ -642,7 +646,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // load strategy we're using.
   std::unique_ptr<MultibufferDataSource> data_source_;
   std::unique_ptr<Demuxer> demuxer_;
-  ChunkDemuxer* chunk_demuxer_;
+  media::SourceBuffer* source_buffer_;
 
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
 
@@ -685,6 +689,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   double volume_;
   double volume_multiplier_;
 
+  std::unique_ptr<DemuxerFactory> demuxer_factory_;
   std::unique_ptr<RendererFactorySelector> renderer_factory_selector_;
 
   // For requesting surfaces on behalf of the Android H/W decoder in fullscreen.

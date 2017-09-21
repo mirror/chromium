@@ -67,6 +67,9 @@ void MojoRenderer::Initialize(MediaResource* media_resource,
   init_cb_ = init_cb;
 
   switch (media_resource_->GetType()) {
+    case MediaResource::Type::REMOTE:
+      InitializeRendererFromRemoteId(client);
+      break;
     case MediaResource::Type::STREAM:
       InitializeRendererFromStreams(client);
       break;
@@ -138,9 +141,9 @@ void MojoRenderer::InitializeRendererFromStreams(
   // |remote_renderer_|, and the callback won't be dispatched if
   // |remote_renderer_| is destroyed.
   remote_renderer_->Initialize(
-      std::move(client_ptr_info), std::move(stream_proxies),
-      std::move(audio_renderer_sink_ptr), std::move(video_renderer_sink_ptr),
-      base::nullopt, base::nullopt,
+      std::move(client_ptr_info), MediaResource::kInvalidRemoteId,
+      std::move(stream_proxies), std::move(audio_renderer_sink_ptr),
+      std::move(video_renderer_sink_ptr), base::nullopt, base::nullopt,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
 
@@ -160,9 +163,50 @@ void MojoRenderer::InitializeRendererFromUrl(media::RendererClient* client) {
   // |remote_renderer_| is destroyed.
   std::vector<mojom::DemuxerStreamPtr> streams;
   remote_renderer_->Initialize(
-      std::move(client_ptr_info), std::move(streams),
-      mojom::AudioRendererSinkPtr(), mojom::VideoRendererSinkPtr(),
-      url_params.media_url, url_params.site_for_cookies,
+      std::move(client_ptr_info), MediaResource::kInvalidRemoteId,
+      std::move(streams), mojom::AudioRendererSinkPtr(),
+      mojom::VideoRendererSinkPtr(), url_params.media_url,
+      url_params.site_for_cookies,
+      base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
+}
+
+void MojoRenderer::InitializeRendererFromRemoteId(
+    media::RendererClient* client) {
+  DVLOG(2) << __func__;
+  DCHECK(task_runner_->BelongsToCurrentThread());
+
+  mojom::AudioRendererSinkPtr audio_renderer_sink_ptr;
+  mojo_audio_renderer_sink_.reset(
+      new MojoAudioRendererSinkImpl(task_runner_, audio_renderer_sink_,
+                                    MakeRequest(&audio_renderer_sink_ptr)));
+  mojo_audio_renderer_sink_->set_connection_error_handler(
+      base::Bind(&MojoRenderer::OnAudioRendererSinkConnectionError,
+                 base::Unretained(this)));
+
+  mojom::VideoRendererSinkPtr video_renderer_sink_ptr;
+  mojo_video_renderer_sink_.reset(
+      new MojoVideoRendererSinkImpl(task_runner_, video_renderer_sink_,
+                                    MakeRequest(&video_renderer_sink_ptr)));
+  // Using base::Unretained(this) is safe because |this| owns
+  // |mojo_video_renderer_sink|, and the error handler can't be invoked once
+  // |mojo_video_renderer_sink| is destroyed.
+  mojo_video_renderer_sink_->set_connection_error_handler(
+      base::Bind(&MojoRenderer::OnVideoRendererSinkConnectionError,
+                 base::Unretained(this)));
+
+  BindRemoteRendererIfNeeded();
+
+  mojom::RendererClientAssociatedPtrInfo client_ptr_info;
+  client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));
+
+  // Using base::Unretained(this) is safe because |this| owns
+  // |remote_renderer_|, and the callback won't be dispatched if
+  // |remote_renderer_| is destroyed.
+  std::vector<mojom::DemuxerStreamPtr> streams;
+  remote_renderer_->Initialize(
+      std::move(client_ptr_info), media_resource_->GetRemoteId(),
+      std::move(streams), std::move(audio_renderer_sink_ptr),
+      std::move(video_renderer_sink_ptr), base::nullopt, base::nullopt,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
 
