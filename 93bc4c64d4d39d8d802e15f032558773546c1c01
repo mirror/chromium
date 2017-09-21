@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daedffd5_e1b5293c",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-09-21T15:06:26Z",
+      "side": 1,
+      "message": "I\u0027m fine with that too - I just that wasn\u0027t the right level of abstraction. I thought hiding the notion of consent outside this class would be better. Otherwise I thought it would be a bit confusing (i.e. what\u0027s the exact difference between recording allowed and consent - isn\u0027t consent enough?).\n\nBut I don\u0027t feel that strongly - if you think it makes more sense that way I can change.",
+      "parentUuid": "9e7087bd_0022a64b",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 44
+      },
+      "revId": "93bc4c64d4d39d8d802e15f032558773546c1c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "913dac81_91e52c69",
         "filename": "components/metrics_services_manager/metrics_services_manager.cc",
         "patchSetId": 5
