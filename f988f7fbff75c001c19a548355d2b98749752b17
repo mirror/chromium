@@ -397,6 +397,24 @@
     },
     {
       "key": {
+        "uuid": "b8c9fbf4_826a40fd",
+        "filename": "sandbox/policy/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-21T20:25:03Z",
+      "side": 1,
+      "message": "\u003e If so, I\u0027d recommend just putting it in //sandbox itself.\n\nThat\u0027s an even better idea than a two-file directory. Thanks!",
+      "parentUuid": "621eb1ef_50e709e8",
+      "revId": "f988f7fbff75c001c19a548355d2b98749752b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a141373e_58b6f39d",
         "filename": "sandbox/policy/sandbox_type.h",
         "patchSetId": 18
