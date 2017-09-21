@@ -16,6 +16,24 @@
       "revId": "2f77e11261a869d7e48b83639e22a3b5bc7e7fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b6b938_8020a216",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-21T19:33:41Z",
+      "side": 1,
+      "message": "I can imagine a toast after a splash screen which has a \"exit\" in case of error.\n\nDo you see a problem with using the controller with just overlay elements?",
+      "parentUuid": "1a2f252c_e33a2bde",
+      "revId": "2f77e11261a869d7e48b83639e22a3b5bc7e7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
