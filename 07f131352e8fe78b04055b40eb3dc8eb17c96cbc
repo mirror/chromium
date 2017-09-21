@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "942db7cd_bafe03dc",
+        "filename": "media/gpu/android/mcvd_surface_chooser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-21T17:41:15Z",
+      "side": 1,
+      "message": "should this implement AndroidVideoSurfaceChooser?\n\nor, do you want this to be \"the part of MCVD that uses an AndroidVideoSurfaceChooser\".  maybe it just needs a new name, if it\u0027s not supposed to be an AVSC itself.\n\nstill, a \"thread-adapting, other-implementation-wrapping AVSC implementation\" makes a certain amount of sense to me.  it also seems separate from \"encapsulating the MCVD logic that uses an AVSC\".  maybe two classes?",
+      "revId": "07f131352e8fe78b04055b40eb3dc8eb17c96cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe3e0f3_3644c2a3",
+        "filename": "media/gpu/android/mcvd_surface_chooser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-21T17:41:15Z",
+      "side": 1,
+      "message": "this should probably re-use the type(s) that AVSC provides, rather than defining a suspiciously similar one.\n\ni think that AVDA uses the same fn for the callback, with a bound nullptr for the ST case, just as you\u0027ve done in MCVDSurfaceChooser.  so maybe just make AVSC provide a single callback if you like it better that way.  should be a trivial change to AVDA.",
+      "revId": "07f131352e8fe78b04055b40eb3dc8eb17c96cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7597156a_78bdc17c",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-21T17:41:15Z",
+      "side": 1,
+      "message": "if you plan to parallelize these, then i see why we don\u0027t have states for each one.  however, if you\u0027re not going to parallize these, then having multiple init states seems like it would make this much more robust.  the states it has now, effectively, are:\n\n{kInitializing, lazy_init_started \u003d false},\n{kInitializing, lazy_init_started \u003d true, started_chooser \u003d false},\n{kInitializing, lazy_init_started \u003d true, started_chooser \u003d true}\n\nbut \"started_chooser\" is implicit in the \"don\u0027t call DoNextLazyInitStep too often\" sense.  if we had kBeforeInitialization, kInitializingWaitingForVideoFrameFactory, etc., then it\u0027s much easier (plus with an IsInitializing() helper, maybe :) )\n\nnow, if you do plan on parallelizing these, then i agree that we need one kInitializing value for |state_| to cover all the init states.  but, then, perhaps have a separate struct with bits for which tasks have been started, or something.  but, |lazy_init_started_| definitely shouldn\u0027t be spread around the code, else there\u0027s too much implicit state tracking going on.  i.e., one should just call DoNextLazyInitStep(), maybe with the precondition that |state_| is kInitializing, and it should just work.",
+      "revId": "07f131352e8fe78b04055b40eb3dc8eb17c96cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ed38f7_28cfe749",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-21T17:41:15Z",
+      "side": 1,
+      "message": "what if we\u0027re in kInitializing?  do we still want to PumpCodec() since we might not have one?\n\nin general, i think that lazy init is a little fragile, since it\u0027s possible to double-start surface choosing.  it\u0027d be nicer if we could just:\n\nif (state_ \u003d\u003d initializing) {\n  DoNextLazyInitStep();\n  return;\n}\n\nin all the places.  or, factor all of that out and have DoNextLazyInitStep return true / false based on whether \"init is still in progress\", and successfully no nothing if called from kRunning.",
+      "revId": "07f131352e8fe78b04055b40eb3dc8eb17c96cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
