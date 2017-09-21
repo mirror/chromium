@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda13d37_434ef1b5",
+        "filename": "sandbox/win/src/process_thread_policy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-21T22:33:36Z",
+      "side": 1,
+      "message": "I\u0027d like to go through sandbox and change all NULLs to nullptr and TRUE/FALSE to true/false, otherwise stuff just looks out of place in new CLs on old code...",
+      "range": {
+        "startLine": 256,
+        "startChar": 12,
+        "endLine": 256,
+        "endChar": 16
+      },
+      "revId": "099062baa3f401e20bacde7b5f340471a3f8e7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
