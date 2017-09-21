@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ee5ffca_db45dd1e",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T03:24:52Z",
+      "side": 1,
+      "message": "kDeniedSchemes (since this is now a full static constant).",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f45cb7b_3abbeb1b",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T03:24:52Z",
+      "side": 1,
+      "message": "kAllowedSchemes.",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5643f6bf_db363aa2",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T03:24:52Z",
+      "side": 1,
+      "message": "\u0026\u0026 instead of nested if statement.",
+      "range": {
+        "startLine": 192,
+        "startChar": 76,
+        "endLine": 192,
+        "endChar": 77
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e820ec31_1ab36979",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T03:24:52Z",
+      "side": 1,
+      "message": "// state \u003d\u003d BLOCK",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4caccc_b0212222",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-21T03:24:52Z",
+      "side": 1,
+      "message": "This can just be \"true\".",
+      "range": {
+        "startLine": 217,
+        "startChar": 60,
+        "endLine": 217,
+        "endChar": 76
+      },
+      "revId": "97a8339d29ad497194fa02d80b05f5af80380a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
