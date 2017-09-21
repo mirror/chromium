@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a776af39_0e9e2955",
+        "filename": "third_party/WebKit/LayoutTests/reporting-observer/resources/intervention.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-21T05:42:01Z",
+      "side": 1,
+      "message": "drive-by: why is there a test.done() here and one below as well?",
+      "revId": "8eac569dd8d418fdd8071be8b747e03df09308ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8134b3c0_5f456ab8",
+        "filename": "third_party/WebKit/LayoutTests/reporting-observer/resources/intervention.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-21T05:42:01Z",
+      "side": 1,
+      "message": "drive-by: should this and the other console.log be removed? they seem to be here for debugging",
+      "revId": "8eac569dd8d418fdd8071be8b747e03df09308ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
