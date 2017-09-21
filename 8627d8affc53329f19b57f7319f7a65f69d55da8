@@ -34,6 +34,24 @@
       "revId": "8627d8affc53329f19b57f7319f7a65f69d55da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2317c6_cedcbb71",
+        "filename": "chrome/browser/resources/settings/device_page/power.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-21T00:12:03Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "c55e1d98_dce07376",
+      "revId": "8627d8affc53329f19b57f7319f7a65f69d55da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
