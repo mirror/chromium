@@ -21,9 +21,13 @@ CSSParserToken CSSParserTokenStream::ConsumeIncludingWhitespace() {
 bool CSSParserTokenStream::ConsumeCommentOrNothing() {
   DCHECK(!HasLookAhead());
   const auto token = tokenizer_.TokenizeSingleWithComments();
-  if (token.GetType() != kCommentToken)
+  if (token.GetType() != kCommentToken) {
+    next_ = token;
+    has_look_ahead_ = true;
     return false;
+  }
 
+  has_look_ahead_ = false;
   offset_ = tokenizer_.Offset();
   return true;
 }
