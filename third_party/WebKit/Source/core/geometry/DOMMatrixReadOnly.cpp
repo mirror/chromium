@@ -40,43 +40,31 @@ void SetDictionaryMembers(DOMMatrix2DInit& other) {
     other.setM42(other.hasF() ? other.f() : 0);
 }
 
-String GetErrorMessage(const char* a, const char* b) {
-  return String::Format("The '%s' property should equal the '%s' property.", a,
-                        b);
-}
-
 }  // namespace
 
-bool DOMMatrixReadOnly::ValidateAndFixup2D(DOMMatrix2DInit& other,
-                                           ExceptionState& exception_state) {
+bool DOMMatrixReadOnly::ValidateAndFixup2D(DOMMatrix2DInit& other) {
   if (other.hasA() && other.hasM11() && other.a() != other.m11() &&
       !(std::isnan(other.a()) && std::isnan(other.m11()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("a", "m11"));
     return false;
   }
   if (other.hasB() && other.hasM12() && other.b() != other.m12() &&
       !(std::isnan(other.b()) && std::isnan(other.m12()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("b", "m12"));
     return false;
   }
   if (other.hasC() && other.hasM21() && other.c() != other.m21() &&
       !(std::isnan(other.c()) && std::isnan(other.m21()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("c", "m21"));
     return false;
   }
   if (other.hasD() && other.hasM22() && other.d() != other.m22() &&
       !(std::isnan(other.d()) && std::isnan(other.m22()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("d", "m22"));
     return false;
   }
   if (other.hasE() && other.hasM41() && other.e() != other.m41() &&
       !(std::isnan(other.e()) && std::isnan(other.m41()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("e", "m41"));
     return false;
   }
   if (other.hasF() && other.hasM42() && other.f() != other.m42() &&
       !(std::isnan(other.f()) && std::isnan(other.m42()))) {
-    exception_state.ThrowTypeError(GetErrorMessage("f", "m42"));
     return false;
   }
 
@@ -86,8 +74,11 @@ bool DOMMatrixReadOnly::ValidateAndFixup2D(DOMMatrix2DInit& other,
 
 bool DOMMatrixReadOnly::ValidateAndFixup(DOMMatrixInit& other,
                                          ExceptionState& exception_state) {
-  if (!ValidateAndFixup2D(other, exception_state))
+  if (!ValidateAndFixup2D(other)) {
+    exception_state.ThrowTypeError(
+        "Property mismatch on matrix initialization.");
     return false;
+  }
 
   if (other.hasIs2D() && other.is2D() &&
       (other.m31() || other.m32() || other.m13() || other.m23() ||
@@ -177,11 +168,8 @@ DOMMatrixReadOnly* DOMMatrixReadOnly::fromFloat64Array(
                                float64_array.View()->length());
 }
 
-DOMMatrixReadOnly* DOMMatrixReadOnly::fromMatrix2D(
-    DOMMatrix2DInit& other,
-    ExceptionState& exception_state) {
-  if (!ValidateAndFixup2D(other, exception_state)) {
-    DCHECK(exception_state.HadException());
+DOMMatrixReadOnly* DOMMatrixReadOnly::fromMatrix2D(DOMMatrix2DInit& other) {
+  if (!ValidateAndFixup2D(other)) {
     return nullptr;
   }
   double args[] = {other.m11(), other.m12(), other.m21(),

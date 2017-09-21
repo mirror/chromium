@@ -37,8 +37,9 @@ class CORE_EXPORT DOMMatrixReadOnly
   static DOMMatrixReadOnly* fromFloat64Array(NotShared<DOMFloat64Array>,
                                              ExceptionState&);
   static DOMMatrixReadOnly* fromMatrix(DOMMatrixInit&, ExceptionState&);
-  static DOMMatrixReadOnly* fromMatrix2D(DOMMatrix2DInit&, ExceptionState&);
   static DOMMatrixReadOnly* CreateForSerialization(double[], int size);
+  // Used by Canvas2D, not defined on the IDL.
+  static DOMMatrixReadOnly* fromMatrix2D(DOMMatrix2DInit&);
   virtual ~DOMMatrixReadOnly();
 
   double a() const { return matrix_->M11(); }
@@ -134,7 +135,7 @@ class CORE_EXPORT DOMMatrixReadOnly
 
   void SetMatrixValueFromString(const String&, ExceptionState&);
 
-  static bool ValidateAndFixup2D(DOMMatrix2DInit&, ExceptionState&);
+  static bool ValidateAndFixup2D(DOMMatrix2DInit&);
   static bool ValidateAndFixup(DOMMatrixInit&, ExceptionState&);
   // TransformationMatrix needs to be 16-byte aligned. PartitionAlloc
   // supports 16-byte alignment but Oilpan doesn't. So we use an std::unique_ptr

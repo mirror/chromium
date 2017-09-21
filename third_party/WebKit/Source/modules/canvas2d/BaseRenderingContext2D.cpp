@@ -556,16 +556,33 @@ void BaseRenderingContext2D::setTransform(double m11,
                                           double m22,
                                           double dx,
                                           double dy) {
-  PaintCanvas* c = DrawingCanvas();
-  if (!c)
-    return;
-
   if (!std::isfinite(m11) || !std::isfinite(m21) || !std::isfinite(dx) ||
       !std::isfinite(m12) || !std::isfinite(m22) || !std::isfinite(dy))
     return;
 
   resetTransform();
   transform(m11, m12, m21, m22, dx, dy);
+}
+
+void BaseRenderingContext2D::setTransform(DOMMatrix2DInit& transform) {
+  DOMMatrixReadOnly* m = DOMMatrixReadOnly::fromMatrix2D(transform);
+
+  if (!m)
+    return;
+
+  setTransform(m->m11(), m->m12(), m->m21(), m->m22(), m->m41(), m->m42());
+}
+
+DOMMatrix* BaseRenderingContext2D::getTransform() {
+  const AffineTransform& t = GetState().Transform();
+  DOMMatrix* m = DOMMatrix::Create();
+  m->setA(t.A());
+  m->setB(t.B());
+  m->setC(t.C());
+  m->setD(t.D());
+  m->setE(t.E());
+  m->setF(t.F());
+  return m;
 }
 
 void BaseRenderingContext2D::beginPath() {
