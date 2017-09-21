@@ -88,7 +88,7 @@
       },
       {
         "title": "Performance & Profiling",
-        "href": "/devtools/docs/network", 
+        "href": "/devtools/docs/network",
         "items": [
           {
             "title": "Evaluating Network Performance",
@@ -137,7 +137,7 @@
           {
             "title": "Integrating with DevTools & Chrome",
             "href": "/devtools/docs/integrating"
-          },  
+          },
           {
             "title": "DevTools Extensions API",
             "href": "/extensions/devtools",
@@ -399,7 +399,7 @@
               {
                 "title": "Native Messaging",
                 "href": "/apps/nativeMessaging"
-              },  
+              },
               {
                 "title": "Rich Notifications",
                 "href": "/apps/richNotifications"
@@ -544,8 +544,8 @@
               },
 
               {
-                "title": "Event Pages",
-                "href": "/extensions/event_pages"
+                "title": "Event Management",
+                "href": "/extensions/background_pages"
               },
               {
                 "title": "Content Scripts",
@@ -554,6 +554,10 @@
               {
                 "title": "activeTab Permission",
                 "href": "/extensions/activeTab"
+              },
+              {
+                "title": "Background Migration",
+                "href": "/extensions/background_migration"
               },
               {
                 "title": "What's New?",
@@ -613,7 +617,7 @@
                 "title": "Options",
                 "href": "/extensions/options"
               },
-              { 
+              {
                 "title": "Options Version 2",
                 "href": "/extensions/optionsV2"
               }
