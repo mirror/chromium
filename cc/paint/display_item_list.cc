@@ -55,7 +55,8 @@ void DisplayItemList::Raster(SkCanvas* canvas,
     return;
 
   std::vector<size_t> offsets = rtree_.Search(canvas_playback_rect);
-  paint_op_buffer_.Playback(canvas, image_provider, callback, &offsets);
+  paint_op_buffer_.Playback(canvas, image_provider, nullptr, callback,
+                            &offsets);
 }
 
 void DisplayItemList::GrowCurrentBeginItemVisualRect(
@@ -121,7 +122,7 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
   if (include_items) {
     state->BeginArray("items");
 
-    PlaybackParams params(nullptr, SkMatrix::I());
+    PlaybackParams params(nullptr, nullptr, SkMatrix::I());
     for (const PaintOp* op : PaintOpBuffer::Iterator(&paint_op_buffer_)) {
       state->BeginDictionary();
 
