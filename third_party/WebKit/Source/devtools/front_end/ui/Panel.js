@@ -42,8 +42,6 @@ UI.Panel = class extends UI.VBox {
 
     // For testing.
     UI.panels[name] = this;
-
-    this._shortcuts = /** !Object.<number, function(Event=):boolean> */ ({});
   }
 
   get name() {
@@ -63,16 +61,6 @@ UI.Panel = class extends UI.VBox {
    */
   elementsToRestoreScrollPositionsFor() {
     return [];
-  }
-
-  /**
-   * @param {!KeyboardEvent} event
-   */
-  handleShortcut(event) {
-    var shortcutKey = UI.KeyboardShortcut.makeKeyFromEvent(event);
-    var handler = this._shortcuts[shortcutKey];
-    if (handler && handler(event))
-      event.handled = true;
   }
 
   /**
