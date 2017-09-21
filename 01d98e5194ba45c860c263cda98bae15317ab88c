@@ -34,6 +34,24 @@
       "revId": "01d98e5194ba45c860c263cda98bae15317ab88c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf8817c_17ad5af6",
+        "filename": "chrome/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:36:43Z",
+      "side": 1,
+      "message": "I\u0027m saying introduce DevToolsSession in chrome, a trimmed down version of the one in content.",
+      "parentUuid": "43967691_d25f667a",
+      "revId": "01d98e5194ba45c860c263cda98bae15317ab88c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
