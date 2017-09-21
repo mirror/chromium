@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04ce4534_b70963cf",
+        "filename": "third_party/WebKit/LayoutTests/media/media-ended.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-21T07:04:04Z",
+      "side": 1,
+      "message": "Updated to an assert_throws.",
+      "parentUuid": "62110a2a_9503ff30",
+      "revId": "ca02f7d123e80537621d811a03959a7b4187e4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b05db31b_f9607d10",
         "filename": "third_party/WebKit/LayoutTests/media/video-playbackrate.html",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-20T06:45:55Z",
       "side": 1,
       "message": "Should we use something like assert_throws to make sure the exception is really thrown?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "ca02f7d123e80537621d811a03959a7b4187e4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b002a93e_35736224",
+        "filename": "third_party/WebKit/LayoutTests/media/video-playbackrate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-21T07:04:04Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "b05db31b_f9607d10",
       "range": {
         "startLine": 41,
         "startChar": 10,
