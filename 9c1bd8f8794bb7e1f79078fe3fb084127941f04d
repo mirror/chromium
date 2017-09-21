@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eb0ff92_3f302620",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-21T18:06:24Z",
+      "side": 1,
+      "message": "This dependency is unneeded.\n\nbuild_hooks_android_java and build_hooks_android_impl_java seems pretty complicated.\n\n(Though I did notice jar_excluded_patterns \u003d [ \"*/BuildHooksAndroidImpl.class\" ] in build_hooks_android_java)\n\nI don\u0027t quite understand it. I would appreciate an explanation of how it works during some Friday in the future",
+      "revId": "9c1bd8f8794bb7e1f79078fe3fb084127941f04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
