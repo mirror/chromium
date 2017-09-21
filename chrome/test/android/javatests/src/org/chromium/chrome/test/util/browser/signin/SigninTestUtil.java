@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.test.util.browser.signin;
 
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
+
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Instrumentation;
@@ -19,6 +21,8 @@ import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +33,9 @@ import java.util.List;
  */
 public final class SigninTestUtil {
     private static final String TAG = "Signin";
+
+    public static final long TIMEOUT_MS = scaleTimeout(20000);
+    public static final int INTERVAL_MS = 250;
 
     private static final String DEFAULT_ACCOUNT = "test@gmail.com";
 
@@ -64,9 +71,11 @@ public final class SigninTestUtil {
      * Tears down the test authentication environment.
      */
     public static void tearDownAuthForTest() {
-        for (AccountHolder accountHolder : sAddedAccounts) {
-            sAccountManager.removeAccountHolderExplicitly(accountHolder);
-        }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            for (AccountHolder accountHolder : sAddedAccounts) {
+                sAccountManager.removeAccountHolderExplicitly(accountHolder);
+            }
+        });
         sAddedAccounts.clear();
         sContext = null;
     }
@@ -91,12 +100,8 @@ public final class SigninTestUtil {
      */
     public static Account addTestAccount(String name) {
         Account account = createTestAccount(name);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AccountTrackerService.get().invalidateAccountSeedStatus(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> AccountTrackerService.get().invalidateAccountSeedStatus(true));
         return account;
     }
 
@@ -105,22 +110,30 @@ public final class SigninTestUtil {
      */
     public static Account addAndSignInTestAccount() {
         Account account = createTestAccount(DEFAULT_ACCOUNT);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ChromeSigninController.get().setSignedInAccountName(DEFAULT_ACCOUNT);
-                AccountTrackerService.get().invalidateAccountSeedStatus(true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ChromeSigninController.get().setSignedInAccountName(DEFAULT_ACCOUNT);
+            AccountTrackerService.get().invalidateAccountSeedStatus(true);
         });
         return account;
     }
 
     private static Account createTestAccount(String accountName) {
         assert sContext != null;
+        ThreadUtils.assertOnBackgroundThread();
+
         Account account = AccountManagerFacade.createAccountFromName(accountName);
-        AccountHolder accountHolder = AccountHolder.builder(account).alwaysAccept(true).build();
-        sAccountManager.addAccountHolderExplicitly(accountHolder);
-        sAddedAccounts.add(accountHolder);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            AccountHolder accountHolder = AccountHolder.builder(account).alwaysAccept(true).build();
+            sAccountManager.addAccountHolderExplicitly(accountHolder);
+            sAddedAccounts.add(accountHolder);
+        });
+
+        CriteriaHelper.pollInstrumentationThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return AccountManagerFacade.get().hasAccountForName(accountName);
+            }
+        }, TIMEOUT_MS, INTERVAL_MS);
         return account;
     }
 
