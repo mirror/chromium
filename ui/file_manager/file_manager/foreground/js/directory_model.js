@@ -550,11 +550,20 @@ DirectoryModel.prototype.clearAndScan_ = function(newDirContents,
     callback(false);
   }.bind(this);
 
-  // Clear the table, and start scanning.
+  // Clear the table.
   this.metadataModel_.clearAllCache();
   cr.dispatchSimpleEvent(this, 'scan-started');
   var fileList = this.getFileList();
   fileList.splice(0, fileList.length);
+
+  // Update MetadataModel.
+  var locationInfo = this.volumeManager_.getLocationInfo(
+      assert(this.currentDirContents_.getDirectoryEntry()));
+  var useModificationByMeTime =
+      locationInfo.rootType === VolumeManagerCommon.RootType.RECENT;
+  this.metadataModel_.setUseModificationByMeTime(useModificationByMeTime);
+
+  // Start scanning.
   this.scan_(this.currentDirContents_, false,
              onDone, onFailed, onUpdated, onCancelled);
 };
