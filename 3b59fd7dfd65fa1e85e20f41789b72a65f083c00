@@ -69,6 +69,24 @@
       "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f500d13_f0e56fec",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-21T10:54:08Z",
+      "side": 1,
+      "message": "Right. Then I guess we should rename auto_sized_tracks by tracks_for_stretching or something like this, because otherwise is too weird not to include fit-content tracks in a list of auto_sized tracks. This is just to protect us from future usages of this auto_suzed_tracks list.",
+      "parentUuid": "14e9cbbd_89d94424",
+      "revId": "3b59fd7dfd65fa1e85e20f41789b72a65f083c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
