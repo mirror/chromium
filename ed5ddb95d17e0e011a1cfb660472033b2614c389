@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b88a44a8_b7a4ee37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "\u0027made\u0027, \u0027created\u0027, or \u0027built\u0027",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93943cf_2785aa60",
         "filename": "sdch/open-vcdiff",
         "patchSetId": 3
@@ -19,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "c8c7b354_7843e583",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterfaceDocument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "I guess this should have been included in another CL. (https://chromium.googlesource.com/chromium/src/+/e92361313635c5d5f29ed29b053442c9be8be6ec ?)\n\nIt\u0027s not your fault, but could you commit this line as another CL?",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78c4b57_163c6dd9",
         "filename": "tools/idl_parser/test_parser/namespace_web.idl",
         "patchSetId": 3
@@ -30,6 +70,80 @@
       "writtenOn": "2017-09-21T13:07:46Z",
       "side": 1,
       "message": "We have a new style of copyright, and should use it.\n\n----\nCopyright 2017 The Chromium Authors. All rights reserved.\nUse of this source code is governed by a BSD-style license that can be\nfound in the LICENSE file.\n----",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fef0db_4d6b0d24",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "We can\u0027t find this example.",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a32f7bb_5e7b25cc",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "Please add test cases for\n- partial namespace\n- namespace with extended attributes\n- members with extended attributes",
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e01d659_57cca99a",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "Please remove annotated type, or create another operation whose argument is a simple type.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1139ff_816b078c",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-21T14:30:17Z",
+      "side": 1,
+      "message": "Please do not mixture a well-parsed sample and an error sample.\nAn error sample should focus on the error, and should not have unrelated members.",
       "revId": "ed5ddb95d17e0e011a1cfb660472033b2614c389",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
