@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faf6033f_670d2655",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-21T01:20:14Z",
+      "side": 1,
+      "message": "nit: this should be \"with\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "adaebef8fbc1ecdc4f8b423819673b6b667a203d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
