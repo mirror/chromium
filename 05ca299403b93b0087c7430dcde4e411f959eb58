@@ -69,6 +69,24 @@
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01c05d9_4c9a6836",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-21T00:29:36Z",
+      "side": 1,
+      "message": "Thank you so much, this is really smart! It makes perfect sense!\n\nSorry for bothering so much. However, returning to your previous comments about the whenCalled(\u0027getPreviewsEnabled\u0027). When this promise got resolved, the result actually has not been rendered on the DOM yet. Because on index.js, when testPageHandler.getReviewsEnabled() resolved, there are codes that have not executed yet.",
+      "parentUuid": "89c95414_5577f14e",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
