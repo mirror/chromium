@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b64096e_66e0ac16",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T14:50:12Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not quite sure this is true.  IsAutoUpdateableLocation() returns true if it\u0027s either internal or external, but not all of these are required to be updatable.  I think we don\u0027t require that external extensions always be updatable, and certainly internal extensions on linux don\u0027t require an update URL (though admittedly, whether this matters is debatable, since we don\u0027t enforce the webstore lockdown on linux).\n\nAdditionally, if this is to ensure added extensions have some update url, what\u0027s to prevent them from specifying a fake update url?",
+      "revId": "ddf9d645ffe007df8cce7aadb8dc4a8df8340636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
