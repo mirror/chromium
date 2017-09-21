@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ec29179_6ff7fada",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2428,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "481517c0_9a475069",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca6723b_fb12763f",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T06:54:17Z",
       "side": 1,
       "message": "Could you handle |delegateFocus| here instead of |AttachShadowRootInternal()|?",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9101998_be3af091",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "I asked this point to hayato@, and he said it would be better to pass delegateFocus to AttachShadowRootInternal, as we might want to control delegateFocus in some situation.",
+      "parentUuid": "7ca6723b_fb12763f",
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd52ce7d_71d0ff01",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2435,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52d9053_baf1a07c",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c17568_9f790f46",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2891d2de_df2c1023",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2437,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c17568_9f790f46",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "22dc80ac_40e1fd33",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c0140b_c7412ea4",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42af7870_2dd82008",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -137,6 +227,24 @@
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f5dd7a_ada17a7e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2459,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42af7870_2dd82008",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "dbf8d1b8_fcfda5f2",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2461,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c0486c0_2f89164f",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0bde839_d13de991",
         "filename": "third_party/WebKit/Source/core/dom/Element.h",
         "patchSetId": 7
@@ -168,6 +294,24 @@
       "writtenOn": "2017-09-21T06:54:17Z",
       "side": 1,
       "message": "Could you make this function as a file local function?\nUntil we have other call sites, we don\u0027t want to expose this.",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44193d51_0b1342c5",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "After discussion with hayato@, I make this function to private, since turning it to a file local function had some difficulties.",
+      "parentUuid": "c0bde839_d13de991",
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -188,6 +332,24 @@
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c88168_db2c2a06",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9371a2_941c503d",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +384,24 @@
       "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac49678_47a384ba",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-21T11:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e908b6a_6dfd9fa5",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
