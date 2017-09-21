@@ -112,7 +112,6 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   PasswordProtectionService(
       const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager,
-      scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       history::HistoryService* history_service,
       HostContentSettingsMap* host_content_settings_map);
 
@@ -183,10 +182,10 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Records user action to corresponding UMA histograms.
   void RecordWarningAction(WarningUIType ui_type, WarningAction action);
 
-  // Called when user close warning UI or navigate away.
-  void OnWarningDone(content::WebContents* web_contents,
-                     WarningUIType ui_type,
-                     WarningAction action);
+  // If we want to show password reuse modal warning.
+  static bool ShouldShowModalWarning(
+      const LoginReputationClientRequest* request,
+      const LoginReputationClientResponse* response);
 
   // Shows modal warning dialog on the current |web_contents| and pass the
   // |verdict_token| to callback of this dialog.
@@ -196,6 +195,11 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Record UMA stats and trigger event logger when warning UI is shown.
   virtual void OnWarningShown(content::WebContents* web_contents,
                               WarningUIType ui_type);
+
+  // Called when user interacts with warning UIs.
+  virtual void OnUserAction(content::WebContents* web_contents,
+                            WarningUIType ui_type,
+                            WarningAction action) {}
 
   // If we want to show softer warnings based on Finch parameters.
   static bool ShouldShowSofterWarning();
@@ -234,10 +238,6 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Gets the total number of verdicts of the specified |trigger_type| we cached
   // for this profile. This counts both expired and active verdicts.
   virtual int GetStoredVerdictCount(TriggerType trigger_type);
-
-  scoped_refptr<net::URLRequestContextGetter> request_context_getter() {
-    return request_context_getter_;
-  }
 
   // Returns the URL where PasswordProtectionRequest instances send requests.
   static GURL GetPasswordProtectionRequestUrl();
@@ -278,6 +278,11 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 
   HostContentSettingsMap* content_settings() const { return content_settings_; }
+
+  history::HistoryService* history_service() const { return history_service_; }
+
+  virtual scoped_refptr<net::URLRequestContextGetter>
+  request_context_getter() = 0;
 
  private:
   friend class PasswordProtectionServiceTest;
@@ -349,13 +354,11 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   scoped_refptr<SafeBrowsingDatabaseManager> database_manager_;
 
-  // The context we use to issue network requests. This request_context_getter
-  // is obtained from SafeBrowsingService so that we can use the Safe Browsing
-  // cookie store.
-  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
-
   // Set of pending PasswordProtectionRequests.
   std::set<scoped_refptr<PasswordProtectionRequest>> requests_;
+
+  // History service associated with current profile.
+  history::HistoryService* history_service_;
 
   ScopedObserver<history::HistoryService, history::HistoryServiceObserver>
       history_service_observer_;

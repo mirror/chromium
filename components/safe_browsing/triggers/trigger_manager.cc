@@ -20,7 +20,9 @@ namespace {
 bool TriggerNeedsScout(const TriggerType trigger_type) {
   switch (trigger_type) {
     case TriggerType::SECURITY_INTERSTITIAL:
-      // Security interstitials only need legacy SBER opt-in.
+    case TriggerType::GAIA_PASSWORD_REUSE:
+      // Security interstitials and Gaia password reuses only need legacy SBER
+      // opt-in.
       return false;
     case TriggerType::AD_SAMPLE:
       // Ad samples need Scout-level opt-in.
@@ -39,6 +41,11 @@ bool TriggerNeedsOptInForCollection(const TriggerType trigger_type) {
     case TriggerType::AD_SAMPLE:
       // Ad samples happen in the background so the user must already be opted
       // in before the trigger is allowed to run.
+      return true;
+    case TriggerType::GAIA_PASSWORD_REUSE:
+      // For Gaia password reuses, it is unlikely for users to change opt-in
+      // while the trigger runs, so we require opt-in for collection to avoid
+      // overheads.
       return true;
   }
   // By default, require opt-in for all triggers.

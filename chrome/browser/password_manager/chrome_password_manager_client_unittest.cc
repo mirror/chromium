@@ -72,7 +72,6 @@ class MockPasswordProtectionService
   MockPasswordProtectionService()
       : safe_browsing::PasswordProtectionService(nullptr,
                                                  nullptr,
-                                                 nullptr,
                                                  nullptr) {}
 
   ~MockPasswordProtectionService() override {}
@@ -102,6 +101,8 @@ class MockPasswordProtectionService
                void(const GURL&, const std::string&, content::WebContents*));
   MOCK_METHOD0(GetSyncAccountType,
                safe_browsing::PasswordProtectionService::SyncAccountType());
+  MOCK_METHOD0(request_context_getter,
+               scoped_refptr<net::URLRequestContextGetter>());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPasswordProtectionService);
