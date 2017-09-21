@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b36820c_0962abf5",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T18:40:18Z",
+      "side": 1,
+      "message": "I\u0027d prefer to use TimeTicks, but our cached extension installation time is stored as base::Time in ExtensionPrefs, so we can\u0027t compare it to a TimeTicks.  I\u0027ll investigate separately if we can convert extension prefs code to use TimeTicks - we might be able to.",
+      "parentUuid": "7d0b555c_d19cfe57",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "ab9c69c85ab16a0f092cbc33dc06fd868ab86bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9432dd7e_66b7492b",
         "filename": "chrome/browser/metrics/extensions_metrics_provider_unittest.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7b4944a7_154eacfb",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T18:40:18Z",
+      "side": 1,
+      "message": "Whoops!  Fixed.",
+      "parentUuid": "9432dd7e_66b7492b",
+      "range": {
+        "startLine": 391,
+        "startChar": 41,
+        "endLine": 391,
+        "endChar": 0
+      },
+      "revId": "ab9c69c85ab16a0f092cbc33dc06fd868ab86bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e618b74a_f3c7f2d8",
         "filename": "chrome/browser/metrics/extensions_metrics_provider_unittest.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "ab9c69c85ab16a0f092cbc33dc06fd868ab86bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528d747f_26317e07",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-21T18:40:18Z",
+      "side": 1,
+      "message": "Yes, it should.  Done.",
+      "parentUuid": "e618b74a_f3c7f2d8",
+      "range": {
+        "startLine": 426,
+        "startChar": 68,
+        "endLine": 426,
+        "endChar": 0
+      },
+      "revId": "ab9c69c85ab16a0f092cbc33dc06fd868ab86bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
