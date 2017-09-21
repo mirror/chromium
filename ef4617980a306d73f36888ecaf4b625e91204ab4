@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "956ae3ef_3f42f445",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-21T17:25:12Z",
+      "side": 1,
+      "message": "Is this the only change from the original CL?\nIs it possible to run Lollipop trybot before landing this?",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "ef4617980a306d73f36888ecaf4b625e91204ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
