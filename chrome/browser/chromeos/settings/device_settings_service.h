@@ -130,6 +130,12 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // nullptr.
   Status status() const { return store_status_; }
 
+  // Returns the currently device off hours controller. The returned pointer is
+  // guaranteed to be non-null.
+  const policy::DeviceOffHoursController* device_off_hours_controller() const {
+    return device_off_hours_controller_.get();
+  }
+
   // Triggers an attempt to pull the public half of the owner key from disk and
   // load the device settings.
   void Load();
@@ -257,6 +263,9 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
 
   // Whether the device will be establishing consumer ownership.
   bool will_establish_consumer_ownership_ = false;
+
+  std::unique_ptr<policy::DeviceOffHoursController>
+      device_off_hours_controller_;
 
   base::WeakPtrFactory<DeviceSettingsService> weak_factory_{this};
 
