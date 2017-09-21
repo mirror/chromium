@@ -6,19 +6,16 @@ package org.chromium.chrome.browser.suggestions;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 import static org.chromium.chrome.browser.suggestions.SuggestionsSheetVisibilityChangeObserverTest.TestVisibilityChangeObserver.Event.Hidden;
 import static org.chromium.chrome.browser.suggestions.SuggestionsSheetVisibilityChangeObserverTest.TestVisibilityChangeObserver.Event.InitialReveal;
 import static org.chromium.chrome.browser.suggestions.SuggestionsSheetVisibilityChangeObserverTest.TestVisibilityChangeObserver.Event.Shown;
 import static org.chromium.chrome.browser.suggestions.SuggestionsSheetVisibilityChangeObserverTest.TestVisibilityChangeObserver.Event.StateChange;
 import static org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.TYPE_SUGGESTIONS;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.MediumTest;
-import android.support.test.uiautomator.UiDevice;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -90,17 +87,17 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
 
     @Test
     @MediumTest
-    public void testHomeSheetVisibilityOnOmnibox() {
+    public void testHomeSheetVisibilityOnOmnibox() throws TimeoutException, InterruptedException {
         // Tap the omnibox. The home sheet content should not be notified it is selected.
         Espresso.onView(ViewMatchers.withId(R.id.url_bar)).perform(ViewActions.click());
-        waitForWindowUpdates();
+        mActivityRule.getObserver().mOpenedCallbackHelper.waitForCallback(0);
 
         mObserver.expectEvents();
         assertEquals(BottomSheet.SHEET_STATE_FULL, mActivityRule.getBottomSheet().getSheetState());
 
         // Back closes the bottom sheet.
         Espresso.pressBack();
-        waitForWindowUpdates();
+        mActivityRule.getObserver().mClosedCallbackHelper.waitForCallback(0);
 
         mObserver.expectEvents();
         assertEquals(BottomSheet.SHEET_STATE_PEEK, mActivityRule.getBottomSheet().getSheetState());
@@ -110,10 +107,11 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
 
     @Test
     @MediumTest
-    public void testHomeSheetVisibilityOnOmniboxAndSwipeToolbar() {
+    public void testHomeSheetVisibilityOnOmniboxAndSwipeToolbar()
+            throws TimeoutException, InterruptedException {
         // Tap the omnibox. The home sheet content should not be notified it is selected.
         Espresso.onView(ViewMatchers.withId(R.id.url_bar)).perform(ViewActions.click());
-        waitForWindowUpdates();
+        mActivityRule.getObserver().mOpenedCallbackHelper.waitForCallback(0);
 
         mObserver.expectEvents();
         assertEquals(BottomSheet.SHEET_STATE_FULL, mActivityRule.getBottomSheet().getSheetState());
@@ -153,13 +151,10 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
 
         // Back hides the omnibox suggestions.
         Espresso.pressBack();
-        waitForWindowUpdates();
-
         mObserver.expectEvents(Shown, StateChange);
         assertEquals(BottomSheet.SHEET_STATE_FULL, mActivityRule.getBottomSheet().getSheetState());
         mEventReporter.surfaceOpenedHelper.waitForCallback();
         mEventReporter.surfaceOpenedHelper.verifyCallCount();
-
         // Back again closes the bottom sheet
         Espresso.pressBack();
         mObserver.expectEvents(Hidden, StateChange, StateChange);
@@ -240,6 +235,7 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
         }
     }
 
+    // TODO(dgn): Move to base and use in bottom sheet observer?
     private static class SelfVerifyingCallbackHelper extends CallbackHelper {
         private final String mName;
         private int mVerifiedCallCount = 0;
@@ -270,13 +266,5 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
         public void onSurfaceOpened() {
             surfaceOpenedHelper.notifyCalled();
         }
-    }
-
-    // TODO(dgn): Replace with with shared one after merge.
-    public static void waitForWindowUpdates() {
-        final long maxWindowUpdateTimeMs = scaleTimeout(1000);
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.waitForWindowUpdate(null, maxWindowUpdateTimeMs);
-        device.waitForIdle(maxWindowUpdateTimeMs);
     }
 }
