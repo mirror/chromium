@@ -43,7 +43,8 @@ class VIEWS_EXPORT PaintInfo {
   static PaintInfo CreateChildPaintInfo(const PaintInfo& parent_paint_info,
                                         const gfx::Rect& bounds,
                                         const gfx::Size& parent_size,
-                                        ScaleType scale_type);
+                                        ScaleType scale_type,
+                                        bool is_layer);
 
   // Clones a given paint info, |other|, without the invalidation from its
   // PaintContext.
@@ -81,12 +82,14 @@ class VIEWS_EXPORT PaintInfo {
 
  private:
   friend class PaintInfoTest;
+  FRIEND_TEST_ALL_PREFIXES(PaintInfoTest, LayerPaintInfo);
 
   PaintInfo(const ui::PaintContext& root_context, const gfx::Size& size);
   PaintInfo(const PaintInfo& parent_paint_info,
             const gfx::Rect& bounds,
             const gfx::Size& parent_size,
-            ScaleType scale_type);
+            ScaleType scale_type,
+            bool layer = false);
   PaintInfo(const PaintInfo& other,
             ui::PaintContext::CloneWithoutInvalidation c);
 
