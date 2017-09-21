@@ -29,6 +29,11 @@ function MetadataItem() {
   this.modificationTime;
 
   /**
+   * @public {!Date|undefined}
+   */
+  this.modificationByMeTime;
+
+  /**
    * Thumbnail URL obtained from external provider.
    * @public {string|undefined}
    */
@@ -220,3 +225,13 @@ function MetadataItem() {
    */
   this.exifLittleEndian;
 }
+
+/**
+ * Clones MetadataItem object.
+ * @return {!MetadataItem}
+ */
+MetadataItem.prototype.clone = function() {
+  var newItem = new MetadataItem();
+  Object.assign(newItem, this);
+  return newItem;
+};
