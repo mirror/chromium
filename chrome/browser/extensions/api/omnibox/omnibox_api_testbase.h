@@ -17,10 +17,10 @@
 #include "chrome/browser/ui/location_bar/location_bar.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_result.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "content/public/test/test_utils.h"
-
 
 class AutocompleteController;
 
@@ -31,8 +31,10 @@ class OmniboxApiTest : public ExtensionApiTest {
   }
 
   AutocompleteController* GetAutocompleteController(Browser* browser) const {
-    return GetLocationBar(browser)->GetOmniboxView()->model()->popup_model()->
-        autocomplete_controller();
+    return GetLocationBar(browser)
+        ->GetOmniboxView()
+        ->model()
+        ->autocomplete_controller();
   }
 
   // TODO(phajdan.jr): Get rid of this wait-in-a-loop pattern.
