@@ -22,8 +22,8 @@ const base::Feature kEnablePlayStoreAppSearch{
     "EnablePlayStoreAppSearch", base::FEATURE_DISABLED_BY_DEFAULT};
 
 bool IsAnswerCardEnabled() {
-  static const bool enabled = base::FeatureList::IsEnabled(kEnableAnswerCard);
-  return enabled;
+  // Not using local static variable to allow tests to change this value.
+  return base::FeatureList::IsEnabled(kEnableAnswerCard);
 }
 
 bool IsAnswerCardDarkRunEnabled() {
