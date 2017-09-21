@@ -132,7 +132,7 @@ scoped_refptr<gfx::NativePixmap> SurfaceFactoryCast::CreateNativePixmap(
     gfx::Size size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage) {
-  return make_scoped_refptr(new CastPixmap(egl_implementation_.get()));
+  return base::WrapRefCounted(new CastPixmap(egl_implementation_.get()));
 }
 
 }  // namespace ui

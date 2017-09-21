@@ -788,8 +788,8 @@ void TestingProfile::CreatePrefServiceForSupervisedUser() {
   sync_preferences::PrefServiceMockFactory factory;
   SupervisedUserSettingsService* supervised_user_settings =
       SupervisedUserSettingsServiceFactory::GetForProfile(this);
-  scoped_refptr<PrefStore> supervised_user_prefs =
-      make_scoped_refptr(new SupervisedUserPrefStore(supervised_user_settings));
+  scoped_refptr<PrefStore> supervised_user_prefs = base::WrapRefCounted(
+      new SupervisedUserPrefStore(supervised_user_settings));
 
   factory.set_supervised_user_prefs(supervised_user_prefs);
 

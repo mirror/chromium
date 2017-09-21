@@ -1472,11 +1472,11 @@ TEST_F(DisplayManagerTest, DontRememberBestResolution) {
   display::ManagedDisplayInfo native_display_info =
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1000, 500));
   display::ManagedDisplayInfo::ManagedDisplayModeList display_modes;
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(1000, 500), 58.0f, false, true)));
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(800, 300), 59.0f, false, false)));
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(400, 500), 60.0f, false, false)));
 
   native_display_info.SetManagedDisplayModes(display_modes);
@@ -1539,11 +1539,11 @@ TEST_F(DisplayManagerTest, ResolutionFallback) {
   display::ManagedDisplayInfo native_display_info =
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1000, 500));
   display::ManagedDisplayInfo::ManagedDisplayModeList display_modes;
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(1000, 500), 58.0f, false, true)));
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(800, 300), 59.0f, false, false)));
-  display_modes.push_back(make_scoped_refptr(new display::ManagedDisplayMode(
+  display_modes.push_back(base::WrapRefCounted(new display::ManagedDisplayMode(
       gfx::Size(400, 500), 60.0f, false, false)));
 
   display::ManagedDisplayInfo::ManagedDisplayModeList copy = display_modes;

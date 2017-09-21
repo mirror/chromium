@@ -283,7 +283,7 @@ class BleConnectionManagerTest : public testing::Test {
     fake_cryptauth_service_ =
         base::MakeUnique<cryptauth::FakeCryptAuthService>();
     mock_adapter_ =
-        make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
+        base::WrapRefCounted(new NiceMock<device::MockBluetoothAdapter>());
 
     mock_ble_scanner_ = new MockBleScanner(mock_adapter_);
     ON_CALL(*mock_ble_scanner_, RegisterScanFilterForDevice(_))

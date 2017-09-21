@@ -916,7 +916,7 @@ void ExtensionService::EnableExtension(const std::string& extension_id) {
     return;
 
   // Move it over to the enabled list.
-  registry_->AddEnabled(make_scoped_refptr(extension));
+  registry_->AddEnabled(base::WrapRefCounted(extension));
   registry_->RemoveDisabled(extension->id());
 
   NotifyExtensionLoaded(extension);
@@ -980,7 +980,7 @@ void ExtensionService::DisableExtension(const std::string& extension_id,
 
   // Move it over to the disabled list. Don't send a second unload notification
   // for terminated extensions being disabled.
-  registry_->AddDisabled(make_scoped_refptr(extension));
+  registry_->AddDisabled(base::WrapRefCounted(extension));
   if (registry_->enabled_extensions().Contains(extension->id())) {
     registry_->RemoveEnabled(extension->id());
     NotifyExtensionUnloaded(extension, UnloadedExtensionReason::DISABLE);
@@ -1105,7 +1105,7 @@ void ExtensionService::NotifyExtensionLoaded(const Extension* extension) {
   system_->RegisterExtensionWithRequestContexts(
       extension,
       base::Bind(&ExtensionService::OnExtensionRegisteredWithRequestContexts,
-                 AsWeakPtr(), make_scoped_refptr(extension)));
+                 AsWeakPtr(), base::WrapRefCounted(extension)));
 
   renderer_helper_->OnExtensionLoaded(*extension);
 
@@ -2048,7 +2048,7 @@ void ExtensionService::TrackTerminatedExtension(
   }
 
   // No need to check for duplicates; inserting a duplicate is a no-op.
-  registry_->AddTerminated(make_scoped_refptr(extension));
+  registry_->AddTerminated(base::WrapRefCounted(extension));
   UnloadExtension(extension->id(), UnloadedExtensionReason::TERMINATE);
 }
 

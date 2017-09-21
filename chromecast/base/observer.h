@@ -400,7 +400,7 @@ void Observer<T>::OnUpdate() {
 
 template <typename T>
 Observable<T>::Observable(const T& initial_value)
-    : internals_(make_scoped_refptr(
+    : internals_(base::WrapRefCounted(
           new subtle::ObservableInternals<T>(initial_value))) {}
 
 template <typename T>
