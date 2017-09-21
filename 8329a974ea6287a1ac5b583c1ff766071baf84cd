@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fe7e2cbe_7dcb0583",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T01:00:55Z",
+      "side": 1,
+      "message": "Also, the next CL will move ExtensionService::EnableExtension here, so ActivateExtension will become a private implementation detail. Callers won\u0027t need to differentiate between activating/deactivating and enabling/disabling extensions, nor will ExtensionService manually update the enabled or disabled registry.\n\nI\u0027ll write up a design doc for you to review as that should make the overarching change (and hopefully improvement) clearer.",
+      "parentUuid": "9d02f945_422e47ff",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e0b7a6_bddbff24",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 3
