@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86df759a_cfb5ba8c",
+        "filename": "third_party/inspector_protocol/lib/Values_cpp.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-21T18:35:17Z",
+      "side": 1,
+      "message": "Why don\u0027t you need c \u003c 32 and \u0027\u003c\u0027 \u0027\u003e\u0027 checks in the Latin case?",
+      "revId": "5edafd0e120c04442b9838a1aed9fe1f38cf4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b9a222_1166c586",
+        "filename": "third_party/inspector_protocol/lib/Values_cpp.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-21T18:35:17Z",
+      "side": 1,
+      "message": "nit: early continue",
+      "revId": "5edafd0e120c04442b9838a1aed9fe1f38cf4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
