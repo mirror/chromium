@@ -32,6 +32,7 @@ class WebSurfaceLayerBridgeObserver;
 
 namespace media {
 
+class GpuVideoAcceleratorFactories;
 class SwitchableAudioRendererSink;
 class SurfaceManager;
 
@@ -77,7 +78,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::WatchTimeRecorderProvider* provider,
       CreateCapabilitiesRecorderCB create_capabilities_recorder_cb,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
-          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback);
+          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      base::Callback<
+          void(base::Callback<void(media::GpuVideoAcceleratorFactories*)>)>
+          context_provider_callback);
 
   ~WebMediaPlayerParams();
 
@@ -149,6 +153,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_bridge_callback_;
   }
 
+  const base::Callback<
+      void(base::Callback<void(media::GpuVideoAcceleratorFactories*)>)>&
+  context_provider_callback() const {
+    return context_provider_callback_;
+  }
+
   CreateCapabilitiesRecorderCB create_capabilities_recorder_cb() const {
     return create_capabilities_recorder_cb_;
   }
@@ -176,6 +186,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
+  base::Callback<void(
+      base::Callback<void(media::GpuVideoAcceleratorFactories*)>)>
+      context_provider_callback_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

@@ -363,6 +363,14 @@ GpuVideoAcceleratorFactoriesImpl::GetVideoEncodeAcceleratorSupportedProfiles() {
           .video_encode_accelerator_supported_profiles);
 }
 
+viz::ContextProvider*
+GpuVideoAcceleratorFactoriesImpl::GetMediaContextProvider() {
+  if (!CheckContextLost())
+    return context_provider_;
+  else
+    return nullptr;
+}
+
 void GpuVideoAcceleratorFactoriesImpl::ReleaseContextProvider() {
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
   RecordContextProviderPhaseUmaEnum(

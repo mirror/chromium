@@ -39,6 +39,7 @@ class WebMediaPlayerEncryptedMediaClient;
 namespace media {
 class CdmFactory;
 class DecoderFactory;
+class GpuVideoAcceleratorFactories;
 class MediaLog;
 class MediaObserver;
 class RendererWebMediaPlayerDelegate;
@@ -101,6 +102,11 @@ class MediaFactory {
       blink::WebContentDecryptionModule* initial_cdm,
       const blink::WebString& sink_id,
       blink::WebLayerTreeView* layer_tree_view);
+
+  void GetMediaContextProvider(
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
+      base::Callback<void(media::GpuVideoAcceleratorFactories*)>
+          set_context_provider_callback);
 
   // Provides an EncryptedMediaClient to connect blink's EME layer to media's
   // implementation of requestMediaKeySystemAccess. Will always return the same

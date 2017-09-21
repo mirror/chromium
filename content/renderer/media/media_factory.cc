@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/task_runner_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/buildflag.h"
 #include "content/public/common/content_client.h"
@@ -31,6 +32,7 @@
 #include "media/filters/context_3d.h"
 #include "media/media_features.h"
 #include "media/renderers/default_renderer_factory.h"
+#include "media/video/gpu_video_accelerator_factories.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "services/service_manager/public/cpp/connect.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -288,7 +290,11 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           watch_time_recorder_provider_.get(),
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
-          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view)));
+          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+          base::Bind(&MediaFactory::GetMediaContextProvider,
+                     base::Unretained(this),
+                     RenderThreadImpl::current()
+                         ->GetCompositorMainThreadTaskRunner())));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
@@ -301,6 +307,17 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 #endif  // defined(OS_ANDROID)
 
   return media_player;
+}
+
+void MediaFactory::GetMediaContextProvider(
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
+    base::Callback<void(media::GpuVideoAcceleratorFactories*)>
+        set_context_provider_callback) {
+  base::PostTaskAndReplyWithResult(
+      main_task_runner.get(), FROM_HERE, base::Bind([]() {
+        return RenderThreadImpl::current()->GetGpuFactories();
+      }),
+      set_context_provider_callback);
 }
 
 blink::WebEncryptedMediaClient* MediaFactory::EncryptedMediaClient() {
