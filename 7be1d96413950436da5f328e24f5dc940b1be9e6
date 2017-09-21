@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7692424a_e0fec014",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: move this down, closer to where it is first used",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256572ef_cf52a00a",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: ++i",
+      "range": {
+        "startLine": 504,
+        "startChar": 36,
+        "endLine": 504,
+        "endChar": 39
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bcb9f3_2ac6d871",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: ++i",
+      "range": {
+        "startLine": 508,
+        "startChar": 36,
+        "endLine": 508,
+        "endChar": 39
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac877c5_e57f79bc",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b3780d_1e94c2d6",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: model_ -\u003e pagination_model_ and PaginationModel* const since it would not change for the lifetime of the object.",
+      "range": {
+        "startLine": 90,
+        "startChar": 19,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7628dc_bb07ae05",
+        "filename": "ui/app_list/views/suggestions_container_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:28:56Z",
+      "side": 1,
+      "message": "nit: ditto, PaginationModel* const pagination_model_;",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
