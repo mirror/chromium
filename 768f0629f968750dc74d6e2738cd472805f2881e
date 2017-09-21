@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "491625da_d2c9213d",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3a19269_3f0e3937",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b2be7c_832ee832",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I think this is correct, *BIT would mean zero, one, or more bits but you need at least 1 bit for a huffman coding.",
       "parentUuid": "23e3a019_558a3640",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfe2ca88_54878b89",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d1c0a4f_6f7bc2a8",
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "7fa72541_fc5e7df7",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "Ah, splitting it out is a good point. I\u0027d support using it for \t\t\nexpect-staple-part and hsts-part again (you still have the definition of include-subdomains).",
+      "parentUuid": "87eb2217_09bdd6ff",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e9e632_1c09fb5e",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "81d8b930_1f618ecd",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06e6a0fe_4fc5ed76",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbee3bce_bccdc1b8",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -311,6 +383,24 @@
       "side": 1,
       "message": "Yes, a 4 bit number.",
       "parentUuid": "cbee3bce_bccdc1b8",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e01bbf6_80415286",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "Could we write it as 4BIT, then? (Similar to 7BIT for the offset above.)",
+      "parentUuid": "f1d0f61b_44c0325d",
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

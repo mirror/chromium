@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948b82c8_bde1921b",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-21T00:18:11Z",
+      "side": 1,
+      "message": "This is because the 0xE* values start with a leading 1 and we only encode characters from 0-127, right?\n\nCould you spell this out more?\n\n    The (internal) nodes of the tree are encoded as pairs of uint8s. The last node\n    in the array is the root of the tree. Each node is two uint8_t values, the first\n    is \"left\" and the second is \"right\". If a uint8_t value has the MSB set then its\n    lower 7 bits encode a character from 0-127 (the tree does not support characters\n    128-255). Otherwise the lower 7 bits are a pointer to the n\u0027th node of the array.\n\n    For example, the following uint8_t array\n\n    `0xE1, 0xE2, 0xE3, 0x0, 0xE4, 0xE5, 0x1, 0x2`\n\n    contains 8 elements:\n\n    - 4 internal nodes: 0x0, 0x1, 0x2, and the implicit root node 0x3\n    - 4 leaf values: 0xE1, 0xE2, 0xE3, and 0xE4 (which all have the leading bit set)\n\n(Sorry this wasn\u0027t in the first review. My comment was eaten, so I\u0027m rewriting this from memory.)",
+      "revId": "2726c25d276a4b8b9484af28b0c288b57902a223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
