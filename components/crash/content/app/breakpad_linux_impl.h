@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "breakpad/src/common/simple_string_dictionary.h"
+#include "breakpad/breakpad/src/common/simple_string_dictionary.h"
 #include "components/crash/content/app/breakpad_linux.h"
 
 namespace breakpad {

@@ -4,9 +4,8 @@ URL: https://chromium.googlesource.com/breakpad/breakpad
 License: New BSD, Apple PSL 2.0 and Apache 2.0
 Security Critical: no
 
-This directory contains Chrome's version of Breakpad's Visual Studio build
-files (*.vcproj) and a compiled version of Breakpad's symupload.exe utility
+This directory contains a compiled version of Breakpad's symupload.exe utility
 for Windows.
 
-Part of the upstream Breakpad project is pulled into the src/ subdirectory via
+The upstream Breakpad project is pulled into the breakpad/ subdirectory via
 DEPS.

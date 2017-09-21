@@ -6,7 +6,7 @@
 
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
-#include "breakpad/src/common/linux/libcurl_wrapper.h"
+#include "breakpad/breakpad/src/common/linux/libcurl_wrapper.h"
 #include "chromecast/base/scoped_temp_file.h"
 #include "chromecast/crash/cast_crashdump_uploader.h"
 #include "testing/gmock/include/gmock/gmock.h"

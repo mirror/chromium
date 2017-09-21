@@ -5,7 +5,7 @@
 #import "ios/chrome/test/app/chrome_test_util.h"
 
 #include "base/mac/foundation_util.h"
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
 #import "ios/chrome/app/application_delegate/metrics_mediator.h"

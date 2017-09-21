@@ -12,8 +12,8 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "breakpad/src/client/windows/crash_generation/client_info.h"
-#include "breakpad/src/client/windows/crash_generation/crash_generation_server.h"
+#include "breakpad/breakpad/src/client/windows/crash_generation/client_info.h"
+#include "breakpad/breakpad/src/client/windows/crash_generation/crash_generation_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
