@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6e3c817_3614f242",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-21T13:53:30Z",
+      "side": 1,
+      "message": "For this to be effective, this would require changing the signature of set_server_predictions to take by rvalue-ref (to force move) or by value (to support both move and retained ownership) and the impl to also do a std::move.\n\nGiven how often this runs... +1",
+      "parentUuid": "a6488f72_4b23945c",
+      "range": {
+        "startLine": 525,
+        "startChar": 36,
+        "endLine": 525,
+        "endChar": 54
+      },
+      "revId": "0e16680277adc8e92c235ff9c0825d8ad5a1a1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72ed4b2f_b8f8f42b",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 9
