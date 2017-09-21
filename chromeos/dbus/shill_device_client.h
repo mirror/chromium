@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_SHILL_DEVICE_CLIENT_H_
 
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -40,6 +41,11 @@ class ShillPropertyChangedObserver;
 // DBusThreadManager instance.
 class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
  public:
+  // Enum that lists all possible packet types that can be programmed to wake
+  // the system up. Converted into string equvivalents while communicating with
+  // shill.
+  enum class WakeOnPacketType { TCP = 0, UDP, IDP, IPIP, IGMP, ICMP, IP };
+
   typedef ShillClientHelper::PropertyChangedHandler PropertyChangedHandler;
   typedef ShillClientHelper::DictionaryValueCallback DictionaryValueCallback;
   typedef ShillClientHelper::StringCallback StringCallback;
@@ -172,9 +178,17 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
 
   // Adds |ip_endpoint| to the list of tcp connections that the device should
   // monitor to wake the system from suspend.
-   virtual void AddWakeOnPacketConnection(
+  virtual void AddWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) = 0;
+
+  // Adds |packet_types| to the list of packet types that the device should
+  // wake the system from suspend.
+  virtual void AddWakeOnPacketOfTypes(
+      const dbus::ObjectPath& device_path,
+      const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
       const base::Closure& callback,
       const ErrorCallback& error_callback) = 0;
 
@@ -183,6 +197,14 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
   virtual void RemoveWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) = 0;
+
+  // Removes |packet_types| to the list of packet types that the device should
+  // wake the system from suspend.
+  virtual void RemoveWakeOnPacketOfTypes(
+      const dbus::ObjectPath& device_path,
+      const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
       const base::Closure& callback,
       const ErrorCallback& error_callback) = 0;
 

@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -343,6 +344,23 @@ void FakeShillDeviceClient::AddWakeOnPacketConnection(
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
 
+void FakeShillDeviceClient::AddWakeOnPacketOfTypes(
+    const dbus::ObjectPath& device_path,
+    const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  if (!stub_devices_.HasKey(device_path.value())) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+
+  for (auto it = packet_types.begin(); it != packet_types.end(); ++it) {
+    wake_on_packet_types_[device_path].insert(*it);
+  }
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+}
+
 void FakeShillDeviceClient::RemoveWakeOnPacketConnection(
     const dbus::ObjectPath& device_path,
     const net::IPEndPoint& ip_endpoint,
@@ -366,18 +384,47 @@ void FakeShillDeviceClient::RemoveWakeOnPacketConnection(
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
 
+void FakeShillDeviceClient::RemoveWakeOnPacketOfTypes(
+    const dbus::ObjectPath& device_path,
+    const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  const auto device_iter = wake_on_packet_types_.find(device_path);
+  if (!stub_devices_.HasKey(device_path.value()) ||
+      device_iter == wake_on_packet_types_.end()) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+  for (auto input_it = packet_types.begin(); input_it != packet_types.end();
+       ++input_it) {
+    const auto curr_packet_types_iter = device_iter->second.find(*input_it);
+    if (curr_packet_types_iter != device_iter->second.end())
+      device_iter->second.erase(curr_packet_types_iter);
+  }
+}
+
 void FakeShillDeviceClient::RemoveAllWakeOnPacketConnections(
     const dbus::ObjectPath& device_path,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  const auto iter = wake_on_packet_connections_.find(device_path);
+  const auto packet_connection_iter =
+      wake_on_packet_connections_.find(device_path);
   if (!stub_devices_.HasKey(device_path.value()) ||
-      iter == wake_on_packet_connections_.end()) {
+      packet_connection_iter == wake_on_packet_connections_.end()) {
     PostNotFoundError(error_callback);
     return;
   }
 
-  wake_on_packet_connections_.erase(iter);
+  wake_on_packet_connections_.erase(packet_connection_iter);
+
+  const auto packet_types_iter = wake_on_packet_types_.find(device_path);
+  if (!stub_devices_.HasKey(device_path.value()) ||
+      packet_types_iter == wake_on_packet_types_.end()) {
+    PostNotFoundError(error_callback);
+    return;
+  }
+
+  wake_on_packet_types_.erase(packet_types_iter);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
