@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1643d509_1ee21933",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-21T01:03:52Z",
+      "side": 1,
+      "message": "While you are here, mind changing this part a bit?\n\nWe should not swallow errors here, but instead call\n    dispatcher_-\u003esetFallThroughForNotFound(true)\nin constructor, so that unknown methods turn into kFallThrough.\n\nThen we can serialize error responses similar to success ones below.",
+      "revId": "5b85abdac5a530830f2a58f7efaad0104154e4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
