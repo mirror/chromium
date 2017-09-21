@@ -22,6 +22,30 @@
       "revId": "2d003870a8ebf23a9f6bc745c15b7be3bcd430c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16f2d56_ee7ed2ec",
+        "filename": "base/threading/thread_restrictions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-21T16:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243c5869_66f4eeb9",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "2d003870a8ebf23a9f6bc745c15b7be3bcd430c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
