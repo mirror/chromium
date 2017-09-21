@@ -1060,6 +1060,30 @@
     },
     {
       "key": {
+        "uuid": "20b9cab2_7b3f44c8",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T03:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aec52aa_ae21b887",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8b32c14_ac7c16e9",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -1413,6 +1437,30 @@
     },
     {
       "key": {
+        "uuid": "5bb63e7e_b6c6e66d",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T03:42:07Z",
+      "side": 1,
+      "message": "Oh I should have clarified - I meant that DeviceSync Observers are not notified during the process of GetSyncedDevices() in the DeviceSyncImpl.",
+      "parentUuid": "558fd37d_7a9ffc28",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50de4fe0_6daf910c",
         "filename": "components/multidevice/service/fake_device_sync.cc",
         "patchSetId": 11
@@ -1481,6 +1529,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f614855_dc2fdde0",
+        "filename": "components/multidevice/service/fake_device_sync.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T03:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b506223e_cb07eaa2",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
