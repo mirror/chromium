@@ -87,6 +87,24 @@
       "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f217c8_92565abc",
+        "filename": "chrome/browser/resources/download/download_internals.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-21T01:15:04Z",
+      "side": 1,
+      "message": "The targets listed in the compiled_resources2.gyp file correspond to the .js files.\n\nLooks good to me but did you run the compiler or the trybot? I\u0027d be a little surprised if there isn\u0027t a single error (no matter who wrote the code ;-)\n\nYou can try compiling just your target (to save time) via:\n  ./third_party/closure_compiler/run_compiler chrome/browser/resources/download_internals",
+      "parentUuid": "39de71a5_629ea0a1",
+      "revId": "a32f84eed490516928359bcd81fcedc61e8b0310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
