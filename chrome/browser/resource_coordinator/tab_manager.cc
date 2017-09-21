@@ -598,11 +598,11 @@ bool TabManager::IsTabRestoredInForeground(WebContents* web_contents) const {
   return GetWebContentsData(web_contents)->is_restored_in_foreground();
 }
 
-bool TabManager::IsInBackgroundTabOpeningSession() const {
-  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
-    return false;
+size_t TabManager::GetBackgroundTabLoadingCount() const {
+  if (!IsInBackgroundTabOpeningSession())
+    return 0;
 
-  return !(pending_navigations_.empty() && loading_contents_.empty());
+  return loading_contents_.size() + pending_navigations_.size();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1160,6 +1160,13 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
 
   StartForceLoadTimer();
   return content::NavigationThrottle::DEFER;
+}
+
+bool TabManager::IsInBackgroundTabOpeningSession() const {
+  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
+    return false;
+
+  return !(pending_navigations_.empty() && loading_contents_.empty());
 }
 
 bool TabManager::CanLoadNextTab() const {

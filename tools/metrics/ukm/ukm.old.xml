@@ -1375,7 +1375,8 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
-<event name="TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadTime">
+<event
+    name="TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadTime">
   <owner>zhenw@chromium.org</owner>
   <summary>
     The tab load time of a tab that is switched to when the browser is in
