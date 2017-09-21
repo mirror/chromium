@@ -9,6 +9,7 @@
 #include "content/browser/download/url_download_handler.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace content {
 
@@ -25,13 +26,13 @@ class ResourceDownloader : public UrlDownloadHandler,
       std::unique_ptr<DownloadUrlParameters> download_url_parameters,
       std::unique_ptr<ResourceRequest> request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
+      scoped_refptr<storage::FileSystemContext> file_system_context,
       uint32_t download_id,
       bool is_parallel_request);
 
   ResourceDownloader(
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
       std::unique_ptr<DownloadUrlParameters> download_url_parameters,
-      scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
       uint32_t download_id,
       bool is_parallel_request);
   ~ResourceDownloader() override;
@@ -43,7 +44,9 @@ class ResourceDownloader : public UrlDownloadHandler,
 
  private:
   // Helper method to start the network request.
-  void Start(std::unique_ptr<ResourceRequest> request);
+  void Start(scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
+             scoped_refptr<storage::FileSystemContext> file_system_context,
+             std::unique_ptr<ResourceRequest> request);
 
   base::WeakPtr<UrlDownloadHandler::Delegate> delegate_;
 
@@ -53,11 +56,11 @@ class ResourceDownloader : public UrlDownloadHandler,
   // Parameters for constructing the ResourceRequest.
   std::unique_ptr<DownloadUrlParameters> download_url_parameters_;
 
-  // Object for retrieving the URLLoaderFactory.
-  scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
-
   // Object for handing the server response.
   DownloadResponseHandler response_handler_;
+
+  // URLLoaderClient binding for loading a blob.
+  mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
 
   // ID of the download, or DownloadItem::kInvalidId if this is a new
   // download.
