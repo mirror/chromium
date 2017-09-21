@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "936d9843_753bc22e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-21T08:14:38Z",
+      "side": 1,
+      "message": "Remove this line, it would not make sense in \"git log --online\".",
+      "revId": "e1da9ae21f007d6d8be2173470b764b54dc5482c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
