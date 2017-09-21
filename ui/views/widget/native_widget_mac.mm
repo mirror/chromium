@@ -132,10 +132,10 @@ void NativeWidgetMac::InitNativeWidget(const Widget::InitParams& params) {
 
   delegate_->OnNativeWidgetCreated(true);
 
-  bridge_->SetFocusManager(GetWidget()->GetFocusManager());
-
   DCHECK(GetWidget()->GetRootView());
   bridge_->SetRootView(GetWidget()->GetRootView());
+  [window makeFirstResponder:bridge_->ns_view()];
+  bridge_->SetFocusManager(GetWidget()->GetFocusManager());
 
   // "Infer" must be handled by ViewsDelegate::OnBeforeWidgetInit().
   DCHECK_NE(Widget::InitParams::INFER_OPACITY, params.opacity);
