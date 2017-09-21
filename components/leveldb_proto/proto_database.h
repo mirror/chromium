@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 
 namespace base {
 class FilePath;
@@ -44,7 +44,7 @@ class ProtoDatabase {
   // |callback| will be invoked on the calling thread when complete.
   virtual void Init(const char* client_name,
                     const base::FilePath& database_dir,
-                    const leveldb_env::Options& options,
+                    const leveldb_chrome::Options& options,
                     InitCallback callback) = 0;
 
   // Asynchronously saves |entries_to_save| and deletes entries from
@@ -75,7 +75,7 @@ class ProtoDatabase {
 // Return a new instance of Options, but with two additions:
 // 1) create_if_missing = true
 // 2) max_open_files = 0
-leveldb_env::Options CreateSimpleOptions();
+leveldb_chrome::Options CreateSimpleOptions();
 
 }  // namespace leveldb_proto
 

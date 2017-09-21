@@ -124,7 +124,7 @@ NotificationDatabase::Status NotificationDatabase::Open(
 
   filter_policy_.reset(leveldb::NewBloomFilterPolicy(10));
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = create_if_missing;
   options.paranoid_checks = true;
   options.filter_policy = filter_policy_.get();
@@ -135,7 +135,7 @@ NotificationDatabase::Status NotificationDatabase::Open(
   }
 
   Status status = LevelDBStatusToStatus(
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
+      leveldb_chrome::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
   if (status != STATUS_OK)
     return status;
 
@@ -259,7 +259,7 @@ NotificationDatabase::DeleteAllNotificationDataForServiceWorkerRegistration(
 NotificationDatabase::Status NotificationDatabase::Destroy() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   if (IsInMemoryDatabase()) {
     if (!env_)
       return STATUS_OK;  // The database has not been initialized.

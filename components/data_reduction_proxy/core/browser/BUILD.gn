@@ -97,6 +97,7 @@ static_library("browser") {
     "//google_apis",
     "//net",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//url",
   ]
 

@@ -26,7 +26,7 @@
 
 using base::MessageLoop;
 using base::ScopedTempDir;
-using leveldb_env::Options;
+using leveldb_chrome::Options;
 using leveldb_env::SharedReadCache;
 using testing::Invoke;
 using testing::MakeMatcher;
@@ -49,7 +49,7 @@ class MockDB : public LevelDB {
  public:
   MOCK_METHOD2(Init,
                bool(const base::FilePath& database_dir,
-                    const leveldb_env::Options& options));
+                    const leveldb_chrome::Options& options));
   MOCK_METHOD2(Save, bool(const KeyValueVector&, const KeyVector&));
   MOCK_METHOD1(Load, bool(std::vector<std::string>*));
   MOCK_METHOD3(Get, bool(const std::string&, bool*, std::string*));

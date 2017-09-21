@@ -29,6 +29,7 @@
 #include "google_apis/drive/drive_api_parser.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
@@ -273,11 +274,11 @@ class MetadataDatabaseTest : public testing::TestWithParam<bool> {
 
   std::unique_ptr<LevelDBWrapper> InitializeLevelDB() {
     std::unique_ptr<leveldb::DB> db;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(
+    leveldb::Status status = leveldb_chrome::OpenDB(
         options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
     EXPECT_TRUE(status.ok());
 

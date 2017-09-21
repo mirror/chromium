@@ -212,6 +212,7 @@ component("browser") {
     "//services/network/public/cpp",
     "//sql",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//third_party/sqlite",
     "//url",
   ]
@@ -302,6 +303,7 @@ source_set("unittests") {
     "//sql:test_support",
     "//testing/gtest",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 }
 
@@ -348,5 +350,6 @@ static_library("test_support") {
     "//net:test_support",
     "//testing/gtest",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 }

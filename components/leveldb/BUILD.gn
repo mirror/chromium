@@ -31,6 +31,7 @@ static_library("lib") {
     "//mojo/public/cpp/system",
     "//services/service_manager/public/cpp",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 }
 
@@ -76,6 +77,7 @@ service_test("leveldb_service_unittests") {
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 
   data_deps = [

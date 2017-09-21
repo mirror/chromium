@@ -14,7 +14,7 @@ class LevelDBServiceMojoTest : public testing::Test {};
 }  // namespace
 
 TEST(LevelDBServiceMojoTest, TestSerialization) {
-  leveldb_env::Options input;
+  leveldb_chrome::Options input;
   // Tweak all input values to have a non-default value.
   input.create_if_missing = !input.create_if_missing;
   input.error_if_exists = !input.error_if_exists;
@@ -23,7 +23,7 @@ TEST(LevelDBServiceMojoTest, TestSerialization) {
   input.max_open_files += 1;
   input.block_cache = leveldb_chrome::GetSharedWebBlockCache();
 
-  leveldb_env::Options output;
+  leveldb_chrome::Options output;
   ASSERT_TRUE(leveldb::mojom::OpenOptions::Deserialize(
       leveldb::mojom::OpenOptions::Serialize(&input), &output));
 

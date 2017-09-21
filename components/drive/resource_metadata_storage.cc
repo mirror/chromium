@@ -24,7 +24,7 @@
 #include "components/drive/drive.pb.h"
 #include "components/drive/drive_api_util.h"
 #include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/include/leveldb/db.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
 namespace drive {
@@ -270,10 +270,10 @@ bool ResourceMetadataStorage::UpgradeOldDB(
 
   // Open DB.
   std::unique_ptr<leveldb::DB> resource_map;
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
-  leveldb::Status status = leveldb_env::OpenDB(
+  leveldb::Status status = leveldb_chrome::OpenDB(
       options, resource_map_path.AsUTF8Unsafe(), &resource_map);
   if (!status.ok())
     return false;
@@ -573,15 +573,15 @@ bool ResourceMetadataStorage::Initialize() {
   }
 
   // Try to open the existing DB.
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
 
   DBInitStatus open_existing_result = DB_INIT_NOT_FOUND;
   leveldb::Status status;
   if (base::PathExists(resource_map_path)) {
-    status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+    status = leveldb_chrome::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
+                                    &resource_map_);
     open_existing_result = LevelDBStatusToDBInitStatus(status);
   }
 
@@ -623,13 +623,13 @@ bool ResourceMetadataStorage::Initialize() {
     MoveIfPossible(resource_map_path, preserved_resource_map_path);
 
     // Create DB.
-    options = leveldb_env::Options();
+    options = leveldb_chrome::Options();
     options.max_open_files = 0;  // Use minimum.
     options.create_if_missing = true;
     options.error_if_exists = true;
 
-    status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+    status = leveldb_chrome::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
+                                    &resource_map_);
     if (status.ok()) {
       // Set up header and trash the old DB.
       if (PutHeader(GetDefaultHeaderEntry()) == FILE_ERROR_OK &&
@@ -661,7 +661,7 @@ void ResourceMetadataStorage::RecoverCacheInfoFromTrashedResourceMap(
   if (!base::PathExists(trashed_resource_map_path))
     return;
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
   options.reuse_logs = false;
@@ -676,7 +676,7 @@ void ResourceMetadataStorage::RecoverCacheInfoFromTrashedResourceMap(
 
   // Open it.
   std::unique_ptr<leveldb::DB> resource_map;
-  status = leveldb_env::OpenDB(
+  status = leveldb_chrome::OpenDB(
       options, trashed_resource_map_path.AsUTF8Unsafe(), &resource_map);
   if (!status.ok()) {
     LOG(ERROR) << "Failed to open trashed DB: " << status.ToString();

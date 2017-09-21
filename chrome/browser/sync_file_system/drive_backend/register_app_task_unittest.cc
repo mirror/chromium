@@ -31,7 +31,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "google_apis/drive/drive_api_parser.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
@@ -82,10 +82,10 @@ class RegisterAppTaskTest : public testing::Test {
  protected:
   std::unique_ptr<LevelDBWrapper> OpenLevelDB() {
     std::unique_ptr<leveldb::DB> db;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.create_if_missing = true;
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(
+    leveldb::Status status = leveldb_chrome::OpenDB(
         options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
     EXPECT_TRUE(status.ok());
     return base::MakeUnique<LevelDBWrapper>(std::move(db));
