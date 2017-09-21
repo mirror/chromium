@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f69d13e_0374e104",
+        "filename": "components/cryptauth/remote_device_test_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb9c715_04b4d416",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef92ef95_108950c3",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221a5b76_f0935f10",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef92ef95_108950c3",
+      "range": {
+        "startLine": 260,
+        "startChar": 43,
+        "endLine": 260,
+        "endChar": 53
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6225c5fc_a42086df",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe026a05_7f4feb72",
+      "range": {
+        "startLine": 62,
+        "startChar": 3,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed19b91_3c3a9eea",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a8bd3e_6318c65e",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed19b91_3c3a9eea",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d4086153_4dc51d03",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "689873d2_75ceba26",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 28
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ce5949c_cf110234",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebc7b22_d3938c96",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ce5949c_cf110234",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "95376b61_c10e67a8",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fa51e3_e135c147",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374bfe05_03f17908",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -183,6 +351,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d5964f_fa409bd6",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374bfe05_03f17908",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "eb27540d_d80f993b",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1005affd_948e9eb1",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d431c48_880aef8a",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -229,6 +445,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac11f6ac_491fc315",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d431c48_880aef8a",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c2377a44_54eb1d86",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f66b861_b7660731",
+      "range": {
+        "startLine": 182,
+        "startChar": 37,
+        "endLine": 182,
+        "endChar": 38
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032d908e_79205984",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "61f7b1a2_121f37d6",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032d908e_79205984",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47d8a5ae_23a3abdb",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -298,6 +586,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517d02e3_88786336",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d8a5ae_23a3abdb",
+      "range": {
+        "startLine": 197,
+        "startChar": 39,
+        "endLine": 197,
+        "endChar": 53
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +659,54 @@
     },
     {
       "key": {
+        "uuid": "333e50f6_64172165",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbdb1751_0259c3a9",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 55
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50ce68b6_f4ffbcb0",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37b5923_22f15df2",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efd8ff68_4b0e9462",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -367,6 +727,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a771b008_9e8d7655",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd8ff68_4b0e9462",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 297,
+        "endChar": 31
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "f3a8d8b2_b793fe22",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9869ac4a_99caaf4d",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 5
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b39d27_b68b6fc5",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -413,6 +821,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03484cdb_b47ff4c5",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b39d27_b68b6fc5",
+      "range": {
+        "startLine": 320,
+        "startChar": 36,
+        "endLine": 320,
+        "endChar": 66
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "05bb97bb_77ddedcb",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294d293a_d0564ee9",
+      "range": {
+        "startLine": 327,
+        "startChar": 6,
+        "endLine": 327,
+        "endChar": 7
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9e8ab0_f163d082",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -459,6 +915,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35ba4ef_90f5fc52",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e9e8ab0_f163d082",
+      "range": {
+        "startLine": 342,
+        "startChar": 7,
+        "endLine": 342,
+        "endChar": 22
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "010dcc4b_c8d13394",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3c89fa_4c185792",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 57
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61d545bd_740ed315",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -496,6 +1000,30 @@
       "writtenOn": "2017-09-20T20:50:20Z",
       "side": 1,
       "message": "Your test should test further than this - please let enrollment complete and verify that the sync occurs.",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bb53ac_f6b73ac2",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "On a valid enrollment, the Enrollment Manager is never initialized, but the Device Manager does.  On an invalid enrollment, the Enrollment Manager and the Device Manager initializes.",
+      "parentUuid": "61d545bd_740ed315",
       "range": {
         "startLine": 431,
         "startChar": 0,
@@ -531,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "cc2a3955_85e6e27c",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8b32c14_ac7c16e9",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 8
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0e6429_69caec6b",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -551,6 +1103,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ac9504_c1aa671d",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0e6429_69caec6b",
+      "range": {
+        "startLine": 434,
+        "startChar": 27,
+        "endLine": 434,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "c6ba8c6f_b27c41a4",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b03eaa_5963db50",
+      "range": {
+        "startLine": 440,
+        "startChar": 71,
+        "endLine": 440,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e5f321_a08e486b",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -597,6 +1197,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1726ef9_381ccba8",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Should I delete DeviceSyncImpltest::ClearAllObserverNotificationCounts() and DeviceSyncImpltest::DeviceSyncObserverImpl::ClearNotificationCount()?\n\nI realize now it doesn\u0027t improve clarity.",
+      "parentUuid": "92e5f321_a08e486b",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 39
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -623,6 +1247,30 @@
     },
     {
       "key": {
+        "uuid": "a3dae25c_bb721e68",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ab1085_4786635d",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9fbae1_8f26ca89",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 11
@@ -643,6 +1291,30 @@
       "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d16bde_2217039a",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9fbae1_8f26ca89",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 1
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -669,6 +1341,30 @@
     },
     {
       "key": {
+        "uuid": "b01d6e85_665a66f1",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Should we add that logic in the implementation (DeviceSyncImpl::GetSyncedDevices) ? Currently, GetSyncedDevices simply asks FakeRemoteDeviceProvider for the synced devices, and runs the callback.",
+      "parentUuid": "b752e42c_f55ef684",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 47
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50de4fe0_6daf910c",
         "filename": "components/multidevice/service/fake_device_sync.cc",
         "patchSetId": 11
@@ -680,6 +1376,30 @@
       "writtenOn": "2017-09-20T20:50:20Z",
       "side": 1,
       "message": "You can\u0027t statically declare non-primitives. Please move this to the initializer list of your constructor, and also use GenerateTestRemoteDevices().",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 72
+      },
+      "revId": "df64c376091115cf519e249aa70d4a7c3189e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f63f6cc_447bf007",
+        "filename": "components/multidevice/service/fake_device_sync.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Should we still keep remote_devices_ static?",
+      "parentUuid": "50de4fe0_6daf910c",
       "range": {
         "startLine": 9,
         "startChar": 0,

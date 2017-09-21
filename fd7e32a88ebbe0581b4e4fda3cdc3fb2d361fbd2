@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "c50437cf_d8b02e16",
+        "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Maybe I should modify CryptAuthEnrollmentManager? \n\nThe constructor is public here so I can store identity_manager (and everything else that\u0027s needed to create an instance of a CryptAuthEnroller inside CryptAuthEnrollmentManager) when I create a unique pointer to the Factory as I pass it into the constructor of CryptAuthEnrollmentManager.  The CryptAuthEnrollmentManager can in turn call CreateInstance() internally without worrying about what to pass into CreateInstance and what\u0027s encapsulated?  Let me know this is done incorrectly.  I also follow the line of logic used here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/cryptauth/chrome_cryptauth_service.cc?dr\u003dCSs\u0026q\u003dCryptAuthEnrollerFactoryImpl\u0026l\u003d151",
+      "parentUuid": "9c54e452_69e01554",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 80
+      },
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed76ef5a_2bb43c25",
         "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.h",
         "patchSetId": 9
@@ -1724,6 +1748,24 @@
     },
     {
       "key": {
+        "uuid": "429ba9df_d304629c",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a85f5e0_d5fa9425",
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98af25a8_448867ca",
         "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
         "patchSetId": 9
@@ -1783,6 +1825,30 @@
       "side": 1,
       "message": "Looks like this is still here.",
       "parentUuid": "f022037f_f90a001f",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 68
+      },
+      "revId": "fd7e32a88ebbe0581b4e4fda3cdc3fb2d361fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b7ceae5_710a7651",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-21T01:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b57d297_e5424885",
       "range": {
         "startLine": 365,
         "startChar": 0,
