@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/safe_browsing/db/v4_feature_list.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
@@ -138,6 +139,21 @@ StoresToCheck CreateStoresToCheckFromSBThreatTypeSet(
   return stores_to_check;
 }
 
+const char* const kPVer3FileNameSuffixesToDelete[] = {
+    "Bloom",        "Bloom Prefix Set",   "Csd Whitelist",
+    "Download",     "Download Whitelist", "Extension Blacklist",
+    "IP Blacklist", "Module Whitelist",   "Resource Blacklist",
+    "UwS List",     "UwS List Prefix Set"};
+
+std::string GetUmaSuffixForPVer3FileNameSuffix(const std::string& suffix) {
+  DCHECK(!suffix.empty());
+  std::string uma_suffix;
+  DVLOG(1) << __FUNCTION__ << ": suffix: " << suffix;
+  base::RemoveChars(suffix, base::kWhitespaceASCII, &uma_suffix);
+  DVLOG(1) << __FUNCTION__ << ": uma_suffix: " << uma_suffix;
+  return uma_suffix;
+}
+
 }  // namespace
 
 V4LocalDatabaseManager::PendingCheck::PendingCheck(
@@ -218,6 +234,7 @@ V4LocalDatabaseManager::V4LocalDatabaseManager(
   DCHECK(!list_infos_.empty());
 
   DeleteUnusedStoreFiles();
+  DeletePVer3StoreFiles();
 
   DVLOG(1) << "V4LocalDatabaseManager::V4LocalDatabaseManager: "
            << "base_path_: " << base_path_.AsUTF8Unsafe();
@@ -565,6 +582,29 @@ void V4LocalDatabaseManager::DatabaseUpdated() {
     v4_database_->RecordFileSizeHistograms();
     v4_update_protocol_manager_->ScheduleNextUpdate(
         v4_database_->GetStoreStateMap());
+  }
+}
+
+void V4LocalDatabaseManager::DeletePVer3StoreFiles() {
+  // PVer3 files are directly in the profile directory, whereas PVer4 files are
+  // under "Safe Browsing" directory, so we need to look in the DirName() of
+  // base_path_.
+  for (auto* const pver3_store_suffix : kPVer3FileNameSuffixesToDelete) {
+    DVLOG(1) << __FUNCTION__ << ": pver3_store_suffix: " << pver3_store_suffix;
+    const base::FilePath store_path = base_path_.DirName()
+                                          .AppendASCII("Safe Browsing ")
+                                          .AppendASCII(pver3_store_suffix);
+    bool path_exists = base::PathExists(store_path);
+    base::UmaHistogramBoolean(
+        "SafeBrowsing.V4UnusedStoreFileExists.V3." +
+            GetUmaSuffixForPVer3FileNameSuffix(pver3_store_suffix),
+        path_exists);
+    if (!path_exists) {
+      continue;
+    }
+    task_runner_->PostTask(
+        FROM_HERE, base::Bind(base::IgnoreResult(&base::DeleteFile), store_path,
+                              false /* recursive */));
   }
 }
 
