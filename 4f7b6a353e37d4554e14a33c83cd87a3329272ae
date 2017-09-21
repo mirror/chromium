@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7b6c942_7c98fac7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T09:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3b750e_7f48f149",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90cd2f17_2af85c0e",
         "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "56b0c18b_483ab84c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T09:07:39Z",
+      "side": 1,
+      "message": "No, we are compiling with iOS 11 sdk so it is fine at compilation time.",
+      "parentUuid": "90cd2f17_2af85c0e",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d3e369_90bda26d",
         "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb963f91_fcccd517",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T09:07:39Z",
+      "side": 1,
+      "message": "AddSameConstraints only works with UIView, safeAreaLayoutGuide is a UILayoutGuide, so it does not work :)\nBut we might add an helper method to do exactly this if(){}else{} block.",
+      "parentUuid": "40d3e369_90bda26d",
+      "revId": "4f7b6a353e37d4554e14a33c83cd87a3329272ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
