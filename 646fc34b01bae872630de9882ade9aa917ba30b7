@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf955af0_221e85b0",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-21T10:56:54Z",
+      "side": 1,
+      "message": "Android side needs to know which feature is enabled. With WHITELISTED_PACKAGE_NAME, Android side will enable TalkBack for non-whitelisted application even if user has enabled only SelectToSpeak.",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 52
+      },
+      "revId": "646fc34b01bae872630de9882ade9aa917ba30b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
