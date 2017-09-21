@@ -106,6 +106,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d246c5_12989613",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-21T20:28:07Z",
+      "side": 1,
+      "message": "I agree that the extension should only receive events for sockets it has explicitly registered interest in.  I think we\u0027re discussing what that API should be and how an extension should essentially gain access to an existing socket.  I have a couple of concerns with using send() for this - I think a quick videoconference should clear it up.",
+      "parentUuid": "6c4c6f24_9961a356",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
