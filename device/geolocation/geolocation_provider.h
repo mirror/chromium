@@ -30,8 +30,13 @@ class GeolocationProvider {
   DEVICE_GEOLOCATION_EXPORT static GeolocationProvider* GetInstance();
 
   // Optional: provide a Delegate to override typical services.
+  // Call before using GetInstance() and no more than once.
   DEVICE_GEOLOCATION_EXPORT static void SetGeolocationDelegate(
       GeolocationDelegate* delegate);
+
+  // Optional: Provide a Google API key for network geolocation requests.
+  // Call before using GetInstance().
+  DEVICE_GEOLOCATION_EXPORT static void SetApiKey(const std::string& api_key);
 
   typedef base::Callback<void(const Geoposition&)> LocationUpdateCallback;
   typedef base::CallbackList<void(const Geoposition&)>::Subscription
