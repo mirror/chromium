@@ -150,9 +150,11 @@ Polymer({
 
     if (oldRoute) {
       if (oldRoute.isSubpage() && newRoute.depth > oldRoute.depth) {
-        // Slide left for a deeper subpage.
-        this.$.animatedPages.exitAnimation = 'slide-left-animation';
-        this.$.animatedPages.entryAnimation = 'slide-from-right-animation';
+        var exit = loadTimeData.getString('textdirection');
+        var entry = exit == 'right' ? 'left' : 'right';
+        this.$.animatedPages.exitAnimation = 'slide-' + exit + '-animation';
+        this.$.animatedPages.entryAnimation =
+            'slide-from-' + entry + '-animation';
       } else if (oldRoute.depth > newRoute.depth) {
         // Slide right for a shallower subpage.
         this.$.animatedPages.exitAnimation = 'slide-right-animation';
