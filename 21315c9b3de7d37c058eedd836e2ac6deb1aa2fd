@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84c62c4a_0ecbb594",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T11:54:25Z",
+      "side": 0,
+      "message": "I am not sure to understand the use of this. I have removed it and it is working. Here is a screenshot with a long title: https://drive.google.com/open?id\u003d0B21N-0pPGAuJbklmRzRaeEZnMTQ\nIt has the same behavior on iOS 9.",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "21315c9b3de7d37c058eedd836e2ac6deb1aa2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

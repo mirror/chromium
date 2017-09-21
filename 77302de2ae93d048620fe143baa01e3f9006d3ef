@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "051e01df_18ac4192",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T11:54:25Z",
+      "side": 1,
+      "message": "It should be fine, the button created this way has a \"Back\" accessibility label.",
+      "parentUuid": "90e82f09_6d5b856c",
+      "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e47e897_5b5c6ba5",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5649aa1d_59bdf092",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-21T11:54:25Z",
+      "side": 1,
+      "message": "No, this guard was used before compiling with iOS 11 sdk.",
+      "parentUuid": "9e47e897_5b5c6ba5",
+      "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
