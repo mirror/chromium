@@ -1,0 +1,498 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d05a899_c825d37c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "It\u0027s a bit concerning, as it, I presume, searches across all available slots, not limiting to the current user\u0027s private slot.\n\nIt\u0027ll be best (at least, security-wise) if this function would exit fast whenever the cert is not on a current user\u0027s slot (and only the private slot, I assume). For the example of how this can be done, you may look at [1]. As another (but probably too heavy-weighted) approach, the check can be performed by listing all certs like ListCertificates() does and searching the cert in the list.\n\n[1] https://cs.chromium.org/chromium/src/chromeos/cert_loader.cc?l\u003d145\u0026rcl\u003d379c51e423f16cb23822cb9d24020f7b31152a42\n\nBut, as with my another comment below (in OnGetNSSCertDatabaseForUser()), the code as it is now should be technically correct at the moment, because the cert is anyway checked against the pref. But then a big honky warning in a comment/TODO should be left here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd057866_01155979",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "This will list certs from both the public and the private slots, while I think you\u0027re interested only in the latter. Technically, this will work now, as you anyway filter out all non-corporate ones.\nBut maybe leave a TODO here? (It will also serve as a hint if someone decides to change the filtering logic in the future.)",
+      "range": {
+        "startLine": 272,
+        "startChar": 12,
+        "endLine": 272,
+        "endChar": 21
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cef0b0_28528533",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: This piece of code is duplicated between this function and IsCertificateAllowed(). It\u0027s also unfortunate to have the logic of cert permissions being scattered among two places in the code - this block is very important security-wise, and it should be easy to check/modify it in a single place.\n\nMy specific suggestion is to reorganize it like this:\n\n  bool IsCertificateAllowed(const net::X509Certificate\u0026 cert, const PrefService* prefs);\n  scoped_refptr\u003cnet::X509Certificate\u003e FindCertificateByAlias(const std::string\u0026 alias);\n\nor, as another approach, have IsCertificateAllowed() as shown above, and have IsCertificateByAliasAllowed() and IsCertificateByCERTAllowed() that would call it.",
+      "range": {
+        "startLine": 281,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 63
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8a5b2e_9ddf8d29",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Not used anymore.",
+      "range": {
+        "startLine": 296,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 22
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c06ce1_afa3ad98",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: \"app_id\"? (as at this point it can be either a package name or an extension ID)",
+      "range": {
+        "startLine": 312,
+        "startChar": 19,
+        "endLine": 312,
+        "endChar": 31
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67816db8_9095b256",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Perhaps use user_manager::kStubUserEmail?",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b0a307_cb47da02",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Not needed?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188eb584_388c395a",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Can\u0027t this be done in the test constructor? You will also be able to remove std::unique_ptr then.",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 64
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5ceefc_48cfb723",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Maybe use TestingProfile::kTestUserProfileDir?",
+      "range": {
+        "startLine": 87,
+        "startChar": 71,
+        "endLine": 87,
+        "endChar": 77
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9539298d_9c3b5de8",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: It\u0027s used in the test as either a package name or an extension ID, therefore the name \"package_name\" is not fully correct. Perhaps something like \"app_id\"?",
+      "range": {
+        "startLine": 171,
+        "startChar": 53,
+        "endLine": 171,
+        "endChar": 65
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3e3987_752a8349",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: This seems to likely be a method\u0027s comment instead.",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 22
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15f8b40_b976052c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Make private.",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb26090d_55288139",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Make private.",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3830029a_13d10a14",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Make private.",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 242,
+        "endChar": 27
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b08819_ba1aefe2",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Perhaps use EXPECT_EQ, EXPECT_TRUE in this function - as neither of them represents a fatal error?",
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd06f65_97620628",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "This now finishes asynchronously - so I assume you\u0027d have to spin up a RunLoop for testing its results?",
+      "range": {
+        "startLine": 261,
+        "startChar": 23,
+        "endLine": 261,
+        "endChar": 39
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bd20ea_c9770232",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "Is the system slot really used for anything?",
+      "range": {
+        "startLine": 272,
+        "startChar": 54,
+        "endLine": 272,
+        "endChar": 71
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff46425d_58e0bff5",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ? It\u0027s generally advised to use ASSERT_* only for errors that would otherwise result in fatal test errors (like crashes).",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6755534a_8f2bea17",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "It\u0027s also interesting to test that there\u0027s the certificates list is empty when RegisterCorporateKeys() is already done, but SetCorporateKeyUsagePolicy(kFakePackageName) not yet.",
+      "range": {
+        "startLine": 315,
+        "startChar": 2,
+        "endLine": 315,
+        "endChar": 43
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a38231b_378a672c",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: These Value::Get* and Value::Set* methods are deprecated, nowadays they recommend using Value::FindKey() and Value::SetKey()...\n(the same applies to the rest of the CL)",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 50
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92b856b_a7101dd9",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "The implementation of this function mostly duplicates the code already present in PolicyAllowsCorporateKeyUsageForExtension(). Could you get rid of this duplication - either by adding a separate helper function, or by changing PolicyAllowsCorporateKeyUsageForExtension() to just use the result of GetCorporateKeyUsageAllowedAppIds()?",
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fa7df8_7a2bbf24",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-21T13:54:08Z",
+      "side": 1,
+      "message": "nit: Technically this should work, but it looks like \"||\" is a better fit here.",
+      "range": {
+        "startLine": 413,
+        "startChar": 66,
+        "endLine": 413,
+        "endChar": 68
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
