@@ -362,6 +362,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             mToolbarPullHandle.setTranslationY(0);
             mToolbarShadow.setTranslationY(0);
             mRecyclerView.setTranslationY(0);
+            setRecyclerViewBottomPadding(0);
             ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, true);
             return;
         }
@@ -369,12 +370,15 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mLogoView.setVisibility(View.VISIBLE);
         ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, false);
 
-        // TODO(mvanouwerkerk): Consider using Material animation curves.
         final float transitionFraction;
         if (mLastSheetHeightFraction > LOGO_TRANSITION_TOP_START) {
-            float range = LOGO_TRANSITION_TOP_END - LOGO_TRANSITION_TOP_START;
-            transitionFraction =
-                    Math.min((mLastSheetHeightFraction - LOGO_TRANSITION_TOP_START) / range, 1.0f);
+            if (mSheet.isSmallScreen()) {
+                transitionFraction = 0.0f;
+            } else {
+                float range = LOGO_TRANSITION_TOP_END - LOGO_TRANSITION_TOP_START;
+                transitionFraction = Math.min(
+                        (mLastSheetHeightFraction - LOGO_TRANSITION_TOP_START) / range, 1.0f);
+            }
         } else if (mLastSheetHeightFraction < LOGO_TRANSITION_BOTTOM_START) {
             float range = LOGO_TRANSITION_BOTTOM_START - LOGO_TRANSITION_BOTTOM_END;
             transitionFraction = Math.min(
@@ -394,10 +398,21 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mToolbarPullHandle.setTranslationY(-toolbarOffset);
         mToolbarShadow.setTranslationY(-toolbarOffset);
         mRecyclerView.setTranslationY(toolbarOffset);
+        setRecyclerViewBottomPadding((int) toolbarOffset);
     }
 
     @Override
     public void scrollToTop() {
         mRecyclerView.smoothScrollToPosition(0);
+    }
+
+    private void setRecyclerViewBottomPadding(int newBottom) {
+        int currentBottom = mRecyclerView.getPaddingBottom();
+        if (newBottom == currentBottom) return;
+
+        int left = mRecyclerView.getPaddingLeft();
+        int top = mRecyclerView.getPaddingTop();
+        int right = mRecyclerView.getPaddingRight();
+        mRecyclerView.setPadding(left, top, right, newBottom);
     }
 }
