@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b36e9673_5d2272fd",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-virtual-bool-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T21:04:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b867788_0e1ce503",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263787fd_c8ca35ea",
         "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
         "patchSetId": 2
@@ -98,6 +122,24 @@
       "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0c1e45_9108224d",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-21T21:04:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05ec2c5f_66adde49",
+      "revId": "60b31ef6e8f3d30e90e2df6f8eddad71700dcf07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
