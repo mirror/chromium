@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d0c025_59a712e9",
+        "filename": "tools/perf/generate_system_health_csv.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T14:40:58Z",
+      "side": 1,
+      "message": "Remove this as well since this is not a script",
+      "revId": "a2dd0d90f8600489726756f0876c5036ff95cb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280d1493_4bc69075",
+        "filename": "tools/perf/generate_system_health_csv.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T14:40:58Z",
+      "side": 1,
+      "message": "This \u0026 the line below can now be removed",
+      "revId": "a2dd0d90f8600489726756f0876c5036ff95cb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5a2d03_669243a3",
+        "filename": "tools/perf/generate_system_health_csv.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-21T14:40:58Z",
+      "side": 1,
+      "message": "You can remove this.",
+      "revId": "a2dd0d90f8600489726756f0876c5036ff95cb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
