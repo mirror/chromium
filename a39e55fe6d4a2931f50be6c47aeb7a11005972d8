@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c811666_be14d794",
+        "filename": "ash/public/cpp/remote_shelf_item_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T14:19:58Z",
+      "side": 1,
+      "message": "Did this happen on non-mash because mash always sends things as pointer events?",
+      "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c741149_15b10f3f",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-21T14:19:58Z",
+      "side": 1,
+      "message": "Should this have a NOTREACHED()? I\u0027m concerned that someone might try to serialize some other gesture type. I guess we would get an error on the receiving side from the NOTREACHED you added below, but it might be nice to do on the sending side.",
+      "revId": "a39e55fe6d4a2931f50be6c47aeb7a11005972d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
