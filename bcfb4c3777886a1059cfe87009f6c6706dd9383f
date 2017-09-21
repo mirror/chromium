@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca6723b_fb12763f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "Could you handle |delegateFocus| here instead of |AttachShadowRootInternal()|?",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52d9053_baf1a07c",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2435,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "Since AttachShadowRootInternal() doesn\u0027t allow to attach to INPUT, BUTTON,\netc, we should keep this paart in |CreateShadowRootInternal()|.",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c17568_9f790f46",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2437,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "nit: Could you remove an extra blank line?",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b232c0_7f4b0fd6",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "Once we move |if (Always...()) ...| to |CreateShadowRootInternal()|,\nthis function is just one line. Thus, we may not want to have\n|AddShadowRootInternal()|.\n\nAs of Sep 21, 2017, there are five occurrences of |EnsureShadow().AddShadowRoot()|:\n\n- dom/Element.cpp\n- svg/SVGUseElement.cpp for \u003csvg:use\u003e; it should be replaced to Element::AttachShaodwRoot() since it is V1.\n- css/SelectorQueryTest.cpp; These call sites should be replace to\nElement::AttachShadowRoot() since they are V1.\n\nIt is better to reduce usage of ElementShadow::AddShadowRoot()",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42af7870_2dd82008",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2459,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "Please add |DCHECK(type \u003d\u003d ShadowRootType::kOpen || type \u003d\u003d ShadowRootType::kClose) \u003c\u003c type.\n\nWe don\u0027t want to accept V0 and UA shadow root at this time.",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0486c0_2f89164f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2461,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "It is better to have:\nDCHECK(!AlwaysCreateUserAgentShadowRoot())",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bde839_d13de991",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "Could you make this function as a file local function?\nUntil we have other call sites, we don\u0027t want to expose this.",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9371a2_941c503d",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "nit: Please mark this function as private, since this function doesn\u0027t\ncheck prerequirement and confusing to have both |AddShadowRootInternal()|\nand |AttachShadowRootInternal()|.",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cac62c7_ff762177",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-21T06:54:17Z",
+      "side": 1,
+      "message": "I prefer to call this function |AttachShadowRoot()|. Though, it is up to hayto@",
+      "revId": "bcfb4c3777886a1059cfe87009f6c6706dd9383f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
