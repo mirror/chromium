@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d178249f_cffde19a",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T19:01:27Z",
+      "side": 1,
+      "message": "Looks like we can have multiple DevToolsAgentHost with the same session_id, which ends up clobbering the wrong DevToolsSession. Does this need to be:\n  map\u003cpair\u003cDevToolsAgentHost*, session_id\u003e \u003d\u003e DevToolsSession\u003e",
+      "parentUuid": "b728b3ac_2a2d8253",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc236b6_8c60a54c",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 11
