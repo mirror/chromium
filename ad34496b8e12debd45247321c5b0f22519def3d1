@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd749d2_2e89c291",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "request_body_blob_handle seems not needed? Can just do:\n\nstd::unique_ptr\u003cServiceWorkerFetchRequest\u003e fetch_request \u003d CreateFetchRequest();\nif (HasRequestBody())\n  fetch_request_-\u003eblob \u003d CreateRequestBodyBlob();",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb4266b_4615ce37",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "move this to line 180, generally limit the scope of variables by declaring them where they are used",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b664621e_2f8e7bfe",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "As this comment is the same as the function name, we can remove it.",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575e0f5a_663c8aa0",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "can we use BlockingCopyToString(pipe.consumer_handle)?",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8773def_85eec581",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "kRequestBody",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da5a211_5d93d36f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "kRequestBody",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5489a636_5c137f3c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "Instead of multiple functions mutating request_, it\u0027d probably be clearer for StartRequest() to take a std::unique_ptr\u003cResourceRequest\u003e, and create functions CreateRequest() which returns a basic request. So most callsites are:\nStartRequest(CreateRequest());\n\nAnd the request body one is:\nstd::unique_ptr\u003cResourceRequest\u003e request \u003d CreateRequest();\nrequest-\u003ebody \u003d ...\nStartRequest(std::move(request));",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca3c514_13dd67f3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "I think the point of the test is \"RequestBody\". All request bodies are blobs, as far as I understand.",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5099e1_8956b200",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 1,
+      "message": "since we\u0027ve removed the TODO, just remove these lines 18-19 and change 30 and 31 to set the uuid and size to empty string and 0 directly.",
+      "revId": "ad34496b8e12debd45247321c5b0f22519def3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

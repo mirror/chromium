@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a894d0b_8f48e84f",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-21T06:13:57Z",
+      "side": 0,
+      "message": "can you move the TODO and DCHECK to the SubresourceLoader class?",
+      "revId": "67ae3f5d8124e37b0fb71995bef29c9bd31ee9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
