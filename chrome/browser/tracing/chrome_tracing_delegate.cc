@@ -4,10 +4,14 @@
 
 #include "chrome/browser/tracing/chrome_tracing_delegate.h"
 
+#include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
+#include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
@@ -165,9 +169,9 @@ bool ChromeTracingDelegate::IsAllowedToEndBackgroundScenario(
   return true;
 }
 
-void ChromeTracingDelegate::GenerateMetadataDict(
-    base::DictionaryValue* metadata_dict) {
-  DCHECK(metadata_dict);
+std::unique_ptr<base::DictionaryValue>
+ChromeTracingDelegate::GenerateMetadataDict() {
+  auto metadata_dict = base::MakeUnique<base::DictionaryValue>();
   std::vector<std::string> variations;
   variations::GetFieldTrialActiveGroupIdsAsStrings(base::StringPiece(),
                                                    &variations);
@@ -178,6 +182,7 @@ void ChromeTracingDelegate::GenerateMetadataDict(
 
   metadata_dict->Set("field-trials", std::move(variations_list));
   metadata_dict->SetString("revision", version_info::GetLastChange());
+  return metadata_dict;
 }
 
 content::MetadataFilterPredicate

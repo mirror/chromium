@@ -10,6 +10,10 @@
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "content/public/browser/tracing_delegate.h"
 
+namespace base {
+class DictionaryValue;
+}  // namespace base
+
 class PrefRegistrySimple;
 
 class ChromeTracingDelegate : public content::TracingDelegate,
@@ -31,7 +35,7 @@ class ChromeTracingDelegate : public content::TracingDelegate,
       const content::BackgroundTracingConfig& config,
       bool requires_anonymized_data) override;
 
-  void GenerateMetadataDict(base::DictionaryValue* metadata_dict) override;
+  std::unique_ptr<base::DictionaryValue> GenerateMetadataDict() override;
 
   content::MetadataFilterPredicate GetMetadataFilterPredicate() override;
 
