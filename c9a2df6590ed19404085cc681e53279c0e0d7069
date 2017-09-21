@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a119e417_7547e191",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6093,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-21T05:23:20Z",
+      "side": 1,
+      "message": "Note: This ASSERT_TRUE will not have any effect on startup/test success flow.\n\nYou\u0027d have to do something like\nASSERT_FALSE(HasFatalFailure());\n\nto propagate it, within the test itself.\n\nSuggestion: Remove the ASSERT_TRUE wrapper, use ignore_result ( https://cs.chromium.org/chromium/src/base/macros.h?rcl\u003d79ba387aee6a457ab9f6896a227d759c4de1b89b\u0026l\u003d65 ), then within the test\n\nASSERT_TRUE(https_server_.Started());\n\n\nAlternatively, can you just start the server within the test itself?",
+      "revId": "c9a2df6590ed19404085cc681e53279c0e0d7069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07032adf_4da308c6",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6138,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-21T05:23:20Z",
+      "side": 1,
+      "message": "In order for the ASSERT_TRUE on 6106 to work, you need to \n\nASSERT_NO_FATAL_FAILURE(SetUpCertVerifier(...));\n\nhttps://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#propagating-fatal-failures",
+      "revId": "c9a2df6590ed19404085cc681e53279c0e0d7069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
