@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e997db8_fc13f9a1",
+        "filename": "components/sync/engine_impl/sync_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-21T22:20:46Z",
+      "side": 1,
+      "message": "I am planning to write a test for this logic, but not quite sure how. \nHow do I test that the update is not scheduled?",
+      "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
