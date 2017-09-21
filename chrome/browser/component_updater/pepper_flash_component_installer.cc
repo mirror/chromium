@@ -35,8 +35,8 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pepper_flash.h"
 #include "chrome/common/ppapi_utils.h"
+#include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_service.h"
-#include "components/component_updater/default_component_installer.h"
 #include "components/update_client/update_client.h"
 #include "components/update_client/update_client_errors.h"
 #include "content/public/browser/browser_thread.h"
@@ -239,13 +239,13 @@ void UpdatePathService(const base::FilePath& path) {
 #endif  // !defined(OS_LINUX) && defined(GOOGLE_CHROME_BUILD)
 
 #if defined(GOOGLE_CHROME_BUILD)
-class FlashComponentInstallerTraits : public ComponentInstallerTraits {
+class FlashComponentInstallerTraits : public ComponentInstallerPolicy {
  public:
   FlashComponentInstallerTraits();
   ~FlashComponentInstallerTraits() override {}
 
  private:
-  // The following methods override ComponentInstallerTraits.
+  // The following methods override ComponentInstallerPolicy.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(
@@ -376,11 +376,10 @@ void RegisterPepperFlashComponent(ComponentUpdateService* cus) {
     return;
 #endif  // defined(OS_CHROMEOS)
 
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new FlashComponentInstallerTraits);
   // |cus| will take ownership of |installer| during installer->Register(cus).
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, base::Closure());
 #endif  // defined(GOOGLE_CHROME_BUILD)
 }

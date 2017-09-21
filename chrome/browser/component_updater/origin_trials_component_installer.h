@@ -15,13 +15,13 @@
 #include "base/macros.h"
 #include "base/values.h"
 #include "base/version.h"
-#include "components/component_updater/default_component_installer.h"
+#include "components/component_updater/component_installer.h"
 
 namespace component_updater {
 
 class ComponentUpdateService;
 
-class OriginTrialsComponentInstallerTraits : public ComponentInstallerTraits {
+class OriginTrialsComponentInstallerTraits : public ComponentInstallerPolicy {
  public:
   OriginTrialsComponentInstallerTraits() = default;
   ~OriginTrialsComponentInstallerTraits() override = default;

@@ -30,8 +30,8 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/widevine_cdm_constants.h"
+#include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_service.h"
-#include "components/component_updater/default_component_installer.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cdm_registry.h"
@@ -247,13 +247,13 @@ void RegisterWidevineCdmWithChrome(
 
 }  // namespace
 
-class WidevineCdmComponentInstallerTraits : public ComponentInstallerTraits {
+class WidevineCdmComponentInstallerTraits : public ComponentInstallerPolicy {
  public:
   WidevineCdmComponentInstallerTraits();
   ~WidevineCdmComponentInstallerTraits() override {}
 
  private:
-  // The following methods override ComponentInstallerTraits.
+  // The following methods override ComponentInstallerPolicy.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
   update_client::CrxInstaller::Result OnCustomInstall(
@@ -443,11 +443,10 @@ void RegisterWidevineCdmComponent(ComponentUpdateService* cus) {
   PathService::Get(chrome::FILE_WIDEVINE_CDM_ADAPTER, &adapter_source_path);
   if (!base::PathExists(adapter_source_path))
     return;
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new WidevineCdmComponentInstallerTraits);
   // |cus| will take ownership of |installer| during installer->Register(cus).
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, base::Closure());
 #endif  // defined(WIDEVINE_CDM_AVAILABLE) && defined(WIDEVINE_CDM_IS_COMPONENT)
 }

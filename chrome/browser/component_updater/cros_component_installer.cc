@@ -208,12 +208,11 @@ static void RegisterComponent(ComponentUpdateService* cus,
                               const ComponentConfig& config,
                               const base::Closure& register_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  std::unique_ptr<ComponentInstallerTraits> traits(
+  std::unique_ptr<ComponentInstallerPolicy> traits(
       new CrOSComponentInstallerTraits(config));
   // |cus| will take ownership of |installer| during
   // installer->Register(cus).
-  DefaultComponentInstaller* installer =
-      new DefaultComponentInstaller(std::move(traits));
+  ComponentInstaller* installer = new ComponentInstaller(std::move(traits));
   installer->Register(cus, register_callback);
 }
 
