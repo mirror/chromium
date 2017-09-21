@@ -23,7 +23,7 @@ error::Error GenHelper(GLsizei n,
   DCHECK(n >= 0);
   std::vector<ClientType> client_ids_copy(client_ids, client_ids + n);
   for (GLsizei ii = 0; ii < n; ++ii) {
-    if (id_map->GetServiceID(client_ids_copy[ii], nullptr)) {
+    if (id_map->IsServiceIDInvalid(client_ids_copy[ii], nullptr)) {
       return error::kInvalidArguments;
     }
   }
