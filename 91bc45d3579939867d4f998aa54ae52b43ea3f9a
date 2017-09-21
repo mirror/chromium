@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0081ab65_57082d13",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T10:54:07Z",
+      "side": 1,
+      "message": "No more @Features annotation, but we still need it declared so that it registers the features. Also, running order needs to be enforced between the ChromeHome and Features annotations. It\u0027s currently not explicit AFAIK",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "91bc45d3579939867d4f998aa54ae52b43ea3f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dd6ae7_f24605f1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T10:54:07Z",
+      "side": 1,
+      "message": "Needed here because rules run before setUp and it is requested when modifying the prefs. Candidate to being a rule or some other initialisation, see https://crbug.com/765269",
+      "range": {
+        "startLine": 105,
+        "startChar": 21,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "91bc45d3579939867d4f998aa54ae52b43ea3f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7a8262_a18fd7b2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/ChromeHome.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T10:54:07Z",
+      "side": 1,
+      "message": "would be nice if it was a rule sharing an interface (or being the same!) as Features.Processor. \u003d\u003e https://docs.google.com/document/d/13YIiVfV2razHabLxvB8pVlD9tOq1I6gEpquLdDFQLf4/edit",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "91bc45d3579939867d4f998aa54ae52b43ea3f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b4f015_5f6c08e4",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/Features.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T10:54:07Z",
+      "side": 1,
+      "message": "currently there is no verification that it is called before the features are pushed to ChromeFeatureList",
+      "range": {
+        "startLine": 80,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "91bc45d3579939867d4f998aa54ae52b43ea3f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
