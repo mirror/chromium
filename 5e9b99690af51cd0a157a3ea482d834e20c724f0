@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "4623b706_43c8a53f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:07:43Z",
+      "side": 1,
+      "message": "The two calls here could also be PostTasks() to ui(), directly.",
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257e9e6a_784fc21b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -41,6 +58,29 @@
         "startChar": 4,
         "endLine": 1066,
         "endChar": 66
+      },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dcca55_506f183b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:07:43Z",
+      "side": 1,
+      "message": "#bikeshed:  Shall we call this UiHostInterface, as it\u0027s simply the UI talking to whoever\u0027s hosting it (blissfully unaware of GL/browser details)?",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 34
       },
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -65,6 +105,23 @@
         "endLine": 22,
         "endChar": 7
       },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e130dd2c_fd1d904f",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:07:43Z",
+      "side": 1,
+      "message": "This was formerly UiInterface.  UiInterface is now a superset of this interface.",
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +174,23 @@
     },
     {
       "key": {
+        "uuid": "0888a951_77e2ab84",
+        "filename": "chrome/browser/vr/elements/exclusive_screen_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:07:43Z",
+      "side": 1,
+      "message": "This wrapper is to ease recurring string resource pain.",
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4359798_0fc1b9c5",
         "filename": "chrome/browser/vr/string_resource.h",
         "patchSetId": 1
@@ -157,6 +231,23 @@
         "endLine": 90,
         "endChar": 44
       },
+      "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dee161_981f2b84",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-21T15:07:43Z",
+      "side": 1,
+      "message": "Oops.",
       "revId": "5e9b99690af51cd0a157a3ea482d834e20c724f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
