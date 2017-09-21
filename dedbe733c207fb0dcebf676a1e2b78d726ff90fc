@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b428465_8c622c26",
+        "filename": "ios/public/provider/chrome/browser/build_config.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-21T18:06:17Z",
+      "side": 1,
+      "message": "I think more generally:\neach variant can add deps to customizes their resources.",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "dedbe733c207fb0dcebf676a1e2b78d726ff90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
