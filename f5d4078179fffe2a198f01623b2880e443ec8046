@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "b6508304_17cdf6ae",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-21T22:32:33Z",
+      "side": 1,
+      "message": "Oh, that\u0027s much better! Nice.",
+      "parentUuid": "098142e4_d597bda5",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "f5d4078179fffe2a198f01623b2880e443ec8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53cc052c_52959ed8",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
         "patchSetId": 1
