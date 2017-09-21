@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64444e1_d09218ce",
+        "filename": "chrome/browser/ui/ash/tablet_mode_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T16:51:51Z",
+      "side": 1,
+      "message": "nit: pre-increment",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "31c0a792fb5ebb54f597105ed786a581f9ce9a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
