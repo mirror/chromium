@@ -1507,7 +1507,8 @@ TEST_F(SyncSchedulerImplTest, StartWhenNotConnected) {
   // Should save the nudge for until after the server is reachable.
   base::RunLoop().RunUntilIdle();
 
-  scheduler()->OnConnectionStatusChange();
+  scheduler()->OnConnectionStatusChange(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
   connection()->SetServerReachable();
   connection()->UpdateConnectionStatus();
   base::RunLoop().RunUntilIdle();
@@ -1533,7 +1534,8 @@ TEST_F(SyncSchedulerImplTest, ServerConnectionChangeDuringBackoff) {
   ASSERT_TRUE(scheduler()->IsGlobalBackoff());
 
   // Before we run the scheduled canary, trigger a server connection change.
-  scheduler()->OnConnectionStatusChange();
+  scheduler()->OnConnectionStatusChange(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
   connection()->SetServerReachable();
   connection()->UpdateConnectionStatus();
   base::RunLoop().RunUntilIdle();
@@ -1565,7 +1567,8 @@ TEST_F(SyncSchedulerImplTest, ConnectionChangeCanaryPreemptedByNudge) {
   ASSERT_TRUE(scheduler()->IsGlobalBackoff());
 
   // Before we run the scheduled canary, trigger a server connection change.
-  scheduler()->OnConnectionStatusChange();
+  scheduler()->OnConnectionStatusChange(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
   PumpLoop();
   connection()->SetServerReachable();
   connection()->UpdateConnectionStatus();
@@ -1592,8 +1595,10 @@ TEST_F(SyncSchedulerImplTest, DoubleCanaryInConfigure) {
       base::Bind(&CallbackCounter::Callback, base::Unretained(&retry_counter)));
   scheduler()->ScheduleConfiguration(params);
 
-  scheduler()->OnConnectionStatusChange();
-  scheduler()->OnConnectionStatusChange();
+  scheduler()->OnConnectionStatusChange(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
+  scheduler()->OnConnectionStatusChange(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
 
   PumpLoop();  // Run the nudge, that will fail and schedule a quick retry.
 }
