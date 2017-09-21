@@ -3187,6 +3187,7 @@ test("unit_tests") {
     "../browser/mac/keystone_glue_unittest.mm",
     "../browser/media/android/router/media_router_android_unittest.cc",
     "../browser/media/cast_remoting_connector_unittest.cc",
+    "../browser/media/cdm_storage_unittest.cc",
     "../browser/media/media_engagement_contents_observer_unittest.cc",
     "../browser/media/media_engagement_score_unittest.cc",
     "../browser/media/media_engagement_service_unittest.cc",

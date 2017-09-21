@@ -3946,11 +3946,14 @@ split_static_library("browser") {
     ]
   }
 
-  if (enable_mojo_media) {
+  if (enable_library_cdms) {
     sources += [
+      "media/cdm_storage_impl.cc",
+      "media/cdm_storage_impl.h",
       "media/output_protection_impl.cc",
       "media/output_protection_impl.h",
     ]
+
     deps += [ "//media/mojo/interfaces" ]
     if (mojo_media_host == "browser") {
       deps += [
