@@ -8,6 +8,7 @@
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
+#include "core/dom/ScriptLoader.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/loader/SubresourceIntegrityHelper.h"
@@ -167,8 +168,14 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
 
   error_occurred = ErrorOccurred();
   if (!GetResource()) {
-    return ClassicScript::Create(ScriptSourceCode(
-        GetElement()->TextFromChildren(), document_url, StartingPosition()));
+    const ScriptElementBase* element = GetElement();
+    const String& nonce = element->GetNonceForElement();
+    ParserDisposition parser_state = element->Loader()->IsParserInserted()
+                                         ? kParserInserted
+                                         : kNotParserInserted;
+    return ClassicScript::Create(
+        ScriptSourceCode(GetElement()->TextFromChildren(), document_url, nonce,
+                         parser_state, StartingPosition()));
   }
 
   DCHECK(GetResource()->IsLoaded());
