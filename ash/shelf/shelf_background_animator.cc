@@ -135,6 +135,16 @@ void ShelfBackgroundAnimator::AnimationEnded(const gfx::Animation* animation) {
   animator_.reset();
 }
 
+int ShelfBackgroundAnimator::GetBackgroundAlphaValue(
+    ShelfBackgroundType background_type) const {
+  std::map<ShelfBackgroundType, int>::const_iterator it =
+      background_type_to_alpha_.find(background_type);
+  if (it == background_type_to_alpha_.end())
+    return 0;
+
+  return it->second;
+}
+
 void ShelfBackgroundAnimator::OnWallpaperDataChanged() {}
 
 void ShelfBackgroundAnimator::OnWallpaperColorsChanged() {
@@ -186,7 +196,7 @@ void ShelfBackgroundAnimator::AnimateBackground(
 }
 
 bool ShelfBackgroundAnimator::CanReuseAnimator(
-    ShelfBackgroundType background_type) const {
+    ShelfBackgroundType background_type) {
   if (!animator_)
     return false;
 
@@ -235,7 +245,7 @@ void ShelfBackgroundAnimator::SetTargetValues(
 void ShelfBackgroundAnimator::GetTargetValues(
     ShelfBackgroundType background_type,
     AnimationValues* shelf_background_values,
-    AnimationValues* item_background_values) const {
+    AnimationValues* item_background_values) {
   // Shelf has a transparent background except when session state is ACTIVE.
   // Shell may not have instance in tests.
   if (Shell::HasInstance() &&
@@ -267,6 +277,8 @@ void ShelfBackgroundAnimator::GetTargetValues(
       target_item_color_alpha = 0;
       break;
   }
+
+  background_type_to_alpha_[background_type] = target_shelf_color_alpha;
 
   SkColor target_color =
       wallpaper_controller_
