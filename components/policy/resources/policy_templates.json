@@ -10260,7 +10260,7 @@
           'timezone': { 'type': 'string' },
           'ignored_policies': {
             'type': 'array',
-            'items': { 'type':'string' }
+            'items': { 'type':'integer' }
           }
         }
       },
@@ -10294,7 +10294,7 @@
           }
         ],
         'timezone': 'GMT',
-        'ignored_policies': ['allow_new_users', 'guest_mode_enabled']
+        'ignored_policies': [8, 3]
       },
       'id': 380,
       'caption': '''Off hours intervals when device OffHours |ignored_policies| are released''',
