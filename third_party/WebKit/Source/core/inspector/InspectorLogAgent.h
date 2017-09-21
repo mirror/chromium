@@ -14,6 +14,7 @@ namespace blink {
 
 class ConsoleMessage;
 class ConsoleMessageStorage;
+class InspectorDOMAgent;
 
 class CORE_EXPORT InspectorLogAgent
     : public InspectorBaseAgent<protocol::Log::Metainfo>,
@@ -22,7 +23,9 @@ class CORE_EXPORT InspectorLogAgent
   WTF_MAKE_NONCOPYABLE(InspectorLogAgent);
 
  public:
-  InspectorLogAgent(ConsoleMessageStorage*, PerformanceMonitor*);
+  InspectorLogAgent(ConsoleMessageStorage*,
+                    PerformanceMonitor*,
+                    InspectorDOMAgent*);
   ~InspectorLogAgent() override;
   DECLARE_VIRTUAL_TRACE();
 
@@ -51,6 +54,7 @@ class CORE_EXPORT InspectorLogAgent
   bool enabled_;
   Member<ConsoleMessageStorage> storage_;
   Member<PerformanceMonitor> performance_monitor_;
+  UntracedMember<InspectorDOMAgent> dom_agent_;
 };
 
 }  // namespace blink

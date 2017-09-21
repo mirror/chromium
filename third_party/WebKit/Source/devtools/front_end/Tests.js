@@ -974,6 +974,24 @@
     }
   };
 
+  TestSuite.prototype.testDOMWarnings = function() {
+    var messages = ConsoleModel.consoleModel.messages();
+    this.assertEquals(10, messages.length);
+    var prefixes = [
+      `Found 2 elements with non-unique id #dup:`, `Password field is not contained in a form:`,
+      `Password forms should have (optionally hidden) username fields for accessibility:`,
+      `Input elements should have autocomplete attributes (suggested: "username"):`,
+      `Input elements should have autocomplete attributes (suggested: "current-password"):`,
+      `Input elements should have autocomplete attributes (suggested: "new-password"):`,
+      `Input elements should have autocomplete attributes (suggested: "new-password"):`,
+      `Password forms should have (optionally hidden) username fields for accessibility:`,
+      `Multiple forms should be contained in their own form elements;`,
+      `Multiple forms should be contained in their own form elements;`
+    ];
+    if (!messages.every((message, i) => message.messageText.startsWith(prefixes[i])))
+      this.fail('The DOM elements were incorrectly flagged.');
+  };
+
   TestSuite.prototype.waitForTestResultsInConsole = function() {
     var messages = ConsoleModel.consoleModel.messages();
     for (var i = 0; i < messages.length; ++i) {

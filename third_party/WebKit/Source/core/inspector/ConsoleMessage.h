@@ -51,6 +51,8 @@ class CORE_EXPORT ConsoleMessage final
   MessageLevel Level() const;
   const String& Message() const;
   const String& WorkerId() const;
+  HeapVector<Member<Node>>& Nodes();
+  void SetNodes(HeapVector<Member<Node>> nodes);
 
   DECLARE_TRACE();
 
@@ -67,6 +69,7 @@ class CORE_EXPORT ConsoleMessage final
   unsigned long request_identifier_;
   double timestamp_;
   String worker_id_;
+  HeapVector<Member<Node>> nodes_;
 };
 
 }  // namespace blink

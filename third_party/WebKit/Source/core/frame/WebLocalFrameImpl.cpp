@@ -136,6 +136,7 @@
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewImpl.h"
+#include "core/frame/FrameConsole.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
@@ -708,10 +709,24 @@ void WebLocalFrameImpl::AddMessageToConsole(const WebConsoleMessage& message) {
       break;
   }
 
-  GetFrame()->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
-      kOtherMessageSource, web_core_message_level, message.text,
-      SourceLocation::Create(message.url, message.line_number,
-                             message.column_number, nullptr)));
+  std::unique_ptr<SourceLocation> location(SourceLocation::Create(
+      message.url, message.line_number, message.column_number, nullptr));
+  MessageSource message_source =
+      message.nodes.empty() ? kOtherMessageSource : kDOMMessageSource;
+  ConsoleMessage* console_message =
+      ConsoleMessage::Create(message_source, web_core_message_level,
+                             message.text, std::move(location));
+
+  if (message.nodes.empty()) {
+    GetFrame()->GetDocument()->AddConsoleMessage(console_message);
+  } else {
+    HeapVector<Member<Node>> nodes;
+    for (const blink::WebNode& web_node : message.nodes)
+      nodes.push_back(&(*web_node));
+
+    console_message->SetNodes(std::move(nodes));
+    GetFrame()->Console().AddMessage(console_message);
+  }
 }
 
 void WebLocalFrameImpl::CollectGarbage() {

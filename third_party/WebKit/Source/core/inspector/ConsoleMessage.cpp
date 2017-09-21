@@ -5,6 +5,7 @@
 #include "core/inspector/ConsoleMessage.h"
 
 #include "bindings/core/v8/SourceLocation.h"
+#include "core/dom/Node.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/web/WebConsoleMessage.h"
@@ -94,7 +95,17 @@ const String& ConsoleMessage::WorkerId() const {
   return worker_id_;
 }
 
-DEFINE_TRACE(ConsoleMessage) {}
+HeapVector<Member<Node>>& ConsoleMessage::Nodes() {
+  return nodes_;
+}
+
+void ConsoleMessage::SetNodes(HeapVector<Member<Node>> nodes) {
+  nodes_ = std::move(nodes);
+}
+
+DEFINE_TRACE(ConsoleMessage) {
+  visitor->Trace(nodes_);
+}
 
 STATIC_ASSERT_ENUM(WebConsoleMessage::kLevelVerbose, kVerboseMessageLevel);
 STATIC_ASSERT_ENUM(WebConsoleMessage::kLevelInfo, kInfoMessageLevel);
