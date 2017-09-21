@@ -24,10 +24,13 @@ class HostResolver;
 class HttpAuthHandlerFactory;
 class HttpAuthPreferences;
 class HttpUserAgentSettings;
-class NetLog;
 class ProxyConfigService;
 class URLRequestContext;
 class URLRequestJobFactory;
+}
+
+namespace net_log {
+class ChromeNetLog;
 }
 
 namespace android_webview {
@@ -77,7 +80,7 @@ class AwURLRequestContextGetter : public net::URLRequestContextGetter {
 
   const base::FilePath cache_path_;
 
-  std::unique_ptr<net::NetLog> net_log_;
+  std::unique_ptr<net_log::ChromeNetLog> net_log_;
   std::unique_ptr<net::ProxyConfigService> proxy_config_service_;
   std::unique_ptr<net::URLRequestJobFactory> job_factory_;
   std::unique_ptr<net::HttpUserAgentSettings> http_user_agent_settings_;
