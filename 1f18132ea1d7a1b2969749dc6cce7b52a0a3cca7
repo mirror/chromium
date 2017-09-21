@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e70db152_3cf15a35",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Sure, replaced with Lorem Ipsum.",
+      "parentUuid": "1300cbc0_e023a35f",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb57955_d6cd0018",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-21T09:34:53Z",
       "side": 1,
       "message": "FWIW, I think this is a neat way for a story to specify extra flags to add remove. Maybe the code above in WillRunStory can be moved all the way up to the original SharedPageState so that all stories can use it too? The specific way in which that bit is implemented can later change to add validation and prevent flag conflicts as Caleb and Ned describe on their doc.\n\nAlso note, since these are class variables, we can compute the flags statically without creating the story, this way some form of validation could also be done as a presubmit step.\n\nw.r.t. naming, on the Java side there already are @CommandLineFlags.Add and @CommandLineFlags.Remove [1]. Maybe these should be {ADD/REMOVE}_COMMAND_LINE_FLAGS to keep some consistency?\n\n\n[1]: https://chromium.googlesource.com/chromium/src/+/master/testing/android/docs/instrumentation.md#annotations-that-affect-how-a-test-is-run",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcb0306_79fb010d",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "OK, I uploaded:\n\nhttps://codereview.chromium.org/3019483002/",
+      "parentUuid": "1fb57955_d6cd0018",
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0100f8cf_5e097489",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9413302_7d17ef3e",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e18c8222_f52ec545",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6cb06e_4f649e0d",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e18c8222_f52ec545",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "caa4c15a_a68474a5",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f557c07_37d07a7d",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd961432_f2a3a560",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -110,6 +212,24 @@
       "writtenOn": "2017-09-21T09:34:53Z",
       "side": 1,
       "message": "Is there is scrolling in the story this should be something like: browser:accessibility:codesearch",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8ad327_af2b0e1e",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Should all of these start with browser:accessibility?",
+      "parentUuid": "cd961432_f2a3a560",
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "c711dfed_6dfaeea2",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Just loading the page with accessibility enabled\nforces us to build the accessibility tree for the page\nonce, which is one case we\u0027d like to optimize.\nScrolling would end up doing nothing on some pages\nother than just waste time, but it\u0027s a huge bottleneck\non other pages (like the cs.chromium.org one).\nWe need to separate those.",
+      "parentUuid": "a2f4ffff_5045dcda",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cb57e13_86706a0c",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "5d2b1279_5331bf9e",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb57e13_86706a0c",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1ee947c_e82f89e5",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -167,6 +329,24 @@
       "writtenOn": "2017-09-21T09:34:53Z",
       "side": 1,
       "message": "Technically this is also a browse:* story. Not sure if we want to create another category. Ned, any opinions here?",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca2b1f9_c4815616",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "I\u0027d like to better understand how to organize these.\nCan you explain what the three tokens mean?\n\nI think that accessibility tests are a distinct\ncategory because the focus is to measure the\naccessibility overhead and not the normal loading\ntime or browsing time.",
+      "parentUuid": "a1ee947c_e82f89e5",
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "725f5240_95157bd5",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Reformatted.\n\nThe web page has a text area with a resize handle on it.\nThis is simulating what happens if the user makes the\ntext field bigger by dragging it because that amplifies\nthe performance overhead of typing.\n\nTrying to do that with simulated click events seemed\nlike it could be brittle / flaky.",
+      "parentUuid": "33deb71e_256b38f1",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 35
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d2dcda_410bbd3a",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -207,6 +411,24 @@
       "writtenOn": "2017-09-21T09:34:53Z",
       "side": 1,
       "message": "this should be better fixed within EnterText/PressKey themselves, so other clients can benefit from it.",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94f01d0_26dd6a78",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Agreed, but I\u0027m not sure that other clients would necessarily\nwant the same behavior.\n\nPerhaps it\u0027s ambiguous as to what key event to sent with a \u0027\\n\u0027?",
+      "parentUuid": "05d2dcda_410bbd3a",
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -233,6 +455,30 @@
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb9e6f1_e390768c",
+        "filename": "tools/perf/page_sets/system_health/system_health_story.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-21T19:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e4e9563_b1750873",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
