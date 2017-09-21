@@ -5,6 +5,7 @@
 #include "extensions/shell/browser/shell_extensions_api_client.h"
 
 #include "base/memory/ptr_util.h"
+#include "content/public/browser/browser_context.h"
 #include "extensions/browser/api/messaging/messaging_delegate.h"
 #include "extensions/shell/browser/api/feedback_private/shell_feedback_private_delegate.h"
 #include "extensions/shell/browser/delegates/shell_kiosk_delegate.h"
@@ -33,8 +34,9 @@ AppViewGuestDelegate* ShellExtensionsAPIClient::CreateAppViewGuestDelegate()
 }
 
 std::unique_ptr<VirtualKeyboardDelegate>
-ShellExtensionsAPIClient::CreateVirtualKeyboardDelegate() const {
-  return std::make_unique<ShellVirtualKeyboardDelegate>();
+ShellExtensionsAPIClient::CreateVirtualKeyboardDelegate(
+    content::BrowserContext* browser_context) const {
+  return base::MakeUnique<ShellVirtualKeyboardDelegate>();
 }
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)

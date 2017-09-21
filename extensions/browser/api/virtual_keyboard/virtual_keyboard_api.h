@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "extensions/browser/extension_function.h"
+#include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {
 
@@ -24,6 +25,9 @@ class VirtualKeyboardRestrictFeaturesFunction
   ResponseAction Run() override;
 
  private:
+  void OnRestrictFeatures(
+      const api::virtual_keyboard::FeatureRestrictions update,
+      const std::string error_message);
   DISALLOW_COPY_AND_ASSIGN(VirtualKeyboardRestrictFeaturesFunction);
 };
 
