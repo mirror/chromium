@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0229c08e_a0229359",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-21T00:00:50Z",
+      "side": 1,
+      "message": "Is it possible to include the \"typename\" in the using to avoid having to sprinkle it throughout? If not, this is one downside for this new style..",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 20
+      },
+      "revId": "e104ffb6b034f9568e6b1cbc71113cc15165bd71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
