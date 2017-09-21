@@ -21,6 +21,7 @@
 
 class BrowserHandler;
 class PageHandler;
+class WindowManagerHandler;
 
 class ChromeDevToolsManagerDelegate :
     public content::DevToolsManagerDelegate,
@@ -69,6 +70,7 @@ class ChromeDevToolsManagerDelegate :
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
   std::unique_ptr<BrowserHandler> browser_handler_;
   std::map<content::WebContents*, std::unique_ptr<PageHandler>> page_handlers_;
+  std::unique_ptr<WindowManagerHandler> window_manager_protocl_handler_;
 
   std::unique_ptr<AndroidDeviceManager> device_manager_;
   std::unique_ptr<DevToolsDeviceDiscovery> device_discovery_;

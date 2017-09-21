@@ -1,0 +1,42 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/devtools/protocol/window_manager_handler.h"
+
+#if defined(USE_ASH)
+#include "ash/shell.h"
+#include "ash/wm/overview/window_selector_controller.h"
+#include "content/public/browser/browser_thread.h"
+#endif
+
+WindowManagerHandler::WindowManagerHandler(protocol::UberDispatcher* dispatcher)
+    : frontend_(new protocol::WindowManager::Frontend(dispatcher->channel())) {
+  protocol::WindowManager::Dispatcher::wire(dispatcher, this);
+}
+
+WindowManagerHandler::~WindowManagerHandler() = default;
+
+protocol::Response WindowManagerHandler::EnterOverviewMode() {
+#if defined(USE_ASH)
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  bool toggled =
+      ash::Shell::Get()->window_selector_controller()->ToggleOverview();
+  return toggled ? protocol::Response::OK()
+                 : protocol::Response::Error("Overview failed");
+#else
+  return protocol::Response::Error("Unsupported platform");
+#endif
+}
+
+protocol::Response WindowManagerHandler::ExitOverviewMode() {
+#if defined(USE_ASH)
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  bool toggled =
+      ash::Shell::Get()->window_selector_controller()->ToggleOverview();
+  return toggled ? protocol::Response::OK()
+                 : protocol::Response::Error("Overview failed");
+#else
+  return protocol::Response::Error("Unsupported platform");
+#endif
+}

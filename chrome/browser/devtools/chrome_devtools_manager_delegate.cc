@@ -16,6 +16,7 @@
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/devtools/protocol/browser_handler.h"
 #include "chrome/browser/devtools/protocol/page_handler.h"
+#include "chrome/browser/devtools/protocol/window_manager_handler.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -89,7 +90,9 @@ class ChromeDevToolsManagerDelegate::HostData {
 
 ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate()
     : dispatcher_(std::make_unique<protocol::UberDispatcher>(nullptr)),
-      browser_handler_(std::make_unique<BrowserHandler>(dispatcher_.get())) {
+      browser_handler_(std::make_unique<BrowserHandler>(dispatcher_.get())),
+      window_manager_protocl_handler_(
+          std::make_unique<WindowManagerHandler>(dispatcher_.get())) {
   content::DevToolsAgentHost::AddObserver(this);
   dispatcher_->setFallThroughForNotFound(true);
 }

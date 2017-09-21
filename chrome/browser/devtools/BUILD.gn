@@ -41,6 +41,8 @@ if (!is_android) {
     "protocol/page.h",
     "protocol/protocol.cc",
     "protocol/protocol.h",
+    "protocol/window_manager.cc",
+    "protocol/window_manager.h",
   ]
 
   inspector_protocol_generate("protocol_generated_sources") {
@@ -174,6 +176,8 @@ static_library("devtools") {
       "protocol/browser_handler.h",
       "protocol/page_handler.cc",
       "protocol/page_handler.h",
+      "protocol/window_manager_handler.cc",
+      "protocol/window_manager_handler.h",
       "protocol_string.cc",
       "protocol_string.h",
     ]
