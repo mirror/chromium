@@ -253,7 +253,7 @@ void CastSessionDelegate::GetEventLogsAndReset(
 
   DVLOG(2) << "Serialized log length: " << output_bytes;
 
-  auto blob = base::MakeUnique<base::Value>(std::vector<char>(
+  auto blob = base::MakeUnique<base::Value>(std::vector<uint8_t>(
       serialized_log.get(), serialized_log.get() + output_bytes));
   callback.Run(std::move(blob));
 }

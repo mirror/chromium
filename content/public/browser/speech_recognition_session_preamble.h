@@ -26,7 +26,7 @@ struct CONTENT_EXPORT SpeechRecognitionSessionPreamble
   int sample_depth;
 
   // Audio data, in little-endian samples.
-  std::vector<char> sample_data;
+  std::vector<uint8_t> sample_data;
 
  private:
   friend class base::RefCounted<SpeechRecognitionSessionPreamble>;

@@ -1237,7 +1237,7 @@ void UsbIsochronousTransferFunction::OnCompleted(
       [](const size_t& a, const UsbDeviceHandle::IsochronousPacket& packet) {
         return a + packet.transferred_length;
       });
-  std::vector<char> buffer;
+  std::vector<uint8_t> buffer;
   buffer.reserve(length);
 
   UsbTransferStatus status = UsbTransferStatus::COMPLETED;

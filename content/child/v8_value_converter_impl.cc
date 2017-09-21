@@ -508,7 +508,7 @@ std::unique_ptr<base::Value> V8ValueConverterImpl::FromV8ArrayBuffer(
   } else if (val->IsArrayBufferView()) {
     v8::Local<v8::ArrayBufferView> view = val.As<v8::ArrayBufferView>();
     size_t byte_length = view->ByteLength();
-    std::vector<char> buffer(byte_length);
+    std::vector<uint8_t> buffer(byte_length);
     view->CopyContents(buffer.data(), buffer.size());
     return base::MakeUnique<base::Value>(std::move(buffer));
   } else {
