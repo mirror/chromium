@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ec4894be_2376dbda",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T01:40:30Z",
+      "side": 1,
+      "message": "\u003e inserted \u003d destination.reduce(soFar, d) {\n\u003e   return this.insertIntoStore_(d) || soFar;\n\u003e }, false);\n\nI meant \ninserted \u003d destination.reduce(function(soFar, d) {\n...",
+      "parentUuid": "b1252782_3d02adff",
+      "revId": "39fb7088bf62da39ae626dbd007b76dbc38c66e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9ff8109_061abcb1",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 12
