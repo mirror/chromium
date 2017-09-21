@@ -32,6 +32,10 @@
 #include "extensions/browser/process_manager.h"
 #include "ui/base/resource/resource_bundle.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/devtools/protocol/window_manager_handler.h"
+#endif
+
 using content::DevToolsAgentHost;
 
 char ChromeDevToolsManagerDelegate::kTypeApp[] = "app";
@@ -89,6 +93,10 @@ class ChromeDevToolsManagerDelegate::HostData {
 
 ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate()
     : dispatcher_(std::make_unique<protocol::UberDispatcher>(nullptr)),
+#if defined(OS_CHROMEOS)
+      window_manager_protocl_handler_(
+          std::make_unique<WindowManagerHandler>(dispatcher_.get())),
+#endif
       browser_handler_(std::make_unique<BrowserHandler>(dispatcher_.get())) {
   content::DevToolsAgentHost::AddObserver(this);
   dispatcher_->setFallThroughForNotFound(true);

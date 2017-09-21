@@ -21,6 +21,7 @@
 
 class BrowserHandler;
 class PageHandler;
+class WindowManagerHandler;
 
 class ChromeDevToolsManagerDelegate :
     public content::DevToolsManagerDelegate,
@@ -67,6 +68,9 @@ class ChromeDevToolsManagerDelegate :
   std::map<content::DevToolsAgentHost*, std::unique_ptr<HostData>> host_data_;
 
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<WindowManagerHandler> window_manager_protocl_handler_;
+#endif
   std::unique_ptr<BrowserHandler> browser_handler_;
   std::map<content::WebContents*, std::unique_ptr<PageHandler>> page_handlers_;
 
