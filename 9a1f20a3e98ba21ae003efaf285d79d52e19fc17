@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a072da72_ce56913d",
+        "filename": "ui/app_list/app_list_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T16:19:10Z",
+      "side": 1,
+      "message": "This breaks the assumption that each feature has only one Feature struct and could be fragile as we need to extreme careful of using only one of them for certain devices.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "9a1f20a3e98ba21ae003efaf285d79d52e19fc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
