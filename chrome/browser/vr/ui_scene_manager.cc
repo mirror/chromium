@@ -215,6 +215,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
                                bool in_cct,
                                bool in_web_vr,
                                bool web_vr_autopresentation_expected)
+
     : browser_(browser),
       scene_(scene),
       in_cct_(in_cct),
