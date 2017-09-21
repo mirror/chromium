@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13bec1fd_1482dc66",
+        "filename": "components/ntp_snippets/remote/json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T07:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c7e2ee_da70b2f6",
+      "revId": "f198fc03de18a613669b75cc87751c4c093cfca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d18684b_647bc7de",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "57ef2af6_4b50f81a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T07:25:13Z",
+      "side": 1,
+      "message": "Somewhat done.\n\nThank you for noticing this.\n\nBasically, this constant is a misnomer, the comments both here and in .h for \"ForTester\" accessors are wrong.\n\nThere is no way to request a given number of suggestions from all categories. Thus, effectively it is controlled server side. As of now, this constant is just used for UMA upper bound, thus, it just duplicated kMaxSuggestionsPerCategory from metrics. \n\nIt is also used in one test, which just verifies that client does not trim received suggestions (i.e. if we receive |this number| + 1 suggestions, we will show |this number| + 1 suggestions).\n\nThe TODO to trim suggestions is there since at least 2016-10-07 (https://codereview.chromium.org/2387293009). So this constant was a misnomer, which could not affect anything for ages.\n\nThus, I\u0027ve renamed the constant to |kMaxNormalFetchSuggestionCount|, set it to 20 (same as kMaxSuggestionsPerCategory), added a TODO to either support this on the server or to delete the constant and move UMAs into proper place.",
+      "parentUuid": "6d18684b_647bc7de",
+      "revId": "f198fc03de18a613669b75cc87751c4c093cfca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "922763fc_bf983183",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "f198fc03de18a613669b75cc87751c4c093cfca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06831af_37e269f1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-21T07:25:13Z",
+      "side": 1,
+      "message": "Done.\n\n  // If |fetched_category| is nullopt, fetches all categories. Otherwise,\n  // fetches at most |count_to_fetch| suggestions only from |fetched_category|.\n  // TODO(vitaliii): Also support |count_to_fetch| when |fetched_category| is\n  // nullopt.",
+      "parentUuid": "922763fc_bf983183",
+      "revId": "f198fc03de18a613669b75cc87751c4c093cfca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
