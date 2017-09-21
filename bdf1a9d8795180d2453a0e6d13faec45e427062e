@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aadf96df_699c6a04",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "I really think we should avoid this complexity.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 3
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964a0d2f_45195686",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Since you removed what used to be a clear indication of ownership, can you please add a comment to clarify the lifetime of TaskGroup?",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5d2db4_598ffd82",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Why do we need this to be sorted at all here? Why don\u0027t we just delegate sorting to the TaskManagerTableModel since it\u0027s now doing it anyway?\n\nIf we really want to keep it sorted here, then looking at the `task_managerr_impl.cc` file makes me feel that this is a good candidate to use `base::flat_set`. Maybe we can also change the signature of GetTaskIdsList() to return a const base::flat_set\u003cTaskId\u003e\u0026.",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4190925f_a27e0ce0",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Hmmm, I\u0027m not fully sold on this `task_ids_` -\u003e `task_groups_` mapping architecture. I understand that you wanted `task_groups_` to contain multiple null-PID groups so that each group may have its own SortKey, correct?\n\nHow about moving the SortKey to the `Task` rather than the `TaskGroup`? This way we can have one null-PID group that contains all tasks in that state, but their sort keys are different? That null-PID group is still mapped by `task_groups_by_proc_id_` and then the signature of it can be kept as `std::map\u003cbase::ProcessId, std::unique_ptr\u003cTaskGroup\u003e\u003e`.\n\nWDYT?",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1321b549_f6a868a0",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "This gives the impression that it\u0027s specific to OOPIF with the main and subtasks. Can we explain here a bit more, since not all tasks represent tabs, subframes, or webcontents at all?",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159b593a_f7978720",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "equal or successive? Because the task IDs will be different, or did I misunderstand?",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f0606d_c30d3bdd",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Nit: --new_index;",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 15
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8244861a_165d0ce4",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Optional: this condition would be unnecessary if the previous one evaluates to true.\n\nMaybe something like:?\n\n  if (new_index \u003c old_index) {\n    MoveTasksToLowerIndex(old_index, 1, new_index);\n  } else if (new_index-- \u003e old_index) {\n    // Still greater?\n    if (new_index \u003e old_index)\n      MoveTasksToLowerIndex(old_index + 1, new_index - old_index, old_index);\n  }",
+      "range": {
+        "startLine": 692,
+        "startChar": 6,
+        "endLine": 692,
+        "endChar": 27
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbd0d12_86d32306",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Nit: single-line; no braces.",
+      "range": {
+        "startLine": 700,
+        "startChar": 29,
+        "endLine": 700,
+        "endChar": 30
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4855daf5_ac07baf5",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Did you mean to flip the return value?\n\nIf the task on the previous row belongs to the same process, then how come this task is first in the group?",
+      "range": {
+        "startLine": 957,
+        "startChar": 11,
+        "endLine": 957,
+        "endChar": 15
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f545e547_5d06d89b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Thank you for the very nice and detailed commit message here!",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 43
+      },
+      "revId": "c0e108da3725254ad4b2bf6ba19eaf2584ac9cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1022622_6911d436",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "This comment sounds like it belongs to the header file?",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "c0e108da3725254ad4b2bf6ba19eaf2584ac9cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f374918c_4f59ca4e",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "remove.",
+      "range": {
+        "startLine": 584,
+        "startChar": 36,
+        "endLine": 584,
+        "endChar": 38
+      },
+      "revId": "c0e108da3725254ad4b2bf6ba19eaf2584ac9cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6970c9bc_2460c9fe",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-21T01:06:28Z",
+      "side": 1,
+      "message": "Can you add some comments explaining what happens if a task doesn\u0027t represent a tab?",
+      "range": {
+        "startLine": 595,
+        "startChar": 27,
+        "endLine": 595,
+        "endChar": 28
+      },
+      "revId": "c0e108da3725254ad4b2bf6ba19eaf2584ac9cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
