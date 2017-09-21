@@ -66,10 +66,12 @@ ArcCastReceiverService::ArcCastReceiverService(content::BrowserContext* context,
       prefs::kCastReceiverEnabled,
       base::Bind(&ArcCastReceiverService::OnCastReceiverEnabledChanged,
                  base::Unretained(this)));
-  pref_change_registrar_->Add(
-      prefs::kCastReceiverName,
-      base::Bind(&ArcCastReceiverService::OnCastReceiverNameChanged,
-                 base::Unretained(this)));
+
+  receiver_name_subscription_ =
+      chromeos::CrosSettings::Get()->AddSettingsObserver(
+          chromeos::kCastReceiverName,
+          base::Bind(&ArcCastReceiverService::OnCastReceiverNameChanged,
+                     base::Unretained(this)));
 }
 
 ArcCastReceiverService::~ArcCastReceiverService() {
@@ -90,8 +92,13 @@ void ArcCastReceiverService::OnCastReceiverEnabledChanged() const {
   mojom::CastReceiverInstance* cast_receiver_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->cast_receiver(),
                                   SetEnabled);
+  LOG(ERROR) << "*** DRC *** Cast receiver instance: "
+             << cast_receiver_instance;
   if (!cast_receiver_instance)
     return;
+  LOG(ERROR) << "*** DRC *** Cast enabled: "
+             << pref_change_registrar_->prefs()->GetBoolean(
+                    prefs::kCastReceiverEnabled);
   cast_receiver_instance->SetEnabled(
       pref_change_registrar_->prefs()->GetBoolean(prefs::kCastReceiverEnabled),
       base::Bind(&OnResultReceivedIgnoreResult));
@@ -101,13 +108,18 @@ void ArcCastReceiverService::OnCastReceiverNameChanged() const {
   mojom::CastReceiverInstance* cast_receiver_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->cast_receiver(),
                                   SetName);
+  LOG(ERROR) << "*** DRC *** Cast receiver instance: "
+             << cast_receiver_instance;
   if (!cast_receiver_instance)
     return;
-  const PrefService::Preference* pref =
-      pref_change_registrar_->prefs()->FindPreference(prefs::kCastReceiverName);
-  if (!pref)
+  std::string name;
+  bool has_name = chromeos::CrosSettings::Get()->GetString(
+      chromeos::kCastReceiverName, &name);
+  if (!has_name || name.empty())
+    LOG(ERROR) << "*** DRC *** No cast receiver name set.";
+  if (!has_name || name.empty())
     return;
-  cast_receiver_instance->SetName(pref->GetValue()->GetString(),
+  cast_receiver_instance->SetName(name,
                                   base::Bind(&OnResultReceivedIgnoreResult));
 }
 

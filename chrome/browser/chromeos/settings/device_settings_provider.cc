@@ -578,6 +578,13 @@ void DecodeGenericPolicies(
     if (off_hours_policy)
       new_values_cache->SetValue(kDeviceOffHours, std::move(off_hours_policy));
   }
+
+  if (policy.has_cast_receiver_name()) {
+    const em::CastReceiverNameProto& container(policy.cast_receiver_name());
+    if (container.has_name())
+      new_values_cache->SetValue(
+          kCastReceiverName, base::MakeUnique<base::Value>(container.name()));
+  }
 }
 
 void DecodeLogUploadPolicies(const em::ChromeDeviceSettingsProto& policy,
