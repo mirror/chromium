@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<style>
+  div.target {
+    display: inline-block;
+    overflow: hidden;
+  }
+  div.target:after {
+    display: inline-block;
+    content: url(../css3/background/resources/circle.png);
+    will-change: transform;
+  }
+</style>
+<script src='../resources/testharness.js'></script>
+<script src='../resources/testharnessreport.js'></script>
+<script>
+  function runTest() {
+    test(function() {
+      if (window.eventSender) {
+          var handler = function(event) {
+            assert_equals(event.touches.length, 1);
+          };
+
+          document.addEventListener('touchstart', handler);
+
+          eventSender.addTouchPoint(188, 150);
+          if (eventSender.setTouchPointRadius)
+            eventSender.setTouchPointRadius(20, 20);
+          eventSender.touchStart();
+
+          document.removeEventListener('touchstart', handler);
+          eventSender.clearTouchPoints();
+      }
+    }, "Verify we do not assert when touching an image used with psuedo after");
+  }
+</script>
+<body onload="runTest()">
+<div class="target"></div>
+</body>

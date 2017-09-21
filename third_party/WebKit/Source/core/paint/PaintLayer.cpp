@@ -2377,7 +2377,6 @@ bool PaintLayer::HitTestContents(HitTestResult& result,
                                  const HitTestLocation& hit_test_location,
                                  HitTestFilter hit_test_filter) const {
   DCHECK(IsSelfPaintingLayer() || HasSelfPaintingLayerDescendant());
-
   if (!GetLayoutObject().HitTest(
           result, hit_test_location,
           ToLayoutPoint(fragment_offset - LayoutBoxLocation()),
