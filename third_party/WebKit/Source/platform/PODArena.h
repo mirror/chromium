@@ -54,7 +54,7 @@ class PODArena final : public RefCounted<PODArena> {
 
    protected:
     virtual ~Allocator() {}
-    friend class WTF::RefCounted<Allocator>;
+    friend class base::RefCounted<Allocator>;
   };
 
   // The Arena's default allocator, which uses fastMalloc and

@@ -119,7 +119,7 @@ class PODFreeListArena : public RefCounted<PODFreeListArena<T>> {
   static_assert(sizeof(T) >= sizeof(FixedSizeMemoryChunk),
                 "PODFreeListArena type should be larger");
 
-  friend class WTF::RefCounted<PODFreeListArena>;
+  friend class base::RefCounted<PODFreeListArena>;
   friend class PODFreeListArenaTest;
 };
 
