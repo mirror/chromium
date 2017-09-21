@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "14ab47df_bbadd840",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-21T04:32:03Z",
+      "side": 1,
+      "message": "The barrier serves to update the other threads of the memory state.\n\nExample - Thread A and Thread B\n\nA: Initializes the Task Scheduler\nA: Creates a task runner and hands it off to thread b\nB: Calls PostTask\n\nIf there are no intervening synchronization actions between initialization and posting, then PostTask from B could return false.",
+      "parentUuid": "8611b995_ca76d4e3",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 25
+      },
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71c3ea83_e540078e",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 24
