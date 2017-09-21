@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "8611b995_ca76d4e3",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-21T04:24:48Z",
+      "side": 1,
+      "message": "We explicitly don\u0027t want a barrier here because we\u0027re saying this is fine not being atomic and that\u0027s why this works (main thread only without others running). Adding a barrier would merely reduce chances of TSan catching errors if this is violated.",
+      "parentUuid": "9d1b0eab_aa2a14fc",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 25
+      },
+      "revId": "f53be4caf2a74edd8a9bf9b629a9c0043e8d4efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71c3ea83_e540078e",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 24
