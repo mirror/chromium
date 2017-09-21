@@ -16,6 +16,24 @@
       "revId": "b6c3af7ffd99a203f630b22ac774c222f6146955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6a6684_71b27887",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-21T15:45:03Z",
+      "side": 1,
+      "message": "That\u0027s true, though this is tests so it can dep very assertively.",
+      "parentUuid": "32af9dfc_06a2fbe1",
+      "revId": "b6c3af7ffd99a203f630b22ac774c222f6146955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
