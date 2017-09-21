@@ -10,7 +10,9 @@ action("make_ssl_error_assistant_protobuf") {
   # chrome/browser/browser_resources.grd will look for it.
 
   input_filename = "ssl_error_assistant.asciipb"
-  output_dir = target_gen_dir
+
+  #output_dir = target_gen_dir
+  output_dir = "$root_out_dir/SSLErrorAssistant"
   output_basename = "ssl_error_assistant.pb"
   python_path_root = "$root_out_dir/pyproto"
   python_path_ssl = "$python_path_root/chrome/browser/ssl/"
@@ -40,5 +42,14 @@ action("make_ssl_error_assistant_protobuf") {
     rebase_path(python_path_root, root_build_dir),
     "-p",
     rebase_path(python_path_ssl, root_build_dir),
+  ]
+}
+
+copy("ssl_error_assistant_manifest") {
+  sources = [
+    "manifest.json",
+  ]
+  outputs = [
+    "$root_out_dir/SSLErrorAssistant/manifest.json",
   ]
 }

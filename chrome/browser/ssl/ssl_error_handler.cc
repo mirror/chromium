@@ -242,19 +242,6 @@ std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
   return mitm_software_list;
 }
 
-// Reads the SSL error assistant configuration from the resource bundle.
-std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
-ReadErrorAssistantProtoFromResourceBundle() {
-  auto proto = base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK(proto);
-  ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
-  base::StringPiece data =
-      bundle.GetRawDataResource(IDR_SSL_ERROR_ASSISTANT_PB);
-  google::protobuf::io::ArrayInputStream stream(data.data(), data.size());
-  return proto->ParseFromZeroCopyStream(&stream) ? std::move(proto) : nullptr;
-}
-
 bool IsSSLCommonNameMismatchHandlingEnabled() {
   return base::FeatureList::IsEnabled(kSSLCommonNameMismatchHandling);
 }
@@ -295,6 +282,8 @@ class ConfigSingleton {
           error_assistant_proto);
   void SetEnterpriseManagedForTesting(bool enterprise_managed);
   bool IsEnterpriseManagedFlagSetForTesting() const;
+  int GetErrorAssistantProtoVersionIdForTesting() const;
+
   bool IsEnterpriseManaged() const;
 
  private:
@@ -405,6 +394,10 @@ bool ConfigSingleton::IsEnterpriseManagedFlagSetForTesting() const {
   return true;
 }
 
+int ConfigSingleton::GetErrorAssistantProtoVersionIdForTesting() const {
+  return error_assistant_proto_->version_id();
+}
+
 bool ConfigSingleton::IsEnterpriseManaged() const {
   // Return the value of the testing flag if it's set.
   if (is_enterprise_managed_for_testing_ == ENTERPRISE_MANAGED_STATUS_TRUE) {
@@ -431,11 +424,14 @@ void ConfigSingleton::SetErrorAssistantProto(
     std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> proto) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   CHECK(proto);
+  LOG(ERROR) << ">> ConfigSingleton::SetErrorAssistantProto";
   // Ignore versions that are not new.
   if (error_assistant_proto_ &&
       proto->version_id() <= error_assistant_proto_->version_id()) {
+    LOG(ERROR) << "IGNORING VERSION: " << proto->version_id();
     return;
   }
+  LOG(ERROR) << ">> SETTING NEW VERSION: " << proto->version_id();
   error_assistant_proto_ = std::move(proto);
 
   mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
@@ -450,12 +446,8 @@ void ConfigSingleton::SetErrorAssistantProto(
 bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!captive_portal_spki_hashes_) {
-    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
-    CHECK(error_assistant_proto_);
-    captive_portal_spki_hashes_ =
-        LoadCaptivePortalCertHashes(*error_assistant_proto_);
+    return false;
   }
-
   for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
     if (hash_value.tag != net::HASH_VALUE_SHA256) {
       continue;
@@ -482,19 +474,15 @@ bool RegexMatchesAny(const std::vector<std::string>& organization_names,
 
 const std::string ConfigSingleton::MatchKnownMITMSoftware(
     const scoped_refptr<net::X509Certificate> cert) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // Ignore if the certificate doesn't have an issuer common name or an
   // organization name.
   if (cert->issuer().common_name.empty() &&
       cert->issuer().organization_names.size() == 0) {
     return std::string();
   }
-
-  // Load MITM software data from the SSL error assistant proto.
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!mitm_software_list_) {
-    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
-    DCHECK(error_assistant_proto_);
-    mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
+    return std::string();
   }
 
   for (const MITMSoftwareType& mitm_software : *mitm_software_list_) {
@@ -753,6 +741,11 @@ bool SSLErrorHandler::IsEnterpriseManagedFlagSetForTesting() {
 // static
 std::string SSLErrorHandler::GetHistogramNameForTesting() {
   return kHistogram;
+}
+
+// static
+int SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() {
+  return g_config.Pointer()->GetErrorAssistantProtoVersionIdForTesting();
 }
 
 bool SSLErrorHandler::IsTimerRunningForTesting() const {

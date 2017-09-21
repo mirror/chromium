@@ -223,7 +223,7 @@ bool DefaultComponentInstaller::FindPreinstallation(
   registration_info->install_dir = path;
   registration_info->version = version;
   registration_info->manifest = std::move(manifest);
-
+  //sleep(10);
   return true;
 }
 

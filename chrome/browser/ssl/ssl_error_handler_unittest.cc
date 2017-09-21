@@ -50,6 +50,8 @@ const net::SHA256HashValue kCertPublicKeyHashValue = {{0x01, 0x02}};
 
 const char kOkayCertName[] = "ok_cert.pem";
 
+const uint32_t kLargeVersionId = 0xFFFFFFu;
+
 // These certificates are self signed certificates with relevant issuer common
 // names generated using the following openssl command:
 //  openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
@@ -417,6 +419,8 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
 
     auto config_proto =
         base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+    config_proto->set_version_id(kLargeVersionId);
+
     config_proto->add_captive_portal_cert()->set_sha256_hash(
         "sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     config_proto->add_captive_portal_cert()->set_sha256_hash(
@@ -463,6 +467,7 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
   void InitMITMSoftwareList() {
     auto config_proto =
         base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+    config_proto->set_version_id(kLargeVersionId);
 
     chrome_browser_ssl::MITMSoftware* filter =
         config_proto->add_mitm_software();
@@ -1167,6 +1172,8 @@ TEST_F(SSLErrorAssistantTest,
 
   auto config_proto =
       base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
   chrome_browser_ssl::MITMSoftware* filter = config_proto->add_mitm_software();
   filter->set_name("Misconfigured Firewall");
   filter->set_issuer_common_name_regex("Misconfigured Firewall_[A-Z0-9]+");
@@ -1187,6 +1194,8 @@ TEST_F(SSLErrorAssistantTest,
 
   auto config_proto =
       base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
   chrome_browser_ssl::MITMSoftware* filter = config_proto->add_mitm_software();
   filter->set_name("Misconfigured Firewall");
   filter->set_issuer_common_name_regex("Non-Matching Issuer Common Name");
@@ -1230,6 +1239,8 @@ TEST_F(SSLErrorAssistantTest, MITMSoftware_CertificateMatchesCommonName) {
   // common name regex but not an organization name regex.
   auto config_proto =
       base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
   chrome_browser_ssl::MITMSoftware* filter = config_proto->add_mitm_software();
   filter->set_name("Misconfigured Firewall");
   filter->set_issuer_common_name_regex("Misconfigured Firewall_[A-Z0-9]+");
@@ -1248,6 +1259,8 @@ TEST_F(SSLErrorAssistantTest, MITMSoftware_CertificateMatchesOrganizationName) {
   // organization name regex, but not a common name regex.
   auto config_proto =
       base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
   chrome_browser_ssl::MITMSoftware* filter = config_proto->add_mitm_software();
   filter->set_name("Misconfigured Firewall");
   filter->set_issuer_organization_regex("Misconfigured Firewall");
@@ -1268,6 +1281,8 @@ TEST_F(SSLErrorAssistantTest, MITMSoftware_PartialRegexMatch_NoInterstitial) {
   // organization name fields but not the entire field.
   auto config_proto =
       base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
   chrome_browser_ssl::MITMSoftware* filter = config_proto->add_mitm_software();
   filter->set_name("Misconfigured Firewall");
   filter->set_issuer_common_name_regex("Misconfigured");
@@ -1379,4 +1394,29 @@ TEST_F(SSLErrorAssistantTest, MITMSoftware_Overridable_NoInterstitial) {
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
                                SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL,
                                0);
+}
+
+TEST_F(SSLErrorAssistantTest,
+       MITMSoftware_IgnoreDynamicUpdateWithSmallVersionId) {
+  SetMITMSoftwareFeatureEnabled(true);
+  ResetErrorHandlerFromString(kMisconfiguredFirewallCert,
+                              net::CERT_STATUS_AUTHORITY_INVALID);
+  // Set an empty config with version 10.
+  auto config_proto =
+      base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(10u);
+  SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+
+  // Set another config with version 1 and register a MITM Software entry. This
+  // should normally trigger a MITM software interstitial, but the version is
+  // older than the latest version, so this will be ignored.
+  auto config_proto2 =
+      base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto2->set_version_id(1u);
+  chrome_browser_ssl::MITMSoftware* filter = config_proto2->add_mitm_software();
+  filter->set_name("Misconfigured Firewall");
+  filter->set_issuer_common_name_regex("Misconfigured Firewall_[A-Z0-9]+");
+  SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto2));
+
+  TestNoMITMSoftwareInterstitial();
 }
