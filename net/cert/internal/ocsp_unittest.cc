@@ -32,6 +32,9 @@ const TestParams kTestParams[] = {
     {"good_response.pem", OCSPRevocationStatus::GOOD,
      OCSPVerifyResult::PROVIDED},
 
+    {"good_response_sha256.pem", OCSPRevocationStatus::GOOD,
+     OCSPVerifyResult::PROVIDED},
+
     {"no_response.pem", OCSPRevocationStatus::UNKNOWN,
      OCSPVerifyResult::NO_MATCHING_RESPONSE},
 
