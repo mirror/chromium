@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c04e9a1_3d08038b",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "nit: touch devices",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5431c3_2a17af3e",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "When would this happen? Should this be a DCHECK instead? StartCalibration assumes it will only be called once.",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fca406_ee05047e",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "Can you move the common code between StartCalibration and SetupCustomCalibration into a common method?",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906441af_c26a735c",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "nit: touch device",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05ef391_750b7990",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "If you\u0027re trying to reuse code I think it\u0027d be better to have the shared code in a common method that both Complete/StopCalibration call.\n\nAlso, please disambiguate the names here - Complete and Stop calibration are very similar; it is not clear one is for custom calibration and one is for built-in calibration.",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcacc81_ae480fe4",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "nit: touchdevice -\u003e touch device",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13128078_2716e39f",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-21T23:33:17Z",
+      "side": 1,
+      "message": "Should this be StartCustomCalibration and StopCustomCalibration?",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
