@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2eddb8_50b6202d",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T19:37:44Z",
+      "side": 1,
+      "message": "Hmm, I think this can try closing things twice if the check on _1 file fails (with destructor making the second attempt). That probably calls for a testcase; and maybe the tracker should be programmed more defensively?",
+      "range": {
+        "startLine": 839,
+        "startChar": 5,
+        "endLine": 839,
+        "endChar": 0
+      },
+      "revId": "86cca2477955852b6a8c8542e5c91f5f6f5de580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

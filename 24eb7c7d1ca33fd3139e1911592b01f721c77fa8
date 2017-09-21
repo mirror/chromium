@@ -368,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "c2ace4b4_b0aa7248",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-21T19:37:44Z",
+      "side": 1,
+      "message": "Doneish.... It does remove some code, though feels a bit more brittle.\nMakes me think that I should have the refcount in tracker, just in case...",
+      "parentUuid": "468e819a_b3d364d6",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
