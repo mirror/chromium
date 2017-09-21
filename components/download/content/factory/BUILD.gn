@@ -26,3 +26,26 @@ source_set("factory") {
     "//url",
   ]
 }
+
+source_set("test_support") {
+  testonly = true
+
+  sources = [
+    "test_download_service_factory.cc",
+    "test_download_service_factory.h",
+  ]
+
+  # TODO(xingliu): Clean up the deps here.
+  deps = [
+    "//base",
+    "//components/download/content/internal",
+    "//components/download/internal",
+    "//components/download/internal/proto",
+    "//components/download/internal/test:test_support",
+    "//components/keyed_service/content",
+    "//components/leveldb_proto",
+    "//content/public/browser",
+    "//net",
+    "//url",
+  ]
+}
