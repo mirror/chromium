@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/message_center/views/message_center_button_bar.h"
+#include "ash/message_center/message_center_button_bar.h"
 
+#include "ash/message_center/message_center_view.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "ui/base/models/simple_menu_model.h"
@@ -15,7 +16,6 @@
 #include "ui/message_center/message_center_tray.h"
 #include "ui/message_center/notifier_settings.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
-#include "ui/message_center/views/message_center_view.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/border.h"
@@ -30,7 +30,10 @@
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/painter.h"
 
-namespace message_center {
+using message_center::MessageCenter;
+using message_center::NotifierSettingsProvider;
+
+namespace ash {
 
 namespace {
 constexpr int kButtonSize = 40;
@@ -58,7 +61,7 @@ views::ToggleImageButton* CreateNotificationCenterButton(
   button->SetFocusForPlatform();
 
   button->SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
+      message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
 
   button->SetPreferredSize(gfx::Size(kButtonSize, kButtonSize));
   return button;
@@ -74,9 +77,6 @@ MessageCenterButtonBar::MessageCenterButtonBar(
     const base::string16& title)
     : message_center_view_(message_center_view),
       message_center_(message_center),
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-      close_bubble_button_(NULL),
-#endif
       title_arrow_(NULL),
       notification_label_(NULL),
       button_container_(NULL),
@@ -84,7 +84,8 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       settings_button_(NULL),
       quiet_mode_button_(NULL) {
   SetPaintToLayer();
-  SetBackground(views::CreateSolidBackground(kMessageCenterBackgroundColor));
+  SetBackground(views::CreateSolidBackground(
+      message_center::kMessageCenterBackgroundColor));
 
   ui::ResourceBundle& resource_bundle = ui::ResourceBundle::GetSharedInstance();
 
@@ -99,7 +100,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   notification_label_ = new views::Label(title);
   notification_label_->SetAutoColorReadabilityEnabled(false);
   notification_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  notification_label_->SetEnabledColor(kRegularTextColor);
+  notification_label_->SetEnabledColor(message_center::kRegularTextColor);
   AddChildView(notification_label_);
 
   button_container_ = new views::View;
@@ -165,24 +166,16 @@ void MessageCenterButtonBar::ViewVisibilityChanged() {
   column->AddPaddingColumn(0, kFooterLeftMargin);
   if (title_arrow_->visible()) {
     // Column for the left-arrow used to back out of settings.
-    column->AddColumn(views::GridLayout::LEADING,
-                      views::GridLayout::CENTER,
-                      0.0f,
-                      views::GridLayout::FIXED,
-                      kButtonSize,
-                      0);
+    column->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+                      0.0f, views::GridLayout::FIXED, kButtonSize, 0);
   } else {
     constexpr int kLeftPaddingWidthForNonArrows = 16;
     column->AddPaddingColumn(0.0f, kLeftPaddingWidthForNonArrows);
   }
 
   // Column for the label "Notifications".
-  column->AddColumn(views::GridLayout::LEADING,
-                    views::GridLayout::CENTER,
-                    0.0f,
-                    views::GridLayout::USE_PREF,
-                    0,
-                    0);
+  column->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0.0f,
+                    views::GridLayout::USE_PREF, 0, 0);
 
   // Fills in the remaining space between "Notifications" and buttons.
   gfx::ImageSkia* settings_image =
@@ -193,21 +186,13 @@ void MessageCenterButtonBar::ViewVisibilityChanged() {
   column->AddPaddingColumn(1.0f, image_margin);
 
   // The button area column.
-  column->AddColumn(views::GridLayout::LEADING,
-                    views::GridLayout::CENTER,
-                    0.0f,
-                    views::GridLayout::USE_PREF,
-                    0,
-                    0);
+  column->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0.0f,
+                    views::GridLayout::USE_PREF, 0, 0);
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   // The close-bubble button.
-  column->AddColumn(views::GridLayout::LEADING,
-                    views::GridLayout::LEADING,
-                    0.0f,
-                    views::GridLayout::USE_PREF,
-                    0,
-                    0);
+  column->AddColumn(views::GridLayout::LEADING, views::GridLayout::LEADING,
+                    0.0f, views::GridLayout::USE_PREF, 0, 0);
 #endif
   constexpr int kFooterRightMargin = 14;
   const int right_margin = std::max(0, kFooterRightMargin - image_margin);
@@ -300,4 +285,4 @@ void MessageCenterButtonBar::ButtonPressed(views::Button* sender,
   }
 }
 
-}  // namespace message_center
+}  // namespace ash

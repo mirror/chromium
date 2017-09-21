@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/message_center/views/message_center_view.h"
+#include "ash/message_center/message_center_view.h"
 
 #include <list>
 #include <map>
 
+#include "ash/message_center/message_center_button_bar.h"
+#include "ash/message_center/notifier_settings_view.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
@@ -22,13 +24,10 @@
 #include "ui/message_center/message_center_tray.h"
 #include "ui/message_center/message_center_types.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
-#include "ui/message_center/views/message_center_button_bar.h"
-#include "ui/message_center/views/message_list_view.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/message_center/views/message_view_context_menu_controller.h"
 #include "ui/message_center/views/message_view_factory.h"
 #include "ui/message_center/views/notification_control_buttons_view.h"
-#include "ui/message_center/views/notifier_settings_view.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -39,7 +38,13 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
 
-namespace message_center {
+namespace ash {
+
+using message_center::MessageCenter;
+using message_center::MessageCenterTray;
+using message_center::MessageView;
+using message_center::Notification;
+using message_center::NotificationList;
 
 // static
 bool MessageCenterView::disable_animation_for_testing = false;
@@ -77,13 +82,15 @@ MessageCenterView::MessageCenterView(MessageCenter* message_center,
       is_locked_(message_center_->IsLockedState()),
       mode_((!initially_settings_visible || is_locked_) ? Mode::BUTTONS_ONLY
                                                         : Mode::SETTINGS),
-      context_menu_controller_(new MessageViewContextMenuController(this)),
+      context_menu_controller_(
+          new message_center::MessageViewContextMenuController(this)),
       focus_manager_(nullptr) {
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
-  SetBackground(views::CreateSolidBackground(kMessageCenterBackgroundColor));
+  SetBackground(views::CreateSolidBackground(
+      message_center::kMessageCenterBackgroundColor));
 
-  NotifierSettingsProvider* notifier_settings_provider =
+  message_center::NotifierSettingsProvider* notifier_settings_provider =
       message_center_->GetNotifierSettingsProvider();
   button_bar_ = new MessageCenterButtonBar(
       this, message_center, notifier_settings_provider,
@@ -93,8 +100,9 @@ MessageCenterView::MessageCenterView(MessageCenter* message_center,
   const int button_height = button_bar_->GetPreferredSize().height();
 
   scroller_ = new views::ScrollView();
-  scroller_->SetBackgroundColor(kMessageCenterBackgroundColor);
-  scroller_->ClipHeightTo(kMinScrollViewHeight, max_height - button_height);
+  scroller_->SetBackgroundColor(message_center::kMessageCenterBackgroundColor);
+  scroller_->ClipHeightTo(message_center::kMinScrollViewHeight,
+                          max_height - button_height);
   scroller_->SetVerticalScrollBar(new views::OverlayScrollBar(false));
   scroller_->SetHorizontalScrollBar(new views::OverlayScrollBar(true));
 
@@ -141,7 +149,7 @@ void MessageCenterView::Init() {
 }
 
 void MessageCenterView::SetNotifications(
-    const NotificationList::Notifications& notifications)  {
+    const NotificationList::Notifications& notifications) {
   if (is_closing_)
     return;
 
@@ -149,12 +157,14 @@ void MessageCenterView::SetNotifications(
 
   int index = 0;
   for (NotificationList::Notifications::const_iterator iter =
-           notifications.begin(); iter != notifications.end(); ++iter) {
+           notifications.begin();
+       iter != notifications.end(); ++iter) {
     AddNotificationAt(*(*iter), index++);
 
     message_center_->DisplayedNotification(
         (*iter)->id(), message_center::DISPLAY_SOURCE_MESSAGE_CENTER);
-    if (notification_views_.size() >= kMaxVisibleMessageCenterNotifications)
+    if (notification_views_.size() >=
+        message_center::kMaxVisibleMessageCenterNotifications)
       break;
   }
 
@@ -238,14 +248,8 @@ void MessageCenterView::Layout() {
     return;
   }
 
-  scroller_->SetBounds(0,
-                       0,
-                       width(),
-                       height() - button_height);
-  settings_view_->SetBounds(0,
-                            0,
-                            width(),
-                            height() - button_height);
+  scroller_->SetBounds(0, 0, width(), height() - button_height);
+  settings_view_->SetBounds(0, 0, width(), height() - button_height);
 
   bool is_scrollable = false;
   if (scroller_->visible())
@@ -258,17 +262,13 @@ void MessageCenterView::Layout() {
       // Draw separator line on the top of the button bar if it is on the bottom
       // or draw it at the bottom if the bar is on the top.
       button_bar_->SetBorder(views::CreateSolidSidedBorder(
-          1, 0, 0, 0, kFooterDelimiterColor));
+          1, 0, 0, 0, message_center::kFooterDelimiterColor));
     } else {
-      button_bar_->SetBorder(
-          views::CreateEmptyBorder(1, 0, 0, 0));
+      button_bar_->SetBorder(views::CreateEmptyBorder(1, 0, 0, 0));
     }
     button_bar_->SchedulePaint();
   }
-  button_bar_->SetBounds(0,
-                         height() - button_height,
-                         width(),
-                         button_height);
+  button_bar_->SetBounds(0, height() - button_height, width(), button_height);
   if (GetWidget())
     GetWidget()->GetRootView()->SchedulePaint();
 }
@@ -279,8 +279,8 @@ gfx::Size MessageCenterView::CalculatePreferredSize() const {
     int content_width =
         std::max(source_view_ ? source_view_->GetPreferredSize().width() : 0,
                  target_view_ ? target_view_->GetPreferredSize().width() : 0);
-    int width = std::max(content_width,
-                         button_bar_->GetPreferredSize().width());
+    int width =
+        std::max(content_width, button_bar_->GetPreferredSize().width());
     return gfx::Size(width, GetHeightForWidth(width));
   }
 
@@ -337,14 +337,15 @@ void MessageCenterView::OnNotificationAdded(const std::string& id) {
   int index = 0;
   const NotificationList::Notifications& notifications =
       message_center_->GetVisibleNotifications();
-  for (NotificationList::Notifications::const_iterator iter =
-           notifications.begin(); iter != notifications.end();
-       ++iter, ++index) {
+  for (NotificationList::Notifications::const_iterator
+           iter = notifications.begin();
+       iter != notifications.end(); ++iter, ++index) {
     if ((*iter)->id() == id) {
       AddNotificationAt(*(*iter), index);
       break;
     }
-    if (notification_views_.size() >= kMaxVisibleMessageCenterNotifications)
+    if (notification_views_.size() >=
+        message_center::kMaxVisibleMessageCenterNotifications)
       break;
   }
   Update(true /* animate */);
@@ -373,8 +374,8 @@ void MessageCenterView::OnNotificationRemoved(const std::string& id,
       if (next_focused_view) {
         if (view->IsCloseButtonFocused()) {
           // Safe cast since all views in MessageListView are MessageViews.
-          static_cast<MessageView*>(
-              next_focused_view)->RequestFocusOnCloseButton();
+          static_cast<MessageView*>(next_focused_view)
+              ->RequestFocusOnCloseButton();
         } else {
           next_focused_view->RequestFocus();
         }
@@ -435,7 +436,7 @@ void MessageCenterView::RemoveNotification(const std::string& notification_id,
 }
 
 std::unique_ptr<ui::MenuModel> MessageCenterView::CreateMenuModel(
-    const NotifierId& notifier_id,
+    const message_center::NotifierId& notifier_id,
     const base::string16& display_source) {
   return tray_->CreateNotificationMenuModel(notifier_id, display_source);
 }
@@ -470,8 +471,9 @@ void MessageCenterView::UpdateNotificationSize(
 void MessageCenterView::AnimationEnded(const gfx::Animation* animation) {
   DCHECK_EQ(animation, settings_transition_animation_.get());
 
-  Visibility visibility =
-      mode_ == Mode::SETTINGS ? VISIBILITY_SETTINGS : VISIBILITY_MESSAGE_CENTER;
+  message_center::Visibility visibility =
+      mode_ == Mode::SETTINGS ? message_center::VISIBILITY_SETTINGS
+                              : message_center::VISIBILITY_MESSAGE_CENTER;
   message_center_->SetVisibility(visibility);
 
   if (source_view_) {
@@ -513,12 +515,12 @@ void MessageCenterView::AnimationCanceled(const gfx::Animation* animation) {
 
 void MessageCenterView::AddNotificationAt(const Notification& notification,
                                           int index) {
-  MessageView* view =
-      MessageViewFactory::Create(this, notification, false);  // Not top-level.
+  MessageView* view = message_center::MessageViewFactory::Create(
+      this, notification, false);  // Not top-level.
 
   // TODO(yoshiki): Temporary disable context menu on custom notifications.
   // See crbug.com/750307 for detail.
-  if (notification.type() != NOTIFICATION_TYPE_CUSTOM)
+  if (notification.type() != message_center::NOTIFICATION_TYPE_CUSTOM)
     view->set_context_menu_controller(context_menu_controller_.get());
 
   notification_views_[notification.id()] = view;
@@ -604,15 +606,15 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
       gfx::Tween::EASE_OUT));
   // Second part: fade-out the source_view.
   if (source_view_ && source_view_->layer()) {
-    parts.push_back(gfx::MultiAnimation::Part(
-        kDefaultAnimationDurationMs, gfx::Tween::LINEAR));
+    parts.push_back(gfx::MultiAnimation::Part(kDefaultAnimationDurationMs,
+                                              gfx::Tween::LINEAR));
   } else {
     parts.push_back(gfx::MultiAnimation::Part());
   }
   // Third part: fade-in the target_view.
   if (target_view_ && target_view_->layer()) {
-    parts.push_back(gfx::MultiAnimation::Part(
-        kDefaultAnimationDurationMs, gfx::Tween::LINEAR));
+    parts.push_back(gfx::MultiAnimation::Part(kDefaultAnimationDurationMs,
+                                              gfx::Tween::LINEAR));
     target_view_->layer()->SetOpacity(0);
     target_view_->SetVisible(true);
   } else {
@@ -694,4 +696,4 @@ void MessageCenterView::UpdateNotification(const std::string& id) {
   view->NotifyAccessibilityEvent(ui::AX_EVENT_CHILDREN_CHANGED, false);
 }
 
-}  // namespace message_center
+}  // namespace ash

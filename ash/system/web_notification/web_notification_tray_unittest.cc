@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "ash/message_center/message_center_bubble.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shelf/shelf.h"
@@ -19,7 +20,6 @@
 #include "ash/system/tray/system_tray_item.h"
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/web_notification/ash_popup_alignment_delegate.h"
-#include "ash/system/web_notification/message_center_bubble.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_state.h"
 #include "base/memory/ptr_util.h"

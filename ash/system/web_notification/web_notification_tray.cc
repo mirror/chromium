@@ -5,6 +5,7 @@
 #include "ash/system/web_notification/web_notification_tray.h"
 
 #include "ash/accessibility_delegate.h"
+#include "ash/message_center/message_center_bubble.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -18,7 +19,6 @@
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/tray/tray_utils.h"
 #include "ash/system/web_notification/ash_popup_alignment_delegate.h"
-#include "ash/system/web_notification/message_center_bubble.h"
 #include "base/auto_reset.h"
 #include "base/i18n/number_formatting.h"
 #include "base/i18n/rtl.h"
