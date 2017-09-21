@@ -7,6 +7,7 @@
 #include <utility>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/TestToV8.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "bindings/core/v8/V8Internals.h"
@@ -17,11 +18,6 @@
 namespace blink {
 
 namespace {
-
-template <typename T>
-v8::Local<v8::Value> ToV8(V8TestingScope* scope, T value) {
-  return blink::ToV8(value, scope->GetContext()->Global(), scope->GetIsolate());
-}
 
 TEST(NativeValueTraitsImplTest, IDLInterface) {
   V8TestingScope scope;
