@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224e0b16_bc488dd8",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-21T18:56:13Z",
+      "side": 1,
+      "message": "Actually, we use \u0027event.target\u0027 elsewhere, which I think is more correct. (Event.srcElement is nonstandard: https://developer.mozilla.org/en-US/docs/Web/API/Event/srcElement)",
+      "revId": "4653d4918396f519b45b4120a658e1635ef55a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
