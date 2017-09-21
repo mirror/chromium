@@ -22,6 +22,30 @@
       "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdcd067_584bfb6d",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T20:56:42Z",
+      "side": 1,
+      "message": "Current root editable element of what? The selection or the composition (can these be in different nodes?)?",
+      "parentUuid": "0b24ffa4_5f0d3111",
+      "range": {
+        "startLine": 298,
+        "startChar": 23,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
