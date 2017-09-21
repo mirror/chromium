@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0acfa201_d175199c",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-21T12:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd89c06e_3a9f5eb6",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7055bc98_c6b31234",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 11
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Right, but it\u0027s still possible to share the string (e.g. IDS_DEFAULT_TAB_TITLE).\nIn the past there used to be a file that whitelisted the Chrome desktop string  for iOS. Seems like now they are to be defined in components. You can double check it with the team.",
       "parentUuid": "2055af91_2976a32a",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05c0ef0_9e2888c5",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-21T12:42:15Z",
+      "side": 1,
+      "message": "Waiting for https://chromium-review.googlesource.com/c/chromium/src/+/674689 to land, then I will reuse the string from components",
+      "parentUuid": "7401d2b5_3b54d4c4",
       "range": {
         "startLine": 560,
         "startChar": 21,
