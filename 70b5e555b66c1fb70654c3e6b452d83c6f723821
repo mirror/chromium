@@ -969,6 +969,30 @@
     },
     {
       "key": {
+        "uuid": "fb0068c0_35d4575c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:50:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bbb1e70f_e13b9c53",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b68f547_bdedb965",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 26
@@ -1028,6 +1052,30 @@
       "side": 1,
       "message": "My suggestion yesterday was not that SetNetworkReadOnly only be allowed for partial transactions, but that it only be allowed for writers on which there is only a single transaction.  That would allow this dual use.",
       "parentUuid": "d65e002a_7da9ec84",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88a0a0e_fd354600",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-21T18:50:01Z",
+      "side": 1,
+      "message": "Removed network_read_only_ from this function since if mode was none for a transaction in the headers phase, we don\u0027t really go through entry or entry-\u003ewriters since entry would also be set to null.",
+      "parentUuid": "2382932c_38fefb7f",
       "range": {
         "startLine": 75,
         "startChar": 27,
