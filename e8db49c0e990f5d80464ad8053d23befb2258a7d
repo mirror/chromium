@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaca0f02_6c7d5f78",
+        "filename": "ios/chrome/browser/snapshots/snapshot_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:44:31Z",
+      "side": 1,
+      "message": "s/Block/Callback/ -- \"Block\" is a very general type, and typedefs should be used to clarify how a type is used (c.f. NSTimeInterval rather than NSTimeFloat).",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff6e486_3a94bf08",
+        "filename": "ios/chrome/browser/snapshots/snapshot_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:44:31Z",
+      "side": 1,
+      "message": "provideSnapshotWithCallback:(SnapshotProvidingCallback)callback;",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0060945_f32b0136",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:44:31Z",
+      "side": 1,
+      "message": "__weak ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 4
+      },
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7c84fa_672ae656",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-21T09:44:31Z",
+      "side": 1,
+      "message": "This is now synchronous? Doesn\u0027t really matter I guess, but if the expectation of the API is that snapshotting is async (as implied by the callback) then maybe it should be here (and the API should have a comment to that effect.\n\nOr if synchronous snapshotting is fine, why have a callback at all and instead just have the provider directly return the image to the tab helper?",
+      "range": {
+        "startLine": 232,
+        "startChar": 25,
+        "endLine": 232,
+        "endChar": 43
+      },
+      "revId": "e8db49c0e990f5d80464ad8053d23befb2258a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
