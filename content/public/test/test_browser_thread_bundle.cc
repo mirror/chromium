@@ -67,7 +67,7 @@ TestBrowserThreadBundle::~TestBrowserThreadBundle() {
     // blocked upon it could make a test flaky whereas by flushing we guarantee
     // it will blow up).
     RunAllBlockingPoolTasksUntilIdle();
-    CHECK(base::MessageLoop::current()->IsIdleForTesting());
+    base::MessageLoop::current()->CheckIsIdleForTesting();
   }
 
   // |scoped_task_environment_| needs to explicitly go away before fake threads
