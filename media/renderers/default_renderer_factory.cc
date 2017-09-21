@@ -11,6 +11,7 @@
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
 #include "media/base/decoder_factory.h"
+#include "media/base/default_video_frame_provider_factory.h"
 #include "media/base/media_log.h"
 #include "media/base/video_frame_provider.h"
 #include "media/filters/gpu_video_decoder.h"
@@ -35,10 +36,15 @@ namespace media {
 DefaultRendererFactory::DefaultRendererFactory(
     MediaLog* media_log,
     DecoderFactory* decoder_factory,
-    const GetGpuFactoriesCB& get_gpu_factories_cb)
+    const GetGpuFactoriesCB& get_gpu_factories_cb,
+    std::unique_ptr<VideoFrameProviderFactory> video_frame_provider_factory)
     : media_log_(media_log),
       decoder_factory_(decoder_factory),
-      get_gpu_factories_cb_(get_gpu_factories_cb) {}
+      get_gpu_factories_cb_(get_gpu_factories_cb),
+      video_frame_provider_factory_(std::move(video_frame_provider_factory)) {
+  if (!video_frame_provider_factory_)
+    video_frame_provider_factory_.reset(new DefaultVideoFrameProviderFactory());
+}
 
 DefaultRendererFactory::~DefaultRendererFactory() {}
 
@@ -89,12 +95,20 @@ DefaultRendererFactory::CreateVideoDecoders(
         media_log_));
   }
 
+  std::unique_ptr<VideoFrameProvider> video_frame_provider;
+
 #if !defined(MEDIA_DISABLE_LIBVPX)
-  video_decoders.push_back(base::MakeUnique<VpxVideoDecoder>());
+  video_frame_provider =
+      video_frame_provider_factory_->CreateVideoFrameProvider();
+  video_decoders.push_back(
+      base::MakeUnique<VpxVideoDecoder>(std::move(video_frame_provider)));
 #endif
 
 #if !defined(MEDIA_DISABLE_FFMPEG) && !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
-  video_decoders.push_back(base::MakeUnique<FFmpegVideoDecoder>(media_log_));
+  video_frame_provider =
+      video_frame_provider_factory_->CreateVideoFrameProvider();
+  video_decoders.push_back(base::MakeUnique<FFmpegVideoDecoder>(
+      media_log_, std::move(video_frame_provider)));
 #endif
 
   return video_decoders;

@@ -6,6 +6,7 @@
 #define CONTENT_UTILITY_UTILITY_SERVICE_FACTORY_H_
 
 #include "base/macros.h"
+#include "base/single_thread_task_runner.h"
 #include "content/child/service_factory.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
@@ -30,6 +31,8 @@ class UtilityServiceFactory : public ServiceFactory {
   // Allows embedders to register their interface implementations before the
   // network service is created.
   std::unique_ptr<service_manager::BinderRegistry> network_registry_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(UtilityServiceFactory);
 };

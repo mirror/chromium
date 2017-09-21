@@ -5,10 +5,14 @@
 #include "media/mojo/services/utility_mojo_media_client.h"
 
 #include "base/threading/thread_task_runner_handle.h"
+#include "media/audio/null_audio_sink.h"
 #include "media/base/media.h"
 #include "media/base/video_decoder.h"
 #include "media/mojo/common/mojo_shared_buffer_video_frame.h"
 #include "media/mojo/common/mojo_video_frame_provider.h"
+#include "media/mojo/common/mojo_video_frame_provider_factory.h"
+#include "media/mojo/services/mojo_video_renderer_sink_adapter.h"
+#include "media/renderers/default_renderer_factory.h"
 
 #if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
 #include "media/filters/ffmpeg_video_decoder.h"
@@ -20,7 +24,9 @@
 
 namespace media {
 
-UtilityMojoMediaClient::UtilityMojoMediaClient() {}
+UtilityMojoMediaClient::UtilityMojoMediaClient(
+    scoped_refptr<base::SingleThreadTaskRunner> utility_task_runner)
+    : utility_task_runner_(std::move(utility_task_runner)) {}
 
 UtilityMojoMediaClient::~UtilityMojoMediaClient() {}
 
@@ -28,6 +34,18 @@ void UtilityMojoMediaClient::Initialize(
     service_manager::Connector* connector,
     service_manager::ServiceContextRefFactory* context_ref_factory) {
   InitializeMediaLibrary();
+}
+
+scoped_refptr<AudioRendererSink>
+UtilityMojoMediaClient::CreateAudioRendererSink(
+    const std::string& /* audio_device_id */) {
+  return new NullAudioSink(utility_task_runner_);
+}
+
+std::unique_ptr<VideoRendererSink>
+UtilityMojoMediaClient::CreateVideoRendererSink(
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
+  return base::MakeUnique<MojoVideoRendererSinkAdapter>(task_runner);
 }
 
 std::unique_ptr<VideoDecoder> UtilityMojoMediaClient::CreateVideoDecoder(
@@ -56,6 +74,15 @@ std::unique_ptr<VideoDecoder> UtilityMojoMediaClient::CreateVideoDecoder(
 #endif
 
   return nullptr;
+}
+
+std::unique_ptr<RendererFactory> UtilityMojoMediaClient::CreateRendererFactory(
+    MediaLog* media_log) {
+  std::unique_ptr<VideoFrameProviderFactory> video_frame_provider_factory(
+      new MojoVideoFrameProviderFactory());
+  return base::MakeUnique<DefaultRendererFactory>(
+      media_log, nullptr, DefaultRendererFactory::GetGpuFactoriesCB(),
+      std::move(video_frame_provider_factory));
 }
 
 }  // namespace media
