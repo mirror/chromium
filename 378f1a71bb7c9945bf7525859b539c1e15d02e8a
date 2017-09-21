@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3500dd83_a33dafb0",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-21T15:12:24Z",
+      "side": 1,
+      "message": "actually, I\u0027m kind of confused how this is working because now the default size of the icon image should be 48x48",
+      "range": {
+        "startLine": 339,
+        "startChar": 6,
+        "endLine": 339,
+        "endChar": 22
+      },
+      "revId": "378f1a71bb7c9945bf7525859b539c1e15d02e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
