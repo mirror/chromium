@@ -1343,4 +1343,36 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event
+    name="TabManager.BackgroundTabOpening.ForegroundTab.ExpectedTaskQueueingDuration">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The expected queueing duration of tasks in a foreground tab when the browser
+    is in background tab opening session, which is the duration from the time
+    when the browser starts to open background tabs until the time when browser
+    has finished loading those tabs or paused loading due to memory pressure. A
+    new session starts when the browser resumes loading background tabs when
+    memory pressure returns to normal. The metric reflects the responsiveness of
+    a tab. A lower value means the tab will respond to inputs faster. This
+    metric is equal to RendererScheduler.ExpectedTaskQueueingDuration. It is
+    emitted once for all tasks in each 1000-ms window. The metric is not
+    recorded when the session overlaps with session restore.
+  </summary>
+  <metric name="BackgroundTabLoadingCount">
+    <summary>
+      Number of background tabs that are loading or pending.
+    </summary>
+  </metric>
+  <metric name="ExpectedTaskQueueingDuration">
+    <summary>
+      Duration in MS for expected taskqueueing duration.
+    </summary>
+  </metric>
+  <metric name="TabCount">
+    <summary>
+      Number of all tabs.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>

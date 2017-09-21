@@ -226,6 +226,10 @@ class TabManager : public TabStripModelObserver,
   // foreground.
   bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
 
+  // Returns the number of background tabs that are loading or pending in a
+  // background tab opening session.
+  size_t GetBackgroundTabLoadingCount() const;
+
  private:
   friend class TabManagerStatsCollectorTest;
 
