@@ -17,8 +17,12 @@
                 "include": [ "getWindowForTarget", "getWindowBounds", "setWindowBounds" ],
                 "include_types": [ "Bounds" ],
                 "include_events": []
+            },
+            {
+                "domain": "WindowManager"
             }
-        ]
+        ],
+        "path": "protocol.json"
     },
     "lib": {
         "package": "chrome/browser/devtools/protocol",
