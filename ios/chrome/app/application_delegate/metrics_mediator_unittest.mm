@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #include "base/mac/scoped_block.h"
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 #include "components/metrics/metrics_service.h"
 #import "ios/chrome/app/application_delegate/startup_information.h"
 #include "ios/chrome/browser/application_context.h"

@@ -33,8 +33,8 @@
 
 #include <unistd.h>
 
-#include "breakpad/src/client/linux/handler/exception_handler.h"
-#include "breakpad/src/common/linux/linux_libc_support.h"
+#include "breakpad/breakpad/src/client/linux/handler/exception_handler.h"
+#include "breakpad/breakpad/src/common/linux/linux_libc_support.h"
 #include "third_party/lss/linux_syscall_support.h"
 
 static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,

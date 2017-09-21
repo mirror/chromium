@@ -26,8 +26,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_restrictions.h"
-#import "breakpad/src/client/mac/Framework/Breakpad.h"
-#include "breakpad/src/common/simple_string_dictionary.h"
+#import "breakpad/breakpad/src/client/mac/Framework/Breakpad.h"
+#include "breakpad/breakpad/src/common/simple_string_dictionary.h"
 #include "components/crash/content/app/crash_reporter_client.h"
 #include "components/crash/core/common/crash_keys.h"
 

@@ -13,7 +13,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/time/time.h"
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 #include "ios/chrome/browser/experimental_flags.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)

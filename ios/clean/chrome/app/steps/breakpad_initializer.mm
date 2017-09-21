@@ -5,7 +5,7 @@
 #import "ios/clean/chrome/app/steps/breakpad_initializer.h"
 
 #include "base/logging.h"
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 #include "ios/chrome/browser/application_context.h"
 #import "ios/clean/chrome/app/steps/step_context.h"
 #import "ios/clean/chrome/app/steps/step_features.h"

@@ -120,7 +120,7 @@ PATH_SPECIFIC_WHITELISTED_LICENSES = {
     ],
 
     # http://code.google.com/p/google-breakpad/issues/detail?id=450
-    'breakpad/src': [
+    'breakpad/breakpad/src': [
         'UNKNOWN',
     ],
 

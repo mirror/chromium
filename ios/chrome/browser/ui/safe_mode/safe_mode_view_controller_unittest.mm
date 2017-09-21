@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #import "ios/chrome/browser/ui/safe_mode/safe_mode_view_controller.h"
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 #import "ios/chrome/browser/crash_report/breakpad_helper.h"
 #import "ios/chrome/test/base/scoped_block_swizzler.h"
 #import "ios/chrome/test/ocmock/OCMockObject+BreakpadControllerTesting.h"

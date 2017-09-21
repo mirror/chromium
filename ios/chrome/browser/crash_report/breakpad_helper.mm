@@ -24,7 +24,7 @@
 // TODO(stuartmorgan): Move this up where it belongs once
 // http://code.google.com/p/google-breakpad/issues/detail?id=487
 // is fixed. For now, put it at the end to avoid compiler errors.
-#import "breakpad/src/client/ios/BreakpadController.h"
+#import "breakpad/breakpad/src/client/ios/BreakpadController.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
