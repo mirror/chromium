@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1215829_ebf3a477",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T21:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4557a0_61d3045d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "e0c0b5b013e7f8d462359385c48b81bd9d785797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bcc566c_afaa552f",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 8
