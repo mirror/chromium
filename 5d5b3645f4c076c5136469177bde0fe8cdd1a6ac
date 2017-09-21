@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a57c6565_ee387d1d",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "with the new signals, you don\u0027t need to do this lazily.",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e6f199_ab5ae1ad",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "And no lookup by wc will be necessary.",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc236b6_8c60a54c",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "We now have a concept of sessions, multiple clients can connect to chrome for debugging at a time. We create this \u0027session\u0027 per client attached, session owns dispatcher, there is a set of handler per dispatcher. https://chromium-review.googlesource.com/c/chromium/src/+/677299 adds notifications about the sessions, so you could rebaseline on top of it and create a \u0027session\u0027 object upon session created. That object would hold your dispatcher and handlers.",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528e67ab_f565ff97",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "You would also have multiple of these per web contents. Also, your target will not always be web contents (shared workers)",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd760f5_71ef25b3",
+        "filename": "chrome/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "This looks so good!",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2964b76f_68ceeeda",
+        "filename": "chrome/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-21T16:11:02Z",
+      "side": 1,
+      "message": "Will this forgive you zero contents?",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
