@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa21223_b4eefbf2",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-21T08:58:25Z",
+      "side": 1,
+      "message": "s/tokens not loaded/token service is *not* ready yet",
+      "range": {
+        "startLine": 306,
+        "startChar": 51,
+        "endLine": 306,
+        "endChar": 68
+      },
+      "revId": "f6eee0fbaf79dd70fc8c54642eb88f0afaa355a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
