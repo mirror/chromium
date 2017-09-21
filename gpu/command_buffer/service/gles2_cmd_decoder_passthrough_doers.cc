@@ -23,7 +23,7 @@ error::Error GenHelper(GLsizei n,
   DCHECK(n >= 0);
   std::vector<ClientType> client_ids_copy(client_ids, client_ids + n);
   for (GLsizei ii = 0; ii < n; ++ii) {
-    if (id_map->GetServiceID(client_ids_copy[ii], nullptr)) {
+    if (id_map->IsClientIDInvalid(client_ids_copy[ii])) {
       return error::kInvalidArguments;
     }
   }
@@ -44,7 +44,7 @@ template <typename ClientType, typename ServiceType, typename GenFunction>
 error::Error CreateHelper(ClientType client_id,
                           ClientServiceMap<ClientType, ServiceType>* id_map,
                           GenFunction create_function) {
-  if (id_map->GetServiceID(client_id, nullptr)) {
+  if (id_map->IsClientIDInvalid(client_id)) {
     return error::kInvalidArguments;
   }
   ServiceType service_id = create_function();
@@ -990,7 +990,7 @@ error::Error GLES2DecoderPassthroughImpl::DoEnableVertexAttribArray(
 error::Error GLES2DecoderPassthroughImpl::DoFenceSync(GLenum condition,
                                                       GLbitfield flags,
                                                       GLuint client_id) {
-  if (resources_->sync_id_map.GetServiceID(client_id, nullptr)) {
+  if (resources_->sync_id_map.IsClientIDInvalid(client_id)) {
     return error::kInvalidArguments;
   }
 
@@ -3854,7 +3854,7 @@ error::Error GLES2DecoderPassthroughImpl::DoCreateAndConsumeTextureINTERNAL(
     GLuint texture_client_id,
     const volatile GLbyte* mailbox) {
   if (!texture_client_id ||
-      resources_->texture_id_map.GetServiceID(texture_client_id, nullptr)) {
+      resources_->texture_id_map.IsClientIDInvalid(texture_client_id)) {
     return error::kInvalidArguments;
   }
 
