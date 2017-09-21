@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b5410639_8984da56",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-21T19:12:59Z",
+      "side": 1,
+      "message": "I have gone ahead and made this change. PTAL.",
+      "parentUuid": "d178249f_cffde19a",
+      "revId": "5d5b3645f4c076c5136469177bde0fe8cdd1a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc236b6_8c60a54c",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 11
