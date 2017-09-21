@@ -324,9 +324,12 @@ void ComponentLoader::AddZipArchiverExtension() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableZipArchiverOnFileManager) &&
       PathService::Get(chrome::DIR_RESOURCES, &resources_path)) {
-    AddComponentFromDir(
+    AddWithNameAndDescriptionFromDir(
         resources_path.Append(extension_misc::kZipArchiverExtensionPath),
-        extension_misc::kZipArchiverExtensionId, base::Closure());
+        extension_misc::kZipArchiverExtensionId,
+        l10n_util::GetStringUTF8(IDS_ZIP_ARCHIVER_NAME),
+        l10n_util::GetStringUTF8(IDS_ZIP_ARCHIVER_DESCRIPTION),
+        base::Closure());
   }
 #endif  // defined(OS_CHROMEOS)
 }
@@ -688,6 +691,22 @@ void ComponentLoader::AddComponentFromDir(
                  done_cb));
 }
 
+void ComponentLoader::AddWithNameAndDescriptionFromDir(
+    const base::FilePath& root_directory,
+    const char* extension_id,
+    const std::string& name_string,
+    const std::string& description_string,
+    const base::Closure& done_cb) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  base::PostTaskAndReplyWithResult(
+      GetExtensionFileTaskRunner().get(), FROM_HERE,
+      base::Bind(&LoadManifestOnFileThread, root_directory,
+                 extensions::kManifestFilename),
+      base::Bind(&ComponentLoader::FinishAddWithNameAndDescriptionFromDir,
+                 weak_factory_.GetWeakPtr(), root_directory, extension_id,
+                 name_string, description_string, done_cb));
+}
+
 void ComponentLoader::FinishAddComponentFromDir(
     const base::FilePath& root_directory,
     const char* extension_id,
@@ -696,6 +715,27 @@ void ComponentLoader::FinishAddComponentFromDir(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!manifest)
     return;  // Error already logged.
+  std::string actual_extension_id =
+      Add(std::move(manifest), root_directory, false);
+  CHECK_EQ(extension_id, actual_extension_id);
+  if (!done_cb.is_null())
+    done_cb.Run();
+}
+
+void ComponentLoader::FinishAddWithNameAndDescriptionFromDir(
+    const base::FilePath& root_directory,
+    const char* extension_id,
+    const std::string& name_string,
+    const std::string& description_string,
+    const base::Closure& done_cb,
+    std::unique_ptr<base::DictionaryValue> manifest) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!manifest)
+    return;  // Error already logged.
+
+  manifest->SetString(manifest_keys::kName, name_string);
+  manifest->SetString(manifest_keys::kDescription, description_string);
+
   std::string actual_extension_id =
       Add(std::move(manifest), root_directory, false);
   CHECK_EQ(extension_id, actual_extension_id);
