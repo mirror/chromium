@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "679e1df9_a03a597c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2783281f_b08ac92d",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e220ac3_818fe2cb",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-20T06:03:06Z",
       "side": 1,
       "message": "nit/style: pls use \"\u003d default;\" in ARC code.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c69d003_bfb6b381",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Removed this fake in the new CL.",
+      "parentUuid": "1e220ac3_818fe2cb",
       "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +186,24 @@
     },
     {
       "key": {
+        "uuid": "0c1036e0_652e9a84",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7b6a68_214ac295",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56348158_16656695",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 7
@@ -158,6 +218,24 @@
       "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa48335_b499e6db",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56348158_16656695",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "30f695e5_3527354c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1414ff4f_6bf2a982",
+      "range": {
+        "startLine": 869,
+        "startChar": 70,
+        "endLine": 869,
+        "endChar": 77
+      },
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a877106e_e6f8fe42",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 7
@@ -195,6 +297,24 @@
       "writtenOn": "2017-09-20T06:03:06Z",
       "side": 1,
       "message": "This is not a flow for OOBE, but for enabling OPA, right?\nIf so, please keep the OOBE flow testing working, and add yours, too.",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa64cae_e871c21f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "IsOobeOptInActive() should return true IFF the current screen is Arc ToS screen.\nThis line is added just to make sure the function does not return true when other screen is active.",
+      "parentUuid": "a877106e_e6f8fe42",
       "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "6ae5decd_a225da0d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "This will set the \"current_screen_\" in WizardController to ArcToS screen, which we use to determine whether Opa OptIn flow is active in the method IsOobeOptInActive().",
+      "parentUuid": "11ca9e4e_50cd39f5",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "607ac8b1_4f77b5e6",
         "filename": "chrome/browser/chromeos/login/wizard_controller.h",
         "patchSetId": 7
@@ -235,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "b5f74750_5f10d7cc",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "607ac8b1_4f77b5e6",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c76acb0_45f65f50",
         "filename": "chrome/browser/chromeos/login/wizard_controller.h",
         "patchSetId": 7
@@ -249,6 +405,24 @@
       "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53c3112_02fe7c22",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-21T01:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c76acb0_45f65f50",
+      "revId": "7958eb8bf079aa6c7ba67bd2c3269849c836d241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
