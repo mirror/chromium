@@ -70,6 +70,30 @@
       "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e160c17_841c5f46",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-21T21:27:12Z",
+      "side": 1,
+      "message": "Yeah, I think we only ever pass in either the current composition range or the current selection range. I feel like the function should be able to handle all EphemeralRanges or someone might eventually get tripped up by this though (since it\u0027s called \"PlainTextRangeForEphemeralRange\" and not \"PlainTextRangeForSelectionRange\" or \"PlainTextRangeForCompositionRange\").",
+      "parentUuid": "f5344ed6_0b387a82",
+      "range": {
+        "startLine": 298,
+        "startChar": 23,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
