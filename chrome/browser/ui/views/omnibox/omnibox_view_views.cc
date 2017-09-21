@@ -54,6 +54,7 @@
 #include "ui/views/border.h"
 #include "ui/views/button_drag_utils.h"
 #include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/widget/widget.h"
 #include "url/gurl.h"
 
@@ -282,6 +283,12 @@ int OmniboxViewViews::GetTextWidth() const {
 
 bool OmniboxViewViews::IsImeComposing() const {
   return IsIMEComposing();
+}
+
+gfx::Insets OmniboxViewViews::GetInsets() const {
+  // Ignore the default Textfield insets.
+  return View::GetInsets() +
+         views::LayoutProvider::Get()->GetInsetsMetric(views::INSETS_OMNIBOX);
 }
 
 gfx::Size OmniboxViewViews::GetMinimumSize() const {
