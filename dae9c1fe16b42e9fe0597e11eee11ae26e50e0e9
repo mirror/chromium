@@ -88,6 +88,24 @@
       "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4c6f24_9961a356",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-21T19:03:17Z",
+      "side": 1,
+      "message": "Sorry...did not quite follow why it could prevent dropping message before send()...\n\nsocket-\u003eAddObserver() will be invoked in cast.channel.send() or cast.channel.open(). We will not call cast.channel.open() for in-browser discovery, so observer is only added if cast.channel.send() is called...message before send() will be dropped.\n\nDoes it mean that we add ext observer when CastMediaSinkSerivceImpl opens cast channel? If so, want to clarify how should ext work if browser side open / close channels.\n\n1. browser side opens channel 1, and 2\n2. ext registered cast.channel.onError, cast.channel.onMessage event listeners\n3. channel 1 has error, channel 2 has message (not sure if this will happen), but ext does not call cast.channel.open() or cast.channel.send() or cast.channel.close(). Should we still dispatch onError, onMessage events to ext?\n\nI think we should not, since ext does not know cast channel 1, 2, or open / send message on them. It seems a little strange to invoke ext onError, onMessage with some channels ext does not know. That is why adding observer in cast.channel.send().\n\nGlad to change if it does not make sense :)",
+      "parentUuid": "3e0826a9_34ab5929",
+      "revId": "dae9c1fe16b42e9fe0597e11eee11ae26e50e0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
