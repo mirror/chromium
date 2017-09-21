@@ -1,0 +1,105 @@
+/* Copyright (c) 2013 The Chromium Authors. All rights reserved.
+   Use of this source code is governed by a BSD-style license that can be
+  found in the LICENSE file. */
+
+/* Test Namespace productions
+
+Run with --test to generate an AST and verify that all comments accurately
+reflect the state of the Nodes.
+
+ERROR Error String
+This comment signals that a error of <Error String> is generated.  The error
+is not assigned to a node, but are expected in order.
+
+TREE
+Type(Name)
+  Type(Name)
+  Type(Name)
+    Type(Name)
+    ...
+This comment signals that a tree of nodes matching the BUILD comment
+symatics should exist.  This is an exact match.
+*/
+
+
+/** TREE
+ *Namespace(MyNamespace)
+ */
+namespace MyNamespace { };
+
+/** TREE
+ *Namespace(MyNamespace2)
+ *  Operation(fooLong)
+ *    Arguments()
+ *    Type()
+ *      PrimitiveType(long)
+ *  Operation(voidArgClampLong)
+ *    Arguments()
+ *      Argument(arg)
+ *        Type()
+ *          PrimitiveType(long)
+ *          ExtAttributes()
+ *            ExtAttribute(Clamp)
+ *    Type()
+ *      PrimitiveType(void)
+ */
+namespace MyNamespace2 {
+  long fooLong();
+  void voidArgClampLong([Clamp] long arg);
+};
+
+/** TREE
+ *Namespace(MyNamespaceMissingArgument)
+ *  Operation(foo)
+ *    Arguments()
+ *      Argument(arg)
+ *        Type()
+ *          StringType(DOMString)
+ *      Error(Missing argument.)
+ *    Type()
+ *      PrimitiveType(void)
+ */
+namespace MyNamespaceMissingArgument {
+  void foo(DOMString arg, );
+};
+
+/** TREE
+ *Namespace(VectorUtils)
+ *  Attribute(unit)
+ *    READONLY: True
+ *    Type()
+ *      Typeref(Vector)
+ *  Operation(dotProduct)
+ *    Arguments()
+ *      Argument(x)
+ *        Type()
+ *          Typeref(Vector)
+ *      Argument(y)
+ *        Type()
+ *          Typeref(Vector)
+ *    Type()
+ *      PrimitiveType(double)
+ *  Operation(crossProduct)
+ *    Arguments()
+ *      Argument(x)
+ *        Type()
+ *          Typeref(Vector)
+ *      Argument(y)
+ *        Type()
+ *          Typeref(Vector)
+ *    Type()
+ *      Typeref(Vector)
+ *  Error(Unexpected ";" after "]".)
+ */
+namespace VectorUtils {
+  readonly attribute Vector unit;
+  double dotProduct(Vector x, Vector y);
+  Vector crossProduct(Vector x, Vector y);
+  [Clamp];
+};
+
+/** TREE
+ *Error(Unexpected ";" after "{".)
+ */
+namespace NameSpaceError {
+  ;
