@@ -11,10 +11,14 @@ source_set("test_support") {
   testonly = true
 
   sources = [
+    "black_hole_log_sink.cc",
+    "black_hole_log_sink.h",
     "download_params_utils.cc",
     "download_params_utils.h",
     "empty_client.cc",
     "empty_client.h",
+    "empty_logger.cc",
+    "empty_logger.h",
     "entry_utils.cc",
     "entry_utils.h",
     "mock_client.cc",
@@ -23,6 +27,8 @@ source_set("test_support") {
     "mock_controller.h",
     "mock_download_service.cc",
     "mock_download_service.h",
+    "mock_log_sink.cc",
+    "mock_log_sink.h",
     "mock_model_client.cc",
     "mock_model_client.h",
     "noop_store.cc",

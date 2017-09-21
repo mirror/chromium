@@ -15,6 +15,7 @@
 #include "components/download/internal/startup_status.h"
 #include "components/download/internal/stats.h"
 #include "components/download/internal/test/download_params_utils.h"
+#include "components/download/internal/test/empty_logger.h"
 #include "components/download/internal/test/mock_controller.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -35,10 +36,11 @@ class DownloadServiceImplTest : public testing::Test {
 
   void SetUp() override {
     auto config = base::MakeUnique<Configuration>();
+    auto logger = base::MakeUnique<test::EmptyLogger>();
     auto controller = base::MakeUnique<test::MockController>();
     controller_ = controller.get();
-    service_ = base::MakeUnique<DownloadServiceImpl>(std::move(config),
-                                                     std::move(controller));
+    service_ = base::MakeUnique<DownloadServiceImpl>(
+        std::move(config), std::move(logger), std::move(controller));
   }
 
  protected:
