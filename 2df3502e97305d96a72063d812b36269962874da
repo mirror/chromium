@@ -16,6 +16,24 @@
       "revId": "2df3502e97305d96a72063d812b36269962874da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b036e6_e0b5d0e3",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-21T01:59:40Z",
+      "side": 1,
+      "message": "also not sure if there can be multiple vary headers, the value is a comma delimited set of header names, but idk how multiples headers should be handled, will also look into that",
+      "parentUuid": "4a6ea4ae_a3eb87d6",
+      "revId": "2df3502e97305d96a72063d812b36269962874da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
