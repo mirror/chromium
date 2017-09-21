@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e1f53d_0aab29be",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "nit: fill 80 chars",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdc25e7_62d1c03c",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "nit: this section is a little confusing to me. Maybe the idea to convey is that public functions of PermissionManager take \"actual\" origins but internally the origin is converted to a canonicalized origin.",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da7b214_1befba03",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "nit: the embedding origin should just be the local NTP URL too I think. Though it won\u0027t have any impact.",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec53fe1c_5014ac0c",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "There\u0027s a flag switches::kUseFakeDeviceForMediaStream, does that do the trick?",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089122f3_9e1b3ecd",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "nit: same here, this should be the local ntp URL",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

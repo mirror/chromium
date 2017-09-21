@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "8c15d8bc_33eb44cc",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "That seems right. The patterns come from content settings, which would be the google eTLD+1.\n\nWhat I meant earlier by \"it shouldn\u0027t be needed\" is that I think this function is used by the permissions API to detect changes to the permission status and that probably isn\u0027t ever used by the NTP. But I agree that it\u0027s probably better to have it anyway.",
+      "parentUuid": "11ba6af1_6b08cdee",
+      "range": {
+        "startLine": 529,
+        "startChar": 48,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c1b79d_d93acebc",
         "filename": "chrome/browser/permissions/permission_manager.h",
         "patchSetId": 1
@@ -184,6 +208,24 @@
       "side": 1,
       "message": "Comment added, to the best of my understanding. Improvements welcome :)\n\nIt can\u0027t be static because it needs |profile_| to get the Google base URL.",
       "parentUuid": "76c1b79d_d93acebc",
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1ef0e12_55978dca",
+        "filename": "chrome/browser/permissions/permission_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-21T02:03:59Z",
+      "side": 1,
+      "message": "Ah right, that makes sense. Thanks for the detailed comment.",
+      "parentUuid": "9bdd05ad_f3263f02",
       "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
