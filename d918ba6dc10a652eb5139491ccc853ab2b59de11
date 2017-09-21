@@ -281,6 +281,30 @@
       "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ba69659_d7bc2dd3",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-21T21:00:36Z",
+      "side": 1,
+      "message": "Generated mojo binding code is using base::Closure/Callback. Never mind then.",
+      "parentUuid": "f3a48669_283238bc",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d918ba6dc10a652eb5139491ccc853ab2b59de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
