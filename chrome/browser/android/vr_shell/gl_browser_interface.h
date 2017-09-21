@@ -20,9 +20,7 @@ class WebInputEvent;
 
 namespace vr_shell {
 
-// An interface for the GL thread to communicate with the rest of the system
-// (UI, VrShell, etc). Many of the functions in this interface are proxies to
-// methods on VrShell.
+// The interface between the GL subsystem and the browser (VrShell).
 class GlBrowserInterface {
  public:
   virtual ~GlBrowserInterface() = default;
@@ -30,18 +28,11 @@ class GlBrowserInterface {
   virtual void ContentSurfaceChanged(jobject surface) = 0;
   virtual void GvrDelegateReady(gvr::ViewerType viewer_type) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
-  virtual void AppButtonGesturePerformed(
-      vr::UiInterface::Direction direction) = 0;
-  virtual void AppButtonClicked() = 0;
   virtual void ProcessContentGesture(
       std::unique_ptr<blink::WebInputEvent> event) = 0;
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
-  virtual void OnGlInitialized(unsigned int content_texture_id) = 0;
-  virtual void OnWebVrFrameAvailable() = 0;
-  virtual void OnWebVrTimedOut() = 0;
-  virtual void OnProjMatrixChanged(const gfx::Transform& proj_matrix) = 0;
 };
 
 }  // namespace vr_shell
