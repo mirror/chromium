@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "2551dd16_04a6debc",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-21T18:32:46Z",
+      "side": 1,
+      "message": "Reintroduced include-subdomains.\n\nI also used it for expect-staple-part, not sure if you object to using it there since you didn\u0027t mention it?",
+      "parentUuid": "7fa72541_fc5e7df7",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e9e632_1c09fb5e",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -401,6 +419,24 @@
       "side": 1,
       "message": "Could we write it as 4BIT, then? (Similar to 7BIT for the offset above.)",
       "parentUuid": "f1d0f61b_44c0325d",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec0fe8d4_dcdf8fdd",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-21T18:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e01bbf6_80415286",
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

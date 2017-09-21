@@ -16,6 +16,24 @@
       "revId": "2726c25d276a4b8b9484af28b0c288b57902a223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff97bb0_63e86d8e",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-21T18:32:46Z",
+      "side": 1,
+      "message": "Yes, the tree only supports leaf values 0-127 (ASCII characters) but not extended ASCII. Added a slightly modified version of your text. Thanks!",
+      "parentUuid": "948b82c8_bde1921b",
+      "revId": "2726c25d276a4b8b9484af28b0c288b57902a223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
