@@ -642,9 +642,6 @@ void LayerImpl::SetElementId(ElementId element_id) {
   if (element_id == element_id_)
     return;
 
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"), "LayerImpl::SetElementId",
-               "element", element_id.AsValue().release());
-
   layer_tree_impl_->RemoveFromElementMap(this);
   element_id_ = element_id;
   layer_tree_impl_->AddToElementMap(this);
@@ -655,9 +652,6 @@ void LayerImpl::SetElementId(ElementId element_id) {
 void LayerImpl::SetMutableProperties(uint32_t properties) {
   if (mutable_properties_ == properties)
     return;
-
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-               "LayerImpl::SetMutableProperties", "properties", properties);
 
   mutable_properties_ = properties;
   // If this layer is already in the element map, update its properties.
