@@ -29,6 +29,11 @@ class ClientServiceMap {
 
   void Clear() { client_to_service_.clear(); }
 
+  bool IsServiceIDInvalid(ClientType client_id, ServiceType* service_id) const {
+    auto iter = client_to_service_.find(client_id);
+    return iter != client_to_service_.end() || client_id == 0;
+  }
+
   bool GetServiceID(ClientType client_id, ServiceType* service_id) const {
     auto iter = client_to_service_.find(client_id);
     if (iter != client_to_service_.end()) {
