@@ -118,6 +118,30 @@
       "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6722d647_82ccb6e2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-21T12:13:23Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/677197",
+      "parentUuid": "1b6e84ea_162717cf",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
