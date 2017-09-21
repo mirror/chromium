@@ -591,7 +591,7 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
     HTMLInputElement& input = toHTMLInputElement(*GetNode());
     const AtomicString& type = input.type();
     if (input.DataList())
-      return kComboBoxRole;
+      return kTextFieldWithComboBoxRole;
     if (type == InputTypeNames::button) {
       if ((GetNode()->parentNode() &&
            isHTMLMenuElement(GetNode()->parentNode())) ||
@@ -869,7 +869,7 @@ bool AXNodeObject::IsTextControl() const {
 
   switch (RoleValue()) {
     case kTextFieldRole:
-    case kComboBoxRole:
+    case kTextFieldWithComboBoxRole:
     case kSearchBoxRole:
     // TODO(dmazzoni): kSpinButtonRole might need to be removed.
     case kSpinButtonRole:
@@ -1249,7 +1249,8 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
     case kCheckBoxRole:
     case kColorWellRole:
     case kColumnHeaderRole:
-    case kComboBoxRole:
+    case kComboBoxGroupingRole:
+    case kComboBoxMenuButtonRole:
     case kDateRole:
     case kDateTimeRole:
     case kGridRole:
@@ -1266,6 +1267,7 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
     case kSpinButtonRole:
     case kSwitchRole:
     case kTextFieldRole:
+    case kTextFieldWithComboBoxRole:
     case kToggleButtonRole:
     case kTreeGridRole:
       return true;
@@ -1446,16 +1448,24 @@ unsigned AXNodeObject::HierarchicalLevel() const {
   return level;
 }
 
+// TODO: rename this just AutoComplete, it's not only ARIA.
 String AXNodeObject::AriaAutoComplete() const {
-  if (!IsARIATextControl())
-    return String();
+  if (IsARIATextControl()) {
+    const AtomicString& aria_auto_complete =
+        GetAOMPropertyOrARIAAttribute(AOMStringProperty::kAutocomplete)
+            .DeprecatedLower();
+    // Illegal values must be passed through, according to CORE-AAM.
+    if (!aria_auto_complete.IsNull())
+      return aria_auto_complete == "none" ? String() : aria_auto_complete;
+  }
 
-  const AtomicString& aria_auto_complete =
-      GetAOMPropertyOrARIAAttribute(AOMStringProperty::kAutocomplete)
-          .DeprecatedLower();
+  if (GetNode() && isHTMLInputElement(*GetNode())) {
+    HTMLInputElement& input = toHTMLInputElement(*GetNode());
+    if (input.DataList())
+      return "list";
+  }
 
-  // Illegal values must be passed through, according to CORE-AAM.
-  return aria_auto_complete == "none" ? String() : aria_auto_complete;
+  return String();
 }
 
 namespace {
@@ -1525,7 +1535,8 @@ AccessibilityOrientation AXNodeObject::Orientation() const {
     orientation = kAccessibilityOrientationVertical;
 
   switch (RoleValue()) {
-    case kComboBoxRole:
+    case kComboBoxGroupingRole:
+    case kComboBoxMenuButtonRole:
     case kListBoxRole:
     case kMenuRole:
     case kScrollBarRole:
