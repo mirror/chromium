@@ -1296,8 +1296,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewSafeAreaInsetsDidChange];
   // Gate this behind iPhone X, since it's currently the only device that
   // needs layout updates here after startup.
-  if (IsIPhoneX())
+  if (IsIPhoneX()) {
     [self setUpViewLayout];
+    [_toolbarController layoutSubviews];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

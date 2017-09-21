@@ -212,12 +212,12 @@ CGRect RectShiftedUpAndResizedForStatusBar(CGRect rect) {
   return RectShiftedUpForStatusBar(rect);
 }
 
-CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
-  if (IsIPadIdiom())
-    return rect;
-  rect.size.height -= StatusBarHeight();
-  return RectShiftedDownForStatusBar(rect);
-}
+//CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
+//  if (IsIPadIdiom())
+//    return rect;
+//  rect.size.height -= StatusBarHeight();
+//  return RectShiftedDownForStatusBar(rect);
+//}
 
 }  // namespace
 
@@ -382,6 +382,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // this method.
   _webToolbar =
       [[UIView alloc] initWithFrame:LayoutRectGetRect(kWebToolbarFrame[idiom])];
+  [_webToolbar setTranslatesAutoresizingMaskIntoConstraints:NO];
   UIColor* textColor =
       _incognito
           ? [UIColor whiteColor]
@@ -422,15 +423,14 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
   [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                                   UIViewAutoresizingFlexibleTopMargin |
-                                   UIViewAutoresizingFlexibleBottomMargin];
+                                   UIViewAutoresizingFlexibleTopMargin];
   // Note that the forward button gets repositioned when -layoutOmnibox is
   // called.
   _forwardButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kForwardButtonFrame[idiom])];
   [_forwardButton
       setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                          UIViewAutoresizingFlexibleBottomMargin];
+                          UIViewAutoresizingFlexibleTopMargin];
 
   [_webToolbar addSubview:_backButton];
   [_webToolbar addSubview:_forwardButton];
@@ -440,7 +440,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   _omniboxBackground = [[UIImageView alloc] initWithFrame:omniboxRect];
   [_omniboxBackground
       setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleBottomMargin];
+                          UIViewAutoresizingFlexibleTopMargin];
 
   if (idiom == IPAD_IDIOM) {
     [_webToolbar addSubview:_omniboxBackground];
@@ -589,7 +589,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       _incognito ? @"omnibox_transparent_background" : @"omnibox_background";
   [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
   [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleBottomMargin];
+                                UIViewAutoresizingFlexibleTopMargin];
   [_reloadButton addTarget:self
                     action:@selector(cancelOmniboxEdit)
           forControlEvents:UIControlEventTouchUpInside];
@@ -610,9 +610,20 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
   // Resize the container to match the available area.
   [self.view addSubview:_webToolbar];
-  [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                   UIViewAutoresizingFlexibleBottomMargin];
-  [_webToolbar setFrame:[self specificControlsArea]];
+//  [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+//                                   UIViewAutoresizingFlexibleBottomMargin];
+//  [_webToolbar setFrame:[self specificControlsArea]];
+  UILayoutGuide* layoutguide = [self specificControlsLayoutGuide];
+  [NSLayoutConstraint activateConstraints:@[
+                    [_webToolbar.leadingAnchor
+                     constraintEqualToAnchor:layoutguide.leadingAnchor],
+                    [_webToolbar.trailingAnchor
+                     constraintEqualToAnchor:layoutguide.trailingAnchor],
+                    [_webToolbar.topAnchor constraintEqualToAnchor:layoutguide.topAnchor],
+                    [_webToolbar.bottomAnchor
+                     constraintEqualToAnchor:layoutguide.bottomAnchor]
+                    ]];
+
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       _omniBox, _browserState, preloader, self, self, self.dispatcher);
 
@@ -862,7 +873,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     }
 
     // Re-layout toolbar and omnibox.
-    [_webToolbar setFrame:[self specificControlsArea]];
+//    [_webToolbar setFrame:[self specificControlsArea]];
     [self layoutOmnibox];
   }
 }
@@ -1025,6 +1036,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // Animate web toolbar: Maintain the trailing padding so that toolbar buttons
   // on the trailing side have enough room, and ensure that the height is at
   // most the specific control area's height.
+
   CGRect specificControlsArea = [self specificControlsArea];
   CGFloat webToolbarTrailingPadding =
       CGRectGetTrailingLayoutOffsetInBoundingRect(specificControlsArea,
@@ -1345,6 +1357,23 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
   return frame;
 }
+
+/*
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  if (IsIPhoneX()) {
+    CGRect omniboxBackgroundFrame = [_omniboxBackground frame];
+    omniboxBackgroundFrame.origin.y = LayoutRectGetRect(kOmniboxFrame[IPHONE_IDIOM]).origin.y + StatusBarHeight();
+    [_omniboxBackground setFrame:omniboxBackgroundFrame];
+
+    CGRect clippingViewFrame = [_clippingView frame];
+    clippingViewFrame.size.height = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).size.height;
+    clippingViewFrame.origin.y = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).origin.y;
+    [_clippingView setFrame:clippingViewFrame];
+    [self layoutOmnibox];
+  }
+}*/
+
 
 #pragma mark -
 #pragma mark ToolbarFrameDelegate methods.
@@ -1887,10 +1916,10 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     // toolbar controls will be hidden below). Temporarily suppress autoresizing
     // to avoid interfering with the omnibox animation.
     [_webToolbar setAutoresizesSubviews:NO];
-    CGRect expandedFrame =
-        RectShiftedDownAndResizedForStatusBar(self.view.bounds);
-    [_webToolbar
-        setFrame:growOmnibox ? expandedFrame : [self specificControlsArea]];
+//    CGRect expandedFrame =
+//        RectShiftedDownAndResizedForStatusBar(self.view.bounds);
+//    [_webToolbar
+//        setFrame:growOmnibox ? expandedFrame : [self specificControlsArea]];
     [_webToolbar setAutoresizesSubviews:YES];
 
     // Compute new omnibox layout after the web toolbar is resized.
