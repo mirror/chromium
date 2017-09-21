@@ -87,6 +87,24 @@
       "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6794b9_f6748fd0",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-21T00:55:10Z",
+      "side": 1,
+      "message": "Did you modify TestPageHandler to properly call methodCalled() when the method is called? In theory the prod code should always execute before your test\u0027s callback, such that you can do assertions.\n\nIt would help if you upload a patch or separate CL that showcases the problem you are facing.",
+      "parentUuid": "f01c05d9_4c9a6836",
+      "revId": "05ca299403b93b0087c7430dcde4e411f959eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
