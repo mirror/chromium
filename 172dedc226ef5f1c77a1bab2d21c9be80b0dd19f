@@ -34,6 +34,24 @@
       "revId": "172dedc226ef5f1c77a1bab2d21c9be80b0dd19f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78ce6fe_6d6353ab",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T22:04:20Z",
+      "side": 1,
+      "message": "I removed this logic, because it\u0027s set from DownloadUrlParameters, the caller of DownloadManager::DownloadUrl can control the behavior.\n\nI think only the initial request will set this flag, and all the resumption(sending new http request) or parallel requests will not have this flag.\n\nEdge cases:\n1. Initial request is 404, then stop in the middle. \n\nA. If the content is available again on the server, since the first 404 should not have etag, the offset of resumption request will be set to 0 in DownloadItemImpl::ResumeInterruptedDownload, since we don\u0027t set the fetch_error_body flag, the file can be successfully downloaded.\n\nB. If resumption response is still 404, the offset will be set to 0 similarly, but we don\u0027t set the flag on resumption, so it will report download failure. (This is the only draw back for download service, but acceptable?)\n\n2. Initial request is 200, then stop in the middle. The resumption request is 404, but without setting the |fetch_error_body| flag, the behavior will be the same and download will fail.\n\n3. Initial request is 200, then we send parallel request, one of the request is 404, but without setting the flag, the behavior will be the same, download may fail based on parallel download logic.\n\nwdyt?",
+      "parentUuid": "c578ed1f_d62d0653",
+      "revId": "172dedc226ef5f1c77a1bab2d21c9be80b0dd19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
