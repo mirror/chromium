@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c42dc7_d85b8fea",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T00:59:03Z",
+      "side": 1,
+      "message": "Why is this needed in addition to Hide()? (comment? or remove it?)\n\n(I\u0027m guessing.. something to with kInitialOpacity being 0.1 instead of 0.0, - but the hide should always hide completely, and the Show() above is preceded by AnimationProgressed() which should set it again)",
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51a983c_47bb822d",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T00:59:03Z",
+      "side": 1,
+      "message": "Comment about this? (Was this to fix the test on Mac?). ExclusiveAccessBubbleViews doesn\u0027t rely on a separate boolean. Is the framework code returning something weird/buggy on Mac?\n\nOr perhaps comment on IsVisible(), explaining how it differs from popup_-\u003eIsVisible(). It\u0027s not obvious to me (I\u0027m guessing something to do with opacity and reversible animations).",
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57792673_2c853eae",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T00:59:03Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr;",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
