@@ -6,7 +6,10 @@
 
 #include <stdint.h>
 #include <algorithm>
+#include <fstream>
+#include <iostream>
 #include <set>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
@@ -85,18 +88,9 @@ bool DoTitlesDiffer(const MostVisitedURLList& old_list,
 const size_t kMaxTempTopImages = 8;
 
 const int kDaysOfHistory = 90;
-// Time from startup to first HistoryService query.
-const int64_t kUpdateIntervalSecs = 15;
-// Intervals between requests to HistoryService.
-const int64_t kMinUpdateIntervalMinutes = 1;
-#if defined(OS_IOS) || defined(OS_ANDROID)
-// On mobile, having the max at 60 minutes results in the topsites database
-// being not updated often enough since the app isn't usually running for long
-// stretches of time.
-const int64_t kMaxUpdateIntervalMinutes = 5;
-#else
-const int64_t kMaxUpdateIntervalMinutes = 60;
-#endif  // defined(OS_IOS) || defined(OS_ANDROID)
+
+// The delay before querying top sites.
+constexpr base::TimeDelta kDelayForQueries = base::TimeDelta::FromSeconds(5);
 
 // Use 100 quality (highest quality) because we're very sensitive to
 // artifacts for these small sized, highly detailed images.
@@ -118,7 +112,6 @@ TopSitesImpl::TopSitesImpl(PrefService* pref_service,
     : backend_(nullptr),
       cache_(base::MakeUnique<TopSitesCache>()),
       thread_safe_cache_(base::MakeUnique<TopSitesCache>()),
-      last_num_urls_changed_(0),
       prepopulated_pages_(prepopulated_pages),
       pref_service_(pref_service),
       history_service_(history_service),
@@ -382,14 +375,15 @@ bool TopSitesImpl::AddForcedURL(const GURL& url, const base::Time& time) {
 
 void TopSitesImpl::OnNavigationCommitted(const GURL& url) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (!loaded_ || IsNonForcedFull())
+  if (!loaded_)
     return;
 
-  if (!cache_->IsKnownURL(url) && can_add_url_to_history_.Run(url)) {
-    // To avoid slamming history we throttle requests when the url updates. To
-    // do otherwise negatively impacts perf tests.
-    RestartQueryForTopSitesTimer(GetUpdateDelay());
-  }
+  std::ofstream out("C:\\Users\\chengx\\Documents\\file.txt");
+  out << url.spec();
+  out.close();
+
+  if (can_add_url_to_history_.Run(url))
+    InitializeTimerForQueryingTopSites(kDelayForQueries);
 }
 
 void TopSitesImpl::ShutdownOnUIThread() {
@@ -613,10 +607,6 @@ void TopSitesImpl::AddTemporaryThumbnail(const GURL& url,
   temp_images_.push_back(image);
 }
 
-void TopSitesImpl::TimerFired() {
-  StartQueryForMostVisited();
-}
-
 // static
 int TopSitesImpl::GetRedirectDistanceForURL(const MostVisitedURL& most_visited,
                                             const GURL& url) {
@@ -717,16 +707,6 @@ std::string TopSitesImpl::GetURLHash(const GURL& url) {
   return base::MD5String(url.spec());
 }
 
-base::TimeDelta TopSitesImpl::GetUpdateDelay() const {
-  if (cache_->top_sites().size() <= prepopulated_pages_.size())
-    return base::TimeDelta::FromSeconds(30);
-
-  int64_t range = kMaxUpdateIntervalMinutes - kMinUpdateIntervalMinutes;
-  int64_t minutes = kMaxUpdateIntervalMinutes -
-                    last_num_urls_changed_ * range / cache_->top_sites().size();
-  return base::TimeDelta::FromMinutes(minutes);
-}
-
 void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
                                const CallLocation location) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -766,8 +746,6 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
   if (!should_notify_observers) {
     should_notify_observers = DoTitlesDiffer(cache_->top_sites(), top_sites);
   }
-
-  last_num_urls_changed_ = delta.added.size() + delta.moved.size();
 
   // We always do the following steps (setting top sites in cache, and resetting
   // thread safe cache ...) as this method is invoked during startup at which
@@ -814,9 +792,6 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
       NotifyTopSitesChanged(TopSitesObserver::ChangeReason::MOST_VISITED);
   }
 
-  // Restart the timer that queries history for top sites. This is done to
-  // ensure we stay in sync with history.
-  RestartQueryForTopSitesTimer(GetUpdateDelay());
 }
 
 int TopSitesImpl::num_results_to_request_from_history() const {
@@ -874,15 +849,13 @@ void TopSitesImpl::ResetThreadSafeImageCache() {
   thread_safe_cache_->SetThumbnails(cache_->images());
 }
 
-void TopSitesImpl::RestartQueryForTopSitesTimer(base::TimeDelta delta) {
-  if (timer_.IsRunning() && ((timer_start_time_ + timer_.GetCurrentDelay()) <
-                             (base::TimeTicks::Now() + delta))) {
-    return;
+void TopSitesImpl::InitializeTimerForQueryingTopSites(base::TimeDelta delta) {
+  if (timer_.IsRunning()) {
+    timer_.Reset();
+  } else {
+    timer_.Start(FROM_HERE, delta, this,
+                 &TopSitesImpl::StartQueryForMostVisited);
   }
-
-  timer_start_time_ = base::TimeTicks::Now();
-  timer_.Stop();
-  timer_.Start(FROM_HERE, delta, this, &TopSitesImpl::TimerFired);
 }
 
 void TopSitesImpl::OnGotMostVisitedThumbnails(
@@ -901,8 +874,7 @@ void TopSitesImpl::OnGotMostVisitedThumbnails(
   MoveStateToLoaded();
 
   // Start a timer that refreshes top sites from history.
-  RestartQueryForTopSitesTimer(
-      base::TimeDelta::FromSeconds(kUpdateIntervalSecs));
+  InitializeTimerForQueryingTopSites(kDelayForQueries);
 }
 
 void TopSitesImpl::OnTopSitesAvailableFromHistory(
@@ -939,7 +911,6 @@ void TopSitesImpl::OnURLsDeleted(HistoryService* history_service,
     }
     SetTopSites(new_top_sites, CALL_LOCATION_FROM_OTHER_PLACES);
   }
-  StartQueryForMostVisited();
 }
 
 }  // namespace history

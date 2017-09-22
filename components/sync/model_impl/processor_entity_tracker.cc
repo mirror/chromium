@@ -217,7 +217,7 @@ void ProcessorEntityTracker::ReceiveCommitResponse(
     const CommitResponseData& data) {
   DCHECK_EQ(metadata_.client_tag_hash(), data.client_tag_hash);
   DCHECK_GT(data.sequence_number, metadata_.acked_sequence_number());
-  DCHECK_GT(data.response_version, metadata_.server_version());
+  /*DCHECK_GT(data.response_version, metadata_.server_version());*/
 
   // The server can assign us a new ID in a commit response.
   metadata_.set_server_id(data.id);
