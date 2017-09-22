@@ -18,6 +18,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "dbus/bus.h"
 #include "dbus/dbus_statistics.h"
+#include "dbus/error.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
 #include "dbus/scoped_dbus_error.h"
@@ -74,7 +75,7 @@ ObjectProxy::~ObjectProxy() {
 std::unique_ptr<Response> ObjectProxy::CallMethodAndBlockWithErrorDetails(
     MethodCall* method_call,
     int timeout_ms,
-    ScopedDBusError* error) {
+    base::Optional<Error>* error_out) {
   bus_->AssertOnDBusThread();
 
   if (!bus_->Connect() ||
@@ -85,22 +86,24 @@ std::unique_ptr<Response> ObjectProxy::CallMethodAndBlockWithErrorDetails(
   DBusMessage* request_message = method_call->raw_message();
 
   // Send the message synchronously.
+  ScopedDBusError error;
   const base::TimeTicks start_time = base::TimeTicks::Now();
   DBusMessage* response_message =
-      bus_->SendWithReplyAndBlock(request_message, timeout_ms, error->get());
+      bus_->SendWithReplyAndBlock(request_message, timeout_ms, error.get());
   // Record if the method call is successful, or not. 1 if successful.
   UMA_HISTOGRAM_ENUMERATION("DBus.SyncMethodCallSuccess",
                             response_message ? 1 : 0,
                             kSuccessRatioHistogramMaxValue);
+  *error_out = error.is_set()
+                   ? base::make_optional(Error(error.name(), error.message()))
+                   : base::nullopt;
   statistics::AddBlockingSentMethodCall(service_name_,
                                         method_call->GetInterface(),
                                         method_call->GetMember());
 
   if (!response_message) {
-    LogMethodCallFailure(method_call->GetInterface(),
-                         method_call->GetMember(),
-                         error->is_set() ? error->name() : "unknown error type",
-                         error->is_set() ? error->message() : "");
+    LogMethodCallFailure(method_call->GetInterface(), method_call->GetMember(),
+                         *error_out);
     return std::unique_ptr<Response>();
   }
   // Record time spent for the method call. Don't include failures.
@@ -113,7 +116,7 @@ std::unique_ptr<Response> ObjectProxy::CallMethodAndBlockWithErrorDetails(
 std::unique_ptr<Response> ObjectProxy::CallMethodAndBlock(
     MethodCall* method_call,
     int timeout_ms) {
-  ScopedDBusError error;
+  base::Optional<Error> error;
   return CallMethodAndBlockWithErrorDetails(method_call, timeout_ms, &error);
 }
 
@@ -557,21 +560,22 @@ DBusHandlerResult ObjectProxy::HandleMessageThunk(
 void ObjectProxy::LogMethodCallFailure(
     const base::StringPiece& interface_name,
     const base::StringPiece& method_name,
-    const base::StringPiece& error_name,
-    const base::StringPiece& error_message) const {
-  if (ignore_service_unknown_errors_ &&
-      (error_name == kErrorServiceUnknown || error_name == kErrorObjectUnknown))
+    const base::Optional<Error>& error) const {
+  if (ignore_service_unknown_errors_ && error &&
+      (error->name() == kErrorServiceUnknown ||
+       error->name() == kErrorObjectUnknown))
     return;
 
   std::ostringstream msg;
   msg << "Failed to call method: " << interface_name << "." << method_name
-      << ": object_path= " << object_path_.value()
-      << ": " << error_name << ": " << error_message;
+      << ": object_path= " << object_path_.value() << ": "
+      << (error ? error->name() : "unknown error type") << ": "
+      << (error ? error->message() : "");
 
   // "UnknownObject" indicates that an object or service is no longer available,
   // e.g. a Shill network service has gone out of range. Treat these as warnings
   // not errors.
-  if (error_name == kErrorObjectUnknown)
+  if (error && error->name() == kErrorObjectUnknown)
     LOG(WARNING) << msg.str();
   else
     LOG(ERROR) << msg.str();
@@ -587,18 +591,17 @@ void ObjectProxy::OnCallMethod(const std::string& interface_name,
     std::move(response_callback).Run(response);
     return;
   }
+
   // Method call failed.
-  std::string error_name;
-  std::string error_message;
+  base::Optional<Error> error;
   if (error_response) {
     // Error message may contain the error message as string.
-    error_name = error_response->GetErrorName();
+    std::string error_message;
     MessageReader reader(error_response);
     reader.PopString(&error_message);
-  } else {
-    error_name = "unknown error type";
+    error.emplace(error_response->GetErrorName(), error_message);
   }
-  LogMethodCallFailure(interface_name, method_name, error_name, error_message);
+  LogMethodCallFailure(interface_name, method_name, error);
 
   std::move(response_callback).Run(nullptr);
 }

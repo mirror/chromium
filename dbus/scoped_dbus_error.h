@@ -12,6 +12,7 @@
 namespace dbus {
 
 // Utility class to ensure that DBusError is freed.
+// Exported for testing purpose in dbus/.
 class CHROME_DBUS_EXPORT ScopedDBusError {
  public:
   // Do not inline methods that call dbus_error_xxx() functions.

@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_BLOCKING_METHOD_CALLER_H_
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/synchronization/waitable_event.h"
 #include "chromeos/chromeos_export.h"
 #include "dbus/message.h"
@@ -13,8 +14,8 @@
 namespace dbus {
 
 class Bus;
+class Error;
 class ObjectProxy;
-class ScopedDBusError;
 
 }  // namespace dbus
 
@@ -36,7 +37,7 @@ class CHROMEOS_EXPORT BlockingMethodCaller {
   // returns null in case of an error.
   std::unique_ptr<dbus::Response> CallMethodAndBlockWithError(
       dbus::MethodCall* method_call,
-      dbus::ScopedDBusError* error_out);
+      base::Optional<dbus::Error>* error_out);
 
  private:
   dbus::Bus* bus_;

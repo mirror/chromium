@@ -94,7 +94,7 @@ class BlockingMethodCallerTest : public testing::Test {
   std::unique_ptr<dbus::Response> CreateMockProxyResponse(
       dbus::MethodCall* method_call,
       int timeout_ms,
-      dbus::ScopedDBusError* error) {
+      base::Optional<dbus::Error>* error) {
     if (method_call->GetInterface() == "org.chromium.TestInterface" &&
         method_call->GetMember() == "Echo") {
       dbus::MessageReader reader(method_call);

@@ -111,8 +111,10 @@ class MockTest : public testing::Test {
   }
 
   std::unique_ptr<Response> CreateMockProxyResponseWithErrorDetails(
-      MethodCall* method_call, int timeout_ms, ScopedDBusError* error) {
-    dbus_set_error(error->get(), DBUS_ERROR_NOT_SUPPORTED, "Not implemented");
+      MethodCall* method_call,
+      int timeout_ms,
+      base::Optional<Error>* error) {
+    error->emplace(DBUS_ERROR_NOT_SUPPORTED, "Not implemented");
     return nullptr;
   }
 
@@ -174,16 +176,16 @@ TEST_F(MockTest, CallMethodAndBlockWithErrorDetails) {
   // Create a method call.
   MethodCall method_call("org.chromium.TestInterface", "Echo");
 
-  ScopedDBusError error;
+  base::Optional<Error> error;
   // Call the method.
   std::unique_ptr<Response> response(proxy->CallMethodAndBlockWithErrorDetails(
       &method_call, ObjectProxy::TIMEOUT_USE_DEFAULT, &error));
 
   // Check the response.
   ASSERT_FALSE(response.get());
-  ASSERT_TRUE(error.is_set());
-  EXPECT_STREQ(DBUS_ERROR_NOT_SUPPORTED, error.name());
-  EXPECT_STREQ("Not implemented", error.message());
+  ASSERT_TRUE(error);
+  EXPECT_EQ(DBUS_ERROR_NOT_SUPPORTED, error->name());
+  EXPECT_EQ("Not implemented", error->message());
 }
 
 // This test demonstrates how to mock an asynchronous method call using the

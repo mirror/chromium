@@ -18,6 +18,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -31,6 +32,7 @@
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "crypto/sha2.h"
 #include "dbus/bus.h"
+#include "dbus/error.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
 #include "dbus/object_proxy.h"
@@ -295,13 +297,13 @@ class SessionManagerClientImpl : public SessionManagerClient {
       std::string* policy_out) override {
     dbus::MethodCall method_call(login_manager::kSessionManagerInterface,
                                  login_manager::kSessionManagerRetrievePolicy);
-    dbus::ScopedDBusError error;
+    base::Optional<dbus::Error> error;
     std::unique_ptr<dbus::Response> response =
         blocking_method_caller_->CallMethodAndBlockWithError(&method_call,
                                                              &error);
     RetrievePolicyResponseType result = RetrievePolicyResponseType::SUCCESS;
-    if (error.is_set() && error.name()) {
-      result = GetResponseTypeBasedOnError(error.name());
+    if (error && !error->name().empty()) {
+      result = GetResponseTypeBasedOnError(error->name());
     }
     if (result == RetrievePolicyResponseType::SUCCESS) {
       ExtractString(login_manager::kSessionManagerRetrievePolicy,
@@ -622,13 +624,13 @@ class SessionManagerClientImpl : public SessionManagerClient {
                                  method_name);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(account_name);
-    dbus::ScopedDBusError error;
+    base::Optional<dbus::Error> error;
     std::unique_ptr<dbus::Response> response =
         blocking_method_caller_->CallMethodAndBlockWithError(&method_call,
                                                              &error);
     RetrievePolicyResponseType result = RetrievePolicyResponseType::SUCCESS;
-    if (error.is_set() && error.name()) {
-      result = GetResponseTypeBasedOnError(error.name());
+    if (error && !error->name().empty()) {
+      result = GetResponseTypeBasedOnError(error->name());
     }
     if (result == RetrievePolicyResponseType::SUCCESS) {
       ExtractString(method_name, response.get(), policy_out);
