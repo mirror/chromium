@@ -2147,6 +2147,10 @@ public class ChromeTabbedActivity
     @Override
     public void onExitVr() {
         super.onExitVr();
+        if (getFullscreenManager() != null
+                && getFullscreenManager().getPersistentFullscreenMode()) {
+            return;
+        }
         mControlContainer.setVisibility(View.VISIBLE);
     }
 
