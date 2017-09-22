@@ -28,10 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
-Network.RequestHTMLView = class extends UI.VBox {
+SourceFrame.HTMLView = class extends UI.VBox {
   /**
    * @param {string} dataURL
    */

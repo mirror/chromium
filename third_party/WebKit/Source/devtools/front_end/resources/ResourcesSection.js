@@ -275,7 +275,7 @@ Resources.FrameResourceTreeElement = class extends Resources.BaseStorageTreeElem
   _preparePreview() {
     if (this._previewPromise)
       return this._previewPromise;
-    var viewPromise = SourceFrame.PreviewFactory.createPreview(this._resource, this._resource.mimeType);
+    var viewPromise = SourceFrame.PreviewFactory.createPreview(this._resource, this._resource.mimeType, null);
     this._previewPromise = viewPromise.then(view => {
       if (view)
         return view;

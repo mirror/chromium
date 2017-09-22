@@ -52,25 +52,20 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
   }
 
   /**
-   * @return {!Promise<?UI.Widget>}
+   * @param {!SDK.NetworkRequest.ContentData} contentData
+   * @return {?string}
    */
-  async _htmlErrorPreview() {
-    var contentData = await this.request.contentData();
-    if (contentData.error)
-      return new UI.EmptyWidget(Common.UIString('Failed to load response data'));
-
+  _errorPageDataURL(contentData) {
     // We can assume the status code has been set already because fetching contentData should wait for request to be
     // finished.
     if (!this.request.hasErrorStatusCode() && this.request.resourceType() !== Common.resourceTypes.XHR)
       return null;
-
     var whitelist = new Set(['text/html', 'text/plain', 'application/xhtml+xml']);
     if (!whitelist.has(this.request.mimeType))
       return null;
 
-    var dataURL = Common.ContentProvider.contentAsDataURL(
+    return Common.ContentProvider.contentAsDataURL(
         contentData.content, this.request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
-    return dataURL ? new Network.RequestHTMLView(dataURL) : null;
   }
 
   /**
@@ -78,12 +73,13 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
    * @return {!Promise<!UI.Widget>}
    */
   async createPreview() {
-    var htmlErrorPreview = await this._htmlErrorPreview();
-    if (htmlErrorPreview)
-      return htmlErrorPreview;
+    var contentData = await this.request.contentData();
+    if (contentData.error)
+      return new UI.EmptyWidget(Common.UIString('Failed to load response data'));
 
     // Try provider before the source view - so JSON and XML are not shown in generic editor
-    var provided = await SourceFrame.PreviewFactory.createPreview(this.request, this.request.mimeType);
+    var provided = await SourceFrame.PreviewFactory.createPreview(
+        this.request, this.request.mimeType, this._errorPageDataURL(contentData));
     if (provided)
       return provided;
 

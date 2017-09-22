@@ -6,9 +6,10 @@ SourceFrame.PreviewFactory = class {
   /**
    * @param {!Common.ContentProvider} provider
    * @param {string} mimeType
+   * @param {?string} dataURL
    * @returns {!Promise<?UI.Widget>}
    */
-  static async createPreview(provider, mimeType) {
+  static async createPreview(provider, mimeType, dataURL) {
     var content = await provider.requestContent();
     if (!content)
       return new UI.EmptyWidget(Common.UIString('Nothing to preview'));
@@ -22,8 +23,10 @@ SourceFrame.PreviewFactory = class {
     if (parsedJSON && typeof parsedJSON.data === 'object')
       return SourceFrame.JSONView.createSearchableView(/** @type {!SourceFrame.ParsedJSON} */ (parsedJSON));
 
-    var resourceType = provider.contentType() || Common.resourceTypes.Other;
+    if (dataURL)
+      return new SourceFrame.HTMLView(dataURL);
 
+    var resourceType = provider.contentType() || Common.resourceTypes.Other;
     if (resourceType.isTextType()) {
       var highlighterType = mimeType.replace(/;.*/, '');  // remove charset
       return SourceFrame.ResourceSourceFrame.createSearchableView(provider, highlighterType);

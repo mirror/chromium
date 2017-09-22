@@ -43,6 +43,7 @@
     "scripts": [
         "SourcesTextEditor.js",
         "FontView.js",
+        "HTMLView.js",
         "ImageView.js",
         "SourceFrame.js",
         "ResourceSourceFrame.js",
