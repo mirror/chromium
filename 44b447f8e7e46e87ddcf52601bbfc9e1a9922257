@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2c401896_c7561804",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T20:54:25Z",
+      "side": 1,
+      "message": "Actually, I should say that the plan is to have the UI render itself eventually, given a platform-specific buffer provider.  At that point, the UI itself will know whether to draw WebVR or not, and a bunch of \"should draw webvr\" should disappear from here.  In theory.",
+      "parentUuid": "dbe3fdf6_7e259a5c",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06c330f8_facf70d5",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 2
