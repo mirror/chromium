@@ -27,7 +27,6 @@ class FakeDeviceCapabilityManager : public cryptauth::DeviceCapabilityManager {
 
   void set_capability_enabled_error_code(std::string error_code) {
     set_capability_enabled_error_code_ = error_code;
-    LOG(ERROR) << set_capability_enabled_error_code_;
   }
 
   void set_is_capability_promotable_error_code(std::string error_code) {
