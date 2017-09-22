@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d27c175f_6d22e48f",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T03:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "383ceb8f_c6279a06",
+      "range": {
+        "startLine": 500,
+        "startChar": 23,
+        "endLine": 500,
+        "endChar": 39
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e09612_1ae3c079",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d225a036_e9e7f6fd",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T03:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6e09612_1ae3c079",
+      "range": {
+        "startLine": 346,
+        "startChar": 10,
+        "endLine": 346,
+        "endChar": 26
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "285ea0b1_667ddd8c",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T03:31:41Z",
+      "side": 1,
+      "message": "Good point! I\u0027ve clarified this.",
+      "parentUuid": "39df076d_a227ab9c",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63c8fe61_faa9794b",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-22T02:53:17Z",
       "side": 1,
       "message": "micro-nit:\nif (arbitrator_)\n  return; \n?",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 21
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63f2552_6e52d7b1",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T03:31:41Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s nicer. Done.",
+      "parentUuid": "63c8fe61_faa9794b",
       "range": {
         "startLine": 196,
         "startChar": 0,
@@ -114,6 +210,30 @@
       "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69083058_2d5947f6",
+        "filename": "device/geolocation/network_location_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T03:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "571df119_04c3b1ea",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 20
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
