@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "6b43e32b_c8a37ec4",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T20:36:34Z",
+      "side": 1,
+      "message": "Need to test for the existence of the results directory before deleting it, otherwise it\u0027ll raise an OSError.",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f9c9a2c_51ba8574",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
