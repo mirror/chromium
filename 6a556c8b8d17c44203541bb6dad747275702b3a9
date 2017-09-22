@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96de72e8_dcb12e84",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-22T02:31:36Z",
+      "side": 1,
+      "message": "MetadataModel is shared across many components of Files app. So setting this property may affect other components, and cause unexpected behavior.\n\nCould we avoid setting this property and move the property rewriting logic from MetadataCache to eg. DirectoryContents?",
+      "revId": "6a556c8b8d17c44203541bb6dad747275702b3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
