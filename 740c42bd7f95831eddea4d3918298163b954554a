@@ -22,6 +22,29 @@
       "revId": "740c42bd7f95831eddea4d3918298163b954554a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91ddd09_383f4d7b",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T19:56:06Z",
+      "side": 1,
+      "message": "nit: IsHomescreenOnTop\n\nsame with all the \"at top\" comments.",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "740c42bd7f95831eddea4d3918298163b954554a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
