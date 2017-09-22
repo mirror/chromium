@@ -7,6 +7,8 @@
 
 #include <string>
 
+bool IsAppRunningFromReadOnlyDiskImage(std::string* dmg_bsd_device_name);
+
 // If the application is running from a read-only disk image, prompts the user
 // to install it to the hard drive.  If the user approves, the application
 // will be installed and launched, and MaybeInstallFromDiskImage will return

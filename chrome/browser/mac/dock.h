@@ -19,6 +19,8 @@ enum AddIconStatus {
   IconAlreadyPresent
 };
 
+bool ChromeWasLaunchedFromDock();
+
 // Adds an icon to the Dock pointing to |installed_path| if one is not already
 // present. |dmg_app_path| is the path to the install source. Its tile will be
 // removed if present. If any changes are made to the Dock's configuration,
