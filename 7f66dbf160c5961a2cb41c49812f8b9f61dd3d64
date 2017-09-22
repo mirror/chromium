@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d586a6f_fc38c75e",
+        "filename": "device/u2f/u2f_ble_frames.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "Nit: Consider using assign here, i.e. data.assign(fragment.data(), fragment.data() + fragment.size());",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 78
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b00b1c3_27f2c555",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "What is your motivation to use output parameters instead of return values? Also applies to the |Serialize| and |Parse| methods below.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5882db71_d3537686",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "As these are subclasses anyway, maybe drop these lines and simply mark the constructor as protected?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4426a0b4_ffab505e",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "Do you intend to support a constructor only taking the data param, e.g. |U2fBleFrameFragment(my_data)|? If not, I\u0027d drop the default values here, initialize data_ and size_ directly, and have a default constructor as well as the the two argument version.",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 35
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0495eb_6da3b23c",
+        "filename": "device/u2f/u2f_ble_frames_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "Nit: This could be inlined.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2730ef_52557624",
+        "filename": "device/u2f/u2f_ble_frames_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T10:05:55Z",
+      "side": 1,
+      "message": "Consider testing the remaining ErrorCodes as well:\n\nINVALID_LEN\nREQ_TIMEOUT\nNA_1\nNA_2\nNA_3",
+      "range": {
+        "startLine": 138,
+        "startChar": 44,
+        "endLine": 138,
+        "endChar": 55
+      },
+      "revId": "7f66dbf160c5961a2cb41c49812f8b9f61dd3d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
