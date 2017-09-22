@@ -109,6 +109,9 @@ class PersonalDataManager : public KeyedService,
   // if the |TypeAndLastFourDigits| in |imported_credit_card| matches the
   // |TypeAndLastFourDigits| in a saved masked server card. Returns |true| if
   // sufficient address or credit card data was found.
+  // |credit_card_in_form_matches_any_card_in_record| is set |true| if the form
+  // includes credit card data that matches a local card, a masked server card
+  // or a full server card.
   bool ImportFormData(
       const FormStructure& form,
       bool should_return_local_card,
@@ -308,6 +311,10 @@ class PersonalDataManager : public KeyedService,
     return context_getter_.get();
   }
 
+  CreditCard ExtractCreditCardFromForm(const FormStructure& form);
+
+  bool DoesCardMatchAnyCardInRecord(const CreditCard& credit_card);
+
  protected:
   // Only PersonalDataManagerFactory and certain tests can create instances of
   // PersonalDataManager.
@@ -498,11 +505,17 @@ class PersonalDataManager : public KeyedService,
   // whether |imported_credit_card| is filled even if an existing masked server
   // card as the same |TypeAndLastFourDigits|. Success is defined as having a
   // new card to import, or having merged with an existing card.
+  // |credit_card_in_form_matches_any_card_in_record| is set |true| if the form
+  // includes credit card data that matches a local card, a masked server card
+  // or a full server card.
   bool ImportCreditCard(
       const FormStructure& form,
       bool should_return_local_card,
       std::unique_ptr<CreditCard>* imported_credit_card,
       bool* imported_credit_card_matches_masked_server_credit_card);
+
+  CreditCard ExtractCreditCardFromForm(const FormStructure& form,
+                                       bool* hasDuplicateFieldType);
 
   // Functionally equivalent to GetProfiles(), but also records metrics if
   // |record_metrics| is true. Metrics should be recorded when the returned
