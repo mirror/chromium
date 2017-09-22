@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3632df63_97e50bb6",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-22T09:30:24Z",
+      "side": 1,
+      "message": "I forgot to remove this! Feel free to remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3ba9bf_70378cba",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-22T09:30:24Z",
+      "side": 1,
+      "message": "This can also call IsVisible().",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bd4bd0_f42601c7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-22T09:30:24Z",
+      "side": 1,
+      "message": "It seems that if we\u0027re calling Show while the popup is already visible, this is likely a bug. If this is just a simple guard that shouldn\u0027t happen, use a DCHECK to express this.\n\nSame for Hide().",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70c42dc7_d85b8fea",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
         "patchSetId": 35
@@ -13,6 +82,29 @@
       "writtenOn": "2017-09-22T00:59:03Z",
       "side": 1,
       "message": "Why is this needed in addition to Hide()? (comment? or remove it?)\n\n(I\u0027m guessing.. something to with kInitialOpacity being 0.1 instead of 0.0, - but the hide should always hide completely, and the Show() above is preceded by AnimationProgressed() which should set it again)",
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a66e5a_fcf1479f",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-22T09:30:24Z",
+      "side": 1,
+      "message": "Nit: Accessors should directly return the corresponding variables. If they don\u0027t, they should be conventionally named (Sorry I didn\u0027t see this earlier).\n\nSo this should be GetPopupWidget or something to that effect.\nSimilarly the animation should be GetAnimationForTesting().",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 23
+      },
       "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
