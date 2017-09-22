@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e7fc9b9_54268cfd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T12:00:38Z",
+      "side": 1,
+      "message": "Indeed, the gesture is not working.",
+      "parentUuid": "39653bcf_1764ff9b",
+      "range": {
+        "startLine": 1060,
+        "startChar": 4,
+        "endLine": 1060,
+        "endChar": 55
+      },
+      "revId": "4344ed36c5ac2a958acd29781ebbbcbf384d02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d095545_3a360571",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "4344ed36c5ac2a958acd29781ebbbcbf384d02c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d95599_78904acc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T12:00:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d095545_3a360571",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "4344ed36c5ac2a958acd29781ebbbcbf384d02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
