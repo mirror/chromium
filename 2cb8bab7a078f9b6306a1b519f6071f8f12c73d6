@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86b38c6_0f0b2a7f",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592194d9_83d5aa91",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "this is not necessary, unless your expect start_time to be very close to base::Time()... which I think I\u0027d be fine running a clean up for.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce39e013_1eec290e",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "replace lines 88-93 with:\n\nreturn (start_time - last_start_time \u003e\u003d kClearStorageInterval);",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cbc33f_1c0cab6c",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "good change, but I think we should not be passing policy controller to IO at all. Please look into it.",
+      "range": {
+        "startLine": 110,
+        "startChar": 27,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4431ed_220fd228",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "range": {
+        "startLine": 123,
+        "startChar": 29,
+        "endLine": 123,
+        "endChar": 30
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11304078_f6e0f823",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "where is the tracked limit incremented?\nHINT: should be done at the bottom of the loop.",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53017a87_38ffca59",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "Make the section below still fall inside of this loop, e.g.:\n\n// Pages with no file can be removed.\nif (!base::PathExists(page_info.file_path)) {\n  page_infos_to_delete-\u003epush_back(page_info);\n  continue;\n}  \n\n// If page does not fit in quota, it needs to be removed.\nif (remaining_size + page_info.file_size \u003e max_allowed_size) {\n  page_infos_to_delete-\u003epush_back(page_info);\n  continue;\n}",
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a288a7_fa22abcb",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "nit: {} not needed.",
+      "range": {
+        "startLine": 218,
+        "startChar": 68,
+        "endLine": 218,
+        "endChar": 69
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a058091f_92a7dd7f",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "Now that I think about that. I think you can inject the clean-up time into the task as well.",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 30
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31880cb_2ea8b7c9",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:31:37Z",
+      "side": 1,
+      "message": "I think passing a pointer to controller to the IO thread is dangerous here.\nEither we need to introduce copy capability, or get all the info on the UI side, prior to passing stuff to IO.",
+      "range": {
+        "startLine": 263,
+        "startChar": 34,
+        "endLine": 263,
+        "endChar": 52
+      },
+      "revId": "2cb8bab7a078f9b6306a1b519f6071f8f12c73d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
