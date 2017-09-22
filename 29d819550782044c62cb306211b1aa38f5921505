@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b35cc3fe_929a4d21",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-22T22:44:05Z",
+      "side": 1,
+      "message": "Done, but also clarified second part (we shouldn\u0027t use 320 as a snap point for modal dialogs).",
+      "parentUuid": "bf1efab7_8e32d278",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d3f2ec_93940c70",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52157b1f_bcb799e1",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-22T22:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d3f2ec_93940c70",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be0d0d9_e9974efb",
         "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "29d819550782044c62cb306211b1aa38f5921505",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4e3585_d4149e95",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-22T22:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be0d0d9_e9974efb",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 7
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
