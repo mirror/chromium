@@ -27,11 +27,13 @@ PlaybackImageProvider::PlaybackImageProvider(
     bool skip_all_images,
     PaintImageIdFlatSet images_to_skip,
     ImageDecodeCache* cache,
-    const gfx::ColorSpace& target_color_space)
+    const gfx::ColorSpace& target_color_space,
+    base::flat_map<PaintImage::Id, size_t> image_to_current_frame_index)
     : skip_all_images_(skip_all_images),
       images_to_skip_(std::move(images_to_skip)),
       cache_(cache),
-      target_color_space_(target_color_space) {
+      target_color_space_(target_color_space),
+      image_to_current_frame_index_(std::move(image_to_current_frame_index)) {
   DCHECK(cache_);
 }
 
@@ -64,8 +66,14 @@ PlaybackImageProvider::GetDecodedDrawImage(const PaintImage& paint_image,
                          SkSize::Make(1.f, 1.f), filter_quality));
   }
 
-  DrawImage draw_image = DrawImage(paint_image, RoundOutRect(src_rect),
-                                   filter_quality, matrix, target_color_space_);
+  const auto& it = image_to_current_frame_index_.find(paint_image.stable_id());
+  size_t frame_index = it == image_to_current_frame_index_.end()
+                           ? paint_image.frame_index()
+                           : it->second;
+
+  DrawImage draw_image =
+      DrawImage(paint_image, RoundOutRect(src_rect), filter_quality, matrix,
+                frame_index, target_color_space_);
   auto decoded_draw_image = cache_->GetDecodedImageForDraw(draw_image);
   return ScopedDecodedDrawImage(
       decoded_draw_image,
