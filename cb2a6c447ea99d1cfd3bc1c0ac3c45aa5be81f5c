@@ -93,6 +93,30 @@
       "revId": "cb2a6c447ea99d1cfd3bc1c0ac3c45aa5be81f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdbf6d5_b308c3c3",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T19:44:26Z",
+      "side": 1,
+      "message": "Ok, I see, it seems in javascript, window.URL.revokeObjectURL() can be called before download is done, so we shouldn\u0027t stop the download.\n\nhttp://www.javascripture.com/URL example of window.URL.revokeObjectURL().",
+      "parentUuid": "96beddf3_ed65b39b",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 53
+      },
+      "revId": "cb2a6c447ea99d1cfd3bc1c0ac3c45aa5be81f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
