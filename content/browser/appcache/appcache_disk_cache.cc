@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback_helpers.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
@@ -67,27 +68,29 @@ class AppCacheDiskCache::EntryImpl : public Entry {
            int64_t offset,
            net::IOBuffer* buf,
            int buf_len,
-           const net::CompletionCallback& callback) override {
+           OnceCompletionCallback callback) override {
     if (offset < 0 || offset > std::numeric_limits<int32_t>::max())
       return net::ERR_INVALID_ARGUMENT;
     if (!disk_cache_entry_)
       return net::ERR_ABORTED;
     return disk_cache_entry_->ReadData(
-        index, static_cast<int>(offset), buf, buf_len, callback);
+        index, static_cast<int>(offset), buf, buf_len,
+        base::AdaptCallbackForRepeating(std::move(callback)));
   }
 
   int Write(int index,
             int64_t offset,
             net::IOBuffer* buf,
             int buf_len,
-            const net::CompletionCallback& callback) override {
+            OnceCompletionCallback callback) override {
     if (offset < 0 || offset > std::numeric_limits<int32_t>::max())
       return net::ERR_INVALID_ARGUMENT;
     if (!disk_cache_entry_)
       return net::ERR_ABORTED;
     const bool kTruncate = true;
     return disk_cache_entry_->WriteData(
-        index, static_cast<int>(offset), buf, buf_len, callback, kTruncate);
+        index, static_cast<int>(offset), buf, buf_len,
+        base::AdaptCallbackForRepeating(std::move(callback)), kTruncate);
   }
 
   int64_t GetSize(int index) override {
@@ -124,9 +127,9 @@ class AppCacheDiskCache::ActiveCall
   static int CreateEntry(const base::WeakPtr<AppCacheDiskCache>& owner,
                          int64_t key,
                          Entry** entry,
-                         const net::CompletionCallback& callback) {
+                         OnceCompletionCallback callback) {
     scoped_refptr<ActiveCall> active_call(
-        new ActiveCall(owner, entry, callback));
+        new ActiveCall(owner, entry, std::move(callback)));
     int rv = owner->disk_cache()->CreateEntry(
         base::Int64ToString(key), &active_call->entry_ptr_,
         base::Bind(&ActiveCall::OnAsyncCompletion, active_call));
@@ -136,9 +139,9 @@ class AppCacheDiskCache::ActiveCall
   static int OpenEntry(const base::WeakPtr<AppCacheDiskCache>& owner,
                        int64_t key,
                        Entry** entry,
-                       const net::CompletionCallback& callback) {
+                       OnceCompletionCallback callback) {
     scoped_refptr<ActiveCall> active_call(
-        new ActiveCall(owner, entry, callback));
+        new ActiveCall(owner, entry, std::move(callback)));
     int rv = owner->disk_cache()->OpenEntry(
         base::Int64ToString(key), &active_call->entry_ptr_,
         base::Bind(&ActiveCall::OnAsyncCompletion, active_call));
@@ -147,9 +150,9 @@ class AppCacheDiskCache::ActiveCall
 
   static int DoomEntry(const base::WeakPtr<AppCacheDiskCache>& owner,
                        int64_t key,
-                       const net::CompletionCallback& callback) {
+                       OnceCompletionCallback callback) {
     scoped_refptr<ActiveCall> active_call(
-        new ActiveCall(owner, nullptr, callback));
+        new ActiveCall(owner, nullptr, std::move(callback)));
     int rv = owner->disk_cache()->DoomEntry(
         base::Int64ToString(key),
         base::Bind(&ActiveCall::OnAsyncCompletion, active_call));
@@ -161,10 +164,10 @@ class AppCacheDiskCache::ActiveCall
 
   ActiveCall(const base::WeakPtr<AppCacheDiskCache>& owner,
              Entry** entry,
-             const net::CompletionCallback& callback)
+             OnceCompletionCallback callback)
       : owner_(owner),
         entry_(entry),
-        callback_(callback),
+        callback_(std::move(callback)),
         entry_ptr_(nullptr) {
     DCHECK(owner_);
   }
@@ -194,12 +197,12 @@ class AppCacheDiskCache::ActiveCall
         rv = net::ERR_ABORTED;
       }
     }
-    callback_.Run(rv);
+    std::move(callback_).Run(rv);
   }
 
   base::WeakPtr<AppCacheDiskCache> owner_;
   Entry** entry_;
-  net::CompletionCallback callback_;
+  OnceCompletionCallback callback_;
   disk_cache::Entry* entry_ptr_;
 };
 
@@ -221,15 +224,15 @@ int AppCacheDiskCache::InitWithDiskBackend(
     int disk_cache_size,
     bool force,
     base::OnceClosure post_cleanup_callback,
-    const net::CompletionCallback& callback) {
+    OnceCompletionCallback callback) {
   return Init(net::APP_CACHE, disk_cache_directory, disk_cache_size, force,
-              std::move(post_cleanup_callback), callback);
+              std::move(post_cleanup_callback), std::move(callback));
 }
 
-int AppCacheDiskCache::InitWithMemBackend(
-    int mem_cache_size, const net::CompletionCallback& callback) {
+int AppCacheDiskCache::InitWithMemBackend(int mem_cache_size,
+                                          OnceCompletionCallback callback) {
   return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false,
-              base::OnceClosure(), callback);
+              base::OnceClosure(), std::move(callback));
 }
 
 void AppCacheDiskCache::Disable() {
@@ -257,59 +260,61 @@ void AppCacheDiskCache::Disable() {
 
 int AppCacheDiskCache::CreateEntry(int64_t key,
                                    Entry** entry,
-                                   const net::CompletionCallback& callback) {
+                                   OnceCompletionCallback callback) {
   DCHECK(entry);
   DCHECK(!callback.is_null());
   if (is_disabled_)
     return net::ERR_ABORTED;
 
   if (is_initializing_or_waiting_to_initialize()) {
-    pending_calls_.push_back(PendingCall(CREATE, key, entry, callback));
+    pending_calls_.push_back(
+        PendingCall(CREATE, key, entry, std::move(callback)));
     return net::ERR_IO_PENDING;
   }
 
   if (!disk_cache_)
     return net::ERR_FAILED;
 
-  return ActiveCall::CreateEntry(
-      weak_factory_.GetWeakPtr(), key, entry, callback);
+  return ActiveCall::CreateEntry(weak_factory_.GetWeakPtr(), key, entry,
+                                 std::move(callback));
 }
 
 int AppCacheDiskCache::OpenEntry(int64_t key,
                                  Entry** entry,
-                                 const net::CompletionCallback& callback) {
+                                 OnceCompletionCallback callback) {
   DCHECK(entry);
   DCHECK(!callback.is_null());
   if (is_disabled_)
     return net::ERR_ABORTED;
 
   if (is_initializing_or_waiting_to_initialize()) {
-    pending_calls_.push_back(PendingCall(OPEN, key, entry, callback));
+    pending_calls_.push_back(
+        PendingCall(OPEN, key, entry, std::move(callback)));
     return net::ERR_IO_PENDING;
   }
 
   if (!disk_cache_)
     return net::ERR_FAILED;
 
-  return ActiveCall::OpenEntry(
-      weak_factory_.GetWeakPtr(), key, entry, callback);
+  return ActiveCall::OpenEntry(weak_factory_.GetWeakPtr(), key, entry,
+                               std::move(callback));
 }
 
-int AppCacheDiskCache::DoomEntry(int64_t key,
-                                 const net::CompletionCallback& callback) {
+int AppCacheDiskCache::DoomEntry(int64_t key, OnceCompletionCallback callback) {
   DCHECK(!callback.is_null());
   if (is_disabled_)
     return net::ERR_ABORTED;
 
   if (is_initializing_or_waiting_to_initialize()) {
-    pending_calls_.push_back(PendingCall(DOOM, key, NULL, callback));
+    pending_calls_.push_back(PendingCall(DOOM, key, NULL, std::move(callback)));
     return net::ERR_IO_PENDING;
   }
 
   if (!disk_cache_)
     return net::ERR_FAILED;
 
-  return ActiveCall::DoomEntry(weak_factory_.GetWeakPtr(), key, callback);
+  return ActiveCall::DoomEntry(weak_factory_.GetWeakPtr(), key,
+                               std::move(callback));
 }
 
 AppCacheDiskCache::AppCacheDiskCache(bool use_simple_cache)
@@ -325,14 +330,16 @@ AppCacheDiskCache::PendingCall::PendingCall()
       entry(NULL) {
 }
 
-AppCacheDiskCache::PendingCall::PendingCall(
-    PendingCallType call_type,
-    int64_t key,
-    Entry** entry,
-    const net::CompletionCallback& callback)
-    : call_type(call_type), key(key), entry(entry), callback(callback) {}
+AppCacheDiskCache::PendingCall::PendingCall(PendingCallType call_type,
+                                            int64_t key,
+                                            Entry** entry,
+                                            OnceCompletionCallback callback)
+    : call_type(call_type),
+      key(key),
+      entry(entry),
+      callback(std::move(callback)) {}
 
-AppCacheDiskCache::PendingCall::PendingCall(const PendingCall& other) = default;
+AppCacheDiskCache::PendingCall::PendingCall(PendingCall&&) = default;
 
 AppCacheDiskCache::PendingCall::~PendingCall() {}
 
@@ -341,7 +348,7 @@ int AppCacheDiskCache::Init(net::CacheType cache_type,
                             int cache_size,
                             bool force,
                             base::OnceClosure post_cleanup_callback,
-                            const net::CompletionCallback& callback) {
+                            OnceCompletionCallback callback) {
   DCHECK(!is_initializing_or_waiting_to_initialize() && !disk_cache_.get());
   is_disabled_ = false;
   create_backend_callback_ = new CreateBackendCallbackShim(this);
@@ -356,7 +363,7 @@ int AppCacheDiskCache::Init(net::CacheType cache_type,
       base::Bind(&CreateBackendCallbackShim::Callback,
                  create_backend_callback_));
   if (rv == net::ERR_IO_PENDING)
-    init_callback_ = callback;
+    init_callback_ = std::move(callback);
   else
     OnCreateBackendComplete(rv);
   return rv;
@@ -370,30 +377,30 @@ void AppCacheDiskCache::OnCreateBackendComplete(int rv) {
 
   // Invoke our clients callback function.
   if (!init_callback_.is_null()) {
-    init_callback_.Run(rv);
+    std::move(init_callback_).Run(rv);
     init_callback_.Reset();
   }
 
   // Service pending calls that were queued up while we were initializing.
-  for (PendingCalls::const_iterator iter = pending_calls_.begin();
+  for (PendingCalls::iterator iter = pending_calls_.begin();
        iter < pending_calls_.end(); ++iter) {
     int rv = net::ERR_FAILED;
     switch (iter->call_type) {
       case CREATE:
-        rv = CreateEntry(iter->key, iter->entry, iter->callback);
+        rv = CreateEntry(iter->key, iter->entry, std::move(iter->callback));
         break;
       case OPEN:
-        rv = OpenEntry(iter->key, iter->entry, iter->callback);
+        rv = OpenEntry(iter->key, iter->entry, std::move(iter->callback));
         break;
       case DOOM:
-        rv = DoomEntry(iter->key, iter->callback);
+        rv = DoomEntry(iter->key, std::move(iter->callback));
         break;
       default:
         NOTREACHED();
         break;
     }
     if (rv != net::ERR_IO_PENDING)
-      iter->callback.Run(rv);
+      std::move(iter->callback).Run(rv);
   }
   pending_calls_.clear();
 }
