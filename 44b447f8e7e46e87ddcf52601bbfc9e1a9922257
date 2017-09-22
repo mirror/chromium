@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2c622dde_8009ae63",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T20:59:20Z",
+      "side": 1,
+      "message": "Yeah, it doesn\u0027t have to change in this CL. Let\u0027s chat offline. I think the decision whether we are in presentation mode or not should not be made inside the UI.",
+      "parentUuid": "2c401896_c7561804",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c330f8_facf70d5",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 2
