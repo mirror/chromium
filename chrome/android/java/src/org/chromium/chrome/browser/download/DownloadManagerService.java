@@ -29,6 +29,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryAdapter;
@@ -193,7 +194,8 @@ public class DownloadManagerService
         Context appContext = ContextUtils.getApplicationContext();
         if (sDownloadManagerService == null) {
             DownloadNotifier downloadNotifier =
-                    CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)
+                    (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)
+                            || ChromeFeatureList.isEnabled(ChromeFeatureList.DOWNLOADS_FOREGROUND))
                     ? new SystemDownloadNotifier2(appContext)
                     : new SystemDownloadNotifier(appContext);
             sDownloadManagerService = new DownloadManagerService(
@@ -1380,7 +1382,8 @@ public class DownloadManagerService
      */
     @Override
     public void broadcastDownloadAction(DownloadItem downloadItem, String action) {
-        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)) {
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)
+                || ChromeFeatureList.isEnabled(ChromeFeatureList.DOWNLOADS_FOREGROUND)) {
             Intent intent = DownloadNotificationFactory.buildActionIntent(mContext, action,
                     LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
                     downloadItem.getDownloadInfo().isOffTheRecord());

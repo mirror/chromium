@@ -74,6 +74,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCustomFeedbackUi,
     &kDontPrefetchLibraries,
     &kDownloadHomeShowStorageInfo,
+    &features::kDownloadsForeground,
     &data_reduction_proxy::features::kDataReductionMainMenu,
     &data_reduction_proxy::features::kDataReductionSiteBreakdown,
     &kFullscreenActivity,

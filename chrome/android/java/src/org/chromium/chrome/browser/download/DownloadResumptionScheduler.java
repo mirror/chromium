@@ -17,6 +17,7 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeBackgroundService;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 
 /**
@@ -87,7 +88,8 @@ public class DownloadResumptionScheduler {
      * Start browser process and resumes all interrupted downloads.
      */
     public void handleDownloadResumption() {
-        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)) {
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)
+                || ChromeFeatureList.isEnabled(ChromeFeatureList.DOWNLOADS_FOREGROUND)) {
             DownloadNotificationService2 downloadNotificationService2 =
                     DownloadNotificationService2.getInstance();
             downloadNotificationService2.resumeAllPendingDownloads();
