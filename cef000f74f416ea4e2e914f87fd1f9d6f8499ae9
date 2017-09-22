@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "2ae43180_d56c938b",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "I mean, why not change StorageStats and keep the same API instead of having new functions (that you\u0027ll have to remove soon anyway)",
+      "parentUuid": "9af89df9_ef38285a",
+      "revId": "cef000f74f416ea4e2e914f87fd1f9d6f8499ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef882e81_9d7cc7f2",
         "filename": "components/offline_pages/core/offline_page_model_impl.h",
         "patchSetId": 1

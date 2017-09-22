@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2f370d_4a143f89",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "This conflicts with another comment?",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16166933_e8b3e726",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "Note what cleans up the pages (offline page model consistency check)",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3644efd6_13f932c8",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "nit: if there are",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576b9a67_c9495578",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "Please add why we make this assumption and what might break if that changes.",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b46661_ed9ebb66",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "You could fold all this into the DCHECK so it\u0027s not compiled in prod:\n\nDCHECK(archives_dirs.size() \u003c 2 || base::SysInfo::AmoundOfFreeDiskSpace(archives_dirs[1]) \u003d\u003d storage_stats.free_disk_space);",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5163cc6_5469a517",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "I think that chromium style prefers the following when using initilalizer lists:\n\nstd::vector\u003cbase::FilePath\u003e archives_dirs \u003d {persistend_archives_dir_};\n\nalso fix other places in this file",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0041ebdd_79601d3e",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "optional nit:\nThis API might be better inside the archive manager, something likke ArchiveManager::IsFileInTemporaryDirectory().  Then the exact mechanics of path matching could be hidden from the model.",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612ac4cf_98baba9e",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "why not:\n\nif (temporary_dir_same_with_persistent_)\n  return persistent_dir_.GetPath();\nreturn temporary_dir_.GetPath();",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12a473a_6c453c85",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "nit: reformat something like:\nbase::FilePath temporary_dir \u003d temporary_dir_same_with_persistent_ ? persistent_dir_path() : temporary_dir_path();\nauto archive_manager \u003d base::MakeUnique\u003c...\u003e(temporary_dir, ...);",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c85189_a8dc6c08",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "nit: https://crbug.com/725685",
+      "range": {
+        "startLine": 1115,
+        "startChar": 28,
+        "endLine": 1115,
+        "endChar": 40
+      },
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cbd7aa_3155eeea",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "I think it might be better to change the #ifdef to mark the test DISABLED_DeleteTemporaryPages on windows, then we could easily run these tests to verify the bug has been fixed.\n\nExample from another test suite:\n#if defined(OS_ANDROID)\n#define MAYBE_StringWidth DISABLED_StringWidth\n#else\n#define MAYBE_StringWidth StringWidth\n#endif\nTEST_F(CanvasTest, MAYBE_StringWidth) {\n  EXPECT_GT(GetStringWidth(\"Test\"), 0);\n}",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87133358_c133bdbc",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T16:44:09Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5c6f0c6c1691591c10848d119bef53f66f263b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
