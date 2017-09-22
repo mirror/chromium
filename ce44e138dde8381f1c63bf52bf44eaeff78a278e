@@ -16,6 +16,24 @@
       "revId": "ce44e138dde8381f1c63bf52bf44eaeff78a278e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472a168e_8bdb176d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "I (overly-optimistically) assumed that if we disable compression, the block\u0027s memory can come straight from the memory env, so we\u0027d have fewer allocations.\n\nIn my defense, the API for RandomAccessFile::Read does allow the implementation to provide its own buffer with the data, and leveldb::ReadBlock (in table/format.cc) has a switch where the kNoCompression branch uses the Slice given by the Read operation, whereas the kSnappyCompression branch always allocates a new slice.\n\nSadly, digging deeper, (anonymous namespace)::RandomAccessFileImpl::Read in helpers/memenv/memenv.cc calls (anonymous namespace)::FileState::Read in the same file, which seems to use fixed 8KB (FileState::kBlockSize) blocks to store files. So, the MemEnv implementation can only return an internal buffer for reads that reside inside the same 8kb block. Given that LevelDB blocks tend to be bigger, this isn\u0027t going to happen for leveldb::ReadBlock.\n\nMy objection against enabling compression is that we\u0027re effectively shipping our own RAM compression scheme. I\u0027d like to avoid this, because I think it\u0027d conflict with the RAM compression that\u0027s already done by modern OSes. However, this assumes a smarter MemEnv, so I\u0027d be OK with putting this idea into a bug for now.\n\n(Also, I\u0027m not sure if Android has RAM compression and, if it doesn\u0027t, I suppose we\u0027re better off sticking to what we\u0027re doing today.)",
+      "parentUuid": "4b52e1a5_84e0fa96",
+      "revId": "ce44e138dde8381f1c63bf52bf44eaeff78a278e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2facd79f_a4944676",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "I like having a presubmit. Nice!",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bfaa064_7c12af76",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "Nit: DidCreateChromeMemEnv?\n\n(I can see the advantage of track / untrack though, feel free to keep the current names if you think they\u0027re better.)",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f823cdc_07119cba",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "Nit: WillDestroyChromeMemEnv?",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c5cd17_566fe27c",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "It\u0027d be nice if all Chrome environments had a base class, and we could ask them what we wanted (e.g. if they\u0027re a MemEnv). We could even use the type system to only allow Chrome envs in various callsites.\n\nSadly, the extra work is not worth the benefits right now, given that this will be a small set. If you think this sounds reasonable, perhaps pile it on the LevelDB refactoring bug?",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a99dd930_34b52c17",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "Nit: would it be better to be specific about what members are protected by this? For example, I don\u0027t think that {web,browser}_block_cache_ are covered.",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c8d42e_1b7942f4",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "Nit: ChromeMemEnv?",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7044d728_e2cb0106",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T10:44:52Z",
+      "side": 1,
+      "message": "Nit: I think ChromeInMemoryEnv should call leveldb::NewMemEnv in its constructor, which should take no args.",
+      "revId": "90ab6e4877c629239436764bfe774c15aefd7474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
