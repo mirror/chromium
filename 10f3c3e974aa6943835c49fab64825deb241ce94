@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9f72365_a94bf226",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-22T22:47:36Z",
+      "side": 1,
+      "message": "Interesting.  That would probably work similar to what\u0027s implemented now, but I want to have control over the tokenizing algorithm because I want to eg. add an option to make individual characters tokens.",
+      "parentUuid": "f55f6965_dc857e36",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b74682c_31251001",
         "filename": "tools/uberblame.py",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f64d1cc5_b415a5a0",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-22T22:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b74682c_31251001",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58340c73_d72a8e6b",
         "filename": "tools/uberblame.py",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-15T18:22:46Z",
       "side": 1,
       "message": "Any particular reason you write one file to disk but send the other via stdin? It\u0027s probably faster than writing both to disk, but is it sufficiently faster to make a noticeable difference? If it isn\u0027t, I would suggest writing both to disk and then getting stdout via a simple \"subprocess.CheckOutput\" instead of separate Popen and communicate calls.\n\nAlternatively, if you were taking this approach for the speedup, consider using https://docs.python.org/2/library/difflib.html to compute diffs in memory without having to write anything out to disk or start any subprocesses.",
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6749557f_bc898498",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-22T22:47:36Z",
+      "side": 1,
+      "message": "It was for speed -- switched to difflib",
+      "parentUuid": "58340c73_d72a8e6b",
       "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8492307b_64b76c1b",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-22T22:47:36Z",
+      "side": 1,
+      "message": "It\u0027s slower to ask git for the file each time instead of just the diffs.  I think it\u0027s because git needs to apply many patches to recover the file, but we only need to apply one",
+      "parentUuid": "fea81ef3_647ed180",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 66
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "938f671f_d6c6c0c5",
         "filename": "tools/uberblame.py",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626f4ccf_fb478c71",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-22T22:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "938f671f_d6c6c0c5",
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
