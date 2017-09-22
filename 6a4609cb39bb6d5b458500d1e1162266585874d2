@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75fcff96_47267dc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-22T09:54:15Z",
+      "side": 1,
+      "message": "If the only remaining usage of AccessTokenStore after this CL is to check whether it\u0027s null or not, would it reasonable to just eliminate those unittests as part of this CL, thus enabling removing the unused functionality in this CL as well?",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
