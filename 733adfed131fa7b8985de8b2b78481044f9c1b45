@@ -104,6 +104,24 @@
       "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d87735_7cdc0922",
+        "filename": "ash/system/network/tray_network.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T22:30:11Z",
+      "side": 1,
+      "message": "Not all languages use the same sentence structure as English.\n\nThis should either be a single formatted paragraph, or two separate elements in the UI.\n\nAlso, FWIW, it\u0027s odd that there is a \u0027.\u0027 after the first sentence but not after the second, you might want to double check that with UX.",
+      "parentUuid": "fd964d93_eb812780",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
