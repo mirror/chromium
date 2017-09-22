@@ -6882,6 +6882,9 @@ I don't think this site should be blocked!
         <message name="IDS_TAB_CXMENU_CLOSEOTHERTABS" desc="The label of the 'Close Other Tabs' Tab context menu item.">
           Close other tabs
         </message>
+        <message name="IDS_TAB_CXMENU_CLOSEDOMAINTABS" desc="The label of the 'Close all tabs from _domain_' tab context menu item. This can contain special names like 'newpage' and 'settings'.">
+          Close all tabs from <ph name="DOMAIN">$1<ex>www.example.com</ex></ph>
+        </message>
         <message name="IDS_TAB_CXMENU_CLOSETABSTORIGHT" desc="The label of the 'Close Tabs to the Right' Tab context menu item.">
           Close tabs to the right
         </message>

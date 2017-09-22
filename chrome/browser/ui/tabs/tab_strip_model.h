@@ -389,6 +389,7 @@ class TabStripModel {
     CommandDuplicate,
     CommandCloseTab,
     CommandCloseOtherTabs,
+    CommandCloseTabsFromSameDomain,
     CommandCloseTabsToRight,
     CommandRestoreTab,
     CommandTogglePinned,
@@ -450,11 +451,11 @@ class TabStripModel {
       const std::vector<int>& indices) const;
 
   // Gets the set of tab indices whose domain matches the tab at |index|.
-  void GetIndicesWithSameDomain(int index, std::vector<int>* indices);
+  void GetIndicesWithSameDomain(int index, std::vector<int>* indices) const;
 
   // Gets the set of tab indices that have the same opener as the tab at
   // |index|.
-  void GetIndicesWithSameOpener(int index, std::vector<int>* indices);
+  void GetIndicesWithSameOpener(int index, std::vector<int>* indices) const;
 
   // If |index| is selected all the selected indices are returned, otherwise a
   // vector with |index| is returned. This is used when executing commands to
