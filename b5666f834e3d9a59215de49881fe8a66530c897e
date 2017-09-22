@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84000cd1_3fcf2182",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T01:32:26Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "b5666f834e3d9a59215de49881fe8a66530c897e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5434435_8b88604e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T01:32:26Z",
+      "side": 1,
+      "message": "This needs to be declare before wizard_controller_, otherwise, at dtor timing, wizard_controller_ will keep a dangling pointer.",
+      "revId": "b5666f834e3d9a59215de49881fe8a66530c897e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
