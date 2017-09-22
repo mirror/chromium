@@ -22,6 +22,30 @@
       "revId": "8dcf58ccd5af0498983fd20b797e16fea14fbb9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea259069_5dbcc1d6",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-22T20:22:42Z",
+      "side": 1,
+      "message": "Done. Removed these lines, ModuleWhitelistDBFilename and kModuleWhitelistDBFile.",
+      "parentUuid": "caa00816_a5920071",
+      "range": {
+        "startLine": 676,
+        "startChar": 27,
+        "endLine": 676,
+        "endChar": 38
+      },
+      "revId": "8dcf58ccd5af0498983fd20b797e16fea14fbb9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
