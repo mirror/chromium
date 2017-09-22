@@ -137,7 +137,7 @@ OfflineAudioContext::OfflineAudioContext(Document* document,
                                          float sample_rate,
                                          ExceptionState& exception_state)
     : BaseAudioContext(document, kOfflineContext),
-      is_rendering_started_(false),
+      is_rendering_started_or_running_(false),
       total_render_frames_(number_of_frames) {
   destination_node_ = OfflineAudioDestinationNode::Create(
       this, number_of_channels, number_of_frames, sample_rate);
@@ -184,14 +184,14 @@ ScriptPromise OfflineAudioContext::startOfflineRendering(
   }
 
   // Can't call startRendering more than once.  Return a rejected promise now.
-  if (is_rendering_started_) {
+  if (is_rendering_started_or_running_) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(kInvalidStateError,
                              "cannot call startRendering more than once"));
   }
 
-  DCHECK(!is_rendering_started_);
+  DCHECK(!is_rendering_started_or_running_);
 
   complete_resolver_ = ScriptPromiseResolver::Create(script_state);
 
@@ -213,7 +213,7 @@ ScriptPromise OfflineAudioContext::startOfflineRendering(
   }
 
   // Start rendering and return the promise.
-  is_rendering_started_ = true;
+  is_rendering_started_or_running_ = true;
   SetContextState(kRunning);
   DestinationHandler().InitializeOfflineRenderThread(render_target);
   DestinationHandler().StartRendering();
@@ -308,7 +308,7 @@ ScriptPromise OfflineAudioContext::resumeContext(ScriptState* script_state) {
   ScriptPromise promise = resolver->Promise();
 
   // If the rendering has not started, reject the promise.
-  if (!is_rendering_started_) {
+  if (!is_rendering_started_or_running_) {
     resolver->Reject(DOMException::Create(
         kInvalidStateError,
         "cannot resume an offline context that has not started"));
@@ -367,6 +367,8 @@ void OfflineAudioContext::FireCompletionEvent() {
     complete_resolver_->Reject(DOMException::Create(
         kInvalidStateError, "the execution context does not exist"));
   }
+
+  is_rendering_started_or_running_ = false;
 }
 
 bool OfflineAudioContext::HandlePreOfflineRenderTasks() {
@@ -456,6 +458,10 @@ bool OfflineAudioContext::ShouldSuspend() {
     return true;
 
   return false;
+}
+
+bool OfflineAudioContext::HasPendingActivity() const {
+  return is_rendering_started_or_running_;
 }
 
 }  // namespace blink
