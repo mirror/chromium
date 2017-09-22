@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50752899_c6b2e962",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-22T16:13:00Z",
+      "side": 1,
+      "message": "Perhaps it’s time to change this, then.",
+      "revId": "6093a9979909bbd0e627cbe6427121bf19b9587d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef80d9d_7353a2d2",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-22T16:13:00Z",
+      "side": 1,
+      "message": "These comments that you’ve added in a few of these .cc files are directly at odds with the comment in the .h (which you haven’t touched):\n\n38  // Fills |output_length| bytes of |output| with random data.\n39  //\n40  // WARNING:\n41  // Do not use for security-sensitive purposes.\n42  // See crypto/ for cryptographically secure random number generation APIs.\n43  BASE_EXPORT void RandBytes(void* output, size_t output_length);\n\nI can’t approve a contradiction.",
+      "revId": "6093a9979909bbd0e627cbe6427121bf19b9587d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
