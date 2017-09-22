@@ -185,6 +185,11 @@ public class ContextualSearchUma {
     private static final int WOULD_FORCE_TRANSLATE = 1;
     private static final int FORCE_TRANSLATE_BOUNDARY = 2;
 
+    // Constants used to log UMA "enum" histograms for translation condition
+    private static final int TRANSLATE_CONDITION_MET = 0;
+    private static final int TRANSLATE_CONDITION_NOT_MET = 1;
+    private static final int TRANSLATE_CONDITION_BOUNDARY = 2;
+
     // Constants used to log UMA "enum" histograms for Quick Answers.
     private static final int QUICK_ANSWER_ACTIVATED_WAS_AN_ANSWER_SEEN = 0;
     private static final int QUICK_ANSWER_ACTIVATED_WAS_AN_ANSWER_NOT_SEEN = 1;
@@ -1214,6 +1219,16 @@ public class ContextualSearchUma {
         int code = didForceTranslate ? DID_FORCE_TRANSLATE : WOULD_FORCE_TRANSLATE;
         RecordHistogram.recordEnumeratedHistogram(
                 "Search.ContextualSearchShouldTranslate", code, FORCE_TRANSLATE_BOUNDARY);
+    }
+
+    /**
+     * Logs that whether or not the conditions are met to perform a translation.
+     * @param conditionMet Whether the translation conditions were met.
+     */
+    public static void logTranslateCondition(boolean conditionMet) {
+        int code = conditionMet ? TRANSLATE_CONDITION_MET : TRANSLATE_CONDITION_NOT_MET;
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchTranslateCondition", code, TRANSLATE_CONDITION_BOUNDARY);
     }
 
     /**

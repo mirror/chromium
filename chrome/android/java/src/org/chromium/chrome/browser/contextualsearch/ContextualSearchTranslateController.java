@@ -44,18 +44,26 @@ public class ContextualSearchTranslateController  {
      * @param sourceLanguage The language to translate from, or an empty string if not known.
      */
     void forceTranslateIfNeeded(ContextualSearchRequest searchRequest, String sourceLanguage) {
-        if (mPolicy.isTranslationDisabled()) return;
-
+        if (mPolicy.isTranslationDisabled()) {
+            // Log whether or not translate conditions are met
+            ContextualSearchUma.logTranslateCondition(false);
+            return;
+        }
+        boolean translateConditionMet = false;
         // Force translation if not disabled and server controlled or client logic says required.
         boolean doForceTranslate = !TextUtils.isEmpty(sourceLanguage)
                 && mPolicy.needsTranslation(sourceLanguage, getReadableLanguages());
         if (doForceTranslate && searchRequest != null) {
             searchRequest.forceTranslation(
                     sourceLanguage, mPolicy.bestTargetLanguage(getProficientLanguageList()));
+            translateConditionMet = true;
         }
         // Log that conditions were right for translation, even though it may be disabled
         // for an experiment so we can compare with the counter factual data.
         ContextualSearchUma.logTranslateOnebox(doForceTranslate);
+
+        // Log whether or not translate conditions are met
+        ContextualSearchUma.logTranslateCondition(translateConditionMet);
     }
 
     /**
@@ -66,17 +74,26 @@ public class ContextualSearchTranslateController  {
     void forceAutoDetectTranslateUnlessDisabled(ContextualSearchRequest searchRequest) {
         // Always trigger translation using auto-detect when we're not resolving,
         // unless disabled by policy.
-        if (mPolicy.isTranslationDisabled()) return;
+        if (mPolicy.isTranslationDisabled()) {
+            // Log whether or not translate conditions are met
+            ContextualSearchUma.logTranslateCondition(false);
+            return;
+        }
 
+        boolean translateConditionMet = false;
         if (searchRequest != null) {
             // The translation one-box won't actually show when the source text ends up being
             // the same as the target text, so we err on over-triggering.
             searchRequest.forceAutoDetectTranslation(
                     mPolicy.bestTargetLanguage(getProficientLanguageList()));
+            translateConditionMet = true;
         }
         // Log that conditions were right for translation, even though it may be disabled
         // for an experiment so we can compare with the counter factual data.
         ContextualSearchUma.logTranslateOnebox(true);
+
+        // Log whether or not translate conditions are met
+        ContextualSearchUma.logTranslateCondition(translateConditionMet);
     }
 
     /**

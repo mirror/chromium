@@ -72254,6 +72254,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Search.ContextualSearchTranslateCondition"
+    enum="ContextualSearchTranslateCondition">
+  <owner>mahmoudi@chromium.org</owner>
+  <owner>donnd@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>Whether translation conditions are met or not.</summary>
+</histogram>
+
 <histogram name="Search.DefaultSearchChangeOrigin"
     enum="DefaultSearchChangeOrigin">
   <owner>mathp@chromium.org</owner>
