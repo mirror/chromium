@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "4b913d46_94dc4d80",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-22T15:59:12Z",
+      "side": 1,
+      "message": "nit: Hyphen (I assume this is adjective \"Blink-initiated\", not subject+predicate \"Blink initiated\")",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1044,
+        "endChar": 17
+      },
+      "revId": "ca5931113ca3663c79a8f85cd7de55dc27ec2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd26f93_577440c9",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-22T15:59:12Z",
+      "side": 1,
+      "message": "I think \"trigger\" here means an action, not an entity. So it should be something like\n\n\"The user navigates to a URL or downloads a file. Also when a webpage, ServiceWorker, or chrome:// uses any network communication.\"",
+      "range": {
+        "startLine": 1047,
+        "startChar": 54,
+        "endLine": 1048,
+        "endChar": 44
+      },
+      "revId": "ca5931113ca3663c79a8f85cd7de55dc27ec2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40421240_c2fb7807",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-22T15:59:12Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 1069,
+        "startChar": 18,
+        "endLine": 1069,
+        "endChar": 19
+      },
+      "revId": "ca5931113ca3663c79a8f85cd7de55dc27ec2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4074b5a_965da823",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 7
