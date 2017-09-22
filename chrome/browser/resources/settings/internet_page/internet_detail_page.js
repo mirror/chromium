@@ -459,6 +459,11 @@ Polymer({
     var type = networkProperties.Type;
     if (type != CrOnc.Type.WI_FI && type != CrOnc.Type.VPN)
       return false;
+    // FIXME: This throws an error, not sure why.
+    if (type == CrOnc.Type.VPN &&
+        CrOnc.getActiveValue(networkProperties.VPN.Type == 'ARCVPN')) {
+      return false;
+    }
     return !this.isPolicySource(networkProperties.Source) &&
         this.isRemembered_(networkProperties);
   },
