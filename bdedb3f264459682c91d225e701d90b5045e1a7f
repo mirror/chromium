@@ -52,6 +52,24 @@
       "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f000844_b60ae45c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T15:19:16Z",
+      "side": 1,
+      "message": "Thank you for comment.\nAck. Branched to an offline discussion, as this is off-topic for this CL.",
+      "parentUuid": "74977a05_387c9648",
+      "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
