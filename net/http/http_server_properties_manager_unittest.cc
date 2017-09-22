@@ -129,7 +129,7 @@ class TestingHttpServerPropertiesManager : public HttpServerPropertiesManager {
 
   MOCK_METHOD0(UpdateCacheFromPrefsOnPrefSequence, void());
   MOCK_METHOD1(UpdatePrefsFromCacheOnNetworkSequence,
-               void(const base::Closure&));
+               void(const base::OnceClosure&));
   MOCK_METHOD1(ScheduleUpdatePrefsOnNetworkSequence, void(Location location));
   MOCK_METHOD6(UpdateCacheFromPrefsOnNetworkSequence,
                void(std::vector<std::string>* spdy_servers,
