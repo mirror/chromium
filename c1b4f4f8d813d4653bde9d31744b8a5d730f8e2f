@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7218d666_5629f747",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-22T21:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e543f4f3_c73c3c9a",
+      "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e4bffb_c4dc1bdf",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f90557_be7e69d9",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-22T21:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e4bffb_c4dc1bdf",
+      "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
