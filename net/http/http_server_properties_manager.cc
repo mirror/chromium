@@ -190,6 +190,10 @@ void HttpServerPropertiesManager::Clear() {
   Clear(base::Closure());
 }
 
+void HttpServerPropertiesManager::UpdatePrefsForTesting() {
+  UpdatePrefsFromCacheOnNetworkSequence();
+}
+
 void HttpServerPropertiesManager::Clear(const base::Closure& completion) {
   DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
 
