@@ -222,7 +222,10 @@ void PnaclComponentInstallerTraits::ComponentReady(
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
   CheckVersionCompatiblity(version);
-  OverrideDirPnaclComponent(install_dir);
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+      base::BindOnce(&OverrideDirPnaclComponent, make_scoped_refptr(this),
+                     install_dir));
 }
 
 base::FilePath PnaclComponentInstallerTraits::GetRelativeInstallDir() const {
