@@ -135,6 +135,10 @@ RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
   DCHECK_GE(initial_containing_block_size.width, LayoutUnit());
   DCHECK_GE(initial_containing_block_size.height, LayoutUnit());
 
+  FontBaseline baseline_type = IsHorizontalWritingMode(writing_mode)
+                                   ? kAlphabeticBaseline
+                                   : kIdeographicBaseline;
+
   return NGConstraintSpaceBuilder(writing_mode, initial_containing_block_size)
       .SetAvailableSize(available_size)
       .SetPercentageResolutionSize(percentage_size)
@@ -148,6 +152,13 @@ RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
           box.SizesLogicalWidthToFitContent(box.StyleRef().LogicalWidth()))
       .SetIsNewFormattingContext(is_new_fc)
       .SetTextDirection(box.StyleRef().Direction())
+      // We don't know which baselines will be requested from LayoutObject
+      // ancestors, so add them all.
+      .AddBaselineRequest(
+          {NGBaselineAlgorithmType::kAtomicInline, baseline_type})
+      .AddBaselineRequest(
+          {NGBaselineAlgorithmType::kAtomicInlineForFirstLine, baseline_type})
+      .AddBaselineRequest({NGBaselineAlgorithmType::kFirstLine, baseline_type})
       .ToConstraintSpace(writing_mode);
 }
 
