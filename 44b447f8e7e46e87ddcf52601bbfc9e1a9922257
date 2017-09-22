@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dbe3fdf6_7e259a5c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T20:48:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure it can be.  The platform portion knows it\u0027s in WebVR rendering mode.  But, the UI can elect to block WebVR rendering (ie. splash screen before first frame arrives).\n\nWorth a chat, but it\u0027s not a change from current behaviour.",
+      "parentUuid": "0215641d_2d5389ad",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06c330f8_facf70d5",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 2
