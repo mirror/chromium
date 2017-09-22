@@ -16,6 +16,24 @@
       "revId": "33e945b11dc27ca362e0d079d4249afbdaee9bcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e86c71a_aac8d1d8",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-22T06:11:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "268928fe_5ad93c2d",
+      "revId": "33e945b11dc27ca362e0d079d4249afbdaee9bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
