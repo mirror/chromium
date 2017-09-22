@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8853b88_ba3e37d6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px-with-context.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-22T00:30:19Z",
+      "side": 1,
+      "message": "This it should be relevant when the SVGLength is _not_ associated with an element. In this test it is, so any reasonable font-size can be chosen. This setup should be done for the tests where an SVGLength is not associated with an element, and we want to convert/check/use font-related metrics.",
+      "range": {
+        "startLine": 15,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 76
+      },
+      "revId": "d687dd09a56546ff6514f9153eb80bc20b78f978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb99b9c_810069fc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-22T00:30:19Z",
+      "side": 1,
+      "message": "Let\u0027s move usage of toFixed(n) to where it\u0027s needed - and only use it _if_ it is needed. (I.e move the usage here to the assert_equals(...valueAsString, ...).) Also, the Number() can be dropped.\n\nDitto for all similar cases.",
+      "range": {
+        "startLine": 72,
+        "startChar": 60,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "d687dd09a56546ff6514f9153eb80bc20b78f978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6258e7a0_2df1fd2e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-22T00:30:19Z",
+      "side": 1,
+      "message": ".01 here?",
+      "range": {
+        "startLine": 85,
+        "startChar": 71,
+        "endLine": 85,
+        "endChar": 75
+      },
+      "revId": "d687dd09a56546ff6514f9153eb80bc20b78f978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
