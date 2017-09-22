@@ -126,6 +126,8 @@ UI.Icon.Descriptors = {
   'smallicon-cross': {position: 'b4', spritesheet: 'smallicons'},
   'smallicon-device': {position: 'c5', spritesheet: 'smallicons'},
   'smallicon-error': {position: 'c4', spritesheet: 'smallicons'},
+  'smallicon-expand-less': {position: 'e6', spritesheet: 'smallicons', isMask: true},
+  'smallicon-expand-more': {position: 'a7', spritesheet: 'smallicons', isMask: true},
   'smallicon-green-arrow': {position: 'a3', spritesheet: 'smallicons'},
   'smallicon-green-ball': {position: 'b3', spritesheet: 'smallicons'},
   'smallicon-info': {position: 'c3', spritesheet: 'smallicons'},
