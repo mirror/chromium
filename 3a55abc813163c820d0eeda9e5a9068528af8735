@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "36f7fceb_b9b9ab7d",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T21:46:39Z",
+      "side": 1,
+      "message": "Can we restore the ScaleAppIcon method and call it from here?",
+      "revId": "3a55abc813163c820d0eeda9e5a9068528af8735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4835752a_c839d17e",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2017-09-22T21:35:08Z",
       "side": 1,
       "message": "Not sure whether we still need this after we did it in line 502? Or maybe it\u0027s better to do it too here?",
+      "revId": "3a55abc813163c820d0eeda9e5a9068528af8735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b48a3d_068f6881",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T21:46:39Z",
+      "side": 1,
+      "message": "Let\u0027s keep it here.",
+      "parentUuid": "4835752a_c839d17e",
       "revId": "3a55abc813163c820d0eeda9e5a9068528af8735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
