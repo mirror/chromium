@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f0686d_4a3d7245",
+        "filename": "chrome/browser/devtools/protocol/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T18:24:25Z",
+      "side": 1,
+      "message": "(This is a bit scary, but we could sort it out later. We make components listen to the session and add their handlers)",
+      "revId": "2c71d079362ab8a0845f428769fa590c3812f260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
