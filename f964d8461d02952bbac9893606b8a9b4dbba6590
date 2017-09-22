@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2b8c227_8a8986f7",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T00:16:55Z",
+      "side": 1,
+      "message": "nit: // chromeos::BaseScreen:",
+      "revId": "f964d8461d02952bbac9893606b8a9b4dbba6590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f0225bb_42e0cfc2",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 95,
         "endChar": 28
       },
+      "revId": "f964d8461d02952bbac9893606b8a9b4dbba6590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41302440_f40cae99",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T00:16:55Z",
+      "side": 1,
+      "message": "Let\u0027s negate the condition because having a return in ctor could be confusing.\ni.e.\n  if (accessibility_manager) {\n    accessibility_subscription_ \u003d ...\n  }",
       "revId": "f964d8461d02952bbac9893606b8a9b4dbba6590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
