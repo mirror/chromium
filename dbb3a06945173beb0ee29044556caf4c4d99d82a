@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52668909_c445f082",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T18:00:27Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to reuse this method and just pass in a base::Optional\u003c\u003e name and description.",
+      "revId": "dbb3a06945173beb0ee29044556caf4c4d99d82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
