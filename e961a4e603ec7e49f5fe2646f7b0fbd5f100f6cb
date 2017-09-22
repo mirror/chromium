@@ -16,6 +16,24 @@
       "revId": "e961a4e603ec7e49f5fe2646f7b0fbd5f100f6cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb182a2_4e890864",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-22T12:12:27Z",
+      "side": 1,
+      "message": "Updated to only remove from TTS notification names.",
+      "parentUuid": "95604601_f1330fd1",
+      "revId": "e961a4e603ec7e49f5fe2646f7b0fbd5f100f6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
