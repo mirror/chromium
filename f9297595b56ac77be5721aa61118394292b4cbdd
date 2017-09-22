@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e00857da_1ea7f3c9",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb463e3_3bd4d497",
+      "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc13aac5_5a81cfaa",
         "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T19:59:03Z",
       "side": 1,
       "message": "Nit: I found this comment slightly more confusing than helpful because I wasn\u0027t sure what question I would have had as a reader without it, that it would be aiming to answer.\n\n\"Why is the UMA named \u0027later\u0027?\" -\u003e it\u0027s not that weird of a name, I\u0027d hope we explain this in the UMA/histograms files.\n\n\"Why are we implementing a Close() method at all?\" -\u003e from inspection, so we can record some UMA stat on close; that\u0027s a common thing to do\n\nMaybe it\u0027s the bit about \"override Close() to intercept other forms of dismissal (and not Auto-accept)\" that\u0027s throwing me.  Is this saying there are many ways to dismiss the bubble (more than just the close button?) and providing this method catches them, but we wouldn\u0027t catch them if we didn\u0027t provide it?  Is it also saying that if we didn\u0027t override this, we\u0027d auto-accept on clicking the close X?  It reads like both of those to me, and I didn\u0027t think either one was true.",
+      "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d605389c_34b6047f",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:46:12Z",
+      "side": 1,
+      "message": "\u003e  Is it also saying that if we didn\u0027t override this, we\u0027d auto-accept on clicking the close X? \n\nit\u0027s this.\n\nThe dialog now only has a single button and\n\nbool DialogDelegate::Close() {\n  int buttons \u003d GetDialogButtons();\n  if ((buttons \u0026 ui::DIALOG_BUTTON_CANCEL) ||\n      (buttons \u003d\u003d ui::DIALOG_BUTTON_NONE)) {\n    return Cancel();\n  }\n  return Accept();\n}\n\n(also the header comment) mean that Accept() will be called.\n\nI\u0027ve reworded the comment:\n\n  // DialogDelegate::Close() would call Accept(), as there is only one button.\n  // Prevent that and record UMA. Note in the past there was also a \"Later\"\n  // button, hence the name.",
+      "parentUuid": "cc13aac5_5a81cfaa",
       "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
