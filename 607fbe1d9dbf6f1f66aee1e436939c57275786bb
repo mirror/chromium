@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4489d813_11cc875a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "The response is not written isn\u0027t perfectly correlated with should_restart being true.\n\nIf there are no dependent transactions but the response isn\u0027t written, should_restart will be false.",
+      "range": {
+        "startLine": 889,
+        "startChar": 14,
+        "endLine": 889,
+        "endChar": 62
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52a8122_31f4c342",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "Why do we sometimes call DoneWithEntry and sometimes call cache_-\u003eDoneWithEntry? The header comment doesn\u0027t explain why we shouldn\u0027t always call DoneWithEntry. Ideally we could converge on one path.",
+      "range": {
+        "startLine": 201,
+        "startChar": 14,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e74ffa_b50ba73a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "Perhaps:\n\nIf there is no network, and no cache entry, then there is nothing to read from. An error state should be set for the next read, else this transaction should have been terminated once it reached this state.",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 29
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969f59cb_69088643",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "Mode shouldn\u0027t be NONE right? At least the comment above says as much: \"if entry_ is present, the transaction is either a writer or a reader\".",
+      "range": {
+        "startLine": 412,
+        "startChar": 27,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489c4da2_0e8ecebe",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "It\u0027s not intuitive that keep_entry translates accurately to did_finish. HC::DoneWithEntry won\u0027t delete the entry just because its |did_finish| argument is false.\n\nPerhaps we could replace this with:\n\n```\nif (!keep_entry) {\n  cache_-\u003eDoomActiveEntry(entry_);  // this interface may not exist?\n}\nDoneWithEntry(false);\n```\n\nWDYT?",
+      "range": {
+        "startLine": 2898,
+        "startChar": 18,
+        "endLine": 2898,
+        "endChar": 45
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e873ea_07da0ccd",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "Do we want to handle this situation or DCHECK? I\u0027d think DCHECK to help us find logic bugs.",
+      "range": {
+        "startLine": 3118,
+        "startChar": 4,
+        "endLine": 3118,
+        "endChar": 10
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa49143_7ae5ec12",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN since this has a std::unique_ptr member.",
+      "range": {
+        "startLine": 220,
+        "startChar": 35,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084973fc_8a6d30cf",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "This function isn\u0027t necessary. Just merge its logic into DoPartialNetworkReadCompleted.",
+      "range": {
+        "startLine": 464,
+        "startChar": 6,
+        "endLine": 464,
+        "endChar": 38
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

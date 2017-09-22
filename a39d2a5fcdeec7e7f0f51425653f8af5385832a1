@@ -308,6 +308,24 @@
     },
     {
       "key": {
+        "uuid": "284123c4_e20a1a74",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T16:22:19Z",
+      "side": 1,
+      "message": "AboutToBeRemovedFromWriters is a notification of an event, allowing the HC::T to take care of its own state as a result. Part of that notification should be if it was removed due to an error or not. The HC::T can then figure out what needs to be done with that information, like, storing any error code if it isn\u0027t in the middle of reading from the network at the time.\n\nSetSharedWritingFailState is the HC::W telling the HC::T what to do with its own state, which is in my opinion less desirable.\n\nI strongly prefer removing SetSharedWritingFailstate.",
+      "parentUuid": "98686317_a8e657c4",
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba3cf97_e37add80",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 20
