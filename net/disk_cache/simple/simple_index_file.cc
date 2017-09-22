@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
 #include "base/files/file.h"
 #include "base/files/file_util.h"
 #include "base/files/memory_mapped_file.h"
@@ -355,7 +356,9 @@ SimpleIndexFile::SimpleIndexFile(
       index_file_(cache_directory_.AppendASCII(kIndexDirectory)
                       .AppendASCII(kIndexFileName)),
       temp_index_file_(cache_directory_.AppendASCII(kIndexDirectory)
-                           .AppendASCII(kTempIndexFileName)) {}
+                           .AppendASCII(kTempIndexFileName)) {
+  //base::debug::StackTrace().Print();
+}
 
 SimpleIndexFile::~SimpleIndexFile() {}
 
@@ -367,6 +370,7 @@ void SimpleIndexFile::LoadIndexEntries(base::Time cache_last_modified,
                                   cache_last_modified, cache_directory_,
                                   index_file_, out_result);
   worker_pool_->PostTaskAndReply(FROM_HERE, task, callback);
+  LOG(ERROR) << "here!";
 }
 
 void SimpleIndexFile::WriteToDisk(SimpleIndex::IndexWriteToDiskReason reason,
@@ -395,6 +399,7 @@ void SimpleIndexFile::SyncLoadIndexEntries(
     const base::FilePath& cache_directory,
     const base::FilePath& index_file_path,
     SimpleIndexLoadResult* out_result) {
+  LOG(ERROR) << "In SyncLoadIndexEntries, task for LoadIndexEntries";
   // Load the index and find its age.
   base::Time last_cache_seen_by_index;
   SyncLoadFromDisk(index_file_path, &last_cache_seen_by_index, out_result);

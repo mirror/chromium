@@ -215,6 +215,7 @@ void TaskTracker::Shutdown() {
 
 void TaskTracker::Flush() {
   AutoSchedulerLock auto_lock(flush_lock_);
+  LOG(ERROR) << "TaskTracker::Flush";
   while (subtle::Acquire_Load(&num_pending_undelayed_tasks_) != 0 &&
          !IsShutdownComplete()) {
     flush_cv_->Wait();

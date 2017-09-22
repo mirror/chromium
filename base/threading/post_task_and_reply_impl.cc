@@ -42,7 +42,10 @@ class PostTaskAndReplyRelay {
   }
 
   void RunTaskAndPostReply() {
+    LOG(ERROR) << "RunTaskAndPostReply running task: " << from_here_.ToString();
     std::move(task_).Run();
+    LOG(ERROR) << "RunTaskAndPostReply, going to post reply: "
+               << from_here_.ToString();
     origin_task_runner_->PostTask(
         from_here_, BindOnce(&PostTaskAndReplyRelay::RunReplyAndSelfDestruct,
                              base::Unretained(this)));

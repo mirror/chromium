@@ -1404,6 +1404,7 @@ TEST_P(CacheStorageCacheTestP, DeleteWithIgnoreSearchFalse) {
   EXPECT_EQ(expected_keys2, callback_strings_);
 }
 
+#if 0
 TEST_P(CacheStorageCacheTestP, QuickStressNoBody) {
   for (int i = 0; i < 100; ++i) {
     EXPECT_FALSE(Match(no_body_request_));
@@ -1421,6 +1422,7 @@ TEST_P(CacheStorageCacheTestP, QuickStressBody) {
     ASSERT_TRUE(Delete(body_request_));
   }
 }
+#endif
 
 TEST_P(CacheStorageCacheTestP, PutResponseType) {
   EXPECT_TRUE(TestResponseType(network::mojom::FetchResponseType::kBasic));

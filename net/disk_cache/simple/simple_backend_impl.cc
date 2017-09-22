@@ -17,6 +17,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
@@ -75,7 +76,11 @@ class LeakySequencedWorkerPool {
                                     kThreadNamePrefix,
                                     base::TaskPriority::USER_BLOCKING)) {}
 
-  void FlushForTesting() { sequenced_worker_pool_->FlushForTesting(); }
+  void FlushForTesting() {
+    LOG(ERROR) << "FlushForTesting, " << sequenced_worker_pool_.get();
+    //base::debug::StackTrace(5).Print();
+    sequenced_worker_pool_->FlushForTesting();
+  }
 
   scoped_refptr<base::TaskRunner> GetTaskRunner() {
     return sequenced_worker_pool_->GetTaskRunnerWithShutdownBehavior(
@@ -95,6 +100,8 @@ scoped_refptr<base::SequencedTaskRunner> FallbackToInternalIfNull(
     const scoped_refptr<base::SequencedTaskRunner>& cache_runner) {
   if (cache_runner)
     return cache_runner;
+  LOG(ERROR) << "making another in FallbackToInternalIfNull";
+  //base::debug::StackTrace(5).Print();
   return base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
        base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
@@ -275,6 +282,7 @@ SimpleBackendImpl::SimpleBackendImpl(
 
 SimpleBackendImpl::~SimpleBackendImpl() {
   index_->WriteToDisk(SimpleIndex::INDEX_WRITE_REASON_SHUTDOWN);
+  LOG(ERROR) << "~SimpleBackendImpl so going to destroy cache_runner_ i guess";
 }
 
 int SimpleBackendImpl::Init(const CompletionCallback& completion_callback) {
@@ -803,9 +811,12 @@ void SimpleBackendImpl::DoomEntriesComplete(
 
 // static
 void SimpleBackendImpl::FlushWorkerPoolForTesting() {
+  LOG(ERROR) << "FlushWorkerPoolForTesting";
   // We only need to do this if we there is an active task runner.
-  if (base::ThreadTaskRunnerHandle::IsSet())
+  if (base::ThreadTaskRunnerHandle::IsSet()) {
+    LOG(ERROR) << "calling FlushForTesting";
     g_sequenced_worker_pool.Get().FlushForTesting();
+  }
 }
 
 }  // namespace disk_cache
