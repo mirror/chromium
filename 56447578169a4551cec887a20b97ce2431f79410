@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f61b737f_ab5b69f8",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T21:31:32Z",
+      "side": 1,
+      "message": "within",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "56447578169a4551cec887a20b97ce2431f79410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

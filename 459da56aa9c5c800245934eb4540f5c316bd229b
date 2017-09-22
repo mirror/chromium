@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5faa6121_7679b39a",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T21:31:32Z",
+      "side": 1,
+      "message": "+1 for removing the Ninja call. I prefer to chain together simpler calls with \u0026\u0026.\n\nI don\u0027t think Goma works well with ninja -l (equivalent to running autoninja).",
+      "parentUuid": "43e45a01_f2c9eb1e",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fae9920_2747934c",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
