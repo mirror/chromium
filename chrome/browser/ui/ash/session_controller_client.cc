@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
@@ -170,6 +171,9 @@ SessionControllerClient::SessionControllerClient()
       prefs::kSessionLengthLimit,
       base::Bind(&SessionControllerClient::SendSessionLengthLimit,
                  base::Unretained(this)));
+  chromeos::DeviceSettingsService::Get()
+      ->device_off_hours_controller()
+      ->AddObserver(this);
 
   DCHECK(!g_instance);
   g_instance = this;
@@ -187,6 +191,9 @@ SessionControllerClient::~SessionControllerClient() {
   SessionManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveSessionStateObserver(this);
+  chromeos::DeviceSettingsService::Get()
+      ->device_off_hours_controller()
+      ->RemoveObserver(this);
 }
 
 void SessionControllerClient::Init() {
@@ -196,6 +203,8 @@ void SessionControllerClient::Init() {
   session_controller_->SetClient(std::move(client));
   SendSessionInfoIfChanged();
   SendSessionLengthLimit();
+  SendOffHoursMode();
+  SendOffHoursTime();
   // User sessions and their order will be sent via UserSessionStateObserver
   // even for crash-n-restart.
 }
@@ -518,6 +527,11 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
                      weak_ptr_factory_.GetWeakPtr(), profile));
 }
 
+void SessionControllerClient::OnOffHoursModeChanged() {
+  SendOffHoursMode();
+  SendOffHoursTime();
+}
+
 void SessionControllerClient::SendUserSessionForProfile(Profile* profile) {
   DCHECK(profile);
   const User* user = chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
@@ -600,4 +614,21 @@ void SessionControllerClient::SendSessionLengthLimit() {
   // the feature off in the middle of the session.
   session_controller_->SetSessionLengthLimit(session_length_limit,
                                              session_start_time);
+}
+
+void SessionControllerClient::SendOffHoursMode() {
+  policy::DeviceOffHoursController* off_hours_controller =
+      chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
+  session_controller_->UpdateOffHourMode(
+      off_hours_controller->IsOffHoursMode());
+}
+void SessionControllerClient::SendOffHoursTime() {
+  policy::DeviceOffHoursController* off_hours_controller =
+      chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
+  base::TimeDelta off_hours_duration =
+      off_hours_controller->GetOffHoursDuration();
+  base::Time off_hours_start_time =
+      off_hours_controller->GetOffHoursStartTime();
+  session_controller_->SetOffHoursTime(off_hours_start_time,
+                                       off_hours_duration);
 }

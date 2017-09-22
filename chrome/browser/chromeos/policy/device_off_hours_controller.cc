@@ -6,9 +6,9 @@
 
 #include <algorithm>
 #include <string>
+#include <tuple>
 #include <utility>
 
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/time/time.h"
@@ -207,6 +207,35 @@ DeviceOffHoursController::DeviceOffHoursController() {}
 
 DeviceOffHoursController::~DeviceOffHoursController() {}
 
+// Observer
+DeviceOffHoursController::Observer::~Observer() {}
+
+void DeviceOffHoursController::Observer::OnOffHoursModeChanged() {}
+
+void DeviceOffHoursController::AddObserver(Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DeviceOffHoursController::RemoveObserver(Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void DeviceOffHoursController::SetOffHoursStartTime(
+    base::Time off_hours_start) {
+  off_hours_start_ = off_hours_start;
+}
+
+void DeviceOffHoursController::SetOffHoursDuration(
+    base::TimeDelta off_hours_duration) {
+  off_hours_duration_ = off_hours_duration;
+}
+
+void DeviceOffHoursController::NotifyOffHoursModeChanged() const {
+  VLOG(1) << "OffHours mode is changed.";
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeChanged();
+}
+
 void DeviceOffHoursController::UpdateOffHoursMode() {
   if (off_hours_intervals_.empty()) {
     StopOffHoursTimer();
@@ -217,6 +246,8 @@ void DeviceOffHoursController::UpdateOffHoursMode() {
       off_hours::WeeklyTime::GetCurrentWeeklyTime();
   for (const auto& interval : off_hours_intervals_) {
     if (interval.Contains(current_time)) {
+      SetOffHoursDuration(base::TimeDelta::FromMilliseconds(duration));
+      StartOffHoursTimer(base::TimeDelta::FromMilliseconds(duration));
       SetOffHoursMode(true);
       StartOffHoursTimer(current_time.GetDurationTo(interval.end()));
       return;

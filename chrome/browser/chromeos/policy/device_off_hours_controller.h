@@ -9,11 +9,13 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "net/base/network_change_notifier.h"
 
 namespace policy {
 
@@ -54,9 +56,22 @@ ApplyOffHoursPolicyToProto(
 // decoding process from proto to PolicyMap.
 class DeviceOffHoursController {
  public:
-  // Creates a device off hours controller instance.
+  // Observer interface.
+  class Observer {
+   public:
+    // Gets called when "OffHours" mode or
+    // "OffHours" duration is changed.
+    virtual void OnOffHoursModeChanged();
+
+   protected:
+    virtual ~Observer();
+  };
+
   DeviceOffHoursController();
   ~DeviceOffHoursController();
+
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
 
   // Return current "OffHours" mode status.
   bool IsOffHoursMode();
@@ -66,6 +81,12 @@ class DeviceOffHoursController {
   void UpdateOffHoursPolicy(
       const enterprise_management::ChromeDeviceSettingsProto&
           device_settings_proto);
+
+  // Return "OffHours" mode start time.
+  base::Time GetOffHoursStartTime() { return off_hours_start_; }
+
+  // Return "OffHours" mode duration from start time.
+  base::TimeDelta GetOffHoursDuration() { return off_hours_duration_; }
 
  private:
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to
@@ -83,6 +104,15 @@ class DeviceOffHoursController {
   // Timer for update "OffHours" mode.
   void StartOffHoursTimer(base::TimeDelta delay);
   void StopOffHoursTimer();
+
+  // Run OnOffHoursModeChanged() for observers.
+  void NotifyOffHoursModeChanged() const;
+
+  base::ObserverList<Observer> observers_;
+
+  base::TimeDelta off_hours_duration_;
+
+  base::Time off_hours_start_;
 
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
