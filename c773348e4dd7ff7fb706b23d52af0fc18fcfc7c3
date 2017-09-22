@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "558001a4_1e1757c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-22T11:53:07Z",
+      "side": 1,
+      "message": "\u003e I guess let\u0027s get someone else as a tie-breaker ;)\n\nAgreed, let\u0027s ask Bernhard :D\n\n\u003e \n\u003e \"Site name\" would be less confusing to me, but it\u0027s also not always accurate. Actually, I\u0027m not sure that og:site_name is actually always the right thing to use. The example on ogp.me talks about the IMDb leaf page for \"The Rock\", where the og:site_name is \"IMDb\". Having a tile pointing to that leaf page just say \"IMDb\" doesn\u0027t seem optimal...\n\nOther than for Popular Sites, I agree defaulting to og:site_name over og:title would be correct for TopSites/MostLikely.",
+      "parentUuid": "8a6bef84_ca1ee037",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e708419a_1258d703",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -314,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "258b935b_b21f1473",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-22T11:53:07Z",
+      "side": 1,
+      "message": "The target use case is the FRE and I am not sure what priority the other sources will have.\n\nAlthough, we at least planned to use manifests for a while: crbug/688341\n\nAbout the SuggestionsService ... I am not sure as it would probably be quite expensive. Let\u0027s see how well these titles do and whether crbug.com/731687 will make them more prominent.",
+      "parentUuid": "376e5650_5952ef5a",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768cdc9c_ba4a6129",
         "filename": "chrome/common/search/instant_types.h",
         "patchSetId": 6
@@ -558,6 +600,30 @@
       "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1ed22e_a956b913",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-22T11:53:07Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s neither necessary nor intuitive. Forget about the negative ID part.\nThe enum value is equal to the histogram value which is equal to the same enum used server-side. Adding a new value will just work.\n\n(If the client-side is earlier, the new histogram would just stay empty for a while and if the server-side is updated earlier, it\u0027s logged as UNKNOWN until we know the type, which is correct.)",
+      "parentUuid": "ed87f19c_697c8ae2",
+      "range": {
+        "startLine": 516,
+        "startChar": 76,
+        "endLine": 516,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
