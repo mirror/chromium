@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6258752b_dd3372e8",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Yes.  That\u0027s true.  Thought it should be fine since  CC and address have two different histogram/",
+      "parentUuid": "3bb5e86d_9ef8645d",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f1b588_fd9a0ca4",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 7
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "1efd5887_2834117f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f1b588_fd9a0ca4",
+      "range": {
+        "startLine": 1303,
+        "startChar": 38,
+        "endLine": 1303,
+        "endChar": 60
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc7df89b_6b69e8de",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 7
@@ -85,6 +127,30 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea9cc77_cfe035cb",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc7df89b_6b69e8de",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 55
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +183,24 @@
       "side": 1,
       "message": "\"Decline\" seems like an active choice, though, and it could be the user just didn\u0027t notice.  What about FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTION ?",
       "parentUuid": "048d4878_43cdaad1",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8180cea5_114f76d9",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Mostly done. Probably no need to specifically log non-cc-forms? \n\nFor credit card form histogram: NO_CARD, UNKNOWN_CARD, KNOWN_CARD will all be counted.\nFor address form histogram: only NO_CARD will be counted.\n\nThoughts?",
+      "parentUuid": "fff77993_41633d21",
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -169,6 +253,54 @@
     },
     {
       "key": {
+        "uuid": "e5447ce7_3d7557dd",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77901f6_b8b197fc",
+      "range": {
+        "startLine": 434,
+        "startChar": 70,
+        "endLine": 434,
+        "endChar": 78
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56faef0d_ad576f2f",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0eddfb_5b5e1680",
+      "range": {
+        "startLine": 434,
+        "startChar": 30,
+        "endLine": 434,
+        "endChar": 52
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9d2918_8b233576",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 7
@@ -189,6 +321,30 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9a9afa_17a561ab",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba9d2918_8b233576",
+      "range": {
+        "startLine": 435,
+        "startChar": 30,
+        "endLine": 435,
+        "endChar": 59
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -215,6 +371,30 @@
     },
     {
       "key": {
+        "uuid": "6d769f71_023c964d",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6ee648_8e9967ce",
+      "range": {
+        "startLine": 916,
+        "startChar": 9,
+        "endLine": 916,
+        "endChar": 37
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91060860_56dae65a",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 7
@@ -235,6 +415,30 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d41539_7dd88d14",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91060860_56dae65a",
+      "range": {
+        "startLine": 934,
+        "startChar": 35,
+        "endLine": 934,
+        "endChar": 53
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +465,30 @@
     },
     {
       "key": {
+        "uuid": "b0641b61_47cd8808",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7b88ae6_b3699ea3",
+      "range": {
+        "startLine": 311,
+        "startChar": 64,
+        "endLine": 311,
+        "endChar": 70
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b585ece_77325d76",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 7
@@ -284,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "98c302a6_8a056295",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b585ece_77325d76",
+      "range": {
+        "startLine": 316,
+        "startChar": 40,
+        "endLine": 316,
+        "endChar": 49
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e826e27_1bef5c63",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 7
@@ -298,6 +550,24 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281a3be8_c7f80f6c",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e826e27_1bef5c63",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +594,30 @@
     },
     {
       "key": {
+        "uuid": "316b9d45_cdaa37ff",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Yeah... Talked this with Kumar yesterday. We plan to have a simple metric for now. If we find lots FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_KNOWN_CARD, we may want to dig into this latter.",
+      "parentUuid": "55bc0b7b_48449271",
+      "range": {
+        "startLine": 520,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a0a0260_bb89e468",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 7
@@ -344,6 +638,30 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c3bf9c_0be1e9ef",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "They use this function: https://cs.chromium.org/chromium/src/components/autofill/core/browser/credit_card.cc?q\u003dNetworkAndLastFourDigits\u0026sq\u003dpackage:chromium\u0026l\u003d600\n\nwhich is different in our case. We don\u0027t card if it\u0027s a masked or unmasked card.",
+      "parentUuid": "0a0a0260_bb89e468",
+      "range": {
+        "startLine": 522,
+        "startChar": 7,
+        "endLine": 522,
+        "endChar": 43
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +688,30 @@
     },
     {
       "key": {
+        "uuid": "500069f7_1c8be770",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee7d554_050173bd",
+      "range": {
+        "startLine": 2179,
+        "startChar": 28,
+        "endLine": 2179,
+        "endChar": 50
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d00ab54_b026b1f2",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 7
@@ -390,6 +732,30 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c60cc89_819df706",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-22T22:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d00ab54_b026b1f2",
+      "range": {
+        "startLine": 2182,
+        "startChar": 28,
+        "endLine": 2182,
+        "endChar": 58
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
