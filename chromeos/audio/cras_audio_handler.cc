@@ -1310,9 +1310,30 @@ void CrasAudioHandler::HandleHotPlugDevice(
 
     SwitchToDevice(hotplug_device, true, ACTIVATE_BY_RESTORE_PREVIOUS_STATE);
   } else {
-    // Do not active the device if its previous state is inactive.
-    VLOG(1) << "Hotplug device remains inactive as its previous state:"
-            << hotplug_device.ToString();
+    // Let's check how the current active device is activated, if it is not
+    // activated by user choice, then select the hog plugged device it is of
+    // higher priority.
+    const AudioDevice* active_device = GetDeviceFromId(active_output_node_id_);
+    bool activate_by_user = false;
+    bool state_active = false;
+    bool found_active_state = audio_pref_handler_->GetDeviceActive(
+        *active_device, &state_active, &activate_by_user);
+    DCHECK(found_active_state && state_active);
+    if (!found_active_state || !state_active) {
+      LOG(ERROR) << "Cannot retrieve current active device's state in prefs: "
+                 << active_device->ToString();
+      return;
+    }
+    if (!activate_by_user &&
+        device_priority_queue.top().id == hotplug_device.id) {
+      SwitchToDevice(hotplug_device, true, ACTIVATE_BY_PRIORITY);
+    } else {
+      // Do not active the hotplug device. Either the current device is
+      // expliciltly activated by user, or the hotplug device is of lower
+      // priority.
+      VLOG(1) << "Hotplug device remains inactive as its previous state:"
+              << hotplug_device.ToString();
+    }
   }
 }
 
