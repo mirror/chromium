@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1fa5bf_f88524fa",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-22T12:11:39Z",
+      "side": 1,
+      "message": "This is the only change added from the previous CL.",
+      "range": {
+        "startLine": 176,
+        "startChar": 21,
+        "endLine": 176,
+        "endChar": 22
+      },
+      "revId": "fe2e811d1fa4c2da123f839a21c33060ab614d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
