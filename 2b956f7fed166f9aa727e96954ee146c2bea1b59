@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5fad47e_9b2ed978",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Maybe \"supported_chrome_os_management\"? I feel \"cros\" like being our developer-only slang, but not a commonly understood abbreviation.",
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2737b29d_445159fe",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Maybe it\u0027s just me, but I can\u0027t \"parse\" this code after staring at it for a couple of minutes... Could you maybe transform this lambda into a nested function, written in a more linear fashion? Or maybe change back to a set of functions for each of the user/device sets of policies?",
+      "range": {
+        "startLine": 1275,
+        "startChar": 20,
+        "endLine": 1276,
+        "endChar": 63
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487b5c19_efcb094d",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Wrong indentation.",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 15
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc282483_6ae9a9b3",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Wrong indentation.",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 14
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c10d4dc_45fbccc8",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Wrong indentation.",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 12
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2cffff_d3d1e4ed",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Wrong indentation.",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 14
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fef4a77_428a52a5",
+        "filename": "components/policy/tools/template_writers/writers/chromeos_adml_writer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: Wrong indentation.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbb0edf_40d69913",
+        "filename": "components/policy/tools/template_writers/writers/doc_writer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "nit: The backslash is unnecessary.",
+      "range": {
+        "startLine": 525,
+        "startChar": 41,
+        "endLine": 525,
+        "endChar": 43
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

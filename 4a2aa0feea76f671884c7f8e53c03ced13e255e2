@@ -164,6 +164,30 @@
       "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9daf1606_2b602e26",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T16:04:12Z",
+      "side": 1,
+      "message": "OK, since this have already been discussed.",
+      "parentUuid": "f34b2d4b_2e0e598c",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 32
+      },
+      "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
