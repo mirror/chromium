@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "854b3165_b17e1021",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-22T17:20:45Z",
+      "side": 1,
+      "message": "SendAslLog(level, \"warning: log message could not be formatted\");",
+      "revId": "c485079f6bd8ff6707f18c61e78c7737adc6b0a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd6d9f6_ca5ceda6",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-22T17:20:45Z",
+      "side": 1,
+      "message": "\u003cstring.h\u003e and \u003cerrno.h\u003e",
+      "revId": "c485079f6bd8ff6707f18c61e78c7737adc6b0a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0520c5_7f0785a0",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-22T17:20:45Z",
+      "side": 1,
+      "message": "These messages may not have enough context. Chrome’s logging interface includes __FILE__ and __LINE__, which helps. Here, how are we supposed to know who logged the message? There may be duplicates. If you were just looking at a log and you saw “writev: Bad file descriptor (9)”, you’d have no idea what it meant.",
+      "revId": "c485079f6bd8ff6707f18c61e78c7737adc6b0a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
