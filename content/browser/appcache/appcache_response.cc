@@ -409,9 +409,9 @@ void AppCacheResponseWriter::CreateEntryIfNeededAndContinue() {
     creation_phase_ = INITIAL_ATTEMPT;
     entry_ptr = new AppCacheDiskCacheInterface::Entry*;
     create_callback_ =
-        base::Bind(&AppCacheResponseWriter::OnCreateEntryComplete,
+        base::BindOnce(&AppCacheResponseWriter::OnCreateEntryComplete,
                    weak_factory_.GetWeakPtr(), base::Owned(entry_ptr));
-    rv = disk_cache_->CreateEntry(response_id_, entry_ptr, create_callback_);
+    rv = disk_cache_->CreateEntry(response_id_, entry_ptr, std::move(create_callback_));
   }
   if (rv != net::ERR_IO_PENDING)
     OnCreateEntryComplete(entry_ptr, rv);
@@ -428,7 +428,7 @@ void AppCacheResponseWriter::OnCreateEntryComplete(
     if (rv != net::OK) {
       // We may try to overwrite existing entries.
       creation_phase_ = DOOM_EXISTING;
-      rv = disk_cache_->DoomEntry(response_id_, create_callback_);
+      rv = disk_cache_->DoomEntry(response_id_, std::move(create_callback_));
       if (rv != net::ERR_IO_PENDING)
         OnCreateEntryComplete(NULL, rv);
       return;
@@ -438,9 +438,9 @@ void AppCacheResponseWriter::OnCreateEntryComplete(
     AppCacheDiskCacheInterface::Entry** entry_ptr =
         new AppCacheDiskCacheInterface::Entry*;
     create_callback_ =
-        base::Bind(&AppCacheResponseWriter::OnCreateEntryComplete,
+        base::BindOnce(&AppCacheResponseWriter::OnCreateEntryComplete,
                    weak_factory_.GetWeakPtr(), base::Owned(entry_ptr));
-    rv = disk_cache_->CreateEntry(response_id_, entry_ptr, create_callback_);
+    rv = disk_cache_->CreateEntry(response_id_, entry_ptr, std::move(create_callback_));
     if (rv != net::ERR_IO_PENDING)
       OnCreateEntryComplete(entry_ptr, rv);
     return;

@@ -84,12 +84,12 @@ class CONTENT_EXPORT AppCacheDiskCacheInterface {
                      int64_t offset,
                      net::IOBuffer* buf,
                      int buf_len,
-                     const net::CompletionCallback& callback) = 0;
+                     OnceCompletionCallback callback) = 0;
     virtual int Write(int index,
                       int64_t offset,
                       net::IOBuffer* buf,
                       int buf_len,
-                      const net::CompletionCallback& callback) = 0;
+                      OnceCompletionCallback callback) = 0;
     virtual int64_t GetSize(int index) = 0;
     virtual void Close() = 0;
    protected:
@@ -101,12 +101,12 @@ class CONTENT_EXPORT AppCacheDiskCacheInterface {
 
   virtual int CreateEntry(int64_t key,
                           Entry** entry,
-                          const net::CompletionCallback& callback) = 0;
+                          OnceCompletionCallback callback) = 0;
   virtual int OpenEntry(int64_t key,
                         Entry** entry,
-                        const net::CompletionCallback& callback) = 0;
+                        OnceCompletionCallback callback) = 0;
   virtual int DoomEntry(int64_t key,
-                        const net::CompletionCallback& callback) = 0;
+                        OnceCompletionCallback callback) = 0;
 
   const char* uma_name() const { return uma_name_; }
   base::WeakPtr<AppCacheDiskCacheInterface> GetWeakPtr();
@@ -283,7 +283,7 @@ class CONTENT_EXPORT AppCacheResponseWriter
   int write_position_;
   int write_amount_;
   CreationPhase creation_phase_;
-  net::CompletionCallback create_callback_;
+  OnceCompletionCallback create_callback_;
   base::WeakPtrFactory<AppCacheResponseWriter> weak_factory_;
 };
 
