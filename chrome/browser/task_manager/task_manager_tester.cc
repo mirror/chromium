@@ -49,6 +49,10 @@ class ScopedInterceptTableModelObserver : public ui::TableModelObserver {
     real_table_model_observer_->OnItemsAdded(start, length);
     callback_.Run();
   }
+  void OnItemsMoved(int old_start, int length, int new_start) override {
+    real_table_model_observer_->OnItemsMoved(old_start, length, new_start);
+    callback_.Run();
+  }
   void OnItemsRemoved(int start, int length) override {
     real_table_model_observer_->OnItemsRemoved(start, length);
     callback_.Run();

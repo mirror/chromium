@@ -14,6 +14,7 @@
 #include "base/process/process_handle.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "chrome/browser/task_manager/task_manager_observer.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -51,6 +52,26 @@ class Task {
     NACL,           /* A NativeClient loader or broker process. */
     SANDBOX_HELPER, /* A sandbox helper process. */
   };
+
+  // Sort key that orders Task processes in a user-understandable way. These
+  // fields are determined by the first Task seen in the process, and inherited
+  // by later Tasks, so that same-process Tasks are grouped together. The
+  // inclusion of the final TaskId member guarantees that each process has
+  // a unique ProcessSortKey, since a Task can be in only one process.
+  using ProcessSortKey = std::tuple<Task::Type,  // main task type
+                                    int,         // main tab id
+                                    TaskId,      // main task
+                                    int,         // subtask tab id
+                                    Task::Type,  // subtask type
+                                    TaskId>;     // subtask id
+
+  // Secondary key that determines the order of tasks within a process.
+  using SecondarySortKey = std::tuple<bool,  // has parent task
+                                      int>;  // individual task tab id
+
+  // The user-understandable sorting of Tasks is the concatenation of the per-
+  // process and per-task orderings.
+  using SortKey = std::pair<ProcessSortKey, SecondarySortKey>;
 
   // Create a task with the given |title| and the given favicon |icon|. This
   // task runs on a process whose handle is |handle|. |rappor_sample| is the
@@ -145,6 +166,11 @@ class Task {
 
   int64_t task_id() const { return task_id_; }
 
+  // Access and get the sort key. This value is meant to be assigned by the
+  // TaskManagerInterface instance that controls this Task.
+  const SortKey& sort_key() const { return sort_key_; }
+  void set_sort_key(const SortKey& key) { sort_key_ = key; }
+
   // Returns the instantaneous rate, in bytes per second, of network usage
   // (sent and received), as measured over the last refresh cycle.
   int64_t network_usage_rate() const {
@@ -175,6 +201,10 @@ class Task {
  private:
   // The unique ID of this task.
   const int64_t task_id_;
+
+  // This Task's sort key, as assigned by the TaskManagerInterface instance
+  // (e.g., TaskManagerImpl) that controls this Task.
+  SortKey sort_key_;
 
   // The sum of all bytes that have been uploaded from this task calculated at
   // the last refresh.
