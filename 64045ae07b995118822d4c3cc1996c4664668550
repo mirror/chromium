@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d55de9c9_bf678052",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "For now, I prefer to keep it simple and not allow this, since the only client  at the moment (an applyConstraints() implementation I\u0027m preparing) does not need it. \nI just added an IsRunning() method to allow client code to make sure the source did not change state unexpectedly after a successful start.  WDYT?\n\nIf we ever need to support restarting before the initial start completes, I\nguess we could queue such requests and handle them serially after start completes.",
+      "parentUuid": "437a7b4c_4f1d4506",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 26
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3328ea5c_3176e1d4",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "64045ae07b995118822d4c3cc1996c4664668550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2b4630_56a33061",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3328ea5c_3176e1d4",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da687785_a59390c1",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Great idea. Done.",
+      "parentUuid": "68b138a9_a9f702e5",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda69ea9_30c74a84",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "64045ae07b995118822d4c3cc1996c4664668550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b405b8a_417101de",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "I think NOTREACHED() is better in this case, since this should never be called.\nAdded a comment in the documentation to emphasize that if a subclass overrides StopSourceForRestartImpl(), RestartSourceImpl() must be overriden as well (and viceversa).",
+      "parentUuid": "bda69ea9_30c74a84",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "42d75aab_e239e4f1",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8a12ec_8ca4535c",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 30
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e4aa785_d3414f73",
         "filename": "content/renderer/media/media_stream_video_source.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "64045ae07b995118822d4c3cc1996c4664668550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebac2e32_395bcec7",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e4aa785_d3414f73",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7a374aef_6bd89b74",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff508dca_6a812bb6",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 40
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716c9238_cab49f38",
         "filename": "content/renderer/media/media_stream_video_source.h",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8cb6c219_f2940f30",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Done. Also added other relevant updates to the documentation.",
+      "parentUuid": "716c9238_cab49f38",
+      "range": {
+        "startLine": 100,
+        "startChar": 29,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb979ed_1b0acbe1",
         "filename": "content/renderer/media/media_stream_video_source.h",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "64045ae07b995118822d4c3cc1996c4664668550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccacec2_e2a68a8a",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-22T11:06:43Z",
+      "side": 1,
+      "message": "Removed. Leftover from an earlier development version.",
+      "parentUuid": "adb979ed_1b0acbe1",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 75
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
