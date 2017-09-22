@@ -1298,10 +1298,9 @@ void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
     while (string_builder.length() < kShowTreeCharacterOffset)
       string_builder.Append(' ');
     string_builder.Append('\t');
-    WTFLogAlways("%s%s", string_builder.ToString().Utf8().data(),
-                 GetNode()->ToString().Utf8().data());
+    DLOG(INFO) << string_builder.ToString(), GetNode()->ToString();
   } else {
-    WTFLogAlways("%s", string_builder.ToString().Utf8().data());
+    DLOG(INFO) << string_builder.ToString();
   }
 }
 
@@ -3562,14 +3561,14 @@ void showTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showTree. Root is (nil)";
 }
 
 void showLineTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowLineTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showLineTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLineTree. Root is (nil)";
 }
 
 void showLayoutTree(const blink::LayoutObject* object1) {
@@ -3584,7 +3583,7 @@ void showLayoutTree(const blink::LayoutObject* object1,
       root = root->Parent();
     root->ShowLayoutTreeAndMark(object1, "*", object2, "-", 0);
   } else {
-    WTFLogAlways("%s", "Cannot showLayoutTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLayoutTree. Root is (nil)";
   }
 }
 
