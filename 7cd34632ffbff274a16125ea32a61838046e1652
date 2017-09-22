@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d8199f1_596ea74b",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T21:32:29Z",
+      "side": 1,
+      "message": "are you sure you\u0027re grabbing the right byte? does endian\u0027ness matter?",
+      "range": {
+        "startLine": 292,
+        "startChar": 31,
+        "endLine": 292,
+        "endChar": 32
+      },
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca6fcce_81d491d1",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T21:32:29Z",
+      "side": 1,
+      "message": "Oooops, I see, this should have matched LocalStorageCachedArea::String16ToUint8Vector since the bytes vector key, not the decoded string value.\n\nFood for thought. In hindsight, we probably should have put the conversion methods somewhere in content/common. We\u0027ll probably want to merge this change so keeping the changes all is this file is probably a good idea for this CL.\n\nIt might be nice to implement the fix using exact copies of String16ToUint8Vector and Uint8VectorToString16, so there\u0027s less doubt about the possibility for differences in behavior. MigrateString could straight thru to String16ToUint8Vector and the FixUpData inner loop could decode using Uint8VectorToString16 and recode using String16ToUint8Vector. Along with a TODO about refactoring to share code with the LocalStorageCachedArea class.",
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
