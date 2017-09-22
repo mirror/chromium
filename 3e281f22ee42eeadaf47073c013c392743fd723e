@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c05f1f2_f8d15787",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-22T19:08:49Z",
+      "side": 1,
+      "message": "Bug: \u003cnumber\u003e",
+      "revId": "3e281f22ee42eeadaf47073c013c392743fd723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f3489f_5eaba81a",
+        "filename": "net/http/http_auth_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-22T19:08:49Z",
+      "side": 1,
+      "message": "Check if handle_ is non-null.\n\nEven though call site being added in this CL should guarantee that a handler_ exists, as far as APIs go, we should allow folks to call this method on a controller that has no handler.\n\nAlso, the HTTP/1.1 requirement is true for all connection oriented schemes because they all assume that there\u0027s a 1-1 relationship between a TCP connection and a HTTP session. So you can reduce the condition to:\n\n   handler_ \u0026\u0026 handler_-\u003eis_connection_based()",
+      "revId": "3e281f22ee42eeadaf47073c013c392743fd723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
