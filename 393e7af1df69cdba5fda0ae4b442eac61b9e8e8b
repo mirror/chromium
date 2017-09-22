@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e475feb0_1c75d216",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T16:02:41Z",
+      "side": 1,
+      "message": "Why does this need to inherit from GarbageCollectedMixin?",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f281c252_3c839afa",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T16:02:41Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c375826d_5b06e878",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDeviceEventInit.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T16:02:41Z",
+      "side": 1,
+      "message": "Would you add a link to the spec to all IDL files?",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
