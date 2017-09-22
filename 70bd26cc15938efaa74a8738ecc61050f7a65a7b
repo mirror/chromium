@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722d0801_2d5006b3",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T07:15:08Z",
+      "side": 1,
+      "message": "Isn\u0027t this remove the padding between the left edge and the filename?",
+      "revId": "70bd26cc15938efaa74a8738ecc61050f7a65a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
