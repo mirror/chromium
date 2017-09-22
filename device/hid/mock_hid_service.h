@@ -8,7 +8,6 @@
 #include <map>
 
 #include "device/hid/hid_service.h"
-#include "testing/gmock/include/gmock/gmock.h"
 
 namespace device {
 
@@ -23,9 +22,8 @@ class MockHidService : public HidService {
   void FirstEnumerationComplete();
   const std::map<std::string, scoped_refptr<HidDeviceInfo>>& devices() const;
 
-  MOCK_METHOD2(Connect,
-               void(const std::string& device_guid,
-                    const ConnectCallback& callback));
+  void Connect(const std::string& device_id,
+               const ConnectCallback& callback) override;
 
  private:
   base::WeakPtr<HidService> GetWeakPtr() override;
