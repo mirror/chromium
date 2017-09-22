@@ -84,8 +84,13 @@ namespace base {
 class ListValue;
 }
 
+namespace blink {
+struct WebRemoteScrollProperties;
+}
+
 namespace gfx {
 class Range;
+class Rect;
 }
 
 namespace content {
@@ -817,6 +822,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
   void OnSetDevToolsFrameId(const std::string& devtools_frame_id);
+  void OnScrollRectToVisibleInParentFrame(
+      const gfx::Rect& rect_to_scroll,
+      const blink::WebRemoteScrollProperties& properties);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);

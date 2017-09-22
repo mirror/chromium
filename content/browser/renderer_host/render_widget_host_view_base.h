@@ -326,6 +326,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Returns true if the current view is in virtual reality mode.
   virtual bool IsInVR() const;
 
+  // Returns the view into which this view is directly embedded. This can
+  // return nullptr when this view's associated child frame is not connected
+  // to the frame tree.
+  virtual RenderWidgetHostViewBase* GetParentView() { return nullptr; }
+
   //----------------------------------------------------------------------------
   // The following methods are related to IME.
   // TODO(ekaramad): Most of the IME methods should not stay virtual after IME

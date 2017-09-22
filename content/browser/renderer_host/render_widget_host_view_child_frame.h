@@ -154,6 +154,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   bool IsRenderWidgetHostViewChildFrame() override;
 
   void WillSendScreenRects() override;
+  RenderWidgetHostViewBase* GetParentView() override;
 
 #if defined(OS_MACOSX)
   // RenderWidgetHostView implementation.
@@ -194,11 +195,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   // Returns the current surface scale factor.
   float current_surface_scale_factor() { return current_surface_scale_factor_; }
-
-  // Returns the view into which this view is directly embedded. This can
-  // return nullptr when this view's associated child frame is not connected
-  // to the frame tree.
-  RenderWidgetHostViewBase* GetParentView();
 
   void RegisterFrameSinkId();
   void UnregisterFrameSinkId();

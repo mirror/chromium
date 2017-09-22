@@ -56,6 +56,7 @@
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
+#include "third_party/WebKit/public/platform/WebRemoteScrollProperties.h"
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
@@ -92,7 +93,15 @@ using FrameMsg_SerializeAsMHTML_FrameRoutingIdToContentIdMap =
 #define IPC_MESSAGE_EXPORT CONTENT_EXPORT
 
 #define IPC_MESSAGE_START FrameMsgStart
-
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebRemoteScrollProperties::Alignment,
+                              blink::WebRemoteScrollProperties::kCenterIfNeeded,
+                              blink::WebRemoteScrollProperties::kRightAlways)
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebRemoteScrollProperties::Type,
+                              blink::WebRemoteScrollProperties::kUser,
+                              blink::WebRemoteScrollProperties::kSequenced)
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebRemoteScrollProperties::Behavior,
+                              blink::WebRemoteScrollProperties::kAuto,
+                              blink::WebRemoteScrollProperties::kSmooth)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(content::JavaScriptDialogType,
                               content::JAVASCRIPT_DIALOG_TYPE_ALERT,
                               content::JAVASCRIPT_DIALOG_TYPE_PROMPT)
@@ -131,6 +140,15 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebFindOptions)
   IPC_STRUCT_TRAITS_MEMBER(match_case)
   IPC_STRUCT_TRAITS_MEMBER(find_next)
   IPC_STRUCT_TRAITS_MEMBER(force)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(blink::WebRemoteScrollProperties)
+  IPC_STRUCT_TRAITS_MEMBER(align_x)
+  IPC_STRUCT_TRAITS_MEMBER(align_y)
+  IPC_STRUCT_TRAITS_MEMBER(type)
+  IPC_STRUCT_TRAITS_MEMBER(make_visible_in_visual_viewport)
+  IPC_STRUCT_TRAITS_MEMBER(behavior)
+  IPC_STRUCT_TRAITS_MEMBER(is_for_scroll_sequence)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ColorSuggestion)
@@ -1693,6 +1711,16 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_RunFileChooser, content::FileChooserParams)
 // Notification that the urls for the favicon of a site has been determined.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateFaviconURL,
                     std::vector<content::FaviconURL> /* candidates */)
+
+// Sent to the parent process of a cross-process frame to request scrolling.
+IPC_MESSAGE_ROUTED2(FrameMsg_ScrollRectToVisible,
+                    gfx::Rect /* rect_to_scroll */,
+                    blink::WebRemoteScrollProperties /* properties */);
+
+// Send by a local root to request scrolling in its parent process.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
+                    gfx::Rect /* rect_to_scroll */,
+                    blink::WebRemoteScrollProperties /* properties */)
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
