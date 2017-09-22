@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad4ebc5_b2c941dd",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "nit: This sounds like a too generic name - something like \"CertificatePtrLess\" should be more specific.",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ede3d7_68c7c3ff",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "std::sort() requires the comparator to be \"strictly less\", not \"less or equal\".\n\nIn general, this can be written a bit more reliably (IMHO):\n\n  return std::tie(cert1-\u003ealias, cert1-\u003ecert) \u003c std::tie(cert2-\u003ealias, cert2-\u003ecert);",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447a6838_9a009b8f",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "This member is left uninitialized; you\u0027d want to add:\n\n  \u003d false",
+      "range": {
+        "startLine": 81,
+        "startChar": 34,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5296f04f_351bf265",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "nit: Either do ASSERT_EQ here, or change the for-loop to be bounded by std::min(certs.size(), expected_certs.size()).",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 13
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6371703a_f68f4542",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "Question to be checked by the Mojo API reviewers - should this better be changed to be just OnKeyPermissionsChanged() without any parameters, for uniformity with the pair OnCertificatesChanged()+ListCertificates()?",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb956abb_d4eea542",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T15:40:16Z",
+      "side": 1,
+      "message": "nit: Maybe add \" (e.g., a certificate is added or is removed)\"?",
+      "range": {
+        "startLine": 118,
+        "startChar": 41,
+        "endLine": 118,
+        "endChar": 42
+      },
+      "revId": "7467ccd09776ccc08ed06fe3a6a8669d1c0df7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
