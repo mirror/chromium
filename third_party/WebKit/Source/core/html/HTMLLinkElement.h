@@ -63,6 +63,8 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
     return static_cast<DOMTokenList&>(*rel_list_);
   }
   String Scope() const { return scope_; }
+  String Group() const { return group_; }
+  String Position() const { return position_; }
 
   const AtomicString& GetType() const;
 
@@ -99,6 +101,8 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   bool LoadLink(const String& type,
                 const String& as,
                 const String& media,
+                const String& group,
+                const String& position,
                 ReferrerPolicy,
                 const KURL&);
   bool IsAlternate() const {
@@ -156,6 +160,8 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   String type_;
   String as_;
   String media_;
+  String group_;
+  String position_;
   ReferrerPolicy referrer_policy_;
   Member<DOMTokenList> sizes_;
   Vector<IntSize> icon_sizes_;

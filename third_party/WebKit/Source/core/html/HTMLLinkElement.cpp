@@ -107,6 +107,12 @@ void HTMLLinkElement::ParseAttribute(
     UseCounter::Count(GetDocument(), WebFeature::kHTMLLinkElementDisabled);
     if (LinkStyle* link = GetLinkStyle())
       link->SetDisabledState(!value.IsNull());
+  } else if (name == groupAttr &&
+             RuntimeEnabledFeatures::PriorityHintsEnabled()) {
+    group_ = value;
+  } else if (name == positionAttr &&
+             RuntimeEnabledFeatures::PriorityHintsEnabled()) {
+    position_ = value;
   } else {
     if (name == titleAttr) {
       if (LinkStyle* link = GetLinkStyle())
@@ -127,13 +133,16 @@ bool HTMLLinkElement::ShouldLoadLink() {
 bool HTMLLinkElement::LoadLink(const String& type,
                                const String& as,
                                const String& media,
+                               const String& group,
+                               const String& position,
                                ReferrerPolicy referrer_policy,
                                const KURL& url) {
-  return link_loader_->LoadLink(rel_attribute_,
-                                GetCrossOriginAttributeValue(FastGetAttribute(
-                                    HTMLNames::crossoriginAttr)),
-                                type, as, media, referrer_policy, url,
-                                GetDocument(), NetworkHintsInterfaceImpl());
+  return link_loader_->LoadLink(
+      rel_attribute_,
+      GetCrossOriginAttributeValue(
+          FastGetAttribute(HTMLNames::crossoriginAttr)),
+      type, as, media, group, position, referrer_policy, url, GetDocument(),
+      NetworkHintsInterfaceImpl());
 }
 
 LinkResource* HTMLLinkElement::LinkResourceToProcess() {

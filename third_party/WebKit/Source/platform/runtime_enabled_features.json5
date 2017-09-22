@@ -806,6 +806,10 @@
       name: "PrintBrowser",
     },
     {
+      name: "PriorityHints",
+      status: "experimental",
+    },
+    {
       name: "PushMessaging",
       status: "stable",
     },

@@ -36,6 +36,10 @@ static LinkHeader::LinkParameterName ParameterNameFromString(
     return LinkHeader::kLinkParameterHreflang;
   if (base::EqualsCaseInsensitiveASCII(name, "as"))
     return LinkHeader::kLinkParameterAs;
+  if (base::EqualsCaseInsensitiveASCII(name, "group"))
+    return LinkHeader::kLinkParameterGroup;
+  if (base::EqualsCaseInsensitiveASCII(name, "position"))
+    return LinkHeader::kLinkParameterPosition;
   return LinkHeader::kLinkParameterUnknown;
 }
 
@@ -52,6 +56,10 @@ void LinkHeader::SetValue(LinkParameterName name, const String& value) {
     mime_type_ = value.DeprecatedLower();
   else if (name == kLinkParameterMedia)
     media_ = value.DeprecatedLower();
+  else if (name == kLinkParameterGroup)
+    group_ = value.DeprecatedLower();
+  else if (name == kLinkParameterPosition)
+    position_ = value.DeprecatedLower();
 }
 
 template <typename Iterator>

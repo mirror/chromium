@@ -30,6 +30,8 @@
     [CEReactions, Reflect] attribute DOMString srcset;
     [CEReactions, Reflect] attribute DOMString sizes;
     [CEReactions, Reflect, ReflectOnly=("anonymous","use-credentials"), ReflectEmpty="anonymous", ReflectInvalid="anonymous"] attribute DOMString? crossOrigin;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("critical", "visual", "textcritical", "functional", "late")] attribute DOMString group;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("before", "after")] attribute DOMString position;
     [CEReactions, Reflect] attribute DOMString useMap;
     [CEReactions, Reflect] attribute boolean isMap;
     [CEReactions] attribute unsigned long width;

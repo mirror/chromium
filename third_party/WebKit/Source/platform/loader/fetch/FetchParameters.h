@@ -71,6 +71,20 @@ class PLATFORM_EXPORT FetchParameters {
     kDisallowPlaceholder = 0,  // The requested image must not be a placeholder.
     kAllowPlaceholder,         // The image is allowed to be a placeholder.
   };
+  enum class FetchGroupValue {
+    Invalid = 0,
+    BeforeCritical,
+    Critical,
+    AfterCritical,
+    TextCritical,
+    AfterTextCritical,
+    Functional,
+    AfterFunctional,
+    Visual,
+    AfterVisual,
+    Late,
+    AfterLate,
+  };
   // TODO(toyoshim): Consider to define an enum for preload options, and use it
   // instead of bool in this class, FrameFetchContext, and so on. If it is
   // reasonable, we try merging m_speculativePreload and m_linkPreload into one
@@ -94,6 +108,10 @@ class PLATFORM_EXPORT FetchParameters {
     return resource_request_;
   }
   const KURL& Url() const { return resource_request_.Url(); }
+  static FetchGroupValue FetchGroupStringsToValue(const String& group,
+                                                  const String& position);
+  FetchGroupValue FetchGroup() const { return fetch_group_; }
+  void SetFetchGroup(FetchGroupValue group) { fetch_group_ = group; }
 
   void SetRequestContext(WebURLRequest::RequestContext context) {
     resource_request_.SetRequestContext(context);
@@ -210,6 +228,7 @@ class PLATFORM_EXPORT FetchParameters {
   ResourceWidth resource_width_;
   ClientHintsPreferences client_hint_preferences_;
   PlaceholderImageRequestType placeholder_image_request_type_;
+  FetchGroupValue fetch_group_;
 };
 
 // This class is needed to copy a FetchParameters across threads, because it

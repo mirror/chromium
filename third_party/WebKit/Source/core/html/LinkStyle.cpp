@@ -356,6 +356,8 @@ void LinkStyle::Process() {
   String type = owner_->TypeValue().DeprecatedLower();
   String as = owner_->AsValue().DeprecatedLower();
   String media = owner_->Media().DeprecatedLower();
+  String group = owner_->Group().DeprecatedLower();
+  String position = owner_->Position().DeprecatedLower();
 
   const KURL& href = owner_->GetNonEmptyURLAttribute(hrefAttr);
   WTF::TextEncoding charset = GetCharset();
@@ -374,7 +376,8 @@ void LinkStyle::Process() {
     }
   }
 
-  if (!owner_->LoadLink(type, as, media, owner_->GetReferrerPolicy(), href))
+  if (!owner_->LoadLink(type, as, media, group, position,
+                        owner_->GetReferrerPolicy(), href))
     return;
 
   if (LoadStylesheetIfNeeded(href, charset, type) == kNotNeeded && sheet_) {

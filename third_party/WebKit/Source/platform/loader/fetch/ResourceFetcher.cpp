@@ -158,9 +158,28 @@ ResourceLoadPriority ResourceFetcher::ComputeLoadPriority(
     Resource::Type type,
     const ResourceRequest& resource_request,
     ResourcePriority::VisibilityStatus visibility,
+    FetchParameters::FetchGroupValue group,
     FetchParameters::DeferOption defer_option,
     FetchParameters::SpeculativePreloadType speculative_preload_type,
     bool is_link_preload) {
+  if (group != FetchParameters::FetchGroupValue::Invalid) {
+    if (group == FetchParameters::FetchGroupValue::BeforeCritical ||
+        group == FetchParameters::FetchGroupValue::Critical)
+      return kResourceLoadPriorityVeryHigh;
+    if (group == FetchParameters::FetchGroupValue::AfterCritical ||
+        group == FetchParameters::FetchGroupValue::TextCritical)
+      return kResourceLoadPriorityHigh;
+    if (group == FetchParameters::FetchGroupValue::AfterTextCritical ||
+        group == FetchParameters::FetchGroupValue::Functional)
+      return kResourceLoadPriorityMedium;
+    if (group == FetchParameters::FetchGroupValue::AfterFunctional ||
+        group == FetchParameters::FetchGroupValue::Visual)
+      return kResourceLoadPriorityLow;
+    if (group == FetchParameters::FetchGroupValue::AfterVisual ||
+        group == FetchParameters::FetchGroupValue::Late ||
+        group == FetchParameters::FetchGroupValue::AfterLate)
+      return kResourceLoadPriorityLow;
+  }
   ResourceLoadPriority priority = TypeToPriority(type);
 
   // Visible resources (images in practice) get a boost to High priority.
@@ -274,6 +293,7 @@ ResourceFetcher::ResourceFetcher(FetchContext* new_context,
                                  RefPtr<WebTaskRunner> task_runner)
     : context_(new_context),
       scheduler_(ResourceLoadScheduler::Create(&Context())),
+      defer_non_critical_resources_(true),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
           std::move(task_runner),
@@ -305,6 +325,16 @@ bool ResourceFetcher::IsControlledByServiceWorker() const {
   return Context().IsControlledByServiceWorker();
 }
 
+void ResourceFetcher::FirstChunkProcessed() {
+  DCHECK(IsMainThread());
+  DCHECK(!defer_non_critical_resources_);
+  for (auto& resource : *deferred_resources_) {
+    if (resource->StillNeedsLoad())
+      StartLoad(resource);
+  }
+  deferred_resources_->clear();
+  defer_non_critical_resources_ = false;
+}
 bool ResourceFetcher::ResourceNeedsLoad(Resource* resource,
                                         const FetchParameters& params,
                                         RevalidationPolicy policy) {
@@ -313,6 +343,15 @@ bool ResourceFetcher::ResourceNeedsLoad(Resource* resource,
   if (resource->GetType() == Resource::kFont && !params.IsLinkPreload())
     return false;
 
+  if (params.FetchGroup() != FetchParameters::FetchGroupValue::Invalid &&
+      params.FetchGroup() != FetchParameters::FetchGroupValue::BeforeCritical &&
+      params.FetchGroup() != FetchParameters::FetchGroupValue::Critical &&
+      defer_non_critical_resources_) {
+    if (!deferred_resources_)
+      deferred_resources_ = new HeapVector<Member<Resource>>;
+    deferred_resources_->push_back(resource);
+    return false;
+  }
   // Defer loading images either when:
   // - images are disabled
   // - instructed to defer loading images from network
@@ -571,13 +610,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 
   resource_request.SetPriority(ComputeLoadPriority(
       resource_type, params.GetResourceRequest(), ResourcePriority::kNotVisible,
-      params.Defer(), params.GetSpeculativePreloadType(),
+      params.FetchGroup(), params.Defer(), params.GetSpeculativePreloadType(),
       params.IsLinkPreload()));
   if (resource_request.GetCachePolicy() ==
       WebCachePolicy::kUseProtocolCachePolicy) {
     resource_request.SetCachePolicy(Context().ResourceRequestCachePolicy(
         resource_request, resource_type, params.Defer()));
   }
+  // YOAV(todo): override the policy
+  // Defer the request if it needs to be deferred:
+  // * Did we reach end of head?
+  // If so, e
   if (resource_request.GetRequestContext() ==
       WebURLRequest::kRequestContextUnspecified) {
     resource_request.SetRequestContext(DetermineRequestContext(
@@ -1495,7 +1538,8 @@ void ResourceFetcher::UpdateAllImageResourcePriorities() {
     ResourcePriority resource_priority = resource->PriorityFromObservers();
     ResourceLoadPriority resource_load_priority =
         ComputeLoadPriority(Resource::kImage, resource->GetResourceRequest(),
-                            resource_priority.visibility);
+                            resource_priority.visibility,
+                            FetchParameters::FetchGroupValue::Invalid);
     if (resource_load_priority == resource->GetResourceRequest().Priority())
       continue;
 
@@ -1714,6 +1758,7 @@ DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(document_resources_);
   visitor->Trace(preloads_);
   visitor->Trace(matched_preloads_);
+  visitor->Trace(deferred_resources_);
   visitor->Trace(resource_timing_info_map_);
 }
 
