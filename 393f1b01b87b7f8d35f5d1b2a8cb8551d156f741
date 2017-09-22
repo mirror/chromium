@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1e717866_da838bfc",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:15:36Z",
+      "side": 1,
+      "message": "Could you use |selection_test()|, which is wrapper of |test() + assert_selection()|?\n\nselection_test(\n  \"input text\",\n  selection \u003d\u003e {\n   ....\n   assert_not_equals(\n    window.eventSender, undefined, \u0027This test requires eventSender\u0027);\n  },\n  \"... expected text\",\n  \"...description\");",
+      "revId": "393f1b01b87b7f8d35f5d1b2a8cb8551d156f741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56ef2219_9163babe",
         "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 21,
         "endChar": 0
       },
+      "revId": "393f1b01b87b7f8d35f5d1b2a8cb8551d156f741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c9838c_f5e7abb7",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:15:36Z",
+      "side": 1,
+      "message": "|assert_selection()| now accepts array of string for input text and\nexpected text. So, we don\u0027t need to have |join()|.",
       "revId": "393f1b01b87b7f8d35f5d1b2a8cb8551d156f741",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
