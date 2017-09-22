@@ -276,6 +276,9 @@ HRESULT AccessibilityEventRecorderWin::AccessibleObjectFromWindowWrapper(
   if (SUCCEEDED(hr))
     return hr;
 
+  if (!manager_)
+    return E_FAIL;
+
   // The above call to ::AccessibleObjectFromWindow fails for unknown
   // reasons every once in a while on the bots.  Work around it by grabbing
   // the object directly from the BrowserAccessibilityManager.
