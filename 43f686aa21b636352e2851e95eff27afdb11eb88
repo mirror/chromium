@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d15bbd08_1034e3a5",
+        "filename": "device/u2f/u2f_ble_frames.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T11:45:02Z",
+      "side": 1,
+      "message": "Nit: Maybe it\u0027s just me, but I find this a bit hard to follow. |size| seems to be constant, so you could either inline it or declare it outside the for-loop. For num_continuation_fragments you could remove it here and change line 67 to num_continuation_fragments++ \u0026 0x7F.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 68
+      },
+      "revId": "43f686aa21b636352e2851e95eff27afdb11eb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7475d423_4ef7df41",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T11:45:02Z",
+      "side": 1,
+      "message": "While this could be a return value as well, I suppose the current design makes sense if you want to simply append to already existing data. Is this the intended use-case? (Also applies to U2fBleFrameInitializationFragment::Serialize)",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "43f686aa21b636352e2851e95eff27afdb11eb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
