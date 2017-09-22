@@ -31,13 +31,24 @@
 /**
  * @unrestricted
  */
-UI.ShortcutsScreen = class {
+UI.ShortcutsScreen = class extends UI.SimpleView {
   constructor() {
-    /** @type {!Object.<string, !UI.ShortcutsSection>} */
-    this._sections = {};
+    super(Common.UIString('Shortcuts'));
+    /** @type {!Map<string, !UI.ShortcutsSection>} */
+    this._sections = new Map();
+    UI.shortcutRegistry.addEventListener(UI.ShortcutRegistry.Events.ShortcutsChanged, this._updateShortcuts.bind(this));
+    this.element.classList.add('settings-tab-container');
+
+    this._updateShortcuts();
   }
 
-  static registerShortcuts() {
+  _updateShortcuts() {
+    // set order of some sections explicitly
+    this.section(Common.UIString('Elements Panel'));
+    this.section(Common.UIString('Styles Pane'));
+    this.section(Common.UIString('Debugger'));
+    this.section(Common.UIString('Console'));
+
     self.runtime.extensions('action').forEach(extension => {
       var descriptor = extension.descriptor();
       if (!descriptor['helpSection'])
@@ -45,12 +56,12 @@ UI.ShortcutsScreen = class {
       var keys = UI.shortcutRegistry.shortcutDescriptorsForAction(descriptor['actionId']);
       if (!keys.length)
         return;
-      var section = UI.shortcutsScreen.section(descriptor['helpSection']);
+      var section = this.section(descriptor['helpSection']);
       section.addAlternateKeys(keys, descriptor['helpDescription'] || descriptor['title']);
     });
 
     // Elements panel
-    var elementsSection = UI.shortcutsScreen.section(Common.UIString('Elements Panel'));
+    var elementsSection = this.section(Common.UIString('Elements Panel'));
 
     elementsSection.addAlternateKeys(
         UI.ShortcutsScreen.ElementsPanelShortcuts.NavigateUp, Common.UIString('Navigate elements'));
@@ -70,7 +81,7 @@ UI.ShortcutsScreen = class {
         UI.shortcutRegistry.shortcutDescriptorsForAction('elements.edit-as-html'),
         Common.UIString('Toggle edit as HTML'));
 
-    var stylesPaneSection = UI.shortcutsScreen.section(Common.UIString('Styles Pane'));
+    var stylesPaneSection = this.section(Common.UIString('Styles Pane'));
 
     stylesPaneSection.addAlternateKeys(
         UI.ShortcutsScreen.ElementsPanelShortcuts.NextProperty, Common.UIString('Next/previous property'));
@@ -151,39 +162,10 @@ UI.ShortcutsScreen = class {
    * @return {!UI.ShortcutsSection}
    */
   section(name) {
-    var section = this._sections[name];
+    var section = this._sections.get(name);
     if (!section)
-      this._sections[name] = section = new UI.ShortcutsSection(name);
+      this._sections.set(name, section = new UI.ShortcutsSection(name));
     return section;
-  }
-
-  /**
-   * @return {!UI.Widget}
-   */
-  createShortcutsTabView() {
-    var orderedSections = [];
-    for (var section in this._sections)
-      orderedSections.push(this._sections[section]);
-    function compareSections(a, b) {
-      return a.order - b.order;
-    }
-    orderedSections.sort(compareSections);
-
-    var widget = new UI.Widget();
-
-    widget.element.className = 'settings-tab-container';  // Override
-    widget.element.createChild('header').createChild('h3').createTextChild(Common.UIString('Shortcuts'));
-    var scrollPane = widget.element.createChild('div', 'help-container-wrapper');
-    var container = scrollPane.createChild('div');
-    container.className = 'help-content help-container';
-    for (var i = 0; i < orderedSections.length; ++i)
-      orderedSections[i].renderSection(container);
-
-    var note = scrollPane.createChild('p', 'help-footnote');
-    note.appendChild(UI.createDocumentationLink(
-        'iterate/inspect-styles/shortcuts', Common.UIString('Full list of DevTools keyboard shortcuts and gestures')));
-
-    return widget;
   }
 };
 
@@ -203,7 +185,6 @@ UI.ShortcutsSection = class {
   constructor(name) {
     this.name = name;
     this._lines = /** @type {!Array.<!{key: !Node, text: string}>} */ ([]);
-    this.order = ++UI.ShortcutsSection._sequenceNumber;
   }
 
   /**
@@ -211,22 +192,15 @@ UI.ShortcutsSection = class {
    * @param {string} description
    */
   addAlternateKeys(keys, description) {
-    var keysNode = this._renderSequence(keys, Common.UIString('or'));
+    var keysNode = this._joinNodes(
+        keys.map(this._renderKey.bind(this)), this._createSpan('help-key-delimiter', Common.UIString('or')));
     for (var line of this._lines) {
       if (line.text === description) {
         line.key = this._joinNodes([line.key, keysNode], this._createSpan('help-key-delimiter', '/'));
         return;
       }
     }
-    this._addLine(keysNode, description);
-  }
-
-  /**
-   * @param {!Node} keyElement
-   * @param {string} description
-   */
-  _addLine(keyElement, description) {
-    this._lines.push({key: keyElement, text: description});
+    this._lines.push({key: keysNode, text: description});
   }
 
   /**
@@ -246,16 +220,6 @@ UI.ShortcutsSection = class {
       keyCell.appendChild(this._createSpan('help-key-delimiter', ':'));
       line.createChild('div', 'help-cell').textContent = this._lines[i].text;
     }
-  }
-
-  /**
-   * @param {!Array.<!UI.KeyboardShortcut.Descriptor>} sequence
-   * @param {string} delimiter
-   * @return {!Node}
-   */
-  _renderSequence(sequence, delimiter) {
-    var delimiterSpan = this._createSpan('help-key-delimiter', delimiter);
-    return this._joinNodes(sequence.map(this._renderKey.bind(this)), delimiterSpan);
   }
 
   /**
@@ -295,8 +259,6 @@ UI.ShortcutsSection = class {
     return result;
   }
 };
-
-UI.ShortcutsSection._sequenceNumber = 0;
 
 
 UI.ShortcutsScreen.ElementsPanelShortcuts = {

@@ -65,6 +65,8 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
     this._enableBracketMatchingIfNeeded();
 
     this._updateKeymap();
+    this._boundUpdateKeymap = this._updateKeymap.bind(this);
+    UI.shortcutRegistry.addEventListener(UI.ShortcutRegistry.Events.ShortcutsChanged, this._boundUpdateKeymap);
 
     this._codeMirror.addKeyMap({'\'': 'maybeAvoidSmartSingleQuotes', '\'"\'': 'maybeAvoidSmartDoubleQuotes'});
 
@@ -448,6 +450,7 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
   dispose() {
     if (this._options.bracketMatchingSetting)
       this._options.bracketMatchingSetting.removeChangeListener(this._enableBracketMatchingIfNeeded, this);
+    UI.shortcutRegistry.removeEventListener(UI.ShortcutRegistry.Events.ShortcutsChanged, this._boundUpdateKeymap);
   }
 
   _enableBracketMatchingIfNeeded() {

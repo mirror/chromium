@@ -4,18 +4,33 @@
 /**
  * @unrestricted
  */
-UI.ShortcutRegistry = class {
+UI.ShortcutRegistry = class extends Common.Object {
   /**
    * @param {!UI.ActionRegistry} actionRegistry
    * @param {!Document} document
    */
   constructor(actionRegistry, document) {
+    super();
     this._actionRegistry = actionRegistry;
     /** @type {!Multimap.<string, string>} */
     this._defaultKeyToActions = new Multimap();
     /** @type {!Multimap.<string, !UI.KeyboardShortcut.Descriptor>} */
     this._defaultActionToShortcut = new Multimap();
-    this._registerBindings(document);
+
+    this._customSortcutsSetting = Common.settings.createSetting('customKeyboardShortcuts', {});
+
+    document.addEventListener('input', this.dismissPendingShortcutAction.bind(this), true);
+
+    this._registerShortcuts();
+  }
+
+  /**
+   * @param {!Object<string, string>} customShortcuts
+   */
+  setCustomKeyboardShortcuts(customShortcuts) {
+    this._customSortcutsSetting.set(customShortcuts);
+    this._registerShortcuts();
+    this.dispatchEventToListeners(UI.ShortcutRegistry.Events.ShortcutsChanged);
   }
 
   /**
@@ -152,7 +167,7 @@ UI.ShortcutRegistry = class {
    * @param {string} actionId
    * @param {string} shortcut
    */
-  registerShortcut(actionId, shortcut) {
+  _registerShortcut(actionId, shortcut) {
     var descriptor = UI.KeyboardShortcut.makeDescriptorFromBindingShortcut(shortcut);
     if (!descriptor)
       return;
@@ -167,11 +182,10 @@ UI.ShortcutRegistry = class {
     }
   }
 
-  /**
-   * @param {!Document} document
-   */
-  _registerBindings(document) {
-    document.addEventListener('input', this.dismissPendingShortcutAction.bind(this), true);
+  _registerShortcuts() {
+    this._defaultKeyToActions.clear();
+    this._defaultActionToShortcut.clear();
+
     var extensions = self.runtime.extensions('action');
     extensions.forEach(registerExtension, this);
 
@@ -182,11 +196,14 @@ UI.ShortcutRegistry = class {
     function registerExtension(extension) {
       var descriptor = extension.descriptor();
       var bindings = descriptor['bindings'];
+      var custom = this._customSortcutsSetting.get()[descriptor['actionId']];
+      if (custom)
+        bindings = [{shortcut: custom}];
       for (var i = 0; bindings && i < bindings.length; ++i) {
         if (!platformMatches(bindings[i].platform))
           continue;
         var shortcuts = bindings[i]['shortcut'].split(/\s+/);
-        shortcuts.forEach(this.registerShortcut.bind(this, descriptor['actionId']));
+        shortcuts.forEach(this._registerShortcut.bind(this, descriptor['actionId']));
       }
     }
 
@@ -216,3 +233,8 @@ UI.ShortcutRegistry.ForwardedShortcut.instance = new UI.ShortcutRegistry.Forward
 
 /** @type {!UI.ShortcutRegistry} */
 UI.shortcutRegistry;
+
+/** @enum {symbol} */
+UI.ShortcutRegistry.Events = {
+  ShortcutsChanged: Symbol('shortcuts-changed')
+};
