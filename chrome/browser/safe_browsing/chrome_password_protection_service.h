@@ -100,6 +100,9 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
     return unhandled_password_reuses_;
   }
 
+  // Check if Gaia password hash is changed.
+  void CheckGaiaPasswordChange();
+
   // Called when sync user's Gaia password changed.
   void OnGaiaPasswordChanged();
 
@@ -147,6 +150,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // Gets change password URl based on |account_info_|.
   GURL GetChangePasswordURL();
 
+  void SetGaiaPasswordHashForTesting(const std::string& new_password_hash) {
+    gaia_password_hash_ = new_password_hash;
+  }
+
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUserPopulationForPasswordOnFocusPing);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
@@ -163,6 +170,8 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
                            VerifyUpdateSecurityState);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyGetChangePasswordURL);
+  FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceBrowserTest,
+                           VerifyCheckGaiaPasswordChange);
 
  private:
   friend class MockChromePasswordProtectionService;
@@ -201,6 +210,8 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   Profile* profile_;
   // AccountInfo associated with this |profile_|.
   std::unique_ptr<AccountInfo> account_info_;
+  // Current Gaia password hash.
+  std::string gaia_password_hash_;
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
   base::ObserverList<Observer> observer_list_;
