@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f66cb8ad_67571807",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-22T15:15:53Z",
+      "side": 1,
+      "message": "here it\u0027s not the problem, at first form.activity handler runs and that scriptHandler. But I agree that it\u0027s better to have different names to decrease chances of clashes. Renamed to passwordForm",
+      "parentUuid": "e2406ed3_fe866e94",
+      "range": {
+        "startLine": 68,
+        "startChar": 35,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97f648e_df60fb13",
         "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9801600b_86e5693a",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-22T15:15:53Z",
+      "side": 1,
+      "message": "As discussed offline here using testing::Ne is the only option, since there are a lot of calls to the same function LogSavePasswordProgress.",
+      "parentUuid": "c97f648e_df60fb13",
+      "range": {
+        "startLine": 1446,
+        "startChar": 2,
+        "endLine": 1446,
+        "endChar": 13
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f308f5_325a93a5",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53c087d_00cbc777",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-22T15:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f308f5_325a93a5",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
