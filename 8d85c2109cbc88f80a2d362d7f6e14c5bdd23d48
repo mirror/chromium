@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "780647c7_29a2586b",
+        "filename": "content/test/data/device_sensors/device_orientation_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T18:08:10Z",
+      "side": 1,
+      "message": "this can probably be removed..",
+      "revId": "8d85c2109cbc88f80a2d362d7f6e14c5bdd23d48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
