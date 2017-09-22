@@ -22,6 +22,7 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension_set.h"
+#include "extensions/common/manifest_url_handlers.h"
 #include "third_party/smhasher/src/City.h"
 
 namespace {
@@ -84,7 +85,7 @@ ExtensionState IsOffStoreExtension(
   if (verifier.AllowedByEnterprisePolicy(extension.id()))
     return NO_EXTENSIONS;
 
-  if (!extensions::InstallVerifier::IsFromStore(extension))
+  if (!extensions::ManifestURL::UpdatesFromGallery(&extension))
     return OFF_STORE;
 
   // Local information about the extension implies it is from the store. We try

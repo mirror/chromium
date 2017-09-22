@@ -51,9 +51,6 @@ class InstallVerifier : public KeyedService,
   // Returns whether |extension| is of a type that needs verification.
   static bool NeedsVerification(const Extension& extension);
 
-  // Determines if an extension claims to be from the webstore.
-  static bool IsFromStore(const Extension& extension);
-
   // Initializes this object for use, including reading preferences and
   // validating the stored signature.
   void Init();
