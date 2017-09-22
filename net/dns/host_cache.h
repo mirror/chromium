@@ -75,7 +75,9 @@ class NET_EXPORT HostCache {
   // Stores the latest address list that was looked up for a hostname.
   class NET_EXPORT Entry {
    public:
+    Entry(const Entry& entry);
     Entry(int error, const AddressList& addresses, base::TimeDelta ttl);
+    Entry(const Entry&, bool refreshing);
     // Use when |ttl| is unknown.
     Entry(int error, const AddressList& addresses);
     ~Entry();
@@ -89,6 +91,8 @@ class NET_EXPORT HostCache {
 
     // Public for the net-internals UI.
     int network_changes() const { return network_changes_; }
+
+    bool refreshing() const { return refreshing_; }
 
    private:
     friend class HostCache;
@@ -125,6 +129,7 @@ class NET_EXPORT HostCache {
     int network_changes_;
     int total_hits_;
     int stale_hits_;
+    bool refreshing_;
   };
 
   // Interface for interacting with persistent storage, to be provided by the

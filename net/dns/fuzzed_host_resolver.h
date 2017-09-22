@@ -55,6 +55,7 @@ class FuzzedHostResolver : public HostResolverImpl {
   // DnsClient with fuzzed UDP and TCP sockets. Overrides
   // HostResolverImpl method of the same name.
   void SetDnsClientEnabled(bool enabled) override;
+  void SetDnsRefresherEnabled(bool enabled) override;
 
  private:
   // HostResolverImpl implementation:
