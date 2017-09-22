@@ -16,6 +16,10 @@ class MEDIA_EXPORT VideoFrameProvider {
  public:
   VideoFrameProvider();
   virtual ~VideoFrameProvider();
+
+  virtual std::unique_ptr<VideoFrame::Buffer> CreateBuffer(
+      size_t data_size) const = 0;
+
   virtual scoped_refptr<VideoFrame> CreateZeroInitializedFrame(
       VideoPixelFormat format,
       const gfx::Size& coded_size,
@@ -25,6 +29,20 @@ class MEDIA_EXPORT VideoFrameProvider {
 
   virtual scoped_refptr<VideoFrame> WrapVideoFrame(
       const scoped_refptr<VideoFrame>& frame) = 0;
+
+  virtual scoped_refptr<VideoFrame> WrapExternalYuvBuffer(
+      VideoFrame::Buffer* buffer,
+      VideoPixelFormat format,
+      const gfx::Size& coded_size,
+      const gfx::Rect& visible_rect,
+      const gfx::Size& natural_size,
+      int32_t y_stride,
+      int32_t u_stride,
+      int32_t v_stride,
+      uint8_t* y_data,
+      uint8_t* u_data,
+      uint8_t* v_data,
+      base::TimeDelta timestamp) const = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(VideoFrameProvider);
