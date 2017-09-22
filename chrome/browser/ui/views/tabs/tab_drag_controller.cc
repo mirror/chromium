@@ -41,8 +41,8 @@
 #include "ui/views/widget/widget.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/public/cpp/window_properties.h"
-#include "ash/public/interfaces/window_state_type.mojom.h"
+#include "ash/public/cpp/window_properties.h"               // nogncheck
+#include "ash/public/interfaces/window_state_type.mojom.h"  // nogncheck
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #endif
