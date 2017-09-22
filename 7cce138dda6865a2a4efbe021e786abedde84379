@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fab4ec41_f9203ddb",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "This is being called via a public API. So more precaution is not bad.",
+      "parentUuid": "1f5431c3_2a17af3e",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1fca406_ee05047e",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 8
@@ -50,6 +68,24 @@
       "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be514c06_5ac4ce9b",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1fca406_ee05047e",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "34a892fc_c4b07e44",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "906441af_c26a735c",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a05ef391_750b7990",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 8
@@ -81,6 +135,24 @@
       "writtenOn": "2017-09-21T23:33:17Z",
       "side": 1,
       "message": "If you\u0027re trying to reuse code I think it\u0027d be better to have the shared code in a common method that both Complete/StopCalibration call.\n\nAlso, please disambiguate the names here - Complete and Stop calibration are very similar; it is not clear one is for custom calibration and one is for built-in calibration.",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0ae1e8_b6ea4fb2",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "StopCalibration() is a hard stop to any calibration. It does not stop the calibration gracefully. It is meant to be called when display configuration changes or something goes wrong during calibration.\n\nCompleteCalibration() is meant for graceful exit. It saves the calibration into preferences and calls StopCalibrbation() to shutdown whatever is left. CompleteCalibration() is for both Custom and Native calibration.\n\nWill add this in comments.",
+      "parentUuid": "a05ef391_750b7990",
       "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "256ae077_eb18ca14",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fcacc81_ae480fe4",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13128078_2716e39f",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 8
@@ -118,6 +208,24 @@
       "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f10bf8_693d10b5",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T19:05:05Z",
+      "side": 1,
+      "message": "Removing this method all together and merging with StartCalibration.",
+      "parentUuid": "13128078_2716e39f",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
