@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8338e6c3_0ecea13a",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "avoid this style update as part of this patch. If you want to improve this then do it in a separate patch. doing it here is confusing as it\u0027s not necessary.",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e03cf36_09611d3d",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "remove change as not needed in this patch",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c9b8b4_72e7030b",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "If needed then we can have this propagate to child layers but fine to do that as a follow up when we know it\u0027s needed.",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02db59a7_33f76b9a",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "let\u0027s keep this function as before",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d88883a_f788de2c",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "remove change as not needed in this patch",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7fc4ca_99b9cffe",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "I thought some more about this and I think it\u0027s best to keep the current SuppressPaint functionality as is. ie. still have this disconnect the delegate. I think it would be surprising that calling SuppressPaint() followed by RemoveDeferredPaintRequest is valid behavior that will un-suppress the paint.",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

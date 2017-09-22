@@ -19,6 +19,63 @@
     },
     {
       "key": {
+        "uuid": "1122f9b1_05550b99",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "we don\u0027t this",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82784cb3_dfcf5430",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "if (paint_deferred_ \u0026\u0026 content_layer_)\n  return;\n\nfor consistency",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eaf7b15_60d04cbd",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T21:32:14Z",
+      "side": 1,
+      "message": "don\u0027t think we need this",
+      "range": {
+        "startLine": 889,
+        "startChar": 6,
+        "endLine": 889,
+        "endChar": 26
+      },
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aa18264_4b7150d6",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 6
