@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ccbf64a_b67ef41f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a3c367_b255221f",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "131ee085_36afedfb",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4ed089b6_c828b817",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "Done, but I think it\u0027s the other way around concerning |device_scale|. Multiply by it to convert viewport-\u003escreen, divide by it to convert screen-\u003eviewport.\n\nI renamed the involved variables/members and this reads better now.",
+      "parentUuid": "131ee085_36afedfb",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3d3ee9_144a6c09",
         "filename": "pdf/pdf_engine.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb01dea1_ef3927e7",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3d3ee9_144a6c09",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "2b01b893_bfdb2641",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "822e0ccd_f760528d",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 52
+      },
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2192fd68_c75f53ab",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-21T21:23:18Z",
       "side": 1,
       "message": "|target.y_in_pixels| is in \"page coordinates\", so it has to be multiplied by |current_zoom_| to be converted to \"screen coordinates\".",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d129d54_56992306",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "It\u0027s not in page coordinates, it was converted in pdfium_page.cc:369 with FloatPageRectToPixelRect. I don\u0027t know how to call this space that\u0027s \"pixels but before applying zoom\". The rest of the code here does not call it anything other than \"pixels\".",
+      "parentUuid": "2192fd68_c75f53ab",
       "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "88042e0a_aa9208cb",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "GetScreenRects applies the passed zoom level. Since we pass 1.0 here, it has not applied the current zoom level, so it can be matched to GetVisibleRect(), which divides screen coords back into coords without zoom.",
+      "parentUuid": "9825b2ef_beb32762",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "370a3642_390bd968",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 6
@@ -124,6 +238,24 @@
       "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c643f4_75c2bc5e",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-22T16:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "370a3642_390bd968",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
