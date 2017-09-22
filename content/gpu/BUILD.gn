@@ -27,6 +27,7 @@ if (is_component_build) {
 } else {
   link_target_type = "static_library"
 }
+
 target(link_target_type, "gpu_sources") {
   # This is an internal content API. Code outside of the content "component"
   # (like content/test and content/shell) should depend on ":gpu" above.
@@ -42,6 +43,8 @@ target(link_target_type, "gpu_sources") {
     "gpu_service_factory.h",
     "in_process_gpu_thread.cc",
     "in_process_gpu_thread.h",
+    "sandbox_helper.cc",
+    "sandbox_helper.h",
   ]
 
   configs += [ "//content:content_implementation" ]

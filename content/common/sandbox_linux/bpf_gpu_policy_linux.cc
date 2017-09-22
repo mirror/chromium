@@ -49,71 +49,6 @@ namespace content {
 
 namespace {
 
-inline bool IsChromeOS() {
-#if defined(OS_CHROMEOS)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureX86_64() {
-#if defined(__x86_64__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureI386() {
-#if defined(__i386__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureArm() {
-#if defined(__arm__) || defined(__aarch64__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool UseV4L2Codec() {
-#if BUILDFLAG(USE_V4L2_CODEC)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool UseLibV4L2() {
-#if BUILDFLAG(USE_LIBV4L2)
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool IsAcceleratedVaapiVideoEncodeEnabled() {
-  bool accelerated_encode_enabled = false;
-#if defined(OS_CHROMEOS)
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  accelerated_encode_enabled =
-      !command_line.HasSwitch(switches::kDisableVaapiAcceleratedVideoEncode);
-#endif
-  return accelerated_encode_enabled;
-}
-
-bool IsAcceleratedVideoDecodeEnabled() {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  return !command_line.HasSwitch(switches::kDisableAcceleratedVideoDecode);
-}
-
 intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
                            void* aux_broker_process) {
   RAW_CHECK(aux_broker_process);
@@ -154,28 +89,6 @@ intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
   }
 }
 
-void AddV4L2GpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
-  if (IsAcceleratedVideoDecodeEnabled()) {
-    // Device nodes for V4L2 video decode accelerator drivers.
-    static const base::FilePath::CharType kDevicePath[] =
-        FILE_PATH_LITERAL("/dev/");
-    static const base::FilePath::CharType kVideoDecPattern[] = "video-dec[0-9]";
-    base::FileEnumerator enumerator(base::FilePath(kDevicePath), false,
-                                    base::FileEnumerator::FILES,
-                                    base::FilePath(kVideoDecPattern).value());
-    for (base::FilePath name = enumerator.Next(); !name.empty();
-         name = enumerator.Next())
-      permissions->push_back(BrokerFilePermission::ReadWrite(name.value()));
-  }
-
-  // Device node for V4L2 video encode accelerator drivers.
-  static const char kDevVideoEncPath[] = "/dev/video-enc";
-  permissions->push_back(BrokerFilePermission::ReadWrite(kDevVideoEncPath));
-
-  // Device node for V4L2 JPEG decode accelerator drivers.
-  static const char kDevJpegDecPath[] = "/dev/jpeg-dec";
-  permissions->push_back(BrokerFilePermission::ReadWrite(kDevJpegDecPath));
-}
 
 class GpuBrokerProcessPolicy : public GpuProcessPolicy {
  public:
@@ -280,49 +193,6 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
       // Default on the baseline policy.
       return SandboxBPFBasePolicy::EvaluateSyscall(sysno);
   }
-}
-
-bool GpuProcessPolicy::PreSandboxHook() {
-  // Warm up resources needed by the policy we're about to enable and
-  // eventually start a broker process.
-  const bool chromeos_arm_gpu = IsChromeOS() && IsArchitectureArm();
-  // This policy is for x86 or Desktop.
-  DCHECK(!chromeos_arm_gpu);
-
-  DCHECK(!broker_process());
-  // Create a new broker process.
-  InitGpuBrokerProcess(
-      GpuBrokerProcessPolicy::Create,
-      std::vector<BrokerFilePermission>());  // No extra files in whitelist.
-
-  if (IsArchitectureX86_64() || IsArchitectureI386()) {
-    // Accelerated video dlopen()'s some shared objects
-    // inside the sandbox, so preload them now.
-    if (IsAcceleratedVaapiVideoEncodeEnabled() ||
-        IsAcceleratedVideoDecodeEnabled()) {
-      const char* I965DrvVideoPath = NULL;
-      const char* I965HybridDrvVideoPath = NULL;
-
-      if (IsArchitectureX86_64()) {
-        I965DrvVideoPath = "/usr/lib64/va/drivers/i965_drv_video.so";
-        I965HybridDrvVideoPath = "/usr/lib64/va/drivers/hybrid_drv_video.so";
-      } else if (IsArchitectureI386()) {
-        I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
-      }
-
-      dlopen(I965DrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      dlopen("libva.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#if defined(USE_OZONE)
-      dlopen("libva-drm.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#elif defined(USE_X11)
-      dlopen("libva-x11.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#endif
-    }
-  }
-
-  return true;
 }
 
 void GpuProcessPolicy::InitGpuBrokerProcess(

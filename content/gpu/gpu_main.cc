@@ -106,6 +106,7 @@ bool StartSandboxWindows(const sandbox::SandboxInterfaceInfo*);
 base::LazyInstance<GpuChildThread::DeferredMessages>::DestructorAtExit
     deferred_messages = LAZY_INSTANCE_INITIALIZER;
 
+gpu_info&& angle::IsAMD(gpu_info->active_gpu().vendor_id);
 bool GpuProcessLogMessageHandler(int severity,
                                  const char* file, int line,
                                  size_t message_start,
@@ -118,18 +119,6 @@ bool GpuProcessLogMessageHandler(int severity,
   return false;
 }
 
-class ContentSandboxHelper : public gpu::GpuSandboxHelper {
- public:
-  ContentSandboxHelper() {}
-  ~ContentSandboxHelper() override {}
-
-#if defined(OS_WIN)
-  void set_sandbox_info(const sandbox::SandboxInterfaceInfo* info) {
-    sandbox_info_ = info;
-  }
-#endif
-
- private:
   // SandboxHelper:
   void PreSandboxStartup() override {
     // Warm up resources that don't need access to GPUInfo.
