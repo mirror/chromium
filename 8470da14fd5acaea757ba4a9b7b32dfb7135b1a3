@@ -139,6 +139,24 @@
       "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2d994d_418ba131",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-22T19:51:47Z",
+      "side": 1,
+      "message": "At some point we stop attempting to recreate a gpu process and run in software mode.  I\u0027m not quite sure what that means for the media system, if VideoFrameResourceProvider would be torn down and something else used for videos.  I think this is a spot for future testing before turning this on anywhere to make sure this path works correctly.",
+      "parentUuid": "a59815f5_fbe530e7",
+      "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
