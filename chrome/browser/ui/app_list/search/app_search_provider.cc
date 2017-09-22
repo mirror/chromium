@@ -16,7 +16,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/time/clock.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/extensions/gfx_utils.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -88,19 +87,23 @@ class AppSearchProvider::App {
   App(AppSearchProvider::DataSource* data_source,
       const std::string& id,
       const std::string& name,
-      const base::Time& last_launch_time,
-      const base::Time& install_time)
-      : data_source_(data_source),
-        id_(id),
-        name_(base::UTF8ToUTF16(name)),
-        last_launch_time_(last_launch_time),
-        install_time_(install_time) {}
+      base::TimeDelta time_since_last_launch,
+      base::TimeDelta time_since_install)
+      : data_source_(data_source), id_(id), name_(base::UTF8ToUTF16(name)) {
+    if (!time_since_last_launch.is_zero())
+      time_since_last_activity_ = time_since_last_launch;
+    else if (!time_since_install.is_zero())
+      time_since_last_activity_ = time_since_install;
+    else
+      time_since_last_activity_ = base::TimeDelta::Max();
+  }
   ~App() = default;
 
   struct CompareByLastActivityTime {
     bool operator()(const std::unique_ptr<App>& app1,
                     const std::unique_ptr<App>& app2) {
-      return app1->GetLastActivityTime() > app2->GetLastActivityTime();
+      return app1->time_since_last_activity() <
+             app2->time_since_last_activity();
     }
   };
 
@@ -113,23 +116,19 @@ class AppSearchProvider::App {
     return tokenized_indexed_name_.get();
   }
 
-  const base::Time& GetLastActivityTime() const {
-    return last_launch_time_.is_null() ? install_time_ : last_launch_time_;
-  }
-
   AppSearchProvider::DataSource* data_source() { return data_source_; }
   const std::string& id() const { return id_; }
   const base::string16& name() const { return name_; }
-  const base::Time& last_launch_time() const { return last_launch_time_; }
-  const base::Time& install_time() const { return install_time_; }
+  base::TimeDelta time_since_last_activity() const {
+    return time_since_last_activity_;
+  }
 
  private:
   AppSearchProvider::DataSource* data_source_;
   std::unique_ptr<TokenizedString> tokenized_indexed_name_;
   const std::string id_;
   const base::string16 name_;
-  const base::Time last_launch_time_;
-  const base::Time install_time_;
+  base::TimeDelta time_since_last_activity_;
 
   DISALLOW_COPY_AND_ASSIGN(App);
 };
@@ -207,6 +206,8 @@ class ExtensionDataSource : public AppSearchProvider::DataSource,
                const extensions::ExtensionSet& extensions) {
     extensions::ExtensionPrefs* prefs = extensions::ExtensionPrefs::Get(
         profile());
+    const base::TimeTicks ticks_now = base::TimeTicks::Now();
+    const base::Time now = base::Time::Now();
     for (const auto& it : extensions) {
       const extensions::Extension* extension = it.get();
 
@@ -222,8 +223,8 @@ class ExtensionDataSource : public AppSearchProvider::DataSource,
 
       apps->emplace_back(base::MakeUnique<AppSearchProvider::App>(
           this, extension->id(), extension->short_name(),
-          prefs->GetLastLaunchTime(extension->id()),
-          prefs->GetInstallTime(extension->id())));
+          ticks_now - prefs->GetLastLaunchTime(extension->id()),
+          now - prefs->GetInstallTime(extension->id())));
     }
   }
 
@@ -252,6 +253,7 @@ class ArcDataSource : public AppSearchProvider::DataSource,
     CHECK(arc_prefs);
 
     const std::vector<std::string> app_ids = arc_prefs->GetAppIds();
+    const base::Time now = base::Time::Now();
     for (const auto& app_id : app_ids) {
       std::unique_ptr<ArcAppListPrefs::AppInfo> app_info =
           arc_prefs->GetApp(app_id);
@@ -262,10 +264,9 @@ class ArcDataSource : public AppSearchProvider::DataSource,
 
       if (!app_info->launchable || !app_info->showInLauncher)
         continue;
-
       apps->emplace_back(base::MakeUnique<AppSearchProvider::App>(
-          this, app_id, app_info->name, app_info->last_launch_time,
-          app_info->install_time));
+          this, app_id, app_info->name, now - app_info->last_launch_time,
+          now - app_info->install_time));
     }
   }
 
@@ -301,11 +302,9 @@ class ArcDataSource : public AppSearchProvider::DataSource,
 
 AppSearchProvider::AppSearchProvider(Profile* profile,
                                      AppListControllerDelegate* list_controller,
-                                     std::unique_ptr<base::Clock> clock,
                                      AppListItemList* top_level_item_list)
     : list_controller_(list_controller),
       top_level_item_list_(top_level_item_list),
-      clock_(std::move(clock)),
       update_results_factory_(this) {
   data_sources_.emplace_back(
       base::MakeUnique<ExtensionDataSource>(profile, this));
@@ -364,8 +363,9 @@ void AppSearchProvider::UpdateResults() {
       // Use the app list order to tiebreak apps that have never been launched.
       // The apps that have been installed or launched recently should be
       // more relevant than other apps.
-      const base::Time time = app->GetLastActivityTime();
-      if (time.is_null()) {
+      const base::TimeDelta time_since_activity =
+          app->time_since_last_activity();
+      if (time_since_activity == base::TimeDelta::Max()) {
         const auto& it = id_to_app_list_index.find(app->id());
         // If it's in a folder, it won't be in |id_to_app_list_index|. Rank
         // those as if they are at the end of the list.
@@ -376,7 +376,7 @@ void AppSearchProvider::UpdateResults() {
         result->set_relevance(kUnlaunchedAppRelevanceStepSize *
                               (apps_size - app_list_index));
       } else {
-        result->UpdateFromLastLaunchedOrInstalledTime(clock_->Now(), time);
+        result->UpdateFromLastLaunchedOrInstalledTime(time_since_activity);
       }
       MaybeAddResult(&new_results, std::move(result), &seen_or_filtered_apps);
     }

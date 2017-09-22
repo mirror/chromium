@@ -345,7 +345,7 @@ WebContents* OpenEnabledApplication(const AppLaunchParams& params) {
 
   // Record v1 app launch. Platform app launch is recorded when dispatching
   // the onLaunched event.
-  prefs->SetLastLaunchTime(extension->id(), base::Time::Now());
+  prefs->SetLastLaunchTime(extension->id(), base::TimeTicks::Now());
 
   switch (params.container) {
     case extensions::LAUNCH_CONTAINER_NONE: {

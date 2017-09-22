@@ -49,8 +49,6 @@ constexpr char kGmailArcActivity[] =
 
 }  // namespace
 
-const base::Time kTestCurrentTime = base::Time::FromInternalValue(100000);
-
 bool MoreRelevant(const SearchResult* result1, const SearchResult* result2) {
   return result1->relevance() > result2->relevance();
 }
@@ -71,10 +69,7 @@ class AppSearchProviderTest : public AppListTestBase {
   }
 
   void CreateSearch() {
-    std::unique_ptr<base::SimpleTestClock> clock(new base::SimpleTestClock());
-    clock->SetNow(kTestCurrentTime);
     app_search_.reset(new AppSearchProvider(profile_.get(), nullptr,
-                                            std::move(clock),
                                             model_->top_level_item_list()));
   }
 
@@ -264,21 +259,25 @@ TEST_F(AppSearchProviderTest, FetchRecommendations) {
   extensions::ExtensionPrefs* prefs =
       extensions::ExtensionPrefs::Get(profile_.get());
 
-  prefs->SetLastLaunchTime(kHostedAppId, base::Time::FromInternalValue(20));
-  prefs->SetLastLaunchTime(kPackagedApp1Id, base::Time::FromInternalValue(10));
-  prefs->SetLastLaunchTime(kPackagedApp2Id, base::Time::FromInternalValue(5));
+  const base::TimeTicks now = base::TimeTicks::Now();
+  const base::TimeTicks long_ago = now - base::TimeDelta::FromMinutes(20);
+  const base::TimeTicks middle = now - base::TimeDelta::FromMinutes(10);
+  const base::TimeTicks recently = now - base::TimeDelta::FromMinutes(5);
+
+  prefs->SetLastLaunchTime(kHostedAppId, recently);
+  prefs->SetLastLaunchTime(kPackagedApp1Id, middle);
+  prefs->SetLastLaunchTime(kPackagedApp2Id, long_ago);
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 
-  prefs->SetLastLaunchTime(kHostedAppId, base::Time::FromInternalValue(5));
-  prefs->SetLastLaunchTime(kPackagedApp1Id, base::Time::FromInternalValue(10));
-  prefs->SetLastLaunchTime(kPackagedApp2Id, base::Time::FromInternalValue(20));
+  prefs->SetLastLaunchTime(kHostedAppId, long_ago);
+  prefs->SetLastLaunchTime(kPackagedApp1Id, middle);
+  prefs->SetLastLaunchTime(kPackagedApp2Id, recently);
   EXPECT_EQ("Packaged App 2,Packaged App 1,Hosted App", RunQuery(""));
 
   // Times in the future should just be handled as highest priority.
-  prefs->SetLastLaunchTime(kHostedAppId,
-                           kTestCurrentTime + base::TimeDelta::FromSeconds(5));
-  prefs->SetLastLaunchTime(kPackagedApp1Id, base::Time::FromInternalValue(10));
-  prefs->SetLastLaunchTime(kPackagedApp2Id, base::Time::FromInternalValue(5));
+  prefs->SetLastLaunchTime(kHostedAppId, now + base::TimeDelta::FromWeeks(5));
+  prefs->SetLastLaunchTime(kPackagedApp1Id, middle);
+  prefs->SetLastLaunchTime(kPackagedApp2Id, long_ago);
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 }
 
@@ -291,9 +290,9 @@ TEST_F(AppSearchProviderTest, FetchUnlaunchedRecommendations) {
 
   // The order of unlaunched recommendations should be based on the install time
   // order.
-  prefs->SetLastLaunchTime(kHostedAppId, base::Time::Now());
-  prefs->SetLastLaunchTime(kPackagedApp1Id, base::Time::FromInternalValue(0));
-  prefs->SetLastLaunchTime(kPackagedApp2Id, base::Time::FromInternalValue(0));
+  prefs->SetLastLaunchTime(kHostedAppId, base::TimeTicks::Now());
+  prefs->SetLastLaunchTime(kPackagedApp1Id, base::TimeTicks());
+  prefs->SetLastLaunchTime(kPackagedApp2Id, base::TimeTicks());
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 
   // Switching the app list order should not change the query result.
@@ -336,14 +335,14 @@ TEST_F(AppSearchProviderTest, FilterDuplicate) {
 
   extension_prefs->SetLastLaunchTime(
       extension_misc::kGmailAppId,
-      arc_gmail_app_info->last_launch_time - base::TimeDelta::FromSeconds(1));
+      base::TimeTicks::Now() - base::TimeDelta::FromHours(1));
 
   CreateSearch();
   EXPECT_EQ(kGmailArcName, RunQuery(kGmailQeuery));
 
   extension_prefs->SetLastLaunchTime(
       extension_misc::kGmailAppId,
-      arc_gmail_app_info->last_launch_time + base::TimeDelta::FromSeconds(1));
+      base::TimeTicks::Now() + base::TimeDelta::FromSeconds(1));
 
   CreateSearch();
   EXPECT_EQ(kGmailExtensionName, RunQuery(kGmailQeuery));

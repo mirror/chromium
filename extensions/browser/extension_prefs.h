@@ -339,21 +339,22 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
 
   // Returns the last value set via SetLastPingDay. If there isn't such a
   // pref, the returned Time will return true for is_null().
-  base::Time LastPingDay(const std::string& extension_id) const;
+  base::TimeTicks LastPingDay(const std::string& extension_id) const;
 
   // The time stored is based on the server's perspective of day start time, not
   // the client's.
-  void SetLastPingDay(const std::string& extension_id, const base::Time& time);
+  void SetLastPingDay(const std::string& extension_id,
+                      const base::TimeTicks& time);
 
   // Similar to the 2 above, but for the extensions blacklist.
-  base::Time BlacklistLastPingDay() const;
-  void SetBlacklistLastPingDay(const base::Time& time);
+  base::TimeTicks BlacklistLastPingDay() const;
+  void SetBlacklistLastPingDay(const base::TimeTicks& time);
 
   // Similar to LastPingDay/SetLastPingDay, but for sending "days since active"
   // ping.
-  base::Time LastActivePingDay(const std::string& extension_id) const;
+  base::TimeTicks LastActivePingDay(const std::string& extension_id) const;
   void SetLastActivePingDay(const std::string& extension_id,
-                            const base::Time& time);
+                            const base::TimeTicks& time);
 
   // A bit we use for determining if we should send the "days since active"
   // ping. A value of true means the item has been active (launched) since the
@@ -501,9 +502,9 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   bool DoNotSync(const std::string& extension_id) const;
 
   // Gets/sets the last launch time of an extension.
-  base::Time GetLastLaunchTime(const std::string& extension_id) const;
+  base::TimeTicks GetLastLaunchTime(const std::string& extension_id) const;
   void SetLastLaunchTime(const std::string& extension_id,
-                         const base::Time& time);
+                         const base::TimeTicks& time);
 
   // Clear any launch times. This is called by the browsing data remover when
   // history is cleared.

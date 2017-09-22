@@ -42,8 +42,8 @@ void DispatchOnEmbedRequestedEventImpl(
   EventRouter::Get(context)
       ->DispatchEventWithLazyListener(extension_id, std::move(event));
 
-  ExtensionPrefs::Get(context)
-      ->SetLastLaunchTime(extension_id, base::Time::Now());
+  ExtensionPrefs::Get(context)->SetLastLaunchTime(extension_id,
+                                                  base::TimeTicks::Now());
 }
 
 void DispatchOnLaunchedEventImpl(
@@ -70,8 +70,8 @@ void DispatchOnLaunchedEventImpl(
                                        std::move(args), context);
   EventRouter::Get(context)
       ->DispatchEventWithLazyListener(extension_id, std::move(event));
-  ExtensionPrefs::Get(context)
-      ->SetLastLaunchTime(extension_id, base::Time::Now());
+  ExtensionPrefs::Get(context)->SetLastLaunchTime(extension_id,
+                                                  base::TimeTicks::Now());
 }
 
 #define ASSERT_ENUM_EQUAL(Name) ASSERT_ENUM_EQUAL_FULL(Name, Name)

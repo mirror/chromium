@@ -23,17 +23,14 @@ AppResult::AppResult(Profile* profile,
 AppResult::~AppResult() {
 }
 
-void AppResult::UpdateFromLastLaunchedOrInstalledTime(
-    const base::Time& current_time,
-    const base::Time& old_time) {
+void AppResult::UpdateFromLastLaunchedOrInstalledTime(base::TimeDelta delta) {
   // |current_time| can be before |old_time| in weird cases such as users
   // playing with their clocks. Handle this gracefully.
-  if (current_time < old_time) {
+  if (delta < base::TimeDelta()) {
     set_relevance(1.0);
     return;
   }
 
-  base::TimeDelta delta = current_time - old_time;
   const int kSecondsInWeek = 60 * 60 * 24 * 7;
 
   // Set the relevance to a value between 0 and 1. This function decays as the

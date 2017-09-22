@@ -25,8 +25,7 @@ class AppResult : public SearchResult,
  public:
   ~AppResult() override;
 
-  void UpdateFromLastLaunchedOrInstalledTime(const base::Time& current_time,
-                                             const base::Time& old_time);
+  void UpdateFromLastLaunchedOrInstalledTime(base::TimeDelta delta);
 
   // Marked const in order to be able to use in derived class in const methods.
   Profile* profile() const { return profile_; }

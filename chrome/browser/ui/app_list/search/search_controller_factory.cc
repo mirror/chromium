@@ -10,7 +10,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_util.h"
-#include "base/time/default_clock.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.h"
@@ -97,11 +96,9 @@ std::unique_ptr<SearchController> CreateSearchController(
       controller->AddGroup(kMaxWebstoreResults, 0.4, 0.0);
 
   // Add search providers.
-  controller->AddProvider(
-      apps_group_id,
-      base::MakeUnique<AppSearchProvider>(
-          profile, list_controller, base::MakeUnique<base::DefaultClock>(),
-          model->top_level_item_list()));
+  controller->AddProvider(apps_group_id, base::MakeUnique<AppSearchProvider>(
+                                             profile, list_controller,
+                                             model->top_level_item_list()));
   controller->AddProvider(omnibox_group_id, base::MakeUnique<OmniboxProvider>(
                                                 profile, list_controller));
   if (arc::IsWebstoreSearchEnabled()) {
