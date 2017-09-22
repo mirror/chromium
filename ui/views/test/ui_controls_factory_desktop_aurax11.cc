@@ -154,7 +154,7 @@ class UIControlsDesktopX11 : public UIControlsAura {
     if (root_location != root_current_location && button_down_mask == 0) {
       // Move the cursor because EnterNotify/LeaveNotify are generated with the
       // current mouse position as a result of XGrabPointer()
-      root_window->MoveCursorTo(root_location);
+      root_window->MoveCursorTo(gfx::PointF(root_location));
     } else {
       XEvent xevent = {0};
       XMotionEvent* xmotion = &xevent.xmotion;

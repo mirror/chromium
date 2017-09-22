@@ -204,7 +204,7 @@ TEST_F(MirrorWindowControllerTest, MirrorCursorMoveOnEnter) {
   // mode. Move the cursor to the external display.
   aura::Window* secondary_root_window =
       window_tree_host_manager->GetRootWindowForDisplayId(secondary_display_id);
-  secondary_root_window->MoveCursorTo(gfx::Point(100, 200));
+  secondary_root_window->MoveCursorTo(gfx::PointF(100, 200));
   EXPECT_EQ("300,200", env->last_mouse_location().ToString());
   CursorManagerTestApi cursor_test_api(shell->cursor_manager());
   EXPECT_EQ(1.0f, cursor_test_api.GetCurrentCursor().device_scale_factor());

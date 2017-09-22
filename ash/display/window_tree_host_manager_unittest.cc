@@ -1595,7 +1595,7 @@ TEST_F(WindowTreeHostManagerTest,
   aura::Env* env = aura::Env::GetInstance();
 
   // Set the initial position.
-  root_windows[0]->MoveCursorTo(gfx::Point(-150, 250));
+  root_windows[0]->MoveCursorTo(gfx::PointF(-150, 250));
   EXPECT_EQ("-150,250", env->last_mouse_location().ToString());
 
   // A mouse pointer will stay in 2nd display.
@@ -1626,7 +1626,7 @@ TEST_F(WindowTreeHostManagerTest,
   CursorManagerTestApi test_api(shell->cursor_manager());
 
   window_tree_host_manager->GetPrimaryRootWindow()->MoveCursorTo(
-      gfx::Point(20, 50));
+      gfx::PointF(20, 50));
 
   EXPECT_EQ("20,50", env->last_mouse_location().ToString());
   EXPECT_EQ(1.0f, test_api.GetCurrentCursor().device_scale_factor());
@@ -1656,7 +1656,7 @@ TEST_F(WindowTreeHostManagerTest,
   int primary_display_id = window_tree_host_manager->GetPrimaryDisplayId();
 
   window_tree_host_manager->GetPrimaryRootWindow()->MoveCursorTo(
-      gfx::Point(20, 50));
+      gfx::PointF(20, 50));
 
   EXPECT_EQ("20,50", env->last_mouse_location().ToString());
   EXPECT_EQ(1.0f, test_api.GetCurrentCursor().device_scale_factor());

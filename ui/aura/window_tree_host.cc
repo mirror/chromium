@@ -144,6 +144,12 @@ void WindowTreeHost::ConvertScreenInPixelsToDIP(gfx::Point* point) const {
   ConvertPixelsToDIP(point);
 }
 
+void WindowTreeHost::ConvertDIPToPixels(gfx::PointF* point) const {
+  auto point_3f = gfx::Point3F(*point);
+  GetRootTransform().TransformPoint(&point_3f);
+  *point = point_3f.AsPointF();
+}
+
 void WindowTreeHost::ConvertDIPToPixels(gfx::Point* point) const {
   auto point_3f = gfx::Point3F(gfx::PointF(*point));
   GetRootTransform().TransformPoint(&point_3f);
@@ -180,10 +186,11 @@ void WindowTreeHost::OnCursorVisibilityChanged(bool show) {
 }
 
 void WindowTreeHost::MoveCursorToLocationInDIP(
-    const gfx::Point& location_in_dip) {
-  gfx::Point host_location(location_in_dip);
+    const gfx::PointF& location_in_dip) {
+  gfx::PointF host_location(location_in_dip);
   ConvertDIPToPixels(&host_location);
-  MoveCursorToInternal(location_in_dip, host_location);
+  MoveCursorToInternal(gfx::ToFlooredPoint(location_in_dip),
+                       gfx::ToFlooredPoint(host_location));
 }
 
 void WindowTreeHost::MoveCursorToLocationInPixels(
