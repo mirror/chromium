@@ -21,6 +21,7 @@
 #include "chrome/browser/usb/web_usb_histograms.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/security_state/core/security_state.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/render_frame_host.h"
@@ -29,10 +30,12 @@
 #include "device/usb/mojo/type_converters.h"
 #include "device/usb/public/cpp/filter_utils.h"
 #include "device/usb/usb_device.h"
+#include "device/usb/usb_ids.h"
 #include "device/usb/webusb_descriptors.h"
 #include "device/vr/features/features.h"
 #include "jni/UsbChooserDialog_jni.h"
 #include "ui/android/window_android.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
 using device::UsbDevice;
@@ -210,9 +213,31 @@ void UsbChooserDialogAndroid::AddDeviceToChooserDialog(
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> device_guid =
       base::android::ConvertUTF8ToJavaString(env, device->guid());
-  base::android::ScopedJavaLocalRef<jstring> device_name =
-      base::android::ConvertUTF16ToJavaString(env, device->product_string());
-  Java_UsbChooserDialog_addDevice(env, java_dialog_, device_guid, device_name);
+
+  base::string16 device_name = device->product_string();
+  if (device_name.empty()) {
+    uint16_t vendor_id = device->vendor_id();
+    uint16_t product_id = device->product_id();
+    if (const char* product_name =
+            device::UsbIds::GetProductName(vendor_id, product_id)) {
+      device_name = base::UTF8ToUTF16(product_name);
+    } else if (const char* vendor_name =
+                   device::UsbIds::GetVendorName(vendor_id)) {
+      device_name = l10n_util::GetStringFUTF16(
+          IDS_DEVICE_CHOOSER_DEVICE_NAME_UNKNOWN_DEVICE_WITH_VENDOR_NAME,
+          base::UTF8ToUTF16(vendor_name));
+    } else {
+      device_name = l10n_util::GetStringFUTF16(
+          IDS_DEVICE_CHOOSER_DEVICE_NAME_UNKNOWN_DEVICE_WITH_VENDOR_ID_AND_PRODUCT_ID,
+          base::ASCIIToUTF16(base::StringPrintf("%04x", vendor_id)),
+          base::ASCIIToUTF16(base::StringPrintf("%04x", product_id)));
+    }
+  }
+
+  base::android::ScopedJavaLocalRef<jstring> device_name_jstring =
+      base::android::ConvertUTF16ToJavaString(env, device_name);
+  Java_UsbChooserDialog_addDevice(env, java_dialog_, device_guid,
+                                  device_name_jstring);
 }
 
 void UsbChooserDialogAndroid::RemoveDeviceFromChooserDialog(
