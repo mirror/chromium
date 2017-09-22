@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a66f93_7e5f41a2",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T15:26:20Z",
+      "side": 1,
+      "message": "Could we add here a comment with what happens on first-run? Something like:\n// Chrome restart: Rebuild the Gaia cookie to match the tokens. Make\n// sync account the default account in the Gaia cookie.",
+      "range": {
+        "startLine": 353,
+        "startChar": 68,
+        "endLine": 353,
+        "endChar": 69
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ece5d99_f74b6fef",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T15:26:20Z",
+      "side": 1,
+      "message": "Let\u0027s also get Lucia and Yanan to review this table and let us know what they think here.",
+      "range": {
+        "startLine": 355,
+        "startChar": 26,
+        "endLine": 355,
+        "endChar": 30
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dba34b_d15ac674",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T15:26:20Z",
+      "side": 1,
+      "message": "Question:\nShould we be consistent on start-up and simply always end up in \"B\" here? We said that on start-up it should be fine for us to re-order the cookies. WDYT?",
+      "range": {
+        "startLine": 361,
+        "startChar": 42,
+        "endLine": 361,
+        "endChar": 43
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8043e4d3_839eb56a",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T15:26:20Z",
+      "side": 1,
+      "message": "I would add a blank like here to make it clear that all below are subsequent reconcile.",
+      "range": {
+        "startLine": 401,
+        "startChar": 22,
+        "endLine": 401,
+        "endChar": 23
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b08685_98f15f89",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T15:26:20Z",
+      "side": 1,
+      "message": "Could we add here a comment with what happens on first-run? Something like:\n// Chrome running: Do not change the order of accounts already present in the\n// Gaia cookies.",
+      "range": {
+        "startLine": 401,
+        "startChar": 25,
+        "endLine": 401,
+        "endChar": 26
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
