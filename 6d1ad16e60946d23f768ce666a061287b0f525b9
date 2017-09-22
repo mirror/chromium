@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ed1d4f_549dc36d",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T08:55:03Z",
+      "side": 1,
+      "message": "nit: s/HTMLCollection*/HTMLCollection* const/",
+      "revId": "6d1ad16e60946d23f768ce666a061287b0f525b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9be63cd_91afedb7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T08:55:03Z",
+      "side": 1,
+      "message": "nit: Please remove \"{}\" since this for-statement has only one statement.",
+      "revId": "6d1ad16e60946d23f768ce666a061287b0f525b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551c904d_ebc9f115",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T08:55:03Z",
+      "side": 1,
+      "message": "nit: s/EXPECT_TRUE(...)/ASSERT_TRUE(shadow_root)/\nSince variable type |ShadowRoot*| specify this, we only need to check\nwhether |shadow_root| is |nullptr| or not.",
+      "revId": "6d1ad16e60946d23f768ce666a061287b0f525b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
