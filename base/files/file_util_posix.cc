@@ -263,7 +263,10 @@ bool CopyDirectory(const FilePath& from_path,
   DCHECK(to_path.value().find('*') == std::string::npos);
   DCHECK(from_path.value().find('*') == std::string::npos);
 
-  if (from_path.value().size() >= PATH_MAX) {
+  DCHECK(IsDirectoryEmpty(to_path);
+
+  if (from_path.value().size() >= PATH_MAX ||
+      to_path.value().size() >= PATH_MAX) {
     return false;
   }
 
