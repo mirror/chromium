@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b84472_2edab10a",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:53:45Z",
+      "side": 1,
+      "message": "Probably this DCHECK() can fail because no one ensures the valid context when NotifyModuleTreeLoadFinished().",
+      "revId": "64e4237fde4b8816df974b1520caf91f295b0543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e662d4_db8de0b3",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:53:45Z",
+      "side": 1,
+      "message": "nit: are implemented?",
+      "revId": "64e4237fde4b8816df974b1520caf91f295b0543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
