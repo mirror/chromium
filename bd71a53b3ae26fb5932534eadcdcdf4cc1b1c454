@@ -121,6 +121,24 @@
       "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7077872_72ee3261",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T13:42:27Z",
+      "side": 1,
+      "message": "I\u0027d prefer using an off-heap vector here because we have to put the assumption at line 77 - 80.",
+      "parentUuid": "8245930c_604bba38",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
