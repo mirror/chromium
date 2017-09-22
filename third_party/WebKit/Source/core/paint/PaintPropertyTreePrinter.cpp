@@ -162,8 +162,10 @@ class PropertyTreePrinterTraits<ClipPaintPropertyNode> {
   static void AddFrameViewProperties(
       const LocalFrameView& frame_view,
       PropertyTreePrinter<ClipPaintPropertyNode>& printer) {
-    if (const ClipPaintPropertyNode* content_clip = frame_view.ContentClip())
-      printer.AddPropertyNode(content_clip, "ContentClip (FrameView)");
+    if (const ClipPaintPropertyNode* c = frame_view.ViewportClip())
+      printer.AddPropertyNode(c, "ViewportClip (FrameView)");
+    if (const ClipPaintPropertyNode* c = frame_view.ScrollingContentsClip())
+      printer.AddPropertyNode(c, "ScrollingContentsClip (FrameView)");
   }
 
   static void AddObjectPaintProperties(
@@ -182,6 +184,8 @@ class PropertyTreePrinterTraits<ClipPaintPropertyNode> {
       printer.AddPropertyNode(c, "InnerBorderRadiusClip", object);
     if (const auto* c = properties.OverflowClip())
       printer.AddPropertyNode(c, "OverflowClip", object);
+    if (const auto* c = properties.ScrollingContentsClip())
+      printer.AddPropertyNode(c, "ScrollingContentsClip", object);
   }
 };
 
@@ -455,7 +459,7 @@ class PaintPropertyTreeGraphBuilder {
     if (scroll_translation)
       WritePaintPropertyNode(*scroll_translation, &frame_view,
                              "scrollTranslation");
-    ClipPaintPropertyNode* content_clip = frame_view.ContentClip();
+    ClipPaintPropertyNode* content_clip = frame_view.ViewportClip();
     if (content_clip)
       WritePaintPropertyNode(*content_clip, &frame_view, "contentClip");
     const auto* scroll =

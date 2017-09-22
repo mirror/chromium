@@ -347,18 +347,18 @@ TEST_P(PaintPropertyTreeUpdateTest, DescendantNeedsUpdateAcrossFrames) {
   EXPECT_FALSE(child_frame_view->NeedsPaintPropertyUpdate());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, UpdatingFrameViewContentClip) {
+TEST_P(PaintPropertyTreeUpdateTest, UpdatingFrameViewViewportClip) {
   SetBodyInnerHTML("hello world.");
-  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameContentClip()->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameViewportClip()->ClipRect());
   GetDocument().View()->Resize(800, 599);
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 599), FrameContentClip()->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 599), FrameViewportClip()->ClipRect());
   GetDocument().View()->Resize(800, 600);
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameContentClip()->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameViewportClip()->ClipRect());
   GetDocument().View()->Resize(5, 5);
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(FloatRoundedRect(0, 0, 5, 5), FrameContentClip()->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 5, 5), FrameViewportClip()->ClipRect());
 }
 
 // There is also FrameThrottlingTest.UpdatePaintPropertiesOnUnthrottling

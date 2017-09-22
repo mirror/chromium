@@ -199,9 +199,10 @@ void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
       }
       // Remove the view's clip so the scroll hit test is in the unclipped
       // space.
-      if (view->ContentClip()) {
-        DCHECK(contents_state.Clip() == view->ContentClip());
-        property_state.SetClip(property_state.Clip()->Parent());
+      if (view->ViewportClip()) {
+        DCHECK(contents_state.Clip() == view->ViewportClip() ||
+               contents_state.Clip() == view->ScrollingContentsClip());
+        property_state.SetClip(view->ViewportClip()->Parent());
       }
       ScopedPaintChunkProperties scroll_hit_test_properties(
           paint_info.context.GetPaintController(), layout_block_,
