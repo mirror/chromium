@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "92a40974_5e20b6e6",
+        "filename": "components/omnibox/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T19:43:49Z",
+      "side": 1,
+      "message": "Interesting; the build had failed saying that the longer version didn\u0027t exist. If these are expected to be equivalent, does this mean we\u0027ve done something wrong in the component?",
+      "parentUuid": "ee0b6de8_4eaebadd",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 57
+      },
+      "revId": "82c66988a26ab2a60c65aa5d0a5539f03e070a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9346f66f_6e57000a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
