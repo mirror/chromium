@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95d60f32_4f8df083",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d35f89b_4ed24396",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eddaa99f_ad7f3ccd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4aa4d4_b0de08cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddaa99f_ad7f3ccd",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "42db7bc7_9b817174",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3c7c0f_a6a2d271",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2ece55_59283502",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7150f676_d46877f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc2ece55_59283502",
+      "range": {
+        "startLine": 82,
+        "startChar": 74,
+        "endLine": 82,
+        "endChar": 79
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9644ba2a_2d88c281",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 4
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "6e7daf7f_917888c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9644ba2a_2d88c281",
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db404497_574dd2d4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 4
@@ -122,6 +236,30 @@
       "writtenOn": "2017-09-21T23:24:09Z",
       "side": 1,
       "message": "is there a 3rd detection mode coming, or could we use a boolean at least for now?",
+      "range": {
+        "startLine": 169,
+        "startChar": 17,
+        "endLine": 169,
+        "endChar": 38
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b5ba79_e59a3593",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Boolean is possible, but this seems more readable, since booleans would require /* online */ or or offline all over the place.",
+      "parentUuid": "db404497_574dd2d4",
       "range": {
         "startLine": 169,
         "startChar": 17,
@@ -154,6 +292,30 @@
       "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497f1e15_ea71c113",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T00:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ad2ab7_35c3e8ee",
+      "range": {
+        "startLine": 198,
+        "startChar": 13,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "5a1033f1cd729b41a622e58b99b4578a5f0fb602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
