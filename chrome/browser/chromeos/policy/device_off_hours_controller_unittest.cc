@@ -44,7 +44,7 @@ class DeviceOffHoursControllerTest : public DeviceSettingsTestBase {
   void SetOffHoursProto(
       const std::vector<em::DeviceOffHoursIntervalProto>& intervals,
       const std::string& timezone,
-      const std::vector<std::string>& ignored_policy) {
+      const std::vector<int>& ignored_policy) {
     em::ChromeDeviceSettingsProto& proto(device_policy_.payload());
     auto* off_hours = proto.mutable_device_off_hours();
     for (auto interval : intervals) {
@@ -102,7 +102,7 @@ class DeviceOffHoursControllerTest : public DeviceSettingsTestBase {
     std::vector<em::DeviceOffHoursIntervalProto> intervals;
     intervals.push_back(CreateInterval(start_day_of_week, start_time,
                                        end_day_of_week, end_time));
-    std::vector<std::string> ignored_policies = {"guest_mode_enabled"};
+    std::vector<int> ignored_policies = {3 /*guest_mode_enabled*/};
     SetOffHoursProto(intervals, "GMT", ignored_policies);
   }
 
