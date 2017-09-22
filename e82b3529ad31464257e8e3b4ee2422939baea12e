@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abcbfef_cc65fffc",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:44:51Z",
+      "side": 1,
+      "message": "What is the reason behind turning RefPtr\u003cWebTaskRunner\u003e to WebTaskRunner*?\nI prefer use of RefPtr\u003cWebTaskRunner\u003e to ensure there\u0027s no accidential use-after-free.",
+      "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
