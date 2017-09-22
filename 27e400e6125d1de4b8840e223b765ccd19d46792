@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52277bf5_04a8af39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-22T17:53:55Z",
+      "side": 1,
+      "message": "That\u0027s a good point, I had considered that too. Its possible to have the recordings from a previous update alive on the compositor thread (active tree), while we start doing raster work for the new update (pending tree). My thought was that since the old image will still post a purge message when it is destroyed, it is likely that we\u0027ll end up paying a cost for re-decoding at some point.\n\nI\u0027m also curious about why we saw the cache hit case in skia for getDeferredTextureImageData. My understanding was that we use kDisallow_CachingHint in that method, since cc is already caching the result. You think something might have taken a different path outside this method to populate skia\u0027s cache, or there might be a bug here?",
+      "parentUuid": "ee89ffe9_02aa9703",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "27e400e6125d1de4b8840e223b765ccd19d46792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63bf6e93_41eedb5a",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T13:27:08Z",
       "side": 1,
       "message": "Do you have a sense for how effective/important Skia\u0027s decode cache is at this point?  If CC is caching decode results itself, caching in Skia seems redundant and maybe undesirable?",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 29
+      },
+      "revId": "27e400e6125d1de4b8840e223b765ccd19d46792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93b6910_96018af6",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-22T17:53:55Z",
+      "side": 1,
+      "message": "There are parts of the stack in blink that use skia\u0027s cache. I had accidentally deleted keeping this cached image here once and hit a major perf regression in canvas cases. Anything which decodes in blink relies on skia\u0027s caching.",
+      "parentUuid": "63bf6e93_41eedb5a",
       "range": {
         "startLine": 137,
         "startChar": 0,
