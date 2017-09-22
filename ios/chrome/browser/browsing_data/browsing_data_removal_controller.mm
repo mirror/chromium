@@ -25,6 +25,7 @@
 #include "ios/chrome/browser/sessions/session_util.h"
 #include "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #import "ios/chrome/browser/snapshots/snapshots_util.h"
+#import "ios/chrome/browser/tabs/tab_model_list.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/external_file_remover.h"
 #import "ios/chrome/browser/ui/external_file_remover_factory.h"
@@ -121,33 +122,34 @@ void DoNothing(uint32_t n) {}
   // A map that tracks the number of pending removals for a given
   // ChromeBrowserState.
   base::hash_map<ios::ChromeBrowserState*, int> _pendingRemovalCount;
+  // The BrowserState this controller will be removing data from.
+  ios::ChromeBrowserState* browserState_;
 }
 
-- (instancetype)init {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
   if ((self = [super init])) {
     _browsingDataRemoverHelper.reset(new BrowsingDataRemoverHelper());
+    browserState_ = std::move(browserState);
   }
   return self;
 }
 
-- (void)removeBrowsingDataFromBrowserState:
-            (ios::ChromeBrowserState*)browserState
-                                      mask:(int)mask
-                                timePeriod:(browsing_data::TimePeriod)timePeriod
-                         completionHandler:(ProceduralBlock)completionHandler {
-  DCHECK(browserState);
+- (void)removeBrowsingData:(int)mask
+                timePeriod:(browsing_data::TimePeriod)timePeriod
+         completionHandler:(ProceduralBlock)completionHandler {
+  DCHECK(browserState_);
   DLOG_IF(WARNING, !mask) << "Nothing to remove!";
   // Cookies and server bound certificates should have the same lifetime.
   DCHECK_EQ((mask & IOSChromeBrowsingDataRemover::REMOVE_COOKIES) != 0,
             (mask & IOSChromeBrowsingDataRemover::REMOVE_CHANNEL_IDS) != 0);
 
-  [self incrementPendingRemovalCountForBrowserState:browserState];
+  [self incrementPendingRemovalCountForBrowserState:browserState_];
 
   ProceduralBlock browsingDataCleared = ^{
-    [self decrementPendingRemovalCountForBrowserState:browserState];
+    [self decrementPendingRemovalCountForBrowserState:browserState_];
     if (AccountConsistencyService* accountConsistencyService =
             ios::AccountConsistencyServiceFactory::GetForBrowserState(
-                browserState)) {
+                browserState_)) {
       accountConsistencyService->OnBrowsingDataRemoved();
     }
     if (completionHandler) {
@@ -164,7 +166,7 @@ void DoNothing(uint32_t n) {}
   callbackCounter->IncrementCount();
   base::Time beginDeleteTime =
       browsing_data::CalculateBeginDeleteTime(timePeriod);
-  [self removeIOSSpecificBrowsingDataFromBrowserState:browserState
+  [self removeIOSSpecificBrowsingDataFromBrowserState:browserState_
                                                  mask:mask
                                           deleteBegin:beginDeleteTime
                                     completionHandler:
@@ -173,30 +175,28 @@ void DoNothing(uint32_t n) {}
   if (mask & IOSChromeBrowsingDataRemover::REMOVE_DOWNLOADS) {
     DCHECK_EQ(browsing_data::TimePeriod::ALL_TIME, timePeriod)
         << "Partial clearing not supported";
-    if (!browserState->IsOffTheRecord()) {
+    if (!browserState_->IsOffTheRecord()) {
       callbackCounter->IncrementCount();
-      [self removeExternalFilesForBrowserState:browserState
+      [self removeExternalFilesForBrowserState:browserState_
                              completionHandler:decrementCallbackCounterCount];
     }
   }
 
-  if (!browserState->IsOffTheRecord()) {
+  if (!browserState_->IsOffTheRecord()) {
     callbackCounter->IncrementCount();
-    _browsingDataRemoverHelper->Remove(browserState, mask, timePeriod,
+    _browsingDataRemoverHelper->Remove(browserState_, mask, timePeriod,
                                        base::BindBlockArc(^{
                                          callbackCounter->DecrementCount();
                                        }));
   }
 }
 
-- (void)removeIOSSpecificIncognitoBrowsingDataFromBrowserState:
-            (ios::ChromeBrowserState*)browserState
-                                                          mask:(int)mask
-                                             completionHandler:
-                                                 (ProceduralBlock)
-                                                     completionHandler {
-  DCHECK(browserState && browserState->IsOffTheRecord());
-  [self removeIOSSpecificBrowsingDataFromBrowserState:browserState
+- (void)removeIOSSpecificIncognitoBrowsingData:(int)mask
+                             completionHandler:
+                                 (ProceduralBlock)completionHandler {
+  DCHECK(browserState_ && browserState_->HasOffTheRecordChromeBrowserState());
+  [self removeIOSSpecificBrowsingDataFromBrowserState:
+            browserState_->GetOffTheRecordChromeBrowserState()
                                                  mask:mask
                                           deleteBegin:base::Time()
                                     completionHandler:completionHandler];
@@ -409,6 +409,23 @@ removeWKWebViewCreatedBrowsingDataFromBrowserState:
   }
 }
 
+- (void)setWebUsageEnabled:(BOOL)enabled {
+  if (!browserState_)
+    return;
+
+  for (TabModel* tab_model in GetTabModelsForChromeBrowserState(
+           browserState_)) {
+    [tab_model setWebUsageEnabled:enabled];
+  }
+
+  if (browserState_->HasOffTheRecordChromeBrowserState()) {
+    for (TabModel* tab_model in GetTabModelsForChromeBrowserState(
+             browserState_->GetOffTheRecordChromeBrowserState())) {
+      [tab_model setWebUsageEnabled:enabled];
+    }
+  }
+}
+
 - (void)incrementPendingRemovalCountForBrowserState:
     (ios::ChromeBrowserState*)browserState {
   ++_pendingRemovalCount[browserState];
@@ -424,8 +441,12 @@ removeWKWebViewCreatedBrowsingDataFromBrowserState:
   }
 }
 
-- (BOOL)hasPendingRemovalOperations:(ios::ChromeBrowserState*)browserState {
-  return _pendingRemovalCount[browserState] != 0;
+- (BOOL)hasPendingRemovalOperations {
+  return _pendingRemovalCount[browserState_] != 0;
+}
+
+- (void)shutdown {
+  browserState_ = nullptr;
 }
 
 - (void)browserStateDestroyed:(ios::ChromeBrowserState*)browserState {
