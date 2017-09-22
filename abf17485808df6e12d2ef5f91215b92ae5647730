@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "08ae6fea_e1816448",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:36:56Z",
+      "side": 1,
+      "message": "I think we are on the same page. Maybe I just didn\u0027t explain very well.",
+      "parentUuid": "4ed089b6_c828b817",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3d3ee9_144a6c09",
         "filename": "pdf/pdf_engine.h",
         "patchSetId": 6
@@ -189,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "9938ce45_08819c94",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:36:56Z",
+      "side": 1,
+      "message": "Maybe there really are 5 coordinate spaces after all. ;)",
+      "parentUuid": "9d129d54_56992306",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9825b2ef_beb32762",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 6
@@ -253,6 +289,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "370a3642_390bd968",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c61df6e2_f92df4cf",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:36:56Z",
+      "side": 1,
+      "message": "I mean:\n\nFPDF_BOOL success \u003d FPDFDest_GetLocationInPage(...);\n\nIf |success| is false, you can\u0027t count on has_* to be valid.",
+      "parentUuid": "f1c643f4_75c2bc5e",
       "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
