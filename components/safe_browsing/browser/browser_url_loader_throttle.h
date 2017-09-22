@@ -55,7 +55,7 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
       scoped_refptr<UrlCheckerDelegate> url_checker_delegate,
       const base::Callback<content::WebContents*()>& web_contents_getter);
 
-  void OnCompleteCheck(bool proceed, bool showed_interstitial);
+  void OnCompleteCheck(bool slow_check, bool proceed, bool showed_interstitial);
 
   void OnCheckUrlResult(NativeUrlCheckNotifier* slow_check_notifier,
                         bool proceed,
@@ -69,6 +69,7 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
   std::unique_ptr<SafeBrowsingUrlCheckerImpl> url_checker_;
 
   size_t pending_checks_ = 0;
+  size_t pending_slow_checks_ = 0;
   bool blocked_ = false;
 
   // The time when we started deferring the request.
