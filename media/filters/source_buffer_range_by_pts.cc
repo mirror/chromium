@@ -12,6 +12,7 @@
 namespace media {
 
 // Comparison operators for std::upper_bound() and std::lower_bound().
+// BIG TODO
 static bool CompareDecodeTimestampToStreamParserBuffer(
     const DecodeTimestamp& decode_timestamp,
     const scoped_refptr<StreamParserBuffer>& buffer) {
@@ -26,14 +27,14 @@ static bool CompareStreamParserBufferToDecodeTimestamp(
 SourceBufferRangeByPts::SourceBufferRangeByPts(
     GapPolicy gap_policy,
     const BufferQueue& new_buffers,
-    DecodeTimestamp range_start_decode_time,
+    base::TimeDelta range_start_pts,
     const InterbufferDistanceCB& interbuffer_distance_cb)
     : SourceBufferRange(gap_policy, interbuffer_distance_cb),
-      range_start_decode_time_(range_start_decode_time),
+      range_start_pts_(range_start_pts),
       keyframe_map_index_base_(0) {
   CHECK(!new_buffers.empty());
   DCHECK(new_buffers.front()->is_key_frame());
-  AppendBuffersToEnd(new_buffers, range_start_decode_time_);
+  AppendBuffersToEnd(new_buffers, range_start_pts_);
 }
 
 SourceBufferRangeByPts::~SourceBufferRangeByPts() {}
@@ -47,26 +48,35 @@ void SourceBufferRangeByPts::AppendRangeToEnd(
   if (transfer_current_position && range.next_buffer_index_ >= 0)
     next_buffer_index_ = range.next_buffer_index_ + buffers_.size();
 
-  AppendBuffersToEnd(range.buffers_, kNoDecodeTimestamp());
+  AppendBuffersToEnd(range.buffers_, kNoTimestamp());
 }
 
 bool SourceBufferRangeByPts::CanAppendRangeToEnd(
     const SourceBufferRangeByPts& range) const {
-  return CanAppendBuffersToEnd(range.buffers_, kNoDecodeTimestamp());
+  return CanAppendBuffersToEnd(range.buffers_, kNoTimestamp());
 }
 
 void SourceBufferRangeByPts::AppendBuffersToEnd(
     const BufferQueue& new_buffers,
-    DecodeTimestamp new_buffers_group_start_timestamp) {
+    base::TimeDelta new_buffers_group_start_pts) {
   CHECK(buffers_.empty() ||
-        CanAppendBuffersToEnd(new_buffers, new_buffers_group_start_timestamp));
-  DCHECK(range_start_decode_time_ == kNoDecodeTimestamp() ||
-         range_start_decode_time_ <= new_buffers.front()->GetDecodeTimestamp());
+        CanAppendBuffersToEnd(new_buffers, new_buffers_group_start_pts));
+
+  // BIG TODO In addition to SAP-2, muxed streams in general may need special
+  // handling in callers to make sure this passes. For example, parsers emit CFG
+  // in decode sequence across tracks in muxed stream, but first buffer in track
+  // that starts with later DTS may have PTS < the group start PTS (so FP needs
+  // to re-signal new CFG start like muxed sequence mode had to do
+  // previously in the old dts impl...)
+  DCHECK(range_start_pts_ == kNoTimestamp() ||
+         range_start_pts_ <= new_buffers.front()->timestamp());
+  DCHECK(range_start == kNoTimestamp() || new_buffers.front()->is_key_frame());
 
   AdjustEstimatedDurationForNewAppend(new_buffers);
 
   for (BufferQueue::const_iterator itr = new_buffers.begin();
        itr != new_buffers.end(); ++itr) {
+    DCHECK((*itr)->timestamp() != kNoTimestamp());
     DCHECK((*itr)->GetDecodeTimestamp() != kNoDecodeTimestamp());
 
     buffers_.push_back(*itr);
@@ -75,7 +85,7 @@ void SourceBufferRangeByPts::AppendBuffersToEnd(
 
     if ((*itr)->is_key_frame()) {
       keyframe_map_.insert(
-          std::make_pair((*itr)->GetDecodeTimestamp(),
+          std::make_pair((*itr)->timestamp(),
                          buffers_.size() - 1 + keyframe_map_index_base_));
     }
   }
@@ -83,18 +93,21 @@ void SourceBufferRangeByPts::AppendBuffersToEnd(
 
 bool SourceBufferRangeByPts::CanAppendBuffersToEnd(
     const BufferQueue& buffers,
-    DecodeTimestamp new_buffers_group_start_timestamp) const {
+    base::TimeDelta new_buffers_group_start_pts) const {
   DCHECK(!buffers_.empty());
-  if (new_buffers_group_start_timestamp == kNoDecodeTimestamp()) {
-    return IsNextInDecodeSequence(buffers.front()->GetDecodeTimestamp());
+  if (new_buffers_group_start_pts == kNoTimestamp()) {
+    return buffers.front()->is_key_frame() ? IsNextInPresentationSequence(buffers.front()->timestamp()) :
+                                             IsNextInDecodeSequence(buffers.front()->GetDecodeTimestamp());
   }
-  DCHECK(new_buffers_group_start_timestamp >= GetEndTimestamp());
-  DCHECK(buffers.front()->GetDecodeTimestamp() >=
-         new_buffers_group_start_timestamp);
-  return IsNextInDecodeSequence(new_buffers_group_start_timestamp);
+  CHECK(buffers.front()->is_key_frame();
+  DCHECK(new_buffers_group_start_pts >= GetEndTimestamp());
+  DCHECK(buffers.front()->timestamp() >= new_buffers_group_start_pts);
+  return IsNextInPresentationSequence(new_buffers_group_start_pts);
 }
 
-void SourceBufferRangeByPts::Seek(DecodeTimestamp timestamp) {
+// BIG TODO -- conversion is done to this point. Continue here in this file.
+
+void SourceBufferRangeByPts::Seek(base::TimeDelta timestamp) {
   DCHECK(CanSeekTo(timestamp));
   DCHECK(!keyframe_map_.empty());
 
@@ -103,6 +116,15 @@ void SourceBufferRangeByPts::Seek(DecodeTimestamp timestamp) {
   CHECK_LT(next_buffer_index_, static_cast<int>(buffers_.size()))
       << next_buffer_index_ << ", size = " << buffers_.size();
 }
+
+bool SourceBufferRangeByPts::CanSeekTo(base::TimeDelta timestamp) const {
+  base::TimeDelta start_timestamp =
+      std::max(base::TimeDelta(), GetStartTimestamp() - GetFudgeRoom());
+  return !keyframe_map_.empty() && start_timestamp <= timestamp &&
+         timestamp < GetBufferedEndTimestamp();
+}
+
+//BIG TODO ^^^^ finish conversion of these and helpers they use ^^^^
 
 int SourceBufferRangeByPts::GetConfigIdAtTime(DecodeTimestamp timestamp) {
   DCHECK(CanSeekTo(timestamp));
@@ -174,6 +196,7 @@ std::unique_ptr<SourceBufferRangeByPts> SourceBufferRangeByPts::SplitRange(
   BufferQueue::iterator starting_point = buffers_.begin() + keyframe_index;
   BufferQueue removed_buffers(starting_point, buffers_.end());
 
+  // BIG TODO...
   DecodeTimestamp new_range_start_decode_timestamp = kNoDecodeTimestamp();
   if (GetStartTimestamp() < buffers_.front()->GetDecodeTimestamp() &&
       timestamp < removed_buffers.front()->GetDecodeTimestamp()) {
@@ -216,6 +239,7 @@ bool SourceBufferRangeByPts::TruncateAt(DecodeTimestamp timestamp,
                                         bool is_exclusive) {
   // Find the place in |buffers_| where we will begin deleting data.
   BufferQueue::iterator starting_point =
+      // BIG TODO...
       GetBufferItrAt(timestamp, is_exclusive);
   return TruncateAt(starting_point, removed_buffers);
 }
@@ -264,6 +288,7 @@ size_t SourceBufferRangeByPts::DeleteGOPFromFront(
 
   // Invalidate range start time if we've deleted the first buffer of the range.
   if (buffers_deleted > 0) {
+    // BIG TODO
     range_start_decode_time_ = kNoDecodeTimestamp();
     // Reset the range end time tracking if there are no more buffers in the
     // range.
@@ -401,6 +426,7 @@ DecodeTimestamp SourceBufferRangeByPts::GetNextTimestamp() const {
 
 DecodeTimestamp SourceBufferRangeByPts::GetStartTimestamp() const {
   DCHECK(!buffers_.empty());
+  // BIG TODO...
   DecodeTimestamp start_timestamp = range_start_decode_time_;
   if (start_timestamp == kNoDecodeTimestamp())
     start_timestamp = buffers_.front()->GetDecodeTimestamp();
@@ -423,6 +449,9 @@ DecodeTimestamp SourceBufferRangeByPts::GetBufferedEndTimestamp() const {
 bool SourceBufferRangeByPts::BelongsToRange(DecodeTimestamp timestamp) const {
   DCHECK(!buffers_.empty());
 
+  // BIG TODO: parameterize by keyframe or not... and both types of time.. ??
+  // (See SBS usage and adjust accordingly...)
+
   return (IsNextInDecodeSequence(timestamp) ||
           (GetStartTimestamp() <= timestamp && timestamp <= GetEndTimestamp()));
 }
@@ -441,6 +470,7 @@ DecodeTimestamp SourceBufferRangeByPts::NextKeyframeTimestamp(
   // If the timestamp is inside the gap between the start of the coded frame
   // group and the first buffer, then just pretend there is a keyframe at the
   // specified timestamp.
+  // BIG TODO
   if (itr == keyframe_map_.begin() && timestamp > range_start_decode_time_ &&
       timestamp < itr->first) {
     return timestamp;
@@ -457,13 +487,6 @@ DecodeTimestamp SourceBufferRangeByPts::KeyframeBeforeTimestamp(
     return kNoDecodeTimestamp();
 
   return GetFirstKeyframeAtOrBefore(timestamp)->first;
-}
-
-bool SourceBufferRangeByPts::CanSeekTo(DecodeTimestamp timestamp) const {
-  DecodeTimestamp start_timestamp =
-      std::max(DecodeTimestamp(), GetStartTimestamp() - GetFudgeRoom());
-  return !keyframe_map_.empty() && start_timestamp <= timestamp &&
-         timestamp < GetBufferedEndTimestamp();
 }
 
 bool SourceBufferRangeByPts::GetBuffersInRange(DecodeTimestamp start,
@@ -484,6 +507,13 @@ bool SourceBufferRangeByPts::GetBuffersInRange(DecodeTimestamp start,
         buffer->duration() <= base::TimeDelta()) {
       return false;
     }
+
+
+    // BIG TODO What?! we shouldn't have an EOS buffer ever buffered!! Why is that
+    // check in this condition, and not instead maybe a DCHECK here and a parse
+    // failure (or [D]CHECK earlier)??
+    //   --> it was added in 47509f367e3c7
+
     if (buffer->end_of_stream() ||
         buffer->timestamp() >= end.ToPresentationTime()) {
       break;
@@ -512,6 +542,8 @@ void SourceBufferRangeByPts::SeekAhead(DecodeTimestamp timestamp,
   next_buffer_index_ = result->second - keyframe_map_index_base_;
   DCHECK_LT(next_buffer_index_, static_cast<int>(buffers_.size()));
 }
+
+// BIG TODO ---- in progress conversion of these:::
 
 SourceBufferRange::BufferQueue::iterator SourceBufferRangeByPts::GetBufferItrAt(
     DecodeTimestamp timestamp,
@@ -542,6 +574,8 @@ SourceBufferRangeByPts::GetFirstKeyframeAtOrBefore(DecodeTimestamp timestamp) {
   }
   return result;
 }
+
+// BIG TODO ^^^^^^^^^^^^^^^^^^
 
 bool SourceBufferRangeByPts::TruncateAt(
     const BufferQueue::iterator& starting_point,
