@@ -12,12 +12,8 @@
 
 namespace base {
 
-uint64_t RandUint64() {
-  uint64_t number;
-  RandBytes(&number, sizeof(number));
-  return number;
-}
-
+// NOTE: This function must be cryptographically secure, since it is used by
+// crypto::RandBytes, base::UnguessableToken::Create, and base::GenerateGUID.
 void RandBytes(void* output, size_t output_length) {
   size_t remaining = output_length;
   unsigned char* cur = reinterpret_cast<unsigned char*>(output);
