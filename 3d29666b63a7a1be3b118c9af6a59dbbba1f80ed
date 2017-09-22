@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d4077b9_64789bdb",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T02:56:38Z",
+      "side": 1,
+      "message": "nit: Encodoing seems like a typo.",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c40e5e_5beb39ef",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T02:56:38Z",
+      "side": 1,
+      "message": "Accept-Encoding and Origin (assuming AppCache doesn\u0027t trigger for cross-origin requests... right?) make sense here. \n\n1) Can we have the header names in alphabetical order?\n2) Do we have a good reason for User-Agent? I think we\u0027d technically be breaking the spec if we cache \"Vary: User-Agent\" across Chrome updates, but I could get behind this this as an intervention, if we have a good reason for it.\n\nAlso, if we ignore Vary: User-Agent, I think we\u0027ll need a chromestatus.com entry, and might want to discuss with the Blink API OWNERS. For the other 2 values, we can argue that we\u0027re still following the specs.",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0455857_911a4f58",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T02:56:38Z",
+      "side": 1,
+      "message": "nit: Would a DCHECK_EQ give any extra useful information here?",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
