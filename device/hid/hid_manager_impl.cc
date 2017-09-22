@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
+#include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "device/base/device_client.h"
@@ -14,15 +15,25 @@
 
 namespace device {
 
+base::LazyInstance<device::HidService*>::Leaky g_hid_service =
+    LAZY_INSTANCE_INITIALIZER;
+
 HidManagerImpl::HidManagerImpl()
-    : hid_service_(device::HidService::Create()),
-      hid_service_observer_(this),
-      weak_factory_(this) {
-  DCHECK(hid_service_);
-  hid_service_observer_.Add(hid_service_.get());
+    : hid_service_observer_(this), weak_factory_(this) {
+  if (!g_hid_service.Get())
+    // |g_hid_service| takes the ownership of the HidService instance.
+    g_hid_service.Get() = HidService::Create();
+
+  DCHECK(g_hid_service.Get());
+  hid_service_observer_.Add(g_hid_service.Get());
 }
 
 HidManagerImpl::~HidManagerImpl() {}
+
+// static
+void HidManagerImpl::SetHidServiceForTesting(device::HidService* hid_service) {
+  g_hid_service.Get() = hid_service;
+}
 
 void HidManagerImpl::AddBinding(device::mojom::HidManagerRequest request) {
   bindings_.AddBinding(this, std::move(request));
@@ -31,13 +42,13 @@ void HidManagerImpl::AddBinding(device::mojom::HidManagerRequest request) {
 void HidManagerImpl::GetDevicesAndSetClient(
     device::mojom::HidManagerClientAssociatedPtrInfo client,
     GetDevicesCallback callback) {
-  hid_service_->GetDevices(AdaptCallbackForRepeating(base::BindOnce(
+  g_hid_service.Get()->GetDevices(AdaptCallbackForRepeating(base::BindOnce(
       &HidManagerImpl::CreateDeviceList, weak_factory_.GetWeakPtr(),
       std::move(callback), std::move(client))));
 }
 
 void HidManagerImpl::GetDevices(GetDevicesCallback callback) {
-  hid_service_->GetDevices(AdaptCallbackForRepeating(base::BindOnce(
+  g_hid_service.Get()->GetDevices(AdaptCallbackForRepeating(base::BindOnce(
       &HidManagerImpl::CreateDeviceList, weak_factory_.GetWeakPtr(),
       std::move(callback), nullptr)));
 }
@@ -58,10 +69,10 @@ void HidManagerImpl::CreateDeviceList(
 
 void HidManagerImpl::Connect(const std::string& device_guid,
                              ConnectCallback callback) {
-  hid_service_->Connect(device_guid,
-                        AdaptCallbackForRepeating(base::BindOnce(
-                            &HidManagerImpl::CreateConnection,
-                            weak_factory_.GetWeakPtr(), std::move(callback))));
+  g_hid_service.Get()->Connect(
+      device_guid, AdaptCallbackForRepeating(base::BindOnce(
+                       &HidManagerImpl::CreateConnection,
+                       weak_factory_.GetWeakPtr(), std::move(callback))));
 }
 
 void HidManagerImpl::CreateConnection(
