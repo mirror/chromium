@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e180d49_5a5d793f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-22T20:55:18Z",
+      "side": 1,
+      "message": "these should be @TargetApi(Build.VERSION_CODES.O) I think? At least serves documentation purpose",
+      "revId": "c808a066d3012fd0fa158a7880893e84f9ccfec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
