@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "fb2f0356_db57a59f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-22T22:55:02Z",
+      "side": 1,
+      "message": "Oops, forgot there was a reason for this - when you create it, SimpleWatcher is magically bound to that thread, even though it\u0027s not plugged into a mojo pipe yet.  Since this class is created on the consumer thread, but the pipe is read on a file thread, the watcher can\u0027t be created in the constructor.",
+      "parentUuid": "6b255cb2_930070cb",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4afb87d_0b936189",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
