@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a32a5cf_ccd02293",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-22T16:32:07Z",
+      "side": 1,
+      "message": "Ah, thanks for pointing this out. It\u0027s a leftover from a previous pass at the code. Removed.",
+      "parentUuid": "e475feb0_1c75d216",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f281c252_3c839afa",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f510ce3f_b9ee7a16",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-22T16:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f281c252_3c839afa",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c375826d_5b06e878",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDeviceEventInit.idl",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0478eeae_3690abb3",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDeviceEventInit.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-22T16:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c375826d_5b06e878",
+      "revId": "393e7af1df69cdba5fda0ae4b442eac61b9e8e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
