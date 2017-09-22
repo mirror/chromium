@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719eec38_595434a7",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-22T04:58:39Z",
+      "side": 1,
+      "message": "Can\u0027t you just directly use dbus::ObjectProxy::WaitForServiceToBeAvailableCallback?",
+      "revId": "0574ce52276efb4b2b4ed9e642b69a1c43a9d415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
