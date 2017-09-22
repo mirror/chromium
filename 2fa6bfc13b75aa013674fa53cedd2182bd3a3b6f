@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "77547caa_c9a3cd71",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-22T11:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f1b4e0_23c3af5e",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da9d423f_0a8ee335",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 1
@@ -141,6 +165,30 @@
       "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8c3e01_ac33d97b",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-22T11:17:40Z",
+      "side": 1,
+      "message": "Done: I introduced kInternalInitialization. altimin@, you expect there are other similar cases (PostTask for initialization), right?",
+      "parentUuid": "779c6ee9_10f93a69",
+      "range": {
+        "startLine": 397,
+        "startChar": 63,
+        "endLine": 397,
+        "endChar": 77
+      },
+      "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
