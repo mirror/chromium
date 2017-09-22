@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22801e09_5f493d79",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T14:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64133b0a_ee58390d",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a0e127_e3ad9490",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-21T20:40:58Z",
       "side": 1,
       "message": "Browser is quite a confusing and overloaded term. We should come up with something clearer I think. Feel free to do in a followup.",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bba1ed_9fb3f5ba",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T14:26:54Z",
+      "side": 1,
+      "message": "Yep.  Plan is to rename these interfaces to be mojo-like.  This one is slated to be UiHost, but in a later CL.",
+      "parentUuid": "37a0e127_e3ad9490",
       "range": {
         "startLine": 68,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec006e4_05760455",
+        "filename": "chrome/browser/vr/ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T14:26:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e36d502f_331da03a",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "c603ba60b3cb4cc55159b123fe29dbd7f892cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
