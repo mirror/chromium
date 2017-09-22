@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "383ceb8f_c6279a06",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-22T02:53:17Z",
+      "side": 1,
+      "message": "nit: prefix https://",
+      "range": {
+        "startLine": 500,
+        "startChar": 23,
+        "endLine": 500,
+        "endChar": 39
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e09612_1ae3c079",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-22T02:53:17Z",
+      "side": 1,
+      "message": "TODO(amoylan)  then https://crbug.com/709301",
+      "range": {
+        "startLine": 346,
+        "startChar": 10,
+        "endLine": 346,
+        "endChar": 26
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39df076d_a227ab9c",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-22T02:53:17Z",
+      "side": 1,
+      "message": "Not really, right? It\u0027s only in Init() that |g_api_key| is\nactually needed.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c8fe61_faa9794b",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-22T02:53:17Z",
+      "side": 1,
+      "message": "micro-nit:\nif (arbitrator_)\n  return; \n?",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 21
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571df119_04c3b1ea",
+        "filename": "device/geolocation/network_location_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-22T02:53:17Z",
+      "side": 1,
+      "message": "nit: |api_key|",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 20
+      },
+      "revId": "6ab8dc757137ac905c478a2a789664e5da6a9cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
