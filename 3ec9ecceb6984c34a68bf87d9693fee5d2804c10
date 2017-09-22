@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "93234dd3_34a6b62b",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-22T22:14:13Z",
+      "side": 1,
+      "message": "Sure. This passed clang-format so I figured it was what the style guide called for.",
+      "parentUuid": "bc608425_b5a65e1c",
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b712325_8db11469",
         "filename": "base/files/file_util_posix.cc",
         "patchSetId": 8
