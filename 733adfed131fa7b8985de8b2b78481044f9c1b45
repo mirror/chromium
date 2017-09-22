@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae4db05a_ed983058",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-22T21:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4d50f18_5b648dcd",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20d28d3_0330c3a9",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a641a6ea_ada05f7f",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-22T21:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a20d28d3_0330c3a9",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9bd5a16_8f93e7c8",
         "filename": "ash/system/network/tray_network.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T19:22:41Z",
       "side": 1,
       "message": "We should not append strings like this for display, it may not localize. We need to modify IDS_ASH_STATUS_TRAY_NETWORK_CONNECTED (or add a new string) that uses $1 notation for the signal strength.",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd964d93_eb812780",
+        "filename": "ash/system/network/tray_network.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-22T21:59:35Z",
+      "side": 1,
+      "message": "Just to clarify this is two seperate sentences (eg. Connected to G. Strong signal.), kind of the power declares it (60 percent. 4 hours left).\nSo, I don\u0027t think we need to use placeholders, but i\u0027m not sure.",
+      "parentUuid": "c9bd5a16_8f93e7c8",
       "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
