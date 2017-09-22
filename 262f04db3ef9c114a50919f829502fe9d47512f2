@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5d0fff_6b7aeaf2",
+        "filename": "dbus/error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T06:21:15Z",
+      "side": 1,
+      "message": "Note: Avoided DBusError, because it conflicts the struct name in libdbus unfortunately.",
+      "revId": "262f04db3ef9c114a50919f829502fe9d47512f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8df0a3_48274887",
+        "filename": "dbus/scoped_dbus_error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T06:21:15Z",
+      "side": 1,
+      "message": "Note: I was thinking to get rid of \"export\" here, but unfortunately dbus_unittests requires it.\nWe could, if we get rid of using DBusError interface in bus.cc, but the interface looks intentionally using it, so I just gave up removing export here, at the moment.\nWelcome any suggestions.",
+      "revId": "262f04db3ef9c114a50919f829502fe9d47512f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
