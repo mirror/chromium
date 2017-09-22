@@ -16,6 +16,24 @@
       "revId": "c7db112e62b8db83119317129a6a989fec788d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dfbd53_3491aab0",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-22T05:07:53Z",
+      "side": 0,
+      "message": "To clarify, what I\u0027m suggesting is something like this:\n  // \u003csome description about the callback and async ID\u003e\n  using AsyncMethodCallback \u003d DBusMethodCallback\u003cint\u003e;",
+      "parentUuid": "b00ec328_a9db1056",
+      "revId": "c7db112e62b8db83119317129a6a989fec788d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
