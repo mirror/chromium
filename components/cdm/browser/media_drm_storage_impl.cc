@@ -368,18 +368,13 @@ MediaDrmStorageImpl::MediaDrmStorageImpl(
     PrefService* pref_service,
     const url::Origin& origin,
     media::mojom::MediaDrmStorageRequest request)
-    : render_frame_host_(render_frame_host),
+    : FrameServiceBase(render_frame_host, std::move(request)),
       pref_service_(pref_service),
-      origin_string_(origin.Serialize()),
-      binding_(this, std::move(request)) {
+      origin_string_(origin.Serialize()) {
   DVLOG(1) << __func__ << ": origin = " << origin;
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(pref_service_);
   DCHECK(!origin_string_.empty());
-
-  // |this| owns |binding_|, so unretained is safe.
-  binding_.set_connection_error_handler(
-      base::Bind(&MediaDrmStorageImpl::Close, base::Unretained(this)));
 }
 
 MediaDrmStorageImpl::~MediaDrmStorageImpl() {
@@ -552,33 +547,6 @@ void MediaDrmStorageImpl::RemovePersistentSession(
 
   sessions_dict->RemoveWithoutPathExpansion(session_id, nullptr);
   std::move(callback).Run(true);
-}
-
-void MediaDrmStorageImpl::RenderFrameDeleted(
-    content::RenderFrameHost* render_frame_host) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (render_frame_host == render_frame_host_) {
-    DVLOG(1) << __func__ << ": RenderFrame destroyed.";
-    Close();
-  }
-}
-
-void MediaDrmStorageImpl::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (navigation_handle->GetRenderFrameHost() == render_frame_host_) {
-    DVLOG(1) << __func__ << ": Close connection on navigation.";
-    Close();
-  }
-}
-
-void MediaDrmStorageImpl::Close() {
-  DVLOG(1) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  delete this;
 }
 
 }  // namespace cdm
