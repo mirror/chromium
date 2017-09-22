@@ -389,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "1a0f3fa2_5b317388",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-22T19:45:57Z",
+      "side": 1,
+      "message": "Ping on this. primiano@",
+      "parentUuid": "db80da83_89e064f4",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c38d049_bc94e205",
         "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
         "patchSetId": 11
@@ -629,6 +653,24 @@
       "side": 1,
       "message": "Do you mean\nDCHECK(is_global)\nthen? Because this code path is the one where multiple dumps have the same GUID.\n\nAlso what you said doesn\u0027t match the trace importer code. Is that a legacy/compatibility with old traces issue?",
       "parentUuid": "295a9e36_041f63e0",
+      "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c56f17_1a499adc",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-22T19:45:57Z",
+      "side": 1,
+      "message": "The loop is iterating through a map with path as key. There can be no way we have multiple nodes with same path in a single Process graph.\nMaybe TraceViewer is trying to check sanity of the trace file. This can just be DCHECK(is_global) here.",
+      "parentUuid": "f2d2e8d7_eb66f973",
       "revId": "966a7b1af9ee73cc1b36415aedd1f24ff68caabd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
