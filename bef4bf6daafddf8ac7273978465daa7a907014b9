@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1710a81_87f31e67",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Since Writers object is aware of the event when the writer successfully completes , it invokes WritersDoneWritingToEntry.",
+      "parentUuid": "1b001d16_6a4145a4",
+      "range": {
+        "startLine": 901,
+        "startChar": 15,
+        "endLine": 901,
+        "endChar": 28
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac5837b_b9c4d8ff",
         "filename": "net/http/http_cache.h",
         "patchSetId": 34
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "748b2518_76becff5",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "did_finish \u003d true \u003d\u003e it completed its interaction with the entry completely.",
+      "parentUuid": "fac5837b_b9c4d8ff",
+      "range": {
+        "startLine": 416,
+        "startChar": 11,
+        "endLine": 416,
+        "endChar": 23
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec69f750_f5c17903",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25c0f1a7_b99ddb8f",
+      "range": {
+        "startLine": 416,
+        "startChar": 30,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80232430_e74699ed",
         "filename": "net/http/http_cache.h",
         "patchSetId": 34
@@ -91,6 +163,30 @@
       "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af56f39b_477c90e1",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80232430_e74699ed",
+      "range": {
+        "startLine": 445,
+        "startChar": 7,
+        "endLine": 445,
+        "endChar": 27
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "74f9afe5_177233f9",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618396fb_276a2c09",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6574919_658d68bc",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 34
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-21T21:53:15Z",
       "side": 1,
       "message": "Confirming: There\u0027s no way that we could be in this state on entry to this function?  Because if there is, then we\u0027re presumably going to be entering DoLoop() twice.  Maybe a DCHECK that we\u0027re not in this state before TruncateEntryInternal()?  Or return a boolean from TruncateEntryInternal as to whether DoLoop() should be called?  Actually, what about just calling DoLoop() at the end of TruncateEntryInternal(), maybe with a DCHECK() that we weren\u0027t already in a state in which it would be called before we assigned the new state?",
+      "range": {
+        "startLine": 269,
+        "startChar": 28,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026975cc_a1f65be6",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "This should not happen.\nThat could have happened only if we start truncation internally and externally together. In the latest patch externally it happens through TransactionDoneWithEntry only if there is no other transaction in writers. Internally it either happens when there is no transaction (so no call to TransactionDoneWithEntry possible) or network read failed. In network read failure case it is possible to start truncation internally but synchronously we set entry_ as null in other transactions with SetSharedWritingFailedState and in this transaction through its callback in DoNetworkReadCacheWriteComplete.\nAdding a dcheck here.",
+      "parentUuid": "d6574919_658d68bc",
       "range": {
         "startLine": 269,
         "startChar": 28,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a74e4984_fe0ffd65",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "I\u0027ll think deeper into why this is not a problem, but this is similar to what happens now since partial transaction\u0027s functionality is not different since only one writer is supported.",
+      "parentUuid": "beb367b1_ea7f86dd",
+      "range": {
+        "startLine": 446,
+        "startChar": 5,
+        "endLine": 446,
+        "endChar": 16
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec298f3d_ba684415",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 34
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-21T21:53:15Z",
       "side": 1,
       "message": "Usually this kid of comment refers to a method argument--what response_info are you referring to?",
+      "range": {
+        "startLine": 90,
+        "startChar": 17,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3223da8e_a4dcd417",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Removed in the latest patch",
+      "parentUuid": "ec298f3d_ba684415",
       "range": {
         "startLine": 90,
         "startChar": 17,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5f41b7f8_3589fc36",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Updated . This is actually setting |should_keep_entry_| and not returning",
+      "parentUuid": "eadd7ed5_f2f5d052",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 56
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3fe7973_a96aa6c7",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 34
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "fb752f68_f634a46f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3fe7973_a96aa6c7",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd68635d_6a010138",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 34
@@ -252,6 +492,30 @@
       "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2618a732_7123e357",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd68635d_6a010138",
+      "range": {
+        "startLine": 151,
+        "startChar": 10,
+        "endLine": 151,
+        "endChar": 17
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

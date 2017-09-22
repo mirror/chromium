@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a0bcd4fa_b4be9661",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Actually, there was never a path that went through mode() \u003d\u003d NONE while adding a transaction. This was a redundant condition. I confirmed it from HC::T where if it\u0027s a headers transaction (not in writers) and mode is being set to NONE (pass-through), then it will also set entry_ \u003d null thus it will never be added to entry_-\u003ewriters and will complete its reading via DoNetworkRead/DoNetworkReadComplete states",
+      "parentUuid": "31b67ac0_141cf860",
+      "range": {
+        "startLine": 840,
+        "startChar": 19,
+        "endLine": 840,
+        "endChar": 23
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ee6c22e_48805e4f",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 26

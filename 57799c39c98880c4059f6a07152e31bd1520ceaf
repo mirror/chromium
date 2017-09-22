@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ca79f8c_32ea6516",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Dchecked in RemoveTransaction",
+      "parentUuid": "6f2b86e1_47e1a25b",
+      "revId": "57799c39c98880c4059f6a07152e31bd1520ceaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2f621f0_fc7db012",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 36
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-21T21:53:15Z",
       "side": 1,
       "message": "Is there any way that this could have been set to false with multiple writers?  We don\u0027t want to override it back to true if the entry was considered garbled previously, do we?",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "57799c39c98880c4059f6a07152e31bd1520ceaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8f0346_ae20bb03",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "That\u0027s right. The value set uptil now should be returned. No need to set it here.",
+      "parentUuid": "b2f621f0_fc7db012",
       "range": {
         "startLine": 172,
         "startChar": 4,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9026a19f_85eec955",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Yes, updated",
+      "parentUuid": "16858d95_1bbabc7b",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "57799c39c98880c4059f6a07152e31bd1520ceaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89d20a2_8b61a20a",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 36
@@ -76,6 +142,30 @@
       "writtenOn": "2017-09-21T21:53:15Z",
       "side": 1,
       "message": "I\u0027d love to find some way to make very clear that transaction\u0027s interaction around membership are always through HC::\u003cmethod\u003e(ActiveEntry*), and that this routine is for use by ActiveEntry only.  Worst case we can just put that in all the appropriate comments, but maybe we should have a name that signals that clearly as well?",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 23
+      },
+      "revId": "57799c39c98880c4059f6a07152e31bd1520ceaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449211d4_79612ea0",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 1,
+      "message": "Added a comment",
+      "parentUuid": "f89d20a2_8b61a20a",
       "range": {
         "startLine": 90,
         "startChar": 22,

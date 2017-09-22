@@ -22,6 +22,30 @@
       "revId": "07ea99d7e17fb423850453e72795646d9c9bc82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21064f83_d45d181f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-22T20:55:26Z",
+      "side": 0,
+      "message": "There is a valid path https://cs.chromium.org/chromium/src/net/http/http_cache_transaction.cc?dr\u0026l\u003d1775 where a HEAD transaction wants to invalidate the existing entry. Since we are replacing DoneWritingToEntry with DoneWithEntry, HasDependentTransactions should no longer return a false for HEAD. These conditions were earlier added because of the assumption that HEAD transactions never invalidate an existing entry.\nMerging DoneWritingToEntry calls in DoneWithEntry is proving helpful to figure out such cases and treat all paths consistently through this one function",
+      "parentUuid": "fb04ded2_4a96a60a",
+      "range": {
+        "startLine": 1130,
+        "startChar": 17,
+        "endLine": 1130,
+        "endChar": 0
+      },
+      "revId": "07ea99d7e17fb423850453e72795646d9c9bc82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
