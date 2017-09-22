@@ -1,0 +1,642 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b8e05f3_6b17c86a",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "add also a DCHECK(id_to_dump_iterator.second);  // Check for duplicate pids",
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d57a9bb_ab16db49",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "use base/strings/string_tokenizer.h with StringPiece. Will avoid creating temporary strings.",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9e333f_946dc95c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "I\u0027d just call this ProcessDumpGraph, otherwise seeing a GlobalDumpGraph and DumpGraph just makes this class too mysterious.\n\nAlso why this is an inner class and DumpNode is a standalone class?\n\nEither make both inner classes (in which case you can just call them Process and Node) or both standalone classes, in which case ProcessDumpGraph and DumpNode",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d756731_c469f404",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "+explicit -\u003e explicit DumpGraph(GlobalDumpGraph*)",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177c296e_393afb8c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "Just CreateNode, not sure \"InGraph\" adds too much value",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd08a8f2_c0d0c28e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "In general we pass classes in chrome by const reference, as you did here, but there are few exceptions.\nThe rule is pretty much the following: if the class is copiable and contains just 1-2 short fields, passing by value can be faster than passing a pointer.\nIn this case I\u0027d pass both by value.\nSee the header of string_piece.h for a longer rational.",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 62
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cae429a_4ae98aef",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "Ditto, just FindNode",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a210b2_02872cfd",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "ditto, just StringPiece",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 54
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ecad88_66d9b807",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "Make this a const pointer (but not pointer to const), as you set this only in the ctor.\ni.e. GlobalDumpGraph* const global_graph_;",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06171caf_fd6cae98",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "I would just use here a \nstd::forward_list\u003cDumpNode\u003e\nthis will prevent having to deal with vector expansions.\nforward_list still guarantees pointer stability (unless you remove the elements)",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbd8a10_5e861a60",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "global_allocations_ or shared_memory_graph_ maybe?\nshared_graph_ is a bit too generic IMHO.",
+      "range": {
+        "startLine": 71,
+        "startChar": 29,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea46e240_4fceb1f8",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(GlobalDumpGraph) (from base/macros.h)",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 2
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896089da_0463e7c7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "not sure ScalarUnits makes sense for string. Also string is not scalar :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 10,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ef4aa5_bddee2d2",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "just uint64_t, at least I always see this in the codebase",
+      "range": {
+        "startLine": 105,
+        "startChar": 10,
+        "endLine": 105,
+        "endChar": 15
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74156ae9_5af52db7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "+explicit",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 3
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bb902e_7197819d",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "ditto about just StringPiece, here and elsewhere",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010c0ded_2d0e43ac",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "+const",
+      "range": {
+        "startLine": 123,
+        "startChar": 48,
+        "endLine": 123,
+        "endChar": 49
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12812d47_7fdf706f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "+const",
+      "range": {
+        "startLine": 124,
+        "startChar": 47,
+        "endLine": 124,
+        "endChar": 48
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fced197_ec2094d2",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "GlobalDumpGraph::DumpGraph* const dump_graph_;",
+      "range": {
+        "startLine": 127,
+        "startChar": 28,
+        "endLine": 127,
+        "endChar": 29
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e605862d_627452c0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 2
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606c5d97_4b80dd84",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "note to self, at some point we should get rid of the strings for the units in base and just pass an enum. We are wasting quite lot of memory to say \"bytes\",\"bytes\",\"bytes\",\"bytes\",\"bytes\" all over the places :)",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a66d166_d822cced",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "I\u0027d honestly remove this and just keep the return.\nLog statements are quite pointless in chrome because many of them get stripped in official builds, and in non-official nobody puts any attention because there are just too many of them.\nIf people screw the unit they will eventually figure out (or if they don\u0027t it means that didn\u0027t really matter)",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896550a9_3fa47114",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "just DCHECK?",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 64
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644e8767_240b6d48",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "DCHECK",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 64
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2834c56_02f229fe",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 53
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0772e3_31c3a83a",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "No \"using\" in namespaces in headers, as this will leak the class on everything that includes this.\nAlso looks like you really don\u0027t use the GUId in the header, so remove this line completely.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad5dbb9_4ef8acc7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "Personally I\u0027d use another word here, because in our context Process can be confused for \"unix process\", while here you want to say \"do stuff, elaborate\".\nMaybe ComputeMemoryGraph?",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb8575d_fdc7e131",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T02:05:20Z",
+      "side": 1,
+      "message": "if you don\u0027t need to modify the map, take this as a const std::map\u003c...\u003e\u0026 reference.\nIt will avoid doing a copy (or a std::move at best) of the elements.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "d33c60a2f0f5e570f12dc785a63dfaebee53245c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
