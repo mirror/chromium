@@ -144,6 +144,9 @@ void ToggleRequestTabletSite(Browser* browser);
 void ToggleFullscreenMode(Browser* browser);
 void ClearCache(Browser* browser);
 bool IsDebuggerAttachedToCurrentTab(Browser* browser);
+#if defined(OS_CHROMEOS)
+void QueryAndDisplayArcApps(Browser* browser, GURL url);
+#endif  // defined(OS_CHROMEOS)
 
 // Opens a view-source tab for a given web contents.
 void ViewSource(Browser* browser, content::WebContents* tab);
