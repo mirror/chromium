@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8e5603_990c5f2e",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T00:51:44Z",
+      "side": 1,
+      "message": "nit: remove did_stop, and simply UpdateAdvertisements() and return true in the for loop if the if statement is true.",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f0828e_53ab3e4a",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T00:51:44Z",
+      "side": 1,
+      "message": "I assume this is needed to copy over the service data because of tricky ownership issues. Can you make a quick comment about why it\u0027s needed? (It looks weird because metadata\u0027s device id is simply passed as metadata-\u003edevice_id)",
+      "range": {
+        "startLine": 140,
+        "startChar": 29,
+        "endLine": 140,
+        "endChar": 41
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae454dbe_46115b29",
+        "filename": "chromeos/components/tether/ble_advertiser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T00:51:44Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve never seen this kind of array declaration in C++ before: is this the same thing as \u0027std::unique_ptr\u003cAdvertisementMetadata\u003e[std::unique_ptr\u003cAdvertisementMetadata\u003e] registered_device_metadata_;\u0027 ?",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee5089c_f9c1d284",
+        "filename": "chromeos/components/tether/ble_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T00:51:44Z",
+      "side": 1,
+      "message": "Should this file be removed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27841a87_5aa400ef",
+        "filename": "chromeos/components/tether/error_tolerant_ble_advertisement_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T00:51:44Z",
+      "side": 1,
+      "message": "From how I\u0027m understanding this, this will start another registration attempt -- but we just successfully registered an advertisement? Should AttemptRegistration() check if advertisement_ exists?",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 26
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
