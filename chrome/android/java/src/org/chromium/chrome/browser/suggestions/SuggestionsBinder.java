@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.media.ThumbnailUtils;
@@ -190,7 +191,17 @@ public class SuggestionsBinder {
 
         // Temporarily set placeholder and then fetch the thumbnail from a provider.
         mThumbnailView.setBackground(null);
-        mThumbnailView.setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);
+        if (ChromeFeatureList.isEnabled(
+                    ChromeFeatureList.CONTENT_SUGGESTIONS_THUMBNAIL_DOMINANT_COLOR)) {
+            ColorDrawable colorDrawable =
+                    new ColorDrawable(mSuggestion.getThumbnailDominantColor() != null
+                                    ? mSuggestion.getThumbnailDominantColor()
+                                    : mThumbnailView.getResources().getColor(
+                                              R.color.default_primary_color));
+            mThumbnailView.setImageDrawable(colorDrawable);
+        } else {
+            mThumbnailView.setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);
+        }
         mThumbnailView.setTint(null);
 
         // Fetch thumbnail for the current article.
