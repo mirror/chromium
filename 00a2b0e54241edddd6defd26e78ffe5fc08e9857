@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d8b318c7_c2c4eebd",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "sure, seems fine",
+      "parentUuid": "efde6d0f_223f4199",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31e0cde3_e00a0ee9",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
         "patchSetId": 5
@@ -47,6 +65,91 @@
       "writtenOn": "2017-09-22T04:10:14Z",
       "side": 1,
       "message": "nit: can be a const method\n\nDo we need this method?",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f773e7e9_43d2140a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "I think it\u0027d be cleaner for OnFetchEvent to always set |blob_handle_|, and then any test that wants to get the request body can use ReadBlobRequest(). Then we don\u0027t need a new response_mode_ and can just use kFallbackResponse.",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d059bd0_225a3cd3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "ReadRequestBody()",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd99a86d_56db8ae4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "we could move line 599 down to line 610",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1db21ae_9bc7a6dd",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "you can use auto with MakeRefCoutned for consistentcy with the rest of the file",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d126a9_933c27b2",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T05:57:27Z",
+      "side": 1,
+      "message": "prefer std::string() over \"\", but for here we can just do blob_uuid.clear();",
       "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
