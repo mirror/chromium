@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42b3e2e5_05f0e9bf",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you can use runtime flags here. Only build time flags would work, so I don\u0027t see how this TODO can be addressed.",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6aae7a_296c9924",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Should we be consistent with \"Title Case\" vs \"Title case\"? Do we need both this one and IDS_MD_EXTENSIONS_KIOSK_APP_BUTTON? I don\u0027t recall similar example from Settings and other UIs.",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca51709b_b34d22f1",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "\"_BOLD\" is not something that is reflected in the string, do we need this suffix to disambiguate?",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ca5ed1_4c964413",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Nit (optional): /** @param {string} appId */ (here and elsewhere)",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8b688f_ee833e19",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Are you sure this works as expected. See https://jsfiddle.net/xt0g4xmw/2/. I think it works a bit accidentally (because every list-item happens to have the same type?)",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a186cb_da54b0c0",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Tab character? Or spaces? Let\u0027s remove.",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e24282_f5910c93",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Is the CSS class needed (is it used anywhere)? Also, there is no other paper-icon-button-light on the page. Can we use the following selector instead?\n\nbutton[is\u003dpaper-icon-button-light] {\n....\n}",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e218dd3_b4c09193",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Remove space at the end.",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ef1275_ca025c69",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Remove space at the end.",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e04219_e17b7ec9",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "A bit surprised that \"apps_.1\" works. Should we be using the Polymer provided array mutations methods, like splice? See https://www.polymer-project.org/1.0/docs/devguide/model-data#array-mutation",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4705f76e_b31cfbb8",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "Maybe s/app/appId ?",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5c9eb9_6cf49fb1",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T22:50:36Z",
+      "side": 1,
+      "message": "A bit confused by this.\n\nWhy are we not closing the dialog with close(), which already fires a \u0027close\u0027 event, which will cause manager.html to detach the dialog?\n\nAlso, \u0027close\u0027 is also fired when the bailout dialog is closed, doesn\u0027t that bubble up to manager.html and prematurely kill both dialogs?",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
