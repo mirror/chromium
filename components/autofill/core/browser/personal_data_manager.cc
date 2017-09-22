@@ -1650,16 +1650,17 @@ bool PersonalDataManager::ImportAddressProfileForSection(
   return true;
 }
 
-bool PersonalDataManager::ImportCreditCard(
-    const FormStructure& form,
-    bool should_return_local_card,
-    std::unique_ptr<CreditCard>* imported_credit_card,
-    bool* imported_credit_card_matches_masked_server_credit_card) {
-  DCHECK(!imported_credit_card->get());
-  *imported_credit_card_matches_masked_server_credit_card = false;
+CreditCard PersonalDataManager::ExtractCreditCardFromForm(
+    const FormStructure& form) {
+  bool hasDuplicateFieldType;
+  return ExtractCreditCardFromForm(form, &hasDuplicateFieldType);
+}
 
-  // The candidate for credit card import. There are many ways for the candidate
-  // to be rejected (see everywhere this function returns false, below).
+CreditCard PersonalDataManager::ExtractCreditCardFromForm(
+    const FormStructure& form,
+    bool* hasDuplicateFieldType) {
+  *hasDuplicateFieldType = false;
+
   CreditCard candidate_credit_card;
   candidate_credit_card.set_origin(form.source_url().spec());
 
@@ -1680,11 +1681,13 @@ bool PersonalDataManager::ImportCreditCard(
       continue;
 
     // If we've seen the same credit card field type twice in the same form,
-    // abort credit card import/update.
+    // set hasDuplicateFieldType to true.
     ServerFieldType server_field_type = field_type.GetStorableType();
-    if (types_seen.count(server_field_type))
-      return false;
-    types_seen.insert(server_field_type);
+    if (types_seen.count(server_field_type)) {
+      *hasDuplicateFieldType = true;
+    } else {
+      types_seen.insert(server_field_type);
+    }
 
     // If |field| is an HTML5 month input, handle it as a special case.
     if (base::LowerCaseEqualsASCII(field->form_control_type, "month")) {
@@ -1708,6 +1711,29 @@ bool PersonalDataManager::ImportCreditCard(
         }
       }
     }
+  }
+
+  return candidate_credit_card;
+}
+
+bool PersonalDataManager::ImportCreditCard(
+    const FormStructure& form,
+    bool should_return_local_card,
+    std::unique_ptr<CreditCard>* imported_credit_card,
+    bool* imported_credit_card_matches_masked_server_credit_card) {
+  DCHECK(!imported_credit_card->get());
+  *imported_credit_card_matches_masked_server_credit_card = false;
+
+  // The candidate for credit card import. There are many ways for the candidate
+  // to be rejected (see everywhere this function returns false, below).
+  bool hasDuplicateFieldType;
+  CreditCard candidate_credit_card =
+      ExtractCreditCardFromForm(form, &hasDuplicateFieldType);
+
+  // If we've seen the same credit card field type twice in the same form,
+  // abort credit card import/update.
+  if (hasDuplicateFieldType) {
+    return false;
   }
 
   // Reject the credit card if we did not detect enough filled credit card
@@ -1777,6 +1803,30 @@ bool PersonalDataManager::ImportCreditCard(
 
   imported_credit_card->reset(new CreditCard(candidate_credit_card));
   return true;
+}
+
+bool PersonalDataManager::DoesCardMatchAnyCardInRecord(
+    const CreditCard& credit_card) {
+  for (const auto& card : local_credit_cards_) {
+    if (HasSameNumberOrTypeAndLastFourDigits(credit_card, *card))
+      return true;
+  }
+
+  for (const auto& card : server_credit_cards_) {
+    if (HasSameNumberOrTypeAndLastFourDigits(credit_card, *card))
+      return true;
+  }
+
+  return false;
+}
+
+bool PersonalDataManager::HasSameNumberOrTypeAndLastFourDigits(
+    const CreditCard& card_a,
+    const CreditCard& card_b) {
+  return card_a.NetworkAndLastFourDigits() ==
+             card_b.NetworkAndLastFourDigits() ||
+         CreditCard::StripSeparators(card_a.number()) ==
+             CreditCard::StripSeparators(card_b.number());
 }
 
 const std::vector<AutofillProfile*>& PersonalDataManager::GetProfiles(
