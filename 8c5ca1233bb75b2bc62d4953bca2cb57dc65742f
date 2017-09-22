@@ -52,6 +52,24 @@
       "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941d3dd4_8ea30f92",
+        "filename": "ash/resources/vector_icons/notification_stylus_battery_warning.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-22T20:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d45afc48_d13a63a4",
+      "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
