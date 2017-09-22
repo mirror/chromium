@@ -269,6 +269,9 @@ class ShelfViewTest : public AshTestBase {
 
     test_api_.reset(new ShelfViewTestAPI(shelf_view_));
     test_api_->SetAnimationDuration(1);  // Speeds up animation for test.
+
+    // Add browser shortcut shelf item at index 0 for test.
+    AddItem(TYPE_BROWSER_SHORTCUT, true);
   }
 
   void TearDown() override {
@@ -1151,6 +1154,7 @@ TEST_F(ShelfViewTest, DragWithNotDraggableItemInFront) {
 
   // Ensure that the app list button cannot be dragged.
   // The expected id order is unchanged: 1, 2, 3, 4, 5, 6, 7
+  ASSERT_EQ(TYPE_APP_LIST, model_->items()[0].type);
   ASSERT_NO_FATAL_FAILURE(DragAndVerify(0, 1, shelf_view_, id_map));
   ASSERT_NO_FATAL_FAILURE(DragAndVerify(0, 2, shelf_view_, id_map));
   ASSERT_NO_FATAL_FAILURE(DragAndVerify(0, 5, shelf_view_, id_map));
@@ -1172,8 +1176,8 @@ TEST_F(ShelfViewTest, ClickOneDragAnother) {
   std::vector<std::pair<ShelfID, views::View*>> id_map;
   SetupForDragTest(&id_map);
 
-  // A click on the item at index 2 is simulated.
-  SimulateClick(2);
+  // A click on the item at index 1 is simulated.
+  SimulateClick(1);
 
   // Dragging the browser item at index 1 should change the model order.
   EXPECT_TRUE(model_->items()[1].type == TYPE_BROWSER_SHORTCUT);
