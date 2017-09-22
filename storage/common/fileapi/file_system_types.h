@@ -127,6 +127,8 @@ enum FileSystemType {
   // Marks the end of internal type enum. (This is not the actual fs type)
   // New internal filesystem types must be added above this line.
   kFileSystemInternalTypeEnumEnd,
+
+  kFileSystemTypeLast = kFileSystemTypeArcDocumentsProvider,
 };
 
 }  // namespace storage
