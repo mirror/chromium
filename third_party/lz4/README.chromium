@@ -1,0 +1,13 @@
+Name: lz4
+URL: https://github.com/lz4/lz4
+Version: 810e2ca27b3561e0f6bfa7a88e0fde6faf807064
+License: BSD 2-Clause
+License File: NOT_SHIPPED
+Security Critical: no
+
+Description:
+Extremely Fast Compression algorithm http://www.lz4.org
+
+Local Modifications:
+- This only includes the contents of lib/ that are required for liblz4.
+- Added BUILD.gn
