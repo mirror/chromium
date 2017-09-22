@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97a6b44_b71dafda",
+        "filename": "content/browser/sandbox_ipc_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001558
+      },
+      "writtenOn": "2017-09-22T23:09:00Z",
+      "side": 1,
+      "message": "Could you split the reply.WriteInt() sequence to a separate function? (SerializeTimeStruct or some such).",
+      "revId": "a67629624954cf322d84ffe9d00f4b88522e34a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaaa3fe3_60539c27",
+        "filename": "content/browser/sandbox_ipc_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001558
+      },
+      "writtenOn": "2017-09-22T23:09:00Z",
+      "side": 1,
+      "message": "Could you just create a zero-ed struct tm instead and use the same SerializeTimeStruct() as above to send the sequence of zero?\n\nIt\u0027s hard otherwise to count the number of WriteInt() etc.",
+      "revId": "a67629624954cf322d84ffe9d00f4b88522e34a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00156e92_4849483c",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001558
+      },
+      "writtenOn": "2017-09-22T23:09:00Z",
+      "side": 1,
+      "message": "Could you split deserialization to a separate function and get rid of the macro?",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 1
+      },
+      "revId": "a67629624954cf322d84ffe9d00f4b88522e34a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
