@@ -133,7 +133,8 @@ BrowserAccessibilityManager* BrowserAccessibilityManager::FromID(
 BrowserAccessibilityManager::BrowserAccessibilityManager(
     BrowserAccessibilityDelegate* delegate,
     BrowserAccessibilityFactory* factory)
-    : delegate_(delegate),
+    : AXEventGenerator(),
+      delegate_(delegate),
       factory_(factory),
       tree_(new ui::AXSerializableTree()),
       user_is_navigating_away_(false),
@@ -144,14 +145,15 @@ BrowserAccessibilityManager::BrowserAccessibilityManager(
       parent_node_id_from_parent_tree_(0),
       device_scale_factor_(1.0f),
       use_custom_device_scale_factor_for_testing_(false) {
-  tree_->SetDelegate(this);
+  SetTree(tree_.get());
 }
 
 BrowserAccessibilityManager::BrowserAccessibilityManager(
     const ui::AXTreeUpdate& initial_tree,
     BrowserAccessibilityDelegate* delegate,
     BrowserAccessibilityFactory* factory)
-    : delegate_(delegate),
+    : AXEventGenerator(),
+      delegate_(delegate),
       factory_(factory),
       tree_(new ui::AXSerializableTree()),
       user_is_navigating_away_(false),
@@ -161,12 +163,13 @@ BrowserAccessibilityManager::BrowserAccessibilityManager(
       parent_node_id_from_parent_tree_(0),
       device_scale_factor_(1.0f),
       use_custom_device_scale_factor_for_testing_(false) {
-  tree_->SetDelegate(this);
+  SetTree(tree_.get());
   Initialize(initial_tree);
 }
 
 BrowserAccessibilityManager::~BrowserAccessibilityManager() {
-  tree_.reset(NULL);
+  SetTree(nullptr);
+  tree_.reset(nullptr);
   g_ax_tree_id_map.Get().erase(ax_tree_id_);
 }
 
@@ -385,23 +388,16 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
   } else {
     connected_to_parent_tree_node_ = false;
   }
+  ClearEvents();
 
   // Fire any events related to changes to the tree.
-  for (auto& entry : tree_events_) {
-    BrowserAccessibility* event_target = GetFromID(entry.first);
+  for (auto targeted_event : *this) {
+    BrowserAccessibility* event_target = GetFromAXNode(targeted_event.node);
     if (!event_target)
       continue;
-    std::set<ui::AXEvent>& events = entry.second;
-    if (events.find(ui::AX_EVENT_LIVE_REGION_CREATED) != events.end() ||
-        events.find(ui::AX_EVENT_ALERT) != events.end()) {
-      events.erase(ui::AX_EVENT_LIVE_REGION_CHANGED);
-    }
-    for (auto event : events) {
-      NotifyAccessibilityEvent(BrowserAccessibilityEvent::FromTreeChange, event,
-                               event_target);
-    }
+
+    DispatchGeneratedEvent(event_target, targeted_event.event);
   }
-  tree_events_.clear();
 
   // Based on the changes to the tree, fire focus events if needed.
   // Screen readers might not do the right thing if they're not aware of what
@@ -412,8 +408,7 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
 
   // We are in the process of inferring all native events from tree changes.
   // Mac OS X no longer needs to iterate over the specific events coming from
-  // the renderer, all needed events were fired above by iterating over
-  // tree_events_.
+  // the renderer, all needed events were fired above using AXEventGenerator.
   //
   // When all platforms have switched to inferring all events, we can delete
   // the following code, which iterates over the non-focus events from the
@@ -1113,18 +1108,9 @@ gfx::Rect BrowserAccessibilityManager::GetPageBoundsForRange(
   return result;
 }
 
-void BrowserAccessibilityManager::OnNodeDataWillChange(
-    ui::AXTree* tree,
-    const ui::AXNodeData& old_node_data,
-    const ui::AXNodeData& new_node_data) {}
-
-void BrowserAccessibilityManager::OnTreeDataChanged(
-    ui::AXTree* tree,
-    const ui::AXTreeData& old_tree_data,
-    const ui::AXTreeData& new_tree_data) {}
-
 void BrowserAccessibilityManager::OnNodeWillBeDeleted(ui::AXTree* tree,
                                                       ui::AXNode* node) {
+  AXEventGenerator::OnNodeWillBeDeleted(tree, node);
   DCHECK(node);
   if (id_wrapper_map_.find(node->id()) == id_wrapper_map_.end())
     return;
@@ -1134,6 +1120,7 @@ void BrowserAccessibilityManager::OnNodeWillBeDeleted(ui::AXTree* tree,
 
 void BrowserAccessibilityManager::OnSubtreeWillBeDeleted(ui::AXTree* tree,
                                                          ui::AXNode* node) {
+  AXEventGenerator::OnSubtreeWillBeDeleted(tree, node);
   DCHECK(node);
   BrowserAccessibility* obj = GetFromAXNode(node);
   if (obj)
@@ -1142,24 +1129,33 @@ void BrowserAccessibilityManager::OnSubtreeWillBeDeleted(ui::AXTree* tree,
 
 void BrowserAccessibilityManager::OnNodeWillBeReparented(ui::AXTree* tree,
                                                          ui::AXNode* node) {
+  AXEventGenerator::OnNodeWillBeReparented(tree, node);
   // BrowserAccessibility should probably ask the tree source for the AXNode via
   // an id rather than weakly holding a pointer to a AXNode that might have been
   // destroyed under the hood and re-created later on. Treat this as a delete to
   // make things work.
-  OnNodeWillBeDeleted(tree, node);
+  if (id_wrapper_map_.find(node->id()) == id_wrapper_map_.end())
+    return;
+  GetFromAXNode(node)->Destroy();
+  id_wrapper_map_.erase(node->id());
 }
 
 void BrowserAccessibilityManager::OnSubtreeWillBeReparented(ui::AXTree* tree,
                                                             ui::AXNode* node) {
+  AXEventGenerator::OnSubtreeWillBeReparented(tree, node);
   // BrowserAccessibility should probably ask the tree source for the AXNode via
   // an id rather than weakly holding a pointer to a AXNode that might have been
   // destroyed under the hood and re-created later on. Treat this as a delete to
   // make things work.
-  OnSubtreeWillBeDeleted(tree, node);
+  DCHECK(node);
+  BrowserAccessibility* obj = GetFromAXNode(node);
+  if (obj)
+    obj->OnSubtreeWillBeDeleted();
 }
 
 void BrowserAccessibilityManager::OnNodeCreated(ui::AXTree* tree,
                                                 ui::AXNode* node) {
+  AXEventGenerator::OnNodeCreated(tree, node);
   BrowserAccessibility* wrapper = factory_->Create();
   wrapper->Init(this, node);
   id_wrapper_map_[node->id()] = wrapper;
@@ -1168,15 +1164,20 @@ void BrowserAccessibilityManager::OnNodeCreated(ui::AXTree* tree,
 
 void BrowserAccessibilityManager::OnNodeReparented(ui::AXTree* tree,
                                                    ui::AXNode* node) {
+  AXEventGenerator::OnNodeReparented(tree, node);
   // BrowserAccessibility should probably ask the tree source for the AXNode via
   // an id rather than weakly holding a pointer to a AXNode that might have been
   // destroyed under the hood and re-created later on. Treat this as a create to
   // make things work.
-  OnNodeCreated(tree, node);
+  BrowserAccessibility* wrapper = factory_->Create();
+  wrapper->Init(this, node);
+  id_wrapper_map_[node->id()] = wrapper;
+  wrapper->OnDataChanged();
 }
 
 void BrowserAccessibilityManager::OnNodeChanged(ui::AXTree* tree,
                                                 ui::AXNode* node) {
+  AXEventGenerator::OnNodeChanged(tree, node);
   DCHECK(node);
   GetFromAXNode(node)->OnDataChanged();
 }
@@ -1185,6 +1186,7 @@ void BrowserAccessibilityManager::OnAtomicUpdateFinished(
     ui::AXTree* tree,
     bool root_changed,
     const std::vector<ui::AXTreeDelegate::Change>& changes) {
+  AXEventGenerator::OnAtomicUpdateFinished(tree, root_changed, changes);
   bool ax_tree_id_changed = false;
   if (GetTreeData().tree_id != -1 && GetTreeData().tree_id != ax_tree_id_) {
     g_ax_tree_id_map.Get().erase(ax_tree_id_);
@@ -1204,24 +1206,6 @@ void BrowserAccessibilityManager::OnAtomicUpdateFinished(
   if (root_changed && last_focused_manager_ == this) {
     last_focused_node_ = nullptr;
     last_focused_manager_ = nullptr;
-  }
-
-  // Notify ATs if any live regions have been created.
-  for (auto& change : changes) {
-    if (change.type != NODE_CREATED && change.type != SUBTREE_CREATED)
-      continue;
-
-    const ui::AXNode* created_node = change.node;
-    DCHECK(created_node);
-    BrowserAccessibility* object = GetFromAXNode(created_node);
-    if (object && object->HasStringAttribute(ui::AX_ATTR_LIVE_STATUS)) {
-      int32_t id = object->GetId();
-      if (object->GetRole() == ui::AX_ROLE_ALERT) {
-        tree_events_[id].insert(ui::AX_EVENT_ALERT);
-      } else {
-        tree_events_[id].insert(ui::AX_EVENT_LIVE_REGION_CREATED);
-      }
-    }
   }
 }
 

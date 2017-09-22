@@ -50,17 +50,28 @@ AXEventGenerator::TargetedEvent AXEventGenerator::Iterator::operator*() const {
   return AXEventGenerator::TargetedEvent(map_iter_->first, *set_iter_);
 }
 
+AXEventGenerator::AXEventGenerator() : tree_(nullptr) {
+}
+
 AXEventGenerator::AXEventGenerator(AXTree* tree) : tree_(tree) {
-  DCHECK(tree_);
-  tree_->SetDelegate(this);
+  if (tree_)
+    tree_->SetDelegate(this);
 }
 
 AXEventGenerator::~AXEventGenerator() {
-  DCHECK(tree_);
-  tree_->SetDelegate(nullptr);
+  if (tree_)
+    tree_->SetDelegate(nullptr);
 }
 
-void AXEventGenerator::Clear() {
+void AXEventGenerator::SetTree(AXTree* new_tree) {
+  if (tree_)
+    tree_->SetDelegate(nullptr);
+  tree_ = new_tree;
+  if (tree_)
+    tree_->SetDelegate(this);
+}
+
+void AXEventGenerator::ClearEvents() {
   tree_events_.clear();
 }
 

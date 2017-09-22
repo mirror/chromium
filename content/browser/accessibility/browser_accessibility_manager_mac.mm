@@ -159,6 +159,15 @@ BrowserAccessibility* BrowserAccessibilityManagerMac::GetFocus() {
   return GetActiveDescendant(focus);
 }
 
+void BrowserAccessibilityManagerMac::DispatchGeneratedEvent(
+    BrowserAccessibility* event_target,
+    ui::AXEventGenerator::Event event) {
+  switch (event) {
+    default:
+      break;
+  }
+}
+
 void BrowserAccessibilityManagerMac::NotifyAccessibilityEvent(
     BrowserAccessibilityEvent::Source source,
     ui::AXEvent event_type,
@@ -368,116 +377,6 @@ void BrowserAccessibilityManagerMac::OnAccessibilityEvents(
   BrowserAccessibilityManager::OnAccessibilityEvents(details);
 }
 
-void BrowserAccessibilityManagerMac::OnTreeDataChanged(
-    ui::AXTree* tree,
-    const ui::AXTreeData& old_tree_data,
-    const ui::AXTreeData& new_tree_data) {
-  BrowserAccessibilityManager::OnTreeDataChanged(tree, old_tree_data,
-                                                 new_tree_data);
-  if (new_tree_data.loaded && !old_tree_data.loaded)
-    tree_events_[tree->root()->id()].insert(ui::AX_EVENT_LOAD_COMPLETE);
-  if (new_tree_data.sel_anchor_object_id !=
-          old_tree_data.sel_anchor_object_id ||
-      new_tree_data.sel_anchor_offset != old_tree_data.sel_anchor_offset ||
-      new_tree_data.sel_anchor_affinity != old_tree_data.sel_anchor_affinity ||
-      new_tree_data.sel_focus_object_id != old_tree_data.sel_focus_object_id ||
-      new_tree_data.sel_focus_offset != old_tree_data.sel_focus_offset ||
-      new_tree_data.sel_focus_affinity != old_tree_data.sel_focus_affinity) {
-    tree_events_[tree->root()->id()].insert(
-        ui::AX_EVENT_DOCUMENT_SELECTION_CHANGED);
-  }
-}
-
-void BrowserAccessibilityManagerMac::OnStateChanged(ui::AXTree* tree,
-                                                    ui::AXNode* node,
-                                                    ui::AXState state,
-                                                    bool new_value) {
-  BrowserAccessibilityManager::OnStateChanged(tree, node, state, new_value);
-  if (state == ui::AX_STATE_EXPANDED) {
-    if (node->data().role == ui::AX_ROLE_ROW ||
-        node->data().role == ui::AX_ROLE_TREE_ITEM) {
-      if (new_value)
-        tree_events_[node->id()].insert(ui::AX_EVENT_ROW_EXPANDED);
-      else
-        tree_events_[node->id()].insert(ui::AX_EVENT_ROW_COLLAPSED);
-      ui::AXNode* container = node;
-      while (container && !ui::IsRowContainer(container->data().role))
-        container = container->parent();
-      if (container)
-        tree_events_[container->id()].insert(ui::AX_EVENT_ROW_COUNT_CHANGED);
-    } else {
-      tree_events_[node->id()].insert(ui::AX_EVENT_EXPANDED_CHANGED);
-    }
-  }
-  if (state == ui::AX_STATE_SELECTED) {
-    ui::AXNode* container = node;
-    while (container &&
-           !ui::IsContainerWithSelectableChildrenRole(container->data().role))
-      container = container->parent();
-    if (container)
-      tree_events_[container->id()].insert(
-          ui::AX_EVENT_SELECTED_CHILDREN_CHANGED);
-  }
-}
-
-void BrowserAccessibilityManagerMac::OnStringAttributeChanged(
-    ui::AXTree* tree,
-    ui::AXNode* node,
-    ui::AXStringAttribute attr,
-    const std::string& old_value,
-    const std::string& new_value) {
-  BrowserAccessibilityManager::OnStringAttributeChanged(tree, node, attr,
-                                                        old_value, new_value);
-  switch (attr) {
-    case ui::AX_ATTR_VALUE:
-      tree_events_[node->id()].insert(ui::AX_EVENT_VALUE_CHANGED);
-      break;
-    case ui::AX_ATTR_ARIA_INVALID_VALUE:
-      tree_events_[node->id()].insert(ui::AX_EVENT_INVALID_STATUS_CHANGED);
-      break;
-    case ui::AX_ATTR_LIVE_STATUS:
-      tree_events_[node->id()].insert(ui::AX_EVENT_LIVE_REGION_CREATED);
-      break;
-    default:
-      break;
-  }
-}
-
-void BrowserAccessibilityManagerMac::OnIntAttributeChanged(
-    ui::AXTree* tree,
-    ui::AXNode* node,
-    ui::AXIntAttribute attr,
-    int32_t old_value,
-    int32_t new_value) {
-  BrowserAccessibilityManager::OnIntAttributeChanged(tree, node, attr,
-                                                     old_value, new_value);
-  switch (attr) {
-    case ui::AX_ATTR_CHECKED_STATE:
-      tree_events_[node->id()].insert(ui::AX_EVENT_VALUE_CHANGED);
-      break;
-    case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
-      tree_events_[node->id()].insert(ui::AX_EVENT_ACTIVEDESCENDANTCHANGED);
-      break;
-    case ui::AX_ATTR_INVALID_STATE:
-      tree_events_[node->id()].insert(ui::AX_EVENT_INVALID_STATUS_CHANGED);
-      break;
-    default:
-      break;
-  }
-}
-
-void BrowserAccessibilityManagerMac::OnFloatAttributeChanged(
-    ui::AXTree* tree,
-    ui::AXNode* node,
-    ui::AXFloatAttribute attr,
-    float old_value,
-    float new_value) {
-  BrowserAccessibilityManager::OnFloatAttributeChanged(tree, node, attr,
-                                                       old_value, new_value);
-  if (attr == ui::AX_ATTR_VALUE_FOR_RANGE)
-    tree_events_[node->id()].insert(ui::AX_EVENT_VALUE_CHANGED);
-}
-
 void BrowserAccessibilityManagerMac::OnAtomicUpdateFinished(
     ui::AXTree* tree,
     bool root_changed,
@@ -494,25 +393,6 @@ void BrowserAccessibilityManagerMac::OnAtomicUpdateFinished(
       if (editable_root && [editable_root instanceActive])
         changed_editable_roots.insert(editable_root);
     }
-
-    if ((change.type == NODE_CREATED || change.type == SUBTREE_CREATED) &&
-        change.node->data().HasStringAttribute(ui::AX_ATTR_LIVE_STATUS)) {
-      if (change.node->data().role == ui::AX_ROLE_ALERT)
-        tree_events_[change.node->id()].insert(ui::AX_EVENT_ALERT);
-      else
-        tree_events_[change.node->id()].insert(
-            ui::AX_EVENT_LIVE_REGION_CREATED);
-      continue;
-    }
-    if (change.node->data().HasStringAttribute(
-            ui::AX_ATTR_CONTAINER_LIVE_STATUS)) {
-      ui::AXNode* live_root = change.node;
-      while (live_root &&
-             !live_root->data().HasStringAttribute(ui::AX_ATTR_LIVE_STATUS))
-        live_root = live_root->parent();
-      if (live_root)
-        tree_events_[live_root->id()].insert(ui::AX_EVENT_LIVE_REGION_CHANGED);
-    }
   }
 
   for (const BrowserAccessibilityCocoa* obj : changed_editable_roots) {
@@ -521,9 +401,6 @@ void BrowserAccessibilityManagerMac::OnAtomicUpdateFinished(
     if (!text_edit.IsEmpty())
       text_edits_[[obj browserAccessibility]->GetId()] = text_edit;
   }
-
-  if (root_changed && tree->data().loaded)
-    tree_events_[tree->root()->id()].insert(ui::AX_EVENT_LOAD_COMPLETE);
 }
 
 NSDictionary* BrowserAccessibilityManagerMac::

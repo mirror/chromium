@@ -70,12 +70,22 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
     std::set<Event>::const_iterator set_iter_;
   };
 
+  // If you use this constructor, you must call SetTree
+  // before using this class.
+  AXEventGenerator();
+
   // Automatically registers itself as the delegate of |tree| and
   // clears it on desctruction. |tree| must be valid for the lifetime
   // of this object.
-  AXEventGenerator(AXTree* tree);
+  explicit AXEventGenerator(AXTree* tree);
 
   ~AXEventGenerator() override;
+
+  // Clears this class as the delegate of the previous tree that was
+  // being monitored, if any, and starts monitoring |new_tree|, if not
+  // nullptr. Note that |new_tree| must be valid for the lifetime of
+  // this object or until you call SetTree again.
+  void SetTree(AXTree* new_tree);
 
   Iterator begin() const {
     return Iterator(tree_events_, tree_events_.begin());
@@ -83,7 +93,7 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
   Iterator end() const { return Iterator(tree_events_, tree_events_.end()); }
 
   // Clear any previously added events.
-  void Clear();
+  void ClearEvents();
 
   // This is called automatically based on changes to the tree observed
   // by AXTreeDelegate, but you can also call it directly to add events
