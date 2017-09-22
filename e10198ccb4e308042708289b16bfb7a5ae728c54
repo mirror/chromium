@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0290bd04_a63a488f",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-22T22:22:51Z",
+      "side": 1,
+      "message": "as nit, we have several places where we refer app by id, ideally we should expose this via extension_misc. Please feel free to ignore this if this is urgent",
+      "revId": "e10198ccb4e308042708289b16bfb7a5ae728c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
