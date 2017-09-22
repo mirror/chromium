@@ -156,6 +156,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // account the visibility of the layer and ancestors, where as this tracks
   // whether Show() without a Hide() has been invoked.
   bool TargetVisibility() const { return visible_; }
+  // Returns true if this window is completely occluded. Only updated if this
+  // Window is tracked by WindowOcclusionTracker.
+  bool IsOccluded() const { return occluded_; }
 
   // Returns the window's bounds in root window's coordinates.
   gfx::Rect GetBoundsInRootWindow() const;
@@ -353,6 +356,7 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   friend class HitTestDataProviderAura;
   friend class LayoutManager;
   friend class PropertyConverter;
+  friend class WindowOcclusionTracker;
   friend class WindowPort;
   friend class WindowPortForShutdown;
   friend class WindowTargeter;
@@ -371,6 +375,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Updates the visible state of the layer, but does not make visible-state
   // specific changes. Called from Show()/Hide().
   void SetVisible(bool visible);
+
+  // Updates the occlusion state of the window.
+  void SetOccluded(bool occluded);
 
   // Schedules a paint for the Window's entire bounds.
   void SchedulePaint();
@@ -495,6 +502,10 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // from the visibility of the underlying layer, which may remain visible after
   // the window is hidden (e.g. to animate its disappearance).
   bool visible_;
+
+  // Occlusion state of the window. Only maintained if
+  // WindowOcclusionTracker::Track() was called with this window as argument.
+  bool occluded_;
 
   int id_;
 

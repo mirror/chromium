@@ -35,6 +35,7 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_port.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/aura/window_tree_host.h"
@@ -63,6 +64,7 @@ Window::Window(WindowDelegate* delegate,
       delegate_(delegate),
       parent_(nullptr),
       visible_(false),
+      occluded_(true),
       id_(kInitialId),
       transparent_(false),
       event_targeting_policy_(
@@ -75,6 +77,9 @@ Window::Window(WindowDelegate* delegate,
 }
 
 Window::~Window() {
+  WindowOcclusionTracker::ScopedNoWindowOcclusionComputations
+      no_window_occlusion_computations;
+
   // See comment in header as to why this is done.
   std::unique_ptr<WindowPort> port = std::move(port_owner_);
 
@@ -139,6 +144,9 @@ Window::~Window() {
 }
 
 void Window::Init(ui::LayerType layer_type) {
+  WindowOcclusionTracker::ScopedNoWindowOcclusionComputations
+      no_window_occlusion_computations;
+
   if (!port_owner_) {
     port_owner_ = Env::GetInstance()->CreateWindowPort(this);
     port_ = port_owner_.get();
@@ -349,6 +357,9 @@ void Window::StackChildBelow(Window* child, Window* target) {
 }
 
 void Window::AddChild(Window* child) {
+  WindowOcclusionTracker::ScopedNoWindowOcclusionComputations
+      no_window_occlusion_computations;
+
   DCHECK(layer()) << "Parent has not been Init()ed yet.";
   DCHECK(child->layer()) << "Child has not been Init()ed yt.";
   WindowObserver::HierarchyChangeParams params;
@@ -733,6 +744,14 @@ void Window::SetVisible(bool visible) {
   NotifyWindowVisibilityChanged(this, visible);
 }
 
+void Window::SetOccluded(bool occluded) {
+  if (occluded != occluded_) {
+    occluded_ = occluded;
+    if (delegate_)
+      delegate_->OnWindowOcclusionChanged(occluded_);
+  }
+}
+
 void Window::SchedulePaint() {
   SchedulePaintInRect(gfx::Rect(0, 0, bounds().width(), bounds().height()));
 }
@@ -1047,6 +1066,9 @@ void Window::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
 }
 
 void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {
+  WindowOcclusionTracker::ScopedNoWindowOcclusionComputations
+      no_window_occlusion_computations;
+
   bounds_ = layer()->bounds();
 
   // Use |bounds_| as that is the bounds before any animations, which is what
