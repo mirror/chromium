@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2973bf2_e8834f8f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:32:57Z",
+      "side": 1,
+      "message": "Did we forget to make this to |const Vector\u003cString\u003e|?",
+      "revId": "af1cff248bdd6762aebfce5993a6ba670479968e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cb8d2f_928f95f7",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:32:57Z",
+      "side": 1,
+      "message": "nit: s/SuggestionType/const SuggestionType/",
+      "revId": "af1cff248bdd6762aebfce5993a6ba670479968e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
