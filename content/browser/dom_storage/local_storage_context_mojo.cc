@@ -68,6 +68,9 @@ const unsigned kMaxStorageAreaCount = 50;
 const size_t kMaxCacheSize = 20 * 1024 * 1024;
 #endif
 
+static const uint8_t kUTF16Format = 0;
+static const uint8_t kLatin1Format = 1;
+
 std::vector<uint8_t> CreateMetaDataKey(const url::Origin& origin) {
   auto serialized_origin = leveldb::StdStringToUint8Vector(origin.Serialize());
   std::vector<uint8_t> key;
@@ -258,6 +261,45 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
       return;
     }
     std::move(callback).Run(nullptr);
+  }
+
+  std::vector<LevelDBWrapperImpl::Change> FixUpData(
+      const LevelDBWrapperImpl::ValueMap& data) override {
+    std::vector<LevelDBWrapperImpl::Change> changes;
+    // Chrome M61/M62 had a bug where keys that should have been encoded as
+    // Latin1 were instead encoded as UTF16. Fix this by finding any 8-bit only
+    // keys, and re-encode those. If two encodings of the key exist, the Latin1
+    // encoded value should take precedence.
+    for (const auto& it : data) {
+      // Skip over any Latin1 encoded keys, or unknown encodings/corrupted data.
+      if (it.first.empty() || it.first[0] != kUTF16Format)
+        continue;
+      // Check if key is actually 8-bit safe.
+      bool is_8bit = true;
+      for (size_t i = 2; i < it.first.size(); i += 2)
+        if (it.first[i]) {
+          is_8bit = false;
+          break;
+        }
+      if (!is_8bit)
+        continue;
+      // Found a key that should have been encoded differently. Decode and
+      // re-encode.
+      std::vector<uint8_t> key(1 + (it.first.size() - 1) / 2);
+      key[0] = kLatin1Format;
+      for (size_t in = 1, out = 1; in < it.first.size(); in += 2, out++)
+        key[out] = it.first[in];
+      // Delete incorrect key.
+      changes.push_back(std::make_pair(it.first, base::nullopt));
+      // Check if correct key already exists in data.
+      auto new_it = data.find(key);
+      if (new_it != data.end())
+        continue;
+      // Update value for correct key.
+      changes.push_back(std::make_pair(key, it.second));
+      // TODO(mek): UMA
+    }
+    return changes;
   }
 
   void OnMapLoaded(leveldb::mojom::DatabaseError error) override {
@@ -524,8 +566,19 @@ bool LocalStorageContextMojo::OnMemoryDump(
 // static
 std::vector<uint8_t> LocalStorageContextMojo::MigrateString(
     const base::string16& input) {
-  static const uint8_t kUTF16Format = 0;
-
+  bool is_8bit = true;
+  for (const auto& c : input) {
+    if (c & 0xff00) {
+      is_8bit = false;
+      break;
+    }
+  }
+  if (is_8bit) {
+    std::vector<uint8_t> result(input.size() + 1);
+    result[0] = kLatin1Format;
+    std::copy(input.begin(), input.end(), result.begin() + 1);
+    return result;
+  }
   const uint8_t* data = reinterpret_cast<const uint8_t*>(input.data());
   std::vector<uint8_t> result;
   result.reserve(input.size() * sizeof(base::char16) + 1);

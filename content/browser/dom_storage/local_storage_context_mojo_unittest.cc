@@ -115,6 +115,21 @@ class TestLevelDBObserver : public mojom::LevelDBObserver {
   mojo::AssociatedBinding<mojom::LevelDBObserver> binding_;
 };
 
+class GetAllCallback : public mojom::LevelDBWrapperGetAllCallback {
+ public:
+  static mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo CreateAndBind() {
+    mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo ptr_info;
+    auto request = mojo::MakeRequest(&ptr_info);
+    mojo::MakeStrongAssociatedBinding(base::WrapUnique(new GetAllCallback),
+                                      std::move(request));
+    return ptr_info;
+  }
+
+ private:
+  GetAllCallback() {}
+  void Complete(bool success) override {}
+};
+
 }  // namespace
 
 class LocalStorageContextMojoTest : public testing::Test {
@@ -692,11 +707,15 @@ TEST_F(LocalStorageContextMojoTest, Migration) {
   url::Origin origin2(GURL("http://example.com"));
   base::string16 key = base::ASCIIToUTF16("key");
   base::string16 value = base::ASCIIToUTF16("value");
+  base::string16 key2 = base::ASCIIToUTF16("key2");
+  key2.push_back(0xd83d);
+  key2.push_back(0xde00);
 
   DOMStorageNamespace* local = local_storage_namespace();
   DOMStorageArea* area = local->OpenStorageArea(origin1.GetURL());
   base::NullableString16 dummy;
   area->SetItem(key, value, dummy, &dummy);
+  area->SetItem(key2, value, dummy, &dummy);
   local->CloseStorageArea(area);
   FlushAndPurgeDOMStorageMemory();
 
@@ -714,20 +733,99 @@ TEST_F(LocalStorageContextMojoTest, Migration) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(mock_data().empty());
 
-  base::RunLoop run_loop;
-  bool success = false;
-  std::vector<uint8_t> result;
-  wrapper->Get(
-      LocalStorageContextMojo::MigrateString(key),
-      base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success, &result));
-  run_loop.Run();
-  EXPECT_TRUE(success);
-  EXPECT_EQ(LocalStorageContextMojo::MigrateString(value), result);
+  {
+    base::RunLoop run_loop;
+    bool success = false;
+    std::vector<uint8_t> result;
+    wrapper->Get(LocalStorageContextMojo::MigrateString(key),
+                 base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success,
+                                &result));
+    run_loop.Run();
+    EXPECT_TRUE(success);
+    EXPECT_EQ(LocalStorageContextMojo::MigrateString(value), result);
+  }
+
+  {
+    base::RunLoop run_loop;
+    bool success = false;
+    std::vector<uint8_t> result;
+    wrapper->Get(LocalStorageContextMojo::MigrateString(key2),
+                 base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success,
+                                &result));
+    run_loop.Run();
+    EXPECT_TRUE(success);
+    EXPECT_EQ(LocalStorageContextMojo::MigrateString(value), result);
+  }
 
   // Origin1 should no longer exist in old storage.
   area = local->OpenStorageArea(origin1.GetURL());
   ASSERT_EQ(0u, area->Length());
   local->CloseStorageArea(area);
+}
+
+TEST_F(LocalStorageContextMojoTest, FixUp) {
+  set_mock_data("VERSION", "1");
+  set_mock_data(std::string("_http://foobar.com") + '\x00' + "\x01key",
+                "value1");
+  std::string tmp;
+  base::ReplaceChars(
+      "_http://foobar.com\x02\x02k\x02"
+      "e\x02y\x02",
+      "\x02", std::string() + '\x00', &tmp);
+  set_mock_data(tmp, "value2");
+  base::ReplaceChars(
+      "_http://foobar.com\x02\x02"
+      "f\x02o\x02o\x02",
+      "\x02", std::string() + '\x00', &tmp);
+  set_mock_data(tmp, "value3");
+
+  mojom::LevelDBWrapperPtr wrapper;
+  context()->OpenLocalStorage(url::Origin(GURL("http://foobar.com")),
+                              MakeRequest(&wrapper));
+
+  {
+    base::RunLoop run_loop;
+    bool success = false;
+    std::vector<uint8_t> result;
+    base::ReplaceChars(
+        "\x02k\x02"
+        "e\x02y\x02",
+        "\x02", std::string() + '\x00', &tmp);
+    wrapper->Get(leveldb::StdStringToUint8Vector(tmp),
+                 base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success,
+                                &result));
+    run_loop.Run();
+    EXPECT_FALSE(success);
+  }
+  {
+    base::RunLoop run_loop;
+    bool success = false;
+    std::vector<uint8_t> result;
+    wrapper->Get(leveldb::StdStringToUint8Vector("\x01key"),
+                 base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success,
+                                &result));
+    run_loop.Run();
+    EXPECT_TRUE(success);
+    EXPECT_EQ(leveldb::StdStringToUint8Vector("value1"), result);
+  }
+  {
+    base::RunLoop run_loop;
+    bool success = false;
+    std::vector<uint8_t> result;
+    wrapper->Get(leveldb::StdStringToUint8Vector("\x01"
+                                                 "foo"),
+                 base::BindOnce(&GetCallback, run_loop.QuitClosure(), &success,
+                                &result));
+    run_loop.Run();
+    EXPECT_TRUE(success);
+    EXPECT_EQ(leveldb::StdStringToUint8Vector("value3"), result);
+  }
+
+  EXPECT_EQ(4u, mock_data().size());
+  EXPECT_EQ(leveldb::StdStringToUint8Vector("value1"),
+            mock_data().rbegin()->second);
+  EXPECT_EQ(leveldb::StdStringToUint8Vector("value3"),
+            std::next(mock_data().rbegin())->second);
 }
 
 TEST_F(LocalStorageContextMojoTest, ShutdownClearsData) {
