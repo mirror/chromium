@@ -52,6 +52,24 @@
       "revId": "0574ce52276efb4b2b4ed9e642b69a1c43a9d415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a57ffb0_47e28289",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T06:41:45Z",
+      "side": 1,
+      "message": "Per offline chat, let\u0027s keep it here with renaming (in future).\nI agreed that dbus_method_call_status sounds like not a good location to put this here,\nbut if we get rid of DBusMethodCallStatus, the file name itself won\u0027t make sense.\nProbably, dbus_callback.h is an alternative, and then this would make sense to put here, I believe.",
+      "parentUuid": "77d2ac31_3ff1ccb7",
+      "revId": "0574ce52276efb4b2b4ed9e642b69a1c43a9d415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
