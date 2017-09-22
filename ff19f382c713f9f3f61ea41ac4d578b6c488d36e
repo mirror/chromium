@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddb04c1c_4ecbb877",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T04:20:11Z",
+      "side": 1,
+      "message": "Attempted, and there is a piece of code in clank repo that uses it. Let\u0027s do it separately.",
+      "parentUuid": "2a7dc11b_c716b46b",
+      "revId": "ff19f382c713f9f3f61ea41ac4d578b6c488d36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e3348a_a4194661",
         "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "ff19f382c713f9f3f61ea41ac4d578b6c488d36e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f823ddf7_5896364d",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T04:20:11Z",
+      "side": 1,
+      "message": "Per our discussion I want to keep it that way, at least for now. I think there is a more robust way of doing things, without adding more testing namespaces. I\u0027ll look into it separately.",
+      "parentUuid": "68e3348a_a4194661",
+      "range": {
+        "startLine": 1464,
+        "startChar": 29,
+        "endLine": 1464,
+        "endChar": 30
+      },
+      "revId": "ff19f382c713f9f3f61ea41ac4d578b6c488d36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
