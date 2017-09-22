@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fa1588_7e42d303",
+        "filename": "media/blink/multibuffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "why was this changed?",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a5b3f3_40dce541",
+        "filename": "media/blink/multibuffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "per offline discussion, perhaps expose the lock directly, so it can be AutoLocked.\n\nas an aside, why isn\u0027t AutoLock moveable?  it seems like it could be made to be really, really easily.  then it could just return an AutoLock.",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2efefa_c421cad9",
+        "filename": "media/blink/multibuffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "perhaps move near |data_|",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff8f64e_c2a8e2a4",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "as an aside, i never noticed that this one is called Multi[b]uffer* while the other classes are all Multi[B]uffer*",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d427f55f_48fdfe29",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "i don\u0027t understand this one.\n\nif |bytes_read| \u003e 0, when would the rhs ever not be true?",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b6fc82_231e0872",
+        "filename": "media/blink/multibuffer_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "it might be clearer if there were a TryReadAt on MultiBuffer that had this implementation.  as in, MBR::TryReadAt would just \"return multibuffer_-\u003eTryReadAt(...);\".\n\nit doesn\u0027t seem to reference anything in the reader, and would hide the locking bits entirely inside MultiBuffer.\n\nas a bonus, renaming them both to TryReadAtFromAnyThread() would make it pretty clear what was going on in the MultiBufferDataSource.",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c0ec87_a77ee3ea",
+        "filename": "media/blink/multibuffer_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "continued from comment in multibuffer.h, how cool would\nAutoLock _l \u003d std::move(multibuffer_-\u003eCreateAutoLockForData());\nbe?  probably wouldn\u0027t really use op\u003d, but makes the example clearer about what CALFD() returns.",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7927151e_d7b1aad6",
+        "filename": "media/blink/multibuffer_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T14:42:41Z",
+      "side": 1,
+      "message": "should mention thread safety here too.",
+      "revId": "7a72ea7edee714ff899889ee4b82022e1de70a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
