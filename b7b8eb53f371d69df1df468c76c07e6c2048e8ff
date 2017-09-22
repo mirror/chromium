@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cea3eea_c611a6b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:51:00Z",
+      "side": 1,
+      "message": "nit: wait.",
+      "range": {
+        "startLine": 87,
+        "startChar": 51,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "b7b8eb53f371d69df1df468c76c07e6c2048e8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526c4ed8_d835ea23",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T17:51:00Z",
+      "side": 1,
+      "message": "Is there a chance to fix the PrefetchPrefs at this point?\nIf we have a date a year in future (say someone was playing with their clock).\nAnd this check will be running after midnight, it will be always pushing minimum time further in future by a day.\n\nIs my understanding in a ballpark?\n\nPerhaps we have safeguards in place to guarantee that we won\u0027t make the check until the right time, but I\u0027d stay on a safe side.",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "b7b8eb53f371d69df1df468c76c07e6c2048e8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
