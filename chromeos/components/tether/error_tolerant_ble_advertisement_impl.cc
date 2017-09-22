@@ -110,9 +110,9 @@ void ErrorTolerantBleAdvertisementImpl::SetFakeTimerForTest(
 }
 
 void ErrorTolerantBleAdvertisementImpl::UpdateRegistrationStatus() {
-  if (!advertisement_ && stop_callback_.is_null())
+  if (!advertisement_)
     AttemptRegistration();
-  else if (advertisement_ && !stop_callback_.is_null())
+  else if (advertisement_ && HasBeenStopped())
     AttemptUnregistration();
 }
 
