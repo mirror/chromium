@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbdda508_430905df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T15:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07b2047_faea9cc4",
+      "range": {
+        "startLine": 905,
+        "startChar": 4,
+        "endLine": 905,
+        "endChar": 40
+      },
+      "revId": "5a372580a8ee9379e907b66d4bc7b54c6f54d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18902091_f35625dc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5a372580a8ee9379e907b66d4bc7b54c6f54d64a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78417b7_d955f433",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T15:54:48Z",
+      "side": 1,
+      "message": "As discussed offline, it gets complicated since this code needs to execute at least once. We could use a Boolean, but then we need to guard against a null value other places in our code.",
+      "parentUuid": "18902091_f35625dc",
+      "range": {
+        "startLine": 906,
+        "startChar": 8,
+        "endLine": 907,
+        "endChar": 71
+      },
+      "revId": "5a372580a8ee9379e907b66d4bc7b54c6f54d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
