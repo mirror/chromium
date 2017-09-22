@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a9de26_83a3cea5",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T08:54:15Z",
+      "side": 1,
+      "message": "No need to call this explicitly. It happens automatically upon destruction (WeakReferenceOwner destructor).",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "f2f09f35de5d010036a87c60b60a484d011ecdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0472af5_64321fd4",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T08:54:15Z",
+      "side": 1,
+      "message": "Is \u0027this\u0027 guaranteed to still exist when the task is executed? If not, you need a wrapper that checks that your WeakPtr is still valid. For an example, see HibernateWrapper() in Canvas2DLayerBridge.cpp.  I don\u0027t know this code well enough to tell whether such a check is required.",
+      "range": {
+        "startLine": 591,
+        "startChar": 32,
+        "endLine": 591,
+        "endChar": 45
+      },
+      "revId": "f2f09f35de5d010036a87c60b60a484d011ecdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
