@@ -545,11 +545,11 @@ bool WebPluginContainerImpl::IsRectTopmost(const WebRect& rect) {
   if (!frame)
     return false;
 
-  IntRect document_rect(frame_rect_.X() + rect.x, frame_rect_.Y() + rect.y,
-                        rect.width, rect.height);
+  FloatRect document_rect(frame_rect_.X() + rect.x, frame_rect_.Y() + rect.y,
+                          rect.width, rect.height);
   // hitTestResultAtPoint() takes a padding rectangle.
   // FIXME: We'll be off by 1 when the width or height is even.
-  LayoutPoint center = document_rect.Center();
+  FloatPoint center = document_rect.Center();
   // Make the rect we're checking (the point surrounded by padding rects)
   // contained inside the requested rect. (Note that -1/2 is 0.)
   LayoutSize padding((document_rect.Width() - 1) / 2,
@@ -804,8 +804,8 @@ void WebPluginContainerImpl::HandleDragEvent(MouseEvent* event) {
   WebDragData drag_data = data_transfer->GetDataObject()->ToWebDragData();
   WebDragOperationsMask drag_operation_mask =
       static_cast<WebDragOperationsMask>(data_transfer->SourceOperation());
-  WebPoint drag_screen_location(event->screenX(), event->screenY());
-  WebPoint drag_location(
+  WebFloatPoint drag_screen_location(event->screenX(), event->screenY());
+  WebFloatPoint drag_location(
       event->AbsoluteLocation().X() - frame_rect_.Location().X(),
       event->AbsoluteLocation().Y() - frame_rect_.Location().Y());
 
@@ -820,9 +820,8 @@ void WebPluginContainerImpl::HandleWheelEvent(WheelEvent* event) {
   // Translate the root frame position to content coordinates.
   absolute_location = ParentFrameView().RootFrameToContents(absolute_location);
 
-  IntPoint local_point =
-      RoundedIntPoint(element_->GetLayoutObject()->AbsoluteToLocal(
-          absolute_location, kUseTransforms));
+  FloatPoint local_point = element_->GetLayoutObject()->AbsoluteToLocal(
+      absolute_location, kUseTransforms);
   WebMouseWheelEvent translated_event = event->NativeEvent().FlattenTransform();
   translated_event.SetPositionInWidget(local_point.X(), local_point.Y());
 

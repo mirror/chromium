@@ -94,7 +94,7 @@ TEST_F(CursorWindowControllerTest, MoveToDifferentDisplay) {
   // cursor between displays.
   // Screen location: 220, 50
   // Root location: 20, 50
-  secondary_root->MoveCursorTo(gfx::Point(20, 50));
+  secondary_root->MoveCursorTo(gfx::PointF(20, 50));
 
   // Chrome relies on WindowTreeHost::MoveCursorTo() dispatching a mouse move
   // asynchronously. This is implemented in a platform specific way. Generate a

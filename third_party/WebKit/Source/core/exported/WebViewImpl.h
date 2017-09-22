@@ -512,8 +512,8 @@ class CORE_EXPORT WebViewImpl final
 
   void HideSelectPopup();
 
-  HitTestResult HitTestResultForRootFramePos(const IntPoint&);
-  HitTestResult HitTestResultForViewportPos(const IntPoint&);
+  HitTestResult HitTestResultForRootFramePos(const FloatPoint&);
+  HitTestResult HitTestResultForViewportPos(const FloatPoint&);
 
   void ConfigureAutoResizeMode();
 
