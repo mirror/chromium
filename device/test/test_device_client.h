@@ -8,7 +8,6 @@
 
 namespace device {
 
-class HidService;
 class UsbService;
 
 class TestDeviceClient : public DeviceClient {
@@ -18,11 +17,9 @@ class TestDeviceClient : public DeviceClient {
   // Must be destroyed when tasks can still be posted to |task_runner|.
   ~TestDeviceClient() override;
 
-  HidService* GetHidService() override;
   UsbService* GetUsbService() override;
 
  private:
-  std::unique_ptr<HidService> hid_service_;
   std::unique_ptr<UsbService> usb_service_;
 };
 
