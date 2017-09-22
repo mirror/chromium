@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05cd73d8_42ed9425",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T01:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "124fde32_b444cd89",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40efdacf_2bf3950f",
         "filename": "chrome/test/v8/wasm_trap_handler.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d06ad1f_a78ebf25",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T01:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40efdacf_2bf3950f",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8c7ab281_8fa5efaa",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T01:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49fae5bc_827af2f7",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31e7a75_17f11c62",
         "filename": "chrome/test/v8/wasm_trap_handler.cc",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-21T23:49:28Z",
       "side": 1,
       "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce28a64a_b41745a3",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T01:32:10Z",
+      "side": 1,
+      "message": "This caused compile errors when I tried to add it.",
+      "parentUuid": "e31e7a75_17f11c62",
       "range": {
         "startLine": 54,
         "startChar": 0,
@@ -114,6 +210,30 @@
       "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432f3a8_a761306e",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T01:32:10Z",
+      "side": 1,
+      "message": "It doesn\u0027t hurt to keep running as long as a failure in any test causes the whole thing to fail. To be safe I went ahead and wrapped everything in ASSERT_NO_FATAL_FAILURE.",
+      "parentUuid": "691e80b0_94126b6d",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
