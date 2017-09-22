@@ -22,6 +22,30 @@
       "revId": "dedbe733c207fb0dcebf676a1e2b78d726ff90fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a24a846_9ef65729",
+        "filename": "ios/public/provider/chrome/browser/build_config.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-22T07:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b428465_8c622c26",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "dedbe733c207fb0dcebf676a1e2b78d726ff90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
