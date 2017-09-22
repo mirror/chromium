@@ -13,6 +13,8 @@ namespace cryptauth {
 DeviceCapabilityManagerImpl::Factory*
     DeviceCapabilityManagerImpl::Factory::factory_instance_ = nullptr;
 
+DeviceCapabilityManagerImpl::Factory::~Factory() {}
+
 // static
 std::unique_ptr<DeviceCapabilityManager>
 DeviceCapabilityManagerImpl::Factory::NewInstance(
