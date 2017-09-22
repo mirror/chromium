@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f171dd8_d6884313",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-22T09:38:34Z",
+      "side": 1,
+      "message": "This is not exactly true, we build with a version of clang that is dowloaded from google_storage, not with ToT clang (there is a bot that does that and is used to roll the pre-build version of clang used).\n\nSo I would use the following comment instead:\n\n  # TODO(crbug.com/75794): the version of llvm-cov used for code coverage is tied\n  # to the version of clang used. As no copy of llvm-cov is shipped with the Chrome\u0027s\n  # clang, the version shipped with Xcode is used, thus code needs to be compiled\n  # with Xcode\u0027s clang when enabling code coverage. Remove this once llvm-cov is\n  # shipped with Chrome\u0027s clang.",
+      "range": {
+        "startLine": 100,
+        "startChar": 39,
+        "endLine": 100,
+        "endChar": 51
+      },
+      "revId": "4cf168da04c7e2be9cb4e39a9d75b4171ed62d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ec78c3_a8503da1",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-22T09:38:34Z",
+      "side": 1,
+      "message": "You can just use the following:\n\n  args.append((\u0027use_xcode_clang\u0027, \u0027is_official_build || ios_enable_coverage\u0027))",
+      "revId": "4cf168da04c7e2be9cb4e39a9d75b4171ed62d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
