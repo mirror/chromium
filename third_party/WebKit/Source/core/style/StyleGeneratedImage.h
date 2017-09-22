@@ -55,7 +55,8 @@ class CORE_EXPORT StyleGeneratedImage final : public StyleImage {
   RefPtr<Image> GetImage(const ImageResourceObserver&,
                          const Document&,
                          const ComputedStyle&,
-                         const IntSize&) const override;
+                         const IntSize&,
+                         const LayoutSize&) const override;
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const override;
 
   DECLARE_VIRTUAL_TRACE();
