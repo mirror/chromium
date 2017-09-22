@@ -7,11 +7,14 @@
   // on something that directly or indirectly maps to a resource on the W3C test
   // server.
   var castAppId = '915D2A2C';
-  var castUrl = 'https://google.com/cast#__castAppId__=' + castAppId;
+  var castUrl = 'cast:' + castAppId;
+  // TODO(crbug.com/757358): Remove legacy URL after M63 is stable.
+  var legacyCastUrl = 'https://google.com/cast#__castAppId__=' + castAppId;
 
   window.presentationUrls = [
     'support/presentation.html',
-    castUrl
+    castUrl,
+    legacyCastUrl
   ];
 
   // Both a controlling side and a receiving one must share the same Stash ID to
