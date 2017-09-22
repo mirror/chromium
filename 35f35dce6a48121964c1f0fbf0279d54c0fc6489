@@ -96,6 +96,54 @@
     },
     {
       "key": {
+        "uuid": "c1851b59_56bdd939",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T09:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d14a0d_2b0db689",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9be3e10c_138a3f14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T09:37:44Z",
+      "side": 1,
+      "message": "Done. Haven\u0027t noticed that the comment message has to be updated manually.",
+      "parentUuid": "7fbe10e5_376248cf",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "35f35dce6a48121964c1f0fbf0279d54c0fc6489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b14179cf_af58e253",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 12
