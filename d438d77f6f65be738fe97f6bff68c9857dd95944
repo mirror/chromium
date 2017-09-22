@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "701b7ad9_730c02e9",
+        "filename": "chrome/browser/signin/easy_unlock_service_signin_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T23:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9e7247_6dfc3e1e",
+      "range": {
+        "startLine": 555,
+        "startChar": 7,
+        "endLine": 555,
+        "endChar": 18
+      },
+      "revId": "d438d77f6f65be738fe97f6bff68c9857dd95944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb2529eb_2b9d729e",
         "filename": "components/cryptauth/remote_device.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ac08e3cf_3794f993",
+        "filename": "components/cryptauth/remote_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T23:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb2529eb_2b9d729e",
+      "range": {
+        "startLine": 38,
+        "startChar": 30,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "d438d77f6f65be738fe97f6bff68c9857dd95944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32cc119_db6aff24",
         "filename": "components/cryptauth/remote_device.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "d438d77f6f65be738fe97f6bff68c9857dd95944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd844c17_ba20f572",
+        "filename": "components/cryptauth/remote_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-22T23:30:38Z",
+      "side": 1,
+      "message": "Discussed offline -- should be changed to int64_t to reflect the proto.",
+      "parentUuid": "f32cc119_db6aff24",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "d438d77f6f65be738fe97f6bff68c9857dd95944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
