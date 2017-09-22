@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8ee7c08_3de0c9e8",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T19:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6efa099_97431cc7",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dc0c833_176e6451",
         "filename": "components/omnibox/browser/omnibox_view.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T18:56:04Z",
       "side": 1,
       "message": "Something seems wrong here, or at least the comment is confusing.  The comment by the \"if\" says\n\"If we found any \"JavaScript:\" schemes in the text, ...\" but that\u0027s not what the \"if\" is checking.  The if can be true even if we did not find any javascript: schemes.\n\nWhy do you need the \"if\" statement?  What happens if you remove it?",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24b8794_55c42813",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T19:09:15Z",
+      "side": 1,
+      "message": "trim_before starts at 0 and thus if (trim_before) is falsy.\n\ntrim_before only is set to a non-zero value if, on the test on line 38 finds the string \"javascript:\" at which point trim_before is set on line 41.\n\nIf we removed the if (trim_before) test we\u0027d end up stripping leading whitespace and control characters even if there was no \"javascript:\" in the URL.",
+      "parentUuid": "7dc0c833_176e6451",
       "range": {
         "startLine": 48,
         "startChar": 19,
