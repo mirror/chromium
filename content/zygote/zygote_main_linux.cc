@@ -103,26 +103,46 @@ static void ProxyLocaltimeCallToBrowser(time_t input, struct tm* output,
   request.WriteString(
       std::string(reinterpret_cast<char*>(&input), sizeof(input)));
 
+  memset(output, 0, sizeof(struct tm));
+
   uint8_t reply_buf[512];
   const ssize_t r = base::UnixDomainSocket::SendRecvMsg(
       GetSandboxFD(), reply_buf, sizeof(reply_buf), NULL, request);
   if (r == -1) {
-    memset(output, 0, sizeof(struct tm));
     return;
   }
 
   base::Pickle reply(reinterpret_cast<char*>(reply_buf), r);
   base::PickleIterator iter(reply);
-  std::string result;
+
+  int result;
+
+#define get_struct_tm_member_or_fail(member) \
+  if (!iter.ReadInt(&result)) {              \
+    memset(output, 0, sizeof(struct tm));    \
+    return;                                  \
+  }                                          \
+  output->member = result;
+
+  get_struct_tm_member_or_fail(tm_sec);
+  get_struct_tm_member_or_fail(tm_min);
+  get_struct_tm_member_or_fail(tm_hour);
+  get_struct_tm_member_or_fail(tm_mday);
+  get_struct_tm_member_or_fail(tm_mon);
+  get_struct_tm_member_or_fail(tm_year);
+  get_struct_tm_member_or_fail(tm_wday);
+  get_struct_tm_member_or_fail(tm_yday);
+  get_struct_tm_member_or_fail(tm_isdst);
+  get_struct_tm_member_or_fail(tm_gmtoff);
+
+#undef get_struct_tm_member_or_fail
+
   std::string timezone;
-  if (!iter.ReadString(&result) ||
-      !iter.ReadString(&timezone) ||
-      result.size() != sizeof(struct tm)) {
+  if (!iter.ReadString(&timezone)) {
     memset(output, 0, sizeof(struct tm));
     return;
   }
 
-  memcpy(output, result.data(), sizeof(struct tm));
   if (timezone_out_len) {
     const size_t copy_len = std::min(timezone_out_len - 1, timezone.size());
     memcpy(timezone_out, timezone.data(), copy_len);
