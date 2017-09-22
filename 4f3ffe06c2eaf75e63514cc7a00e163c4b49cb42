@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2467f629_f63e8213",
+        "filename": "third_party/WebKit/Source/bindings/modules/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-22T16:18:57Z",
+      "side": 1,
+      "message": "why don\u0027t you use  modules_callback_function_idl_files directly?",
+      "range": {
+        "startLine": 106,
+        "startChar": 58,
+        "endLine": 106,
+        "endChar": 72
+      },
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7db18772_4d8ff6a0",
         "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
         "patchSetId": 1
@@ -81,6 +104,23 @@
       "writtenOn": "2017-09-22T11:56:58Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523ce132_39d3518b",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-22T16:18:57Z",
+      "side": 1,
+      "message": "callback function is not an interface.\nwhy do we need to define modules_static_interface_idl_files?",
       "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
