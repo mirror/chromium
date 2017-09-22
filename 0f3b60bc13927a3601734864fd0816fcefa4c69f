@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "9530e3d6_68636f24",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-22T08:47:06Z",
+      "side": 1,
+      "message": "let me repeat.\ncan we make this traits in \"namespace internal {}\", as other similar classes in base do?\ne.g, base/files/scoped_files",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 2
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf249ea_a9f97f9e",
         "filename": "base/win/win_util.cc",
         "patchSetId": 16
@@ -173,6 +196,30 @@
       "writtenOn": "2017-09-20T13:03:21Z",
       "side": 1,
       "message": "omit .c_str()",
+      "range": {
+        "startLine": 484,
+        "startChar": 54,
+        "endLine": 484,
+        "endChar": 62
+      },
+      "revId": "0f3b60bc13927a3601734864fd0816fcefa4c69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dbc522_d9f834c6",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-22T08:47:06Z",
+      "side": 1,
+      "message": "Can we just remove all conversion instead, e.g. ScopedHString::Create(dev_id) ?\nSince now Create can take StringPiece, passing std::string will work? I may miss something because I rarely use StringPiece.",
+      "parentUuid": "cd46bf71_1ba17755",
       "range": {
         "startLine": 484,
         "startChar": 54,
