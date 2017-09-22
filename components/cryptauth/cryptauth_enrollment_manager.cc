@@ -168,9 +168,11 @@ void CryptAuthEnrollmentManager::OnEnrollmentFinished(bool success) {
 
 std::string CryptAuthEnrollmentManager::GetUserPublicKey() const {
   std::string public_key;
+  LOG(ERROR) << "crashing here";
   if (!base::Base64UrlDecode(
           pref_service_->GetString(prefs::kCryptAuthEnrollmentUserPublicKey),
           base::Base64UrlDecodePolicy::REQUIRE_PADDING, &public_key)) {
+    LOG(ERROR) << "Why arent you working.";
     PA_LOG(ERROR) << "Invalid public key stored in user prefs.";
     return std::string();
   }
