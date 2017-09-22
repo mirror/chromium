@@ -78,7 +78,13 @@ class AURA_EXPORT WindowObserver {
   // on.
   virtual void OnWindowVisibilityChanged(Window* window, bool visible) {}
 
-  // Invoked when SetBounds() is invoked on |window|. |old_bounds| and
+  // Invoked before the bounds of |window| change. |old_bounds| and |new_bounds|
+  // are in parent coordinates.
+  virtual void OnWindowBoundsWillChange(Window* window,
+                                        const gfx::Rect& old_bounds,
+                                        const gfx::Rect& new_bounds) {}
+
+  // Invoked after the bounds of |window| have changed. |old_bounds| and
   // |new_bounds| are in parent coordinates.
   virtual void OnWindowBoundsChanged(Window* window,
                                      const gfx::Rect& old_bounds,
