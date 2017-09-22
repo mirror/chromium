@@ -8085,6 +8085,8 @@ TEST_F(URLRequestTestHTTP, Redirect301Tests) {
   HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
                                std::string());
+  HTTPRedirectOriginHeaderTest(url, "PUT", "PUT", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "PUT", "PUT", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect302Tests) {
@@ -8103,6 +8105,8 @@ TEST_F(URLRequestTestHTTP, Redirect302Tests) {
   HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
                                std::string());
+  HTTPRedirectOriginHeaderTest(url, "PUT", "PUT", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "PUT", "PUT", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect303Tests) {
@@ -8121,6 +8125,8 @@ TEST_F(URLRequestTestHTTP, Redirect303Tests) {
   HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
                                std::string());
+  HTTPRedirectOriginHeaderTest(url, "PUT", "GET", std::string());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "PUT", "GET", std::string());
 }
 
 TEST_F(URLRequestTestHTTP, Redirect307Tests) {
@@ -8138,6 +8144,8 @@ TEST_F(URLRequestTestHTTP, Redirect307Tests) {
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
   HTTPRedirectOriginHeaderTest(url, "POST", "POST", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "POST", "null");
+  HTTPRedirectOriginHeaderTest(url, "PUT", "PUT", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "PUT", "PUT", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect308Tests) {
@@ -8155,6 +8163,8 @@ TEST_F(URLRequestTestHTTP, Redirect308Tests) {
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
   HTTPRedirectOriginHeaderTest(url, "POST", "POST", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "POST", "null");
+  HTTPRedirectOriginHeaderTest(url, "PUT", "PUT", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "PUT", "PUT", "null");
 }
 
 // Make sure that 308 responses without bodies are not treated as redirects.
