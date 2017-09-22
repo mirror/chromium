@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec1d97c_e709d871",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "These should be inside the #if !defined(OS_NACL_NONSFI) block in the anonymous namespace. Otherwise, the compiler used with NaCl may decide this is obvious dead code and complain. (I don\u0027t know why it doesn\u0027t as is)",
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12589fc0_bfb36466",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "nit: No need for base:: inside namespace base.",
+      "range": {
+        "startLine": 195,
+        "startChar": 31,
+        "endLine": 195,
+        "endChar": 37
+      },
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9301bbae_a2eaf1d6",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "\"static constexpr\" while you are at it.",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 7
+      },
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010ca8d0_24517d35",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "buffer.data()",
+      "range": {
+        "startLine": 213,
+        "startChar": 50,
+        "endLine": 213,
+        "endChar": 60
+      },
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc608425_b5a65e1c",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "I generally prefer braces for multi-line if-conditionals, like lines 326-329 in the existing code.",
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b712325_8db11469",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "nit: More else after return.",
+      "range": {
+        "startLine": 370,
+        "startChar": 6,
+        "endLine": 370,
+        "endChar": 10
+      },
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dd1435_4efe6cb2",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T22:11:08Z",
+      "side": 1,
+      "message": "current?",
+      "range": {
+        "startLine": 386,
+        "startChar": 22,
+        "endLine": 386,
+        "endChar": 31
+      },
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
