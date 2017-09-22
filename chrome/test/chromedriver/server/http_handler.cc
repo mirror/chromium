@@ -492,7 +492,7 @@ HttpHandler::HttpHandler(
                                    base::Bind(&ExecuteGetAvailableLogTypes))),
       CommandMapping(kPost, "session/:sessionId/actions",
                      WrapToCommand("PerformActions",
-                                   base::Bind(&ExecuteUnimplementedCommand))),
+                                   base::Bind(&ExecutePerformActions))),
       CommandMapping(kDelete, "session/:sessionId/actions",
                      WrapToCommand("DeleteActions",
                                    base::Bind(&ExecuteUnimplementedCommand))),
@@ -705,6 +705,7 @@ HttpHandler::PrepareStandardResponse(
     case kNoSuchFrame:
     case kStaleElementReference:
     case kElementNotVisible:
+    case kMoveTargetOutOfBounds:
     case kInvalidElementState:
     case kNoSuchWindow:
     case kInvalidCookieDomain:
