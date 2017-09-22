@@ -25,19 +25,6 @@ WeeklyTime::WeeklyTime(int day_of_week, int milliseconds)
   DCHECK_LT(milliseconds, kDay.InMilliseconds());
 }
 
-WeeklyTime WeeklyTime::GetCurrentWeeklyTime() {
-  base::Time::Exploded exploded;
-  base::Time::Now().UTCExplode(&exploded);
-  int day_of_week = exploded.day_of_week;
-  // Exploded contains 0-based day of week (0 = Sunday, etc.)
-  if (day_of_week == 0)
-    day_of_week = 7;
-  return WeeklyTime(day_of_week,
-                    exploded.hour * kHour.InMilliseconds() +
-                        exploded.minute * kMinute.InMilliseconds() +
-                        exploded.second * 1000);
-}
-
 std::unique_ptr<base::DictionaryValue> WeeklyTime::ToValue() const {
   auto weekly_time = base::MakeUnique<base::DictionaryValue>();
   weekly_time->SetInteger("day_of_week", day_of_week_);
@@ -51,6 +38,35 @@ base::TimeDelta WeeklyTime::GetDurationTo(const WeeklyTime& other) const {
   if (duration < 0)
     duration += kWeek.InMilliseconds();
   return base::TimeDelta::FromMilliseconds(duration);
+}
+
+WeeklyTime WeeklyTime::ConvertToGmt(int gmt_offset) const {
+  // Convert time in milliseconds to GMT time considering day offset.
+  int gmt_time = milliseconds_ - gmt_offset;
+  // Make |time_in_gmt| positive number (add number of milliseconds per week)
+  // for easier evaluation.
+  gmt_time += kWeek.InMilliseconds();
+  // Get milliseconds from the start of the day.
+  int gmt_milliseconds = gmt_time % kDay.InMilliseconds();
+  int day_offset = gmt_time / kDay.InMilliseconds();
+  // Convert day of week to GMT timezone considering week is cyclic. +/- 1 is
+  // because day of week is from 1 to 7.
+  int gmt_day_of_week = (day_of_week_ + day_offset - 1) % 7 + 1;
+  return off_hours::WeeklyTime(gmt_day_of_week, gmt_milliseconds);
+}
+
+// static
+WeeklyTime WeeklyTime::GetCurrentWeeklyTime() {
+  base::Time::Exploded exploded;
+  base::Time::Now().UTCExplode(&exploded);
+  int day_of_week = exploded.day_of_week;
+  // Exploded contains 0-based day of week (0 = Sunday, etc.)
+  if (day_of_week == 0)
+    day_of_week = 7;
+  return WeeklyTime(day_of_week,
+                    exploded.hour * kHour.InMilliseconds() +
+                        exploded.minute * kMinute.InMilliseconds() +
+                        exploded.second * 1000);
 }
 
 }  // namespace off_hours
