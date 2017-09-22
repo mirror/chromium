@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8a6bef84_ca1ee037",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T08:17:23Z",
+      "side": 1,
+      "message": "I guess let\u0027s get someone else as a tie-breaker ;)\n\n\"Site name\" would be less confusing to me, but it\u0027s also not always accurate. Actually, I\u0027m not sure that og:site_name is actually always the right thing to use. The example on ogp.me talks about the IMDb leaf page for \"The Rock\", where the og:site_name is \"IMDb\". Having a tile pointing to that leaf page just say \"IMDb\" doesn\u0027t seem optimal...",
+      "parentUuid": "57311bc4_4a2550cd",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e708419a_1258d703",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -272,6 +290,30 @@
     },
     {
       "key": {
+        "uuid": "376e5650_5952ef5a",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T08:17:23Z",
+      "side": 1,
+      "message": "Wow, I never knew.\nOut of curiosity, is the plan to eventually plumb this info through for SuggestionsService as well? Or are we okay with having useful information for TopSites/PopularSites only?",
+      "parentUuid": "6ee6068c_3b0e5631",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768cdc9c_ba4a6129",
         "filename": "chrome/common/search/instant_types.h",
         "patchSetId": 6
@@ -483,6 +525,30 @@
       "side": 1,
       "message": "Guaranteed? No.\nBut as it\u0027s fetched from the history, it\u0027s pretty close - although I could live with using UNKNOWN here as well.\n\n(Currently, the HistoryService reads and writes the titles from the UrlDatabase. The titles are set over the HistoryService which is based on NavigationEntry. The description there is \"The title as set by the page.[...]\")\n\nI am tempted to introduce separate enum entries for history-based and aggregated titles (which would then need a negative ID to not conflict with the ID pushed from the server). WDYT?",
       "parentUuid": "e750fdc4_51f8e5c8",
+      "range": {
+        "startLine": 516,
+        "startChar": 76,
+        "endLine": 516,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed87f19c_697c8ae2",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T08:17:23Z",
+      "side": 1,
+      "message": "\u003e Guaranteed? No.\n\u003e But as it\u0027s fetched from the history, it\u0027s pretty close - although I could live with using UNKNOWN here as well.\n\u003e \n\u003e (Currently, the HistoryService reads and writes the titles from the UrlDatabase. The titles are set over the HistoryService which is based on NavigationEntry. The description there is \"The title as set by the page.[...]\")\n\nOkay, works for me. Thanks for investigating!\n\n\u003e I am tempted to introduce separate enum entries for history-based and aggregated titles (which would then need a negative ID to not conflict with the ID pushed from the server). WDYT?\n\nI\u0027m slightly confused - which ID pushed from where? Why negative instead of just adding another value to the enum?",
+      "parentUuid": "58df3596_5dec9365",
       "range": {
         "startLine": 516,
         "startChar": 76,
