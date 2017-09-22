@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b5678fa8_6ea28898",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:23:21Z",
+      "side": 1,
+      "message": "I love it.  Let\u0027s do this.",
+      "parentUuid": "5f118929_b1127725",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
