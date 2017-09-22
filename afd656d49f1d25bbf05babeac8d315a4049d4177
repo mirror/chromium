@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c07e22_d417edb0",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-22T01:10:18Z",
+      "side": 1,
+      "message": "This is the same as AssociatedLayoutObjectOf(node_, 0).\n\nCan be in another patch.",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 67
+      },
+      "revId": "afd656d49f1d25bbf05babeac8d315a4049d4177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
