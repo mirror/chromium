@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c3e36aeb_05c94dee",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-22T10:02:07Z",
+      "side": 1,
+      "message": "Done, though doing so requires some complexity, because we have to declare the Entry class first, then provide WTF::VectorTraits (since we need it to be clearable with memset; presently this works because the class is trivially constructible, but UntracedMember has a user-provided constructor and breaks that).\n\nLet me know which you prefer. (Making the VectorTraits is more general; avoiding it only worked because this struct was otherwise quite trivial.)",
+      "parentUuid": "f9dc5bc8_31aab5a2",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68bbe844_a9aa6e7a",
         "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
         "patchSetId": 10
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6134dd6e_d88aefc6",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-22T10:02:07Z",
+      "side": 1,
+      "message": "If we never attempt to shrink it, the backing buffer will forever be the largest size it ever needed. We can\u0027t do so on compaction because the backing buffer is on the heap (at least right now). So Add (and to a lesser extend, Remove) is our opportunity to do so. This is analogous to how HeapHashSet may rehash on the next mutation to shrink.",
+      "parentUuid": "68bbe844_a9aa6e7a",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3a9515_d1357bb1",
         "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
         "patchSetId": 10
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-21T12:12:18Z",
       "side": 1,
       "message": "Why does this need to be HeapVector? Will Vector\u003cEntry\u003e work?\n\nWhat happens if we simply use HashMap\u003cUntracedMember\u003cT\u003e, unsigned\u003e? I guess what matters would be the performance of MatchesMask, and the performance of Add and Remove doesn\u0027t really matter.",
+      "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8245930c_604bba38",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-22T10:02:07Z",
+      "side": 1,
+      "message": "1. It could be a non-heap vector, but this would require finalization work. Essentially any HeapVector *could* be a PartitionAlloc vector, because all that really matters is that we can trace through it. In the past we\u0027ve generally preferred heap buffers when pointing to heap objects.\n\n2. A HashMap isn\u0027t correct, because the same object can be present with multiple masks (and this does actually happen in the Document case). The type is more like HeapHashSet\u003cstd::pair\u003cWeakMember\u003cT\u003e, unsigned\u003e\u003e. Using a vector makes the iteration cheaper, and iteration happens both during GC (in the weak callback) and whenever the mask needs to be recomputed. Explicit removal (the only case where the faster lookup of a set matters) is the only case where we\u0027d get a real advantage out of using a set. And of course, the generated code for a hashtable is more complicated than that for a vector.",
+      "parentUuid": "3f3a9515_d1357bb1",
       "revId": "bd71a53b3ae26fb5932534eadcdcdf4cc1b1c454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
