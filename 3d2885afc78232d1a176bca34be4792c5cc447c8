@@ -142,6 +142,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2b8fc9_b1b52828",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-22T02:19:49Z",
+      "side": 1,
+      "message": "OK, I removed the delegate, and changed it to overriding the existing LayerOwner::RecreateLayer, as we were doing that already in view.cc. PTAL.",
+      "parentUuid": "af309603_8842d077",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
