@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95604601_f1330fd1",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-22T11:42:15Z",
+      "side": 1,
+      "message": "This is a bit dangerous because we could be registered for other notifications that aren\u0027t delegate-dependent.  Does it make sense to deregister for the four specific notifications instead?",
+      "revId": "e961a4e603ec7e49f5fe2646f7b0fbd5f100f6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
