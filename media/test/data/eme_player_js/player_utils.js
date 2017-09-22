@@ -31,6 +31,8 @@ PlayerUtils.registerDefaultEventListeners = function(player) {
     // crashes). Don't report a failure if the test is checking that sessions
     // are closed on a crash.
     Utils.timeLog('onHTMLElementError', error.target.error.message);
+    if (player.testConfig.keySystem == WIDEVINE_KEYSYSTEM)
+      return;
     if (player.testConfig.keySystem == CRASH_TEST_KEYSYSTEM) {
       // On failure the session should have been closed, so verify.
       player.session.closed.then(
