@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556e06cd_3c587cd3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-22T01:08:07Z",
+      "side": 1,
+      "message": "Maybe we should be using !IsInitialNavigation() here?  (I think that would continue to work even if we introduce an initial NavigationEntry.)",
+      "revId": "9e75c78c95641ef372aab35ee0c81becc9798aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c36135_bff8ba0d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-22T01:08:07Z",
+      "side": 1,
+      "message": "Should we early return, so that the FTN\u0027s name doesn\u0027t actually change?\n\nI think I agree that we can\u0027t kill the renderer yet due to the OOPIF race, though I suppose there\u0027s some small risk with having the browser and renderer get out of sync over what the frame name is.",
+      "revId": "9e75c78c95641ef372aab35ee0c81becc9798aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
