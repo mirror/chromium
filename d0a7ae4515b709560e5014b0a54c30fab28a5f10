@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b45bcf_66e64dd3",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-22T15:44:42Z",
+      "side": 1,
+      "message": "Would it be possible to instead of declaring all the statuses in the html, to generate them if they don\u0027t exist. That allows use to make changes to the C++ without having to change the JS or HTML. In particular, you can make the browsertest be very general in that you set and arbitrary dictionary of statuses, and make sure it is rendered correctly. Then the unittests in C++ can verify that the right blob is passed.",
+      "revId": "d0a7ae4515b709560e5014b0a54c30fab28a5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
