@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/single_thread_task_runner.h"
 #include "media/mojo/services/mojo_media_client.h"
 
 namespace base {
@@ -20,13 +21,18 @@ class VideoDecoder;
 // Default MojoMediaClient for MediaService.
 class UtilityMojoMediaClient : public MojoMediaClient {
  public:
-  UtilityMojoMediaClient();
+  UtilityMojoMediaClient(
+      scoped_refptr<base::SingleThreadTaskRunner> utility_task_runner);
   ~UtilityMojoMediaClient() final;
 
   // MojoMediaClient implementation.
   void Initialize(
       service_manager::Connector* connector,
       service_manager::ServiceContextRefFactory* context_ref_factory) final;
+  scoped_refptr<AudioRendererSink> CreateAudioRendererSink(
+      const std::string& audio_device_id) final;
+  std::unique_ptr<VideoRendererSink> CreateVideoRendererSink(
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) final;
   std::unique_ptr<VideoDecoder> CreateVideoDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       MediaLog* media_log,
@@ -34,6 +40,11 @@ class UtilityMojoMediaClient : public MojoMediaClient {
       OutputWithReleaseMailboxCB output_cb,
       RequestOverlayInfoCB request_overlay_info_cb,
       const std::string& decoder_name) final;
+  std::unique_ptr<RendererFactory> CreateRendererFactory(
+      MediaLog* media_log) final;
+
+ private:
+  scoped_refptr<base::SingleThreadTaskRunner> utility_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(UtilityMojoMediaClient);
 };

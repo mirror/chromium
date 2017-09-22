@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/child/child_process.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/content_client.h"
@@ -193,7 +194,9 @@ std::unique_ptr<service_manager::Service> CreateDataDecoderService() {
 }  // namespace
 
 UtilityServiceFactory::UtilityServiceFactory()
-    : network_registry_(base::MakeUnique<service_manager::BinderRegistry>()) {}
+    : network_registry_(base::MakeUnique<service_manager::BinderRegistry>()) {
+  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+}
 
 UtilityServiceFactory::~UtilityServiceFactory() {}
 
@@ -213,7 +216,8 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
   service_manager::EmbeddedServiceInfo info_utility;
-  info_utility.factory = base::Bind(&media::CreateUtilityMediaService);
+  info_utility.factory =
+      base::Bind(&media::CreateUtilityMediaService, task_runner_);
   services->insert(
       std::make_pair(media::mojom::kMediaServiceName, info_utility));
 #endif

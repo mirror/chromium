@@ -21,6 +21,7 @@ class DecoderFactory;
 class GpuVideoAcceleratorFactories;
 class MediaLog;
 class VideoDecoder;
+class VideoFrameProviderFactory;
 class VideoRendererSink;
 
 using CreateAudioDecodersCB =
@@ -33,9 +34,11 @@ class MEDIA_EXPORT DefaultRendererFactory : public RendererFactory {
  public:
   using GetGpuFactoriesCB = base::Callback<GpuVideoAcceleratorFactories*()>;
 
-  DefaultRendererFactory(MediaLog* media_log,
-                         DecoderFactory* decoder_factory,
-                         const GetGpuFactoriesCB& get_gpu_factories_cb);
+  DefaultRendererFactory(
+      MediaLog* media_log,
+      DecoderFactory* decoder_factory,
+      const GetGpuFactoriesCB& get_gpu_factories_cb,
+      std::unique_ptr<VideoFrameProviderFactory> video_frame_provider_factory);
   ~DefaultRendererFactory() final;
 
   std::unique_ptr<Renderer> CreateRenderer(
@@ -63,6 +66,8 @@ class MEDIA_EXPORT DefaultRendererFactory : public RendererFactory {
 
   // Creates factories for supporting video accelerators. May be null.
   GetGpuFactoriesCB get_gpu_factories_cb_;
+
+  std::unique_ptr<VideoFrameProviderFactory> video_frame_provider_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DefaultRendererFactory);
 };

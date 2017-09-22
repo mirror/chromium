@@ -15,7 +15,10 @@
 #include "media/base/renderer_client.h"
 #include "media/base/video_renderer_sink.h"
 #include "media/mojo/clients/mojo_demuxer_stream_impl.h"
+#include "media/mojo/clients/mojo_video_renderer_sink_impl.h"
 #include "media/mojo/common/media_type_converters.h"
+#include "media/mojo/features.h"
+#include "media/mojo/interfaces/video_renderer_sink.mojom.h"
 #include "media/renderers/video_overlay_factory.h"
 
 namespace media {
@@ -30,7 +33,8 @@ MojoRenderer::MojoRenderer(
       video_renderer_sink_(video_renderer_sink),
       remote_renderer_info_(remote_renderer.PassInterface()),
       client_binding_(this),
-      media_time_interpolator_(&media_clock_) {
+      media_time_interpolator_(&media_clock_),
+      mojo_video_renderer_sink_(nullptr) {
   DVLOG(1) << __func__;
 }
 
@@ -93,6 +97,21 @@ void MojoRenderer::InitializeRendererFromStreams(
     stream_proxies.push_back(std::move(stream_proxy));
   }
 
+  mojom::VideoRendererSinkPtr video_renderer_sink_ptr;
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  if (video_renderer_sink_) {
+    mojo_video_renderer_sink_.reset(
+        new MojoVideoRendererSinkImpl(task_runner_, video_renderer_sink_,
+                                      MakeRequest(&video_renderer_sink_ptr)));
+    // Using base::Unretained(this) is safe because |this| owns
+    // |mojo_video_renderer_sink|, and the error handler can't be invoked once
+    // |mojo_video_renderer_sink| is destroyed.
+    mojo_video_renderer_sink_->set_connection_error_handler(
+        base::Bind(&MojoRenderer::OnVideoRendererSinkConnectionError,
+                   base::Unretained(this)));
+  }
+#endif
+
   BindRemoteRendererIfNeeded();
 
   mojom::RendererClientAssociatedPtrInfo client_ptr_info;
@@ -102,8 +121,8 @@ void MojoRenderer::InitializeRendererFromStreams(
   // |remote_renderer_|, and the callback won't be dispatched if
   // |remote_renderer_| is destroyed.
   remote_renderer_->Initialize(
-      std::move(client_ptr_info), std::move(stream_proxies), base::nullopt,
-      base::nullopt,
+      std::move(client_ptr_info), std::move(stream_proxies),
+      std::move(video_renderer_sink_ptr), base::nullopt, base::nullopt,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
 
@@ -123,7 +142,8 @@ void MojoRenderer::InitializeRendererFromUrl(media::RendererClient* client) {
   // |remote_renderer_| is destroyed.
   std::vector<mojom::DemuxerStreamPtr> streams;
   remote_renderer_->Initialize(
-      std::move(client_ptr_info), std::move(streams), url_params.media_url,
+      std::move(client_ptr_info), std::move(streams),
+      mojom::VideoRendererSinkPtr(), url_params.media_url,
       url_params.site_for_cookies,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
@@ -330,6 +350,13 @@ void MojoRenderer::OnDemuxerStreamConnectionError(
     }
   }
   NOTREACHED() << "Unrecognized demuxer stream=" << stream;
+}
+
+void MojoRenderer::OnVideoRendererSinkConnectionError() {
+  DVLOG(1) << __func__;
+  CHECK(task_runner_->BelongsToCurrentThread());
+
+  mojo_video_renderer_sink_.reset();
 }
 
 void MojoRenderer::BindRemoteRendererIfNeeded() {

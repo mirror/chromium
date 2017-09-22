@@ -17,6 +17,7 @@
 #include "media/base/media_log.h"
 #include "media/base/null_video_sink.h"
 #include "media/base/renderer_factory.h"
+#include "media/base/video_frame_provider_factory.h"
 #include "media/cdm/default_cdm_factory.h"
 #include "media/renderers/default_renderer_factory.h"
 #include "media/video/gpu_video_accelerator_factories.h"
@@ -65,7 +66,7 @@ std::unique_ptr<VideoRendererSink> TestMojoMediaClient::CreateVideoRendererSink(
 std::unique_ptr<RendererFactory> TestMojoMediaClient::CreateRendererFactory(
     MediaLog* media_log) {
   return base::MakeUnique<DefaultRendererFactory>(
-      media_log, nullptr, DefaultRendererFactory::GetGpuFactoriesCB());
+      media_log, nullptr, DefaultRendererFactory::GetGpuFactoriesCB(), nullptr);
 }
 
 std::unique_ptr<CdmFactory> TestMojoMediaClient::CreateCdmFactory(

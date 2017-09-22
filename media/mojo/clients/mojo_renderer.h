@@ -27,6 +27,7 @@ namespace media {
 
 class MediaResource;
 class MojoDemuxerStreamImpl;
+class MojoVideoRendererSinkImpl;
 class VideoOverlayFactory;
 class VideoRendererSink;
 
@@ -105,6 +106,9 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   // indicates which stream the error happened on.
   void OnDemuxerStreamConnectionError(MojoDemuxerStreamImpl* stream);
 
+  // Callback for connection error on |mojo_video_renderer_sink_|.
+  void OnVideoRendererSinkConnectionError();
+
   // Callbacks for |remote_renderer_| methods.
   void OnInitialized(media::RendererClient* client, bool success);
   void OnFlushed();
@@ -160,6 +164,8 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   mutable base::Lock lock_;
   base::DefaultTickClock media_clock_;
   media::TimeDeltaInterpolator media_time_interpolator_;
+
+  std::unique_ptr<MojoVideoRendererSinkImpl> mojo_video_renderer_sink_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoRenderer);
 };
