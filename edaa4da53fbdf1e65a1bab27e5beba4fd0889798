@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c84cf76d_e23accb6",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-22T20:24:27Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "0416e9a5_7ea360ff",
+      "range": {
+        "startLine": 93,
+        "startChar": 63,
+        "endLine": 93,
+        "endChar": 79
+      },
+      "revId": "edaa4da53fbdf1e65a1bab27e5beba4fd0889798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccbaed88_17810800",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "edaa4da53fbdf1e65a1bab27e5beba4fd0889798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4ff035_808838de",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-22T20:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccbaed88_17810800",
+      "revId": "edaa4da53fbdf1e65a1bab27e5beba4fd0889798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
