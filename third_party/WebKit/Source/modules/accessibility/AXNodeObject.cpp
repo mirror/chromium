@@ -1386,7 +1386,8 @@ int AXNodeObject::HeadingLevel() const {
     if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
       if (level >= 1 && level <= 9)
         return level;
-      return 1;
+      // In ARIA 1.1, default value of aria-level was changed to 2.
+      return 2;
     }
   }
 
@@ -1412,6 +1413,11 @@ int AXNodeObject::HeadingLevel() const {
   if (element.HasTagName(h6Tag))
     return 6;
 
+  if (RoleValue() == kHeadingRole) {
+    // In ARIA 1.1, default value of aria-level was changed to 2.
+    return 2;
+  }
+
   return 0;
 }
 
@@ -1424,7 +1430,8 @@ unsigned AXNodeObject::HierarchicalLevel() const {
   if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
     if (level >= 1 && level <= 9)
       return level;
-    return 1;
+    // In ARIA 1.1, default value of aria-level was changed to 2.
+    return 2;
   }
 
   // Only tree item will calculate its level through the DOM currently.
