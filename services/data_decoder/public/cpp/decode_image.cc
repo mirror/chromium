@@ -21,6 +21,12 @@ void OnDecodeImage(mojom::ImageDecoderPtr decoder,
   std::move(callback).Run(bitmap);
 }
 
+void OnDecodeImages(mojom::ImageDecoderPtr decoder,
+                    mojom::ImageDecoder::DecodeImagesCallback callback,
+                    const std::vector<SkBitmap>& bitmaps) {
+  std::move(callback).Run(bitmaps);
+}
+
 }  // namespace
 
 void DecodeImage(service_manager::Connector* connector,
@@ -42,6 +48,24 @@ void DecodeImage(service_manager::Connector* connector,
       encoded_bytes, codec, shrink_to_fit, max_size_in_bytes,
       desired_image_frame_size,
       base::BindOnce(&OnDecodeImage, std::move(decoder), std::move(call_once)));
+}
+
+void DecodeImages(service_manager::Connector* connector,
+                  const std::vector<uint8_t>& encoded_bytes,
+                  const gfx::Size& desired_image_frame_size,
+                  mojom::ImageDecoder::DecodeImagesCallback callback) {
+  mojom::ImageDecoderPtr decoder;
+  connector->BindInterface(mojom::kServiceName, &decoder);
+
+  // |call_once| runs |callback| on its first invocation.
+  auto call_once = base::AdaptCallbackForRepeating(std::move(callback));
+  decoder.set_connection_error_handler(
+      base::Bind(call_once, std::vector<SkBitmap>()));
+
+  mojom::ImageDecoder* raw_decoder = decoder.get();
+  raw_decoder->DecodeImages(encoded_bytes, desired_image_frame_size,
+                            base::BindOnce(&OnDecodeImages, std::move(decoder),
+                                           std::move(call_once)));
 }
 
 }  // namespace data_decoder

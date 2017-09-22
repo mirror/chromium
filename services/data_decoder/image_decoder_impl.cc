@@ -106,4 +106,27 @@ void ImageDecoderImpl::DecodeImage(const std::vector<uint8_t>& encoded_data,
   std::move(callback).Run(decoded_image);
 }
 
+void ImageDecoderImpl::DecodeImages(const std::vector<uint8_t>& encoded_data,
+                                    const gfx::Size& desired_image_frame_size,
+                                    DecodeImagesCallback callback) {
+  if (encoded_data.size() == 0) {
+    std::move(callback).Run(std::vector<SkBitmap>());
+    return;
+  }
+
+  std::vector<SkBitmap> decoded_images;
+
+  // ImageDecoder::DecodeFrameBufferAtIndex
+
+  // DONOTSUBMIT: decode all frames.
+  decoded_images.push_back(
+      blink::WebImage::FromData(
+          blink::WebData(reinterpret_cast<const char*>(encoded_data.data()),
+                         encoded_data.size()),
+          desired_image_frame_size)
+          .GetSkBitmap());
+
+  std::move(callback).Run(decoded_images);
+}
+
 }  // namespace data_decoder

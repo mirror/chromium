@@ -26,4 +26,8 @@ interface ImageDecoder {
   DecodeImage(array<uint8> encoded_data, ImageCodec codec, bool shrink_to_fit,
               int64 max_size_in_bytes, gfx.mojom.Size desired_image_frame_size)
       => (skia.mojom.Bitmap? decoded_image);
+
+  DecodeImages(array<uint8> encoded_data,
+               gfx.mojom.Size desired_image_frame_size)
+      => (array<skia.mojom.Bitmap> decoded_image);
 };

@@ -49,6 +49,7 @@ WebImage WebImage::FromData(const WebData& data, const WebSize& desired_size) {
   if (!decoder || !decoder->IsSizeAvailable())
     return WebImage();
 
+
   // Frames are arranged by decreasing size, then decreasing bit depth.
   // Pick the frame closest to |desiredSize|'s area without being smaller,
   // which has the highest bit depth.

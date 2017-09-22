@@ -40,6 +40,12 @@ void DecodeImage(service_manager::Connector* connector,
                  const gfx::Size& desired_image_frame_size,
                  mojom::ImageDecoder::DecodeImageCallback callback);
 
+void DecodeImages(service_manager::Connector* connector,
+                  const std::vector<uint8_t>& encoded_bytes,
+                  const gfx::Size& desired_image_frame_size,
+                  mojom::ImageDecoder::DecodeImagesCallback callback);
+
+
 }  // namespace data_decoder
 
 #endif  // SERVICES_DATA_DECODER_PUBLIC_CPP_DECODE_H_
