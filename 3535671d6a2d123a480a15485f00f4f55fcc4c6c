@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c605ab3_81de0ea2",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T16:56:16Z",
+      "side": 1,
+      "message": "We don\u0027t need a clock if you simply pass time to the task.\nThis eliminates the SetClockForTesting as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "3535671d6a2d123a480a15485f00f4f55fcc4c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f41f43_00588ccd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T16:56:16Z",
+      "side": 1,
+      "message": "1. I think you only need GetPageByOfflineId for your test. No need to get all pages, unless you want to make sure nothing extra gets added.\n\n2. Can you please use the task here instead, so that we don\u0027t have to revisit the method again when we are removing the methods. I understand that you followed the pattern above for InsertItem, but that was before we had the AddPageTask I believe.",
+      "revId": "3535671d6a2d123a480a15485f00f4f55fcc4c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
