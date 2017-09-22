@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddaa5975_e0306d12",
+        "filename": "base/process/process_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-22T18:32:04Z",
+      "side": 1,
+      "message": "On Linux and Windows, the return value of this function is not impacted by |exit_code|. No matter whether |exit_code| is provided, if OS APIs failed to get the status of the process, the function returns false. I suggest to keep the behavior consistent.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 5
+      },
+      "revId": "0bead6084934dd444597c11018b12e071e9b647e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
