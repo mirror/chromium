@@ -407,6 +407,7 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
   TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker",
                                   "ServiceWorkerInstalledScriptsSender", this,
                                   "FinishedReason", static_cast<int>(reason));
+  running_sender_.reset();
   Finish(reason);
 
   switch (reason) {
@@ -420,6 +421,7 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
       // Abort the worker by deleting from the registration since the data was
       // corrupted.
       if (context_) {
+        // Protect the registration until the version is deleted.
         ServiceWorkerRegistration* registration =
             context_->GetLiveRegistration(owner_->registration_id());
         // This ends up with destructing |this|.
