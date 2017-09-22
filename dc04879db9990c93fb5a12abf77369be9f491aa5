@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216fd040_7183fd44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-22T14:13:27Z",
+      "side": 1,
+      "message": "nit: \u0027notifies\u0027, \u0027wakes up\u0027 and \u0027updates\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "dc04879db9990c93fb5a12abf77369be9f491aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f78c88f_ac22ad62",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-22T14:13:27Z",
+      "side": 1,
+      "message": "Please, add a comment about when this observer function is called and why update is needed.",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 42
+      },
+      "revId": "dc04879db9990c93fb5a12abf77369be9f491aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4db9797_3e4f3319",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-22T14:13:27Z",
+      "side": 1,
+      "message": "nit: For consistency with the other CL:\n // chromeos::PowerManagerClient::Observer:",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "dc04879db9990c93fb5a12abf77369be9f491aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
