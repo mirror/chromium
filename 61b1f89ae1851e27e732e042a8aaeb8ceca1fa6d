@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca841a28_ef91fde3",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "Nice thing to remember (I do not know how to turn off formatting).",
+      "range": {
+        "startLine": 330,
+        "startChar": 16,
+        "endLine": 330,
+        "endChar": 19
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe846e5_abb3b642",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "Let\u0027s add a column with the result and have the test just check that the operation actually gives the result.",
+      "range": {
+        "startLine": 345,
+        "startChar": 48,
+        "endLine": 345,
+        "endChar": 0
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d5f7fd_f4bf842f",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "I think we said we actually want this to continue to leave B in the cookies (so API calls this should be \"\").",
+      "range": {
+        "startLine": 357,
+        "startChar": 18,
+        "endLine": 357,
+        "endChar": 19
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bace5e88_6d2f807a",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "What it \"primary\" here (is that the first account)?",
+      "range": {
+        "startLine": 377,
+        "startChar": 54,
+        "endLine": 377,
+        "endChar": 61
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e509cc_dca851a9",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "I think this is identical to the case above, so feel free to remove it.",
+      "range": {
+        "startLine": 383,
+        "startChar": 27,
+        "endLine": 383,
+        "endChar": 28
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81841c7_29caa1e7",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "Unknown account in cookies",
+      "range": {
+        "startLine": 395,
+        "startChar": 14,
+        "endLine": 395,
+        "endChar": 21
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98988154_e9682932",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "To make the code more readable, it would be easier to define a struct account with 2 std::string fields gaia_id and email. That would make it easier when reading the code (.email is easier to read than .second).",
+      "range": {
+        "startLine": 406,
+        "startChar": 4,
+        "endLine": 406,
+        "endChar": 13
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

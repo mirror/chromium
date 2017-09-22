@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e87cead_98d2158e",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T11:36:53Z",
+      "side": 1,
+      "message": "Optional: s/API calls/Gaia calls?",
+      "range": {
+        "startLine": 345,
+        "startChar": 38,
+        "endLine": 345,
+        "endChar": 42
+      },
+      "revId": "3e857dcc21011a5a13b8eaeb7b83528100ccc525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
