@@ -87,11 +87,11 @@ class CryptAuthEnrollmentManager : public SyncScheduler::Delegate,
   // enrollment is already in progress, this function does nothing.
   // |invocation_reason| specifies the reason that the enrollment was triggered,
   // which is upload to the server.
-  void ForceEnrollmentNow(InvocationReason invocation_reason);
+  virtual void ForceEnrollmentNow(InvocationReason invocation_reason);
 
   // Returns true if a successful enrollment has been recorded and this
   // enrollment has not expired.
-  bool IsEnrollmentValid() const;
+  virtual bool IsEnrollmentValid() const;
 
   // Returns the timestamp of the last successful enrollment. If no enrollment
   // has ever been made, then a null base::Time object will be returned.
@@ -117,6 +117,8 @@ class CryptAuthEnrollmentManager : public SyncScheduler::Delegate,
 
  protected:
   void SetSyncSchedulerForTest(std::unique_ptr<SyncScheduler> sync_scheduler);
+
+  void NotifyEnrollmentFinished(bool success);
 
  private:
   // CryptAuthGCMManager::Observer:
