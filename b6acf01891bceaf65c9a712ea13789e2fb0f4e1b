@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7da340ba_40517702",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T03:51:51Z",
+      "side": 1,
+      "message": "Inlined it in line 304 and removed \"default\".",
+      "parentUuid": "65e9cdef_d1786305",
+      "revId": "b6acf01891bceaf65c9a712ea13789e2fb0f4e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69e1ef3d_c54d811e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "09b50fee_aa10759b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T03:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e1ef3d_c54d811e",
+      "revId": "b6acf01891bceaf65c9a712ea13789e2fb0f4e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e2bbee_7f9c5560",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-21T14:41:56Z",
       "side": 1,
       "message": "does it work to just use strict_cast or something other thing from safe_conversions.h?",
+      "revId": "b6acf01891bceaf65c9a712ea13789e2fb0f4e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6f1232_58fa4455",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T03:51:51Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know strict_cast. Replaced.",
+      "parentUuid": "64e2bbee_7f9c5560",
       "revId": "b6acf01891bceaf65c9a712ea13789e2fb0f4e1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
