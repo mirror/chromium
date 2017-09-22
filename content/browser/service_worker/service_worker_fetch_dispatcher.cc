@@ -749,7 +749,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
       mojo::MakeRequest(&url_loader_associated_ptr), -1 /* routing_id? */,
       -1 /* request_id? */, mojom::kURLLoadOptionNone, resource_request,
       std::move(url_loader_client_ptr_to_pass),
-      net::MutableNetworkTrafficAnnotationTag() /* empty? */);
+      net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
 
   // Hook the load up to DelegatingURLLoader, which will call our
   // DelegatingURLLoaderClient.
