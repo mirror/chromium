@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac04320b_4f91e5a1",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab6698a_e220afda",
+      "range": {
+        "startLine": 72,
+        "startChar": 52,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63605d8_80c082b8",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c0a382_1ad9a067",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Moved log message. GetSubjectPublicKeyInfo takes scoped_refptr\u003cnet::X509Certificate\u003e too. That\u0027s why leaving a parameter as \"const scoped_refptr\u003cnet::X509Certificate\u003e\u0026\".",
+      "parentUuid": "f63605d8_80c082b8",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 68
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "aab78739_d0a2314a",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Wow thanks! Done.",
+      "parentUuid": "9ac2851a_ccb18d81",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 269,
+        "endChar": 76
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2bcf82e_8d9b3fad",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 17
@@ -115,6 +187,30 @@
       "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d542bb4e_b182edbf",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Added a solution with \"sort\" for the future. Currently, there is only one certificate in each vector.",
+      "parentUuid": "d2bcf82e_8d9b3fad",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 240,
+        "endChar": 5
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "8fc7b599_66ba378d",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done. Leftover.",
+      "parentUuid": "27e834fb_7a9e9acf",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8805d9d_7c0d57c3",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 17
@@ -161,6 +281,30 @@
       "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1be22dd_2f4283ab",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8805d9d_7c0d57c3",
+      "range": {
+        "startLine": 262,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 11
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "b3fdcbd7_9bead4f9",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a38285e5_27b55a7d",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bdfbe3d_2204bf2e",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
         "patchSetId": 17
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "71ae8cfa_5c00a17a",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bdfbe3d_2204bf2e",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce515568_56c0362f",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
         "patchSetId": 17
@@ -230,6 +422,30 @@
       "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aaedba5_58d63c29",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-22T15:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce515568_56c0362f",
+      "range": {
+        "startLine": 417,
+        "startChar": 22,
+        "endLine": 417,
+        "endChar": 31
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
