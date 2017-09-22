@@ -398,6 +398,30 @@
     },
     {
       "key": {
+        "uuid": "476beb1b_336f98c9",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-22T14:47:13Z",
+      "side": 1,
+      "message": "IIRC, we don\u0027t fetch documents for ML so the expensive part wasn\u0027t mainly targeted at that...",
+      "parentUuid": "732eb1c2_b97a8aec",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768cdc9c_ba4a6129",
         "filename": "chrome/common/search/instant_types.h",
         "patchSetId": 6
