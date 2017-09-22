@@ -440,6 +440,30 @@
     },
     {
       "key": {
+        "uuid": "7f61c822_881970f8",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-22T21:25:53Z",
+      "side": 1,
+      "message": "I don\u0027t see how that helps with most of the raw File*, since temporarily lending out a std::unique_ptr\u003cFile\u003e to a helper method is supposed to be via a File* anyway?\n\nWith respect to the handle --- I was going to object that having FileHandle in SFT will cause problems for eventual Doom, since that will need to rename things by changing the generation counter --- which is simpler to deal with in the current world since one can just update the field in SimpleSynchronousEntry and get the FileHandle indirecting via it at the same time --- but I guess we don\u0027t actually need the doom generation for the key, since the owner + hash are unique. Still, I am not seeing much of a benefit, as per the first paragraph.\n\n(ref. https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions)",
+      "parentUuid": "c177b987_30dcbafa",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
