@@ -43,6 +43,14 @@ enum ChromeDistanceMetric {
   DISTANCE_UNRELATED_CONTROL_HORIZONTAL_LARGE,
   // Larger vertical spacing between unrelated controls.
   DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE,
+  // Recommended size for small modal dialogs. Used for multiline text that
+  // won't wrap without smaller container sizes (preferred size defaults to full
+  // unwrapped text length).
+  // TODO(pbos): Remove need for this hack by: Adding a reasonable text-wrap
+  // default preferred width (possibly below min modal snap), and a min width
+  // for modal dialogs (use different snap widths for modal dialogs / other
+  // dialogs).
+  DISTANCE_MODAL_DIALOG_WIDTH_WORKAROUND_FOR_MULTILINE_TEXT_CONTAINER,
 };
 
 class ChromeLayoutProvider : public views::LayoutProvider {
