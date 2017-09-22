@@ -34,7 +34,9 @@ class ASH_EXPORT ActionableView : public views::ButtonListener,
 
   ~ActionableView() override;
 
-  void SetAccessibleName(const base::string16& name);
+  // views::Button:
+  void SetAccessibleName(const base::string16& name) override;
+
   const base::string16& accessible_name() const { return accessible_name_; }
 
   // Closes the system tray bubble. The |owner_| must not be nullptr.
@@ -76,8 +78,6 @@ class ASH_EXPORT ActionableView : public views::ButtonListener,
   bool* destroyed_;
 
   SystemTrayItem* owner_;
-
-  base::string16 accessible_name_;
 
   // Defines the flavor of ink drop ripple/highlight that should be constructed.
   TrayPopupInkDropStyle ink_drop_style_;
