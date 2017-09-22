@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351c073a_22400e69",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "can you add more context to the description?\nE.g. for what default Certificate Authotiry would be used; what is the labe for?",
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbff9746_5fd61403",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "I assume this hash should be \u0027default\u0027, and the other one \u0027do-not-check\u0027",
+      "range": {
+        "startLine": 271,
+        "startChar": 46,
+        "endLine": 271,
+        "endChar": 57
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddacfcd2_c4b4bb63",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "this could override this.shareNetwork_ set for DEVICE and DEVICE_POLICY networks.\n\nmaybe this.shareNetwork_ \u003d this.shareNetwork_ || Security \u003d\u003d NONE",
+      "range": {
+        "startLine": 372,
+        "startChar": 15,
+        "endLine": 372,
+        "endChar": 28
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4551c3dc_eae04184",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be needed (configProperties.Ethernet will only have AutoConnect property here).",
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9dd9ee_85406541",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "can we do this before if (properties.Ethernet)? E.g.\n\nconfigProperties.Ethernet \u003d {\n  AutoConnect: !!properties.Ethernet \u0026\u0026 properties.Ethernet.AutoConnect;\n};\n\nif (properties.Ethernet \u0026\u0026 properties.Ethernet.EAP) {\n  configProperties.Ethernet.EAP \u003d\n   ...\n}",
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa02b883_69d526e6",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "I\u0027d inline configProperties.Type here",
+      "range": {
+        "startLine": 421,
+        "startChar": 12,
+        "endLine": 421,
+        "endChar": 16
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b60ec3b_c1cf7d0e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "can we update this at the end of updateConfigProperties_?\nI think it would be easier to figure out the logic behind default (or required) shared value that way.",
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8dcf07_01005aff",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "This will be the same as eapProperties, rigth?",
+      "range": {
+        "startLine": 559,
+        "startChar": 31,
+        "endLine": 559,
+        "endChar": 67
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4435434_911cef43",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "how about just:\neapPropertiesSet_ ?",
+      "range": {
+        "startLine": 658,
+        "startChar": 2,
+        "endLine": 658,
+        "endChar": 23
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b31cf87_c6d75c83",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T00:58:00Z",
+      "side": 1,
+      "message": "not really needed?",
+      "range": {
+        "startLine": 662,
+        "startChar": 8,
+        "endLine": 662,
+        "endChar": 15
+      },
+      "revId": "9284e07075cf0f4435afea96cec8c0b7a0b0353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
