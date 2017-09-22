@@ -73,17 +73,14 @@ class AutocompleteInput {
   // |scheme_classifier| is passed to Parse() to help determine the type of
   // input this is; see comments there.
   AutocompleteInput(const base::string16& text,
-                    size_t cursor_position,
-                    const std::string& desired_tld,
-                    const GURL& current_url,
-                    const base::string16& current_title,
                     metrics::OmniboxEventProto::PageClassification
                         current_page_classification,
-                    bool prevent_inline_autocomplete,
-                    bool prefer_keyword,
-                    bool allow_exact_keyword_match,
-                    bool want_asynchronous_matches,
-                    bool from_omnibox_focus,
+                    const AutocompleteSchemeClassifier& scheme_classifier);
+  AutocompleteInput(const base::string16& text,
+                    size_t cursor_position,
+                    const std::string& desired_tld,
+                    metrics::OmniboxEventProto::PageClassification
+                        current_page_classification,
                     const AutocompleteSchemeClassifier& scheme_classifier);
   AutocompleteInput(const AutocompleteInput& other);
   ~AutocompleteInput();
@@ -151,10 +148,14 @@ class AutocompleteInput {
 
   // The current URL, or an invalid GURL if query refinement is not desired.
   const GURL& current_url() const { return current_url_; }
+  void set_current_url(const GURL& url) { current_url_ = url; }
 
   // The title of the current page, corresponding to the current URL, or empty
   // if this is not available.
   const base::string16& current_title() const { return current_title_; }
+  void set_current_title(const base::string16& title) {
+    current_title_ = title;
+  }
 
   // The type of page that is currently behind displayed and how it is
   // displayed (e.g., with search term replacement or without).
@@ -180,23 +181,38 @@ class AutocompleteInput {
   bool prevent_inline_autocomplete() const {
     return prevent_inline_autocomplete_;
   }
+  void set_prevent_inline_autocomplete(bool prevent_inline_autocomplete) {
+    prevent_inline_autocomplete_ = prevent_inline_autocomplete;
+  }
 
   // Returns whether, given an input string consisting solely of a substituting
   // keyword, we should score it like a non-substituting keyword.
   bool prefer_keyword() const { return prefer_keyword_; }
+  void set_prefer_keyword(bool prefer_keyword) {
+    prefer_keyword_ = prefer_keyword;
+  }
 
   // Returns whether this input is allowed to be treated as an exact
   // keyword match.  If not, the default result is guaranteed not to be a
   // keyword search, even if the input is "<keyword> <search string>".
   bool allow_exact_keyword_match() const { return allow_exact_keyword_match_; }
+  void set_allow_exact_keyword_match(bool allow_exact_keyword_match) {
+    allow_exact_keyword_match_ = allow_exact_keyword_match;
+  }
 
   // Returns whether providers should be allowed to make asynchronous requests
   // when processing this input.
   bool want_asynchronous_matches() const { return want_asynchronous_matches_; }
+  void set_want_asynchronous_matches(bool want_asynchronous_matches) {
+    want_asynchronous_matches_ = want_asynchronous_matches;
+  }
 
   // Returns whether this input query was triggered due to the omnibox being
   // focused.
   bool from_omnibox_focus() const { return from_omnibox_focus_; }
+  void set_from_omnibox_focus(bool from_omnibox_focus) {
+    from_omnibox_focus_ = from_omnibox_focus;
+  }
 
   // Returns the terms in |text_| that start with http:// or https:// plus
   // at least one more character, stored without the scheme.  Used in
@@ -212,6 +228,10 @@ class AutocompleteInput {
 
  private:
   friend class AutocompleteProviderTest;
+
+  void Init(const base::string16& text,
+            const std::string& desired_tld,
+            const AutocompleteSchemeClassifier& scheme_classifier);
 
   // NOTE: Whenever adding a new field here, please make sure to update Clear()
   // method.

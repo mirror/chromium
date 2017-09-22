@@ -161,10 +161,7 @@ void HQPPerfTestOnePopularURL::PrintMeasurements(
 
 base::TimeDelta HQPPerfTestOnePopularURL::RunTest(const base::string16& text) {
   base::RunLoop().RunUntilIdle();
-  AutocompleteInput input(text, base::string16::npos, std::string(), GURL(),
-                          base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(text, TestSchemeClassifier());
 
   if (base::ThreadTicks::IsSupported()) {
     base::ThreadTicks start = base::ThreadTicks::Now();
