@@ -8050,10 +8050,60 @@ TEST_F(URLRequestTestHTTP, Post302RedirectGet) {
   std::string mime_type;
   req->GetMimeType(&mime_type);
   EXPECT_EQ("text/html", mime_type);
+  EXPECT_EQ("GET", req->method());
 
   const std::string& data = d.data_received();
 
   // Check that the post-specific headers were stripped:
+  EXPECT_FALSE(ContainsString(data, "Content-Length:"));
+  EXPECT_FALSE(ContainsString(data, "Content-Type:"));
+  EXPECT_FALSE(ContainsString(data, "Origin:"));
+
+  // These extra request headers should not have been stripped.
+  EXPECT_TRUE(ContainsString(data, "Accept:"));
+  EXPECT_TRUE(ContainsString(data, "Accept-Language:"));
+  EXPECT_TRUE(ContainsString(data, "Accept-Charset:"));
+}
+
+// In this test, we do a PUT which the server will 302 redirect.
+// The subsequent transaction should use GET, and should not send the
+// Content-Type header.
+// https://bugs.chromium.org/p/chromium/issues/detail?id=762954
+TEST_F(URLRequestTestHTTP, Put302RedirectGet) {
+  ASSERT_TRUE(http_test_server()->Start());
+
+  const char kData[] = "hello world";
+
+  TestDelegate d;
+  std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
+      http_test_server()->GetURL("/redirect-to-echoall"), DEFAULT_PRIORITY, &d,
+      TRAFFIC_ANNOTATION_FOR_TESTS));
+  req->set_method("PUT");
+  req->set_upload(CreateSimpleUploadData(kData));
+
+  // Set headers (some of which are specific to the PUT).
+  HttpRequestHeaders headers;
+  headers.AddHeadersFromString(
+      "Content-Type: multipart/form-data; "
+      "boundary=----WebKitFormBoundaryAADeAA+NAAWMAAwZ\r\n"
+      "Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,"
+      "text/plain;q=0.8,image/png,*/*;q=0.5\r\n"
+      "Accept-Language: en-US,en\r\n"
+      "Accept-Charset: ISO-8859-1,*,utf-8\r\n"
+      "Content-Length: 11\r\n"
+      "Origin: http://localhost:1337/");
+  req->SetExtraRequestHeaders(headers);
+  req->Start();
+  base::RunLoop().Run();
+
+  std::string mime_type;
+  req->GetMimeType(&mime_type);
+  EXPECT_EQ("text/html", mime_type);
+  EXPECT_EQ("GET", req->method());
+
+  const std::string& data = d.data_received();
+
+  // Check that the put-specific headers were stripped:
   EXPECT_FALSE(ContainsString(data, "Content-Length:"));
   EXPECT_FALSE(ContainsString(data, "Content-Type:"));
   EXPECT_FALSE(ContainsString(data, "Origin:"));
@@ -8077,7 +8127,7 @@ TEST_F(URLRequestTestHTTP, Redirect301Tests) {
       http_test_server()->GetURL("/redirect301-to-https");
 
   HTTPRedirectMethodTest(url, "POST", "GET", true);
-  HTTPRedirectMethodTest(url, "PUT", "PUT", true);
+  HTTPRedirectMethodTest(url, "PUT", "GET", true);
   HTTPRedirectMethodTest(url, "HEAD", "HEAD", false);
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
@@ -8095,7 +8145,7 @@ TEST_F(URLRequestTestHTTP, Redirect302Tests) {
       http_test_server()->GetURL("/redirect302-to-https");
 
   HTTPRedirectMethodTest(url, "POST", "GET", true);
-  HTTPRedirectMethodTest(url, "PUT", "PUT", true);
+  HTTPRedirectMethodTest(url, "PUT", "GET", true);
   HTTPRedirectMethodTest(url, "HEAD", "HEAD", false);
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());

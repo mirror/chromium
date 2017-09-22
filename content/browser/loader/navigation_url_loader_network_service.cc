@@ -279,8 +279,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
       // TODO(davidben): This logic still needs to be replicated at the
       // consumers.
-      if (resource_request_->method == "POST") {
-        // If being switched from POST, must remove Origin header.
+      if (resource_request_->method == "POST" ||
+          resource_request_->method == "PUT") {
+        // If being switched from POST or PUT, must remove Origin header.
         // TODO(jww): This is Origin header removal is probably layering
         // violation and should be refactored into //content.
         // See https://crbug.com/471397.

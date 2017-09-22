@@ -39,11 +39,11 @@ std::unique_ptr<net::RedirectInfo> ComputeRedirectInfo(
   redirect_info->status_code = status;
   // The request method may change, depending on the status code.
   // See the comments in net::URLRequestJob::ComputeRedirectInfo() for details.
-  redirect_info->new_method =
-      ((status == 303 && method != "HEAD") ||
-       ((status == 301 || status == 302) && method == "POST"))
-          ? "GET"
-          : method;
+  redirect_info->new_method = ((status == 303 && method != "HEAD") ||
+                               ((status == 301 || status == 302) &&
+                                (method == "POST" || method == "PUT")))
+                                  ? "GET"
+                                  : method;
   if (url.is_valid() && url.has_ref() && !location.has_ref()) {
     GURL::Replacements replacements;
     replacements.SetRef(url.spec().data(),

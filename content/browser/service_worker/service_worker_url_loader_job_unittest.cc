@@ -834,4 +834,23 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Redirect) {
   EXPECT_EQ(new_url, redirect_info.new_url);
 }
 
+TEST_F(ServiceWorkerURLLoaderJobTest, Put302RedirectGet) {
+  GURL new_url("https://example.com/redirected");
+  helper_->RespondWithRedirectResponse(new_url);
+
+  // Perform the request.
+  JobResult result = StartRequest();
+  EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilRedirectReceived();
+
+  const ResourceResponseHead& info = client_.response_head();
+  EXPECT_EQ(301, info.headers->response_code());
+  ExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());
+
+  const net::RedirectInfo& redirect_info = client_.redirect_info();
+  EXPECT_EQ(301, redirect_info.status_code);
+  EXPECT_EQ("GET", redirect_info.new_method);
+  EXPECT_EQ(new_url, redirect_info.new_url);
+}
+
 }  // namespace content

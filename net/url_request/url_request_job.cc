@@ -61,7 +61,7 @@ std::string ComputeMethodForRedirect(const std::string& method,
   // https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-17#section-7.3
   if ((http_status_code == 303 && method != "HEAD") ||
       ((http_status_code == 301 || http_status_code == 302) &&
-       method == "POST")) {
+       (method == "POST" || method == "PUT"))) {
     return "GET";
   }
   return method;
