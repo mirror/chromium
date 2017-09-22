@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2e0c764_138d014a",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-22T21:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b24663b_b1d801ac",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8eecaaa_f6b35ca2",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-22T20:35:04Z",
       "side": 1,
       "message": "Can we allow the user to specify a value for -j here? Definitely a nice thing to have for Goma users.",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e45a01_f2c9eb1e",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-22T21:04:43Z",
+      "side": 1,
+      "message": "Would you accept running `autoninja` instead? Maybe I should just delete the ninja call as it\u0027s somewhat peripheral to the purpose of this script.",
+      "parentUuid": "e8eecaaa_f6b35ca2",
       "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2bba2ae2_54289256",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-22T21:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fae9920_2747934c",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b43e32b_c8a37ec4",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4914ea7f_d92b7648",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-22T21:04:43Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "6b43e32b_c8a37ec4",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
