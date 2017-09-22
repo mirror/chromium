@@ -60,6 +60,10 @@ class IPAddress;
 // come after any task posted to network thread from that method on pref thread.
 // This is used to go through network thread before the actual update starts,
 // and grab a WeakPtr.
+//
+// TODO(mmenke): Separate threads are still needed on some platforms, but the
+// pref thred is often the network thread. Consider better supporting that
+// use case, which allows flushing prefs to disk on shutdown.
 class NET_EXPORT HttpServerPropertiesManager : public HttpServerProperties {
  public:
   // Provides an interface to interface with persistent preferences storage
@@ -127,6 +131,9 @@ class NET_EXPORT HttpServerPropertiesManager : public HttpServerProperties {
   // Deletes all data. Works asynchronously, but if a |completion| callback is
   // provided, it will be fired on the pref thread when everything is done.
   void Clear(const base::Closure& completion);
+
+  // Posts a task to update prefs, for testing.
+  void UpdatePrefsForTesting();
 
   // ----------------------------------
   // HttpServerProperties methods:

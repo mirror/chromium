@@ -29,6 +29,11 @@ struct NetworkContextParams {
   // If null and the cache is enabled, an in-memory database is used.
   mojo.common.mojom.FilePath? http_cache_path;
 
+  // The file to store cached server properties (Like HTTP2 and QUIC support).
+  // This information is used as a performance optimization in connection
+  // logic. If null, an in-memory cache will be used instead.
+  mojo.common.mojom.FilePath? http_server_properties_path;
+
   // Enabled protocols. Note that these apply to all fetches, including those
   // used to fetch PAC scripts.
 
