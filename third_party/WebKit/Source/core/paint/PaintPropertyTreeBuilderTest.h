@@ -37,7 +37,8 @@ class PaintPropertyTreeBuilderTest
   // setting.
   const TransformPaintPropertyNode* FramePreTranslation();
   const TransformPaintPropertyNode* FrameScrollTranslation();
-  const ClipPaintPropertyNode* FrameContentClip();
+  const ClipPaintPropertyNode* FrameViewportClip();
+  const ClipPaintPropertyNode* FrameScrollingContentsClip();
   const ScrollPaintPropertyNode* FrameScroll(LocalFrameView* = nullptr);
 
   // Return the local border box's paint offset. For more details, see

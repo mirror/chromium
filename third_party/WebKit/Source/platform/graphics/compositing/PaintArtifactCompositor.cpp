@@ -261,7 +261,8 @@ PaintArtifactCompositor::PendingLayer::PendingLayer(
     const PaintChunk& first_paint_chunk,
     bool chunk_requires_own_layer)
     : bounds(first_paint_chunk.bounds),
-      known_to_be_opaque(first_paint_chunk.known_to_be_opaque),
+      rect_known_to_be_opaque(
+          first_paint_chunk.known_to_be_opaque ? bounds : FloatRect()),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
       property_tree_state(first_paint_chunk.properties.property_tree_state),
       requires_own_layer(chunk_requires_own_layer) {
@@ -276,13 +277,11 @@ void PaintArtifactCompositor::PendingLayer::Merge(const PendingLayer& guest) {
   FloatClipRect guest_bounds_in_home(guest.bounds);
   GeometryMapper::LocalToAncestorVisualRect(
       guest.property_tree_state, property_tree_state, guest_bounds_in_home);
-  FloatRect old_bounds = bounds;
   bounds.Unite(guest_bounds_in_home.Rect());
-  if (bounds != old_bounds)
-    known_to_be_opaque = false;
   // TODO(crbug.com/701991): Upgrade GeometryMapper.
   // If we knew the new bounds is enclosed by the mapped opaque region of
-  // the guest layer, we can deduce the merged layer being opaque too.
+  // the guest layer, we can deduce the merged layer being opaque too, and
+  // update rect_known_to_be_opaque accordingly.
 }
 
 static bool CanUpcastTo(const PropertyTreeState& guest,
@@ -313,7 +312,7 @@ void PaintArtifactCompositor::PendingLayer::Upcast(
   // region. To determine whether the layer is still opaque, we need to
   // query conservative opaque rect after mapping to an ancestor space,
   // which is not supported by GeometryMapper yet.
-  known_to_be_opaque = false;
+  rect_known_to_be_opaque = FloatRect();
 }
 
 static bool IsNonCompositingAncestorOf(
@@ -665,13 +664,22 @@ void PaintArtifactCompositor::Update(
   for (auto& entry : synthesized_clip_cache_)
     entry.in_use = false;
 
-  for (const PendingLayer& pending_layer : pending_layers) {
+  for (auto& pending_layer : pending_layers) {
+    const auto& property_state = pending_layer.property_tree_state;
+
+    // Clip the layer bounds to its nearest clip node which has the same
+    // transform space as the layer. If the layer is for scrolling contents,
+    // the clip is the scrolling contents clip which will hide visual overflows
+    // out of the scrolling range.
+    if (property_state.Clip()->LocalTransformSpace() ==
+        property_state.Transform())
+      pending_layer.bounds.Intersect(property_state.Clip()->ClipRect().Rect());
+
     gfx::Vector2dF layer_offset;
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
         paint_artifact, pending_layer, layer_offset, new_content_layer_clients,
         new_scroll_hit_test_layers);
 
-    auto property_state = pending_layer.property_tree_state;
     const auto* transform = property_state.Transform();
     int transform_id =
         property_tree_manager.EnsureCompositorTransformNode(transform);
@@ -719,11 +727,8 @@ void PaintArtifactCompositor::Update(
     layer->SetScrollTreeIndex(scroll_id);
     layer->SetClipTreeIndex(clip_id);
     layer->SetEffectTreeIndex(effect_id);
-
-    layer->SetContentsOpaque(
-        // Don't set opaque if the pending_layer's bounds are at subpixels.
-        EnclosingIntRect(pending_layer.bounds) == pending_layer.bounds &&
-        pending_layer.known_to_be_opaque);
+    layer->SetContentsOpaque(pending_layer.rect_known_to_be_opaque.Contains(
+        FloatRect(EnclosingIntRect(pending_layer.bounds))));
     layer->SetDoubleSided(!pending_layer.backface_hidden);
     layer->SetShouldCheckBackfaceVisibility(pending_layer.backface_hidden);
   }

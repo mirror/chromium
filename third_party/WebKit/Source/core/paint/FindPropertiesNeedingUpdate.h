@@ -64,8 +64,10 @@ class FindFrameViewPropertiesNeedingUpdateScope {
 
     if (auto* pre_translation = frame_view_->PreTranslation())
       original_pre_translation_ = pre_translation->Clone();
-    if (auto* content_clip = frame_view_->ContentClip())
-      original_content_clip_ = content_clip->Clone();
+    if (auto* viewport_clip = frame_view_->ViewportClip())
+      original_viewport_clip_ = viewport_clip->Clone();
+    if (auto* scrolling_contents_clip = frame_view_->ScrollingContentsClip())
+      original_scrolling_contents_clip_ = scrolling_contents_clip->Clone();
     if (auto* scroll_node = frame_view_->ScrollNode())
       original_scroll_node_ = scroll_node->Clone();
     if (auto* scroll_translation = frame_view_->ScrollTranslation())
@@ -85,8 +87,10 @@ class FindFrameViewPropertiesNeedingUpdateScope {
     //    PaintPropertyTreeBuilderContext::force_subtree_update).
     DCHECK_FRAMEVIEW_PROPERTY_EQ(original_pre_translation_,
                                  frame_view_->PreTranslation());
-    DCHECK_FRAMEVIEW_PROPERTY_EQ(original_content_clip_,
-                                 frame_view_->ContentClip());
+    DCHECK_FRAMEVIEW_PROPERTY_EQ(original_viewport_clip_,
+                                 frame_view_->ViewportClip());
+    DCHECK_FRAMEVIEW_PROPERTY_EQ(original_scrolling_contents_clip_,
+                                 frame_view_->ScrollingContentsClip());
     DCHECK_FRAMEVIEW_PROPERTY_EQ(original_scroll_node_,
                                  frame_view_->ScrollNode());
     DCHECK_FRAMEVIEW_PROPERTY_EQ(original_scroll_translation_,
@@ -101,7 +105,8 @@ class FindFrameViewPropertiesNeedingUpdateScope {
   bool needed_paint_property_update_;
   bool needed_forced_subtree_update_;
   RefPtr<const TransformPaintPropertyNode> original_pre_translation_;
-  RefPtr<const ClipPaintPropertyNode> original_content_clip_;
+  RefPtr<const ClipPaintPropertyNode> original_viewport_clip_;
+  RefPtr<const ClipPaintPropertyNode> original_scrolling_contents_clip_;
   RefPtr<const ScrollPaintPropertyNode> original_scroll_node_;
   RefPtr<const TransformPaintPropertyNode> original_scroll_translation_;
 };
@@ -184,6 +189,9 @@ class FindObjectPropertiesNeedingUpdateScope {
                                 object_properties->InnerBorderRadiusClip());
       DCHECK_OBJECT_PROPERTY_EQ(object_, original_properties_->OverflowClip(),
                                 object_properties->OverflowClip());
+      DCHECK_OBJECT_PROPERTY_EQ(object_,
+                                original_properties_->ScrollingContentsClip(),
+                                object_properties->ScrollingContentsClip());
       DCHECK_OBJECT_PROPERTY_EQ(object_, original_properties_->Perspective(),
                                 object_properties->Perspective());
       DCHECK_OBJECT_PROPERTY_EQ(
