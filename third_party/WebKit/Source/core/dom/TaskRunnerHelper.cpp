@@ -50,6 +50,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
     case TaskType::kIdleTask:
     case TaskType::kUnspecedTimer:
     case TaskType::kMiscPlatformAPI:
+    case TaskType::kInternalInitialization:
       // TODO(altimin): Move appropriate tasks to throttleable task queue.
       return frame->FrameScheduler()->DeferrableTaskRunner();
     // PostedMessage can be used for navigation, so we shouldn't defer it
@@ -138,6 +139,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
     case TaskType::kUnspecedTimer:
     case TaskType::kUnspecedLoading:
     case TaskType::kUnthrottled:
+    case TaskType::kInternalInitialization:
       // UnthrottledTaskRunner is generally discouraged in future.
       // TODO(nhiroki): Identify which tasks can be throttled / suspendable and
       // move them into other task runners. See also comments in

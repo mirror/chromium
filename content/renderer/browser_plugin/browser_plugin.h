@@ -206,6 +206,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // own this. The delegate destroys itself.
   base::WeakPtr<BrowserPluginDelegate> delegate_;
 
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
   // Weak factory used in v8 |MakeWeak| callback, since the v8 callback might
   // get called after BrowserPlugin has been destroyed.
   base::WeakPtrFactory<BrowserPlugin> weak_ptr_factory_;
