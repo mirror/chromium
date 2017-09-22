@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "437a7b4c_4f1d4506",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "Is it possible for StopForRestart() to be called while state_ \u003d\u003d STARTING? (Meaning, the client code tried to start the source and then quickly restart for a format change.) Is it okay to error-out the whole source in this case, or would it be better to handle such a scenario?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 26
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3328ea5c_3176e1d4",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "See comments below, regarding running the callback before StopForRestart() has returned...",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b138a9_a9f702e5",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it is okay or not, but be aware that it is possible the restart_callback will be run in the same call stack as StopForRestart() (i.e., before StopForRestart() returns). This can cause weird bugs in client code, if folks aren\u0027t careful.\n\nFor safety, you may want to PostTask(restart_callback_) in OnStopForRestartDone() below to ensure the callback is always run after StopForRestart() has returned.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda69ea9_30c74a84",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "Should this run the callback with an error state, if not implemented by the subclass?",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8a12ec_8ca4535c",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "Per comments above, you may want to PostTask(restart_callback_, restart_result) here too.",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 30
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4aa785_d3414f73",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "with a different ________?",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff508dca_6a812bb6",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "s/when/after/",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 40
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716c9238_cab49f38",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "Video frames are delivered on a different thread. This introduces the possibility where in-flight frames are still being delivered with the old format. Frames with the old format could, theoretically be delivered after StopForRestart() completes AND even after this Restart() here completes.\n\nI\u0027d suggest documenting this possibility in these comments somewhere, and requiring that the downstream code not assume frames are in the new format until they receive a first frame in the new format.\n\nOr, maybe things have changed a bit since I last looked at these files, and there is some kind of \"cut-off\" to prevent this?",
+      "range": {
+        "startLine": 100,
+        "startChar": 29,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb979ed_1b0acbe1",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-22T02:10:02Z",
+      "side": 1,
+      "message": "I can\u0027t find this method in the .cc file. Did you mean to declare it?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 75
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
