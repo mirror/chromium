@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55647f63_9fd145be",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2951,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-22T20:17:03Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t know what this comment means, either here or on line 2948. I also expect it needs to be updated for the different filename?",
+      "revId": "b508b6eae5403b5fc61d54287b1cd9eefabd6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

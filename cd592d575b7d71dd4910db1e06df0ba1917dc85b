@@ -307,6 +307,24 @@
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d3154b7_fefb69ea",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-22T20:17:03Z",
+      "side": 1,
+      "message": "What was the resolution?",
+      "parentUuid": "e4933c7c_376ce2b3",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
