@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0479d8_8504a3a4",
+        "filename": "headless/lib/browser/devtools_api/devtools_connection.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-22T07:58:30Z",
+      "side": 1,
+      "message": "should we mention that it should throw an exception if validation fails?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "f91e3e77ccfcd1e164fd8c36bb850f51223b4532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
