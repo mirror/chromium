@@ -16,6 +16,24 @@
       "revId": "e155238b5261e4c603c9be0db16fb3af61363b29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616877a5_9fb6aef7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0afec7_86153d80",
+      "revId": "e155238b5261e4c603c9be0db16fb3af61363b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

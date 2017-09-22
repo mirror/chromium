@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e27086a0_5a5f63ff",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Done.  Agreed.",
+      "parentUuid": "a62bc9d0_1887efb2",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca610b42_fbb8e0ca",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T20:01:24Z",
       "side": 1,
       "message": "And in the follow-up CL HandleInput will become part of the Ui interface?",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b366fc6f_393243e4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Yes, or something similar.",
+      "parentUuid": "ca610b42_fbb8e0ca",
       "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8c5d70f9_c852d700",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Yep.  I\u0027m not opposed to doing that here, and forwarding all the calls to scene manager internally.  If you\u0027d like that, I\u0027ll plop it in.",
+      "parentUuid": "ad016227_9edc297e",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06c330f8_facf70d5",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 2
@@ -138,6 +192,24 @@
       "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663497df_aa75907b",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c330f8_facf70d5",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
