@@ -9,11 +9,14 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
 #include "chrome/browser/command_observer.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
 #include "chrome/browser/ui/toolbar/back_forward_menu_model.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/upgrade_observer.h"
+#include "components/arc/common/intent_helper.mojom.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/prefs/pref_member.h"
 #include "components/translate/core/browser/translate_step.h"
 #include "components/translate/core/common/translate_errors.h"
@@ -76,6 +79,16 @@ class ToolbarView : public views::AccessiblePaneView,
   bool IsAppMenuFocused();
 
   virtual bool GetAcceleratorInfo(int id, ui::Accelerator* accel);
+
+  void ShowIntentPickerBubble(const GURL& url);
+  void OnAppCandidatesReceived(
+      std::vector<arc::mojom::IntentHandlerInfoPtr> handlers);
+  void OnAppIconsReceived(
+      std::vector<arc::mojom::IntentHandlerInfoPtr> handlers,
+      std::unique_ptr<arc::ArcIntentHelperBridge::ActivityToIconsMap> icons);
+  void OnIntentPickerClosed(
+      const std::string& package_name,
+      arc::ArcNavigationThrottle::CloseReason close_reason);
 
   // Shows a bookmark bubble and anchors it appropriately.
   void ShowBookmarkBubble(const GURL& url,

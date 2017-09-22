@@ -19,6 +19,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
+#include "chrome/browser/ui/bookmarks/bookmark_utils.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -35,6 +36,8 @@
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/extensions/extension_popup.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/intent_picker_bubble_view.h"
+#include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/outdated_upgrade_bubble_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
@@ -48,6 +51,8 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_service_manager.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
@@ -63,6 +68,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/image/canvas_image_source.h"
+#include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/native_theme/native_theme_aura.h"
@@ -275,6 +281,145 @@ void ToolbarView::SetPaneFocusAndFocusAppMenu() {
 
 bool ToolbarView::IsAppMenuFocused() {
   return app_menu_button_ && app_menu_button_->HasFocus();
+}
+
+void ToolbarView::ShowIntentPickerBubble(const GURL& url) {
+  arc::ArcServiceManager* arc_service_manager = arc::ArcServiceManager::Get();
+  if (!arc_service_manager)
+    return;
+
+  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(
+      GetWebContents()->GetBrowserContext());
+  if (!intent_helper_bridge)
+    return;
+
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_service_manager->arc_bridge_service()->intent_helper(),
+      RequestUrlHandlerList);
+  if (!instance)
+    return;
+
+  instance->RequestUrlHandlerList(
+      url.spec(), base::Bind(&ToolbarView::OnAppCandidatesReceived,
+                             base::Unretained(this)));
+}
+
+void ToolbarView::OnAppCandidatesReceived(
+    std::vector<arc::mojom::IntentHandlerInfoPtr> handlers) {
+  if (!arc::ArcNavigationThrottle::IsAppAvailable(handlers)) {
+    return;
+  }
+
+  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(
+      GetWebContents()->GetBrowserContext());
+  if (!intent_helper_bridge) {
+    return;
+  }
+
+  std::vector<arc::ArcIntentHelperBridge::ActivityName> activities;
+  for (const auto& handler : handlers) {
+    activities.emplace_back(handler->package_name, handler->activity_name);
+  }
+
+  intent_helper_bridge->GetActivityIcons(
+      activities, base::Bind(&ToolbarView::OnAppIconsReceived,
+                             base::Unretained(this), base::Passed(&handlers)));
+}
+
+void ToolbarView::OnAppIconsReceived(
+    std::vector<arc::mojom::IntentHandlerInfoPtr> handlers,
+    std::unique_ptr<arc::ArcIntentHelperBridge::ActivityToIconsMap> icons) {
+  std::vector<IntentPickerBubbleView::AppInfo> app_info;
+
+  for (const auto& handler : handlers) {
+    gfx::Image icon;
+    const arc::ArcIntentHelperBridge::ActivityName activity(
+        handler->package_name, handler->activity_name);
+    const auto it = icons->find(activity);
+
+    app_info.emplace_back(arc::ArcNavigationThrottle::AppInfo(
+        it != icons->end() ? it->second.icon20 : gfx::Image(),
+        handler->package_name, handler->name));
+  }
+
+  views::View* anchor_view = location_bar();
+  IntentPickerView* intent_picker_view = location_bar()->intent_picker_view();
+  if (intent_picker_view) {
+    anchor_view = intent_picker_view;
+    if (!anchor_view->visible()) {
+      anchor_view->SetVisible(true);
+      location_bar()->Layout();
+    }
+
+    views::Widget* bubble_widget = IntentPickerBubbleView::ShowBubble(
+        anchor_view, GetWebContents(), app_info,
+        base::Bind(&ToolbarView::OnIntentPickerClosed, base::Unretained(this)));
+    if (bubble_widget && intent_picker_view)
+      bubble_widget->AddObserver(intent_picker_view);
+  }
+}
+
+void ToolbarView::OnIntentPickerClosed(
+    const std::string& pkg,
+    arc::ArcNavigationThrottle::CloseReason close_reason) {
+  GURL url = chrome::GetURLToBookmark(GetWebContents());
+
+  auto* arc_service_manager = arc::ArcServiceManager::Get();
+  arc::mojom::IntentHelperInstance* instance = nullptr;
+  if (arc_service_manager) {
+    instance = ARC_GET_INSTANCE_FOR_METHOD(
+        arc_service_manager->arc_bridge_service()->intent_helper(), HandleUrl);
+  }
+  if (!instance)
+    close_reason = arc::ArcNavigationThrottle::CloseReason::ERROR;
+
+  switch (close_reason) {
+    case arc::ArcNavigationThrottle::CloseReason::ERROR:
+    case arc::ArcNavigationThrottle::CloseReason::CHROME_PRESSED:
+    case arc::ArcNavigationThrottle::CloseReason::DIALOG_DEACTIVATED: {
+      break;
+    }
+    case arc::ArcNavigationThrottle::CloseReason::PREFERRED_ACTIVITY_FOUND: {
+      if (!arc::ArcIntentHelperBridge::IsIntentHelperPackage(pkg)) {
+        instance->HandleUrl(url.spec(), pkg);
+      }
+      break;
+    }
+    case arc::ArcNavigationThrottle::CloseReason::ARC_APP_PREFERRED_PRESSED: {
+      DCHECK(arc_service_manager);
+      if (ARC_GET_INSTANCE_FOR_METHOD(
+              arc_service_manager->arc_bridge_service()->intent_helper(),
+              AddPreferredPackage)) {
+        instance->AddPreferredPackage(pkg);
+      }
+      instance->HandleUrl(url.spec(), pkg);
+      break;
+    }
+    case arc::ArcNavigationThrottle::CloseReason::CHROME_PREFERRED_PRESSED: {
+      DCHECK(arc_service_manager);
+      if (ARC_GET_INSTANCE_FOR_METHOD(
+              arc_service_manager->arc_bridge_service()->intent_helper(),
+              AddPreferredPackage)) {
+        instance->AddPreferredPackage(pkg);
+      }
+      break;
+    }
+    case arc::ArcNavigationThrottle::CloseReason::ARC_APP_PRESSED: {
+      instance->HandleUrl(url.spec(), pkg);
+      break;
+    }
+    case arc::ArcNavigationThrottle::CloseReason::ALWAYS_PRESSED:
+    case arc::ArcNavigationThrottle::CloseReason::JUST_ONCE_PRESSED:
+    // ALWAYS_PRESSED and JUST_ONCE_PRESSED are deprecated options.
+    case arc::ArcNavigationThrottle::CloseReason::INVALID: {
+      NOTREACHED();
+      return;
+    }
+  }
+
+  arc::ArcNavigationThrottle::Platform platform =
+      arc::ArcNavigationThrottle::GetDestinationPlatform(pkg, close_reason);
+  arc::ArcNavigationThrottle::RecordUma(close_reason, platform);
 }
 
 void ToolbarView::ShowBookmarkBubble(
