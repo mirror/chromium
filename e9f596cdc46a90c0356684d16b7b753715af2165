@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236487d1_ed18dffe",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T07:16:34Z",
+      "side": 1,
+      "message": "nit: prefer early return in case we can\u0027t read",
+      "revId": "e9f596cdc46a90c0356684d16b7b753715af2165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57837c7_5239678c",
+        "filename": "mojo/common/file_info.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T07:16:34Z",
+      "side": 1,
+      "message": "I think there was a chat about re-using some interface in components/filesystem or services/file, but looking into it now there doesn\u0027t seem very handy one that we can use right away... so maybe doing this is good.",
+      "revId": "e9f596cdc46a90c0356684d16b7b753715af2165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
