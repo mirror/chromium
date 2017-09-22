@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746eb7e3_c46133f5",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T16:59:34Z",
+      "side": 1,
+      "message": "might be worth pulling this out into a helper, just to keep the heuristic in one place.",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 424,
+        "endChar": 29
+      },
+      "revId": "ebe514fb9da3bc17f60628a4779d5ce159fced3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
