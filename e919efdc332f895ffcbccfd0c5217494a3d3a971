@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6500e3_dde468b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:09:34Z",
+      "side": 1,
+      "message": "nit: s/push and update/push an update",
+      "range": {
+        "startLine": 70,
+        "startChar": 48,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73173efc_e63891e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:09:34Z",
+      "side": 1,
+      "message": "We should probably cancel the previously running animation if there is one. Is there a concept of \"cancel aware\" that would allow us to cancel without jumping to the end?",
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d844ba67_9754071f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:09:34Z",
+      "side": 1,
+      "message": "Should this cancel be above if \u003d\u003d null block? Or does it not matter?",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 42
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9b7fc4_00c9d732",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:09:34Z",
+      "side": 1,
+      "message": "nit: 0.f and 1.f?",
+      "range": {
+        "startLine": 568,
+        "startChar": 20,
+        "endLine": 568,
+        "endChar": 24
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c2ec54_e25163c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:09:34Z",
+      "side": 1,
+      "message": "Should we be setting the m*Animation variables back to null when the animations end?",
+      "range": {
+        "startLine": 584,
+        "startChar": 12,
+        "endLine": 584,
+        "endChar": 41
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
