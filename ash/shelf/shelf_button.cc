@@ -17,6 +17,7 @@
 #include "skia/ext/image_operations.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/layer.h"
+#include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
@@ -24,6 +25,7 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skbitmap_operations.h"
+#include "ui/gfx/transform_util.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/controls/image_view.h"
@@ -31,21 +33,30 @@
 
 namespace {
 
-const int kIconSize = 32;
-const int kAttentionThrobDurationMS = 800;
-const int kMaxAnimationSeconds = 10;
-const int kIndicatorOffsetFromBottom = 3;
-const int kIndicatorRadiusDip = 2;
-const SkColor kIndicatorColor = SK_ColorWHITE;
+constexpr int kIconSize = 32;
+constexpr int kAttentionThrobDurationMS = 800;
+constexpr int kMaxAnimationSeconds = 10;
+constexpr int kIndicatorOffsetFromBottom = 3;
+constexpr int kIndicatorRadiusDip = 2;
+constexpr SkColor kIndicatorColor = SK_ColorWHITE;
 
 // Shelf item ripple constants.
-const int kInkDropSmallSize = 48;
-const int kInkDropLargeSize = 60;
+constexpr int kInkDropSmallSize = 48;
+constexpr int kInkDropLargeSize = 60;
 
 // Padding from the edge of the shelf to the application icon when the shelf
 // is horizontally and vertically aligned, respectively.
-const int kIconPaddingHorizontal = 7;
-const int kIconPaddingVertical = 8;
+constexpr int kIconPaddingHorizontal = 7;
+constexpr int kIconPaddingVertical = 8;
+
+// The time threshold before an item can be dragged by touch events.
+constexpr int kTouchDragTimeThresholdMs = 300;
+
+// The drag and drop app icon should get scaled by this factor.
+constexpr float kAppIconScale = 1.2f;
+
+// The drag and drop app icon scaling up or down animation transition duration.
+constexpr int kDragDropAppIconScaleTransitionMs = 20;
 
 // Simple AnimationDelegate that owns a single ThrobAnimation instance to
 // keep all Draw Attention animations in sync.
@@ -285,6 +296,16 @@ void ShelfButton::AddState(State state) {
     Layout();
     if (state & STATE_ATTENTION)
       indicator_->ShowAttention(true);
+
+    if (state & STATE_TOUCH_DRAGGING) {
+      const gfx::Rect bounds(layer()->bounds().size());
+      gfx::Transform transform =
+          gfx::GetScaleTransform(bounds.CenterPoint(), kAppIconScale);
+      ui::ScopedLayerAnimationSettings settings(layer()->GetAnimator());
+      settings.SetTransitionDuration(
+          base::TimeDelta::FromMilliseconds(kDragDropAppIconScaleTransitionMs));
+      layer()->SetTransform(transform);
+    }
   }
 }
 
@@ -294,6 +315,13 @@ void ShelfButton::ClearState(State state) {
     Layout();
     if (state & STATE_ATTENTION)
       indicator_->ShowAttention(false);
+
+    if (state & STATE_TOUCH_DRAGGING) {
+      ui::ScopedLayerAnimationSettings settings(layer()->GetAnimator());
+      settings.SetTransitionDuration(
+          base::TimeDelta::FromMilliseconds(kDragDropAppIconScaleTransitionMs));
+      layer()->SetTransform(gfx::Transform());
+    }
   }
 }
 
@@ -444,22 +472,37 @@ void ShelfButton::OnGestureEvent(ui::GestureEvent* event) {
   switch (event->type()) {
     case ui::ET_GESTURE_TAP_DOWN:
       AddState(STATE_HOVERED);
-      return Button::OnGestureEvent(event);
-    case ui::ET_GESTURE_END:
-      ClearState(STATE_HOVERED);
-      return Button::OnGestureEvent(event);
-    case ui::ET_GESTURE_SCROLL_BEGIN:
-      shelf_view_->PointerPressedOnButton(this, ShelfView::TOUCH, *event);
+      touch_drag_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kTouchDragTimeThresholdMs),
+          base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
       event->SetHandled();
       return;
+    case ui::ET_GESTURE_END:
+      ClearState(STATE_HOVERED);
+      ClearState(STATE_TOUCH_DRAGGING);
+      return Button::OnGestureEvent(event);
+    case ui::ET_GESTURE_SCROLL_BEGIN:
+      if (state_ & STATE_TOUCH_DRAGGING) {
+        shelf_view_->PointerPressedOnButton(this, ShelfView::TOUCH, *event);
+        event->SetHandled();
+      } else {
+        touch_drag_timer_.Stop();
+      }
+      return;
     case ui::ET_GESTURE_SCROLL_UPDATE:
-      shelf_view_->PointerDraggedOnButton(this, ShelfView::TOUCH, *event);
-      event->SetHandled();
+      if ((state_ & STATE_TOUCH_DRAGGING) && shelf_view_->IsDraggedView(this)) {
+        shelf_view_->PointerDraggedOnButton(this, ShelfView::TOUCH, *event);
+        event->SetHandled();
+      }
       return;
     case ui::ET_GESTURE_SCROLL_END:
     case ui::ET_SCROLL_FLING_START:
-      shelf_view_->PointerReleasedOnButton(this, ShelfView::TOUCH, false);
-      event->SetHandled();
+      if (state_ & STATE_TOUCH_DRAGGING) {
+        ClearState(STATE_TOUCH_DRAGGING);
+        shelf_view_->PointerReleasedOnButton(this, ShelfView::TOUCH, false);
+        event->SetHandled();
+      }
       return;
     case ui::ET_GESTURE_LONG_TAP:
       // Handle LONG_TAP to avoid opening the context menu twice.
@@ -513,6 +556,10 @@ void ShelfButton::UpdateState() {
                                        ? views::ImageView::LEADING
                                        : views::ImageView::CENTER);
   SchedulePaint();
+}
+
+void ShelfButton::OnTouchDragTimer() {
+  AddState(STATE_TOUCH_DRAGGING);
 }
 
 }  // namespace ash
