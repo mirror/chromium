@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e638dd4c_b87f7612",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3623,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-22T17:30:04Z",
+      "side": 1,
+      "message": "This pool should make local resources but it\u0027s not in this patch set right?",
+      "revId": "512300d8671cd8dd8e2fe5def0123362b3cb9bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
