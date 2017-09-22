@@ -16,6 +16,24 @@
       "revId": "0574ce52276efb4b2b4ed9e642b69a1c43a9d415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807c1ae2_ae650a21",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-22T05:04:11Z",
+      "side": 1,
+      "message": "It depends on how much do we want to split the header file dependency.\nIf it is ok to include dbus/*.h files from chromeos/dbus headers directly, we can share.\nOr, alternatively, if we can move the ObjectProxy::WaitForServiceToBeAvailableCallback into an independent header file, the dependency will be minimum.\n\nAny thoughts?",
+      "parentUuid": "719eec38_595434a7",
+      "revId": "0574ce52276efb4b2b4ed9e642b69a1c43a9d415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
