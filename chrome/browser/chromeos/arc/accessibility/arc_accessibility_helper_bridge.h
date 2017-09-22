@@ -50,6 +50,9 @@ class ArcAccessibilityHelperBridge
                                ArcBridgeService* arc_bridge_service);
   ~ArcAccessibilityHelperBridge() override;
 
+  // Sets ChromeVox or TalkBack active for the current task.
+  void SetNativeChromeVoxArcSupport(bool value);
+
   // KeyedService overrides.
   void Shutdown() override;
 

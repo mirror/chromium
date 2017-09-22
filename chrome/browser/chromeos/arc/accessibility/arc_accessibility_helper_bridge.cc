@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/wm/window_util.h"
 #include "base/command_line.h"
 #include "base/memory/singleton.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
@@ -153,6 +154,33 @@ ArcAccessibilityHelperBridge::ArcAccessibilityHelperBridge(
 }
 
 ArcAccessibilityHelperBridge::~ArcAccessibilityHelperBridge() = default;
+
+void ArcAccessibilityHelperBridge::SetNativeChromeVoxArcSupport(bool value) {
+  if (current_task_id_ == kNoTaskId)
+    return;
+
+  for (auto entry : package_name_to_task_ids_) {
+    if (entry.second.count(current_task_id_) > 0) {
+      auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service_->accessibility_helper(),
+          SetNativeChromeVoxArcSupport);
+      instance->SetNativeChromeVoxArcSupport(entry.first, value);
+
+      auto it = package_name_to_tree_.find(entry.first);
+      if (it != package_name_to_tree_.end()) {
+        if (!value)
+          package_name_to_tree_.erase(it);
+        else
+          it->second->Focus(ash::wm::GetActiveWindow());
+      } else if (value) {
+        package_name_to_tree_[entry.first].reset(new AXTreeSourceArc(this));
+        package_name_to_tree_[entry.first]->Focus(ash::wm::GetActiveWindow());
+      }
+
+      break;
+    }
+  }
+}
 
 void ArcAccessibilityHelperBridge::Shutdown() {
   // We do not unregister ourselves from WMHelper as an ActivationObserver
