@@ -7,7 +7,7 @@
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
 #include "cc/ipc/cc_param_traits.h"
-#include "cc/output/compositor_frame.h"
+#include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/picture_draw_quad.h"
 #include "gpu/ipc/common/mailbox_holder_struct_traits.h"
 #include "gpu/ipc/common/mailbox_struct_traits.h"
@@ -40,19 +40,20 @@ enum class UseSingleSharedQuadState { YES, NO };
 
 class CCSerializationPerfTest : public testing::Test {
  protected:
-  static bool ReadMessage(const IPC::Message* msg, CompositorFrame* frame) {
+  static bool ReadMessage(const IPC::Message* msg,
+                          viz::CompositorFrame* frame) {
     base::PickleIterator iter(*msg);
-    return IPC::ParamTraits<CompositorFrame>::Read(msg, &iter, frame);
+    return IPC::ParamTraits<viz::CompositorFrame>::Read(msg, &iter, frame);
   }
 
   static void RunDeserializationTestParamTraits(
       const std::string& test_name,
-      const CompositorFrame& frame,
+      const viz::CompositorFrame& frame,
       UseSingleSharedQuadState single_sqs) {
     IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
-    IPC::ParamTraits<CompositorFrame>::Write(&msg, frame);
+    IPC::ParamTraits<viz::CompositorFrame>::Write(&msg, frame);
     for (int i = 0; i < kNumWarmupRuns; ++i) {
-      CompositorFrame compositor_frame;
+      viz::CompositorFrame compositor_frame;
       ReadMessage(&msg, &compositor_frame);
     }
 
@@ -64,7 +65,7 @@ class CCSerializationPerfTest : public testing::Test {
     size_t count = 0;
     while (start < end) {
       for (int i = 0; i < kTimeCheckInterval; ++i) {
-        CompositorFrame compositor_frame;
+        viz::CompositorFrame compositor_frame;
         ReadMessage(&msg, &compositor_frame);
         now = base::TimeTicks::Now();
         // We don't count iterations after the end time.
@@ -93,11 +94,11 @@ class CCSerializationPerfTest : public testing::Test {
 
   static void RunSerializationTestParamTraits(
       const std::string& test_name,
-      const CompositorFrame& frame,
+      const viz::CompositorFrame& frame,
       UseSingleSharedQuadState single_sqs) {
     for (int i = 0; i < kNumWarmupRuns; ++i) {
       IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
-      IPC::ParamTraits<CompositorFrame>::Write(&msg, frame);
+      IPC::ParamTraits<viz::CompositorFrame>::Write(&msg, frame);
     }
 
     base::TimeTicks start = base::TimeTicks::Now();
@@ -109,7 +110,7 @@ class CCSerializationPerfTest : public testing::Test {
     while (start < end) {
       for (int i = 0; i < kTimeCheckInterval; ++i) {
         IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
-        IPC::ParamTraits<CompositorFrame>::Write(&msg, frame);
+        IPC::ParamTraits<viz::CompositorFrame>::Write(&msg, frame);
         now = base::TimeTicks::Now();
         // We don't count iterations after the end time.
         if (now < end)
@@ -137,12 +138,12 @@ class CCSerializationPerfTest : public testing::Test {
 
   static void RunDeserializationTestStructTraits(
       const std::string& test_name,
-      const CompositorFrame& frame,
+      const viz::CompositorFrame& frame,
       UseSingleSharedQuadState single_sqs) {
     mojo::Message message =
         viz::mojom::CompositorFrame::SerializeAsMessage(&frame);
     for (int i = 0; i < kNumWarmupRuns; ++i) {
-      CompositorFrame compositor_frame;
+      viz::CompositorFrame compositor_frame;
       viz::mojom::CompositorFrame::Deserialize(
           message.payload(), message.payload_num_bytes(), &compositor_frame);
     }
@@ -155,7 +156,7 @@ class CCSerializationPerfTest : public testing::Test {
     size_t count = 0;
     while (start < end) {
       for (int i = 0; i < kTimeCheckInterval; ++i) {
-        CompositorFrame compositor_frame;
+        viz::CompositorFrame compositor_frame;
         viz::mojom::CompositorFrame::Deserialize(
             message.payload(), message.payload_num_bytes(), &compositor_frame);
         now = base::TimeTicks::Now();
@@ -186,7 +187,7 @@ class CCSerializationPerfTest : public testing::Test {
 
   static void RunSerializationTestStructTraits(
       const std::string& test_name,
-      const CompositorFrame& frame,
+      const viz::CompositorFrame& frame,
       UseSingleSharedQuadState single_sqs) {
     for (int i = 0; i < kNumWarmupRuns; ++i) {
       mojo::Message message =
@@ -229,7 +230,7 @@ class CCSerializationPerfTest : public testing::Test {
   }
 
   static void RunComplexCompositorFrameTest(const std::string& test_name) {
-    CompositorFrame frame;
+    viz::CompositorFrame frame;
 
     std::vector<viz::TransferableResource>& resource_list = frame.resource_list;
     for (uint32_t i = 0; i < 80; ++i) {
@@ -395,7 +396,7 @@ class CCSerializationPerfTest : public testing::Test {
                                      uint32_t num_quads,
                                      uint32_t num_passes,
                                      UseSingleSharedQuadState single_sqs) {
-    CompositorFrame frame;
+    viz::CompositorFrame frame;
 
     for (uint32_t i = 0; i < num_passes; ++i) {
       std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
@@ -416,7 +417,7 @@ class CCSerializationPerfTest : public testing::Test {
   }
 
   static void RunTest(const std::string& test_name,
-                      CompositorFrame frame,
+                      viz::CompositorFrame frame,
                       UseSingleSharedQuadState single_sqs) {
     RunSerializationTestStructTraits(test_name, frame, single_sqs);
     RunDeserializationTestStructTraits(test_name, frame, single_sqs);
