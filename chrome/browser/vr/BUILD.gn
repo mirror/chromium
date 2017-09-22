@@ -177,6 +177,7 @@ test("vr_common_unittests") {
     "ui_scene_manager_unittest.cc",
     "ui_scene_unittest.cc",
     "vr_gl_util_unittest.cc",
+    "vr_shell_renderer_perftest.cc",
   ]
 
   deps = [
@@ -191,6 +192,7 @@ test("vr_common_unittests") {
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//ui/gl",
+    "//ui/gl:test_support",
   ]
 
   if (is_android) {
