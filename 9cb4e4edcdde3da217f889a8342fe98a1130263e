@@ -22,6 +22,30 @@
       "revId": "9cb4e4edcdde3da217f889a8342fe98a1130263e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302aa92e_b7b4ed34",
+        "filename": "content/common/sandbox_linux/bpf_widevine_policy_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-22T18:46:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b35e8c8_0d079089",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "9cb4e4edcdde3da217f889a8342fe98a1130263e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
