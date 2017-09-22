@@ -13,7 +13,8 @@
 @implementation MainViewController
 
 - (UIViewController*)activeViewController {
-  return [self.childViewControllers firstObject];
+  return self.presentedViewController;
+  //return [self.childViewControllers firstObject];
 }
 
 - (void)setActiveViewController:(UIViewController*)activeViewController {
@@ -21,30 +22,38 @@
   if (self.activeViewController == activeViewController)
     return;
 
-  // TODO(crbug.com/546189): DCHECK here that there isn't a modal view
-  // controller showing once the known violations of that are fixed.
-
-  // Remove the current active view controller, if any.
   if (self.activeViewController) {
-    [self.activeViewController willMoveToParentViewController:nil];
-    [self.activeViewController.view removeFromSuperview];
-    [self.activeViewController removeFromParentViewController];
+    [super dismissViewControllerAnimated:NO completion:nil];
   }
+  [super presentViewController:activeViewController animated:NO completion:^{
+      DCHECK(self.activeViewController == activeViewController);
+    }];
+  return;
 
-  DCHECK(self.activeViewController == nil);
-  DCHECK(self.view.subviews.count == 0);
+//   // TODO(crbug.com/546189): DCHECK here that there isn't a modal view
+//   // controller showing once the known violations of that are fixed.
 
-  // Add the new active view controller.
-  [self addChildViewController:activeViewController];
-  self.activeViewController.view.frame = self.view.bounds;
-  [self.view addSubview:self.activeViewController.view];
-  [activeViewController didMoveToParentViewController:self];
+//   // Remove the current active view controller, if any.
+//   if (self.activeViewController) {
+//     [self.activeViewController willMoveToParentViewController:nil];
+//     [self.activeViewController.view removeFromSuperview];
+//     [self.activeViewController removeFromParentViewController];
+//   }
 
-  // Let the system know that the child has changed so appearance updates can
-  // be made.
-  [self setNeedsStatusBarAppearanceUpdate];
+//   DCHECK(self.activeViewController == nil);
+//   DCHECK(self.view.subviews.count == 0);
 
-  DCHECK(self.activeViewController == activeViewController);
+//   // Add the new active view controller.
+//   [self addChildViewController:activeViewController];
+//   self.activeViewController.view.frame = self.view.bounds;
+//   [self.view addSubview:self.activeViewController.view];
+//   [activeViewController didMoveToParentViewController:self];
+
+//   // Let the system know that the child has changed so appearance updates can
+//   // be made.
+//   [self setNeedsStatusBarAppearanceUpdate];
+
+//   DCHECK(self.activeViewController == activeViewController);
 }
 
 #pragma mark - UIViewController methods
