@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99415cbd_0db17d85",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-22T18:22:18Z",
+      "side": 1,
+      "message": "Can you leave a comment here explaining why we need to do this?",
+      "range": {
+        "startLine": 171,
+        "startChar": 1,
+        "endLine": 171,
+        "endChar": 2
+      },
+      "revId": "00685229d8f86336e0cc066431c9f692d9953d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
