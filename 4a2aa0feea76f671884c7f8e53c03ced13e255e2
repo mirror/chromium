@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e508db3_447e6555",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-22T15:37:34Z",
+      "side": 1,
+      "message": "This refers to the Windows example value, e.g. in\n  Example value:\n  0x00000000 (Windows), false (Linux), \u003cfalse /\u003e (Mac)\nThe other values are not affected. Please note that this change just restores the way it was before the Chrome OS ADMX templates were introduced. If there was a Chrome OS policy, we didn\u0027t show the Windows example value. After this change, we only show the example value for Chrome OS policies that apply for AD-management.",
+      "parentUuid": "728c5cba_015a9969",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3be5ac63_556c1962",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
@@ -68,6 +92,54 @@
       "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34b2d4b_2e0e598c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-22T15:37:34Z",
+      "side": 1,
+      "message": "We discussed this in an email a while back. The concern brought forward was, as you mention, that it would muddy the meaning of \u0027product\u0027. If we ever introduce another Chrome OS product, we\u0027d clash. It seemed much cleaner to introduce a new key. Mattias compared it to distinguishing user from device policy, which you could also implement as chrome_os.user and chrome_os.device, but we decided to introduce a new key \u0027device_only\u0027 instead.",
+      "parentUuid": "443ddf9e_45a98bec",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 32
+      },
+      "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2862699_8f7c90ee",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-22T15:37:34Z",
+      "side": 1,
+      "message": "Done, although I used \u0027google_cloud\u0027 since\n  supported_cros_management \u003d [\u0027google_cloud_management\u0027]\nseems redundant.",
+      "parentUuid": "3be5ac63_556c1962",
+      "range": {
+        "startLine": 168,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 45
+      },
+      "revId": "4a2aa0feea76f671884c7f8e53c03ced13e255e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
