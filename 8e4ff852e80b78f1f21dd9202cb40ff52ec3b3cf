@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ecedc3_e1cfb0f3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/preload/link_header_preload_nonce.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-22T18:26:28Z",
+      "side": 1,
+      "message": "Can you make this into an exported web-platform-test?",
+      "revId": "8e4ff852e80b78f1f21dd9202cb40ff52ec3b3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831ccea8_afcfc63c",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoaderTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-22T18:26:28Z",
+      "side": 1,
+      "message": "Can you add a new test that also checks with/without nonce here?",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 45
+      },
+      "revId": "8e4ff852e80b78f1f21dd9202cb40ff52ec3b3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
