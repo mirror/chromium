@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b05d2c_cc42f912",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T20:52:54Z",
+      "side": 1,
+      "message": "This is now copied across 4 pages. Open to suggestions on where exactly to place this for reuse (probably better in a follow up).",
+      "revId": "c898931fc1b9497bf45ca6176b2272f1e7409585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
