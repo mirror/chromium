@@ -33,6 +33,24 @@
       "revId": "fd4616ea996fb2dd546fce2cf9075c50a909a80f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174f7519_809e7fdb",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-22T23:53:20Z",
+      "side": 1,
+      "message": "Interesting. Based on the documentation for V4L2_CID_MIN_BUFFERS_FOR_CAPTURE I thought we just need to request at least that many buffers. I tried this change locally with VP9 video playback and didn\u0027t see any issues, but maybe I just got lucky.",
+      "parentUuid": "994c9f71_e32f5ee0",
+      "revId": "fd4616ea996fb2dd546fce2cf9075c50a909a80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
