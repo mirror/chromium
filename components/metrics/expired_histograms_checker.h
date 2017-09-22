@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "base/metrics/record_histogram_checker.h"
 
@@ -21,11 +24,25 @@ class ExpiredHistogramsChecker final : public base::RecordHistogramChecker {
   ~ExpiredHistogramsChecker() override;
 
   // Checks if the given |histogram_hash| corresponds to an expired histogram.
-  bool ShouldRecord(uint64_t histogram_hash) const override;
+  bool ShouldRecord(uint64_t histogram_hash) override;
+
+  void LoadFinchParameters();
 
  private:
   const uint64_t* const array_;
   const size_t size_;
+
+  const std::string finch_study_ = "ConfigureExpiredHistograms";
+  const char delimeter = ',';
+
+  // Hashes of the histograms that were affected by the Finch study.
+  std::vector<uint64_t> enabled_histograms_;
+  std::vector<uint64_t> disabled_histograms_;
+
+  // True iff finch parameters were loaded.
+  bool finch_parameters_loaded_;
+
+  std::vector<uint64_t> ParseFinchParameter(const std::string& parameter) const;
 
   DISALLOW_COPY_AND_ASSIGN(ExpiredHistogramsChecker);
 };
