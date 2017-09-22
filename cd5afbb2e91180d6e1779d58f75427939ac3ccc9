@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c3ae7a_be5276bf",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T00:16:25Z",
+      "side": 1,
+      "message": "Nit: The \"_\" suffix is used on members of a class to indicate \"private\". It is not needed here. pageHandler is private to the enclosing scope anyway.",
+      "revId": "cd5afbb2e91180d6e1779d58f75427939ac3ccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3deb904_5f3dc890",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T00:16:25Z",
+      "side": 1,
+      "message": "How can this happen? Please add a comment in the code explaining, or remove if not necessary.",
+      "revId": "cd5afbb2e91180d6e1779d58f75427939ac3ccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
