@@ -16,6 +16,7 @@
 #include "chrome/browser/vr/elements/exit_prompt_backplane.h"
 #include "chrome/browser/vr/elements/full_screen_rect.h"
 #include "chrome/browser/vr/elements/grid.h"
+#include "chrome/browser/vr/elements/hit_target.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/loading_indicator.h"
 #include "chrome/browser/vr/elements/rect.h"
@@ -344,8 +345,9 @@ void UiSceneManager::CreateSystemIndicators() {
 void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   // Place an invisible but hittable plane behind the content quad, to keep the
   // reticle roughly planar with the content if near content.
-  std::unique_ptr<UiElement> hit_plane = base::MakeUnique<UiElement>();
+  std::unique_ptr<HitTarget> hit_plane = base::MakeUnique<HitTarget>();
   hit_plane->set_name(kBackplane);
+  hit_plane->set_draw_phase(kPhaseForeground);
   hit_plane->SetSize(kBackplaneSize, kBackplaneSize);
   hit_plane->SetTranslate(0, 0, -kTextureOffset);
   content_elements_.push_back(hit_plane.get());
@@ -604,6 +606,7 @@ void UiSceneManager::CreateExitPrompt() {
   exit_prompt_backplane_ = backplane.get();
   element = std::move(backplane);
   element->set_name(kExitPromptBackplane);
+  element->set_draw_phase(kPhaseForeground);
   element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
   element->SetTranslate(0.0, 0.0, -kTextureOffset);
   exit_prompt_backplane_ = element.get();

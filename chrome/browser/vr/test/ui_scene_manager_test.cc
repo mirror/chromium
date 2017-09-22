@@ -68,7 +68,8 @@ void UiSceneManagerTest::VerifyElementsVisible(
     SCOPED_TRACE(name);
     auto* element = scene_->GetUiElementByName(name);
     EXPECT_NE(nullptr, element);
-    EXPECT_TRUE(element->IsVisible() && IsElementFacingCamera(element));
+    EXPECT_TRUE(element->IsVisible() && IsElementFacingCamera(element) &&
+                element->draw_phase() != kPhaseNone);
   }
 }
 
