@@ -126,7 +126,10 @@ class FormStructure {
   // a timestamp corresponding to the form's submission. |observed_submission|
   // indicates whether this method is called as a result of observing a
   // submission event (otherwise, it may be that an upload was triggered after
-  // a form was unfocused or a navigation occurred).
+  // a form was unfocused or a navigation occurred). |is_credit_card_form|
+  // indicates whether the submitted form is a cedit card form. Since, we
+  // preassume we've detected form interaction in this fuction, if submitted
+  // form is not credit card form, it is an address form.
   // TODO(sebsg): We log more than quality metrics. Maybe rename or split
   // function?
   void LogQualityMetrics(
@@ -281,6 +284,9 @@ class FormStructure {
 
   // Further processes the extracted |fields_|.
   void ProcessExtractedFields();
+
+  // Returns true if this form contains credit card fields.
+  bool HasCreditCardFields() const;
 
   // Returns the longest common prefix found within |strings|. Strings below a
   // threshold length are excluded when performing this check; this is needed

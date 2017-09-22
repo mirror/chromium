@@ -721,16 +721,28 @@ class AutofillMetrics {
   static void LogFormFillDurationFromLoadWithoutAutofill(
       const base::TimeDelta& duration);
 
-  // This should be called when a form that has been Autofilled is submitted.
-  // |duration| should be the time elapsed between the initial form interaction
-  // and submission.
-  static void LogFormFillDurationFromInteractionWithAutofill(
+  // This should be called when a credit card form that has been Autofilled is
+  // submitted. |duration| should be the time elapsed between the initial form
+  // interaction and submission.
+  static void LogCreditCardFormFillDurationFromInteractionWithAutofill(
       const base::TimeDelta& duration);
 
-  // This should be called when a fillable form that has not been Autofilled is
-  // submitted.  |duration| should be the time elapsed between the initial form
+  // This should be called when a fillable credit card form that has not been
+  // Autofilled is submitted.  |duration| should be the time elapsed between the
+  // initial form interaction and submission.
+  static void LogCreditCardFormFillDurationFromInteractionWithoutAutofill(
+      const base::TimeDelta& duration);
+
+  // This should be called when an address form that has been Autofilled is
+  // submitted. |duration| should be the time elapsed between the initial form
   // interaction and submission.
-  static void LogFormFillDurationFromInteractionWithoutAutofill(
+  static void LogAddressFormFillDurationFromInteractionWithAutofill(
+      const base::TimeDelta& duration);
+
+  // This should be called when a fillable address form that has not been
+  // Autofilled is submitted.  |duration| should be the time elapsed between the
+  // initial form interaction and submission.
+  static void LogAddressFormFillDurationFromInteractionWithoutAutofill(
       const base::TimeDelta& duration);
 
   // This should be called each time a page containing forms is loaded.
