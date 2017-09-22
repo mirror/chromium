@@ -50,12 +50,7 @@ ScriptPromise ServiceWorkerWindowClient::focus(ScriptState* script_state) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
 
-  if (!ExecutionContext::From(script_state)->IsWindowInteractionAllowed()) {
-    resolver->Reject(DOMException::Create(kInvalidAccessError,
-                                          "Not allowed to focus a window."));
-    return promise;
-  }
-  ExecutionContext::From(script_state)->ConsumeWindowInteraction();
+  // SECURITY WARNING: NO USER GESTURE CHECK. DO NOT SUBMIT.
 
   ServiceWorkerGlobalScopeClient::From(ExecutionContext::From(script_state))
       ->Focus(Uuid(),

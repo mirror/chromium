@@ -179,12 +179,7 @@ ScriptPromise ServiceWorkerClients::openWindow(ScriptState* script_state,
     return promise;
   }
 
-  if (!context->IsWindowInteractionAllowed()) {
-    resolver->Reject(DOMException::Create(kInvalidAccessError,
-                                          "Not allowed to open a window."));
-    return promise;
-  }
-  context->ConsumeWindowInteraction();
+  // SECURITY WARNING: NO USER GESTURE CHECK. DO NOT SUBMIT.
 
   ServiceWorkerGlobalScopeClient::From(context)->OpenWindowForClients(
       parsed_url, WTF::MakeUnique<NavigateClientCallback>(resolver));
