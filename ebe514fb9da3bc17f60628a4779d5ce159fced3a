@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "d0fb28be_6dadb2ea",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-22T17:09:51Z",
+      "side": 1,
+      "message": "Ideally, readtask would just call seektask after it\u0027s done.\nAlso, multipele posted seek tasks should really be flattened to just one seek task, but that has to be done carefully to make pre-loading work correctly.\nExpect a follow-up CL with some cleanup later... :)",
+      "parentUuid": "746eb7e3_c46133f5",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 424,
+        "endChar": 29
+      },
+      "revId": "ebe514fb9da3bc17f60628a4779d5ce159fced3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac4ce82e_220a9e6c",
         "filename": "media/blink/multibuffer_reader.cc",
         "patchSetId": 2
