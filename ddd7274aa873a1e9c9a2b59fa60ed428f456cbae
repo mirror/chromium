@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e57c8a9_13bb202d",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-22T06:50:52Z",
+      "side": 1,
+      "message": "You don\u0027t need this variable any more.",
+      "range": {
+        "startLine": 571,
+        "startChar": 21,
+        "endLine": 571,
+        "endChar": 27
+      },
+      "revId": "ddd7274aa873a1e9c9a2b59fa60ed428f456cbae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
