@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "172c53b3_3c513145",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T19:56:29Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr and update all other consts since you are here.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "0dc594f594793bf3bcc2a705bd8ccde92b3917b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e9931d_42d1e1da",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T19:56:29Z",
+      "side": 1,
+      "message": "If event is handled, we can just return in the next statement instead of calling into base class.",
+      "revId": "0dc594f594793bf3bcc2a705bd8ccde92b3917b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c44833_b46219cb",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T19:56:29Z",
+      "side": 1,
+      "message": "Think it would be better if we make |touch_dragging_| a new State. We can then bind ScaleAppIcon call with state change in AddState/ClearState.",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 548,
+        "endChar": 21
+      },
+      "revId": "0dc594f594793bf3bcc2a705bd8ccde92b3917b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d44fb11_36207868",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T19:56:29Z",
+      "side": 1,
+      "message": "nit: think this is not necessary for scale transform",
+      "revId": "0dc594f594793bf3bcc2a705bd8ccde92b3917b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
