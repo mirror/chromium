@@ -44,8 +44,8 @@ Android relocation packing tool details:
     Copy sources from AOSP bionic/tools/relocation_packer
     Remove scripts that regenerate golden test data (not relevant here)
     Create a nativehelper/ScopedFd.h to satisfy inclusion from main.cc
-    Create gyp build
     Create gn build (currently packer only; no unit tests)
+    Added support for compressed packed relocations (https://crbug.com/681933)
     List of bionic changes currently included:
       Refresh: https://android-review.googlesource.com/#/c/143878/
       Refresh: https://android-review.googlesource.com/#/c/147620/

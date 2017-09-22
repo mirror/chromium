@@ -19,10 +19,14 @@
 #include <string>
 #include <vector>
 
+#include "third_party/lz4/lib/lz4.h"
+#include "third_party/lz4/lib/lz4hc.h"
+
 #include "debug.h"
 #include "elf_traits.h"
 #include "libelf.h"
 #include "packer.h"
+
 
 namespace relocation_packer {
 
@@ -34,8 +38,17 @@ static constexpr int32_t DT_ANDROID_RELSZ = DT_LOOS + 3;
 static constexpr int32_t DT_ANDROID_RELA = DT_LOOS + 4;
 static constexpr int32_t DT_ANDROID_RELASZ = DT_LOOS + 5;
 
+static constexpr int32_t DT_ANDROID_COMPRESSED_REL = DT_LOOS + 6;
+static constexpr int32_t DT_ANDROID_COMPRESSED_RELA = DT_LOOS + 7;
+
 static constexpr uint32_t SHT_ANDROID_REL = SHT_LOOS + 1;
 static constexpr uint32_t SHT_ANDROID_RELA = SHT_LOOS + 2;
+static constexpr uint32_t SHT_ANDROID_COMPRESSED_REL = SHT_LOOS + 3;
+static constexpr uint32_t SHT_ANDROID_COMPRESSED_RELA = SHT_LOOS + 4;
+
+static constexpr size_t kCompressionChunkSize = 64 * 1024;
+static constexpr size_t kAndroidRelroPrefixSize = 4;  // APS2
+static constexpr size_t kMinimumCompressionBytesSaves = 100;
 
 static const size_t kPageSize = 4096;
 
@@ -44,6 +57,13 @@ static const size_t kPageSize = 4096;
 // Out of caution for RELRO page alignment, we preserve to a complete target
 // page.  See http://www.airs.com/blog/archives/189.
 static const size_t kPreserveAlignment = kPageSize;
+
+static bool IsPackedSectionType(int sh_type) {
+  return sh_type == SHT_ANDROID_REL ||
+         sh_type == SHT_ANDROID_RELA ||
+         sh_type == SHT_ANDROID_COMPRESSED_REL ||
+         sh_type == SHT_ANDROID_COMPRESSED_RELA;
+}
 
 // Get section data.  Checks that the section has exactly one data entry,
 // so that the section size and the data size are the same.  True in
@@ -127,6 +147,87 @@ static void VerboseLogSectionData(const Elf_Data* data) {
   VLOG(1) << "    d_align = " << data->d_align;
 }
 
+// Compresses using lz4, which gives about 92% compression for libchrome.so.
+// libz gives 94% for libchrome.so, but is much slower.
+// lz4 ints (without first encoding as sleb128) results in 89% compression.
+// The format used here:
+//   * First four bytes as a marker "APZ2",
+//   * Next four bytes is a little-endian uint32 storing the uncompressed size.
+//   * Remaining is compressed chunks of the form (chuck_size, bytes).
+static bool Compress(std::vector<uint8_t>* data) {
+  // Uses memcpy to store uint32_t in little endian.
+  CHECK(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
+
+  // Allocate data->size() for output buffer to ensure compression does not make
+  // data larger.
+  std::vector<uint8_t> buffer(data->size());
+  const char* src = reinterpret_cast<const char *>(&(*data)[0]) + kAndroidRelroPrefixSize;
+  char* dest = reinterpret_cast<char*>(&buffer[0]) + sizeof(uint32_t) + kAndroidRelroPrefixSize;
+
+  int remaining_in = data->size() - kAndroidRelroPrefixSize;
+  int remaining_out = buffer.size() - sizeof(uint32_t) - kAndroidRelroPrefixSize;
+  while (remaining_in > 0) {
+    int chunk_size_in = std::min(static_cast<int>(kCompressionChunkSize), remaining_in);
+    uint32_t chunk_size_out = static_cast<uint32_t>(
+        LZ4_compress_HC(src, dest + sizeof(uint32_t), chunk_size_in, remaining_out, LZ4HC_CLEVEL_MAX));
+    // Happens if compression would increase size.
+    if (chunk_size_out == 0) {
+      VLOG(1) << "Skipping compression since it would increase size.";
+      return false;
+    }
+    memcpy(dest, &chunk_size_out, sizeof(uint32_t));
+
+    src += chunk_size_in;
+    remaining_in -= chunk_size_in;
+    dest += sizeof(uint32_t) + chunk_size_out;
+    remaining_out -= sizeof(uint32_t) + chunk_size_out;
+  }
+  uint32_t compressed_size = buffer.size() - remaining_out;
+  uint32_t savings = data->size() - compressed_size;
+  if (savings < kMinimumCompressionBytesSaves) {
+    VLOG(1) << "Skipping compression since it would save only " << savings << " bytes";
+    return false;
+  }
+
+  memcpy(&buffer[0], &(*data)[0], kAndroidRelroPrefixSize);
+  buffer[2] = 'Z';  // Change from APS2 -> APZ2.
+  uint32_t uncompressed_size = data->size() - kAndroidRelroPrefixSize;
+  memcpy(&buffer[kAndroidRelroPrefixSize], &uncompressed_size, sizeof(uint32_t));
+  buffer.resize(compressed_size);
+  data->swap(buffer);
+  return true;
+}
+
+static std::vector<uint8_t> Uncompress(const std::vector<uint8_t>& data) {
+  uint32_t uncompressed_size = 0;
+  CHECK(data[0] == 'A');
+  CHECK(data[1] == 'P');
+  CHECK(data[2] == 'Z');
+  memcpy(&uncompressed_size, &data[kAndroidRelroPrefixSize], sizeof(uint32_t));
+  std::vector<uint8_t> buffer(kAndroidRelroPrefixSize + uncompressed_size);
+
+  const char* src = reinterpret_cast<const char*>(&data[0]) + kAndroidRelroPrefixSize + sizeof(uint32_t);
+  char* dest = reinterpret_cast<char*>(&buffer[0]) + kAndroidRelroPrefixSize;
+  int dest_remaining = uncompressed_size;
+  while (dest_remaining > 0) {
+    uint32_t chunk_size;
+    memcpy(&chunk_size, src, sizeof(uint32_t));
+    CHECK(chunk_size);
+    src += sizeof(uint32_t);
+    int bytes_decompressed = LZ4_decompress_safe(src, dest, chunk_size, dest_remaining);
+    CHECK(bytes_decompressed <= static_cast<int>(kCompressionChunkSize));
+    src += chunk_size;
+    dest += bytes_decompressed;
+    dest_remaining -= bytes_decompressed;
+  }
+  CHECK(dest_remaining == 0);
+  memcpy(&buffer[0], &data[0], kAndroidRelroPrefixSize);
+  buffer[2] = 'S';  // Change from APZ2 -> APS2
+
+  return buffer;
+}
+
+
 // Load the complete ELF file into a memory image in libelf, and identify
 // the .rel.dyn or .rela.dyn, .dynamic, and .android.rel.dyn or
 // .android.rela.dyn sections.  No-op if the ELF file has already been loaded.
@@ -201,10 +302,14 @@ bool ElfFile<ELF>::Load() {
     VerboseLogSectionHeader(name, section_header);
 
     // Note relocation section types.
-    if (section_header->sh_type == SHT_REL || section_header->sh_type == SHT_ANDROID_REL) {
+    if (section_header->sh_type == SHT_REL ||
+        section_header->sh_type == SHT_ANDROID_REL ||
+        section_header->sh_type == SHT_ANDROID_COMPRESSED_REL) {
       has_rel_relocations = true;
     }
-    if (section_header->sh_type == SHT_RELA || section_header->sh_type == SHT_ANDROID_RELA) {
+    if (section_header->sh_type == SHT_RELA ||
+        section_header->sh_type == SHT_ANDROID_RELA ||
+        section_header->sh_type == SHT_ANDROID_COMPRESSED_RELA) {
       has_rela_relocations = true;
     }
 
@@ -214,9 +319,7 @@ bool ElfFile<ELF>::Load() {
       found_relocations_section = section;
 
       // Note if relocation section is already packed
-      has_android_relocations =
-          section_header->sh_type == SHT_ANDROID_REL ||
-          section_header->sh_type == SHT_ANDROID_RELA;
+      has_android_relocations = IsPackedSectionType(section_header->sh_type);
     }
 
     if (section_header->sh_offset == dynamic_program_header->p_offset) {
@@ -536,7 +639,9 @@ void ElfFile<ELF>::AdjustDynamicSectionForHole(Elf_Scn* dynamic_section,
                                 tag == DT_VERNEED ||
                                 tag == DT_VERDEF ||
                                 tag == DT_ANDROID_REL||
-                                tag == DT_ANDROID_RELA);
+                                tag == DT_ANDROID_RELA ||
+                                tag == DT_ANDROID_COMPRESSED_REL ||
+                                tag == DT_ANDROID_COMPRESSED_RELA);
 
     if (is_adjustable && dynamic->d_un.d_ptr <= hole_start) {
       dynamic->d_un.d_ptr -= hole_size;
@@ -609,8 +714,7 @@ void ElfFile<ELF>::ResizeSection(Elf* elf, Elf_Scn* section, size_t new_size,
 
   // libelf overrides sh_entsize for known sh_types, so it does not matter what we set
   // for SHT_REL/SHT_RELA.
-  typename ELF::Xword new_entsize =
-      (new_sh_type == SHT_ANDROID_REL || new_sh_type == SHT_ANDROID_RELA) ? 1 : 0;
+  typename ELF::Xword new_entsize = IsPackedSectionType(section_header->sh_type) ? 1 : 0;
 
   VLOG(1) << "Update section (" << name << ") entry size: " <<
       section_header->sh_entsize << " -> " << new_entsize;
@@ -675,7 +779,7 @@ static void ReplaceDynamicEntry(typename ELF::Sword tag,
 // Remove relative entries from dynamic relocations and write as packed
 // data into android packed relocations.
 template <typename ELF>
-bool ElfFile<ELF>::PackRelocations() {
+bool ElfFile<ELF>::PackRelocations(bool compress) {
   // Load the ELF file into libelf.
   if (!Load()) {
     LOG(ERROR) << "Failed to load as ELF";
@@ -705,12 +809,13 @@ bool ElfFile<ELF>::PackRelocations() {
     NOTREACHED();
   }
 
-  return PackTypedRelocations(&relocations);
+  return PackTypedRelocations(&relocations, compress);
 }
 
 // Helper for PackRelocations().  Rel type is one of ELF::Rel or ELF::Rela.
 template <typename ELF>
-bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocations) {
+bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocations,
+                                        bool compress) {
   typedef typename ELF::Rela Rela;
 
   if (has_android_relocations_) {
@@ -735,8 +840,14 @@ bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocat
 
   // Pack relocations: dry run to estimate memory savings.
   packer.PackRelocations(*relocations, &packed);
-  const size_t packed_bytes_estimate = packed.size() * sizeof(packed[0]);
-  VLOG(1) << "Packed         (no padding): " << packed_bytes_estimate << " bytes";
+  VLOG(1) << "Packed         (no padding): " << packed.size() << " bytes";
+
+  if (compress) {
+    compress = Compress(&packed);
+    if (compress) {
+      VLOG(1) << "Packed & compressed (no padding): " << packed.size() << " bytes";
+    }
+  }
 
   if (packed.empty()) {
     LOG(INFO) << "Too few relocations to pack";
@@ -746,6 +857,7 @@ bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocat
   // Pre-calculate the size of the hole we will close up when we rewrite
   // dynamic relocations.  We have to adjust relocation addresses to
   // account for this.
+  const size_t packed_bytes_estimate = packed.size() * sizeof(packed[0]);
   typename ELF::Shdr* section_header = ELF::getshdr(relocations_section_);
   ssize_t hole_size = initial_bytes - packed_bytes_estimate;
 
@@ -773,11 +885,14 @@ bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocat
   std::vector<uint8_t> padding(data_padding_bytes, 0);
   packed.insert(packed.end(), padding.begin(), padding.end());
 
-  const void* packed_data = &packed[0];
-
   // Run a loopback self-test as a check that packing is lossless.
   std::vector<Rela> unpacked;
-  packer.UnpackRelocations(packed, &unpacked);
+  if (compress) {
+    std::vector<uint8_t> inflated = Uncompress(packed);
+    packer.UnpackRelocations(inflated, &unpacked);
+  } else {
+    packer.UnpackRelocations(packed, &unpacked);
+  }
   CHECK(unpacked.size() == relocations->size());
   CHECK(!memcmp(&unpacked[0],
                 &relocations->at(0),
@@ -785,8 +900,15 @@ bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocat
 
   // Rewrite the current dynamic relocations section with packed one then shrink it to size.
   const size_t bytes = packed.size() * sizeof(packed[0]);
-  ResizeSection(elf_, relocations_section_, bytes,
-      relocations_type_ == REL ? SHT_ANDROID_REL : SHT_ANDROID_RELA, relocations_type_);
+  typename ELF::Word new_type;
+  if (compress) {
+    new_type = relocations_type_ == REL ? SHT_ANDROID_COMPRESSED_REL : SHT_ANDROID_COMPRESSED_RELA;
+  } else {
+    new_type = relocations_type_ == REL ? SHT_ANDROID_REL : SHT_ANDROID_RELA;
+  }
+
+  ResizeSection(elf_, relocations_section_, bytes, new_type, relocations_type_);
+  const void* packed_data = &packed[0];
   RewriteSectionData(relocations_section_, packed_data, bytes);
 
   // TODO (dimitry): fix string table and replace .rel.dyn/plt with .android.rel.dyn/plt
@@ -801,7 +923,11 @@ bool ElfFile<ELF>::PackTypedRelocations(std::vector<typename ELF::Rela>* relocat
   section_header = ELF::getshdr(relocations_section_);
   {
     typename ELF::Dyn dyn;
-    dyn.d_tag = relocations_type_ == REL ? DT_ANDROID_REL : DT_ANDROID_RELA;
+    if (compress) {
+      dyn.d_tag = relocations_type_ == REL ? DT_ANDROID_COMPRESSED_REL : DT_ANDROID_COMPRESSED_RELA;
+    } else {
+      dyn.d_tag = relocations_type_ == REL ? DT_ANDROID_REL : DT_ANDROID_RELA;
+    }
     dyn.d_un.d_ptr = section_header->sh_addr;
     ReplaceDynamicEntry<ELF>(relocations_type_ == REL ? DT_REL : DT_RELA, dyn, &dynamics);
   }
@@ -841,30 +967,38 @@ bool ElfFile<ELF>::UnpackRelocations() {
       packed_base,
       packed_base + data->d_size / sizeof(packed[0]));
 
-  if ((section_header->sh_type == SHT_ANDROID_RELA || section_header->sh_type == SHT_ANDROID_REL) &&
+  bool compress = false;
+  if (IsPackedSectionType(section_header->sh_type) &&
       packed.size() > 3 &&
       packed[0] == 'A' &&
       packed[1] == 'P' &&
       packed[2] == 'S' &&
+      (packed[2] == 'S' || packed[2] == 'Z') &&
       packed[3] == '2') {
     LOG(INFO) << "Relocations   : " << (relocations_type_ == REL ? "REL" : "RELA");
+    compress = packed[2] == 'Z';
   } else {
     LOG(ERROR) << "Packed relocations not found (not packed?)";
     return false;
   }
 
-  return UnpackTypedRelocations(packed);
+  return UnpackTypedRelocations(packed, compress);
 }
 
 // Helper for UnpackRelocations().  Rel type is one of ELF::Rel or ELF::Rela.
 template <typename ELF>
-bool ElfFile<ELF>::UnpackTypedRelocations(const std::vector<uint8_t>& packed) {
+bool ElfFile<ELF>::UnpackTypedRelocations(const std::vector<uint8_t>& packed, bool compress) {
   // Unpack the data to re-materialize the relative relocations.
   const size_t packed_bytes = packed.size() * sizeof(packed[0]);
   LOG(INFO) << "Packed           : " << packed_bytes << " bytes";
   std::vector<typename ELF::Rela> unpacked_relocations;
   RelocationPacker<ELF> packer;
-  packer.UnpackRelocations(packed, &unpacked_relocations);
+  if (compress) {
+    std::vector<uint8_t> inflated = Uncompress(packed);
+    packer.UnpackRelocations(inflated, &unpacked_relocations);
+  } else {
+    packer.UnpackRelocations(packed, &unpacked_relocations);
+  }
 
   const size_t relocation_entry_size =
       relocations_type_ == REL ? sizeof(typename ELF::Rel) : sizeof(typename ELF::Rela);
@@ -917,8 +1051,13 @@ bool ElfFile<ELF>::UnpackTypedRelocations(const std::vector<uint8_t>& packed) {
     typename ELF::Dyn dyn;
     dyn.d_tag = relocations_type_ == REL ? DT_REL : DT_RELA;
     dyn.d_un.d_ptr = section_header->sh_addr;
-    ReplaceDynamicEntry<ELF>(relocations_type_ == REL ? DT_ANDROID_REL : DT_ANDROID_RELA,
-        dyn, &dynamics);
+    typename ELF::Sword tag;
+    if (compress) {
+      tag = relocations_type_ == REL ? DT_ANDROID_COMPRESSED_REL : DT_ANDROID_COMPRESSED_RELA;
+    } else {
+      tag = relocations_type_ == REL ? DT_ANDROID_REL : DT_ANDROID_RELA;
+    }
+    ReplaceDynamicEntry<ELF>(tag, dyn, &dynamics);
   }
 
   {

@@ -9,10 +9,11 @@ package org.chromium.base;
  */
 public class BuildConfig {
 
-    /** Whether multidex is enabled for this target.
+    /**
+     * Whether multidex is enabled for this target.
      *
-     *  This has to be a function instead of a static final boolean s.t. the initial false value
-     *  doesn't get optimized into {@link ChromiumMultiDexInstaller} at base_java compile time.
+     * This has to be a function instead of a static final boolean s.t. the initial false value
+     * doesn't get optimized into {@link ChromiumMultiDexInstaller} at base_java compile time.
      */
     public static boolean isMultidexEnabled() {
 #if defined(ENABLE_MULTIDEX)
@@ -28,6 +29,17 @@ public class BuildConfig {
 #else
     public static final boolean DCHECK_IS_ON = false;
 #endif
+
+    /**
+     * LegacyLinker must be used when packed relocations are compressed.
+     */
+    public static boolean useLegacyLinker() {
+#if defined(_USE_LEGACY_LINKER)
+      return true;
+#else
+      return false;
+#endif
+    }
 
     // Sorted list of locales that have a compressed .pak within assets.
     // Stored as an array because AssetManager.list() is slow.

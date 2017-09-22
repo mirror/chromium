@@ -89,3 +89,4 @@ Local Modifications:
 
 - Start zip EOCD signature search at size of EOCD record bytes from file end.
 
+- Added support for compressed packed relocations (https://crbug.com/681933).

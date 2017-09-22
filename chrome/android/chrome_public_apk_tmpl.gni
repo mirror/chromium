@@ -91,6 +91,13 @@ template("chrome_public_apk_tmpl") {
       if (!defined(enable_relocation_packing)) {
         enable_relocation_packing = chrome_public_apk_use_relocation_packer
       }
+
+      # TODO(agrieve): Remove the !load_library_from_apk restriction once
+      #     CrazyLinker is enabled for Android M (https://crbug.com/719977).
+      if (enable_relocation_packing && !defined(compress_packed_relocations) &&
+          !load_library_from_apk) {
+        compress_packed_relocations = true  # Requires crazy linker
+      }
     }
     command_line_flags_file = "chrome-command-line"
   }

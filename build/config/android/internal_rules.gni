@@ -3060,7 +3060,6 @@ if (enable_java_templates) {
       args = [
         "--depfile",
         rebase_path(depfile, root_build_dir),
-        "--enable-packing=1",
         "--android-pack-relocations",
         rebase_path(relocation_packer_exe, root_build_dir),
         "--stripped-libraries-dir",
@@ -3071,6 +3070,10 @@ if (enable_java_templates) {
         "--filelistjson",
         rebase_path(invoker.file_list_json, root_build_dir),
       ]
+      if (defined(invoker.compress_packed_relocations) &&
+          invoker.compress_packed_relocations) {
+        args += [ "--compress" ]
+      }
     }
   }
 }

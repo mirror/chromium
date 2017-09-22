@@ -9,6 +9,7 @@ if (current_toolchain == host_toolchain) {
   source_set("android_lib_relocation_packer") {
     deps = [
       "//third_party/elfutils:libelf",
+      "//third_party/lz4:lz4_full",
     ]
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
