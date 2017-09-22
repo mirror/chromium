@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30412002_c31a19df",
+        "filename": "url/url_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-22T10:42:14Z",
+      "side": 1,
+      "message": "Not sure it makes sense to put this limitation in //url. If we\u0027re mostly concerned about this kind of thing coming from Blink, perhaps it would be better to put the max length in KURL\u0027s constructor?",
+      "revId": "636927c8b0993af8a24bf56ffcfbb6b4b11176d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
