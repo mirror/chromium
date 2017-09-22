@@ -117,6 +117,30 @@
       "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a1ed41_5d5323d8",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T19:32:02Z",
+      "side": 1,
+      "message": "Ah, nice catch. \n\nLooking at this with slightly fresher eyes, I think I can be more clear about what I\u0027m doing and use less code. PTAL?",
+      "parentUuid": "15a1aa86_e46daad6",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
