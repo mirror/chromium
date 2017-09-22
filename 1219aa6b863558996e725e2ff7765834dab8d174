@@ -16,6 +16,24 @@
       "revId": "1219aa6b863558996e725e2ff7765834dab8d174",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfb3570_791f97d7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 34
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-22T15:38:41Z",
+      "side": 1,
+      "message": "\u003e Where is the corresponding call to removeChildViewController?\n\nIn PasswordController I call removeFromParentViewController. I don\u0027t need to modify BrowserViewController code for that.\n\n\u003e Is it ok if this is invoked multiple times simultaneously for different tabs?\n\nIt wasn\u0027t.\nIn next patch set, I only display the view that came from active tab (+added a TODO to delay showing the view for inactive tabs, instead of suppressing them).",
+      "parentUuid": "140bdd16_46ffc741",
+      "revId": "1219aa6b863558996e725e2ff7765834dab8d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
