@@ -9,11 +9,13 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "net/base/network_change_notifier.h"
 
 namespace policy {
 
@@ -56,6 +58,7 @@ class DeviceOffHoursController {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
+  DeviceOffHoursController(base::Clock* clock, base::TickClock* timer_clock);
   ~DeviceOffHoursController();
 
   // Return current "OffHours" mode status.
@@ -86,7 +89,10 @@ class DeviceOffHoursController {
 
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
-  base::OneShotTimer timer_;
+  std::unique_ptr<base::OneShotTimer> timer_;
+
+  // TODO(yakovleva): description
+  std::unique_ptr<base::Clock> clock_;
 
   bool off_hours_mode_ = false;
 

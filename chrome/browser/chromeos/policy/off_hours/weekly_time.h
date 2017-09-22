@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "base/values.h"
 
@@ -36,8 +37,13 @@ class WeeklyTime {
   // (i.e. [Friday 17:00, Monday 9:00) )
   base::TimeDelta GetDurationTo(const WeeklyTime& other) const;
 
+  // Convert input WeeklyTime structure to GMT timezone considering daylight
+  // time. |gmt_offset| is time in milliseconds which is added to GMT to get
+  // input time.
+  WeeklyTime ConvertToGmt(int gmt_offset) const;
+
   // Return current time in WeeklyTime structure.
-  static WeeklyTime GetCurrentWeeklyTime();
+  static WeeklyTime GetCurrentWeeklyTime(base::Clock* clock);
 
  private:
   // Number of weekday (1 = Monday, 2 = Tuesday, etc.)
