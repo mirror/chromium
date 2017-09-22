@@ -16,6 +16,24 @@
       "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b09e24c_fa682468",
+        "filename": "ash/resources/vector_icons/notification_stylus_battery_warning.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-22T15:55:26Z",
+      "side": 1,
+      "message": "I believe this is because most of the assets are white, which is the default. This one is supposed to be red-ish (copied from Tetsui).",
+      "parentUuid": "a6ed60e8_c26a0322",
+      "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
