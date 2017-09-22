@@ -16,6 +16,29 @@
       "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00a4e09_b5cea787",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-22T23:24:35Z",
+      "side": 1,
+      "message": "Out of curiosity: it took some effort to implement this class so that I can delay sending back the response contents to a certain point. Is there an easy way that is already available?",
+      "range": {
+        "startLine": 562,
+        "startChar": 6,
+        "endLine": 562,
+        "endChar": 30
+      },
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
