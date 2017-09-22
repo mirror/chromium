@@ -22,6 +22,30 @@
       "revId": "ac8847473bd4731b2d253009b728556f60a139c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a690842_cd256bcb",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-22T19:06:02Z",
+      "side": 1,
+      "message": "Good eye, done.",
+      "parentUuid": "b3f744f2_52fbb035",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "ac8847473bd4731b2d253009b728556f60a139c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
