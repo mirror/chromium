@@ -23,6 +23,8 @@ class DeviceCapabilityManagerImpl : public DeviceCapabilityManager {
  public:
   class Factory {
    public:
+    virtual ~Factory();
+
     static std::unique_ptr<DeviceCapabilityManager> NewInstance(
         CryptAuthClientFactory* cryptauth_client_factory);
 
