@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e486e825_60bad64a",
+        "filename": "rules.pl",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-09-22T09:57:12Z",
+      "side": 1,
+      "message": "IIUC, putting default_submit here will disable the following rules. Because it will always be met and return \"needs some-label\u0027. That\u0027s why we always put \u0027need(_)\u0027 in the end [1].\n\n[1] https://gerrit-review.googlesource.com/Documentation/prolog-cookbook.html",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 6
+      },
+      "revId": "eced9366462a9ee53b3f8ef75f260da9a1031a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cf93b8_d7940068",
+        "filename": "rules.pl",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-09-22T09:57:12Z",
+      "side": 1,
+      "message": "Great. They look good to me. The following rule.pl could work:\n\nsubmit_rule(submit(M, A, R)) :-\n  pure_revert_conditions,\n  !,\n  gerrit:commit_author(Au),\n  M \u003d label(\u0027Change-On-Master\u0027, ok(Au)),\n  A \u003d label(\u0027Authored-and-Committed-by-Findit\u0027, ok(Au)),\n  R \u003d label(\u0027Is-Pure-Revert\u0027, ok(Au)).\n\n% Reuse default logic.\nsubmit_rule(X) :-\n    gerrit:default_submit(X).\n\n% Special submit rule on Findit auto-reverts: A change is submittable if\n% 1. If Findit created the change,\n% 2. If Findit wants to commit the change,\n% 3. If the change is a pure revert of another change.\npure_revert_conditions() :-\n    gerrit:change_branch(\u0027refs/heads/master\u0027),\n    gerrit:commit_author(Id, \u0027Findit\u0027, \u0027findit-for-me@appspot.gserviceaccount.com\u0027),\n    gerrit:current_user(Id),\n    gerrit:pure_revert(1).\n\n\nHowever, this is not good enough yet. When a change isn\u0027t submittable, you have to decide in the rules which label should be needed. If the change is a regular change and should use default rule, then you would expect to return \u0027Needs Code-Review\u0027. If it should be considered as a Revert change, then probably you want to return \u0027Needs ****\u0027. \n\nSo you need to define a condition to classify a change to one category (regular or revert). If you use \u0027gerrit:pure_revert(1)\u0027 as the condition. So the rule will look like:\n\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e\n\n\n% Special submit rule on Findit auto-reverts: A change is submittable if\n% 1. If Findit created the change,\n% 2. If Findit wants to commit the change,\n% 3. If the change is a pure revert of another change.\nsubmit_rule(submit(M, A)) :-\n  gerrit:pure_revert(1),\n  !,\n  change_is_on_master(M),\n  created_and_committed_by_findit(A).\n\n% Reuse default logic.\nsubmit_rule(X) :-\n  \\+ gerrit:pure_revert(1),\n  gerrit:default_submit(X).\n\n% The change is on master branch.\nchange_is_on_master(M) :-\n    gerrit:change_branch(\u0027refs/heads/master\u0027),\n    !,\n    gerrit:commit_author(A),\n    M \u003d label(\u0027Change-On-Master\u0027, ok(A)).\nchange_is_on_master(M) :-\n    gerrit:change_branch(B),\n    B \\\u003d \u0027refs/heads/master\u0027,\n    M \u003d label(\u0027Change-On-Master\u0027, need(_)).\n% Findit is CL author and now it tries to commit the CL.\ncreated_and_committed_by_findit(A) :-\n    gerrit:commit_author(Id, \u0027Findit\u0027, \u0027findit-for-me@appspot.gserviceaccount.com\u0027),\n    gerrit:current_user(Id),\n    !,\n    A \u003d label(\u0027Authored-and-Committed-by-Findit\u0027, ok(Id)).\ncreated_and_committed_by_findit(A) :-\n    A \u003d label(\u0027Authored-and-Committed-by-Findit\u0027, need(_)).",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "eced9366462a9ee53b3f8ef75f260da9a1031a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
