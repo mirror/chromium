@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6cf87a9_6d0e0727",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-22T06:09:02Z",
+      "side": 0,
+      "message": "There\u0027s a bug here that we don\u0027t call WebContentsObserver::Observe()",
+      "revId": "a7d11af324c214dc2c64cc1dbfbb8d3772831a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
