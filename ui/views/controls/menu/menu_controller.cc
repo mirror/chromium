@@ -1084,7 +1084,7 @@ ui::PostDispatchAction MenuController::OnWillDispatchKeyEvent(
     return ui::POST_DISPATCH_PERFORM_DEFAULT;
   }
 
-  event->StopPropagation();
+  event->SetHandled();
 
   if (event->type() == ui::ET_KEY_PRESSED) {
     base::WeakPtr<MenuController> this_ref = AsWeakPtr();
