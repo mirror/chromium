@@ -155,6 +155,15 @@ void LayoutNGBlockFlow::AddOverflowFromChildren() {
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  if (ChildrenInline()) {
+    // Table (and Grid?) calls this before layout?
+    if (NeedsLayout())
+      return LayoutBlockFlow::FirstLineBoxBaseline();
+#if 0
+    // Still hit this, needs investigation.
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+#endif
+  }
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
@@ -162,6 +171,21 @@ LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  DCHECK(!NeedsLayout());
+  if (ChildrenInline()) {
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+    // TODO(kojii): Implement. This will stop working once we stop creating line
+    // boxes.
+    const NGPhysicalBoxFragment& physical_fragment =
+        ToNGPhysicalBoxFragment(*cached_result_->PhysicalFragment());
+    FontBaseline baseline_type =
+        IsHorizontalWritingMode() ? kAlphabeticBaseline : kIdeographicBaseline;
+    // TODO(kojii): How do we know if we were on the first line?
+    if (const NGBaseline* baseline = physical_fragment.Baseline(
+            {NGBaselineAlgorithmType::kAtomicInline, baseline_type})) {
+    }
+    // NOTREACHED();
+  }
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
