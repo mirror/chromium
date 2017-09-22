@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "383eaeb4_5c9217c6",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T02:28:26Z",
+      "side": 1,
+      "message": "This is fine, it\u0027s one of the few cases where longer lines are acceptable.",
+      "parentUuid": "2617779f_0fe62883",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e1f04d7_50750bc9",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 1
@@ -101,6 +119,23 @@
       "side": 1,
       "message": "I\u0027m gonna remove this one for now, but the documentation adds to this entry: This option is sometimes useful when trying to compile the date and time functions on a platform that does not support the concept of local time.\n\nSo, by what I understand, this is not referring to specific SQL functions, or at least it only affects underlying logic implementing them.",
       "parentUuid": "47506679_5a4e5b78",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54aaa48d_2d5248cc",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T02:28:26Z",
+      "side": 1,
+      "message": "Please add a note in the doc describing why we\u0027re leaving this one in for now. If it\u0027s really only used by fuzzers, we should (in follow up patches) try to change the fuzzers and then remove the feature.",
       "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
