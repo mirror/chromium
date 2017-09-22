@@ -71,6 +71,7 @@
           <paper-checkbox aria-labelledby="tpm-firmware-update-label"
               id="tpmFirmwareUpdateCheckbox"
               checked="{{tpmFirmwareUpdateChecked_}}"
+              disabled="{{!tpmFirmwareUpdateEditable_}}"
               on-change="onTPMFirmwareUpdateChanged_">
             <div id="tpmFirmwareUpdateContainer">
               <span i18n-content="resetTPMFirmwareUpdate"></span>
