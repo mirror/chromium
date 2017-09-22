@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe3f11a_52699db6",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-22T00:45:10Z",
+      "side": 1,
+      "message": "Could we use TaskRunnerHelper::Get here?",
+      "range": {
+        "startLine": 537,
+        "startChar": 6,
+        "endLine": 537,
+        "endChar": 49
+      },
+      "revId": "904a58d3c590814751b1c6a87687986686b715dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9a2b52_4b1ff77e",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebSocketHandle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-22T00:45:10Z",
+      "side": 1,
+      "message": "Let\u0027s use RefPtr everywhere for WebTaskRunner. Soon for attribution purposes we\u0027ll have to return a new object for every TaskRunnerHelper::Get call and passing WebTaskRunner will cause problems.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "904a58d3c590814751b1c6a87687986686b715dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
