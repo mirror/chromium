@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e3aecab_8f95d3e3",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "return CheckContextLost() ? nullptr : context_provider_;\n\nis somewhat more readable, IMHO.",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b496f2bc_1efa7c2a",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "since this doesn\u0027t actually refer to any MediaFactory instance, you might just put it in an anonymous namespace rather than as a static fn.  that gets it out of the header and hides it as an implementation detail.  otherwise, it\u0027s a public static fn, which is confusing.",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08b168d_4af755a9",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "base::Callback\u003cvoid(media::GVAF*)\u003e could use a type alias.",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc251580_11d224ef",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "the outer callback could also use a type alias.  also, please add some comments.",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8028b81_9f602650",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem like a \"context provider callback\" to me.  it seems like a \"GpuVideoAcceleratorFactories provider callback\".",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b69f26_33858424",
+        "filename": "media/video/mock_gpu_video_accelerator_factories.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "you shouldn\u0027t need this, since it\u0027s in gpu_video_accelerator_factories.h already.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1419a87e_e920e303",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "is this legal to call on this thread?\n\nactually, why is it being called at all here?  why not just send in the context provider directly from the callback, and have it do this?  i\u0027m not sure that we really need to pass the GpuVideoAcceleratorFactories all the way down here.",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93dea21_5080b0d5",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-22T20:05:14Z",
+      "side": 1,
+      "message": "if |context_provider_callback_| calls back with null, then this is going to be the thread-hopping equivalent of a busy wait.\n\ngiven that you\u0027re also calling this in the constructor, i take it that you\u0027re expecting it to be null sometimes.",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
