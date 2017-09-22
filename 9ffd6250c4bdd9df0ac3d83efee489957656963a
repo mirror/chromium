@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18587aa5_432162ff",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-22T17:31:02Z",
+      "side": 1,
+      "message": "Nit:\nThe comment here reads like there must be something special about this value and that it doesn\u0027t work as one would normally expect.\n\nI don\u0027t think that\u0027s actually the case (I didn\u0027t go and read the comments on CastsocketOpenParams though).",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "9ffd6250c4bdd9df0ac3d83efee489957656963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
