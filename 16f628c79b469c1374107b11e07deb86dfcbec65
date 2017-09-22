@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9261ea26_9c8357f8",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Please untemplatize this class in another patch.\nPlease replace |Strategy::XXX()| to |NodeTraversal::XXX()|.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3bee9e_22331c7c",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "nit: Please remove an extra blank line.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6e2c5c_4e04db29",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "nit: Please remove \"{}\". For one statement then-clause, we don\u0027t need to\nhave \"{}\".",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c650ee_42a07fdb",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "nit: Please remove an extra blank line.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6f0bf6_a6577bb7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Better to write\nif (ShadowRoot* element \u003d element-\u003eShadowRootIfV1())\n\nto avoid call |element-\u003eShadowRootIfV1()| twice.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d9e9c9_37e594a6",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Please introduce HandleContanerNode() to share code L129-L133 and L135-L141.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac441619_08766460",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "nit: Please remove this statement.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58db1b5_460d72fe",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Could you also have test case for using SLOT elements?",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23886667_b76825e0",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Please write Position constructor directly in |EXPECT_EQ()|.\nWe don\u0027t need to use variables, |base| and |extent|.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302f40ae_c7662870",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T09:06:14Z",
+      "side": 1,
+      "message": "Please utilize |getElementById()| to have \"shadow1\" and \"shadow2\"\ninstead of using |firstChild()|, |nextSibling()|, etc.",
+      "revId": "16f628c79b469c1374107b11e07deb86dfcbec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
