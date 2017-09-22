@@ -46,7 +46,7 @@ class CORE_EXPORT CSSParserTokenStream {
   };
 
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
-      : buffer_(512), tokenizer_(tokenizer), next_(kEOFToken) {}
+      : buffer_(128), tokenizer_(tokenizer), next_(kEOFToken) {}
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
