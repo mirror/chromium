@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9f5dcc58_2be862a0",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T15:17:40Z",
+      "side": 1,
+      "message": "You could also load up chrome/test/data/extensions/simple_with_icon if you wanted to use a \"real\" extension with an actual icon, or could use TestExtensionDir to create your own.  ExtensionBuilder is good for some uses, but will break if anything relies on the extension existing somewhere on disk.\n\nUp to you - any of these approaches is fine.",
+      "parentUuid": "123f8623_92c7cca7",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f6ac210_5702182a",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8

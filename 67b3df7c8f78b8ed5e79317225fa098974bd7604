@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9488ce4_926e6926",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T15:17:40Z",
+      "side": 1,
+      "message": "nit: s/seems to do anything interesting/results in a bubble displaying to the user\nor similar",
+      "revId": "67b3df7c8f78b8ed5e79317225fa098974bd7604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eff32b7_7e96d381",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T15:17:40Z",
+      "side": 1,
+      "message": "nittiest of nits: \u0027.\u0027 inside parens",
+      "range": {
+        "startLine": 126,
+        "startChar": 64,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "67b3df7c8f78b8ed5e79317225fa098974bd7604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
