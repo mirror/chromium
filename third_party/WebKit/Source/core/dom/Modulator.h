@@ -142,7 +142,9 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   virtual Vector<ModuleRequest> ModuleRequestsFromScriptModule(
       ScriptModule) = 0;
 
-  virtual void ExecuteModule(const ModuleScript*) = 0;
+  virtual ScriptValue ExecuteModule(
+      const ModuleScript*,
+      CaptureEvalErrorFlag = CaptureEvalErrorFlag::kReport) = 0;
 
   virtual ModuleScriptFetcher* CreateModuleScriptFetcher() = 0;
 
