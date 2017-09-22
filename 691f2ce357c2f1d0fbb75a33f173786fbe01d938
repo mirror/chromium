@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5fcf83_8f642e7b",
+        "filename": "ios/showcase/payments/sc_payments_editor_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-22T16:24:05Z",
+      "side": 1,
+      "message": "This comment contradicts the claims made by EarlGrey on github. https://github.com/google/EarlGrey/blob/master/docs/features.md\nCan you elaborate what makes the specific animations incompatible with EarlGrey\u0027s synchronization mechanisms?",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 76
+      },
+      "revId": "691f2ce357c2f1d0fbb75a33f173786fbe01d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
