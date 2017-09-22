@@ -34,6 +34,24 @@
       "revId": "b508b6eae5403b5fc61d54287b1cd9eefabd6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ae96a7_4d7e6f58",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2951,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-22T21:30:00Z",
+      "side": 1,
+      "message": "(Fixed the comment)",
+      "parentUuid": "f3bd25ab_00b2bf94",
+      "revId": "b508b6eae5403b5fc61d54287b1cd9eefabd6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
