@@ -40,6 +40,7 @@ class EnvObserver;
 class InputStateLookup;
 class MusMouseLocationUpdater;
 class Window;
+class WindowOcclusionTracker;
 class WindowPort;
 class WindowTreeClient;
 class WindowTreeHost;
@@ -109,6 +110,9 @@ class AURA_EXPORT Env : public ui::EventTarget,
   ui::ContextFactoryPrivate* context_factory_private() {
     return context_factory_private_;
   }
+  WindowOcclusionTracker* window_occlusion_tracker() const {
+    return window_occlusion_tracker_.get();
+  }
 
   // See CreateInstance() for description.
   void SetWindowTreeClient(WindowTreeClient* window_tree_client);
@@ -170,6 +174,7 @@ class AURA_EXPORT Env : public ui::EventTarget,
   base::ObserverList<EnvObserver> observers_;
 
   std::unique_ptr<EnvInputStateController> env_controller_;
+  const std::unique_ptr<WindowOcclusionTracker> window_occlusion_tracker_;
   int mouse_button_flags_;
   // Location of last mouse event, in screen coordinates.
   mutable gfx::Point last_mouse_location_;
