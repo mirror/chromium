@@ -27,8 +27,6 @@ class BrowserInstantController {
   // Returns the Profile associated with the Browser that owns this object.
   Profile* profile() const;
 
-  InstantController* instant() { return &instant_; }
-
   // Invoked by |browser_| when the active tab changes.
   void OnTabActivated(content::WebContents* web_contents);
   void OnTabDeactivated(content::WebContents* web_contents);
