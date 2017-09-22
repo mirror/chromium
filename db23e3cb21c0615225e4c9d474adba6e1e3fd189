@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352e1eae_cac8f48a",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "Same comment as on previous CL- there is not \"primary\" if not syncing, so this test is the same as the one above. You may remove it if you agree (or keep it if you think it is necessary).",
+      "range": {
+        "startLine": 437,
+        "startChar": 22,
+        "endLine": 437,
+        "endChar": 27
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90c3bfd_6602e90c",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "Kill empty line.",
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f4e2b0_e1a0a6e7",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "s/exectution/execution",
+      "range": {
+        "startLine": 728,
+        "startChar": 58,
+        "endLine": 728,
+        "endChar": 68
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343ccbc8_3bc797e8",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "I think this test is already covered by the table test).",
+      "range": {
+        "startLine": 729,
+        "startChar": 30,
+        "endLine": 729,
+        "endChar": 51
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6f2289_679aaebd",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "s/primary_account_mismatch/first_account_mismatch",
+      "range": {
+        "startLine": 494,
+        "startChar": 7,
+        "endLine": 494,
+        "endChar": 31
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a71e10_e9224ff4",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "Should this be first_account.empty() and remove the |do_full_logout|? This would also make it clear why it is safe to do add_to_cookie_.push_back(first_account) on the else branch.",
+      "range": {
+        "startLine": 522,
+        "startChar": 6,
+        "endLine": 522,
+        "endChar": 20
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446caeb6_55f3ee8e",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "It is not clear to me why we only enter here for DICE. I mean for Mirror we may also call Logout when the user signs out of Chrome.\n\nTake the following scenario (only sure about it at 50% though:\n* user signs out of Chrome while a ListAccounts in in progress\n* we get a call to OnGaiaAccountsInCookieUpdated before we reset the primary_account_id_\n* we start reconcile (note that now we start it even if there are no accounts as we only test if TokenService is loaded)",
+      "range": {
+        "startLine": 523,
+        "startChar": 19,
+        "endLine": 523,
+        "endChar": 50
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed39bebd_df5f0ec0",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "Could we extract this operation to a local function to make the FinishReconcile method more concise and easier to read (something like RevokeCredentials(std::string account_id_to_keep) or RevokeCredentialsForAllSecondaryAccounts)?",
+      "range": {
+        "startLine": 528,
+        "startChar": 18,
+        "endLine": 528,
+        "endChar": 19
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd57483b_623a1aad",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "s/gaia/Gaia",
+      "range": {
+        "startLine": 536,
+        "startChar": 62,
+        "endLine": 536,
+        "endChar": 66
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1de2fea_7efe4b58",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-22T13:05:52Z",
+      "side": 1,
+      "message": "I realized now that there is a difference on compared to what we had before - before the list of accounts may have been 0 if the user was signed out of Chrome (token service would have 0 accounts in that case and it would also be loaded). Not sure if that leads to any issue for mirror though.",
+      "range": {
+        "startLine": 634,
+        "startChar": 25,
+        "endLine": 634,
+        "endChar": 48
+      },
+      "revId": "db23e3cb21c0615225e4c9d474adba6e1e3fd189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
