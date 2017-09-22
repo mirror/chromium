@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "6b255cb2_930070cb",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-22T22:05:21Z",
+      "side": 1,
+      "message": "Sorry, missed this comment.  URLFetcher just takes a SequencedTaskRunner as input (Or even just a priority), which is certainly something we could do, but as you say, it\u0027s unlikely to see much use.  The default priority of ResourceRequest is IDLE, so if we just use that mapping, requests would use background priority by default, which I can certainly live with.  I\u0027ll go ahead and update the other CL.",
+      "parentUuid": "ccadc685_5875797d",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4afb87d_0b936189",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
