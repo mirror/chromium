@@ -39,11 +39,11 @@ void DevToolsManagerDelegate::SessionDestroyed(
     content::DevToolsAgentHost* agent_host,
     int session_id) {}
 
-base::DictionaryValue* DevToolsManagerDelegate::HandleCommand(
+DevToolsManagerDelegate::CommandResponse DevToolsManagerDelegate::HandleCommand(
     DevToolsAgentHost* agent_host,
     int session_id,
     base::DictionaryValue* command) {
-  return nullptr;
+  return kFallThrough;
 }
 
 bool DevToolsManagerDelegate::HandleAsyncCommand(

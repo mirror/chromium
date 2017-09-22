@@ -80,12 +80,11 @@ protocol::Response::Status DevToolsSession::Dispatch(
   if (value && value->IsType(base::Value::Type::DICTIONARY) && delegate) {
     base::DictionaryValue* dict_value =
         static_cast<base::DictionaryValue*>(value.get());
-    std::unique_ptr<base::DictionaryValue> response(
-        delegate->HandleCommand(agent_host_, session_id_, dict_value));
-    if (response) {
-      SendResponse(std::move(response));
+    auto response =
+        delegate->HandleCommand(agent_host_, session_id_, dict_value);
+    if (response == DevToolsManagerDelegate::kHandled)
       return protocol::Response::kSuccess;
-    }
+
     if (delegate->HandleAsyncCommand(agent_host_, session_id_, dict_value,
                                      base::Bind(&DevToolsSession::SendResponse,
                                                 weak_factory_.GetWeakPtr()))) {
