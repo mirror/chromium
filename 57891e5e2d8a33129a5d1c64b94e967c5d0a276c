@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3ee97d04_7612a653",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:29:33Z",
+      "side": 1,
+      "message": "How about adding the comment like the following? (derived from the comment in ExecuteModule())\n\nCaptureEvalErrorFlag is used to implement \"rethrow errors\" parameter in run-a-module-script.\nWhen \"rethrow errors\" is to be set, use kCapture for\nScriptModule::Evaluate()/Modulator::EvaluateModule(), and rethrow the returned exception (if any) in the caller of these methods.\nWhen \"rethrow errors\" is not to be set, use kReport, and Evaluate()/EvaluateModule() \"report the error\".\n\nI think this kind of comments should be added somewhere in header files (not necessarily here though), because this is about the public interface methods of ScriptModule/Modulator and not about their implementation details.",
+      "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3027da62_30651ac8",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.h",
         "patchSetId": 1
@@ -30,6 +47,40 @@
       "writtenOn": "2017-09-22T06:19:42Z",
       "side": 1,
       "message": "nit: s/capture_error/kCapture/?",
+      "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d301077c_407ba22f",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImplBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:29:33Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f23101_c746ba97",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImplBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:29:33Z",
+      "side": 1,
+      "message": "See my comment in ScriptModule.h.\nThis kind of comments should be added in header files, not here.",
       "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
