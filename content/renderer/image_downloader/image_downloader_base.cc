@@ -119,7 +119,11 @@ void ImageDownloaderBase::DidFetchImage(
     if (iter->get() == fetcher) {
       iter->release();
       image_fetchers_.erase(iter);
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, fetcher);
+      render_frame()
+          ->GetTaskRunner(blink::TaskType::kUnspecedTimer)
+          ->PostTask(FROM_HERE,
+                     base::BindOnce([](MultiResolutionImageResourceFetcher*) {},
+                                    base::Owned(fetcher)));
       break;
     }
   }
