@@ -559,7 +559,7 @@ void EasyUnlockServiceSignin::OnUserDataLoaded(
     cryptauth::RemoteDevice remote_device(
         account_id.GetUserEmail(), std::string(), decoded_public_key,
         device.bluetooth_address, decoded_psk, true /* unlock_key */,
-        false /* supports_mobile_hotspot */);
+        false /* supports_mobile_hotspot */, 0 /* last_update_time_millis */);
 
     if (!device.serialized_beacon_seeds.empty()) {
       PA_LOG(INFO) << "Deserializing BeaconSeeds: "

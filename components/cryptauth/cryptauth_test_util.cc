@@ -14,5 +14,6 @@ const char kTestRemoteDeviceBluetoothAddress[] = "AA:BB:CC:DD:EE:FF";
 const char kTestRemoteDevicePSK[] = "remote device psk";
 const bool kTestRemoteDeviceUnlockKey = true;
 const bool kTestRemoteDeviceSupportsMobileHotspot = true;
+const int64 kTestRemoteDeviceLastUpdateTimeMillis = 0;
 
 }  // namespace cryptauth
