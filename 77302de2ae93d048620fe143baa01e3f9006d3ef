@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "34522aec_a6cd311e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T07:57:04Z",
+      "side": 1,
+      "message": "For now, they both have aa  \"Back\" value. I will remove the use of IDS_IOS_BOOKMARK_NEW_BACK_LABEL in a future CL.",
+      "parentUuid": "22a403d5_8340e64f",
+      "revId": "77302de2ae93d048620fe143baa01e3f9006d3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e47e897_5b5c6ba5",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 4
