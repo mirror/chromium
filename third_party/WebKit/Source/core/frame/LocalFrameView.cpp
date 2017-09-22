@@ -716,11 +716,11 @@ Scrollbar* LocalFrameView::CreateScrollbar(ScrollbarOrientation orientation) {
   return scrollbar_manager_.CreateScrollbar(orientation);
 }
 
-void LocalFrameView::SetContentsSize(const IntSize& size) {
-  if (size == ContentsSize())
+void LocalFrameView::SetLayoutOverflowSize(const IntSize& size) {
+  if (size == layout_overflow_size_)
     return;
 
-  contents_size_ = size;
+  layout_overflow_size_ = size;
   needs_scrollbars_update_ = true;
   ScrollableArea::ContentsResized();
 
@@ -755,7 +755,7 @@ void LocalFrameView::AdjustViewSize() {
       SetScrollOrigin(origin);
   }
 
-  SetContentsSize(size);
+  SetLayoutOverflowSize(size);
 }
 
 void LocalFrameView::AdjustViewSizeAndLayout() {
@@ -2744,7 +2744,12 @@ LocalFrameView::ScrollingReasons LocalFrameView::GetScrollingReasons() const {
   // 4) scrolling: no;
 
   // Covers #1
-  IntSize contents_size = this->ContentsSize();
+  IntSize contents_size;
+  if (GetLayoutView())
+    contents_size = GetLayoutView()->DocumentRect().Size();
+  else
+    contents_size = ContentsSize();
+
   IntSize visible_content_size = VisibleContentRect().Size();
   if ((contents_size.Height() <= visible_content_size.Height() &&
        contents_size.Width() <= visible_content_size.Width()))
@@ -4098,7 +4103,9 @@ IntRect LocalFrameView::VisibleContentRect(
 }
 
 IntSize LocalFrameView::ContentsSize() const {
-  return contents_size_;
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    return Size();
+  return layout_overflow_size_;
 }
 
 void LocalFrameView::ClipPaintRect(FloatRect* paint_rect) const {
@@ -4134,7 +4141,7 @@ int LocalFrameView::ScrollSize(ScrollbarOrientation orientation) const {
 
   // If no scrollbars are present, the content may still be scrollable.
   if (!scrollbar) {
-    IntSize scroll_size = contents_size_ - VisibleContentRect().Size();
+    IntSize scroll_size = ContentsSize() - VisibleContentRect().Size();
     scroll_size.ClampNegativeToZero();
     return orientation == kHorizontalScrollbar ? scroll_size.Width()
                                                : scroll_size.Height();
