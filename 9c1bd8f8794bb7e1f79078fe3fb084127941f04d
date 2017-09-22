@@ -52,6 +52,24 @@
       "revId": "9c1bd8f8794bb7e1f79078fe3fb084127941f04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbbfbb98_46fc2e9a",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-22T00:51:57Z",
+      "side": 1,
+      "message": "Turns out the logic for android_library had a bug where if the target didn\u0027t declare any deps, then build_hooks deps didn\u0027t get added either. Fixed.",
+      "parentUuid": "4c430d06_1d44b651",
+      "revId": "9c1bd8f8794bb7e1f79078fe3fb084127941f04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
