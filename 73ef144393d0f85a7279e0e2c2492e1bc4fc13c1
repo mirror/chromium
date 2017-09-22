@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c60d9bc_e7540ddd",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "If this is meant to be optional use base::Optional instead of a pointer.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04775ebe_6640347a",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "Default parameters are more or less banned by style guide.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de54554d_b9f76490",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "CancelCalibration?\n\nTo me, stop doesn\u0027t indicate success or failure. Cancel indicates failure.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c55a37_eebed592",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "nit: under process",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be57f87f_342d3c1b",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "What about using an enum instead of two booleans?\n\n  enum class CalibrationType {\n    kNative, kCustom, /* if needed, kNone */\n  };\n  CalibrationType calibration_type_;\n\nThat also clarifies if both in_native_calibration_ and in_custom_touch_calibration_ are the same value (either both true or both false).\n\nAlso, what do you think of kExtension instead of kCustom?\n\nI think kNative is more or less fine, but kBuiltIn is an alternative to consider. Up to you.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6a34a6_fe3776d7",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "nit: under process",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ca2b52_3e117bf4",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "No default parameters.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f620d2be_f3905a0d",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T23:01:52Z",
+      "side": 1,
+      "message": "No default parameters.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
