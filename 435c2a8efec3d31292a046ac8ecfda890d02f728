@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "da7829a7_d5159b8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T18:17:48Z",
+      "side": 1,
+      "message": "We can detect that CTA2 is running so long as its process hasn\u0027t died. If the process has died, tabs have to be re-created anyone so CTA taking over them isn\u0027t a big deal. Tab reparenting will need some work to support reparenting a batch of tabs at once. When I was implementing tab model merging last year, I could reparent one or two then things started misbehaving.",
+      "parentUuid": "03bd4d9d_8ee27aac",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35882aa2_b9fa1a5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 6
@@ -295,6 +313,30 @@
       "side": 1,
       "message": "But that\u0027s no different than before, right? Except that now CTA bounces and not ChromeLauncherActivity.\n\nDo you think user will see white screen flash during that bounce, because ChromeLauncherActivity is Translucent.NoTitleBar and CTA is not?\n\nI\u0027ll check this case and report here. I think we can also try setting theme to Translucent.NoTitleBar in abortLaunch().",
       "parentUuid": "b12fbca2_640652d6",
+      "range": {
+        "startLine": 445,
+        "startChar": 30,
+        "endLine": 445,
+        "endChar": 52
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926ff07a_614e66f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T18:17:48Z",
+      "side": 1,
+      "message": "Ted\u0027s understanding is correct. If we get an intent in ChromeLauncherActivity that is destined for tabbed mode and only CTA2 is running, the current behavior is to dispatch directly to CTA2.\n\nIn this current implementation, I do think the user will see a white screen flash during the bounce because CTA has a window background. I\u0027ve tried various incantations of setting the window background sometime after launch (e.g. so we can show a different one when Chrome Home is enabled or when we know we\u0027re launching an incognito tab immediately), but haven\u0027t had any luck.",
+      "parentUuid": "186d8fef_fbdff5ec",
       "range": {
         "startLine": 445,
         "startChar": 30,
