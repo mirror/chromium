@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a28b5e9_8e9c0cdc",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-22T17:39:39Z",
+      "side": 1,
+      "message": "Comment that this is only for ChromeOS?",
+      "revId": "a84e88824db01d78b6d7a544d10ec5dde0efc31f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c46c26b_32c2d4fe",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-22T17:39:39Z",
+      "side": 1,
+      "message": "\u003d false to ensure it\u0027s initialized?",
+      "range": {
+        "startLine": 23,
+        "startChar": 34,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "a84e88824db01d78b6d7a544d10ec5dde0efc31f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
