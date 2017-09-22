@@ -40,6 +40,7 @@
           "content::mojom::WebDatabaseHost",
           "content::mojom::WorkerURLLoaderFactoryProvider",
           "device::mojom::BatteryMonitor",
+          "device::mojom::FakeBluetooth",
           "device::mojom::GamepadMonitor",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_coordinator::mojom::MemoryCoordinatorHandle",
@@ -77,6 +78,7 @@
         "data_decoder": [ "image_decoder" ],
         "device": [
           "device:battery_monitor",
+          "device:fake_bluetooth",
           "device:generic_sensor",
           "device:hid",
           "device:nfc",
