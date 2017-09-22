@@ -19,11 +19,14 @@ source_set("test_support") {
     "mock_download_service.h",
     "test_download_service.cc",
     "test_download_service.h",
+    "test_network_change_notifier.cc",
+    "test_network_change_notifier.h",
   ]
 
   public_deps = [
     "//base",
     "//components/download/public",
+    "//net",
     "//testing/gmock",
   ]
 }
