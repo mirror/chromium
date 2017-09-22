@@ -16,6 +16,24 @@
       "revId": "f7bcb0817da01448a6c12e4dcef6079f0ed39f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3654e8f_818e001c",
+        "filename": "ash/shelf/shelf_background_animator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-22T22:30:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64774bca_76ba7693",
+      "revId": "f7bcb0817da01448a6c12e4dcef6079f0ed39f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
