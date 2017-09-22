@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "de750c0c_032ee70e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:25:38Z",
+      "side": 1,
+      "message": "You\u0027re not using the (boolean) value of |result| anywhere in the code, just its presence (except in tests). Can you change it to |bool removal_attempted|, or add a comment that the value is only used in tests?",
+      "range": {
+        "startLine": 956,
+        "startChar": 62,
+        "endLine": 956,
+        "endChar": 68
+      },
+      "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a56367_27c23d36",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -67,6 +90,29 @@
       "side": 1,
       "message": "Thank you for comment.\nAck. Branched to an offline discussion, as this is off-topic for this CL.",
       "parentUuid": "74977a05_387c9648",
+      "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab051629_5b7f3942",
+        "filename": "components/arc/arc_data_remover_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:25:38Z",
+      "side": 1,
+      "message": "Can you call this \"PrefPersistsAcrossInstances\"? I had a bit of trouble figuring out what this test was supposed to do.",
+      "range": {
+        "startLine": 97,
+        "startChar": 27,
+        "endLine": 97,
+        "endChar": 37
+      },
       "revId": "bdedb3f264459682c91d225e701d90b5045e1a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
