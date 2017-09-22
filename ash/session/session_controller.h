@@ -46,6 +46,10 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   base::TimeDelta session_length_limit() const { return session_length_limit_; }
   base::TimeTicks session_start_time() const { return session_start_time_; }
 
+  base::TimeDelta off_hours_duration() const { return off_hours_duration_; }
+  base::Time off_hours_start_time() const { return off_hours_start_time_; }
+  bool off_hours_mode() const { return off_hours_mode_; }
+
   // Binds the mojom::SessionControllerRequest to this object.
   void BindRequest(mojom::SessionControllerRequest request);
 
@@ -191,6 +195,12 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   void ProvideUserPrefServiceForTest(const AccountId& account_id,
                                      std::unique_ptr<PrefService> pref_service);
 
+  // Set "OffHours" session start time and duration.
+  void SetOffHoursTime(base::Time start_time,
+                       base::TimeDelta duration) override;
+  // Update "OffHours" mode.
+  void UpdateOffHourMode(bool off_hours_mode) override;
+
  private:
   void SetSessionState(session_manager::SessionState state);
   void AddUserSession(mojom::UserSessionPtr user_session);
@@ -263,6 +273,14 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // null if there is no session length limit. This value is also stored in a
   // pref in case of a crash during the session.
   base::TimeTicks session_start_time_;
+
+  // "OffHours" mode duration from the start time.
+  base::TimeDelta off_hours_duration_;
+
+  // "OffHours" mode start time.
+  base::Time off_hours_start_time_;
+
+  bool off_hours_mode_;
 
   base::ObserverList<ash::SessionObserver> observers_;
 
