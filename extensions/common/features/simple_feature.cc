@@ -560,9 +560,13 @@ Feature::Availability SimpleFeature::GetEnvironmentAvailability(
   if (channel_ && *channel_ < GetCurrentChannel())
     return CreateAvailability(UNSUPPORTED_CHANNEL, *channel_);
 
-  if (!command_line_switch_.empty() &&
-      !IsCommandLineSwitchEnabled(command_line, command_line_switch_)) {
-    return CreateAvailability(MISSING_COMMAND_LINE_SWITCH);
+  if (!command_line_switch_.empty()) {
+    if (!command_line_switch_result_) {
+      command_line_switch_result_ =
+          IsCommandLineSwitchEnabled(command_line, command_line_switch_);
+    }
+    if (!(*command_line_switch_result_))
+      return CreateAvailability(MISSING_COMMAND_LINE_SWITCH);
   }
 
   if (!MatchesSessionTypes(session_type))

@@ -17,6 +17,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/values.h"
 #include "components/version_info/version_info.h"
 #include "extensions/common/extension.h"
@@ -259,6 +260,9 @@ class SimpleFeature : public Feature {
   bool component_extensions_auto_granted_;
   bool is_internal_;
   std::string command_line_switch_;
+  // The result of checking for the command line switch. Lazily calculated, then
+  // cached.
+  mutable base::Optional<bool> command_line_switch_result_;
   std::unique_ptr<version_info::Channel> channel_;
 
   DISALLOW_COPY_AND_ASSIGN(SimpleFeature);

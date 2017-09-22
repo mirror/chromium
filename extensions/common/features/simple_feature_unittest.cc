@@ -664,43 +664,39 @@ TEST_F(SimpleFeatureTest, ManifestVersion) {
 }
 
 TEST_F(SimpleFeatureTest, CommandLineSwitch) {
-  SimpleFeature feature;
-  feature.set_command_line_switch("laser-beams");
-  {
-    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH,
-              feature.IsAvailableToEnvironment().result());
-  }
+  auto test_feature = []() {
+    SimpleFeature feature;
+    feature.set_command_line_switch("laser-beams");
+    return feature.IsAvailableToEnvironment().result();
+  };
+
+  { EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH, test_feature()); }
   {
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitch("laser-beams");
-    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH, test_feature());
   }
   {
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitch(
         "enable-laser-beams");
-    EXPECT_EQ(Feature::IS_AVAILABLE,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::IS_AVAILABLE, test_feature());
   }
   {
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitch(
         "disable-laser-beams");
-    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH, test_feature());
   }
   {
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitch("laser-beams=1");
-    EXPECT_EQ(Feature::IS_AVAILABLE,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::IS_AVAILABLE, test_feature());
   }
   {
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitch("laser-beams=0");
-    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH, test_feature());
   }
 }
 
@@ -949,19 +945,21 @@ TEST(SimpleFeatureUnitTest, TestAvailableToEnvironment) {
   }
 
   {
-    // Test with command-line restrictions.
+    // Test with command-line restrictions. Since the command-line determination
+    // is cached, we create a new feature each check.
     const char kFakeSwitch[] = "some-fake-switch";
-    SimpleFeature feature;
-    feature.set_command_line_switch(kFakeSwitch);
+    auto test_feature = [kFakeSwitch]() {
+      SimpleFeature feature;
+      feature.set_command_line_switch(kFakeSwitch);
+      return feature.IsAvailableToEnvironment().result();
+    };
 
-    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH,
-              feature.IsAvailableToEnvironment().result());
+    EXPECT_EQ(Feature::MISSING_COMMAND_LINE_SWITCH, test_feature());
     {
       base::test::ScopedCommandLine command_line;
       command_line.GetProcessCommandLine()->AppendSwitch(
           base::StringPrintf("enable-%s", kFakeSwitch));
-      EXPECT_EQ(Feature::IS_AVAILABLE,
-                feature.IsAvailableToEnvironment().result());
+      EXPECT_EQ(Feature::IS_AVAILABLE, test_feature());
     }
   }
 
