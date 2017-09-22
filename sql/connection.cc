@@ -97,7 +97,7 @@ int BackupDatabase(sqlite3* src, sqlite3* dst, const char* db_name) {
   if (!backup) {
     // Since this call only sets things up, this indicates a gross
     // error in SQLite.
-    DLOG(FATAL) << "Unable to start sqlite3_backup(): " << sqlite3_errmsg(dst);
+    DLOG(DCHECK) << "Unable to start sqlite3_backup(): " << sqlite3_errmsg(dst);
     return sqlite3_errcode(dst);
   }
 
@@ -466,7 +466,7 @@ void Connection::CloseInternal(bool forced) {
     int rc = sqlite3_close(db_);
     if (rc != SQLITE_OK) {
       UMA_HISTOGRAM_SPARSE_SLOWLY("Sqlite.CloseFailure", rc);
-      DLOG(FATAL) << "sqlite3_close failed: " << GetErrorMessage();
+      DLOG(DCHECK) << "sqlite3_close failed: " << GetErrorMessage();
     }
   }
   db_ = NULL;
@@ -1059,13 +1059,13 @@ bool Connection::Raze() {
   }
 
   if (transaction_nesting_ > 0) {
-    DLOG(FATAL) << "Cannot raze within a transaction";
+    DLOG(DCHECK) << "Cannot raze within a transaction";
     return false;
   }
 
   sql::Connection null_db;
   if (!null_db.OpenInMemory()) {
-    DLOG(FATAL) << "Unable to open in-memory database.";
+    DLOG(DCHECK) << "Unable to open in-memory database.";
     return false;
   }
 
@@ -1141,14 +1141,14 @@ bool Connection::Raze() {
     sqlite3_file* file = NULL;
     rc = GetSqlite3File(db_, &file);
     if (rc != SQLITE_OK) {
-      DLOG(FATAL) << "Failure getting file handle.";
+      DLOG(DCHECK) << "Failure getting file handle.";
       return false;
     }
 
     rc = file->pMethods->xTruncate(file, 0);
     if (rc != SQLITE_OK) {
       UMA_HISTOGRAM_SPARSE_SLOWLY("Sqlite.RazeDatabaseTruncate",rc);
-      DLOG(FATAL) << "Failed to truncate file.";
+      DLOG(DCHECK) << "Failed to truncate file.";
       return false;
     }
 
@@ -1156,14 +1156,14 @@ bool Connection::Raze() {
     UMA_HISTOGRAM_SPARSE_SLOWLY("Sqlite.RazeDatabase2",rc);
 
     if (rc != SQLITE_DONE) {
-      DLOG(FATAL) << "Failed retrying Raze().";
+      DLOG(DCHECK) << "Failed retrying Raze().";
     }
   }
 
   // The entire database should have been backed up.
   if (rc != SQLITE_DONE) {
     // TODO(shess): Figure out which other cases can happen.
-    DLOG(FATAL) << "Unable to copy entire null database.";
+    DLOG(DCHECK) << "Unable to copy entire null database.";
     return false;
   }
 
@@ -1444,7 +1444,7 @@ bool Connection::Execute(const char* sql) {
   // a change alters the schema but not all queries adjust.  This can happen
   // in production if the schema is corrupted.
   if (error == SQLITE_ERROR)
-    DLOG(FATAL) << "SQL Error in " << sql << ", " << GetErrorMessage();
+    DLOG(DCHECK) << "SQL Error in " << sql << ", " << GetErrorMessage();
   return error == SQLITE_OK;
 }
 
@@ -1503,7 +1503,7 @@ scoped_refptr<Connection::StatementRef> Connection::GetStatementImpl(
   if (rc != SQLITE_OK) {
     // This is evidence of a syntax error in the incoming SQL.
     if (rc == SQLITE_ERROR)
-      DLOG(FATAL) << "SQL compile error " << GetErrorMessage();
+      DLOG(DCHECK) << "SQL compile error " << GetErrorMessage();
 
     // It could also be database corruption.
     OnSqliteError(rc, NULL, sql);
@@ -1649,7 +1649,7 @@ bool Connection::OpenInternal(const std::string& file_name,
   AssertIOAllowed();
 
   if (db_) {
-    DLOG(FATAL) << "sql::Connection is already open.";
+    DLOG(DCHECK) << "sql::Connection is already open.";
     return false;
   }
 
@@ -1908,7 +1908,7 @@ void Connection::StatementRefCreated(StatementRef* ref) {
 void Connection::StatementRefDeleted(StatementRef* ref) {
   StatementRefSet::iterator i = open_statements_.find(ref);
   if (i == open_statements_.end())
-    DLOG(FATAL) << "Could not find statement";
+    DLOG(DCHECK) << "Could not find statement";
   else
     open_statements_.erase(i);
 }
@@ -1965,7 +1965,7 @@ int Connection::OnSqliteError(
 
   // The default handling is to assert on debug and to ignore on release.
   if (!IsExpectedSqliteError(err))
-    DLOG(FATAL) << GetErrorMessage();
+    DLOG(DCHECK) << GetErrorMessage();
   return err;
 }
 
