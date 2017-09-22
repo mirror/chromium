@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/display/screen.h"
+#include "ui/events/devices/device_data_manager.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
 
@@ -35,26 +36,37 @@ void TouchCalibratorController::OnDisplayConfigurationChanged() {
 
 void TouchCalibratorController::StartCalibration(
     const display::Display& target_display,
-    const TouchCalibratorController::TouchCalibrationCallback& callback) {
-  is_calibrating_ = true;
-  callback_ = callback;
+    bool is_custom_calibration,
+    const TouchCalibratorController::TouchCalibrationCallback* callback) {
+  in_native_calibration_ = !is_custom_calibration;
+  in_custom_touch_calibration_ = is_custom_calibration;
 
-  Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  if (callback)
+    callback_ = *callback;
+
   target_display_ = target_display;
 
   // Clear all touch calibrator views used in any previous calibration.
   touch_calibrator_views_.clear();
 
-  // Reset the calibration data.
-  touch_point_quad_.fill(std::make_pair(gfx::Point(0, 0), gfx::Point(0, 0)));
+  // Set the touchdevice id as invalid so it can be set during calibration.
+  touch_device_id_ = ui::InputDevice::kInvalidId;
 
-  std::vector<display::Display> displays =
-      display::Screen::GetScreen()->GetAllDisplays();
+  // If this is a native touch calibration, then initialize the UX for it.
+  if (in_native_calibration_) {
+    Shell::Get()->window_tree_host_manager()->AddObserver(this);
 
-  for (const display::Display& display : displays) {
-    bool is_primary_view = display.id() == target_display_.id();
-    touch_calibrator_views_[display.id()] =
-        base::MakeUnique<TouchCalibratorView>(display, is_primary_view);
+    // Reset the calibration data.
+    touch_point_quad_.fill(std::make_pair(gfx::Point(0, 0), gfx::Point(0, 0)));
+
+    std::vector<display::Display> displays =
+        display::Screen::GetScreen()->GetAllDisplays();
+
+    for (const display::Display& display : displays) {
+      bool is_primary_view = display.id() == target_display_.id();
+      touch_calibrator_views_[display.id()] =
+          base::MakeUnique<TouchCalibratorView>(display, is_primary_view);
+    }
   }
 
   Shell::Get()->touch_transformer_controller()->SetForCalibration(true);
@@ -64,10 +76,8 @@ void TouchCalibratorController::StartCalibration(
 }
 
 void TouchCalibratorController::StopCalibration() {
-  if (!is_calibrating_)
+  if (!IsCalibrating())
     return;
-  is_calibrating_ = false;
-
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
 
   Shell::Get()->touch_transformer_controller()->SetForCalibration(false);
@@ -76,9 +86,13 @@ void TouchCalibratorController::StopCalibration() {
   Shell::Get()->RemovePreTargetHandler(this);
 
   // Transition all touch calibrator views to their final state for a graceful
-  // exit.
-  for (const auto& it : touch_calibrator_views_)
-    it.second->SkipToFinalState();
+  // exit if this is touch calibration with native UX.
+  if (in_native_calibration_ && !in_custom_touch_calibration_) {
+    for (const auto& it : touch_calibrator_views_)
+      it.second->SkipToFinalState();
+  }
+
+  in_native_calibration_ = in_custom_touch_calibration_ = false;
 
   if (callback_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
@@ -87,9 +101,37 @@ void TouchCalibratorController::StopCalibration() {
   }
 }
 
+void TouchCalibratorController::CompleteCalibration(
+    const CalibrationPointPairQuad& pairs,
+    const gfx::Size& display_size) {
+  StopCalibration();
+
+  const std::vector<ui::TouchscreenDevice>& device_list =
+      ui::DeviceDataManager::GetInstance()->GetTouchscreenDevices();
+  for (const auto& device : device_list) {
+    if (device.id == touch_device_id_) {
+      uint32_t touch_device_identifier =
+          display::TouchCalibrationData::GenerateTouchDeviceIdentifier(
+              device.name, device.vendor_id, device.product_id);
+
+      Shell::Get()->display_manager()->SetTouchCalibrationData(
+          target_display_.id(), pairs, display_size, touch_device_identifier);
+      return;
+    }
+  }
+
+  NOTREACHED() << "No touchdevice with id: " << touch_device_id_ << " found to "
+               << "complete touch calibration for display with id: "
+               << target_display_.id();
+}
+
+bool TouchCalibratorController::IsCalibrating() const {
+  return in_native_calibration_ || in_custom_touch_calibration_;
+}
+
 // ui::EventHandler:
 void TouchCalibratorController::OnKeyEvent(ui::KeyEvent* key) {
-  if (!is_calibrating_)
+  if (!in_native_calibration_)
     return;
   // Detect ESC key press.
   if (key->type() == ui::ET_KEY_PRESSED && key->key_code() == ui::VKEY_ESCAPE)
@@ -99,13 +141,21 @@ void TouchCalibratorController::OnKeyEvent(ui::KeyEvent* key) {
 }
 
 void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
-  if (!is_calibrating_)
+  if (!IsCalibrating())
     return;
   if (touch->type() != ui::ET_TOUCH_RELEASED)
     return;
   if (base::Time::Now() - last_touch_timestamp_ < kTouchIntervalThreshold)
     return;
   last_touch_timestamp_ = base::Time::Now();
+
+  if (touch_device_id_ == ui::InputDevice::kInvalidId)
+    touch_device_id_ = touch->source_device_id();
+
+  // If this is a custom touch calibration, then everything else is managed
+  // by the application responsible for the custom calibration UX.
+  if (in_custom_touch_calibration_)
+    return;
 
   TouchCalibratorView* target_screen_calibration_view =
       touch_calibrator_views_[target_display_.id()].get();
@@ -119,10 +169,9 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
           FROM_HERE, base::Bind(callback_, true));
       callback_.Reset();
     }
-    StopCalibration();
-    Shell::Get()->display_manager()->SetTouchCalibrationData(
-        target_display_.id(), touch_point_quad_,
-        target_screen_calibration_view->size());
+
+    CompleteCalibration(touch_point_quad_,
+                        target_screen_calibration_view->size());
     return;
   }
 
