@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac66e6e_61b38abe",
+        "filename": "content/public/browser/devtools_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-22T01:04:42Z",
+      "side": 1,
+      "message": "The comment is wrong now.",
+      "revId": "76a74024f6d73a7d5d69765f6327017c5fc9e247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556d2160_5f0f18ef",
+        "filename": "content/public/browser/devtools_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-22T01:04:42Z",
+      "side": 1,
+      "message": "I\u0027d make it return bool. HandleSomething usually returns true if handled.",
+      "revId": "76a74024f6d73a7d5d69765f6327017c5fc9e247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
