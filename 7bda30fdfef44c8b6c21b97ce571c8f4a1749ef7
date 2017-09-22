@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0df313f4_74c50555",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-22T06:14:32Z",
+      "side": 1,
+      "message": "Is it possible to add a helper function in path_finder or somewhere in webkitpy.common which returns True when we moved to blink/ ?",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 32
+      },
+      "revId": "7bda30fdfef44c8b6c21b97ce571c8f4a1749ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
