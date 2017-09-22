@@ -243,7 +243,9 @@ CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
       ppd_provider_(CreatePpdProvider(profile_)),
       printer_configurer_(PrinterConfigurer::Create(profile_)),
       printers_manager_(CupsPrintersManager::Create(profile_)),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  printers_manager_->AddObserver(this);
+}
 
 CupsPrintersHandler::~CupsPrintersHandler() {}
 
@@ -297,6 +299,7 @@ void CupsPrintersHandler::RegisterMessages() {
 
 void CupsPrintersHandler::HandleGetCupsPrintersList(
     const base::ListValue* args) {
+  LOG(WARNING) << "Get Printers";
   AllowJavascript();
 
   CHECK_EQ(1U, args->GetSize());
@@ -308,6 +311,7 @@ void CupsPrintersHandler::HandleGetCupsPrintersList(
 
   auto printers_list = base::MakeUnique<base::ListValue>();
   for (const Printer& printer : printers) {
+    LOG(WARNING) << "Printer!";
     printers_list->Append(GetPrinterInfo(printer));
   }
 
@@ -741,6 +745,8 @@ void CupsPrintersHandler::HandleStartDiscovery(const base::ListValue* args) {
   UMA_HISTOGRAM_COUNTS_100(
       "Printing.CUPS.PrintersDiscovered",
       discovered_printers_.size() + automatic_printers_.size());
+  // Scan completes immedately right now.  Emit done.
+  FireWebUIListener("on-printer-discovery-done");
 }
 
 void CupsPrintersHandler::HandleStopDiscovery(const base::ListValue* args) {
@@ -756,20 +762,36 @@ void CupsPrintersHandler::HandleStopDiscovery(const base::ListValue* args) {
 void CupsPrintersHandler::OnPrintersChanged(
     CupsPrintersManager::PrinterClass printer_class,
     const std::vector<Printer>& printers) {
-  if (!discovery_active_) {
-    return;
-  }
   switch (printer_class) {
     case CupsPrintersManager::kAutomatic:
       automatic_printers_ = printers;
+      UpdateDiscoveredPrinters();
       break;
     case CupsPrintersManager::kDiscovered:
       discovered_printers_ = printers;
+      UpdateDiscoveredPrinters();
       break;
-    default:
-      // It's a class we don't care about.
+    case CupsPrintersManager::kConfigured: {
+      std::unique_ptr<base::ListValue> printers_list =
+          base::MakeUnique<base::ListValue>();
+      for (const Printer& printer : printers) {
+        printers_list->Append(GetPrinterInfo(printer));
+      }
+      FireWebUIListener("on-printers-changed", *printers_list);
+      break;
+    }
+    case CupsPrintersManager::kNumPrinterClasses:
+    case CupsPrintersManager::kEnterprise:
+      // These classes are not shown.
       return;
   }
+}
+
+void CupsPrintersHandler::UpdateDiscoveredPrinters() {
+  if (!discovery_active_) {
+    return;
+  }
+
   std::unique_ptr<base::ListValue> printers_list =
       base::MakeUnique<base::ListValue>();
   for (const Printer& printer : automatic_printers_) {
@@ -780,7 +802,6 @@ void CupsPrintersHandler::OnPrintersChanged(
   }
 
   FireWebUIListener("on-printer-discovered", *printers_list);
-  FireWebUIListener("on-printer-discovery-done");
 }
 
 void CupsPrintersHandler::HandleAddDiscoveredPrinter(
