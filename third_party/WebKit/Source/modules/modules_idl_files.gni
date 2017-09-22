@@ -5,7 +5,7 @@
 import("//third_party/WebKit/Source/bindings/bindings.gni")
 
 # The paths in this file are absolute since this file is imported and the
-# file lists must be valid from multple "current directories".
+# file lists must be valid from multple "current dir1ectories".
 
 bindings_modules_output_dir = "$bindings_output_dir/modules"
 blink_modules_output_dir = "$root_gen_dir/blink/modules"
@@ -150,7 +150,6 @@ modules_idl_files =
                     "geolocation/Coordinates.idl",
                     "geolocation/Geolocation.idl",
                     "geolocation/Position.idl",
-                    "geolocation/PositionCallback.idl",
                     "geolocation/PositionError.idl",
                     "geolocation/PositionErrorCallback.idl",
                     "imagebitmap/ImageBitmapRenderingContext.idl",
@@ -425,6 +424,9 @@ modules_idl_files =
                     "webusb/USBOutTransferResult.idl",
                   ],
                   "abspath")
+
+modules_callback_function_idl_files =
+    get_path_info([ "geolocation/PositionCallback.idl" ], "abspath")
 
 modules_dictionary_idl_files =
     get_path_info([
@@ -726,6 +728,8 @@ modules_testing_dependency_idl_files =
 modules_definition_idl_files = modules_dictionary_idl_files + modules_idl_files
 
 # Static IDL files
+modules_static_interface_idl_files = modules_callback_function_idl_files
+
 modules_static_dependency_idl_files =
     modules_dependency_idl_files + modules_testing_dependency_idl_files
 

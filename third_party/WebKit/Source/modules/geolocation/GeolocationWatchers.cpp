@@ -14,6 +14,13 @@ DEFINE_TRACE(GeolocationWatchers) {
   visitor->Trace(notifier_to_id_map_);
 }
 
+DEFINE_TRACE_WRAPPERS(GeolocationWatchers) {
+  for (const auto& notifier : id_to_notifier_map_.Values())
+    visitor->TraceWrappers(notifier);
+  for (const auto& notifier : notifier_to_id_map_.Keys())
+    visitor->TraceWrappers(notifier);
+}
+
 bool GeolocationWatchers::Add(int id, GeoNotifier* notifier) {
   DCHECK_GT(id, 0);
   if (!id_to_notifier_map_.insert(id, notifier).is_new_entry)
