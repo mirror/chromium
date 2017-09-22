@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed83d4ad_2eecd73c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e86da833_e05587cb",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b1d4692_21ab82a2",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3141d1_cffa7bf6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b1d4692_21ab82a2",
+      "range": {
+        "startLine": 106,
+        "startChar": 10,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea65790a_41a4c109",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73736cb2_e69df2fc",
+      "range": {
+        "startLine": 105,
+        "startChar": 41,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f79291bb_c231702e",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a1d54a34_b3bcdd37",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79291bb_c231702e",
+      "range": {
+        "startLine": 856,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 58
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28250a97_4edc0a59",
         "filename": "chrome/test/data/policy/policy_test_cases.json",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-22T14:22:24Z",
       "side": 1,
       "message": "nit: add a comment with policy names here.",
+      "range": {
+        "startLine": 3281,
+        "startChar": 192,
+        "endLine": 3281,
+        "endChar": 196
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5aaee8_de66b41e",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Is it allowed?\n\n  File \"/usr/lib/python2.7/json/decoder.py\", line 382, in raw_decode\n    obj, end \u003d self.scan_once(s, idx)\nValueError: Expecting property name: line 3279 column 3 (char 94634)",
+      "parentUuid": "28250a97_4edc0a59",
       "range": {
         "startLine": 3281,
         "startChar": 192,
@@ -137,6 +257,30 @@
       "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6118644e_2e40b17f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 10297,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-22T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9719d501_a7c8bbce",
+      "range": {
+        "startLine": 10297,
+        "startChar": 29,
+        "endLine": 10297,
+        "endChar": 33
+      },
+      "revId": "2f3dbdf31c6153ee1d2064963beb38b3d85d5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
