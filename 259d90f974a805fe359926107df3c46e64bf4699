@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3605b75b_577812b1",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "probably better to call it something with \"threshold\", e.g. IsAngleDifferentThreshold..",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2795babc_b443e4cd",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "should fall_back_to_absolute_orientation_sensor_ be initialized somewhere?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1043604e_0a7e3988",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "is there a corresponding crbug? (it\u0027s good to have crbugs associated with TODO otherwise easy to lose track..",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614e6e67_f2f6f175",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "hmm, this is a new case? is this check necessary (i.e. when can this fail?)",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4111f12_80aa6754",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "is it worth the trouble to crash here (when trying to start device orientation) ? (i.e. when is this possible to be null?)",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd32bc52_040ffb1c",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "is this needed? the absolute field is set in GetDataFromSharedMemory?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460e1cf3_8b9f9ccb",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "can this be optimized to: {\n  if (!absolute_ \u0026\u0026 !relative_orientation_sensor_.sensor) {\n    // fallback\n  }\n  DeviceSensorEventPump::DidStartIfPossible();\n}\nor am I missing something?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e4f218_511cbeb7",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "also, maybe it\u0027s easier to \u0027decouple\u0027 the fallback logic somehow from the \u0027pump\u0027 functionality. Strictly speaking the pump should not be doing too clever things, otherwise it tends to become complex. Ideally it should simply connect to sensor and propagate its shared buffer to blink. Maybe something that would detect which sensor to use and pass it on to the pump..",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e512559_0f041b04",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "+ maybe a DCHECK that the two sensors (absolute \u0026 relative) cannot be not null at the same time (if I understand correctly)",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab026c08_177ef976",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "also, in case the sensor info cannot be provided we should fire a one-off null-event. Does this happen here? if yes, how does this work exactly?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3b86e2_8c98d981",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "if I remember correctly, it\u0027s possible that not all angles can be provided (e.g. on mac https://cs.chromium.org/chromium/src/device/sensors/data_fetcher_shared_memory_mac.cc?sq\u003dpackage:chromium\u0026l\u003d88). In which case they should be set to null (in javascript).",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d3a80a_15d994e2",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "provide -\u003e provides",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95642dc_ccf6596c",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "any reason to change the position of this line? (otherwise I think better to keep at old place)",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f787916a_ad21d110",
+        "filename": "content/test/data/device_sensors/device_orientation_fallback_to_absolute_test.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-22T17:56:52Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
