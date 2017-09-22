@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9ab1ab_f1097b9c",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "nit: revert whitespace changes",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817decb1_bbf8edd9",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "Should not make any difference, why changing?",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e1497e_16ca9903",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "Console messages are cached and you are no longer tracing the nodes, which will lead to use-after-free. We have two options:\n\n- retain the nodes, consider warning important enough to produce the leak\n- weak-point to it\n\nIf we consider callers to be careless and spammy, weak-pointing would be better. And this brings us to the way you used to point to nodes in your earlier patches. The simplest weak pointer to node would be its DOMNodeId::IdForNode(). So you could store Vector\u003cDOMNodeId\u003e here, don\u0027t call them backend_node_ids, that is a protocol term, you are simply using the same utility to weak point.",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9fa2d9_0997af70",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "1. dom_agent_ is nullable, see the Worker instance\n2. this time you would have two hops, domnodeid -\u003e node -\u003e remote object. In this case we would only retain the node if it was not collected and devtools is opened, which sounds good.",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bb6fe3_1fb53967",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "Don\u0027t use raw pointers, we should always Member\u003c\u003e all the members in Oilpan.",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5752b944_f4e48549",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 28
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "Replace\n\ndata.entry.args\n\nwith\n\n[data.entry.text, ...data.entry.args]\n\nIn the console world console.log(\"Foo %O\", document) turns into\n\nmessageText \u003d\u003d \"Foo %O\" and\nparameters \u003d [\"Foo %O\", document]\n\nTake a look at _consoleAPICalled in ConsoleModel.js. It parses args and converts the first one into string in case it can be used as a message format. If it is not a string, message text is not there and we simply print array of args. We need this flexibility to support both\n\nconsole.log(\"Foo %O\", document) and console.log(document, document) use cases.\n\nPrepending basic JS string to the list of params is handled fine by the console logic.",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a689da_23c1d99b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
+        "patchSetId": 28
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 1,
+      "message": "just inherit?",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

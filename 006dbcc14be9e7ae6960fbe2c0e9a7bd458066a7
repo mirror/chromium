@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a78d58_2633f133",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 0,
+      "message": "nit: revert whitespace changes",
+      "revId": "006dbcc14be9e7ae6960fbe2c0e9a7bd458066a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862b6b92_8f55c50d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 28
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-22T16:55:36Z",
+      "side": 0,
+      "message": "That way you don\u0027t need to touch this, it is formally right.",
+      "revId": "006dbcc14be9e7ae6960fbe2c0e9a7bd458066a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
