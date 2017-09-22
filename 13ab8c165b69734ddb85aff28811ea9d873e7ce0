@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab6698a_e220afda",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: I\u0027d also suggest to put a comment with a BIG WARNING here too - I mean, that this function doesn\u0027t explicitly check the certificate\u0027s slot, and just relies on the check against pref below.",
+      "range": {
+        "startLine": 72,
+        "startChar": 52,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63605d8_80c082b8",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: This log message seems to be inaccurate - the function here shouldn\u0027t assume that the NULL argument may only come from CreateX509CertificateFromCERTCertificate(). I\u0027d rather place this log message into FindCertificateByAlias(), and also handle the NULL return value in the code that calls FindCertificateByAlias(), and accept the cert by const-ref here in IsCertificateAllowed(). WDYT?",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 68
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d1b40f_397fa956",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: This code looks a bit too cryptic. (Sorry, forgot to comment on this during the previous iterations).\nI think it\u0027ll be easier to read this if put as following:\n\n  if ((previous_value \u0026\u0026 !current_value) ||\n      (!previous_value \u0026\u0026 current_value) ||\n      (previous_value \u0026\u0026 current_value \u0026\u0026 *previous_value !\u003d *current_value)) {",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 269,
+        "endChar": 76
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bcf82e_8d9b3fad",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "I believe this code may work incorrectly if |certs| contains duplicate items - imagine |expected_certs|\u003d[Cert1, Cert2], |certs|\u003d[Cert1, Cert1].\n\nI\u0027m not sure what\u0027s the simplest way to do this properly... One idea is adding a reversed check of |expected_certs| against |certs| - which will work in the example above, but is still not 100% robust in presence of duplicate items. Another is to introduce a (local) comparison function and actually sort and compare two vectors. WDYT?\n\n(And sorry for not figuring this issue out during the previous iterations.)",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 240,
+        "endChar": 5
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e834fb_7a9e9acf",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: Looks like a leftover from some debugging? If you want to leave it in the code, then probably make this DLOG/DVLOG better.",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8805d9d_7c0d57c3",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: Sorry, but this one should better be reversed back to ASSERT_EQ - because the following line will crash if the vector is empty.",
+      "range": {
+        "startLine": 262,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 11
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38285e5_27b55a7d",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "This will CHECK if the value is a non-boolean, while the old code would handle this correctly and just consider this as false. So, in order to preserve the old behavior, it\u0027s better to also check for \"|| !allow_corporate_key_usage.is_bool()\" in the condition above.",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdfbe3d_2204bf2e",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "nit: \"profile_policies\"",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce515568_56c0362f",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "This will CHECK if the value is a non-string, while the old code would handle this correctly and return false. So, in order to preserve the old behavior, it\u0027s better to also check for \"|| !key_usage.is_string()\" in the condition above.",
+      "range": {
+        "startLine": 417,
+        "startChar": 22,
+        "endLine": 417,
+        "endChar": 31
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "099afb77_57fdc016",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T12:44:41Z",
+      "side": 1,
+      "message": "Sorry for not checking the comments history. OK, I won\u0027t insist then.\n\nBut just a note - execution of each test instantiates a separate instance of the test fixture object, so in this sense doing work in constructor isn\u0027t worse than doing it in SetUp* methods. Unless I\u0027m missing something.",
+      "parentUuid": "3f0289ac_258fa7db",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 64
+      },
+      "revId": "150b29df45f41576481629ca3a3fb5012753efba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5ceefc_48cfb723",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 14
