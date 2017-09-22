@@ -16,6 +16,23 @@
       "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e4bffb_c4dc1bdf",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T18:58:32Z",
+      "side": 1,
+      "message": "Could you add some comments for kMdnsDial / kDialMdns?\n\nDevice was first discovered via DIAL, then subsequently by mDNS.\n\n(and vice versa)",
+      "revId": "c1b4f4f8d813d4653bde9d31744b8a5d730f8e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
