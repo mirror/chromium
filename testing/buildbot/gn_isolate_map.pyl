@@ -565,6 +565,11 @@
     "type": "raw",
     "args": [],
   },
+  "ios_chrome_passwords_egtests": {
+    "label": "//ios/chrome/test/earl_grey:ios_chrome_passwords_egtests",
+    "type": "raw",
+    "args": [],
+  },
   "ios_chrome_payments_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_payments_egtests",
     "type": "raw",
