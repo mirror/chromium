@@ -28,6 +28,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/browsing_data/core/history_notice_utils.h"
 #include "components/browsing_data/core/pref_names.h"
+#include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/browsing_data_filter_builder.h"
@@ -128,6 +129,16 @@ void ClearBrowsingDataHandler::OnJavascriptAllowed() {
           BrowsingDataCounterFactory::GetForProfileAndPref(profile_, pref),
           browsing_data::ClearBrowsingDataTab::ADVANCED);
     }
+    PrefService* prefs = profile_->GetPrefs();
+    period_ = std::make_unique<IntegerPrefMember>();
+    period_->Init(browsing_data::prefs::kDeleteTimePeriod, prefs,
+                  base::Bind(&ClearBrowsingDataHandler::HandleTimePeriodChanged,
+                             base::Unretained(this)));
+    periodBasic_ = std::make_unique<IntegerPrefMember>();
+    periodBasic_->Init(
+        browsing_data::prefs::kDeleteTimePeriodBasic, prefs,
+        base::Bind(&ClearBrowsingDataHandler::HandleTimePeriodChanged,
+                   base::Unretained(this)));
   }
 }
 
@@ -135,6 +146,8 @@ void ClearBrowsingDataHandler::OnJavascriptDisallowed() {
   sync_service_observer_.RemoveAll();
   weak_ptr_factory_.InvalidateWeakPtrs();
   counters_.clear();
+  period_.reset();
+  periodBasic_.reset();
 }
 
 void ClearBrowsingDataHandler::HandleClearBrowsingData(
@@ -475,6 +488,16 @@ void ClearBrowsingDataHandler::UpdateCounterText(
       "cr.webUIListenerCallback", base::Value("update-counter-text"),
       base::Value(result->source()->GetPrefName()),
       base::Value(GetChromeCounterTextFromResult(result.get())));
+}
+
+void ClearBrowsingDataHandler::HandleTimePeriodChanged(
+    const std::string& pref_name) {
+  PrefService* prefs = profile_->GetPrefs();
+  int period = prefs->GetInteger(pref_name);
+
+  browsing_data::TimePeriod time_period =
+      static_cast<browsing_data::TimePeriod>(period);
+  browsing_data::RecordTimePeriodChange(time_period);
 }
 
 }  // namespace settings
