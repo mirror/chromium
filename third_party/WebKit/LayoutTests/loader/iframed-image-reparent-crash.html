@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <iframe id="iframeElement" src="resources/image.gif"></iframe>
+
+  <script>
+    function init() {
+      setTimeout("reparent()", 100);
+    }
+
+    function reparent() {
+      newDoc = document.implementation.createDocument(
+        "http://www.w3.org/1999/xhtml", "html");
+      newDoc.adoptNode(iframeElement.contentDocument.documentElement);
+    }
+
+    document.addEventListener("DOMContentLoaded", init, false);
+  </script>
+</html>

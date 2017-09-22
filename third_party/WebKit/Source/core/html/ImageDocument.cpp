@@ -137,6 +137,14 @@ static LayoutSize CachedImageSize(HTMLImageElement* element) {
       1.0f);
 }
 
+static LayoutSize CachedImageResourceDeprecatedSize(ImageDocument* document) {
+  DCHECK(document->CachedImageResourceDeprecated());
+  return document->CachedImageResourceDeprecated()->GetContent()->ImageSize(
+      LayoutObject::ShouldRespectImageOrientation(
+          document->ImageElement()->GetLayoutObject()),
+      1.0f);
+}
+
 void ImageDocumentParser::AppendBytes(const char* data, size_t length) {
   if (!length)
     return;
@@ -174,7 +182,7 @@ void ImageDocumentParser::Finish() {
     // level.  At a zoom level of 1 the image is guaranteed to have an integer
     // size.
     IntSize size =
-        FlooredIntSize(CachedImageSize(GetDocument()->ImageElement()));
+        FlooredIntSize(CachedImageResourceDeprecatedSize(GetDocument()));
     if (size.Width()) {
       // Compute the title, we use the decoded filename of the resource, falling
       // back on the (decoded) hostname if there is no path.
