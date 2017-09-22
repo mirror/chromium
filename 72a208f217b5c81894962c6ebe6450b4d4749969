@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "98b4fffe_0434e73b",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-22T17:14:48Z",
+      "side": 1,
+      "message": "Ah, that was the problem.",
+      "parentUuid": "810a6851_b300bc06",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "72a208f217b5c81894962c6ebe6450b4d4749969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691e80b0_94126b6d",
         "filename": "chrome/test/v8/wasm_trap_handler.cc",
         "patchSetId": 6
