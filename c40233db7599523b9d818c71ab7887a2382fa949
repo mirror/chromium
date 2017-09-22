@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade0de48_6a72b023",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-22T01:45:09Z",
+      "side": 1,
+      "message": "You might want to update the description of the CL.",
+      "revId": "c40233db7599523b9d818c71ab7887a2382fa949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba158519_3e724167",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-22T01:45:09Z",
+      "side": 1,
+      "message": "s/delegateFocus/delegate_focus/",
+      "revId": "c40233db7599523b9d818c71ab7887a2382fa949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f4da32_159ec2a3",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-22T01:45:09Z",
+      "side": 1,
+      "message": "Nit; s/delegateFocus/delegate_focus/",
+      "revId": "c40233db7599523b9d818c71ab7887a2382fa949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
