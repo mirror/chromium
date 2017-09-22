@@ -355,6 +355,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
                                       gfx::Point* transformed_point) override;
   // Returns true when we can do SurfaceHitTesting for the event type.
   bool ShouldRouteEvent(const blink::WebInputEvent& event) const;
+  void SendRoutableGesture(blink::WebGestureEvent* event);
   void ProcessMouseEvent(const blink::WebMouseEvent& event,
                          const ui::LatencyInfo& latency) override;
   void ProcessMouseWheelEvent(const blink::WebMouseWheelEvent& event,
