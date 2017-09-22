@@ -853,11 +853,12 @@ message DeviceOffHoursProto {
   // Timezone in the same format as SystemTimezoneProto.timezone.
   // If timezone isn't set then "GMT" will be used
   optional string timezone = 2;
-  // List of policies which settings are ignored during OffHours mode.
-  // List contains policy names from ChromeDeviceSettingsProto
-  // (i.e. "device_policy_refresh_rate")
+  // List of policy IDs which settings are ignored during OffHours mode.
+  // List contains policy id from ChromeDeviceSettingsProto
+  // (i.e. id = 1 means device_policy_refresh_rate policy).
+  // IDs is used because they are the only one consistent identificator.
   // During OffHoursMode default settings of ignored policies are used.
-  repeated string ignored_policies = 3;
+  repeated int32 ignored_policies = 3;
 }
 
 // The url and hash that specified in JSON format that can be used to retrieve

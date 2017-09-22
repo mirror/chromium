@@ -42,17 +42,18 @@ def main():
                'namespace em = enterprise_management;\n\n'
                'void RemovePolicies(\n'
                '    em::ChromeDeviceSettingsProto* policies,\n'
-               '    const std::vector<std::string>& '
+               '    const std::vector<int>& '
                'input_policies_to_remove) {\n'
-               '  std::vector<std::string> policies_to_remove'
+               '  std::vector<int> policies_to_remove'
                '(input_policies_to_remove);\n'
                '  std::sort(policies_to_remove.begin(),'
                ' policies_to_remove.end());\n')
     for field in ChromeDeviceSettingsProto.DESCRIPTOR.fields:
       file.write('  if (std::binary_search(policies_to_remove.begin(),\n'
                  '                         policies_to_remove.end(),\n'
-                 '                         "{name}"))\n'
-                 '    policies->clear_{name}();\n'.format(name=field.name))
+                 '                         {id}))\n'
+                 '    policies->clear_{name}();\n'.format(id=field.number,
+                                                          name=field.name))
     file.write('}\n}\n')
   return 0
 
