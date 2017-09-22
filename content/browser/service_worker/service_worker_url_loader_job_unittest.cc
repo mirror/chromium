@@ -21,7 +21,10 @@
 #include "net/test/test_data_directory.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "storage/browser/blob/blob_data_builder.h"
+#include "storage/browser/blob/blob_data_handle.h"
+#include "storage/browser/blob/blob_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -253,6 +256,21 @@ class Helper : public EmbeddedWorkerTestHelper {
     base::RunLoop().RunUntilIdle();
   }
 
+  // Tells this helper to test blob request. And use ReadingBlobrequest() after
+  // use StartRequest(). This method read blob request.
+  void TestBlobRequest() { response_mode_ = ResponseMode::kFallbackResponse; }
+  std::string ReadRequestBody() {
+    mojo::DataPipe pipe;
+    (*blob_handle_)->ReadAll(std::move(pipe.producer_handle), nullptr);
+    base::RunLoop().RunUntilIdle();
+
+    std::string received;
+    EXPECT_TRUE(mojo::common::BlockingCopyToString(
+        std::move(pipe.consumer_handle), &received));
+
+    return received;
+  }
+
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
@@ -261,6 +279,7 @@ class Helper : public EmbeddedWorkerTestHelper {
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       FetchCallback finish_callback) override {
+    blob_handle_ = request.blob;
     switch (response_mode_) {
       case ResponseMode::kDefault:
         EmbeddedWorkerTestHelper::OnFetchEvent(
@@ -386,6 +405,9 @@ class Helper : public EmbeddedWorkerTestHelper {
   // For ResponseMode::kRedirect.
   GURL redirected_url_;
 
+  // For ResponseMode::kTestBlobRequest.
+  scoped_refptr<storage::BlobHandle> blob_handle_;
+
   DISALLOW_COPY_AND_ASSIGN(Helper);
 };
 
@@ -476,16 +498,12 @@ class ServiceWorkerURLLoaderJobTest
   // Returns whether ServiceWorkerURLLoaderJob handled the request. If
   // kHandledRequest was returned, the request is ongoing and the caller can use
   // functions like client_.RunUntilComplete() to wait for completion.
-  JobResult StartRequest() {
-    ResourceRequest request;
-    request.url = GURL("https://www.example.com/");
-    request.method = "GET";
-
+  JobResult StartRequest(std::unique_ptr<ResourceRequest> request) {
     // Start a ServiceWorkerURLLoaderJob. It should return a
     // StartLoaderCallback.
     StartLoaderCallback callback;
     job_ = base::MakeUnique<ServiceWorkerURLLoaderJob>(
-        base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request,
+        base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, *request,
         make_scoped_refptr<URLLoaderFactoryGetter>(
             helper_->context()->loader_factory_getter()),
         GetBlobStorageContext());
@@ -521,6 +539,14 @@ class ServiceWorkerURLLoaderJobTest
               info.did_service_worker_navigation_preload);
   }
 
+  std::unique_ptr<ResourceRequest> CreateRequest() {
+    std::unique_ptr<ResourceRequest> request =
+        base::MakeUnique<ResourceRequest>();
+    request->url = GURL("https://www.example.com/");
+    request->method = "GET";
+    return request;
+  }
+
  protected:
   // ServiceWorkerURLLoaderJob::Delegate --------------------------------------
   void OnPrepareToRestart() override {}
@@ -553,7 +579,7 @@ class ServiceWorkerURLLoaderJobTest
 
 TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
   // Perform the request
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilComplete();
 
@@ -561,6 +587,26 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());
+}
+
+TEST_F(ServiceWorkerURLLoaderJobTest, RequestBody) {
+  const std::string kData = "BlobRequest";
+
+  // Create request.
+  auto request_body = base::MakeRefCounted<ResourceRequestBody>();
+  request_body->AppendBytes(kData.c_str(), kData.length());
+  std::unique_ptr<ResourceRequest> request = CreateRequest();
+  request->request_body = request_body;
+
+  // Service worker responds with network fallback. Since this test needs only
+  // blob request, it is not related with responds.
+  helper_->TestBlobRequest();
+  JobResult result = StartRequest(std::move(request));
+  EXPECT_EQ(JobResult::kDidNotHandleRequest, result);
+
+  // Read blob data
+  std::string received = helper_->ReadRequestBody();
+  EXPECT_EQ(kData, received);
 }
 
 TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
@@ -573,7 +619,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
   helper_->RespondWithBlob(blob_handle->uuid(), blob_handle->size());
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilComplete();
 
@@ -594,7 +640,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, NonExistentBlobUUIDResponse) {
   helper_->RespondWithBlob("blob-id:nothing-is-here", 0);
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilComplete();
 
@@ -615,7 +661,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
                              std::move(data_pipe.consumer_handle));
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilResponseReceived();
 
@@ -655,7 +701,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse_Abort) {
                              std::move(data_pipe.consumer_handle));
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilResponseReceived();
 
@@ -693,7 +739,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
                              std::move(data_pipe.consumer_handle));
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilResponseReceived();
 
@@ -733,7 +779,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, FallbackResponse) {
   helper_->RespondWithFallback();
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kDidNotHandleRequest, result);
 
   // The request should not be handled by the job, but it shouldn't be a
@@ -746,7 +792,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, FailFetchDispatch) {
   helper_->FailToDispatchFetchEvent();
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kDidNotHandleRequest, result);
   EXPECT_TRUE(was_main_resource_load_failed_called_);
 }
@@ -757,7 +803,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, EarlyResponse) {
   helper_->RespondEarly();
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilComplete();
 
@@ -799,7 +845,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, NavigationPreload) {
   helper_->RespondWithNavigationPreloadResponse();
 
   // Perform the request
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   ASSERT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilComplete();
 
@@ -825,7 +871,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Redirect) {
   helper_->RespondWithRedirectResponse(new_url);
 
   // Perform the request.
-  JobResult result = StartRequest();
+  JobResult result = StartRequest(CreateRequest());
   EXPECT_EQ(JobResult::kHandledRequest, result);
   client_.RunUntilRedirectReceived();
 

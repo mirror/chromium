@@ -26,6 +26,8 @@ struct RedirectInfo;
 
 namespace storage {
 class BlobStorageContext;
+class BlobDataHandle;
+class BlobStorageContext;
 }
 
 namespace content {
@@ -113,6 +115,8 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
                      mojom::URLLoaderRequest request,
                      mojom::URLLoaderClientPtr client);
   void AfterRead(scoped_refptr<net::IOBuffer> buffer, int bytes);
+
+  scoped_refptr<storage::BlobHandle> CreateRequestBodyBlob();
 
   // Calls url_loader_client_->OnReceiveResopnse() with |response_head_|.
   void CommitResponseHeaders();
