@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1c3627_9472a099",
+        "filename": "chrome/browser/ui/browser_instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-22T10:26:43Z",
+      "side": 1,
+      "message": "This looks like it can be inline, rather than a unique_ptr\u003c\u003e",
+      "revId": "4ded926c7933bd30de614217f5e37b7e9bcff36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dd7c03_b5e8fbc3",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-22T10:26:43Z",
+      "side": 1,
+      "message": "Arguably unrelated, but could you rename browser_ to browser_instant_controller_ or something? I was very confused by this line (“I thought this CL removed Browser::search_model()”) until I realized that browser_ wasn\u0027t a Browser*.",
+      "revId": "4ded926c7933bd30de614217f5e37b7e9bcff36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ff2462_b4897191",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-22T10:26:43Z",
+      "side": 1,
+      "message": "ScopedObserver?",
+      "revId": "4ded926c7933bd30de614217f5e37b7e9bcff36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
