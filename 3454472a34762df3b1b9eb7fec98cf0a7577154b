@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60567ea5_cbf512ec",
+        "filename": "chrome/browser/printing/print_view_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-22T06:03:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6001415a_c42ca53e",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "3454472a34762df3b1b9eb7fec98cf0a7577154b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6b6b31d_f14f7943",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 20
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-21T12:45:42Z",
       "side": 1,
       "message": "While it\u0027s technically true that this won\u0027t ever be destroyed (due to the fact that Oilpan GC will keep this live), this seems like an implementation detail that we shouldn\u0027t depend on. How about grabbing a WeakPtr to |this| and testing that instead, since we already have a WeakPtrFactory?",
+      "revId": "3454472a34762df3b1b9eb7fec98cf0a7577154b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15082291_9908f117",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-22T06:03:03Z",
+      "side": 1,
+      "message": "ok, new patch set uses WeakPtrFactory in this file.",
+      "parentUuid": "d6b6b31d_f14f7943",
       "revId": "3454472a34762df3b1b9eb7fec98cf0a7577154b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
