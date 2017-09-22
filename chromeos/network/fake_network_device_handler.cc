@@ -89,6 +89,12 @@ void FakeNetworkDeviceHandler::AddWifiWakeOnPacketConnection(
     const base::Closure& callback,
     const network_handler::ErrorCallback& error_callback) {}
 
+void FakeNetworkDeviceHandler::AddWifiWakeOnPacketsOfType(
+    const std::vector<chromeos::ShillDeviceClient::WakeOnPacketType>&
+        packet_types,
+    const base::Closure& callback,
+    const network_handler::ErrorCallback& error_callback) {}
+
 void FakeNetworkDeviceHandler::RemoveWifiWakeOnPacketConnection(
     const net::IPEndPoint& ip_endpoint,
     const base::Closure& callback,

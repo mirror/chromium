@@ -5,11 +5,14 @@
 #ifndef CHROMEOS_NETWORK_NETWORK_DEVICE_HANDLER_H_
 #define CHROMEOS_NETWORK_NETWORK_DEVICE_HANDLER_H_
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
+#include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/network/network_handler_callbacks.h"
 
 namespace base {
@@ -222,6 +225,14 @@ class CHROMEOS_EXPORT NetworkDeviceHandler {
   // should monitor to wake the system from suspend.
   virtual void AddWifiWakeOnPacketConnection(
       const net::IPEndPoint& ip_endpoint,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback) = 0;
+
+  // Adds |packet_types| to the list of packet types that the wifi device
+  // should monitor to wake the system from suspend.
+  virtual void AddWifiWakeOnPacketsOfType(
+      const std::vector<chromeos::ShillDeviceClient::WakeOnPacketType>&
+          packet_types,
       const base::Closure& callback,
       const network_handler::ErrorCallback& error_callback) = 0;
 

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/test/mock_callback.h"
@@ -339,6 +341,110 @@ TEST_F(ShillDeviceClientTest, Reset) {
   // Call method.
   client_->Reset(dbus::ObjectPath(kExampleDevicePath), mock_closure.Get(),
                  mock_error_callback.Get());
+  // Run the message loop.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(ShillDeviceClientTest, AddWakeOnPacketOfTypes) {
+  // Create response.
+  std::unique_ptr<dbus::Response> response(dbus::Response::CreateEmpty());
+
+  // Set expectations.
+  std::vector<std::string> packet_type_strs;
+  packet_type_strs.push_back(shill::kWakeOnTCP);
+  packet_type_strs.push_back(shill::kWakeOnUDP);
+  base::MockCallback<base::Closure> mock_closure;
+  base::MockCallback<ShillDeviceClient::ErrorCallback> mock_error_callback;
+  PrepareForMethodCall(
+      shill::kAddWakeOnPacketOfTypesFunction,
+      base::Bind(&ExpectArrayOfStringsArgument, packet_type_strs),
+      response.get());
+  EXPECT_CALL(mock_closure, Run()).Times(1);
+
+  // Call method.
+  std::vector<ShillDeviceClient::WakeOnPacketType> packet_type_enums;
+  packet_type_enums.push_back(ShillDeviceClient::WakeOnPacketType::TCP);
+  packet_type_enums.push_back(ShillDeviceClient::WakeOnPacketType::UDP);
+  client_->AddWakeOnPacketOfTypes(dbus::ObjectPath(kExampleDevicePath),
+                                  packet_type_enums, mock_closure.Get(),
+                                  mock_error_callback.Get());
+
+  // Run the message loop.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(ShillDeviceClientTest, AddWakeOnPacketOfTypesEmptyArr) {
+  // Create response.
+  std::unique_ptr<dbus::Response> response(dbus::Response::CreateEmpty());
+
+  // Set expectations.
+  std::vector<std::string> packet_type_strs;
+  base::MockCallback<base::Closure> mock_closure;
+  base::MockCallback<ShillDeviceClient::ErrorCallback> mock_error_callback;
+  PrepareForMethodCall(
+      shill::kAddWakeOnPacketOfTypesFunction,
+      base::Bind(&ExpectArrayOfStringsArgument, packet_type_strs),
+      response.get());
+  EXPECT_CALL(mock_closure, Run()).Times(1);
+
+  // Call method.
+  std::vector<ShillDeviceClient::WakeOnPacketType> packet_type_enums;
+  client_->AddWakeOnPacketOfTypes(dbus::ObjectPath(kExampleDevicePath),
+                                  packet_type_enums, mock_closure.Get(),
+                                  mock_error_callback.Get());
+
+  // Run the message loop.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(ShillDeviceClientTest, RemoveWakeOnPacketOfTypes) {
+  // Create response.
+  std::unique_ptr<dbus::Response> response(dbus::Response::CreateEmpty());
+
+  // Set expectations.
+  std::vector<std::string> packet_type_strs;
+  packet_type_strs.push_back(shill::kWakeOnTCP);
+  packet_type_strs.push_back(shill::kWakeOnUDP);
+  base::MockCallback<base::Closure> mock_closure;
+  base::MockCallback<ShillDeviceClient::ErrorCallback> mock_error_callback;
+  PrepareForMethodCall(
+      shill::kRemoveWakeOnPacketOfTypesFunction,
+      base::Bind(&ExpectArrayOfStringsArgument, packet_type_strs),
+      response.get());
+  EXPECT_CALL(mock_closure, Run()).Times(1);
+
+  // Call method.
+  std::vector<ShillDeviceClient::WakeOnPacketType> packet_type_enums;
+  packet_type_enums.push_back(ShillDeviceClient::WakeOnPacketType::TCP);
+  packet_type_enums.push_back(ShillDeviceClient::WakeOnPacketType::UDP);
+  client_->RemoveWakeOnPacketOfTypes(dbus::ObjectPath(kExampleDevicePath),
+                                     packet_type_enums, mock_closure.Get(),
+                                     mock_error_callback.Get());
+
+  // Run the message loop.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(ShillDeviceClientTest, RemoveWakeOnPacketOfTypesEmptyArr) {
+  // Create response.
+  std::unique_ptr<dbus::Response> response(dbus::Response::CreateEmpty());
+
+  // Set expectations.
+  std::vector<std::string> packet_type_strs;
+  base::MockCallback<base::Closure> mock_closure;
+  base::MockCallback<ShillDeviceClient::ErrorCallback> mock_error_callback;
+  PrepareForMethodCall(
+      shill::kRemoveWakeOnPacketOfTypesFunction,
+      base::Bind(&ExpectArrayOfStringsArgument, packet_type_strs),
+      response.get());
+  EXPECT_CALL(mock_closure, Run()).Times(1);
+
+  // Call method.
+  std::vector<ShillDeviceClient::WakeOnPacketType> packet_type_enums;
+  client_->RemoveWakeOnPacketOfTypes(dbus::ObjectPath(kExampleDevicePath),
+                                     packet_type_enums, mock_closure.Get(),
+                                     mock_error_callback.Get());
+
   // Run the message loop.
   base::RunLoop().RunUntilIdle();
 }

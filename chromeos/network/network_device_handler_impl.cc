@@ -6,7 +6,10 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -17,7 +20,6 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/dbus/shill_ipconfig_client.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_state_handler.h"
@@ -485,6 +487,22 @@ void NetworkDeviceHandlerImpl::AddWifiWakeOnPacketConnection(
       callback,
       base::Bind(&HandleShillCallFailure,
                  device_state->path(),
+                 error_callback));
+}
+
+void NetworkDeviceHandlerImpl::AddWifiWakeOnPacketsOfType(
+    const std::vector<chromeos::ShillDeviceClient::WakeOnPacketType>&
+        packet_types,
+    const base::Closure& callback,
+    const network_handler::ErrorCallback& error_callback) {
+  const DeviceState* device_state = GetWifiDeviceState(error_callback);
+  if (!device_state)
+    return;
+
+  NET_LOG(USER) << "Device.AddWakeOnPacketOfTypes: " << device_state->path();
+  DBusThreadManager::Get()->GetShillDeviceClient()->AddWakeOnPacketOfTypes(
+      dbus::ObjectPath(device_state->path()), packet_types, callback,
+      base::Bind(&HandleShillCallFailure, device_state->path(),
                  error_callback));
 }
 
