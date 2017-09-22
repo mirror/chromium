@@ -55,6 +55,8 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   void StartSourceImpl(
       const VideoCaptureDeliverFrameCB& frame_callback) override;
   void StopSourceImpl() override;
+  void StopSourceForRestartImpl() override;
+  void RestartSourceImpl(const media::VideoCaptureFormat& new_format) override;
   base::Optional<media::VideoCaptureFormat> GetCurrentFormat() const override;
   base::Optional<media::VideoCaptureParams> GetCurrentCaptureParams()
       const override;
@@ -72,12 +74,12 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   // The source that provides video frames.
   const std::unique_ptr<media::VideoCapturerSource> source_;
 
-  // Indicates whether the capture is in starting. It is set to true by
-  // StartSourceImpl() when starting the capture, and is reset after starting
-  // is completed.
-  bool is_capture_starting_ = false;
+  enum State { STARTING, STARTED, STOPPING_FOR_RESTART, RESTARTING, STOPPED };
+  State state_ = STOPPED;
 
   media::VideoCaptureParams capture_params_;
+  media::VideoCaptureParams new_capture_params_;
+  VideoCaptureDeliverFrameCB frame_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamVideoCapturerSource);
 };
