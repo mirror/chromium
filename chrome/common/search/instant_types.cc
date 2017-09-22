@@ -58,7 +58,8 @@ bool ThemeBackgroundInfo::operator==(const ThemeBackgroundInfo& rhs) const {
 }
 
 InstantMostVisitedItem::InstantMostVisitedItem()
-    : source(ntp_tiles::TileSource::TOP_SITES) {}
+    : name_source(ntp_tiles::TileNameSource::UNKNOWN),
+      source(ntp_tiles::TileSource::TOP_SITES) {}
 
 InstantMostVisitedItem::InstantMostVisitedItem(
     const InstantMostVisitedItem& other) = default;

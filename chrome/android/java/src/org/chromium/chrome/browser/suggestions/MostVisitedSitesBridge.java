@@ -98,14 +98,17 @@ public class MostVisitedSitesBridge
     }
 
     @Override
-    public void recordTileImpression(int index, int type, int source, String url) {
-        nativeRecordTileImpression(mNativeMostVisitedSitesBridge, index, type, source, url);
+    public void recordTileImpression(int index, @TileVisualType int type,
+            @TileNameSource int nameSource, @TileSource int source, String url) {
+        nativeRecordTileImpression(
+                mNativeMostVisitedSitesBridge, index, type, nameSource, source, url);
     }
 
     @Override
-    public void recordOpenedMostVisitedItem(
-            int index, @TileVisualType int type, @TileSource int source) {
-        nativeRecordOpenedMostVisitedItem(mNativeMostVisitedSitesBridge, index, type, source);
+    public void recordOpenedMostVisitedItem(int index, @TileVisualType int type,
+            @TileNameSource int nameSource, @TileSource int source) {
+        nativeRecordOpenedMostVisitedItem(
+                mNativeMostVisitedSitesBridge, index, type, nameSource, source);
     }
 
     @Override
@@ -124,11 +127,11 @@ public class MostVisitedSitesBridge
      * {@link SiteSuggestion}s.
      */
     public static List<SiteSuggestion> buildSiteSuggestions(String[] titles, String[] urls,
-            int[] sections, String[] whitelistIconPaths, int[] sources) {
+            int[] sections, String[] whitelistIconPaths, int[] nameSources, int[] sources) {
         List<SiteSuggestion> siteSuggestions = new ArrayList<>(titles.length);
         for (int i = 0; i < titles.length; ++i) {
-            siteSuggestions.add(new SiteSuggestion(
-                    titles[i], urls[i], whitelistIconPaths[i], sources[i], sections[i]));
+            siteSuggestions.add(new SiteSuggestion(titles[i], urls[i], whitelistIconPaths[i],
+                    nameSources[i], sources[i], sections[i]));
         }
         return siteSuggestions;
     }
@@ -147,14 +150,14 @@ public class MostVisitedSitesBridge
      */
     @CalledByNative
     private void onURLsAvailable(String[] titles, String[] urls, int[] sections,
-            String[] whitelistIconPaths, int[] sources) {
+            String[] whitelistIconPaths, int[] nameSources, int[] sources) {
         // Don't notify observer if we've already been destroyed.
         if (mNativeMostVisitedSitesBridge == 0) return;
 
         List<SiteSuggestion> suggestions = new ArrayList<>();
 
-        suggestions.addAll(
-                buildSiteSuggestions(titles, urls, sections, whitelistIconPaths, sources));
+        suggestions.addAll(buildSiteSuggestions(
+                titles, urls, sections, whitelistIconPaths, nameSources, sources));
 
         // TODO(galinap): Remove dummy data when backend is ready.
         if (SuggestionsConfig.useSitesExplorationUi()
@@ -166,13 +169,14 @@ public class MostVisitedSitesBridge
             int[] socialSections = new int[socialUrls.length];
             Arrays.fill(socialSections, TileSectionType.SOCIAL);
 
+            int[] dummyNameSources = new int[socialUrls.length];
             int[] dummySources = new int[socialUrls.length];
             String[] dummyWhitelistIconPaths = new String[socialSections.length];
             Arrays.fill(dummySources, TileSource.POPULAR);
             Arrays.fill(dummyWhitelistIconPaths, "");
 
             suggestions.addAll(buildSiteSuggestions(socialTitles, socialUrls, socialSections,
-                    dummyWhitelistIconPaths, dummySources));
+                    dummyWhitelistIconPaths, dummyNameSources, dummySources));
 
             String[] entertainmentUrls = {"https://www.youtube.com/", "http://www.hotstar.com",
                     "https://m.cricbuzz.com/", "https://www.wittyfeed.com/"};
@@ -183,7 +187,8 @@ public class MostVisitedSitesBridge
             Arrays.fill(entertainmentSections, TileSectionType.ENTERTAINMENT);
 
             suggestions.addAll(buildSiteSuggestions(entertainmentTitles, entertainmentUrls,
-                    entertainmentSections, dummyWhitelistIconPaths, dummySources));
+                    entertainmentSections, dummyWhitelistIconPaths, dummyNameSources,
+                    dummySources));
 
             String[] newsUrls = {"http://timesofindia.indiatimes.com/", "http://www.jagran.com/",
                     "http://www.bbc.co.uk/news", "http://www.dailymail.co.uk/"};
@@ -193,8 +198,8 @@ public class MostVisitedSitesBridge
             int[] newsSections = new int[newsUrls.length];
             Arrays.fill(newsSections, TileSectionType.NEWS);
 
-            suggestions.addAll(buildSiteSuggestions(
-                    newsTitles, newsUrls, newsSections, dummyWhitelistIconPaths, dummySources));
+            suggestions.addAll(buildSiteSuggestions(newsTitles, newsUrls, newsSections,
+                    dummyWhitelistIconPaths, dummyNameSources, dummySources));
 
             String[] ecommerceUrls = {"https://www.amazon.co.uk", "https://www.flipkart.com/",
                     "https://www.snapdeal.com/", "https://www.olx.com/"};
@@ -205,7 +210,7 @@ public class MostVisitedSitesBridge
             Arrays.fill(ecommerceSections, TileSectionType.ECOMMERCE);
 
             suggestions.addAll(buildSiteSuggestions(ecommerceTitles, ecommerceUrls,
-                    ecommerceSections, dummyWhitelistIconPaths, dummySources));
+                    ecommerceSections, dummyWhitelistIconPaths, dummyNameSources, dummySources));
 
             String[] toolsUrls = {"https://www.google.co.uk/maps/", "https://paytm.com/",
                     "https://www.olacabs.com/", "https://in.bookmyshow.com/"};
@@ -215,8 +220,8 @@ public class MostVisitedSitesBridge
             int[] toolsSections = new int[toolsUrls.length];
             Arrays.fill(toolsSections, TileSectionType.TOOLS);
 
-            suggestions.addAll(buildSiteSuggestions(
-                    toolsTitles, toolsUrls, toolsSections, dummyWhitelistIconPaths, dummySources));
+            suggestions.addAll(buildSiteSuggestions(toolsTitles, toolsUrls, toolsSections,
+                    dummyWhitelistIconPaths, dummyNameSources, dummySources));
 
             String[] travelUrls = {"https://www.makemytrip.com/", "https://in.via.com/",
                     "https://housing.com/", "https://www.redbus.in/"};
@@ -227,7 +232,7 @@ public class MostVisitedSitesBridge
             Arrays.fill(travelSections, TileSectionType.TRAVEL);
 
             suggestions.addAll(buildSiteSuggestions(travelTitles, travelUrls, travelSections,
-                    dummyWhitelistIconPaths, dummySources));
+                    dummyWhitelistIconPaths, dummyNameSources, dummySources));
         }
 
         mWrappedObserver.onSiteSuggestionsAvailable(suggestions);
@@ -265,8 +270,8 @@ public class MostVisitedSitesBridge
             long nativeMostVisitedSitesBridge, String url, boolean addUrl);
     private native void nativeRecordPageImpression(
             long nativeMostVisitedSitesBridge, int tilesCount);
-    private native void nativeRecordTileImpression(
-            long nativeMostVisitedSitesBridge, int index, int type, int source, String url);
+    private native void nativeRecordTileImpression(long nativeMostVisitedSitesBridge, int index,
+            int type, int nameSource, int source, String url);
     private native void nativeRecordOpenedMostVisitedItem(
-            long nativeMostVisitedSitesBridge, int index, int tileType, int source);
+            long nativeMostVisitedSitesBridge, int index, int tileType, int nameSource, int source);
 }

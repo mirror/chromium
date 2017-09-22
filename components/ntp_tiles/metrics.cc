@@ -20,6 +20,8 @@ namespace {
 // Maximum number of tiles to record in histograms.
 const int kMaxNumTiles = 12;
 
+const int kLastNameSource = static_cast<int>(TileNameSource::LAST);
+
 // Identifiers for the various tile sources.
 const char kHistogramClientName[] = "client";
 const char kHistogramServerName[] = "server";
@@ -93,6 +95,7 @@ void RecordPageImpression(int number_of_tiles) {
 }
 
 void RecordTileImpression(int index,
+                          TileNameSource name,
                           TileSource source,
                           TileVisualType type,
                           const GURL& url,
@@ -104,6 +107,13 @@ void RecordTileImpression(int index,
   std::string impression_histogram = base::StringPrintf(
       "NewTabPage.SuggestionsImpression.%s", source_name.c_str());
   LogHistogramEvent(impression_histogram, index, kMaxNumTiles);
+
+  UMA_HISTOGRAM_ENUMERATION("NewTabPage.TileName", static_cast<int>(name),
+                            kLastNameSource + 1);
+  std::string name_histogram = base::StringPrintf(
+      "NewTabPage.TileName.%s", GetSourceHistogramName(source).c_str());
+  LogHistogramEvent(name_histogram, static_cast<int>(name),
+                    kLastNameSource + 1);
 
   if (type > LAST_RECORDED_TILE_TYPE) {
     return;
@@ -130,7 +140,10 @@ void RecordTileImpression(int index,
   }
 }
 
-void RecordTileClick(int index, TileSource source, TileVisualType tile_type) {
+void RecordTileClick(int index,
+                     TileNameSource name,
+                     TileSource source,
+                     TileVisualType tile_type) {
   UMA_HISTOGRAM_ENUMERATION("NewTabPage.MostVisited", index, kMaxNumTiles);
 
   std::string histogram = base::StringPrintf(
@@ -144,14 +157,21 @@ void RecordTileClick(int index, TileSource source, TileVisualType tile_type) {
     LogHistogramEvent(tile_type_histogram, index, kMaxNumTiles);
   }
 
+  UMA_HISTOGRAM_ENUMERATION("NewTabPage.TileNameClicked",
+                            static_cast<int>(name), kLastNameSource + 1);
+  std::string name_histogram = base::StringPrintf(
+      "NewTabPage.TileNameClicked.%s", GetSourceHistogramName(source).c_str());
+  LogHistogramEvent(name_histogram, static_cast<int>(name),
+                    kLastNameSource + 1);
+
   if (tile_type <= LAST_RECORDED_TILE_TYPE) {
     UMA_HISTOGRAM_ENUMERATION("NewTabPage.TileTypeClicked", tile_type,
                               LAST_RECORDED_TILE_TYPE + 1);
 
-    std::string histogram =
+    std::string type_histogram =
         base::StringPrintf("NewTabPage.TileTypeClicked.%s",
                            GetSourceHistogramName(source).c_str());
-    LogHistogramEvent(histogram, tile_type, LAST_RECORDED_TILE_TYPE + 1);
+    LogHistogramEvent(type_histogram, tile_type, LAST_RECORDED_TILE_TYPE + 1);
   }
 }
 
