@@ -14,8 +14,10 @@
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/login/ui/pin_keyboard_animation.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/user_manager/user.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/callback_layer_animation_observer.h"
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/layer_animator.h"
@@ -105,7 +107,9 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
   user_view_ = new LoginUserView(LoginDisplayStyle::kLarge,
                                  true /*show_dropdown*/, on_tap);
   password_view_ = new LoginPasswordView(
-      base::Bind(&LoginAuthUserView::OnAuthSubmit, base::Unretained(this)));
+      base::Bind(&LoginAuthUserView::OnAuthSubmit, base::Unretained(this)),
+      base::Bind(&LoginAuthUserView::OnPasswordFieldCleared,
+                 base::Unretained(this)));
   // Enable layer rendering so the password opacity can be animated.
   password_view_->SetPaintToLayer();
   password_view_->layer()->SetFillsBoundsOpaquely(false);
@@ -195,7 +199,16 @@ void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
     password_view_->RequestFocus();
   }
 
-  pin_view_->SetVisible(auth_methods_ & AUTH_PIN);
+  bool has_pin = (auth_methods & AUTH_PIN) != 0;
+  pin_view_->SetVisible(has_pin);
+
+  if (has_password && has_pin) {
+    password_view_->SetPlaceholderText(
+        l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_PIN_PLACEHOLDER));
+  } else if (has_password) {
+    password_view_->SetPlaceholderText(
+        l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_PLACEHOLDER));
+  }
 
   // Only the active auth user view has a password displayed. If that is the
   // case, then render the user view as if it was always focused, since clicking
@@ -329,6 +342,11 @@ void LoginAuthUserView::OnAuthSubmit(const base::string16& password) {
       base::BindOnce([](OnAuthCallback on_auth,
                         bool auth_success) { on_auth.Run(auth_success); },
                      on_auth_));
+}
+
+void LoginAuthUserView::OnPasswordFieldCleared(bool is_empty) {
+  if (pin_view_)
+    pin_view_->PasswordFieldCleared(is_empty);
 }
 
 }  // namespace ash

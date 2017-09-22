@@ -18,6 +18,9 @@ class Timer;
 }  // namespace base
 
 namespace ash {
+namespace {
+class BackspacePinButton;
+}
 
 // Implements a PIN keyboard. The class emits high-level events that can be used
 // by the embedder. The PIN keyboard, while displaying letters, only emits
@@ -77,10 +80,13 @@ class ASH_EXPORT LoginPinView : public NonAccessibleView {
                         const OnPinBackspace& on_backspace);
   ~LoginPinView() override;
 
+  void PasswordFieldCleared(bool);
+
   // views::View:
   bool OnKeyPressed(const ui::KeyEvent& event) override;
 
  private:
+  BackspacePinButton* backspace_;
   OnPinKey on_key_;
   OnPinBackspace on_backspace_;
 
