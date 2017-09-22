@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "db1c9298_62636304",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-22T18:43:06Z",
+      "side": 1,
+      "message": "Switched from DCHECK() to explicit check that returns empty buffer if values can\u0027t be obtained. https://chromium-review.googlesource.com/c/chromium/src/+/678438 is adding a template to watch for RFH navigations and will get added to PlatformVerificationImpl as well.",
+      "parentUuid": "2d957977_6765b3ee",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1411e854_7b2691e7",
         "filename": "chrome/browser/media/cdm_storage_id.h",
         "patchSetId": 4
