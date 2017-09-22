@@ -317,6 +317,9 @@ class BrowserView : public BrowserWindow,
   bool IsToolbarVisible() const override;
   bool IsToolbarShowing() const override;
   void ShowUpdateChromeDialog() override;
+#if defined(OS_CHROMEOS)
+  void ShowIntentPickerBubble(const GURL& url) override;
+#endif  //  defined(OS_CHROMEOS)
   void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) override;
   autofill::SaveCardBubbleView* ShowSaveCreditCardBubble(
       content::WebContents* contents,
