@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "701a374b_35a6f79e",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-22T21:53:05Z",
+      "side": 1,
+      "message": "Nah, it\u0027s nice just to get these ui-related things in the correct home for now without all the code churn.",
+      "parentUuid": "8c5d70f9_c852d700",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06c330f8_facf70d5",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 2
