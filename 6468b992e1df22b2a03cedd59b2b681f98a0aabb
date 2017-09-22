@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c997241_6c74d119",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-22T00:38:50Z",
+      "side": 1,
+      "message": "might be safer to leave this in the default rule, and then do\n[dir\u003drtl] {\n  left: 0;\n  right: -12px;\n}",
+      "revId": "6468b992e1df22b2a03cedd59b2b681f98a0aabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
