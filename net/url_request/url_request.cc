@@ -933,8 +933,8 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
 
   if (redirect_info.new_method != method_) {
     // TODO(davidben): This logic still needs to be replicated at the consumers.
-    if (method_ == "POST") {
-      // If being switched from POST, must remove Origin header.
+    if (method_ == "POST" || method_ == "PUT") {
+      // If being switched from POST or PUT, must remove Origin header.
       // TODO(jww): This is Origin header removal is probably layering violation
       // and should be refactored into //content. See https://crbug.com/471397.
       // See also: https://crbug.com/760487
