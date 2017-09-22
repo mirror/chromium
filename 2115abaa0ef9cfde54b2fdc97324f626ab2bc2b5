@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900a66a2_176972e0",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-22T19:01:25Z",
+      "side": 1,
+      "message": "Can we make LocationBar::GetExtensionName public and reuse that instead?\n\nWould be something like:\n\nif (!web_contents || !url.SchemeIs(extensions::kExtensionScheme)) {\n  return FormatOriginUrl(url);\n}\nreturn LocationBar::GetExtensionName(url, web_contents);",
+      "range": {
+        "startLine": 266,
+        "startChar": 69,
+        "endLine": 266,
+        "endChar": 0
+      },
+      "revId": "2115abaa0ef9cfde54b2fdc97324f626ab2bc2b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
