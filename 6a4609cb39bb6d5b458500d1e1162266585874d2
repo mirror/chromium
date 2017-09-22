@@ -16,6 +16,24 @@
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed1411f_178c6501",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-22T11:06:42Z",
+      "side": 1,
+      "message": "Yep I could do that.\n\nThis falls into the category I was labeling a \u0027weird state\u0027, in this case: a unit of untested albeit unused, partially deconstructed (i.e. URLRequestContext parts excised) code.\n\nAnother option, I could almost-wholly deconstruct it, i.e. reduce AccessTokenStore to basically \"class AccessTokenStore() {};\". But using that as an of/off marker for NetworkLocationProvider is a \u0027weird state\u0027 in its own way.\n\nIn the end it\u0027s all for a short time, so happy to go with any of these really. What\u0027s your preference for review purposes?",
+      "parentUuid": "75fcff96_47267dc5",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
