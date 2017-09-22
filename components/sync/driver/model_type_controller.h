@@ -51,9 +51,14 @@ class ModelTypeController : public DataTypeController {
   void GetStatusCounters(const StatusCountersCallback& callback) override;
   void RecordMemoryUsageHistogram() override;
 
+ protected:
+  void ReportModelError(const ModelError& error);
+
+  // The sync client, which provides access to this type's ModelTypeSyncBridge.
+  SyncClient* const sync_client_;
+
  private:
   void RecordStartFailure(ConfigureResult result) const;
-  void ReportModelError(const ModelError& error);
 
   // If the DataType controller is waiting for models to load, once the models
   // are loaded this function should be called to let the base class
@@ -72,10 +77,8 @@ class ModelTypeController : public DataTypeController {
 
   // Post the given task that requires the bridge object to run to the model
   // thread, where the bridge lives.
-  void PostBridgeTask(const base::Location& location, const BridgeTask& task);
-
-  // The sync client, which provides access to this type's ModelTypeSyncBridge.
-  SyncClient* const sync_client_;
+  virtual void PostBridgeTask(const base::Location& location,
+                              const BridgeTask& task);
 
   // The thread the model type lives on.
   scoped_refptr<base::SingleThreadTaskRunner> model_thread_;
