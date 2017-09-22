@@ -593,7 +593,8 @@ IntPoint VisualViewport::ClampDocumentOffsetAtScale(const IntPoint& offset,
       FlooredIntSize(FloatSize(ContentsSize()) - scaled_size);
   IntSize max = view->MaximumScrollOffsetInt() + visual_viewport_max;
   IntSize min =
-      view->MinimumScrollOffsetInt();  // VisualViewportMin should be (0, 0)
+      view->LayoutViewportScrollableArea()
+          ->MinimumScrollOffsetInt();  // VisualViewportMin should be (0, 0)
 
   IntSize clamped = ToIntSize(offset);
   clamped = clamped.ShrunkTo(max);
