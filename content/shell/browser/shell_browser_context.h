@@ -69,6 +69,7 @@ class ShellBrowserContext : public BrowserContext {
   net::URLRequestContextGetter* CreateMediaRequestContextForStoragePartition(
       const base::FilePath& partition_path,
       bool in_memory) override;
+  origin_manifest::OriginManifestStore* GetOriginManifestStore() override;
 
  protected:
   // Contains URLRequestContextGetter required for resource loading.
@@ -123,6 +124,8 @@ class ShellBrowserContext : public BrowserContext {
   base::FilePath path_;
   BrowserPluginGuestManager* guest_manager_;
   scoped_refptr<ShellURLRequestContextGetter> url_request_getter_;
+
+  std::unique_ptr<origin_manifest::OriginManifestStore> origin_manifest_store_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellBrowserContext);
 };

@@ -115,6 +115,7 @@ specific_include_rules = {
     "+content/browser/loader/loader_delegate.h",
     "+content/browser/loader/mojo_async_resource_handler.h",
     "+content/browser/loader/null_resource_controller.h",
+    "+content/browser/loader/origin_manifest_resource_handler.h",
     "+content/browser/loader/resource_dispatcher_host_impl.h",
     "+content/browser/loader/resource_loader.h",
     "+content/browser/loader/resource_loader_delegate.h",

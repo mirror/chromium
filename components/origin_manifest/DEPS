@@ -1,0 +1,13 @@
+include_rules = [
+  "+mojo/public/cpp/bindings",
+  "+net",
+  "+sql",
+]
+
+specific_include_rules = {
+  'origin_manifest_store_browsertest\.cc': [
+    "+content/public/browser",
+    "+content/public/test",
+    "+content/shell/browser",
+  ],
+}

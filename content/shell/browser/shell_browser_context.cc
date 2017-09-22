@@ -16,6 +16,7 @@
 #include "build/build_config.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/network_session_configurator/common/network_switches.h"
+#include "components/origin_manifest/origin_manifest_store_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_switches.h"
@@ -59,7 +60,9 @@ ShellBrowserContext::ShellBrowserContext(bool off_the_record,
       ignore_certificate_errors_(false),
       off_the_record_(off_the_record),
       net_log_(net_log),
-      guest_manager_(NULL) {
+      guest_manager_(NULL),
+      origin_manifest_store_(new origin_manifest::OriginManifestStoreImpl(
+          GetDefaultStoragePartition(this)->GetURLRequestContext())) {
   InitWhileIOAllowed();
   BrowserContextDependencyManager::GetInstance()->
       CreateBrowserContextServices(this);
@@ -195,6 +198,11 @@ net::URLRequestContextGetter*
         const base::FilePath& partition_path,
         bool in_memory) {
   return nullptr;
+}
+
+origin_manifest::OriginManifestStore*
+ShellBrowserContext::GetOriginManifestStore() {
+  return origin_manifest_store_.get();
 }
 
 ResourceContext* ShellBrowserContext::GetResourceContext()  {

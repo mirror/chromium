@@ -409,6 +409,7 @@ ProfileImpl::ProfileImpl(
       io_data_(this),
       last_session_exit_type_(EXIT_NORMAL),
       start_time_(Time::Now()),
+      origin_manifest_store_(nullptr),
       delegate_(delegate),
       predictor_(nullptr) {
   TRACE_EVENT0("browser,startup", "ProfileImpl::ctor")
@@ -647,6 +648,21 @@ void ProfileImpl::DoFinalInit() {
                 media_cache_max_size, extensions_cookie_path, GetPath(),
                 predictor_, session_cookie_mode, GetSpecialStoragePolicy(),
                 CreateDomainReliabilityMonitor(local_state));
+
+  // Create and initialize Origin Manifest store
+  // TODO(dhausknecht) this probably needs to go to io_data_
+  base::FilePath origin_manifest_path = GetPath();
+  origin_manifest_path =
+      origin_manifest_path.Append(chrome::kOriginManifestFilename);
+  origin_manifest_store_.reset(
+      new origin_manifest::OriginManifestStoreImpl(GetRequestContext()));
+  origin_manifest_store_->Init(
+      new origin_manifest::SQLitePersistentOriginManifestStore(
+          origin_manifest_path,
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+          base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::BACKGROUND,
+               base::TaskShutdownBehavior::BLOCK_SHUTDOWN})));
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   ChromePluginServiceFilter::GetInstance()->RegisterResourceContext(
@@ -1124,6 +1140,10 @@ void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
 
 std::string ProfileImpl::GetMediaDeviceIDSalt() {
   return media_device_id_salt_->GetSalt();
+}
+
+origin_manifest::OriginManifestStore* ProfileImpl::GetOriginManifestStore() {
+  return origin_manifest_store_.get();
 }
 
 bool ProfileImpl::IsSameProfile(Profile* profile) {
