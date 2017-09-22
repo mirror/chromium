@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7fc838_089721bb",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T23:02:45Z",
+      "side": 1,
+      "message": "cmd.extend(file_line_coverage_report.GetListOfFiles())",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 7
+      },
+      "revId": "f9934d26bb1e7b6fc5ec1394381d7119621e7604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
