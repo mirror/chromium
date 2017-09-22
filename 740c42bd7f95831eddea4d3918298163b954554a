@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9eb2d4e4_156e870a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-22T20:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9866e35c_f5f53ba4",
+      "range": {
+        "startLine": 604,
+        "startChar": 33,
+        "endLine": 604,
+        "endChar": 35
+      },
+      "revId": "740c42bd7f95831eddea4d3918298163b954554a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a91ddd09_383f4d7b",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "740c42bd7f95831eddea4d3918298163b954554a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f21b186_546b20fa",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-22T20:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a91ddd09_383f4d7b",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "740c42bd7f95831eddea4d3918298163b954554a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
