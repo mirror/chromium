@@ -34,6 +34,24 @@
       "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45afc48_d13a63a4",
+        "filename": "ash/resources/vector_icons/notification_stylus_battery_warning.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-22T20:14:30Z",
+      "side": 1,
+      "message": "Typically no, they shouldn\u0027t have colors --- the colors should be passed at runtime. PATH_COLOR_ARGB is there to support having different paths with different colors in the same icon.\n\nIt looks like you should instead be fiddling with the |color_type| you\u0027re passing to CreateSystemNotification().",
+      "parentUuid": "3b09e24c_fa682468",
+      "revId": "8c5ca1233bb75b2bc62d4953bca2cb57dc65742f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
