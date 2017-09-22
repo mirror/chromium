@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #include "components/toolbar/toolbar_model_impl.h"
@@ -132,7 +133,9 @@ TEST_F(OmniboxViewMacTest, TabToAutocomplete) {
   SetModel(&view, model);
 
   MockOmniboxPopupView popup_view;
-  OmniboxPopupModel popup_model(&popup_view, model);
+  OmniboxPopupModel popup_model(&popup_view, model, model->client(),
+                                model->autocomplete_controller());
+  model->set_popup_model(popup_model);
 
   // With popup closed verify that tab doesn't autocomplete.
   popup_view.set_is_open(false);
@@ -158,7 +161,9 @@ TEST_F(OmniboxViewMacTest, UpDownArrow) {
   SetModel(&view, model);
 
   MockOmniboxPopupView popup_view;
-  OmniboxPopupModel popup_model(&popup_view, model);
+  OmniboxPopupModel popup_model(&popup_view, model, model->client(),
+                                model->autocomplete_controller());
+  model->set_popup_model(popup_model);
 
   // With popup closed verify that pressing up and down arrow works.
   popup_view.set_is_open(false);
@@ -189,7 +194,9 @@ TEST_F(OmniboxViewMacTest, WritingDirectionLTR) {
   MockOmniboxEditModel* model =
       new MockOmniboxEditModel(&view, &edit_controller, profile());
   MockOmniboxPopupView popup_view;
-  OmniboxPopupModel popup_model(&popup_view, model);
+  OmniboxPopupModel popup_model(&popup_view, model, model->client(),
+                                model->autocomplete_controller());
+  model->set_popup_model(popup_model);
 
   model->OnSetFocus(true);
   SetModel(&view, model);
@@ -221,7 +228,9 @@ TEST_F(OmniboxViewMacTest, WritingDirectionRTL) {
   MockOmniboxEditModel* model =
       new MockOmniboxEditModel(&view, &edit_controller, profile());
   MockOmniboxPopupView popup_view;
-  OmniboxPopupModel popup_model(&popup_view, model);
+  OmniboxPopupModel popup_model(&popup_view, model, model->client(),
+                                model->autocomplete_controller());
+  model->set_popup_model(popup_model);
 
   model->OnSetFocus(true);
   SetModel(&view, model);
