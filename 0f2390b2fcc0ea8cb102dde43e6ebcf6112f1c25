@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6efa099_97431cc7",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-22T18:56:04Z",
+      "side": 1,
+      "message": "nit: trim_before",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc0c833_176e6451",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-22T18:56:04Z",
+      "side": 1,
+      "message": "Something seems wrong here, or at least the comment is confusing.  The comment by the \"if\" says\n\"If we found any \"JavaScript:\" schemes in the text, ...\" but that\u0027s not what the \"if\" is checking.  The if can be true even if we did not find any javascript: schemes.\n\nWhy do you need the \"if\" statement?  What happens if you remove it?",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
