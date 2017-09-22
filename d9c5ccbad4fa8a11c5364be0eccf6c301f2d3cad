@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e590ac_23d36dbc",
+        "filename": "build/toolchain/linux/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1230571
+      },
+      "writtenOn": "2017-09-22T01:10:59Z",
+      "side": 1,
+      "message": "I don\u0027t think set toolprefix is right.\nGCC Target is mips64el-redhat-linux or mips64el-unkown-linux on loongson3a platform \nSo, not set toolprefix and get cc from system gcc is good to me.",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 12
+      },
+      "revId": "d9c5ccbad4fa8a11c5364be0eccf6c301f2d3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
