@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d4909f43_68dda670",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T20:04:19Z",
+      "side": 1,
+      "message": "Interesting. Why wouldn\u0027t you show the overflow indicators in these scenarios?",
+      "parentUuid": "48fa63c2_e72de995",
+      "range": {
+        "startLine": 890,
+        "startChar": 2,
+        "endLine": 890,
+        "endChar": 43
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ab4bb2_a0fe71af",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 9
