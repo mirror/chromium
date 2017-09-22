@@ -51,4 +51,14 @@ void OfflinePageMetadataStoreTestUtil::InsertItem(const OfflinePageItem& page) {
   EXPECT_EQ(ItemActionStatus::SUCCESS, status);
 }
 
+std::vector<OfflinePageItem> OfflinePageMetadataStoreTestUtil::GetAllPages() {
+  std::vector<OfflinePageItem> result;
+  store_->GetOfflinePages(
+      base::Bind([](std::vector<OfflinePageItem>* out_pages,
+                    std::vector<OfflinePageItem> pages) { *out_pages = pages; },
+                 &result));
+  task_runner_->RunUntilIdle();
+  return result;
+}
+
 }  // namespace offline_pages
