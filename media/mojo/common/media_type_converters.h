@@ -14,6 +14,7 @@
 
 namespace media {
 class AudioBuffer;
+class AudioBus;
 class AudioDecoderConfig;
 class DecoderBuffer;
 class DecryptConfig;
@@ -86,6 +87,11 @@ struct TypeConverter<scoped_refptr<media::AudioBuffer>,
                      media::mojom::AudioBufferPtr> {
   static scoped_refptr<media::AudioBuffer> Convert(
       const media::mojom::AudioBufferPtr& input);
+};
+
+template <>
+struct TypeConverter<media::mojom::AudioBusPtr, media::AudioBus> {
+  static media::mojom::AudioBusPtr Convert(const media::AudioBus& input);
 };
 
 }  // namespace mojo

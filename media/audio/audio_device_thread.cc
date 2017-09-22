@@ -6,8 +6,10 @@
 
 #include <limits>
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "base/sys_info.h"
+#include "base/threading/thread.h"
 
 namespace {
 
@@ -64,21 +66,27 @@ void AudioDeviceThread::Callback::InitializeOnAudioThread() {
 AudioDeviceThread::AudioDeviceThread(Callback* callback,
                                      base::SyncSocket::Handle socket,
                                      const char* thread_name)
-    : callback_(callback), thread_name_(thread_name), socket_(socket) {
-  CHECK(base::PlatformThread::CreateWithPriority(0, this, &thread_handle_,
-                                                 GetAudioThreadPriority()));
-  DCHECK(!thread_handle_.is_null());
+    : callback_(callback),
+      socket_(socket),
+      thread_(new base::Thread("AudioDevice")) {
+  base::Thread::Options options;
+  options.joinable = true;
+  options.priority = GetAudioThreadPriority();
+  thread_->StartWithOptions(options);
+  bool started = thread_->WaitUntilThreadStarted();
+  CHECK(started);
+
+  thread_->task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&AudioDeviceThread::ThreadMain, base::Unretained(this)));
 }
 
 AudioDeviceThread::~AudioDeviceThread() {
   socket_.Shutdown();
-  if (thread_handle_.is_null())
-    return;
-  base::PlatformThread::Join(thread_handle_);
+  thread_->Stop();
 }
 
 void AudioDeviceThread::ThreadMain() {
-  base::PlatformThread::SetName(thread_name_);
   callback_->InitializeOnAudioThread();
 
   uint32_t buffer_index = 0;

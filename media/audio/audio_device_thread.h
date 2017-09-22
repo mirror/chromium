@@ -7,13 +7,18 @@
 
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/memory/shared_memory.h"
 #include "base/sync_socket.h"
-#include "base/threading/platform_thread.h"
 #include "base/threading/thread_checker.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/media_export.h"
+
+namespace base {
+class Thread;
+}
 
 namespace media {
 
@@ -80,9 +85,8 @@ class MEDIA_EXPORT AudioDeviceThread : public base::PlatformThread::Delegate {
   void ThreadMain() final;
 
   Callback* const callback_;
-  const char* thread_name_;
   base::CancelableSyncSocket socket_;
-  base::PlatformThreadHandle thread_handle_;
+  std::unique_ptr<base::Thread> thread_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioDeviceThread);
 };
