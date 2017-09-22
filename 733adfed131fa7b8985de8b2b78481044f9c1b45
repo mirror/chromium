@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d50f18_5b648dcd",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:22:41Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20d28d3_0330c3a9",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:22:41Z",
+      "side": 1,
+      "message": "We should test this in network_icon_unittest.cc",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bd5a16_8f93e7c8",
+        "filename": "ash/system/network/tray_network.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:22:41Z",
+      "side": 1,
+      "message": "We should not append strings like this for display, it may not localize. We need to modify IDS_ASH_STATUS_TRAY_NETWORK_CONNECTED (or add a new string) that uses $1 notation for the signal strength.",
+      "revId": "733adfed131fa7b8985de8b2b78481044f9c1b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
