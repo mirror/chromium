@@ -93,6 +93,30 @@
       "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85adfac8_4133e3fd",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T07:21:24Z",
+      "side": 1,
+      "message": "I have a WIP CL that renames color_space and pixel_format, so no need to duplicate that work.",
+      "parentUuid": "4f6a0709_e48963a5",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
