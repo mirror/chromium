@@ -390,9 +390,6 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   // read since the last invocation.
   virtual void UpdatePacketReadTimes();
 
-  // Computes a new RedirectInfo based on receiving a redirect response of
-  // |location| and |http_status_code|.
-  RedirectInfo ComputeRedirectInfo(const GURL& location, int http_status_code);
 
   // Notify the network delegate that more bytes have been received or sent over
   // the network, if bytes have been received or sent since the previous
@@ -430,7 +427,7 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
 
   // Set when a redirect is deferred. Redirects are deferred after validity
   // checks are performed, so this field must not be modified.
-  RedirectInfo deferred_redirect_info_;
+  std::unique_ptr<net::RedirectInfo> deferred_redirect_info_;
 
   // The network delegate to use with this request, if any.
   NetworkDelegate* network_delegate_;
