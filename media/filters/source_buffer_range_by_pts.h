@@ -19,11 +19,11 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
  public:
   // Creates a range with |new_buffers|. |new_buffers| cannot be empty and the
   // front of |new_buffers| must be a keyframe.
-  // |range_start_decode_time| refers to the starting timestamp for the coded
+  // |range_start_pts| refers to the starting timestamp for the coded
   // frame group to which these buffers belong.
   SourceBufferRangeByPts(GapPolicy gap_policy,
                          const BufferQueue& new_buffers,
-                         DecodeTimestamp range_start_decode_time,
+                         base::TimeDelta range_start_pts,
                          const InterbufferDistanceCB& interbuffer_distance_cb);
 
   ~SourceBufferRangeByPts() override;
@@ -211,16 +211,16 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
   void UpdateEndTimeUsingLastGOP();
 
   // If the first buffer in this range is the beginning of a coded frame group,
-  // |range_start_decode_time_| is the time when the coded frame group begins.
+  // |range_start_pts_| is the presentation time when the coded frame group begins.
   // This is especially important in muxed media where the first coded frames
   // for each track do not necessarily begin at the same time.
-  // |range_start_decode_time_| may be <= the timestamp of the first buffer in
-  // |buffers_|. |range_start_decode_time_| is kNoDecodeTimestamp() if this
+  // |range_start_pts_| may be <= the timestamp of the first buffer in
+  // |buffers_|. |range_start_pts_| is kNoTimestamp() if this
   // range does not start at the beginning of a coded frame group, which can
   // happen by range removal or split when we don't have a way of knowing,
   // across potentially multiple muxed streams, the coded frame group start
   // timestamp for the new range.
-  DecodeTimestamp range_start_decode_time_;
+  DecodeTimestamp range_start_pts_;
 
   // Index base of all positions in |keyframe_map_|. In other words, the
   // real position of entry |k| of |keyframe_map_| in the range is:
