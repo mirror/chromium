@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6774e0ec_7bc43eb8",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "We will return true.",
+      "parentUuid": "a0c1ede8_54c14e05",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1122f9b1_05550b99",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aaafdaea_b2f623a7",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1122f9b1_05550b99",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82784cb3_dfcf5430",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ed3039_552574c7",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82784cb3_dfcf5430",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "871a4e5c_c27a6e3f",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eaf7b15_60d04cbd",
+      "range": {
+        "startLine": 889,
+        "startChar": 6,
+        "endLine": 889,
+        "endChar": 26
+      },
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa18264_4b7150d6",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-20T18:51:49Z",
       "side": 1,
       "message": "why not \"paint_region_.Union(deferred_paint_region_);\" here? or maybe better \"damage_region_.Union(deferred_damage_region_)\" ?",
+      "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc345c5_23fc3a1a",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "We do not need this.",
+      "parentUuid": "3aa18264_4b7150d6",
       "revId": "a19f2ec8ebd85f737e7ad912be1a7443a9bcc6a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

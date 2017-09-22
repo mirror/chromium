@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "337bfd8b_5dbc63b6",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Undo.",
+      "parentUuid": "8338e6c3_0ecea13a",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e03cf36_09611d3d",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T21:32:14Z",
       "side": 1,
       "message": "remove change as not needed in this patch",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955dafff_b1a09f4b",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Undo.",
+      "parentUuid": "3e03cf36_09611d3d",
       "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf9635c5_9d709e58",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4c9b8b4_72e7030b",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02db59a7_33f76b9a",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e98b68b3_ef26639d",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Undo.",
+      "parentUuid": "02db59a7_33f76b9a",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d88883a_f788de2c",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-22T21:32:14Z",
       "side": 1,
       "message": "remove change as not needed in this patch",
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e463c8cc_3c3c96d0",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Undo.",
+      "parentUuid": "6d88883a_f788de2c",
       "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +197,30 @@
       "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f686d50_30d8bfcf",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-22T22:41:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f7fc4ca_99b9cffe",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "526feb8c0eee57cd65340b5968b62b11ad08b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
