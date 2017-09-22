@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "667431ac_9b8f70d8",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "// Create the request to pass to the fetch event.",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7fbb1b_019cc4b4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "// Dispatch the fetch event.",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75def3f2_d6c2682e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "don\u0027t need line 232 and 233 to be separate statements",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42a5008_1c3b84eb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried about the \"FinishedBlob\" thing. SWURLRequestJob does only calls this after \"resolving file sizes\" which might be what \"Finished\" means?? +dmurph, +mek for blob expertise.",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89891c9_47c2b661",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "remove this one as it\u0027s duplicated in line 30",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91728acd_fc5cb321",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "To match the order in the .cc file, this should move to between line 99 and 100",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa0ec90_0d81778d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "Now we don\u0027t need this function, we can just use RespondWithFallback().",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c551e7fb_7559b2c1",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "we can add ASSERT_TRUE(blob_handle_) here",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7c046b_f67f6e3f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "\"received\" -\u003e \"body\" maybe",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba3fd80_8d099a71",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "don\u0027t need this comment now",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d711a8_bb925b6e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:58:37Z",
+      "side": 1,
+      "message": "blob_handle_ -\u003e request_body_blob_\n\nand move this to under response_mode_ as it\u0027s a generic member now",
+      "revId": "bb4405d8ca0cec4e9202c494a32d8ede1471afef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
