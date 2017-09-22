@@ -28,6 +28,7 @@
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
+#include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 
 namespace content {
@@ -338,9 +339,7 @@ void ServiceWorkerWriteToCacheJob::OnResponseStarted(net::URLRequest* request,
   if (resource_type_ == RESOURCE_TYPE_SERVICE_WORKER) {
     std::string mime_type;
     request->GetMimeType(&mime_type);
-    if (mime_type != "application/x-javascript" &&
-        mime_type != "text/javascript" &&
-        mime_type != "application/javascript") {
+    if (!blink::IsSupportedJavascriptMimeType(mime_type)) {
       std::string error_message =
           mime_type.empty()
               ? kNoMIMEError
