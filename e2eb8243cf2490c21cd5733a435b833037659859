@@ -16,6 +16,24 @@
       "revId": "e2eb8243cf2490c21cd5733a435b833037659859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027ac8b6_7d0146ae",
+        "filename": "docs/speed/benchmark_harnesses/power_perf.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-09-22T21:04:42Z",
+      "side": 1,
+      "message": "Done. (I still left in the bit about why you might choose to run a perf try job rather than a local benchmark, as well as which configurations are currently equipped with BattOrs.)",
+      "parentUuid": "5da8c1bf_fe2303f1",
+      "revId": "e2eb8243cf2490c21cd5733a435b833037659859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
