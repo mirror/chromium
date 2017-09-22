@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c56677e_a53e7c96",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T06:43:50Z",
+      "side": 1,
+      "message": "Is there a particular set of distros that we\u0027re interested in?  Could we define an enum map rather than recording a freeform string?",
+      "range": {
+        "startLine": 182,
+        "startChar": 41,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "eb8d68cd9768195854e95a5b608016d464d5f0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "812e0b5d_4895adf0",
         "filename": "components/metrics/proto/system_profile.proto",
         "patchSetId": 1
