@@ -16,6 +16,24 @@
       "revId": "05371bfede2cc55ff0af29732b91a01546d5aea1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af221ffc_a63e9f9f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T15:14:14Z",
+      "side": 1,
+      "message": "That just widens the image icon, which is not desired. We already flex the display name below (class \u003d \"middle\"), but unless we flex the entire \"settings-row\" div, it will not be sized correctly.",
+      "parentUuid": "658507eb_0d6dc4b1",
+      "revId": "05371bfede2cc55ff0af29732b91a01546d5aea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

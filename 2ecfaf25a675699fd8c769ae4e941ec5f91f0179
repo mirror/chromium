@@ -16,6 +16,24 @@
       "revId": "2ecfaf25a675699fd8c769ae4e941ec5f91f0179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f4b0d5_83f2bf57",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T15:14:14Z",
+      "side": 1,
+      "message": "Apologies. I forgot to upload the latest patch that reverts this.\nIt turns out we can\u0027t just remove the settings-row, the tap handling does not work correctly.\nInstead I added a rule here for .settings-row to add flex\u003d1.",
+      "parentUuid": "a47894f4_eb41644c",
+      "revId": "2ecfaf25a675699fd8c769ae4e941ec5f91f0179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
