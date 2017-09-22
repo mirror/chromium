@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "6fd8b221_e76b427e",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "nit: GpuMemoryBufferImplDXGI to be consistent with GpuMemoryBufferFactory",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e191967_94f669b3",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "nit: please use a switch case for usage like OS_MACOSX above",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea6bdd3_7d112ef6",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "why do we need to support 2 formats with alpha and 2 without when buffers can\u0027t be mapped and layout doesn\u0027t really matter? is it not enough with format with alpha and one without?",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcec6b7_3e22fbfc",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be chosen based on |format|?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec7fcf9a_27774f29",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
         "patchSetId": 6
@@ -18,6 +104,69 @@
         "startChar": 6,
         "endLine": 105,
         "endChar": 9
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c260aa_3b295800",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "nit: \"return nullptr;\" here instead",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374b2982_afb27bf1",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "why do you need this map? Relying on a map here is bad as it falls apart when the GPU process crashes. this should be fixed in the IOSurface case and NativePixmap cases and it would be nice to not introduce the same mistake here.\n\nIdeally we\u0027d remove this completely but it need to be kept around then please store base::SharedMEmory instances instead of handles. Handles should only be used for IPC.",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72205cf2_55ce6fda",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "why did you add GMB formats with alpha if we\u0027re always going to ignore it when creating an image and binding it to a texture?",
+      "range": {
+        "startLine": 246,
+        "startChar": 6,
+        "endLine": 246,
+        "endChar": 25
       },
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +191,63 @@
         "endLine": 260,
         "endChar": 36
       },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a378e06_e56f18e0",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "why do these need to be public? please move to anonymous namespace in cc file if possible",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9e8bac_35695bb0",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "why shouldn\u0027t store the handle here but instead a shm instance but I understand that mistake was done earlier",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc344318_7365690c",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-22T13:42:52Z",
+      "side": 1,
+      "message": "Do these two functions need to be member functions? Please move to anonymous namespace in cc file if possible",
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
