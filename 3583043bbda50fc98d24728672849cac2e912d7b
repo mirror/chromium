@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc4e302_f3aa55a9",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T21:43:09Z",
+      "side": 1,
+      "message": "Should all four of these continue their legacy behavior of ALSO logging to Autofill.FillDuration.FromInteraction.WithAutofill, too?  Would it be useful?",
+      "range": {
+        "startLine": 745,
+        "startChar": 7,
+        "endLine": 745,
+        "endChar": 57
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13834e8c_a08d5906",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T21:43:09Z",
+      "side": 1,
+      "message": "This |elapsed| is per-form, right?  Like in dump-truck case #3 where there\u0027s an address form and a credit card form on the same page, I assume it logs separately?",
+      "range": {
+        "startLine": 799,
+        "startChar": 20,
+        "endLine": 799,
+        "endChar": 27
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a6db3f_37d92cab",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T21:43:09Z",
+      "side": 1,
+      "message": "Roger wrote some new code recently that marks a form as NOT a credit card form if not enough credit card fields were found, to reduce false positives.  Maybe check with him if there\u0027s a way to integrate that logic here for consistency.",
+      "range": {
+        "startLine": 1438,
+        "startChar": 20,
+        "endLine": 1438,
+        "endChar": 41
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d80a984_95b2f75d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93687,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T21:43:09Z",
+      "side": 1,
+      "message": "There\u0027s already an Autofill.FormEvents.Address and Autofill.FormEvents.CreditCard; is that reusable here?",
+      "range": {
+        "startLine": 93687,
+        "startChar": 26,
+        "endLine": 93687,
+        "endChar": 38
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
