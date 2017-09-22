@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46c1bca5_41bbb4f3",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-22T19:06:39Z",
+      "side": 1,
+      "message": "Good points. Done.",
+      "parentUuid": "431b157a_f427a89a",
+      "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bebe953_bbc8c44a",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1597d28_d0b9dc59",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-22T19:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bebe953_bbc8c44a",
+      "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74129aa2_aefccf51",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-22T19:06:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d44fefef_8b3a2983",
+      "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b97fbaa3_4411a590",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-21T18:04:10Z",
       "side": 1,
       "message": "I think this function needs to be robust to GetMediaContextProvider() returning null.  In that case, I think don\u0027t create a resource updater and call the context provider callback again?",
+      "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59815f5_fbe530e7",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-22T19:06:39Z",
+      "side": 1,
+      "message": "Done. Do we run a danger of looping forever then if we never get a context_provider?",
+      "parentUuid": "b97fbaa3_4411a590",
       "revId": "8470da14fd5acaea757ba4a9b7b32dfb7135b1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
