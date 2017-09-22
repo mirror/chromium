@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b7148e8_e2509c12",
+        "filename": "ios/showcase/payments/sc_payments_picker_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-22T16:17:52Z",
+      "side": 1,
+      "message": "Is the starting point necessary?",
+      "range": {
+        "startLine": 87,
+        "startChar": 44,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "60af3094a8682d8f8ac723dd263dbe6e501a7bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
