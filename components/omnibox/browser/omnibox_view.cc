@@ -7,6 +7,8 @@
 
 #include "components/omnibox/browser/omnibox_view.h"
 
+#include <algorithm>
+#include <memory>
 #include <utility>
 
 #include "base/strings/string16.h"
@@ -26,13 +28,28 @@
 base::string16 OmniboxView::StripJavascriptSchemas(const base::string16& text) {
   const base::string16 kJsPrefix(
       base::ASCIIToUTF16(url::kJavaScriptScheme) + base::ASCIIToUTF16(":"));
-  base::string16 out(text);
-  while (base::StartsWith(out, kJsPrefix,
-                          base::CompareCase::INSENSITIVE_ASCII)) {
-    base::TrimWhitespace(out.substr(kJsPrefix.length()), base::TRIM_LEADING,
-                         &out);
+
+  // Find the index of the first character that isn't whitespace, a control
+  // character, or a part of a JavaScript: scheme.
+  size_t i = 0;
+  bool found_JavaScript = false;
+  for (; i < text.size(); ++i) {
+    if (base::IsUnicodeWhitespace(text[i]) || (text[i] < 0x20))
+      continue;
+    if (!base::EqualsCaseInsensitiveASCII(text.substr(i, kJsPrefix.length()),
+                                          kJsPrefix))
+      break;
+    found_JavaScript = true;
+    i = i + kJsPrefix.length() - 1;
   }
-  return out;
+
+  // If we found any "JavaScript:" schemes in the text, return the text starting
+  // at the first non-whitespace/control character after the last instance of
+  // the scheme.
+  if (found_JavaScript)
+    return text.substr(i);
+
+  return text;
 }
 
 // static
