@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/ActivationDelegationFlags.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 
@@ -40,6 +41,10 @@ struct CONTENT_EXPORT FrameOwnerProperties {
   // for a frame. See https://crbug.com/647588 and
   // https://www.w3.org/TR/csp-embedded-enforcement/#required-csp
   std::string required_csp;
+
+  // Allow user activation to be delegated to child frames for certain uses.
+  // See https://www.chromestatus.com/features/6025124331388928
+  blink::ActivationDelegationFlags activation_delegation_flags;
 };
 
 }  // namespace content
