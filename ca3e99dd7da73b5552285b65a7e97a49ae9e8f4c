@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f71af64_8be4fbea",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T16:52:46Z",
+      "side": 1,
+      "message": "This function is too big to be inlined. As it is it\u0027s pretty hard to read the code.",
+      "revId": "ca3e99dd7da73b5552285b65a7e97a49ae9e8f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed41477_47b10274",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T16:52:46Z",
+      "side": 1,
+      "message": "This function does not return anything. Right?",
+      "range": {
+        "startLine": 594,
+        "startChar": 19,
+        "endLine": 594,
+        "endChar": 26
+      },
+      "revId": "ca3e99dd7da73b5552285b65a7e97a49ae9e8f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
