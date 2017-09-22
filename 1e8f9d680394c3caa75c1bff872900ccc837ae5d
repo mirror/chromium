@@ -50,6 +50,57 @@
       "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a39f69_b98c0317",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-22T11:53:33Z",
+      "side": 1,
+      "message": "Can you add accessibility tag to all these stories? First, add ACCESSIBILITY to https://cs.chromium.org/chromium/src/tools/perf/page_sets/system_health/story_tags.py?q\u003dstory_tags.py\u0026l\u003d1\n\nThen add TAGS \u003d [...] for each story below",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240a5efb_270803e8",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-22T11:53:33Z",
+      "side": 1,
+      "message": "This should also have SCROLL tag",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7c4296_32975859",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-22T11:53:33Z",
+      "side": 1,
+      "message": "I think we should add KEYBOARD_INPUT tag for this one as well",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
