@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f744f2_52fbb035",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-22T18:39:38Z",
+      "side": 1,
+      "message": "It looks like you can just replace this with:\n\nreturn NavigateFrame(gutl, subframe);",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "ac8847473bd4731b2d253009b728556f60a139c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
