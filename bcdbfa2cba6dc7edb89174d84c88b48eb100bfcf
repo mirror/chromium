@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f93664f_ebb66269",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/html/passphrase-dialog.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-22T04:17:16Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t \u003cpaper-checkbox i18n-content\u003d\"...\"\u003e work? Same for paper-button.",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 61
+      },
+      "revId": "bcdbfa2cba6dc7edb89174d84c88b48eb100bfcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
