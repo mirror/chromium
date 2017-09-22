@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90bd191d_1739ec50",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a69e4e3_1ffc68c2",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5787688e_3d3b9a5a",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218f69f2_b42699c9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5787688e_3d3b9a5a",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "7e15f649_38c670cb",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "At the moment, I don\u0027t but it will be useful later when I will be passing this list to JS for better sessions UI.",
+      "parentUuid": "9bf6b288_b65eb659",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54abc74a_fbfc2698",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 3
@@ -87,6 +147,24 @@
       "writtenOn": "2017-09-20T21:07:28Z",
       "side": 1,
       "message": "If you decide to return vector instead of ListValue as the comment above. you could use std::transform when convert a vector\u003cpair\u003c\u003e\u003e to vector\u003cpair-\u003esecond\u003e.\n\nIf you decide keep using ListValue, you could convert the string to Value in the early for loop and call ListValue ctor directly here:\nhttps://cs.chromium.org/chromium/src/base/values.h?type\u003dcs\u0026q\u003dbase::ListValue\u0026sq\u003dpackage:chromium\u0026l\u003d588",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe47ec5_6ae17e1d",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "I don\u0027t see how I can use a constructor directly since the vector still needs to have both name and access time.",
+      "parentUuid": "54abc74a_fbfc2698",
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +211,48 @@
     },
     {
       "key": {
+        "uuid": "f11b12d1_937a71d6",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Surprisingly, no, this is why I had to add this.",
+      "parentUuid": "d16733f9_9ad67235",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604403c1_3891cc94",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1faac472_6562aab6",
+      "range": {
+        "startLine": 141,
+        "startChar": 51,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba67db41_a5bcaaf0",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
         "patchSetId": 3
@@ -165,6 +285,24 @@
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e716ced5_94690ef4",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a43442_9bfff922",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "3880c1c9_d58a5ef1",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "\u003e Instead of using string here, use const char[] and convert it to string later.\n\n\u003e you can use the proper char type through this typedef\n\nDone.\n\n\u003e Also, if you want to make it private, consider put it into anonymous namespace.\n\nIf I am not mistaken, this limits the scope to the file, but I need those field in at least 2 files (handler and test).\n\n\u003e also remember to apply the proper constness\n\nWhile I agree that constexpr is a better match by meaning, I haven\u0027t been able to find any example where a static class member is constexpr. What would you suggest?",
+      "parentUuid": "7944f68d_3b80223e",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fda50f52_974fb461",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
         "patchSetId": 3
@@ -217,6 +373,24 @@
       "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a0a4d1_c8ebbf38",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-22T15:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda50f52_974fb461",
+      "revId": "45236b755ab15f8273e8306b160d30a8d612295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
