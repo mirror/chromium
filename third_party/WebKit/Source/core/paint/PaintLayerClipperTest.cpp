@@ -456,7 +456,7 @@ TEST_F(PaintLayerClipperTest, Filter) {
       "  * { margin: 0 }"
       "  #target { "
       "    filter: drop-shadow(0 3px 4px #333); overflow: hidden;"
-      "    width: 100px; height: 200px;"
+      "    width: 100px; height: 200px; margin: 50px;"
       "  }"
       "</style>"
       "<div id='target'></div>");
@@ -472,14 +472,42 @@ TEST_F(PaintLayerClipperTest, Filter) {
       .CalculateRects(context, target->GetLayoutObject().FirstFragment(),
                       infinite_rect, layer_bounds, background_rect,
                       foreground_rect);
-
   // The background rect is used to clip stacking context (layer) output.
   // In this case, nothing is above us, thus the infinite rect. However we do
-  // clip to the layer's after-filter visual rect as an optimization
+  // clip to the layer's after-filter visual rect as an optimization.
   EXPECT_EQ(LayoutRect(-12, -9, 124, 224), background_rect.Rect());
   // The foreground rect is used to clip the normal flow contents of the
   // stacking context (layer) thus including the overflow clip.
   EXPECT_EQ(LayoutRect(0, 0, 100, 200), foreground_rect.Rect());
+
+  // Test without GeometryMapper.
+  background_rect = infinite_rect;
+  foreground_rect = infinite_rect;
+  target->Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .CalculateRects(context, nullptr, infinite_rect, layer_bounds,
+                      background_rect, foreground_rect);
+  EXPECT_EQ(LayoutRect(-12, -9, 124, 224), background_rect.Rect());
+  EXPECT_EQ(LayoutRect(0, 0, 100, 200), foreground_rect.Rect());
+
+  // Test mapping to the root layer.
+  ClipRectsContext root_context(GetLayoutView().Layer(), kUncachedClipRects);
+  background_rect = infinite_rect;
+  foreground_rect = infinite_rect;
+  target->Clipper(PaintLayer::kUseGeometryMapper)
+      .CalculateRects(root_context, target->GetLayoutObject().FirstFragment(),
+                      infinite_rect, layer_bounds, background_rect,
+                      foreground_rect);
+  EXPECT_EQ(LayoutRect(38, 41, 124, 224), background_rect.Rect());
+  EXPECT_EQ(LayoutRect(50, 50, 100, 200), foreground_rect.Rect());
+
+  // Test mapping to the root layer without GeometryMapper.
+  background_rect = infinite_rect;
+  foreground_rect = infinite_rect;
+  target->Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .CalculateRects(root_context, nullptr, infinite_rect, layer_bounds,
+                      background_rect, foreground_rect);
+  EXPECT_EQ(LayoutRect(38, 41, 124, 224), background_rect.Rect());
+  EXPECT_EQ(LayoutRect(50, 50, 100, 200), foreground_rect.Rect());
 }
 
 // Computed infinite clip rects may not match LayoutRect::InfiniteIntRect()
