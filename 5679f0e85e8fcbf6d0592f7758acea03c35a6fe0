@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7a7644_72cf6292",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-22T23:33:26Z",
+      "side": 1,
+      "message": "@khorimoto using the same GetDeviceId used here: \nhttps://cs.chromium.org/chromium/src/components/cryptauth/remote_device.cc?type\u003dcs\u0026q\u003dGetDeviceID+cryptauth\u0026sq\u003dpackage:chromium\u0026l\u003d63",
+      "revId": "5679f0e85e8fcbf6d0592f7758acea03c35a6fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
