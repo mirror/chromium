@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e69b0c46_93eaa4e6",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "It\u0027s simplest and more efficient to do the analysis in a single pass, but the nature of the warnings is that they cannot always be generated in the correct (highest priority first) order (additionally, the priority may be changed in the future). I\u0027ve added some comments to clarify the purpose and behaviour of ConsoleLogger to make it less confusing, but if you still feel even then that it\u0027d be better to refactor, I can change it.",
+      "parentUuid": "bc8415a8_a59392eb",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "324ef7e8_0e91ef91",
         "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
         "patchSetId": 27
@@ -33,6 +51,24 @@
       "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b3f467_a340a795",
+        "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "I\u0027ve created a separate CL at https://chromium-review.googlesource.com/c/chromium/src/+/678503 for this purpose.",
+      "parentUuid": "324ef7e8_0e91ef91",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "953dc594_1ad2c8c0",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "I need to at least use the Console().AddMessage route instead of GetDocument()-\u003eAddConsoleMessage, as that path doesn\u0027t take nodes into account (without making more changes). Using kDOMMessageSource allows the messages to be verbose (rather than warnings), yet still have the warning styling. I can simplify the rest, though.",
+      "parentUuid": "0c5c3d83_17710e08",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "301933e1_9437010b",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 27
@@ -67,6 +121,24 @@
       "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd43b79_bc2b12e5",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "301933e1_9437010b",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e54e8c84_f1de95c3",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleTypes.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e743c20_d83827b5",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a77575_61870891",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
         "patchSetId": 27
@@ -101,6 +191,24 @@
       "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17ddf4f_ed8383cd",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42a77575_61870891",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e8b87106_cae2271b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "741011f2_340914f1",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34627b4_f895ff20",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 27
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f39fbc34_898bd41e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 27
+      },
+      "lineNbr": 4970,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b34627b4_f895ff20",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b44243c_c38fa98e",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 27
@@ -152,6 +296,24 @@
       "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587ccdb5_5a8dd2d1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 27
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-22T14:26:59Z",
+      "side": 1,
+      "message": "I added this because the default code path ignores parameters for kOtherMessageSource and I thought a message prefix would be more consistent. However, ignoring parameters probably was not intentional, so I\u0027ve modified the default case instead, and add the prefix in PagePasswordsAnalyser.",
+      "parentUuid": "2b44243c_c38fa98e",
+      "revId": "efc7448d8da720636d3f477d9d7abff270c8d03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
