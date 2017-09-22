@@ -908,6 +908,11 @@ void AutofillMetrics::LogNumberOfCreditCardsSuppressedForDisuse(
 }
 
 // static
+void AutofillMetrics::LogNumberOfCreditCardsDeletedForDisuse(size_t num_cards) {
+  UMA_HISTOGRAM_COUNTS_1000("Autofill.CreditCardsDeletedForDisuse", num_cards);
+}
+
+// static
 void AutofillMetrics::LogNumberOfProfilesAtAutofillableFormSubmission(
     size_t num_profiles) {
   UMA_HISTOGRAM_COUNTS(
@@ -926,6 +931,12 @@ void AutofillMetrics::LogNumberOfAddressesSuppressedForDisuse(
     size_t num_profiles) {
   UMA_HISTOGRAM_COUNTS_1000("Autofill.AddressesSuppressedForDisuse",
                             num_profiles);
+}
+
+// static
+void AutofillMetrics::LogNumberOfAddressesDeletedForDisuse(
+    size_t num_profiles) {
+  UMA_HISTOGRAM_COUNTS_1000("Autofill.AddressesDeletedForDisuse", num_profiles);
 }
 
 // static

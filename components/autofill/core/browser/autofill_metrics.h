@@ -766,6 +766,10 @@ class AutofillMetrics {
   // used.
   static void LogNumberOfCreditCardsSuppressedForDisuse(size_t num_cards);
 
+  // Log the number of autofill credit card deleted during major version upgrade
+  // because they have not been used for a long time and are expired.
+  static void LogNumberOfCreditCardsDeletedForDisuse(size_t num_cards);
+
   // Log the number of profiles available when an autofillable form is
   // submitted.
   static void LogNumberOfProfilesAtAutofillableFormSubmission(
@@ -782,6 +786,7 @@ class AutofillMetrics {
   // autofill is triggered. Addresses matching something the user has types are
   // always offered, regardless of how recently they have been used.
   static void LogNumberOfAddressesSuppressedForDisuse(size_t num_profiles);
+  static void LogNumberOfAddressesDeletedForDisuse(size_t num_profiles);
 
   // Log the number of Autofill address suggestions presented to the user when
   // filling a form.

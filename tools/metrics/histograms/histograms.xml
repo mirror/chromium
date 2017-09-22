@@ -4435,6 +4435,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Autofill.AddressesDeletedForDisuse">
+  <owner>wuandy@chromium.org</owner>
+  <summary>
+
+  </summary>
+</histogram>
+
 <histogram name="Autofill.AddressesSuppressedForDisuse">
   <owner>rogerm@chromium.org</owner>
   <summary>
@@ -4530,6 +4537,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The relative frequency with which users accept, deny, or ignore the Autofill
     credit card info bar prompt.
+  </summary>
+</histogram>
+
+<histogram name="Autofill.CreditCardsDeletedForDisuse">
+  <owner>wuandy@chromium.org</owner>
+  <summary>
+    The number of credit card deleted during a major version upgrade because
+    they have not been used recently enough and are expired.
   </summary>
 </histogram>
 

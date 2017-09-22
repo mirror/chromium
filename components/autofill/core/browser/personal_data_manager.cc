@@ -65,6 +65,16 @@ constexpr base::TimeDelta kDisusedProfileTimeDelta =
     base::TimeDelta::FromDays(180);
 constexpr base::TimeDelta kDisusedCreditCardTimeDelta =
     base::TimeDelta::FromDays(180);
+constexpr base::TimeDelta kDisusedCreditCardDeletionTimeDelta =
+    base::TimeDelta::FromDays(395);
+constexpr base::TimeDelta kDisusedAddressDeletionTimeDelta =
+    base::TimeDelta::FromDays(395);
+
+// Time delta to create test data.
+const base::TimeDelta kDeletableUseDateDelta =
+    kDisusedCreditCardDeletionTimeDelta + base::TimeDelta::FromDays(5);
+const base::TimeDelta kDeletableExpiryDateDelta =
+    kDisusedCreditCardDeletionTimeDelta + base::TimeDelta::FromDays(45);
 
 template <typename T>
 class FormGroupMatchesByGUIDFunctor {
@@ -339,6 +349,23 @@ CreditCard CreateDisusedTestCreditCard(const std::string& locale) {
   return credit_card;
 }
 
+CreditCard CreateDisusedDeletableTestCreditCard(const std::string& locale) {
+  const base::Time now = AutofillClock::Now();
+  const base::Time use_date = now - kDeletableUseDateDelta;
+  base::Time::Exploded expiry_date;
+  (now - kDeletableExpiryDateDelta).LocalExplode(&expiry_date);
+
+  CreditCard credit_card;
+  credit_card.SetInfo(CREDIT_CARD_NAME_FULL,
+                      base::UTF8ToUTF16("Charlie Deletable"), locale);
+  credit_card.SetInfo(CREDIT_CARD_NUMBER, base::UTF8ToUTF16("378282246310005"),
+                      locale);
+  credit_card.SetExpirationMonth(expiry_date.month);
+  credit_card.SetExpirationYear(expiry_date.year);
+  credit_card.set_use_date(use_date);
+  return credit_card;
+}
+
 }  // namespace
 
 const char kFrecencyFieldTrialName[] = "AutofillProfileOrderByFrecency";
@@ -411,6 +438,7 @@ void PersonalDataManager::OnSyncServiceInitialized(
   if (!IsSyncEnabledFor(sync_service, syncer::AUTOFILL_PROFILE)) {
     ApplyProfileUseDatesFix();  // One-time fix, otherwise NOP.
     ApplyDedupingRoutine();     // Once per major version, otherwise NOP.
+    DeleteDisusedAddresses();   // Once per major version, otherwise NOP.
     CreateTestAddresses();      // Once per user profile startup.
   }
 
@@ -418,7 +446,8 @@ void PersonalDataManager::OnSyncServiceInitialized(
   // then run credit card address cleanup/startup code here. Otherwise, defer
   // until after sync has started.
   if (!IsSyncEnabledFor(sync_service, syncer::AUTOFILL_WALLET_DATA)) {
-    CreateTestCreditCards();  // Once per user profile startup.
+    DeleteDisusedCreditCards();  // Once per major version, otherwise NOP.
+    CreateTestCreditCards();     // Once per user profile startup.
   }
 }
 
@@ -492,13 +521,15 @@ void PersonalDataManager::SyncStarted(syncer::ModelType model_type) {
   if (model_type == syncer::AUTOFILL_PROFILE) {
     ApplyProfileUseDatesFix();  // One-time fix, otherwise NOP.
     ApplyDedupingRoutine();     // Once per major version, otherwise NOP.
+    DeleteDisusedAddresses();   // Once per major version, otherwise NOP.
     CreateTestAddresses();      // Once per user profile startup.
   }
 
   // Run deferred credit card startup code.
   // See: OnSyncServiceInitialized
   if (model_type == syncer::AUTOFILL_WALLET_DATA) {
-    CreateTestCreditCards();  // Once per user profile startup.
+    DeleteDisusedCreditCards();  // Once per major version, otherwise NOP.
+    CreateTestCreditCards();     // Once per user profile startup.
   }
 }
 
@@ -791,6 +822,22 @@ void PersonalDataManager::AddServerCreditCardForTest(
   server_credit_cards_.push_back(std::move(credit_card));
 }
 
+void PersonalDataManager::RemoveAutofillProfileByGUID(const std::string& guid) {
+  database_->RemoveAutofillProfile(guid);
+
+  // Reset the billing_address_id of any card that refered to this profile.
+  for (CreditCard* credit_card : GetCreditCards()) {
+    if (credit_card->billing_address_id() == guid) {
+      credit_card->set_billing_address_id("");
+
+      if (credit_card->record_type() == CreditCard::LOCAL_CARD)
+        database_->UpdateCreditCard(*credit_card);
+      else
+        database_->UpdateServerCardMetadata(*credit_card);
+    }
+  }
+}
+
 void PersonalDataManager::RemoveByGUID(const std::string& guid) {
   if (is_off_the_record_)
     return;
@@ -807,19 +854,7 @@ void PersonalDataManager::RemoveByGUID(const std::string& guid) {
   if (is_credit_card) {
     database_->RemoveCreditCard(guid);
   } else {
-    database_->RemoveAutofillProfile(guid);
-
-    // Reset the billing_address_id of any card that refered to this profile.
-    for (CreditCard* credit_card : GetCreditCards()) {
-      if (credit_card->billing_address_id() == guid) {
-        credit_card->set_billing_address_id("");
-
-        if (credit_card->record_type() == CreditCard::LOCAL_CARD)
-          database_->UpdateCreditCard(*credit_card);
-        else
-          database_->UpdateServerCardMetadata(*credit_card);
-      }
-    }
+    RemoveAutofillProfileByGUID(guid);
   }
 
   // Refresh our local cache and send notifications to observers.
@@ -2257,6 +2292,131 @@ void PersonalDataManager::CreateTestCreditCards() {
 
   AddCreditCard(CreateBasicTestCreditCard(app_locale_));
   AddCreditCard(CreateDisusedTestCreditCard(app_locale_));
+  AddCreditCard(CreateDisusedDeletableTestCreditCard(app_locale_));
+}
+
+bool PersonalDataManager::IsCreditCardDeletable(CreditCard* card) {
+  const base::Time deletion_threshold =
+      AutofillClock::Now() - kDisusedCreditCardDeletionTimeDelta;
+
+  return card->use_date() < deletion_threshold &&
+         card->IsExpired(deletion_threshold);
+}
+
+bool PersonalDataManager::DeleteDisusedCreditCards() {
+  if (!base::FeatureList::IsEnabled(kAutofillDeleteDisusedCreditCards)) {
+    return false;
+  }
+
+  // Check if credit cards deletion has already been performed this major
+  // version.
+  int current_major_version = atoi(version_info::GetVersionNumber().c_str());
+  if (pref_service_->GetInteger(
+          prefs::kAutofillLastVersionDisusedCreditCardsDeleted) >=
+      current_major_version) {
+    DVLOG(1)
+        << "Autofill credit cards deletion already performed for this version";
+    return false;
+  }
+
+  // Set the pref to the current major version.
+  pref_service_->SetInteger(
+      prefs::kAutofillLastVersionDisusedCreditCardsDeleted,
+      current_major_version);
+
+  // Only delete local cards, as server cards are managed by Payments.
+  auto cards = GetLocalCreditCards();
+
+  // Early exit when there is no local cards.
+  if (cards.empty()) {
+    return true;
+  }
+
+  std::vector<std::string> guid_to_delete;
+  for (CreditCard* card : cards) {
+    if (IsCreditCardDeletable(card)) {
+      guid_to_delete.push_back(card->guid());
+    }
+  }
+
+  size_t num_deleted_cards = guid_to_delete.size();
+
+  for (auto const guid : guid_to_delete) {
+    database_->RemoveCreditCard(guid);
+  }
+
+  if (num_deleted_cards > 0) {
+    Refresh();
+  }
+
+  AutofillMetrics::LogNumberOfCreditCardsDeletedForDisuse(num_deleted_cards);
+
+  return true;
+}
+
+bool PersonalDataManager::DeleteDisusedAddresses() {
+  if (!base::FeatureList::IsEnabled(kAutofillDeleteDisusedAddresses)) {
+    return false;
+  }
+
+  // Check if credit cards deletion has already been performed this major
+  // version.
+  int current_major_version = atoi(version_info::GetVersionNumber().c_str());
+  if (pref_service_->GetInteger(
+          prefs::kAutofillLastVersionDisusedAddressesDeleted) >=
+      current_major_version) {
+    DVLOG(1)
+        << "Autofill addresses deletion already performed for this version";
+    return false;
+  }
+
+  // Set the pref to the current major version.
+  pref_service_->SetInteger(prefs::kAutofillLastVersionDisusedAddressesDeleted,
+                            current_major_version);
+
+  auto profiles = GetProfiles();
+
+  // Early exit when there is no profiles.
+  if (profiles.empty()) {
+    return true;
+  }
+
+  std::unordered_set<std::string> addresses_guid_of_undeletable_cards;
+  for (CreditCard* card : GetCreditCards()) {
+    if (!IsCreditCardDeletable(card)) {
+      addresses_guid_of_undeletable_cards.insert(card->billing_address_id());
+    }
+  }
+
+  const base::Time deletion_threshold =
+      AutofillClock::Now() - kDisusedAddressDeletionTimeDelta;
+
+  std::vector<std::string> guid_to_delete;
+  for (AutofillProfile* profile : profiles) {
+    // Collect guids of profile that are
+    // 1. not used since deletion_threshold, and
+    // 2. address is not verified, and
+    // 3. address is not used by any not-deletable credit cards.
+    if (profile->use_date() < deletion_threshold && !profile->IsVerified() &&
+        addresses_guid_of_undeletable_cards.find(profile->guid()) ==
+            addresses_guid_of_undeletable_cards.end()) {
+      guid_to_delete.push_back(profile->guid());
+    }
+  }
+
+  size_t num_deleted_addresses = guid_to_delete.size();
+
+  for (auto const guid : guid_to_delete) {
+    RemoveAutofillProfileByGUID(guid);
+  }
+
+  if (num_deleted_addresses > 0) {
+    Refresh();
+  }
+
+  AutofillMetrics::LogNumberOfAddressesDeletedForDisuse(num_deleted_addresses);
+
+  return true;
 }
 
 }  // namespace autofill
