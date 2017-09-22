@@ -41,6 +41,10 @@
 #error "Extensions must be enabled"
 #endif
 
+namespace {
+class ExtensionRegistrarDelegate;
+}
+
 class HostContentSettingsMap;
 class Profile;
 
@@ -264,6 +268,9 @@ class ExtensionService
   // Suppresses noisy failures.
   void ReloadExtensionWithQuietFailure(const std::string& extension_id);
 
+  void LoadExtensionForReload(const extensions::ExtensionId& extension_id,
+                              const base::FilePath& file_path);
+
   // Uninstalls the specified extension. Callers should only call this method
   // with extensions that exist. |reason| lets the caller specify why the
   // extension is uninstalled.
@@ -297,12 +304,15 @@ class ExtensionService
   // This state is stored in preferences, so persists until Chrome restarts.
   //
   // Component, external component and whitelisted policy installed extensions
-  // are exempt from being Blocked (see CanBlockExtension).
+  // are exempt from being Blocked (see CanBlockExtension in .cc file).
   void BlockAllExtensions();
 
   // All blocked extensions are reverted to their previous state, and are
   // reloaded. Newly added extensions are no longer automatically blocked.
   void UnblockAllExtensions();
+
+  // Returns true if extensions are in a blocked state.
+  bool AreExtensionsBlocked();
 
   // Updates the |extension|'s granted permissions lists to include all
   // permissions in the |extension|'s manifest and re-enables the
@@ -452,9 +462,8 @@ class ExtensionService
   void LoadExtensionsFromCommandLineFlag(const char* switch_name);
 
   // Reloads the specified extension, sending the onLaunched() event to it if it
-  // currently has any window showing. |be_noisy| determines whether noisy
-  // failures are allowed for unpacked extension installs.
-  void ReloadExtensionImpl(const std::string& extension_id, bool be_noisy);
+  // currently has any window showing.
+  void ReloadExtensionImpl(const std::string& extension_id);
 
   // content::NotificationObserver implementation:
   void Observe(int type,
@@ -498,11 +507,8 @@ class ExtensionService
 
   // Adds the given extension id to the list of terminated extensions if
   // it is not already there and unloads it.
+  // TODO move.......
   void TrackTerminatedExtension(const std::string& extension_id);
-
-  // Removes the extension with the given id from the list of
-  // terminated extensions if it is there.
-  void UntrackTerminatedExtension(const std::string& id);
 
   // Update preferences for a new or updated extension; notify observers that
   // the extension is installed, e.g., to update event handlers on background
@@ -515,17 +521,6 @@ class ExtensionService
                                 const syncer::StringOrdinal& page_ordinal,
                                 const std::string& install_parameter);
 
-  // Handles sending notification that |extension| was loaded.
-  // TODO(michaelpg): Move to a delegate provided to ExtensionRegistrar, so
-  // ExtensionRegistrar is responsible for calling this at the right times.
-  void NotifyExtensionLoaded(const extensions::Extension* extension);
-
-  // Handles updating the profile when |extension| is disabled or removed.
-  // TODO(michaelpg): Move to a delegate provided to ExtensionRegistrar, so
-  // ExtensionRegistrar is responsible for calling this at the right times.
-  void PostDeactivateExtension(
-      scoped_refptr<const extensions::Extension> extension);
-
   // Common helper to finish installing the given extension.
   void FinishInstallation(const extensions::Extension* extension);
 
@@ -534,16 +529,10 @@ class ExtensionService
   void CheckPermissionsIncrease(const extensions::Extension* extension,
                                 bool is_extension_loaded);
 
-  // Helper that updates the active extension list used for crash reporting.
-  void UpdateActiveExtensionsInCrashReporter();
-
   // Helper to get the disable reasons for an installed (or upgraded) extension.
   // A return value of disable_reason::DISABLE_NONE indicates that we should
   // enable this extension initially.
   int GetDisableReasonsOnInstalled(const extensions::Extension* extension);
-
-  // Helper method to determine if an extension can be blocked.
-  bool CanBlockExtension(const extensions::Extension* extension) const;
 
   // Helper to determine if installing an extensions should proceed immediately,
   // or if we should delay the install until further notice, or if the install
@@ -653,6 +642,7 @@ class ExtensionService
   using UnloadedExtensionPathMap = std::map<std::string, base::FilePath>;
   UnloadedExtensionPathMap unloaded_extension_paths_;
 
+  /* TODO remove */
   // Map of DevToolsAgentHost instances that are detached,
   // waiting for an extension to be reloaded.
   using OrphanedDevTools =
@@ -697,9 +687,15 @@ class ExtensionService
   // Set to true if extensions are all to be blocked.
   bool block_extensions_ = false;
 
+  // Stores whether noisy failures are allowed for the next unpacked extension
+  // install to come from a reload.
+  bool noisy_next_reload_ = false;
+
+  /*
   // Store the ids of reloading extensions. We use this to re-enable extensions
   // which were disabled for a reload.
   extensions::ExtensionIdSet reloading_extensions_;
+  */
 
   // A set of the extension ids currently being terminated. We use this to
   // avoid trying to unload the same extension twice.

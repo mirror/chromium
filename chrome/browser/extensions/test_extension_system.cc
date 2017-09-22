@@ -27,6 +27,7 @@
 #include "extensions/browser/quota_service.h"
 #include "extensions/browser/runtime_data.h"
 #include "extensions/browser/state_store.h"
+#include "extensions/browser/test_extension_registrar_delegate.h"
 #include "extensions/browser/value_store/test_value_store_factory.h"
 #include "extensions/browser/value_store/testing_value_store.h"
 #if defined(OS_CHROMEOS)
@@ -73,7 +74,9 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
-  extension_registrar_ = std::make_unique<ExtensionRegistrar>(profile_);
+  extension_registrar_ = std::make_unique<ExtensionRegistrar>(
+      profile_, ExtensionPrefs::Get(profile_),
+      std::make_unique<TestExtensionRegistrarDelegate>(profile_));
   extension_service_->ClearProvidersForTesting();
   return extension_service_.get();
 }
