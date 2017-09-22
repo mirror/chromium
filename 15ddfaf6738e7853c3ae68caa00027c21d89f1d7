@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318c94ea_b7114f5f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3703,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T08:17:18Z",
+      "side": 1,
+      "message": "I think you meant: [ Pass Timeout ] . \nBut instead of doing that, could you mark the test as slow instead?  That way we maintain coverage.\nCould you associate the expectation with a new crbug? Something about investigating performance.\n\nIt looks like you also need to do this for virtual/gpu-rasterization/images/color-profile-svg.html",
+      "range": {
+        "startLine": 3703,
+        "startChar": 112,
+        "endLine": 3703,
+        "endChar": 119
+      },
+      "revId": "15ddfaf6738e7853c3ae68caa00027c21d89f1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
