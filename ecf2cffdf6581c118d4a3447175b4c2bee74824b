@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bf08c37_e34eb254",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02940da8_85c743ab",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 86
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f6026d_46971a31",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-16T00:35:09Z",
       "side": 1,
       "message": "Let\u0027s pass ConsoleModel.ConsoleMessage instead.",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1991b2_8c957f94",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "We have a bad need to keep CViewMessage here.  We depend on ViewMessage to run matchesFilterText/Regex() over the deepTextContent() of the element, which cannot be done with just a ConsoleModel.ConsoleMessage.\n\nIf we just pass CModel.CMessage, we could run matches against just messageText and parameter values, but we\u0027d lose cases like these:\n- match across substitutions, e.g. console.log(\u0027Kyo%sto\u0027, \u0027foo\u0027) should match \u0027Kyofooto\u0027\n- match inside stack trace preview\n- match generated text like the \u0027[Violation]\u0027 before every violation\n- match within the classname in logged DOM element previews\n\nTo me, it seems like a significant enough change to warrant a separate patch.  It\u0027s definitely not performant to materialize all elements.  On a local canary test, I found that logging 10k messages was 5x slower (2s \u003e 10s) when the filter contains text.",
+      "parentUuid": "17f6026d_46971a31",
       "range": {
         "startLine": 24,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "99b9bc73_248f08a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "073b05a2_2cb2631a",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d389ec2_21837761",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f373b0_4753c16e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d389ec2_21837761",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2475bc2c_43f59353",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9dbf46_44a07e7a",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d81658_4d2ae5c2",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597811b3_d94fb4e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d81658_4d2ae5c2",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 15
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fa9d485d_bf668007",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "990d9ea0_29cbe874",
+      "range": {
+        "startLine": 1028,
+        "startChar": 9,
+        "endLine": 1028,
+        "endChar": 27
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5117254a_3a55d3bf",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 14
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "46bed7cf_1997a9ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5117254a_3a55d3bf",
+      "range": {
+        "startLine": 1073,
+        "startChar": 14,
+        "endLine": 1073,
+        "endChar": 20
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23d50e1_8bc4c7e0",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 14
@@ -203,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "b7b566af_7cb80e1c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f23d50e1_8bc4c7e0",
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031df0da_5fce1dbf",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 14
@@ -214,6 +424,24 @@
       "writtenOn": "2017-09-16T00:35:09Z",
       "side": 1,
       "message": "Not related to this patch, but I think sidebar should switch to All instead and trigger an event. Let\u0027s fix in a follow up.",
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f901cb19_bc7c15a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-22T08:15:56Z",
+      "side": 1,
+      "message": "Okay, will do.",
+      "parentUuid": "031df0da_5fce1dbf",
       "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
