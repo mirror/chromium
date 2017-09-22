@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0243df55_32f2fc01",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T18:55:52Z",
+      "side": 1,
+      "message": "nit: Is there a particular reason we want to pass the factory_getter and file_system_context through this function, instead of caching them in the ctor?",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "cb2a6c447ea99d1cfd3bc1c0ac3c45aa5be81f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245266b1_470d423e",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T18:55:52Z",
+      "side": 1,
+      "message": "This is also set from storage::BlobStorageContext::GetBlobDataFromPublicURL, can the revoke happen after this is set?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 53
+      },
+      "revId": "cb2a6c447ea99d1cfd3bc1c0ac3c45aa5be81f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
