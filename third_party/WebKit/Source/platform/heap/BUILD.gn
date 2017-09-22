@@ -31,6 +31,7 @@ source_set("heap") {
     "HeapPage.h",
     "HeapTerminatedArray.h",
     "HeapTerminatedArrayBuilder.h",
+    "MaskedObjectTracker.h",
     "Member.h",
     "PageMemory.cpp",
     "PageMemory.h",
@@ -80,6 +81,7 @@ test("blink_heap_unittests") {
     "HeapTest.cpp",
     "HeapTestUtilities.cpp",
     "HeapTestUtilities.h",
+    "MaskedObjectTrackerTest.cpp",
     "PersistentTest.cpp",
     "RunAllTests.cpp",
   ]
