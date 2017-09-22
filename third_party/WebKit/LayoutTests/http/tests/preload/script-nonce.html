@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="script-src 'nonce-abc'">
+</head>
+<body>
+<script nonce="abc" src="../../resources/testharness.js"></script>
+<script nonce="abc" src="../../resources/testharnessreport.js"></script>
+<script nonce="abc">
+
+async_test(function(t) {
+    var url = new URL('resources/empty.js?with-nonce', location.href).href;
+    var l = document.createElement('link');
+    l.setAttribute('rel', 'preload');
+    l.setAttribute('as', 'script');
+    l.setAttribute('href', url);
+    l.setAttribute('nonce', 'abc');
+    l.onload = l.onerror = t.step_func(function() {
+        assert_equals(performance.getEntriesByName(url).length, 1);
+        t.done();
+    });
+    document.body.appendChild(l);
+}, 'link preload with nonce attribute');
+
+async_test(function(t) {
+    var url = new URL('resources/empty.js?without-nonce', location.href).href;
+    var l = document.createElement('link');
+    l.setAttribute('rel', 'preload');
+    l.setAttribute('as', 'script');
+    l.setAttribute('href', url);
+    l.onload = l.onerror = t.step_func(function() {
+        assert_equals(performance.getEntriesByName(url).length, 0);
+        t.done();
+    });
+    document.body.appendChild(l);
+}, 'link preload without nonce attribute');
+
+</script>
+</body>
