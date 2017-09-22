@@ -13,6 +13,7 @@ import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_V
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
+import android.view.View;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.vr_shell.mock.MockVrDaydreamApi;
 import org.chromium.chrome.browser.vr_shell.rules.ChromeTabbedActivityVrTestRule;
@@ -31,6 +33,7 @@ import org.chromium.chrome.browser.vr_shell.util.VrShellDelegateUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.content.browser.test.util.DOMUtils;
 
 import java.util.concurrent.TimeoutException;
 
@@ -130,6 +133,28 @@ public class VrShellTransitionTest {
     @MediumTest
     public void test2dtoVrShellto2dUnsupported() {
         enterExitVrShell(false /* supported */);
+    }
+
+    /**
+     * Tests that the control container doesn't appear after exiting VR from cinema mode.
+     */
+    @Test
+    @MediumTest
+    public void testControlContainerInvisibleAfterExitingVrFromCinemaMode()
+            throws InterruptedException, TimeoutException {
+        mVrTestFramework.loadUrlAndAwaitInitialization(
+                VrTestFramework.getHtmlTestFile("test_navigation_2d_page"), PAGE_LOAD_TIMEOUT_S);
+        VrTransitionUtils.forceEnterVr();
+        VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
+        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen");
+        mVrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
+
+        Assert.assertTrue(DOMUtils.isFullscreen(mVrTestFramework.getFirstTabWebContents()));
+        VrTransitionUtils.forceExitVr();
+        ChromeActivity activity = mVrTestFramework.getRule().getActivity();
+        Assert.assertTrue(
+                activity.getFullscreenManager().getControlContainer().getView().getVisibility()
+                == View.INVISIBLE);
     }
 
     /**
