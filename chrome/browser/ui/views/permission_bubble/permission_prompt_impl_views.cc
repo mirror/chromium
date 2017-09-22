@@ -10,6 +10,7 @@
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
     content::WebContents* web_contents,
     Delegate* delegate) {
-  return base::WrapUnique(new PermissionPromptImpl(
-      chrome::FindBrowserWithWebContents(web_contents), delegate));
+  return base::WrapUnique(
+      new PermissionPromptImpl(chrome::FindBrowserWithWebContents(web_contents),
+                               delegate, web_contents));
 }
