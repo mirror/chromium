@@ -275,4 +275,8 @@ const char kDevicePrintersBlacklist[] = "cros.device.printers_blacklist";
 // A list of strings representing the list of device printer ids which are
 // accessible.
 const char kDevicePrintersWhitelist[] = "cros.device.printers_whitelist";
+
+// String indicating what name should be advertised for casting to.
+// If the string is empty or blank the system name will be used.
+const char kCastReceiverName[] = "cros.device.cast_receiver.name";
 }  // namespace chromeos

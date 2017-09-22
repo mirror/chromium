@@ -61,6 +61,7 @@ const char* const kKnownSettings[] = {
     kAllowRedeemChromeOsRegistrationOffers,
     kAllowedConnectionTypesForUpdate,
     kAttestationForContentProtectionEnabled,
+    kCastReceiverName,
     kDeviceAttestationEnabled,
     kDeviceDisabled,
     kDeviceDisabledMessage,
@@ -577,6 +578,14 @@ void DecodeGenericPolicies(
         policy::off_hours::ConvertPolicyProtoToValue(policy.device_off_hours());
     if (off_hours_policy)
       new_values_cache->SetValue(kDeviceOffHours, std::move(off_hours_policy));
+  }
+
+  if (policy.has_cast_receiver_name()) {
+    const em::CastReceiverNameProto& container(policy.cast_receiver_name());
+    if (container.has_name()) {
+      new_values_cache->SetValue(
+          kCastReceiverName, base::MakeUnique<base::Value>(container.name()));
+    }
   }
 }
 
