@@ -75,6 +75,7 @@
 #include "ios/chrome/browser/metrics/tab_usage_recorder.h"
 #import "ios/chrome/browser/open_url_util.h"
 #import "ios/chrome/browser/passwords/password_controller.h"
+#include "ios/chrome/browser/passwords/password_tab_helper.h"
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/prerender/preload_controller_delegate.h"
 #import "ios/chrome/browser/prerender/prerender_service.h"
@@ -378,6 +379,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
+                                    PasswordControllerDelegate,
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
@@ -2398,6 +2400,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
   PrintTabHelper::CreateForWebState(tab.webState, self);
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
+  PasswordTabHelper* passwordTabHelper =
+      PasswordTabHelper::FromWebState(tab.webState);
+  if (passwordTabHelper) {
+    passwordTabHelper->SetPasswordControllerDelegate(self);
+  }
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -2671,6 +2678,21 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return (IsIPadIdiom() || _isOffTheRecord) ? UIStatusBarStyleLightContent
                                             : UIStatusBarStyleDefault;
+}
+
+#pragma mark - PasswordControllerDelegate methods
+
+- (BOOL)displaySignInNotification:(UIViewController*)viewController
+                        fromTabId:(NSString*)tabId {
+  // Check if the call comes from currently visible tab.
+  if ([tabId isEqual:[_model currentTab].tabId]) {
+    [self addChildViewController:viewController];
+    [self.view addSubview:viewController.view];
+    [viewController didMoveToParentViewController:self];
+    return YES;
+  } else {
+    return NO;
+  }
 }
 
 #pragma mark - CRWWebStateDelegate methods.
