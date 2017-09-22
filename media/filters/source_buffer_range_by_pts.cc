@@ -26,14 +26,14 @@ static bool CompareStreamParserBufferToDecodeTimestamp(
 SourceBufferRangeByPts::SourceBufferRangeByPts(
     GapPolicy gap_policy,
     const BufferQueue& new_buffers,
-    DecodeTimestamp range_start_decode_time,
+    base::TimeDelta range_start_pts,
     const InterbufferDistanceCB& interbuffer_distance_cb)
     : SourceBufferRange(gap_policy, interbuffer_distance_cb),
-      range_start_decode_time_(range_start_decode_time),
+      range_start_pts_(range_start_pts),
       keyframe_map_index_base_(0) {
   CHECK(!new_buffers.empty());
   DCHECK(new_buffers.front()->is_key_frame());
-  AppendBuffersToEnd(new_buffers, range_start_decode_time_);
+  AppendBuffersToEnd(new_buffers, range_start_pts_);
 }
 
 SourceBufferRangeByPts::~SourceBufferRangeByPts() {}
@@ -60,8 +60,8 @@ void SourceBufferRangeByPts::AppendBuffersToEnd(
     DecodeTimestamp new_buffers_group_start_timestamp) {
   CHECK(buffers_.empty() ||
         CanAppendBuffersToEnd(new_buffers, new_buffers_group_start_timestamp));
-  DCHECK(range_start_decode_time_ == kNoDecodeTimestamp() ||
-         range_start_decode_time_ <= new_buffers.front()->GetDecodeTimestamp());
+  DCHECK(range_start_pts_ == kNoTimestamp() ||
+         range_start_pts_ <= new_buffers.front()->timestamp());  // BIG TODO In addition to SAP-2, muxed streams in general may need special handling in callers to make sure this passes.
 
   AdjustEstimatedDurationForNewAppend(new_buffers);
 
@@ -75,7 +75,7 @@ void SourceBufferRangeByPts::AppendBuffersToEnd(
 
     if ((*itr)->is_key_frame()) {
       keyframe_map_.insert(
-          std::make_pair((*itr)->GetDecodeTimestamp(),
+          std::make_pair((*itr)->GetDecodeTimestamp(), // BIG TODO change map and usage to PTS index.. BIG TODO continue here..
                          buffers_.size() - 1 + keyframe_map_index_base_));
     }
   }
