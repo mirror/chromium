@@ -166,6 +166,14 @@ std::string ProfilePolicyConnector::GetManagementDomain() const {
   const CloudPolicyStore* actual_policy_store = GetActualPolicyStore();
   if (actual_policy_store)
     return GetStoreManagementDomain(actual_policy_store);
+#if defined(OS_CHROMEOS)
+  const BrowserPolicyConnectorChromeOS* browser_policy_connector_chromeos =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  if (browser_policy_connector_chromeos->IsCloudManaged())
+    return browser_policy_connector_chromeos->GetEnterpriseEnrollmentDomain();
+  if (browser_policy_connector_chromeos->IsActiveDirectoryManaged())
+    return browser_policy_connector_chromeos->GetRealm();
+#endif
   return std::string();
 }
 
