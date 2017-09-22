@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baf16fdf_4e24cbc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t parse\n\nCan you reword?",
+      "range": {
+        "startLine": 9,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb5e86d_9ef8645d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "if I read this correctly, you\u0027ll log this for every non-cc form.",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f1b588_fd9a0ca4",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "s/card_that_google_knows/known_card/",
+      "range": {
+        "startLine": 1303,
+        "startChar": 38,
+        "endLine": 1303,
+        "endChar": 60
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048d4878_43cdaad1",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "How about these names?\n\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS              // non-cc-forms\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_NO_CARD      // cc-form, missing value\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_UNKNOWN_CARD // cc-form, new/unknown value\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_KNOWN_CARD   // cc-form, could have filled",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77901f6_b8b197fc",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "_DECLINED",
+      "range": {
+        "startLine": 434,
+        "startChar": 70,
+        "endLine": 434,
+        "endChar": 78
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0eddfb_5b5e1680",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "s/CARD_THAT_GOOGLE_KNOWN/KNOWN_CARD/",
+      "range": {
+        "startLine": 434,
+        "startChar": 30,
+        "endLine": 434,
+        "endChar": 52
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9d2918_8b233576",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "s/CARD_THAT_GOOGLE_DOES_NOT_KNOW/UNKNOWN_CARD/",
+      "range": {
+        "startLine": 435,
+        "startChar": 30,
+        "endLine": 435,
+        "endChar": 59
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e826e27_1bef5c63",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "IsKnownCard?",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee7d554_050173bd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "s/card the google knows/known card/",
+      "range": {
+        "startLine": 2179,
+        "startChar": 28,
+        "endLine": 2179,
+        "endChar": 50
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d00ab54_b026b1f2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:10:14Z",
+      "side": 1,
+      "message": "s/card the google does not know/unknown card/",
+      "range": {
+        "startLine": 2182,
+        "startChar": 28,
+        "endLine": 2182,
+        "endChar": 58
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
