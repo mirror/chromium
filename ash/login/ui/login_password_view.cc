@@ -4,6 +4,7 @@
 
 #include "ash/login/ui/login_password_view.h"
 
+#include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -18,7 +19,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
-#include "ui/views/controls/image_view.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
@@ -32,10 +33,6 @@
 namespace ash {
 namespace {
 
-// Width/height of the submit button.
-constexpr int kSubmitButtonWidthDp = 20;
-constexpr int kSubmitButtonHeightDp = 20;
-
 // Width/height of the password inputfield.
 constexpr int kPasswordInputWidthDp = 184;
 constexpr int kPasswordInputHeightDp = 36;
@@ -45,6 +42,9 @@ constexpr int kPasswordTotalWidthDp = 204;
 
 // Distance between the last password dot and the submit arrow/button.
 constexpr int kDistanceBetweenPasswordAndSubmitDp = 0;
+
+// Color of the password field text.
+constexpr SkColor kTextColor = SkColorSetARGBMacro(0xAB, 0xFF, 0xFF, 0xFF);
 
 constexpr const char kLoginPasswordViewName[] = "LoginPasswordView";
 
@@ -77,8 +77,11 @@ views::View* LoginPasswordView::TestApi::submit_button() const {
   return view_->submit_button_;
 }
 
-LoginPasswordView::LoginPasswordView(const OnPasswordSubmit& on_submit)
-    : on_submit_(on_submit) {
+LoginPasswordView::LoginPasswordView(
+    const OnPasswordSubmit& on_submit,
+    const OnPasswordFieldCleared& on_password_field_cleared)
+    : on_submit_(on_submit),
+      on_password_field_cleared_(on_password_field_cleared) {
   DCHECK(on_submit_);
   auto* root_layout = new views::BoxLayout(views::BoxLayout::kVertical);
   root_layout->set_main_axis_alignment(
@@ -99,9 +102,12 @@ LoginPasswordView::LoginPasswordView(const OnPasswordSubmit& on_submit)
   textfield_sizer->SetLayoutManager(new SizeRangeLayout(
       gfx::Size(kPasswordInputWidthDp, kPasswordInputHeightDp)));
   textfield_ = new views::Textfield();
+  textfield_->set_controller(this);
   textfield_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
-  // TODO(jdufault): Real placeholder text.
-  textfield_->set_placeholder_text(base::ASCIIToUTF16("Password (FIXME)"));
+  textfield_->set_password_replacement_char_to_bullet();
+  textfield_->SetTextColor(kTextColor);
+  textfield_->set_placeholder_text_color(kTextColor);
+
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
 
@@ -109,21 +115,26 @@ LoginPasswordView::LoginPasswordView(const OnPasswordSubmit& on_submit)
   row->AddChildView(textfield_sizer);
 
   // Submit button.
-  auto* submit_icon = new views::ImageView();
-  submit_icon->SetPreferredSize(
-      gfx::Size(kSubmitButtonWidthDp, kSubmitButtonHeightDp));
-  // TODO: Change icon color when enabled/disabled.
-  submit_icon->SetImage(
-      gfx::CreateVectorIcon(kLockScreenArrowIcon, SK_ColorWHITE));
-  submit_button_ = new tray::ButtonFromView(
-      submit_icon, this, TrayPopupInkDropStyle::HOST_CENTERED);
+  submit_button_ = new views::ImageButton(this);
+  submit_button_->SetImage(
+      views::Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(kLockScreenArrowIcon,
+                            login_constants::kButtonEnabledColor));
+  submit_button_->SetImage(
+      views::Button::STATE_DISABLED,
+      gfx::CreateVectorIcon(
+          kLockScreenArrowIcon,
+          SkColorSetA(login_constants::kButtonEnabledColor,
+                      login_constants::kButtonDisabledAlpha)));
+  submit_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
+                                    views::ImageButton::ALIGN_MIDDLE);
   submit_button_->SetAccessibleName(l10n_util::GetStringUTF16(
       IDS_ASH_LOGIN_POD_SUBMIT_BUTTON_ACCESSIBLE_NAME));
   row->AddChildView(submit_button_);
 
   // Separator on bottom.
-  auto* separator = new NonAccessibleSeparator();
-  AddChildView(separator);
+  separator_ = new NonAccessibleSeparator();
+  AddChildView(separator_);
 
   // Make sure the textfield always starts with focus.
   textfield_->RequestFocus();
@@ -140,15 +151,20 @@ void LoginPasswordView::UpdateForUser(const mojom::UserInfoPtr& user) {
 void LoginPasswordView::SetFocusEnabledForChildViews(bool enable) {
   auto behavior = enable ? FocusBehavior::ALWAYS : FocusBehavior::NEVER;
   textfield_->SetFocusBehavior(behavior);
-  submit_button_->SetFocusBehavior(behavior);
 }
 
 void LoginPasswordView::Clear() {
   textfield_->SetText(base::string16());
+  // |ContentsChanged| won't be called by |Textfield| if the text is changed
+  // by |Textfield::SetText()|.
+  ContentsChanged(textfield_, textfield_->text());
 }
 
 void LoginPasswordView::AppendNumber(int value) {
   textfield_->SetText(textfield_->text() + base::IntToString16(value));
+  // |ContentsChanged| won't be called by |Textfield| if the text is changed
+  // by |Textfield::AppendText()|.
+  ContentsChanged(textfield_, textfield_->text());
 }
 
 void LoginPasswordView::Backspace() {
@@ -164,6 +180,11 @@ void LoginPasswordView::Backspace() {
 }
 
 void LoginPasswordView::Submit() {}
+
+void LoginPasswordView::SetPlaceholderText(
+    const base::string16 placeholder_text) {
+  textfield_->set_placeholder_text(placeholder_text);
+}
 
 const char* LoginPasswordView::GetClassName() const {
   return kLoginPasswordViewName;
@@ -192,6 +213,26 @@ void LoginPasswordView::ButtonPressed(views::Button* sender,
                                       const ui::Event& event) {
   DCHECK_EQ(sender, submit_button_);
   SubmitPassword();
+}
+
+void LoginPasswordView::ContentsChanged(views::Textfield* sender,
+                                        const base::string16& new_contents) {
+  DCHECK_EQ(sender, textfield_);
+  if (new_contents.empty()) {
+    separator_->SetColor(SkColorSetA(login_constants::kButtonEnabledColor,
+                                     login_constants::kButtonDisabledAlpha));
+    submit_button_->SetEnabled(false);
+    on_password_field_cleared_.Run(true);
+    return;
+  }
+  // Set elements to enabled state if the password field changes from empty to
+  // non-empty. (Or when the text length is reduced to 1, but it's not
+  // necessary to distinguish that case.)
+  if (new_contents.size() == 1) {
+    separator_->SetColor(login_constants::kButtonEnabledColor);
+    submit_button_->SetEnabled(true);
+    on_password_field_cleared_.Run(false);
+  }
 }
 
 void LoginPasswordView::SubmitPassword() {

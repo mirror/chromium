@@ -489,6 +489,16 @@ class GFX_EXPORT RenderText {
 
   void set_strike_thickness_factor(SkScalar f) { strike_thickness_factor_ = f; }
 
+  // Set bullet as the password replacement char. Used as an exception when the
+  // default |kPasswordReplacementChar| is not desirable.
+  void set_password_replacement_char_to_bullet() {
+    password_replacement_char_ = 0x2022;
+  };
+
+  base::char16 password_replacement_char() {
+    return password_replacement_char_;
+  };
+
  protected:
   RenderText();
 
@@ -827,6 +837,9 @@ class GFX_EXPORT RenderText {
 
   // The ratio of strike-through line thickness to text height.
   SkScalar strike_thickness_factor_;
+
+  // The character used for displaying obscured text.
+  base::char16 password_replacement_char_ = kPasswordReplacementChar;
 
   DISALLOW_COPY_AND_ASSIGN(RenderText);
 };

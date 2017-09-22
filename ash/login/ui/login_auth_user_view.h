@@ -85,6 +85,10 @@ class ASH_EXPORT LoginAuthUserView : public NonAccessibleView {
   // Called when the user submits an auth method. Runs mojo call.
   void OnAuthSubmit(const base::string16& password);
 
+  // Called when the password field changes from non-empty to empty or vice
+  // versa.
+  void OnPasswordFieldCleared(bool is_empty);
+
   AuthMethods auth_methods_ = AUTH_NONE;
   views::View* non_pin_root_ = nullptr;
   LoginUserView* user_view_ = nullptr;
