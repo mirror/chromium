@@ -35,6 +35,7 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
     LIVE_REGION_CREATED,
     LIVE_REGION_NODE_CHANGED,
     LOAD_COMPLETE,
+    MENU_ITEM_SELECTED,
     NAME_CHANGED,
     OTHER_ATTRIBUTE_CHANGED,
     ROLE_CHANGED,
@@ -165,6 +166,10 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
  private:
   AXTree* tree_;  // Not owned.
   std::map<AXNode*, std::set<Event>> tree_events_;
+
+  // Valid between the call to OnIntAttributeChanged and the call to
+  // OnAtomicUpdateFinished. List of nodes whose active descendant changed.
+  std::vector<AXNode*> active_descendant_changed_;
 };
 
 }  // namespace ui

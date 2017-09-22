@@ -129,23 +129,19 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXEventGenerator {
 
   static ui::AXTreeUpdate GetEmptyDocument();
 
-  virtual void NotifyAccessibilityEvent(
-      BrowserAccessibilityEvent::Source source,
-      ui::AXEvent event_type,
-      BrowserAccessibility* node);
+  // Subclasses override these methods to send native event notifications.
+  virtual void FireFocusEvent(BrowserAccessibility* node);
+  virtual void FireBlinkEvent(ui::AXEvent event_type, BrowserAccessibility* node) {}
+  virtual void FireGeneratedEvent(AXEventGenerator::Event event_type,
+                                  BrowserAccessibility* node) {}
 
   // Checks whether focus has changed since the last time it was checked,
   // taking into account whether the window has focus and which frame within
   // the frame tree has focus. If focus has changed, calls FireFocusEvent.
-  void FireFocusEventsIfNeeded(BrowserAccessibilityEvent::Source source);
+  void FireFocusEventsIfNeeded();
 
   // Return whether or not we are currently able to fire events.
   virtual bool CanFireEvents();
-
-  // Fire a focus event. Virtual so that some platforms can customize it,
-  // like firing a focus event on the root first, on Windows.
-  virtual void FireFocusEvent(BrowserAccessibilityEvent::Source source,
-                              BrowserAccessibility* node);
 
   // Return a pointer to the root of the tree, does not make a new reference.
   BrowserAccessibility* GetRoot();

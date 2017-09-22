@@ -34,20 +34,20 @@ class CONTENT_EXPORT BrowserAccessibilityManagerMac
   BrowserAccessibility* GetFocus() override;
 
   // Implementation of BrowserAccessibilityManager.
-  void NotifyAccessibilityEvent(
-      BrowserAccessibilityEvent::Source source,
-      ui::AXEvent event_type,
-      BrowserAccessibility* node) override;
+  void FireFocusEvent(BrowserAccessibility* node) override;
+  void FireBlinkEvent(ui::AXEvent event_type, BrowserAccessibility* node) override;
+  void FireGeneratedEvent(AXEventGenerator::Event event_type,
+                          BrowserAccessibility* node) override;
 
-  void DispatchGeneratedEvent(
-      BrowserAccessibility* event_target,
-      ui::AXEventGenerator::Event event) override;
   void OnAccessibilityEvents(
       const std::vector<AXEventNotificationDetails>& details) override;
 
   NSView* GetParentView();
 
  private:
+  void FireNativeMacNotification(NSString* mac_notification,
+                                 BrowserAccessibility* node);
+
   // AXTreeDelegate methods.
   void OnAtomicUpdateFinished(ui::AXTree* tree,
                               bool root_changed,

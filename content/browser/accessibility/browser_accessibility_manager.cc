@@ -201,15 +201,7 @@ BrowserAccessibilityManager::GetEmptyDocument() {
   return update;
 }
 
-void BrowserAccessibilityManager::NotifyAccessibilityEvent(
-    BrowserAccessibilityEvent::Source source,
-    ui::AXEvent event_type,
-    BrowserAccessibility* node) {
-  BrowserAccessibilityEvent::Create(source, event_type, node)->Fire();
-}
-
-void BrowserAccessibilityManager::FireFocusEventsIfNeeded(
-    BrowserAccessibilityEvent::Source source) {
+void BrowserAccessibilityManager::FireFocusEventsIfNeeded() {
   BrowserAccessibility* focus = GetFocus();
 
   // Don't fire focus events if the window itself doesn't have focus.
@@ -234,7 +226,7 @@ void BrowserAccessibilityManager::FireFocusEventsIfNeeded(
   }
 
   if (focus && focus != last_focused_node_)
-    FireFocusEvent(source, focus);
+    FireFocusEvent(focus);
 
   last_focused_node_ = focus;
   last_focused_manager_ = focus ? focus->manager() : nullptr;
@@ -244,11 +236,7 @@ bool BrowserAccessibilityManager::CanFireEvents() {
   return true;
 }
 
-void BrowserAccessibilityManager::FireFocusEvent(
-    BrowserAccessibilityEvent::Source source,
-    BrowserAccessibility* node) {
-  NotifyAccessibilityEvent(source, ui::AX_EVENT_FOCUS, node);
-
+void BrowserAccessibilityManager::FireFocusEvent(BrowserAccessibility* node) {
   if (g_focus_change_callback_for_testing.Get())
     g_focus_change_callback_for_testing.Get().Run();
 }
@@ -319,7 +307,7 @@ const ui::AXTreeData& BrowserAccessibilityManager::GetTreeData() {
 
 void BrowserAccessibilityManager::OnWindowFocused() {
   if (this == GetRootManager())
-    FireFocusEventsIfNeeded(BrowserAccessibilityEvent::FromWindowFocusChange);
+    FireFocusEventsIfNeeded();
 }
 
 void BrowserAccessibilityManager::OnWindowBlurred() {
@@ -379,16 +367,19 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
     if (!connected_to_parent_tree_node_) {
       parent->OnDataChanged();
       parent->UpdatePlatformAttributes();
-      NotifyAccessibilityEvent(
-          BrowserAccessibilityEvent::FromChildFrameLoading,
-          ui::AX_EVENT_CHILDREN_CHANGED,
-          parent);
+      FireGeneratedEvent(Event::CHILDREN_CHANGED, parent);
       connected_to_parent_tree_node_ = true;
     }
   } else {
     connected_to_parent_tree_node_ = false;
   }
   ClearEvents();
+
+  // Based on the changes to the tree, fire focus events if needed.
+  // Screen readers might not do the right thing if they're not aware of what
+  // has focus, so always try that first. Nothing will be fired if the window
+  // itself isn't focused or if focus hasn't changed.
+  GetRootManager()->FireFocusEventsIfNeeded();
 
   // Fire any events related to changes to the tree.
   for (auto targeted_event : *this) {
@@ -399,60 +390,19 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
     DispatchGeneratedEvent(event_target, targeted_event.event);
   }
 
-  // Based on the changes to the tree, fire focus events if needed.
-  // Screen readers might not do the right thing if they're not aware of what
-  // has focus, so always try that first. Nothing will be fired if the window
-  // itself isn't focused or if focus hasn't changed.
-  GetRootManager()->FireFocusEventsIfNeeded(
-      BrowserAccessibilityEvent::FromBlink);
-
-  // We are in the process of inferring all native events from tree changes.
-  // Mac OS X no longer needs to iterate over the specific events coming from
-  // the renderer, all needed events were fired above using AXEventGenerator.
-  //
-  // When all platforms have switched to inferring all events, we can delete
-  // the following code, which iterates over the non-focus events from the
-  // renderer and fires native events based on them.
-  //
-  // See http://crbug.com/699438 for details.
+  // Fire events from Blink.
   for (uint32_t index = 0; index < details.size(); index++) {
     const AXEventNotificationDetails& detail = details[index];
 
-    // Find the node corresponding to the id that's the target of the
-    // event (which may not be the root of the update tree).
-    ui::AXNode* node = tree_->GetFromId(detail.id);
-    if (!node)
-      continue;
-
-    ui::AXEvent event_type = detail.event_type;
-
-// On Mac and Windows, nearly all events are now fired implicitly,
-// so we should ignore most events from the renderer.
-#if defined(OS_MACOSX) || defined(OS_WIN)
-    if (event_type != ui::AX_EVENT_HOVER &&
-        event_type != ui::AX_EVENT_LOCATION_CHANGED &&
-        event_type != ui::AX_EVENT_SCROLLED_TO_ANCHOR) {
-      continue;
-    }
-#endif  // !defined(OS_MACOSX)
-
-    if (event_type == ui::AX_EVENT_FOCUS ||
-        event_type == ui::AX_EVENT_BLUR) {
-      // We already handled all focus events above.
-      continue;
-    }
-
     // Fire the native event.
-    BrowserAccessibility* event_target = GetFromAXNode(node);
-    if (event_target) {
-      if (event_type == ui::AX_EVENT_HOVER)
-        GetRootManager()->CacheHitTestResult(event_target);
+    BrowserAccessibility* event_target = GetFromID(detail.id);
+    if (!event_target)
+      return;
 
-      NotifyAccessibilityEvent(
-          BrowserAccessibilityEvent::FromBlink,
-          event_type,
-          event_target);
-    }
+    if (detail.event_type == ui::AX_EVENT_HOVER)
+      GetRootManager()->CacheHitTestResult(event_target);
+
+    FireBlinkEvent(detail.event_type, event_target);
   }
 }
 
@@ -529,10 +479,7 @@ void BrowserAccessibilityManager::ActivateFindInPageResult(
 
   // The "scrolled to anchor" notification is a great way to get a
   // screen reader to jump directly to a specific location in a document.
-  NotifyAccessibilityEvent(
-      BrowserAccessibilityEvent::FromFindInPageResult,
-      ui::AX_EVENT_SCROLLED_TO_ANCHOR,
-      node);
+  FireBlinkEvent(ui::AX_EVENT_SCROLLED_TO_ANCHOR, node);
 }
 
 BrowserAccessibility* BrowserAccessibilityManager::GetActiveDescendant(

@@ -173,6 +173,7 @@ void AXEventGenerator::OnIntAttributeChanged(AXTree* tree,
   switch (attr) {
     case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
       AddEvent(node, Event::ACTIVE_DESCENDANT_CHANGED);
+      active_descendant_changed_.push_back(node);
       break;
     case ui::AX_ATTR_CHECKED_STATE:
       AddEvent(node, Event::CHECKED_STATE_CHANGED);
@@ -313,6 +314,24 @@ void AXEventGenerator::OnAtomicUpdateFinished(
         AddEvent(live_root, Event::LIVE_REGION_CHANGED);
     }
   }
+
+  for (AXNode* node : active_descendant_changed_) {
+    AXNode* descendant = tree->GetFromId(
+        node->data().GetIntAttribute(ui::AX_ATTR_ACTIVEDESCENDANT_ID));
+    if (!descendant)
+      continue;
+    switch (descendant->data().role) {
+      case ui::AX_ROLE_MENU_ITEM:
+      case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
+      case ui::AX_ROLE_MENU_ITEM_RADIO:
+      case ui::AX_ROLE_MENU_LIST_OPTION:
+        AddEvent(descendant, Event::MENU_ITEM_SELECTED);
+        break;
+      default:
+        break;
+    }
+  }
+  active_descendant_changed_.clear();
 }
 
 }  // namespace ui
