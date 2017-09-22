@@ -204,6 +204,8 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
     layout_counter_count_--;
   }
   bool HasLayoutCounters() { return layout_counter_count_; }
+  void SetNeedsCounterUpdate() { needs_counter_update_ = true; }
+  void UpdateCounters();
 
   bool BackgroundIsKnownToBeOpaqueInRect(
       const LayoutRect& local_rect) const override;
@@ -301,6 +303,7 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
 
   LayoutQuote* layout_quote_head_;
   unsigned layout_counter_count_;
+  bool needs_counter_update_ = false;
 
   unsigned hit_test_count_;
   unsigned hit_test_cache_hits_;
