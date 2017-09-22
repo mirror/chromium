@@ -16,6 +16,24 @@
       "revId": "c808a066d3012fd0fa158a7880893e84f9ccfec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ce2b07_f27c914a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-22T21:03:54Z",
+      "side": 1,
+      "message": "Do you mean, the assertions should be removed and replaced with TargetApi? I like the assertions because they would have caught the original bug.\n\nOr do you mean, every function which references TextClassifier needs TargetApi? (There are a lot of those.)",
+      "parentUuid": "9e180d49_5a5d793f",
+      "revId": "c808a066d3012fd0fa158a7880893e84f9ccfec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
