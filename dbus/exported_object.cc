@@ -34,6 +34,7 @@ ExportedObject::ExportedObject(Bus* bus,
     : bus_(bus),
       object_path_(object_path),
       object_is_registered_(false) {
+  CHECK(object_path_.IsValid());
 }
 
 ExportedObject::~ExportedObject() {
