@@ -90,6 +90,51 @@ if (!use_system_sqlite) {
       # memory-usage goals.
       "SQLITE_DEFAULT_PCACHE_INITSZ=0",
 
+      # Omit define keys, to prevent the introduction of unnecessary feature on
+      # the build.
+      #
+      # Check out https://www.sqlite.org/compile.html for a detailed reference
+      # on every supported omit guard.
+      #
+      # Further information about rationale and implementation of these omit
+      # flags as default on during our build can be found at the link
+      # https://docs.google.com/document/d/13nuwRmM-RQgibE8-2DbQD0G6zSvbuGevI5KYfxWjBBw
+
+      # Only provided for backwards compatibility with older versions of SQLite
+      # that lack the sqlite3_initialize()
+      "SQLITE_OMIT_AUTOINIT",
+
+      # By default, the sqlite3_step() interface will automatically invoke
+      # sqlite3_reset() to reset the prepared statement if necessary. This
+      # compile-time option changes that behavior so that sqlite3_step() will
+      # return SQLITE_MISUSE if it called again after returning.
+      "SQLITE_OMIT_AUTORESET",
+
+      # This option causes SQLite to omit support for the CAST operator.
+      "SQLITE_OMIT_CAST",
+
+      # This option is used to omit the compile-time option diagnostics
+      # available in SQLite.
+      "SQLITE_OMIT_COMPILEOPTION_DIAGS",
+
+      # This option causes SQLite to omit support for interfaces marked as
+      # deprecated.
+      "SQLITE_OMIT_DEPRECATED",
+
+      # Defining this option causes the EXPLAIN command to be omitted from the
+      # library.
+      "SQLITE_OMIT_EXPLAIN",
+
+      # This option causes support for sqlite3_get_table() and
+      # sqlite3_free_table() to be omitted.
+      "SQLITE_OMIT_GET_TABLE",
+
+      # This option builds SQLite without support for shared-cache mode. The
+      # sqlite3_enable_shared_cache() is omitted along with a fair amount of
+      # logic within the B-Tree subsystem associated with shared cache
+      # management.
+      "SQLITE_OMIT_SHARED_CACHE",
+
       # NOTE(shess): Some defines can affect the amalgamation.  Those should be
       # added to google_generate_amalgamation.sh, and the amalgamation
       # re-generated.  Usually this involves disabling features which include
