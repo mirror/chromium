@@ -348,8 +348,6 @@ void URLLoaderImpl::ReadMore() {
                      &bytes_read);
   if (url_request_->status().is_io_pending()) {
     // Wait for OnReadCompleted.
-  } else if (url_request_->status().is_success() && bytes_read > 0) {
-    DidRead(static_cast<uint32_t>(bytes_read), true);
   } else {
     CompletePendingWrite();
     NotifyCompleted(url_request_->status().ToNetError());
