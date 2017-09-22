@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ef2219_9163babe",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-22T06:00:09Z",
+      "side": 1,
+      "message": "1) https://bugs.webkit.org/show_bug.cgi?id\u003d40342 bug when this test case was added.\n2) As per the description in this html file this test case expected\n This tests to make sure that inserting a line break in a hidden textarea doesn\u0027t crash.\n To repro manually, press enter or return in the textarea.  We pass if we don\u0027t crash.\nSo expectation was \n1) A textArea with focus but hidden visiblity.\nSo moved the eventSender to this location.",
+      "range": {
+        "startLine": 21,
+        "startChar": 37,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "393f1b01b87b7f8d35f5d1b2a8cb8551d156f741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
