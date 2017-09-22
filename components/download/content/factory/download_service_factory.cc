@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/files/file_path.h"
+#include "components/download/content/factory/download_service_factory.h"
+
 #include "base/memory/ptr_util.h"
 #include "components/download/content/factory/navigation_monitor_factory.h"
 #include "components/download/content/internal/download_driver_impl.h"
@@ -26,7 +27,7 @@ const base::FilePath::CharType kFilesStorageDir[] = FILE_PATH_LITERAL("Files");
 
 DownloadService* CreateDownloadService(
     std::unique_ptr<DownloadClientMap> clients,
-    content::DownloadManager* download_manager,
+    content::BrowserContext* browser_context,
     const base::FilePath& storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler) {
@@ -34,7 +35,8 @@ DownloadService* CreateDownloadService(
   auto config = Configuration::CreateFromFinch();
 
   auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
-  auto driver = base::MakeUnique<DownloadDriverImpl>(download_manager);
+  auto driver = base::MakeUnique<DownloadDriverImpl>(
+      content::BrowserContext::GetDownloadManager(browser_context));
 
   auto entry_db_storage_dir = storage_dir.Append(kEntryDBStorageDir);
   auto entry_db =
@@ -46,8 +48,7 @@ DownloadService* CreateDownloadService(
   auto device_status_listener =
       base::MakeUnique<DeviceStatusListener>(config->network_change_delay);
   NavigationMonitor* navigation_monitor =
-      NavigationMonitorFactory::GetForBrowserContext(
-          download_manager->GetBrowserContext());
+      NavigationMonitorFactory::GetForBrowserContext(browser_context);
   auto scheduler = base::MakeUnique<SchedulerImpl>(
       task_scheduler.get(), config.get(), client_set.get());
   auto file_monitor = base::MakeUnique<FileMonitorImpl>(
