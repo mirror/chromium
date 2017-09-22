@@ -33,6 +33,7 @@ class ShellWebContentsViewDelegate : public WebContentsViewDelegate {
                        const ContextMenuParams& params) override;
 
 #if defined(OS_MACOSX)
+  bool Focus() override;
   void ActionPerformed(int id);
 #endif
 

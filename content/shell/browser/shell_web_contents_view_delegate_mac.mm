@@ -219,6 +219,17 @@ void ShellWebContentsViewDelegate::ShowContextMenu(
                    forView:parent_view];
 }
 
+bool ShellWebContentsViewDelegate::Focus() {
+  NSView* native_view = web_contents_->GetContentNativeView();
+  NSWindow* window = [native_view window];
+  [window makeFirstResponder:native_view];
+  if (![window isVisible])
+    return false;
+
+  [window makeKeyAndOrderFront:nil];
+  return true;
+}
+
 void ShellWebContentsViewDelegate::ActionPerformed(int tag) {
   switch (tag) {
     case ShellContextMenuItemCutTag:
