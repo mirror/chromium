@@ -33,6 +33,23 @@
       "revId": "cd5afbb2e91180d6e1779d58f75427939ac3ccc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15d50f8_5acce96b",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-22T15:39:16Z",
+      "side": 1,
+      "message": "nit: I believe the comment style for inheritance is now: \"// mojom::InterventionsInternalsPageHandler:\" without the \"overrides\"",
+      "revId": "cd5afbb2e91180d6e1779d58f75427939ac3ccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
