@@ -46,6 +46,30 @@
       "revId": "51c79bfed25ca0fa1bb68ee7ff6abc26d3b7809d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26790c2_9f366def",
+        "filename": "content/browser/media/media_color_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-09-22T19:34:11Z",
+      "side": 1,
+      "message": "Also, I know nothing about these tests, unfortunately, so I have no idea which path it\u0027s taking and why it\u0027s trying to use software emulation. I\u0027m also not clear on why certain values are checked and why some are considered good, since the video shows up properly (visually) when I open the page locally and other platforms, which may be able to show these videos properly, are marked as failing in this file, so I\u0027m wondering if the test is correct or if it is too susceptible to minor differences between platforms.",
+      "parentUuid": "ee5a4685_ab38f47d",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "51c79bfed25ca0fa1bb68ee7ff6abc26d3b7809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
