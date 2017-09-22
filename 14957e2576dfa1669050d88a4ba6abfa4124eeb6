@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7f4cd6b5_52762b84",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58371955_e7af0b30",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0fbc2e_158b91d8",
         "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
         "patchSetId": 6
@@ -53,6 +77,30 @@
       "writtenOn": "2017-09-21T00:25:59Z",
       "side": 1,
       "message": "Why isn\u0027t this a const std::sting\u0026?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a19e09_8a6373bc",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/components/browser_sync/profile_sync_components_factory_impl.h?sq\u003dpackage:chromium\u0026l\u003d114\n\nI don\u0027t know \"const std::sting\u0026\" is better than \"const char*\", so just keep same as it in profile_sync_components_factory_impl.",
+      "parentUuid": "ed0fbc2e_158b91d8",
       "range": {
         "startLine": 52,
         "startChar": 16,
@@ -82,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "b7a7b3b9_20da00e3",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "yeah, but since ReadyForStart() is public in DataTypeController, and PostBridgeTask() is private in ModelTypeController, I think we should do this way, right?",
+      "parentUuid": "65bc620b_3ca6c3f8",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "accc94af_fdf670a2",
         "filename": "components/history/core/browser/typed_url_model_type_controller.h",
         "patchSetId": 6
@@ -96,6 +162,24 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a41c26_4f80ea28",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "accc94af_fdf670a2",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "04fb1875_9c57e5fc",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2570303c_1bde87a1",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855eeb4f_2ab11590",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -136,6 +244,24 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2810aac1_c01c5795",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855eeb4f_2ab11590",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "5b0ad5e3_90b4af78",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cdfcc7c_81128df2",
+      "range": {
+        "startLine": 144,
+        "startChar": 68,
+        "endLine": 144,
+        "endChar": 71
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c404112_37d3468c",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -176,6 +326,24 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57573c63_6e6d3e55",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c404112_37d3468c",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "c6fd6f83_c8c78d3e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done\n\nThis bug is found by an integration test, TwoClientTypedUrlsSyncTest.MergeTypedWithNonTypedDuringAssociation.\n\nI did not enable the integration tests for typed url because there are some other tests are failed, For this CL I just want to chrome is launchable with kSyncUSSTypedURL enabled. I will enable integration tests on the next CL.",
+      "parentUuid": "503710f7_be2c4c3b",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aee89501_056e4bc0",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "35300fbc_9c5e103c",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee89501_056e4bc0",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b55a25f2_3fa2dc16",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -227,6 +431,24 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7018de_85b9c824",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55a25f2_3fa2dc16",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "3be0e5be_44e12fc4",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b511e1d_c05ebf5e",
+      "range": {
+        "startLine": 370,
+        "startChar": 12,
+        "endLine": 370,
+        "endChar": 13
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16509744_c6164029",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -267,6 +513,24 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285e0069_3c86cf6e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16509744_c6164029",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +557,30 @@
     },
     {
       "key": {
+        "uuid": "93997489_e9a00ac0",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a437bfee_da880dc2",
+      "range": {
+        "startLine": 930,
+        "startChar": 46,
+        "endLine": 930,
+        "endChar": 47
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d419571_6c79d180",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 6
@@ -310,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "cf23c916_481d881b",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d419571_6c79d180",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c44668b7_6af8b28f",
         "filename": "components/history/core/browser/typed_url_sync_bridge.h",
         "patchSetId": 6
@@ -321,6 +627,30 @@
       "writtenOn": "2017-09-21T00:25:59Z",
       "side": 1,
       "message": "nit: I would use \"sync\", not \"syncer\". Not sure what would syncer mean here.\n\nAlso, can you add a test that covers the logic here?",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6729aca_58c7760d",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 1,
+      "message": "the existing unittests covered this, without this, unittests failed every where.",
+      "parentUuid": "c44668b7_6af8b28f",
       "range": {
         "startLine": 222,
         "startChar": 7,

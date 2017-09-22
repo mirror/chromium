@@ -22,6 +22,30 @@
       "revId": "43f6451668312441a0d9909454e1a4002962e394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a7983b_deede3db",
+        "filename": "components/sync/driver/model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-22T20:50:09Z",
+      "side": 0,
+      "message": "yes, I agree with you since in typed url controller, |model_thread_| is totally useless.\nDo you have idea how to do it?",
+      "parentUuid": "900a519b_b1696ad4",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "43f6451668312441a0d9909454e1a4002962e394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
