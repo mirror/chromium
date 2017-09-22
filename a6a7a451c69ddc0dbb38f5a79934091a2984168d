@@ -22,6 +22,30 @@
       "revId": "a6a7a451c69ddc0dbb38f5a79934091a2984168d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fea282_4bf0bb15",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-22T20:36:10Z",
+      "side": 1,
+      "message": "WebAPK runtime library size increases by 2.3K, from 7.6K to 9.9K.\n\nAlso this API is documented as available 24.00 (Android N) and above, although I tested in my Nexus 5x running Android 6.0 and seems fine.\n\nhttps://developer.android.com/reference/android/support/v4/app/NotificationManagerCompat.html#areNotificationsEnabled()\n\nDo you want to change to use NotificationManagerCompat or stick with the original approach?",
+      "parentUuid": "aa04192b_0030cbf7",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "a6a7a451c69ddc0dbb38f5a79934091a2984168d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
