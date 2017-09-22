@@ -103,10 +103,10 @@ public class AndroidSyncSettingsTest {
     private Context mContext;
     private CountingMockSyncContentResolverDelegate mSyncContentResolverDelegate;
     private String mAuthority;
+    private FakeAccountManagerDelegate mAccountManager;
     private Account mAccount;
     private Account mAlternateAccount;
     private MockSyncSettingsObserver mSyncSettingsObserver;
-    private FakeAccountManagerDelegate mAccountManager;
     private CallbackHelper mCallbackHelper;
     private int mNumberOfCallsToWait;
 
@@ -130,31 +130,27 @@ public class AndroidSyncSettingsTest {
 
     }
 
-    private void setupTestAccounts() {
+    private void setupTestAccounts() throws Exception {
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
-        mAccount = setupTestAccount("account@example.com");
-        mAlternateAccount = setupTestAccount("alternate@example.com");
+        mAccount = addTestAccount("account@example.com");
+        mAlternateAccount = addTestAccount("alternate@example.com");
     }
 
-    private Account setupTestAccount(String accountName) {
-        Account account = AccountManagerFacade.createAccountFromName(accountName);
-        AccountHolder.Builder accountHolder =
-                AccountHolder.builder(account).password("password").alwaysAccept(true);
-        mAccountManager.addAccountHolderExplicitly(accountHolder.build());
+    /**
+     * Add an account with a given name.
+     */
+    public Account addTestAccount(String name) throws Exception {
+        Account account = AccountManagerFacade.createAccountFromName(name);
+        AccountHolder holder = AccountHolder.builder(account).alwaysAccept(true).build();
+        mAccountManager.addAccountHolderBlocking(holder);
         return account;
     }
 
     @After
     public void tearDown() throws Exception {
         if (mNumberOfCallsToWait > 0) mCallbackHelper.waitForCallback(0, mNumberOfCallsToWait);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AccountManagerFacade.resetAccountManagerFacadeForTests();
-            }
-        });
     }
 
     private void enableChromeSyncOnUiThread() {

@@ -106,13 +106,13 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         AndroidSyncSettings.overrideForTests(mContext, mSyncContentResolver);
     }
 
-    public Account setUpTestAccount() {
+    public Account setUpTestAccount() throws Exception {
         Account account = SigninTestUtil.addTestAccount();
         Assert.assertFalse(SyncTestUtil.isSyncRequested());
         return account;
     }
 
-    public Account setUpTestAccountAndSignIn() {
+    public Account setUpTestAccountAndSignIn() throws Exception {
         Account account = setUpTestAccount();
         signIn(account);
         return account;

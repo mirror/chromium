@@ -183,6 +183,7 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
      * @param accountHolder the account holder to add
      */
     public void addAccountHolderExplicitly(AccountHolder accountHolder) {
+        ThreadUtils.assertOnUiThread();
         boolean added = mAccounts.add(accountHolder);
         Assert.assertTrue("Account was already added", added);
         for (AccountsChangeObserver observer : mObservers) {
@@ -196,10 +197,58 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
      * @param accountHolder the account holder to remove
      */
     public void removeAccountHolderExplicitly(AccountHolder accountHolder) {
+        ThreadUtils.assertOnUiThread();
         boolean removed = mAccounts.remove(accountHolder);
         Assert.assertTrue("Account was already added", removed);
         for (AccountsChangeObserver observer : mObservers) {
             observer.onAccountsChanged();
+        }
+    }
+
+    public void addAccountHolderBlocking(AccountHolder accountHolder) throws InterruptedException {
+        ThreadUtils.assertOnBackgroundThread();
+
+        SimpleFuture<Void> future = new SimpleFuture<>();
+        AccountsChangeObserver observer = () -> {
+            if (AccountManagerFacade.get().hasAccountForName(accountHolder.getAccount().name)) {
+                future.provide(null);
+            }
+        };
+
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            AccountManagerFacade.get().addObserver(observer);
+            addAccountHolderExplicitly(accountHolder);
+        });
+
+        try {
+            future.get();
+        } finally {
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> AccountManagerFacade.get().removeObserver(observer));
+        }
+    }
+
+    public void removeAccountHolderBlocking(AccountHolder accountHolder)
+            throws InterruptedException {
+        ThreadUtils.assertOnBackgroundThread();
+
+        SimpleFuture<Void> future = new SimpleFuture<>();
+        AccountsChangeObserver observer = () -> {
+            if (!AccountManagerFacade.get().hasAccountForName(accountHolder.getAccount().name)) {
+                future.provide(null);
+            }
+        };
+
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            AccountManagerFacade.get().addObserver(observer);
+            removeAccountHolderExplicitly(accountHolder);
+        });
+
+        try {
+            future.get();
+        } finally {
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> AccountManagerFacade.get().removeObserver(observer));
         }
     }
 
