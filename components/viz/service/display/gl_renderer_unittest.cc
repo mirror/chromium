@@ -1916,13 +1916,10 @@ class TestOverlayProcessor : public OverlayProcessor {
   Strategy* strategy_;
 };
 
-void MailboxReleased(const gpu::SyncToken& sync_token,
-                     bool lost_resource,
-                     cc::BlockingTaskRunner* main_thread_task_runner) {}
+void MailboxReleased(const gpu::SyncToken& sync_token, bool lost_resource) {}
 
 static void CollectResources(std::vector<ReturnedResource>* array,
-                             const std::vector<ReturnedResource>& returned,
-                             cc::BlockingTaskRunner* main_thread_task_runner) {
+                             const std::vector<ReturnedResource>& returned) {
   array->insert(array->end(), returned.begin(), returned.end());
 }
 
@@ -1949,7 +1946,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   TextureMailbox mailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                          GL_TEXTURE_2D, gfx::Size(256, 256), true, false);
   auto release_callback =
-      cc::SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+      SingleReleaseCallback::Create(base::Bind(&MailboxReleased));
   ResourceId resource_id =
       child_resource_provider->CreateResourceFromTextureMailbox(
           mailbox, std::move(release_callback));
@@ -2141,7 +2138,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   TextureMailbox mailbox(gpu::Mailbox::Generate(), sync_token, GL_TEXTURE_2D,
                          gfx::Size(256, 256), true, false);
   auto release_callback =
-      cc::SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+      SingleReleaseCallback::Create(base::Bind(&MailboxReleased));
   ResourceId resource_id =
       child_resource_provider->CreateResourceFromTextureMailbox(
           mailbox, std::move(release_callback));
@@ -2376,7 +2373,7 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
   TextureMailbox mailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                          GL_TEXTURE_2D, gfx::Size(256, 256), true, false);
   auto release_callback =
-      cc::SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+      SingleReleaseCallback::Create(base::Bind(&MailboxReleased));
   ResourceId resource_id =
       child_resource_provider->CreateResourceFromTextureMailbox(
           mailbox, std::move(release_callback));
