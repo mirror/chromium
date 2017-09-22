@@ -104,7 +104,7 @@ class RefPtr {
   explicit operator bool() const { return ptr_ != nullptr; }
 
   RefPtr& operator=(RefPtr o) {
-    Swap(o);
+    swap(o);
     return *this;
   }
   RefPtr& operator=(std::nullptr_t) {
@@ -115,7 +115,7 @@ class RefPtr {
   template <typename U>
   RefPtr& operator=(RefPtrValuePeeker<U>);
 
-  void Swap(RefPtr&);
+  void swap(RefPtr&);
 
   static T* HashTableDeletedValue() { return reinterpret_cast<T*>(-1); }
 
@@ -146,18 +146,18 @@ template <typename T>
 template <typename U>
 inline RefPtr<T>& RefPtr<T>::operator=(RefPtrValuePeeker<U> optr) {
   RefPtr ptr = static_cast<U*>(optr);
-  Swap(ptr);
+  swap(ptr);
   return *this;
 }
 
 template <class T>
-inline void RefPtr<T>::Swap(RefPtr& o) {
+inline void RefPtr<T>::swap(RefPtr& o) {
   std::swap(ptr_, o.ptr_);
 }
 
 template <class T>
 inline void swap(RefPtr<T>& a, RefPtr<T>& b) {
-  a.Swap(b);
+  a.swap(b);
 }
 
 template <typename T, typename U>
