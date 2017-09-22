@@ -118,6 +118,30 @@
       "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d6041c_d61bca95",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-22T02:05:46Z",
+      "side": 1,
+      "message": "Hmm... if that is the case, wouldn\u0027t it be better to call\nRootEditableElement() and CompositionPlainTextRange() separately?\n\nI\u0027m still having a hard time understanding the difference between root editable and tree scope root, though. Can you explain?",
+      "parentUuid": "ac8bda9a_88e92fed",
+      "range": {
+        "startLine": 298,
+        "startChar": 23,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "5ab34874d0fc5121e8120416a1cdb7f067ab428e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
