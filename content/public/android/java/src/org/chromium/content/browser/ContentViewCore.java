@@ -2133,9 +2133,10 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * Sets TextClassifier for Smart Text selection.
+     * Sets TextClassifier for Smart Text selection. (Takes Object rather than TextClassifier,
+     * to be callable pre-O.)
      */
-    public void setTextClassifier(TextClassifier textClassifier) {
+    public void setTextClassifier(Object textClassifier) {
         mSelectionPopupController.setTextClassifier(textClassifier);
     }
 
@@ -2145,13 +2146,15 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      * classifier.
      */
     public TextClassifier getTextClassifier() {
+        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         return mSelectionPopupController.getTextClassifier();
     }
 
     /**
-     * Returns the TextClassifier which has been set with setTextClassifier(), or null.
+     * Returns the TextClassifier which has been set with setTextClassifier(), or null. (Returns
+     * Object rather than TextClassifier, to be callable pre-O.)
      */
-    public TextClassifier getCustomTextClassifier() {
+    public Object getCustomTextClassifier() {
         return mSelectionPopupController.getCustomTextClassifier();
     }
 

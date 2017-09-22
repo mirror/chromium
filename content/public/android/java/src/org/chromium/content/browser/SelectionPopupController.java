@@ -1137,10 +1137,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     /**
-     * Sets TextClassifier for Smart Text selection.
+     * Sets TextClassifier for Smart Text selection. (Takes Object rather than TextClassifier,
+     * to be callable pre-O, in which case mSelectionClient should be null.)
      */
-    public void setTextClassifier(TextClassifier textClassifier) {
-        if (mSelectionClient != null) mSelectionClient.setTextClassifier(textClassifier);
+    public void setTextClassifier(Object textClassifier) {
+        if (mSelectionClient != null) {
+            assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+            mSelectionClient.setTextClassifier((TextClassifier) textClassifier);
+        }
     }
 
     /**
@@ -1149,13 +1153,15 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * classifier.
      */
     public TextClassifier getTextClassifier() {
+        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         return mSelectionClient == null ? null : mSelectionClient.getTextClassifier();
     }
 
     /**
-     * Returns the TextClassifier which has been set with setTextClassifier(), or null.
+     * Returns the TextClassifier which has been set with setTextClassifier(), or null. (Returns
+     * Object rather than TextClassifier, to be callable pre-O.)
      */
-    public TextClassifier getCustomTextClassifier() {
+    public Object getCustomTextClassifier() {
         return mSelectionClient == null ? null : mSelectionClient.getCustomTextClassifier();
     }
 

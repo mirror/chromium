@@ -56,7 +56,7 @@ public interface SelectionClient {
 
     /**
      * Sets TextClassifier for the Smart Text selection. Pass null argument to use the system
-     * classifier
+     * classifier.
      */
     public void setTextClassifier(TextClassifier textClassifier);
 

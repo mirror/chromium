@@ -1048,8 +1048,9 @@ public class AwContents implements SmartClipProvider {
      * ^^^^^^^^^  See the native class declaration for more details on relative object lifetimes.
      */
     private void setNewAwContents(long newAwContentsPtr) {
-        // Move the text classifier to the new ContentViewCore.
-        TextClassifier textClassifier =
+        // Move the text classifier to the new ContentViewCore. (Referenced as Object, since this
+        // function runs on pre-O.)
+        Object textClassifier =
                 mContentViewCore == null ? null : mContentViewCore.getCustomTextClassifier();
 
         if (mNativeAwContents != 0) {
@@ -2733,11 +2734,13 @@ public class AwContents implements SmartClipProvider {
 
     public void setTextClassifier(TextClassifier textClassifier) {
         assert mContentViewCore != null;
+        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         mContentViewCore.setTextClassifier(textClassifier);
     }
 
     public TextClassifier getTextClassifier() {
         assert mContentViewCore != null;
+        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         return mContentViewCore.getTextClassifier();
     }
 

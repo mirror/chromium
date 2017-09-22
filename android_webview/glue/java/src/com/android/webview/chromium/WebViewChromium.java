@@ -1538,7 +1538,7 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
 
     @Override
     public TextClassifier getTextClassifier() {
-        return (TextClassifier) mAwContents.getTextClassifier();
+        return mAwContents.getTextClassifier();
     }
 
     public void autofill(final SparseArray<AutofillValue> values) {
