@@ -39,6 +39,30 @@
       "revId": "fdc1c11866f712ef339fe130c6a9d343e014307b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bfc9fe_6a26388b",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T06:38:08Z",
+      "side": 1,
+      "message": "Ah, okay, I see now why you need to buffer this.  It still feels a bit funny to write a for loop the body of which is essentially an increment-by-1 operation, but I would expect that your counts are quite small, so there\u0027s not much efficiency loss vs. incrementing-by-n once.",
+      "parentUuid": "8ce5807d_b2fda2a8",
+      "range": {
+        "startLine": 111,
+        "startChar": 54,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "fdc1c11866f712ef339fe130c6a9d343e014307b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
