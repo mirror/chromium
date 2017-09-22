@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77c2fe45_424f4731",
+        "filename": "chrome/browser/chromeos/login/reset_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T15:53:15Z",
+      "side": 1,
+      "message": "Remove debugging logs.",
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39da5264_e5da09d4",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T15:53:15Z",
+      "side": 1,
+      "message": "nit: Wasn\u0027t forward decl enough ?",
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143eea7a_782e17a0",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T15:53:15Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
