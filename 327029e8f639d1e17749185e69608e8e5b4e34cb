@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0213b5d8_9ab89245",
+        "filename": "net/http/http_stream_factory_impl_job_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-22T20:06:33Z",
+      "side": 1,
+      "message": "Ah. This isn\u0027t quite accurate. We can attempt to restart a tunnel after prompting for credentials. For example:\n\n* Network transaction begins and attempts to create a http stream. This results in a proxy CONNECT.\n\n* The proxy responds with a 407.\n\n* There are no credentials, so the request bubbles up to the surface. On it\u0027s way, we hit HttpNetworkTransaction::OnNeedsProxyAuth(), which sets establishing_tunnel_ to true, and notifies the upper layers (cache transaction, URLRequest HTTP job, URLRequest, URLR::Delegate), ultimately calling URLR::Delegate::OnAuthRequired().\n\n* The delegate (say the browser) obtains credentials and calls URLRequest::SetAuth(), which trickles down to the HttpNetworkTransaction.\n\n* HttpNetworkTransaction notices it\u0027s establishing a tunnel, so it calls RestartTunnelWithProxyAuth() on the stream request.\n\n* We wind up here.\n\n\nSo in this case, connection oriented auth schemes weren\u0027t involved. The same scenario could play out for HTTP Basic authentication.\n\nIs this not supported on QUIC? It\u0027s supported on H2.",
+      "revId": "327029e8f639d1e17749185e69608e8e5b4e34cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
