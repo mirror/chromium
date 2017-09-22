@@ -10,12 +10,18 @@
 #include <limits>
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -228,6 +234,244 @@ class SaveToStringBodyHandler : public BodyHandler,
   DISALLOW_COPY_AND_ASSIGN(SaveToStringBodyHandler);
 };
 
+// BodyHandler implementation for saving the response to a file
+class SaveToFileBodyHandler : public BodyHandler {
+ public:
+  SaveToFileBodyHandler(SimpleURLLoaderImpl* simple_url_loader,
+                        SimpleURLLoader::DownloadToFileCompleteCallback
+                            download_to_file_complete_callback,
+                        const base::FilePath& path,
+                        uint64_t max_body_size)
+      : BodyHandler(simple_url_loader),
+        download_to_file_complete_callback_(
+            std::move(download_to_file_complete_callback)),
+        weak_ptr_factory_(this) {
+    // Can only do this after initializing the WeakPtrFactory.
+    file_writer_ = std::make_unique<FileWriter>(path, max_body_size);
+  }
+
+  ~SaveToFileBodyHandler() override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    if (file_writer_)
+      FileWriter::Destroy(std::move(file_writer_), base::OnceClosure());
+  }
+
+  // BodyHandler implementation:
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle body_data_pipe) override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    file_writer_->StartWriting(std::move(body_data_pipe),
+                               base::BindOnce(&SaveToFileBodyHandler::OnDone,
+                                              weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  void NotifyConsumerOfCompletion(bool destroy_results) override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    DCHECK(!download_to_file_complete_callback_.is_null());
+
+    if (destroy_results) {
+      // Prevent the FileWriter from calling OnDone().
+      weak_ptr_factory_.InvalidateWeakPtrs();
+
+      // To avoid any issues if the consumer tries to re-download a file to the
+      // same location, don't invoke the callback until any partially downloaded
+      // file has been destroyed.
+      FileWriter::Destroy(
+          std::move(file_writer_),
+          base::Bind(&SaveToFileBodyHandler::InvokeCallbackAsynchronously,
+                     weak_ptr_factory_.GetWeakPtr()));
+      return;
+    }
+
+    file_writer_->ReleaseFile();
+    std::move(download_to_file_complete_callback_).Run(path_);
+  }
+
+ private:
+  // Class to read from a mojo::ScopedDataPipeConsumerHandle and write the
+  // contents to a file. Does all reading and writing on a separate file
+  // SequencedTaskRunner. All public methods are called on BodyHandler's
+  // TaskRunner, except the destructor. All private methods are run on the file
+  // TaskRunner.
+  //
+  // Destroys the file that it's saving to on destruciton, unless ReleaseFile()
+  // is called first, so on cancellation and errors, the default behavior is to
+  // clean up after itself.
+  class FileWriter : public BodyReader::Delegate {
+   public:
+    using OnDoneCallback = base::OnceCallback<void(net::Error error,
+                                                   int64_t total_bytes,
+                                                   const base::FilePath& path)>;
+
+    explicit FileWriter(const base::FilePath& path, int64_t max_body_size)
+        : path_(path),
+          body_handler_task_runner_(base::SequencedTaskRunnerHandle::Get()),
+          file_writer_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+               base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
+          body_reader_(std::make_unique<BodyReader>(this, max_body_size)) {
+      DCHECK(body_handler_task_runner_->RunsTasksInCurrentSequence());
+    }
+
+    // Starts reading from |body_data_pipe| and writing to the file.
+    void StartWriting(mojo::ScopedDataPipeConsumerHandle body_data_pipe,
+                      OnDoneCallback on_done_callback) {
+      DCHECK(body_handler_task_runner_->RunsTasksInCurrentSequence());
+      file_writer_task_runner_->PostTask(
+          FROM_HERE,
+          base::BindOnce(&FileWriter::StartWritingOnFileSequence,
+                         base::Unretained(this), std::move(body_data_pipe),
+                         std::move(on_done_callback)));
+    }
+
+    // Releases ownership of the downloaded file. If not called before
+    // destruction, file will automatically be destroyed in the destructor.
+    void ReleaseFile() {
+      DCHECK(body_handler_task_runner_->RunsTasksInCurrentSequence());
+      file_writer_task_runner_->PostTask(
+          FROM_HERE, base::BindOnce(&FileWriter::ReleaseFileOnFileSequence,
+                                    base::Unretained(this)));
+    }
+
+    // Destroys the FileWriter on the file TaskRunner.
+    //
+    // If |on_destroyed_closure| is non-null, it will be invoked on the caller's
+    // task runner once the FileWriter has been destroyed.
+    static void Destroy(std::unique_ptr<FileWriter> file_writer,
+                        base::OnceClosure on_destroyed_closure) {
+      DCHECK(
+          file_writer->body_handler_task_runner_->RunsTasksInCurrentSequence());
+      // Have to stash this pointer before posting a task, since |file_writer|
+      // is bound to the callback that's posted to the TaskRunner.
+      base::SequencedTaskRunner* task_runner =
+          file_writer->file_writer_task_runner_.get();
+      if (!on_destroyed_closure.is_null()) {
+        task_runner->PostTaskAndReply(
+            FROM_HERE,
+            base::BindOnce(&FileWriter::DeleteTask, std::move(file_writer)),
+            base::BindOnce(std::move(on_destroyed_closure)));
+      } else {
+        CHECK(file_writer);
+        CHECK(file_writer->file_writer_task_runner_);
+        task_runner->DeleteSoon(FROM_HERE, std::move(file_writer));
+      }
+    }
+
+    // Destructor is only public so the consumer can keep it in a unique_ptr.
+    // Class must be destroyed by using Destroy().
+    ~FileWriter() override {
+      DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
+      file_.Close();
+
+      if (owns_file_) {
+        DCHECK(!path_.empty());
+        base::DeleteFile(path_, false /* recursive */);
+      }
+    }
+
+   private:
+    void StartWritingOnFileSequence(
+        mojo::ScopedDataPipeConsumerHandle body_data_pipe,
+        OnDoneCallback on_done_callback) {
+      DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
+      DCHECK(!file_.IsValid());
+
+      // Try to create the file.
+      file_.Initialize(path_,
+                       base::File::FLAG_WRITE | base::File::FLAG_CREATE_ALWAYS);
+      if (!file_.IsValid()) {
+        body_handler_task_runner_->PostTask(
+            FROM_HERE, base::BindOnce(std::move(on_done_callback),
+                                      net::MapSystemError(
+                                          logging::GetLastSystemErrorCode()),
+                                      0, base::FilePath()));
+        return;
+      }
+
+      on_done_callback_ = std::move(on_done_callback);
+      owns_file_ = true;
+      body_reader_->Start(std::move(body_data_pipe));
+    }
+
+    // BodyReader::Delegate implementation:
+    net::Error OnDataRead(uint32_t length, const char* data) override {
+      DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
+      while (length > 0) {
+        int written = file_.WriteAtCurrentPos(
+            data, std::min(length, static_cast<uint32_t>(
+                                       std::numeric_limits<int>::max())));
+        if (written < 0)
+          return net::MapSystemError(logging::GetLastSystemErrorCode());
+        length -= written;
+        data += written;
+      }
+
+      return net::OK;
+    }
+
+    void OnDone(net::Error error, int64_t total_bytes) override {
+      // This should only be called if the file was successfully created.
+      DCHECK(file_.IsValid());
+
+      // Close the file so that there's no ownership contention when the
+      // consumer uses it.
+      file_.Close();
+
+      DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
+      body_handler_task_runner_->PostTask(
+          FROM_HERE, base::BindOnce(std::move(on_done_callback_), error,
+                                    total_bytes, path_));
+    }
+
+    // Closes the file, so it won't be deleted on destruction.
+    void ReleaseFileOnFileSequence() { owns_file_ = false; }
+
+    static void DeleteTask(std::unique_ptr<FileWriter> file_writer) {}
+
+    base::FilePath path_;
+    // File being downloaded to. If valid during destruction, will be deleted.
+    // file is created just before reading from the data pipe.
+    base::File file_;
+
+    OnDoneCallback on_done_callback_;
+
+    const scoped_refptr<base::SequencedTaskRunner> body_handler_task_runner_;
+    const scoped_refptr<base::SequencedTaskRunner> file_writer_task_runner_;
+
+    std::unique_ptr<BodyReader> body_reader_;
+
+    // If true, destroys the file in the destructor. Set to true once the file
+    // is created.
+    bool owns_file_ = false;
+
+    DISALLOW_COPY_AND_ASSIGN(FileWriter);
+  };
+
+  // Called by FileWriter::Destroy after deleting a partially downloaded file.
+  void InvokeCallbackAsynchronously() {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    std::move(download_to_file_complete_callback_).Run(base::FilePath());
+  }
+
+  void OnDone(net::Error error,
+              int64_t total_bytes,
+              const base::FilePath& path);
+
+  // Path of the file. Set in OnDone().
+  base::FilePath path_;
+
+  SimpleURLLoader::DownloadToFileCompleteCallback
+      download_to_file_complete_callback_;
+
+  std::unique_ptr<FileWriter> file_writer_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  base::WeakPtrFactory<SaveToFileBodyHandler> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(SaveToFileBodyHandler);
+};
+
 class SimpleURLLoaderImpl : public SimpleURLLoader,
                             public mojom::URLLoaderClient {
  public:
@@ -245,6 +489,13 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       mojom::URLLoaderFactory* url_loader_factory,
       const net::NetworkTrafficAnnotationTag& annotation_tag,
       BodyAsStringCallback body_as_string_callback) override;
+  void DownloadToFile(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      DownloadToFileCompleteCallback download_to_file_complete_callback,
+      const base::FilePath& file_path,
+      int64_t max_body_size) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
   void SetAllowHttpErrorResults(bool allow_http_error_results) override;
   int NetError() const override;
@@ -352,6 +603,13 @@ void SaveToStringBodyHandler::NotifyConsumerOfCompletion(bool destroy_results) {
   std::move(body_as_string_callback_).Run(std::move(body_));
 }
 
+void SaveToFileBodyHandler::OnDone(net::Error error,
+                                   int64_t total_bytes,
+                                   const base::FilePath& path) {
+  path_ = path;
+  simple_url_loader()->OnBodyHandlerDone(error, total_bytes);
+}
+
 SimpleURLLoaderImpl::SimpleURLLoaderImpl() : client_binding_(this) {
   // Allow creation and use on different threads.
   DETACH_FROM_SEQUENCE(sequence_checker_);
@@ -381,6 +639,19 @@ void SimpleURLLoaderImpl::DownloadToStringOfUnboundedSizeUntilCrashAndDie(
       // int64_t because ResourceRequestCompletionStatus::decoded_body_length is
       // an int64_t, not a size_t.
       std::numeric_limits<int64_t>::max());
+  StartInternal(resource_request, url_loader_factory, annotation_tag);
+}
+
+void SimpleURLLoaderImpl::DownloadToFile(
+    const ResourceRequest& resource_request,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag,
+    DownloadToFileCompleteCallback download_to_file_complete_callback,
+    const base::FilePath& file_path,
+    int64_t max_body_size) {
+  body_handler_ = std::make_unique<SaveToFileBodyHandler>(
+      this, std::move(download_to_file_complete_callback), file_path,
+      max_body_size);
   StartInternal(resource_request, url_loader_factory, annotation_tag);
 }
 
