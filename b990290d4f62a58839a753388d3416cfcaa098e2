@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a6e624_edbf070c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextControl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-22T08:36:30Z",
+      "side": 1,
+      "message": "Note to readers: This is needed for Node::CanStartSelection() to return |true| early, i.e already at the inner editor (no need to check ancestors).\n\nNode::CanStartSelection() would otherwise walk ancestors and return |false| if any of them had |user-select: none|. This is what caused the unwanted inheritance of |user-select: none| into text fields, as reported in the bug.",
+      "revId": "b990290d4f62a58839a753388d3416cfcaa098e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
