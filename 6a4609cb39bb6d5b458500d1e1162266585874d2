@@ -34,6 +34,24 @@
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dfa5f5_a701249f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-22T15:19:23Z",
+      "side": 1,
+      "message": "OK, it makes sense for the removal of AccessTokenStore to be a \"clean removal\", i.e., it could be reverted to bring all the code back as it was. It\u0027s the end of my day now, so I\u0027ll review this CL on Monday (as-is). Apologies for the delay!",
+      "parentUuid": "7ed1411f_178c6501",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
