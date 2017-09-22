@@ -12,6 +12,7 @@
 #include "chrome/test/base/interactive_test_utils.h"
 #include "chrome/test/base/search_test_utils.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 

@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_result_view.h"
 #include "chrome/browser/ui/views/theme_copying_widget.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "third_party/skia/include/core/SkDrawLooper.h"
@@ -65,13 +66,18 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
     OmniboxView* omnibox_view,
     OmniboxEditModel* edit_model,
     LocationBarView* location_bar_view)
-    : model_(new OmniboxPopupModel(this, edit_model)),
+    : model_(new OmniboxPopupModel(this,
+                                   edit_model,
+                                   edit_model->client(),
+                                   edit_model->autocomplete_controller())),
       omnibox_view_(omnibox_view),
       location_bar_view_(location_bar_view),
       font_list_(font_list),
       size_animation_(this),
       start_margin_(0),
       end_margin_(0) {
+  edit_model->set_popup_model(model_.get());
+
   // The contents is owned by the LocationBarView.
   set_owned_by_client();
 
