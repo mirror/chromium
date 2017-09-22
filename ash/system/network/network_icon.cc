@@ -1009,5 +1009,22 @@ void PurgeNetworkIconCache() {
   PurgeIconMap(ICON_TYPE_MENU_LIST, network_paths);
 }
 
+SignalStrength GetSignalStrengthForNetwork(
+    const chromeos::NetworkState* network) {
+  if (!network->Matches(NetworkTypePattern::Wireless()))
+    return SignalStrength::NOT_WIRELESS;
+
+  // Decide whether the signal is considered weak, medium or strong based on the
+  // strength index.
+  int index = StrengthIndex(network->signal_strength());
+  if (index <= std::ceil(static_cast<float>(kNumNetworkImages) / 3.f))
+    return SignalStrength::WEAK;
+  else if (index <=
+           std::ceil(2.f * static_cast<float>(kNumNetworkImages) / 3.f))
+    return SignalStrength::MEDIUM;
+
+  return SignalStrength::STRONG;
+}
+
 }  // namespace network_icon
 }  // namespace ash
