@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2617779f_0fe62883",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-22T02:03:12Z",
+      "side": 1,
+      "message": "Done, but I\u0027m not sure how to wrap that line, since this url goes beyond the 80th column.",
+      "parentUuid": "66afbe1f_e038d758",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e1f04d7_50750bc9",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a08cd1bc_7803a741",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-22T02:03:12Z",
+      "side": 1,
+      "message": "To be honest, I had included to see what the Layout Tests would make of it. I will remove it for further review.\n\nBy the way, the documentation of that entry continues saying:\n\nSpecifically, the SQL functions julianday(), date(), time(), datetime() and strftime() are not available. The default column values CURRENT_TIME, CURRENT_DATE and CURRENT_TIMESTAMP are still available.\n\nI didn\u0027t include this mention.",
+      "parentUuid": "2e1f04d7_50750bc9",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47506679_5a4e5b78",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T01:47:57Z",
       "side": 1,
       "message": "Same question about Web content as before.",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f614981_5b0eebe6",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-22T02:03:12Z",
+      "side": 1,
+      "message": "I\u0027m gonna remove this one for now, but the documentation adds to this entry: This option is sometimes useful when trying to compile the date and time functions on a platform that does not support the concept of local time.\n\nSo, by what I understand, this is not referring to specific SQL functions, or at least it only affects underlying logic implementing them.",
+      "parentUuid": "47506679_5a4e5b78",
       "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
