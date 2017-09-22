@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e28ad65d_2b65236d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-22T17:50:00Z",
+      "side": 1,
+      "message": "I\u0027m just wondering -- what should the interface look like for an AXRange? Should it maybe resemble a DOM range\u0027s interface?",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd9a1600_52b4fe90",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-22T17:50:00Z",
+      "side": 1,
+      "message": "This looks like maybe it belongs as a constructor.",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a70511c2_5bf63257",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-22T17:50:00Z",
+      "side": 1,
+      "message": "There\u0027s an AXRange struct in AXObject you might want to get rid of. Does it really make sense to encapsulate these ranges in a class as opposed to maybe have utility functions that can manipulate the struct AXRange? If the former, why don\u0027t we just mirror the DOM data structures and also have an AXPosition class as well (an AXRange would be a pair of AXPositions)?",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e848dc8_b628a067",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-22T17:50:00Z",
+      "side": 1,
+      "message": "Name -1 as constant.",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
