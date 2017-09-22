@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1f823e9_14cbf9e2",
+        "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f81175_a50a3d61",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18dd21af_a528e2aa",
         "filename": "extensions/common/api/virtual_keyboard.idl",
         "patchSetId": 40
@@ -45,6 +69,30 @@
       "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dc92a9_e30314cd",
+        "filename": "extensions/common/api/virtual_keyboard.idl",
+        "patchSetId": 40
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18dd21af_a528e2aa",
+      "range": {
+        "startLine": 13,
+        "startChar": 69,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f9a3c6e3_104cfe19",
+        "filename": "extensions/shell/browser/shell_extensions_api_client.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "241de3d7_827d26bc",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7bead1c_ede95298",
         "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
         "patchSetId": 40
@@ -85,6 +157,24 @@
       "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afaca08_9fbcfdce",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7bead1c_ede95298",
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "21967c37_a02286ed",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e68d00_5640e223",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c514087_f4c670d1",
         "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
         "patchSetId": 40
@@ -131,6 +245,30 @@
       "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234fae64_15e273d5",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "It\u0027s removed.",
+      "parentUuid": "9c514087_f4c670d1",
+      "range": {
+        "startLine": 77,
+        "startChar": 35,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "59934d2c_3859c551",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done, but could you explain why?",
+      "parentUuid": "c933451f_319e136f",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da165e84_5133a619",
         "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.h",
         "patchSetId": 40
@@ -177,6 +339,30 @@
       "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d042a97_c3a3652f",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T02:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da165e84_5133a619",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "657c31f846768568000bc9179f5599ab4c35ae3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
