@@ -131,10 +131,13 @@ policy.Policy.prototype.setStatus_ = function(value) {
 
 /**
  * Set the policy value.
- * @param {Object} value Dictionary with information about the policy value.
+ * @param {Object|string|integer|boolean} value Policy value.
  * @private
  */
 policy.Policy.prototype.setValue_ = function(value) {
+  if (value && typeof value != 'string') {
+    value = JSON.stringify(value);
+  }
   this.unset = !value;
   this.value = value;
   this.querySelector('.value').textContent = value || '';
