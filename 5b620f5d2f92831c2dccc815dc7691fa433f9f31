@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "fc7df89b_6b69e8de",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "Chromium code is open-source (and could even be Chromium instead of Chrome) so I\u0027d suggest not name-dropping Google where possible.\ns/that Google knows/known by the browser\n(Also everywhere else, etc.)",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 55
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "048d4878_43cdaad1",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 7
@@ -76,6 +99,24 @@
       "writtenOn": "2017-09-22T20:10:14Z",
       "side": 1,
       "message": "How about these names?\n\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS              // non-cc-forms\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_NO_CARD      // cc-form, missing value\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_UNKNOWN_CARD // cc-form, new/unknown value\nFORM_EVENT_SUBMIT_AFTER_DECLINED_SUGGESTIONS_KNOWN_CARD   // cc-form, could have filled",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff77993_41633d21",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "\"Decline\" seems like an active choice, though, and it could be the user just didn\u0027t notice.  What about FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTION ?",
+      "parentUuid": "048d4878_43cdaad1",
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +192,98 @@
     },
     {
       "key": {
+        "uuid": "8e6ee648_8e9967ce",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 916,
+        "startChar": 9,
+        "endLine": 916,
+        "endChar": 37
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91060860_56dae65a",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 934,
+        "startChar": 35,
+        "endLine": 934,
+        "endChar": 53
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b88ae6_b3699ea3",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "nit: s/allows/allows for\n(if I understand this comment correctly)",
+      "range": {
+        "startLine": 311,
+        "startChar": 64,
+        "endLine": 311,
+        "endChar": 70
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b585ece_77325d76",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "s/in record/known by the browser\n(otherwise it\u0027s \"on record\" actually)",
+      "range": {
+        "startLine": 316,
+        "startChar": 40,
+        "endLine": 316,
+        "endChar": 49
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e826e27_1bef5c63",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 7
@@ -162,6 +295,52 @@
       "writtenOn": "2017-09-22T20:10:14Z",
       "side": 1,
       "message": "IsKnownCard?",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bc0b7b_48449271",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "Do we care about expiration dates?  It could be that users don\u0027t pick a card because they know the expiration date is wrong on that card and they\u0027ll need to change it anyway.",
+      "range": {
+        "startLine": 520,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0a0260_bb89e468",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-22T20:59:16Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure we already have a function like this somewhere...it\u0027s used for preventing Upstream of already-known cards...",
+      "range": {
+        "startLine": 522,
+        "startChar": 7,
+        "endLine": 522,
+        "endChar": 43
+      },
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
