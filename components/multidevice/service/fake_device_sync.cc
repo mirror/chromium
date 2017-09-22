@@ -3,30 +3,41 @@
 // found in the LICENSE file.
 
 #include "components/multidevice/service/fake_device_sync.h"
+#include "components/cryptauth/remote_device_test_util.h"
 
 namespace multidevice {
 
-FakeDeviceSync::FakeDeviceSync() {}
+namespace {
+const int kNumRemoteDevices = 3;
+}
+
+FakeDeviceSync::FakeDeviceSync()
+    : remote_devices_(cryptauth::GenerateTestRemoteDevices(kNumRemoteDevices)) {
+}
 
 FakeDeviceSync::~FakeDeviceSync() {}
 
 void FakeDeviceSync::ForceEnrollmentNow() {
-  observers_.ForAllPtrs([this](
-                            device_sync::mojom::DeviceSyncObserver* observer) {
-    observer->OnEnrollmentFinished(should_enroll_successfully_ /* success */);
-  });
+  observers_.ForAllPtrs(
+      [this](device_sync::mojom::DeviceSyncObserver* observer) {
+        observer->OnEnrollmentFinished(should_enroll_successfully_);
+      });
 }
 
 void FakeDeviceSync::ForceSyncNow() {
-  observers_.ForAllPtrs(
-      [this](device_sync::mojom::DeviceSyncObserver* observer) {
-        observer->OnDevicesSynced(should_sync_successfully_ /* success */);
-      });
+  observers_.ForAllPtrs([this](
+                            device_sync::mojom::DeviceSyncObserver* observer) {
+    observer->OnDevicesSynced(should_sync_successfully_, device_change_result_);
+  });
 }
 
 void FakeDeviceSync::AddObserver(
     device_sync::mojom::DeviceSyncObserverPtr observer) {
   observers_.AddPtr(std::move(observer));
+}
+
+void FakeDeviceSync::GetSyncedDevices(GetSyncedDevicesCallback callback) {
+  std::move(callback).Run(remote_devices_);
 }
 
 }  // namespace multidevice
