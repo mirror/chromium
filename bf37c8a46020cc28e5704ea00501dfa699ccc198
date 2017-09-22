@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f82292c_4d5436c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-22T15:02:30Z",
+      "side": 1,
+      "message": "Note: These lines here are the only lines from the CL.\n\nGerrit is total garbage at doing diffbases so I gave up.",
+      "range": {
+        "startLine": 990,
+        "startChar": 0,
+        "endLine": 1002,
+        "endChar": 11
+      },
+      "revId": "bf37c8a46020cc28e5704ea00501dfa699ccc198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
