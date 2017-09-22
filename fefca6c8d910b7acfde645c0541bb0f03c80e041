@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0196c5ee_a84d672f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T12:02:39Z",
+      "side": 1,
+      "message": "dcheck_eq/ne is super picky about type matching, doens\u0027t trigger implicit casts.\nJust do here: DCHECK(!subpath.empty())",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 11
+      },
+      "revId": "fefca6c8d910b7acfde645c0541bb0f03c80e041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708c5492_980a3c65",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-22T12:02:39Z",
+      "side": 1,
+      "message": "+const -\u003e const GuidNodeMap\u0026 nodes_by_guid() const {\n\nhere and below",
+      "range": {
+        "startLine": 119,
+        "startChar": 36,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "fefca6c8d910b7acfde645c0541bb0f03c80e041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
