@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "8cec025c_6569bc3c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:11:24Z",
+      "side": 1,
+      "message": "please use base::DoNothing (throughout the change).",
+      "range": {
+        "startLine": 322,
+        "startChar": 68,
+        "endLine": 322,
+        "endChar": 75
+      },
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f879f70_a477189c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:11:24Z",
+      "side": 1,
+      "message": "\"Internal\" doesn\u0027t communicate what the method does. How about \"AfterSettingsSynced\"?\n\nAlso, what happens if the connection is not ready? Should you store the intention about the wizard starting so that you can retry upon connection?",
+      "range": {
+        "startLine": 403,
+        "startChar": 59,
+        "endLine": 403,
+        "endChar": 67
+      },
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f60ae59e_912a1705",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 7
@@ -30,6 +76,29 @@
       "writtenOn": "2017-09-22T01:59:41Z",
       "side": 1,
       "message": "Nit: DVLOG",
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605de5f4_3a1330a2",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:11:24Z",
+      "side": 1,
+      "message": "Would it be possible to pass a bool to the callback (whether the operation was successful) to avoid ignoring it?",
+      "range": {
+        "startLine": 99,
+        "startChar": 57,
+        "endLine": 99,
+        "endChar": 80
+      },
       "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
