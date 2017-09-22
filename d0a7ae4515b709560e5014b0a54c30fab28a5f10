@@ -16,6 +16,24 @@
       "revId": "d0a7ae4515b709560e5014b0a54c30fab28a5f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844902a8_06b3627d",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-22T18:11:25Z",
+      "side": 1,
+      "message": "That\u0027s a good point. A lot of unnecessary tests are removed. Done.",
+      "parentUuid": "02b45bcf_66e64dd3",
+      "revId": "d0a7ae4515b709560e5014b0a54c30fab28a5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
