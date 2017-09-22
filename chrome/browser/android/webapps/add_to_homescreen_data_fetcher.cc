@@ -42,29 +42,16 @@ GURL GetShortcutUrl(const content::WebContents* web_contents) {
 }
 
 InstallableParams ParamsToPerformManifestAndIconFetch(
-    int ideal_icon_size_in_px,
-    int minimum_icon_size_in_px,
-    int badge_size_in_px,
     bool check_webapk_compatibility) {
   InstallableParams params;
-  params.ideal_primary_icon_size_in_px = ideal_icon_size_in_px;
-  params.minimum_primary_icon_size_in_px = minimum_icon_size_in_px;
   params.fetch_valid_primary_icon = true;
-  if (check_webapk_compatibility) {
-    params.fetch_valid_badge_icon = true;
-    params.ideal_badge_icon_size_in_px = badge_size_in_px;
-    params.minimum_badge_icon_size_in_px = badge_size_in_px;
-  }
+  params.fetch_valid_badge_icon = check_webapk_compatibility;
   return params;
 }
 
 InstallableParams ParamsToPerformInstallableCheck(
-    int ideal_icon_size_in_px,
-    int minimum_icon_size_in_px,
     bool check_webapk_compatibility) {
   InstallableParams params;
-  params.ideal_primary_icon_size_in_px = ideal_icon_size_in_px;
-  params.minimum_primary_icon_size_in_px = minimum_icon_size_in_px;
   params.check_installable = check_webapk_compatibility;
   params.fetch_valid_primary_icon = check_webapk_compatibility;
   return params;
@@ -107,11 +94,8 @@ std::pair<SkBitmap, bool> CreateLauncherIconFromFaviconInBackground(
 
 AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
     content::WebContents* web_contents,
-    int ideal_icon_size_in_px,
-    int minimum_icon_size_in_px,
     int ideal_splash_image_size_in_px,
     int minimum_splash_image_size_in_px,
-    int badge_size_in_px,
     int data_timeout_ms,
     bool check_webapk_compatibility,
     Observer* observer)
@@ -119,17 +103,13 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
       installable_manager_(InstallableManager::FromWebContents(web_contents)),
       observer_(observer),
       shortcut_info_(GetShortcutUrl(web_contents)),
-      ideal_icon_size_in_px_(ideal_icon_size_in_px),
-      minimum_icon_size_in_px_(minimum_icon_size_in_px),
       ideal_splash_image_size_in_px_(ideal_splash_image_size_in_px),
       minimum_splash_image_size_in_px_(minimum_splash_image_size_in_px),
-      badge_size_in_px_(badge_size_in_px),
       data_timeout_ms_(data_timeout_ms),
       check_webapk_compatibility_(check_webapk_compatibility),
       is_waiting_for_web_application_info_(true),
       is_waiting_for_manifest_(true),
       weak_ptr_factory_(this) {
-  DCHECK(minimum_icon_size_in_px <= ideal_icon_size_in_px);
   DCHECK(minimum_splash_image_size_in_px <= ideal_splash_image_size_in_px);
   DCHECK(shortcut_info_.url.is_valid());
 
@@ -190,9 +170,7 @@ void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
                  weak_ptr_factory_.GetWeakPtr()));
 
   installable_manager_->GetData(
-      ParamsToPerformManifestAndIconFetch(
-          ideal_icon_size_in_px_, minimum_icon_size_in_px_, badge_size_in_px_,
-          check_webapk_compatibility_),
+      ParamsToPerformManifestAndIconFetch(check_webapk_compatibility_),
       base::Bind(&AddToHomescreenDataFetcher::OnDidGetManifestAndIcons,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -227,9 +205,7 @@ void AddToHomescreenDataFetcher::OnDataTimedout() {
     // operation. If it does not complete, an "UNKNOWN" will be recorded.
     installable_manager_->RecordAddToHomescreenManifestAndIconTimeout();
     installable_manager_->GetData(
-        ParamsToPerformInstallableCheck(ideal_icon_size_in_px_,
-                                        minimum_icon_size_in_px_,
-                                        check_webapk_compatibility_),
+        ParamsToPerformInstallableCheck(check_webapk_compatibility_),
         InstallableCallback());
   } else {
     installable_manager_->RecordAddToHomescreenInstallabilityTimeout();
@@ -287,9 +263,7 @@ void AddToHomescreenDataFetcher::OnDidGetManifestAndIcons(
   }
 
   installable_manager_->GetData(
-      ParamsToPerformInstallableCheck(ideal_icon_size_in_px_,
-                                      minimum_icon_size_in_px_,
-                                      check_webapk_compatibility_),
+      ParamsToPerformInstallableCheck(check_webapk_compatibility_),
       base::Bind(&AddToHomescreenDataFetcher::OnDidPerformInstallableCheck,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -339,8 +313,9 @@ void AddToHomescreenDataFetcher::FetchFavicon() {
           ServiceAccessType::EXPLICIT_ACCESS);
 
   // Using favicon if its size is not smaller than platform required size,
-  // otherwise using the largest icon among all avaliable icons.
-  int threshold_to_get_any_largest_icon = ideal_icon_size_in_px_ - 1;
+  // otherwise using the largest icon among all available icons.
+  int threshold_to_get_any_largest_icon =
+      InstallableManager::GetMinimumIconSizeInPx() - 1;
   favicon_service->GetLargestRawFaviconForPageURL(
       shortcut_info_.url, icon_types, threshold_to_get_any_largest_icon,
       base::Bind(&AddToHomescreenDataFetcher::OnFaviconFetched,
