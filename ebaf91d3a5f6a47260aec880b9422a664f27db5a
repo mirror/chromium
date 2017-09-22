@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73fdb681_4046ac91",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-22T18:48:31Z",
+      "side": 1,
+      "message": "I notice that there are some GSUs being targeted to the intermediate bubbling target before the router gets the GSB ack and retargets the GSB and GSUs. So the GSUs sent to the intermediate target still reach the root without the fix (which explains why the root scrolls slightly before being interrupted). It\u0027s the GSUs that come after the retargeting GSE that get dropped.\n\nSo for testing, it looks like we\u0027d need to do more to make sure that the later GSUs are also making it to the root.",
+      "revId": "ebaf91d3a5f6a47260aec880b9422a664f27db5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
