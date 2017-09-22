@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f386248a_8d7c7657",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-22T05:09:00Z",
+      "side": 1,
+      "message": "Let\u0027s spell the type out, we seem to do it in similar cases, and it\u0027s not quite evident it\u0027s a unique_ptr\u003c\u003e from the call.",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34661e82_2bf560f7",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-22T05:09:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff770fab_6778cec9",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-22T05:09:00Z",
+      "side": 1,
+      "message": "drop base::Passed()?",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066c3918_92029c0a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/serviceworker/fetch-sync-tags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-22T05:09:00Z",
+      "side": 1,
+      "message": ";",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5781aa_d83b6ba4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/serviceworker/fetch-sync-tags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-22T05:09:00Z",
+      "side": 1,
+      "message": "drop this!",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
