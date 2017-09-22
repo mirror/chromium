@@ -17,7 +17,6 @@ class BrowserUiInterface {
  public:
   virtual ~BrowserUiInterface() {}
 
-  virtual void SetWebVrMode(bool enabled, bool show_toast) = 0;
   virtual void SetFullscreen(bool enabled) = 0;
   virtual void SetToolbarState(const ToolbarState& state) = 0;
   virtual void SetIncognito(bool enabled) = 0;

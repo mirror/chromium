@@ -391,9 +391,9 @@ void VrShell::SetWebVrMode(JNIEnv* env,
   webvr_mode_ = enabled;
   if (metrics_helper_)
     metrics_helper_->SetWebVREnabled(enabled);
-  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::SetWebVrMode,
-                                       gl_thread_->GetVrShellGl(), enabled));
-  ui_->SetWebVrMode(enabled, show_toast);
+  PostToGlThread(FROM_HERE,
+                 base::Bind(&VrShellGl::SetWebVrMode,
+                            gl_thread_->GetVrShellGl(), enabled, show_toast));
 }
 
 void VrShell::OnFullscreenChanged(bool enabled) {

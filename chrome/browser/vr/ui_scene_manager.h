@@ -30,6 +30,7 @@ class UiElement;
 class UiScene;
 class UrlBar;
 class ExitPrompt;
+struct UiInitialState;
 
 // The scene manager creates and maintains a UiElement hierarchy.
 //
@@ -81,10 +82,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   UiSceneManager(UiBrowserInterface* browser,
                  UiScene* scene,
                  ContentInputDelegate* content_input_delegate,
-                 bool in_cct,
-                 bool in_web_vr,
-                 bool web_vr_autopresentation_expected);
-
+                 const UiInitialState& ui_initial_state);
   ~UiSceneManager() override;
 
   base::WeakPtr<UiSceneManager> GetWeakPtr();
@@ -94,7 +92,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void SetIncognito(bool incognito) override;
   void SetToolbarState(const ToolbarState& state) override;
   void SetWebVrSecureOrigin(bool secure) override;
-  void SetWebVrMode(bool web_vr, bool show_toast) override;
   void SetLoading(bool loading) override;
   void SetLoadProgress(float progress) override;
   void SetIsExiting() override;
@@ -106,6 +103,9 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
 
   // UiInterface.
+  UiScene* scene() override;
+  bool ShouldRenderWebVr() override;
+  void SetWebVrMode(bool web_vr, bool show_toast) override;
   void OnGlInitialized(unsigned int content_texture_id) override;
   void OnAppButtonClicked() override;
   void OnAppButtonGesturePerformed(UiInterface::Direction direction) override;
