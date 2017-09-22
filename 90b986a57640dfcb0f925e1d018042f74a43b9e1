@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5accd42_8c83e729",
+        "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:24:55Z",
+      "side": 1,
+      "message": "why expose this combined method instead of the individual validators?",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "90b986a57640dfcb0f925e1d018042f74a43b9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3069a7_e8a7632a",
+        "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:24:55Z",
+      "side": 1,
+      "message": "is it expected that you\u0027ll call this will a profile nullptr?\n\nIf not, this should be a (D)CHECK?",
+      "revId": "90b986a57640dfcb0f925e1d018042f74a43b9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1980101_19499c0b",
+        "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:24:55Z",
+      "side": 1,
+      "message": "why Raw info?",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "90b986a57640dfcb0f925e1d018042f74a43b9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
