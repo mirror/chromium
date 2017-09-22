@@ -143,54 +143,6 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
                    weak_factory_.GetWeakPtr(), cb));
   }
 
-  // Executed on component load API finish.
-  // Check API return result to decide whether component is successfully loaded.
-  void OnComponentLoad(const Printer& printer,
-                       const std::string& ppd_contents,
-                       const PrinterSetupCallback& cb,
-                       const std::string& result) {
-    // Result is the component mount point, or empty
-    // if the component couldn't be loaded
-    if (result.empty()) {
-      LOG(ERROR) << "Filter component installation fails.";
-      cb.Run(PrinterSetupResult::kFatalError);
-    } else {
-      AddPrinter(printer, ppd_contents, cb);
-    }
-  }
-
-  // Returns true if component is requred (and install if possible),
-  // Otherwise do nothing and return false.
-  bool RequiresComponent(const Printer& printer,
-                         const PrinterSetupCallback& cb,
-                         const std::string& ppd_contents,
-                         const std::vector<std::string>& ppd_filters) {
-    if (base::FeatureList::IsEnabled(features::kCrOSComponent)) {
-      std::set<std::string> components_requested;
-      for (auto& ppd_filter : ppd_filters) {
-        for (auto& component : GetComponentizedFilters()) {
-          if (component.first == ppd_filter) {
-            components_requested.insert(component.second);
-          }
-        }
-      }
-      if (components_requested.size() == 1) {
-        // Only allow one filter request in ppd file.
-        auto& component_name = *components_requested.begin();
-        component_updater::CrOSComponent::LoadComponent(
-            component_name,
-            base::Bind(&PrinterConfigurerImpl::OnComponentLoad,
-                       weak_factory_.GetWeakPtr(), printer, ppd_contents, cb));
-        return true;
-      } else if (components_requested.size() > 1) {
-        LOG(ERROR) << "More than one filter components are requested.";
-        cb.Run(PrinterSetupResult::kFatalError);
-        return true;
-      }
-    }
-    return false;
-  }
-
   void ResolvePpdDone(const Printer& printer,
                       const PrinterSetupCallback& cb,
                       PpdProvider::CallbackResultCode result,
@@ -200,9 +152,7 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
     switch (result) {
       case PpdProvider::SUCCESS:
         DCHECK(!ppd_contents.empty());
-        if (!RequiresComponent(printer, cb, ppd_contents, ppd_filters)) {
-          AddPrinter(printer, ppd_contents, cb);
-        }
+        AddPrinter(printer, ppd_contents, cb);
         break;
       case PpdProvider::CallbackResultCode::NOT_FOUND:
         cb.Run(PrinterSetupResult::kPpdNotFound);
