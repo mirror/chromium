@@ -78,14 +78,25 @@
       }
 
       paper-tabs {
+        --paper-tabs-selection-bar-color: var(--google-blue-500);
         --paper-tabs: {
           font-size: 100%;
           height: 40px;
         }
       }
 
+      paper-tab {
+        --paper-tab-content: {
+          color: var(--google-blue-700);
+        };
+        --paper-tab-content-unselected: {
+          opacity: 1;
+          color: var(--paper-grey-600);
+        };
+      }
+
       .time-range-row {
-        margin-bottom: 4px;
+        margin-bottom: 12px;
       }
 
       .time-range-select {
@@ -94,6 +105,10 @@
          * to keep md-select's text (without the underline) aligned with
          * neighboring text that does not have an underline. */
         margin-top: 3px;
+      }
+
+      [slot=body] {
+        padding-top: 8px;
       }
 
       [slot=title] .secondary {
@@ -241,7 +256,7 @@
         <paper-button id="clearBrowsingDataConfirm"
             class="action-button" disabled="[[clearingInProgress_]]"
             on-tap="onClearBrowsingDataTap_">
-            $i18n{clearBrowsingData}
+            $i18n{clearData}
         </paper-button>
       </div>
     </dialog>
