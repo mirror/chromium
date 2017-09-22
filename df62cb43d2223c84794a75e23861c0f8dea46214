@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f88ba5_67e381e4",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-22T20:41:06Z",
+      "side": 1,
+      "message": "can the code function well without this assumption? If so, prefer to be lenient in what we accept.",
+      "revId": "df62cb43d2223c84794a75e23861c0f8dea46214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
