@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "ef718a8c_a5fdb4ba",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T08:19:24Z",
+      "side": 1,
+      "message": "IMHO, we should change the code here to not ever write to symlinks or fifos or whatnot unless the caller specifically opted in to that behavior. We\u0027ve seen multiple exploits on Chrome OS abusing privileged processes to write data elsewhere by placing unexpected existing objects in the destination directory. At this point, I\u0027m convinced user education will not solve this issue, so we need to make the API safe by default. Whether that\u0027s going to happen as part of this CL or some other CL I don\u0027t care ;-)",
+      "parentUuid": "8ca093d8_87810392",
+      "revId": "a490c539e3056e3237ee7858e34110c31e177123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "926b2b6c_5d7ae8c0",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 4
