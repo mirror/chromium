@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed2deea_c324c9ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:43:30Z",
+      "side": 1,
+      "message": "offers",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "b873df74555ef500b0057b5016fa5d228427dc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0594752a_29df883c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:43:30Z",
+      "side": 1,
+      "message": "This shared backing thread is per-renderer-process object. What happens when multiple iframes in the same renderer process simultaneously use AudioWorklet and one of the iframes is closed? I guess... the shared backing thread suddenly disappears and the renderer process could crash.",
+      "revId": "b873df74555ef500b0057b5016fa5d228427dc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527959c4_e53c9a81",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:43:30Z",
+      "side": 1,
+      "message": "DCHECK(!worklet_messaging_proxy_);",
+      "revId": "b873df74555ef500b0057b5016fa5d228427dc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
