@@ -22,6 +22,30 @@
       "revId": "68502cbccd12d044ec8c4a8e48d409fd9d044c44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d5abf7_6c9192c0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-22T17:58:34Z",
+      "side": 1,
+      "message": "You\u0027re right. it is safer to change the order of these 2 statements. Thanks!",
+      "parentUuid": "561b5189_7c34534a",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 23
+      },
+      "revId": "68502cbccd12d044ec8c4a8e48d409fd9d044c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
