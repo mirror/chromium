@@ -173,6 +173,14 @@ bool CopyDirectory(const FilePath& from_path, const FilePath& to_path,
   // want the containing directory to propagate its SECURITY_DESCRIPTOR.
   ThreadRestrictions::AssertIOAllowed();
 
+  // Some old callers of CopyDirectory want it to support wildcards.
+  // After some discussion, we decided to fix those callers.
+  // Break loudly here if anyone tries to do this.
+  DCHECK(to_path.value().find('*') == std::string::npos);
+  DCHECK(from_path.value().find('*') == std::string::npos);
+
+  DCHECK(IsDirectoryEmpty(to_path));
+
   // NOTE: I suspect we could support longer paths, but that would involve
   // analyzing all our usage of files.
   if (from_path.value().length() >= MAX_PATH ||
