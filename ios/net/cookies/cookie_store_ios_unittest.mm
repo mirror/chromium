@@ -9,11 +9,13 @@
 #include <memory>
 
 #include "base/bind_helpers.h"
+#import "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/sys_string_conversions.h"
+#include "ios/net/cookies/cookie_store_ios_client.h"
 #import "ios/net/cookies/cookie_store_ios_test_util.h"
 #import "ios/net/cookies/ns_http_system_cookie_store.h"
 #import "net/base/mac/url_conversions.h"
@@ -28,6 +30,7 @@ namespace net {
 
 struct CookieStoreIOSTestTraits {
   static std::unique_ptr<net::CookieStore> Create() {
+    net::SetCookieStoreIOSClient(new TestCookieStoreIOSClient());
     ClearCookies();
     return base::MakeUnique<CookieStoreIOS>(
         base::MakeUnique<NSHTTPSystemCookieStore>());
@@ -122,25 +125,30 @@ class CookieStoreIOSTest : public testing::Test {
   void SetSystemCookie(const GURL& url,
                        const std::string& name,
                        const std::string& value) {
-    system_store_->SetCookie([NSHTTPCookie cookieWithProperties:@{
-      NSHTTPCookiePath : base::SysUTF8ToNSString(url.path()),
-      NSHTTPCookieName : base::SysUTF8ToNSString(name),
-      NSHTTPCookieValue : base::SysUTF8ToNSString(value),
-      NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
-    }]);
-    net::CookieStoreIOS::NotifySystemCookiesChanged();
+    system_store_->SetCookieAsync(
+        [NSHTTPCookie cookieWithProperties:@{
+          NSHTTPCookiePath : base::SysUTF8ToNSString(url.path()),
+          NSHTTPCookieName : base::SysUTF8ToNSString(name),
+          NSHTTPCookieValue : base::SysUTF8ToNSString(value),
+          NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
+        }],
+        base::BindOnce(&net::CookieStoreIOS::NotifySystemCookiesChanged));
     base::RunLoop().RunUntilIdle();
   }
 
   void DeleteSystemCookie(const GURL& gurl, const std::string& name) {
-    NSArray* cookies = system_store_->GetCookiesForURL(gurl);
-    for (NSHTTPCookie* cookie in cookies) {
-      if (cookie.name.UTF8String == name) {
-        system_store_->DeleteCookie(cookie);
-        break;
-      }
-    }
-    net::CookieStoreIOS::NotifySystemCookiesChanged();
+    system_store_->GetCookiesForURLAsync(
+        gurl, base::BindBlockArc(^(NSArray<NSHTTPCookie*>* cookies) {
+          for (NSHTTPCookie* cookie in cookies) {
+            if ([[cookie name] isEqualToString:base::SysUTF8ToNSString(name)]) {
+              system_store_->DeleteCookieAsync(
+                  cookie,
+                  base::BindOnce(
+                      &net::CookieStoreIOS::NotifySystemCookiesChanged));
+              break;
+            }
+          }
+        }));
     base::RunLoop().RunUntilIdle();
   }
 
@@ -224,6 +232,7 @@ TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
   cookie_store->GetAllCookiesForURLAsync(
       kTestCookieURL,
       base::Bind(&GetAllCookiesCallback::Run, base::Unretained(&callback)));
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(callback.did_run());
   EXPECT_EQ(1u, callback.cookie_list().size());
   net::CanonicalCookie cookie = callback.cookie_list()[0];

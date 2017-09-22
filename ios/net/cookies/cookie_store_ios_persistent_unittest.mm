@@ -59,13 +59,17 @@ class CookieStoreIOSPersistentTest : public testing::Test {
         backend_(new net::TestPersistentCookieStore),
         store_(
             base::MakeUnique<net::CookieStoreIOSPersistent>(backend_.get())) {
+    net::SetCookieStoreIOSClient(new TestCookieStoreIOSClient());
+
     cookie_changed_callback_ = store_->AddCallbackForCookie(
         kTestCookieURL, "abc",
         base::Bind(&net::RecordCookieChanges, &cookies_changed_,
                    &cookies_removed_));
   }
 
-  ~CookieStoreIOSPersistentTest() override {}
+  ~CookieStoreIOSPersistentTest() override {
+    net::SetCookieStoreIOSClient(nullptr);
+  }
 
   // Gets the cookies. |callback| will be called on completion.
   void GetCookies(net::CookieStore::GetCookiesCallback callback) {

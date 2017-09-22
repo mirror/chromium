@@ -61,7 +61,7 @@ TEST_F(NSHTTPSystemCookieStoreTest, SetCookie) {
        [shared_store_ cookiesForURL:test_cookie_url1_]) {
     EXPECT_FALSE([cookie.name isEqualToString:system_cookie.name]);
   }
-  store_->SetCookie(system_cookie);
+  store_->SetCookie(system_cookie, /*optional_creation_time=*/nullptr);
 
   // Verify that cookie is set in system storage.
   NSHTTPCookie* result_cookie = nil;
@@ -102,7 +102,7 @@ TEST_F(NSHTTPSystemCookieStoreTest, GetCookies) {
   EXPECT_EQ(3u, shared_store_.cookies.count);
 
   // Test GetAllCookies
-  NSArray* cookies = store_->GetAllCookies(/*manager=*/nullptr);
+  NSArray* cookies = store_->GetAllCookies();
   EXPECT_EQ(3u, cookies.count);
   for (NSHTTPCookie* cookie in cookies) {
     NSHTTPCookie* existing_cookie = [input_cookies valueForKey:cookie.name];
@@ -114,8 +114,8 @@ TEST_F(NSHTTPSystemCookieStoreTest, GetCookies) {
 
   // Test GetCookiesForURL
   NSHTTPCookie* input_cookie = [input_cookies valueForKey:@"a"];
-  NSArray* cookies_for_url = store_->GetCookiesForURL(
-      GURLWithNSURL(test_cookie_url1_), /*manager=*/nullptr);
+  NSArray* cookies_for_url =
+      store_->GetCookiesForURL(GURLWithNSURL(test_cookie_url1_));
   EXPECT_EQ(1u, cookies_for_url.count);
   NSHTTPCookie* output_cookie = [cookies_for_url objectAtIndex:0];
   EXPECT_TRUE([input_cookie.name isEqualToString:output_cookie.name]);
@@ -128,7 +128,7 @@ TEST_F(NSHTTPSystemCookieStoreTest, DeleteCookies) {
   [shared_store_ setCookie:system_cookie1];
 
   NSHTTPCookie* system_cookie2 = CreateCookie(@"x=d", test_cookie_url2_);
-  store_->SetCookie(system_cookie2);
+  store_->SetCookie(system_cookie2, /*optional_creation_time=*/nullptr);
 
   NSHTTPCookie* system_cookie3 = CreateCookie(@"l=m", test_cookie_url3_);
   [shared_store_ setCookie:system_cookie3];
