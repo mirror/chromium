@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6e92c88_24ad7f75",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e919af2b_bf6b6607",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439c1cb7_a0bb06d2",
         "filename": "sandbox/mac/sandbox_logging.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "cb7f48bb_ef88b86f",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "439c1cb7_a0bb06d2",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149423b6_6ba42ac9",
         "filename": "sandbox/mac/sandbox_logging.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "22468a45_be327ee6",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "The style guide now recommends this for better compile time errors.",
+      "parentUuid": "149423b6_6ba42ac9",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e19f330_0bb121ba",
         "filename": "sandbox/mac/sandbox_logging.cc",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-21T17:33:08Z",
       "side": 1,
       "message": "Also, all of this looks totally familiar. Is there an expectation of recusal in codecestuous situations like this one?",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289ef559_92906d2c",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Robert is also a reviewer. :-)",
+      "parentUuid": "9e19f330_0bb121ba",
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +212,48 @@
     },
     {
       "key": {
+        "uuid": "81114773_2069f89d",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c1d25f_c1cee8cc",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d447f1a_159cb86c",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0686962a_10830e44",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c87fc09_f5bbbb86",
         "filename": "sandbox/mac/sandbox_logging.cc",
         "patchSetId": 2
@@ -148,6 +268,24 @@
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c456575_33c6b3f3",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c87fc09_f5bbbb86",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "66111c5b_11a878f3",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8158328b_9de6e05a",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7564e15b_189c22b1",
         "filename": "sandbox/mac/sandbox_logging.h",
         "patchSetId": 2
@@ -182,6 +338,24 @@
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ae4bc6_814456a4",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7564e15b_189c22b1",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "801dd61b_187eace4",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8bb3418_b03e5a75",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b2fd69_9d5c5c8b",
         "filename": "sandbox/mac/sandbox_logging.h",
         "patchSetId": 2
@@ -216,6 +408,24 @@
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc590dee_cc498236",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5b2fd69_9d5c5c8b",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +475,54 @@
     },
     {
       "key": {
+        "uuid": "83fa0c60_ce30f217",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f00e708c_d09ccf31",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bf1714b_82564337",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba23a64_c4ef8020",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26658d8_d45a81f5",
         "filename": "sandbox/mac/seatbelt_exec.cc",
         "patchSetId": 2
@@ -276,6 +534,24 @@
       "writtenOn": "2017-09-21T15:27:24Z",
       "side": 1,
       "message": "I think having a log function equivalent to PCHECK/PLOG would be handy.",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503d1051_399263cd",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-22T17:12:01Z",
+      "side": 1,
+      "message": "It would be useful, but I worry about writing a lot of boilerplate code to maintain just for a few use cases right now. Should we do that as follow up when we add this to sandbox/common?",
+      "parentUuid": "a26658d8_d45a81f5",
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
