@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bdaa77b_1431d273",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-22T21:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556e06cd_3c587cd3",
+      "revId": "9e75c78c95641ef372aab35ee0c81becc9798aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c36135_bff8ba0d",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T01:08:07Z",
       "side": 1,
       "message": "Should we early return, so that the FTN\u0027s name doesn\u0027t actually change?\n\nI think I agree that we can\u0027t kill the renderer yet due to the OOPIF race, though I suppose there\u0027s some small risk with having the browser and renderer get out of sync over what the frame name is.",
+      "revId": "9e75c78c95641ef372aab35ee0c81becc9798aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc81eb2_ac1952a6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-22T21:17:58Z",
+      "side": 1,
+      "message": "\u003e Should we early return, so that the FTN\u0027s name doesn\u0027t actually change?\n\nYes - I\u0027ve start with a DCHECK as a smoke test - to make sure via tryjobs that there are no known scenarios where the unique name would change.\n\nBefore landing we should change the DCHECK to either:\n\n1. kill the renderer (this seems like a risky thing to do if we want to merge back to m62)\n\nor\n\n2. proceed with the |name| change, but ignore the unexpected |unique_name| change\n   (e.g. the SetFrameName call below should use the old unique name).\n\nDo you have any comments / opinions on choosing 1 vs 2 above?\n\n\u003e I think I agree that we can\u0027t kill the renderer yet due to the OOPIF race, though I suppose there\u0027s some small risk with having the browser and renderer get out of sync over what the frame name is.\n\nThe race I know about can lead to duplicate unique names (when 2 renderers at the \"same time\", independently calculate a new unique name for 2 different frames and happen to end up with the same unique name).\n\nI think we should never see a unique name change after the 1st commit (i.e. I think there are no races to worry about) - such change should never happen via *our* (i.e. non-malicious / non-compromised) renderer code which explicitly avoids updating the unique name after the first commit:\n\n    void RenderFrameImpl::DidChangeName(const blink::WebString\u0026 name) {\n      if (current_history_item_.IsNull()) {\n        // Once a navigation has committed, the unique name must no longer change to\n        // avoid breaking back/forward navigations: https://crbug.com/607205\n        unique_name_helper_.UpdateName(name.Utf8());\n      }\n      Send(new FrameHostMsg_DidChangeName(routing_id_, name.Utf8(),\n                                          unique_name_helper_.value()));\n\n      if (!committed_first_load_)\n        name_changed_before_first_commit_ \u003d true;\n    }\n\nTL;DR: I don\u0027t see a risk of a race here.  I agree that new renderer kills are risky in general (especially for merging to beta/stable).",
+      "parentUuid": "18c36135_bff8ba0d",
       "revId": "9e75c78c95641ef372aab35ee0c81becc9798aae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
