@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1a26bf_8f194dbc",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-22T16:10:20Z",
+      "side": 1,
+      "message": "Nit: https://crbug.com/767406 so it\u0027s clickable :)",
+      "range": {
+        "startLine": 87,
+        "startChar": 53,
+        "endLine": 87,
+        "endChar": 65
+      },
+      "revId": "7c65689297fc215d06633ec7f294b9b439fefc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
