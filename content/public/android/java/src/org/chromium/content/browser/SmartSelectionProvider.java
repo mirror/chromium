@@ -59,10 +59,12 @@ public class SmartSelectionProvider {
 
     public void sendSuggestAndClassifyRequest(
             CharSequence text, int start, int end, Locale[] locales) {
+        System.out.println("ctxs sendSuggestAndClassifyRequest");
         sendSmartSelectionRequest(SUGGEST_AND_CLASSIFY, text, start, end, locales);
     }
 
     public void sendClassifyRequest(CharSequence text, int start, int end, Locale[] locales) {
+        System.out.println("ctxs sendClassifyRequest");
         sendSmartSelectionRequest(CLASSIFY, text, start, end, locales);
     }
 
@@ -98,8 +100,10 @@ public class SmartSelectionProvider {
     @TargetApi(Build.VERSION_CODES.O)
     private void sendSmartSelectionRequest(
             @RequestType int requestType, CharSequence text, int start, int end, Locale[] locales) {
+        System.out.println("ctxs sendSmartSelectionRequest getting classifier...");
         TextClassifier classifier = getTextClassifier();
         if (classifier == null || classifier == TextClassifier.NO_OP) {
+            System.out.println("ctxs no good classifier.");
             mHandler.post(mFailureResponseRunnable);
             return;
         }
@@ -111,12 +115,12 @@ public class SmartSelectionProvider {
 
         mClassificationTask =
                 new ClassificationTask(classifier, requestType, text, start, end, locales);
+        System.out.println("ctxs executing classifier.");
         mClassificationTask.execute();
     }
 
     @TargetApi(Build.VERSION_CODES.O)
     private class ClassificationTask extends AsyncTask<Void, Void, SelectionClient.Result> {
-        private final TextClassifier mTextClassifier;
         private final int mRequestType;
         private final CharSequence mText;
         private final int mOriginalStart;

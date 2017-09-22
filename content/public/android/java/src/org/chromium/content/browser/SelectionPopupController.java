@@ -195,7 +195,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         };
 
         mResultCallback = new SmartSelectionCallback();
-
         mLastSelectedText = "";
 
         if (initializeNative) nativeInit(webContents);

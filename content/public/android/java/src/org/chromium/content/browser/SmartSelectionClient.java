@@ -57,7 +57,8 @@ public class SmartSelectionClient implements SelectionClient {
      */
     public static SmartSelectionClient create(
             ResultCallback callback, WindowAndroid windowAndroid, WebContents webContents) {
-        if (!sEnabled) return null;
+        // TODO(donnd): fix!!!!!
+        //     if (!sEnabled) return null;
         SmartSelectionProvider provider = new SmartSelectionProvider(callback, windowAndroid);
         return new SmartSelectionClient(provider, callback, webContents);
     }

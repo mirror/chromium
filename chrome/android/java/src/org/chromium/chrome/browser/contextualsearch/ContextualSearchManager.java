@@ -64,10 +64,9 @@ import javax.annotation.Nullable;
  * Manager for the Contextual Search feature. This class keeps track of the status of Contextual
  * Search and coordinates the control with the layout.
  */
-public class ContextualSearchManager implements ContextualSearchManagementDelegate,
-                                                ContextualSearchTranslateInterface,
-                                                ContextualSearchNetworkCommunicator,
-                                                ContextualSearchSelectionHandler, SelectionClient {
+public class ContextualSearchManager
+        implements ContextualSearchManagementDelegate, ContextualSearchTranslateInterface,
+                   ContextualSearchNetworkCommunicator, ContextualSearchSelectionHandler {
     // TODO(donnd): provide an inner class that implements some of these interfaces (like the
     // ContextualSearchTranslateInterface) rather than having the manager itself implement the
     // interface because that exposes all the public methods of that interface at the manager level.
@@ -1212,65 +1211,73 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     // SelectionClient -- interface used by ContentViewCore.
     // ============================================================================================
 
-    @Override
-    public void onSelectionChanged(String selection) {
-        if (!isOverlayVideoMode() && mSearchPanel != null) {
-            mSelectionController.handleSelectionChanged(selection);
-            mSearchPanel.updateBrowserControlsState(BrowserControlsState.BOTH, true);
-        }
+    SelectionClient switchSelectionClient(SelectionClient previousSelectionClient) {
+        return new SelectionClientBridge(
+                previousSelectionClient, new ContextualSearchSelectionClient());
     }
 
-    @Override
-    public void onSelectionEvent(int eventType, float posXPix, float posYPix) {
-        if (!isOverlayVideoMode()) {
-            mSelectionController.handleSelectionEvent(eventType, posXPix, posYPix);
-        }
-    }
-
-    @Override
-    public void showUnhandledTapUIIfNeeded(final int x, final int y) {
-        if (!isOverlayVideoMode()) {
-            mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
-        }
-    }
-
-    @Override
-    public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
-        if (mSelectWordAroundCaretCounter > 0) mSelectWordAroundCaretCounter--;
-        if (mSelectWordAroundCaretCounter > 0
-                || !mInternalStateController.isStillWorkingOn(InternalState.START_SHOWING_TAP_UI)) {
-            return;
+    private class ContextualSearchSelectionClient implements SelectionClient {
+        @Override
+        public void onSelectionChanged(String selection) {
+            if (!isOverlayVideoMode() && mSearchPanel != null) {
+                mSelectionController.handleSelectionChanged(selection);
+                mSearchPanel.updateBrowserControlsState(BrowserControlsState.BOTH, true);
+            }
         }
 
-        if (didSelect) {
-            assert mContext != null;
-            mContext.onSelectionAdjusted(startAdjust, endAdjust);
-            showSelectionAsSearchInBar(mSelectionController.getSelectedText());
-            mInternalStateController.notifyFinishedWorkOn(InternalState.START_SHOWING_TAP_UI);
-        } else {
-            hideContextualSearch(StateChangeReason.UNKNOWN);
+        @Override
+        public void onSelectionEvent(int eventType, float posXPix, float posYPix) {
+            if (!isOverlayVideoMode()) {
+                mSelectionController.handleSelectionEvent(eventType, posXPix, posYPix);
+            }
         }
-    }
 
-    @Override
-    public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
-        return false;
-    }
+        @Override
+        public void showUnhandledTapUIIfNeeded(final int x, final int y) {
+            if (!isOverlayVideoMode()) {
+                mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
+            }
+        }
 
-    @Override
-    public void cancelAllRequests() {}
+        @Override
+        public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
+            if (mSelectWordAroundCaretCounter > 0) mSelectWordAroundCaretCounter--;
+            if (mSelectWordAroundCaretCounter > 0
+                    || !mInternalStateController.isStillWorkingOn(
+                               InternalState.START_SHOWING_TAP_UI)) {
+                return;
+            }
 
-    @Override
-    public void setTextClassifier(TextClassifier textClassifier) {}
+            if (didSelect) {
+                assert mContext != null;
+                mContext.onSelectionAdjusted(startAdjust, endAdjust);
+                showSelectionAsSearchInBar(mSelectionController.getSelectedText());
+                mInternalStateController.notifyFinishedWorkOn(InternalState.START_SHOWING_TAP_UI);
+            } else {
+                hideContextualSearch(StateChangeReason.UNKNOWN);
+            }
+        }
 
-    @Override
-    public TextClassifier getTextClassifier() {
-        return null;
-    }
+        @Override
+        public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
+            return false;
+        }
 
-    @Override
-    public TextClassifier getCustomTextClassifier() {
-        return null;
+        @Override
+        public void cancelAllRequests() {}
+
+        @Override
+        public void setTextClassifier(TextClassifier textClassifier) {}
+
+        @Override
+        public TextClassifier getTextClassifier() {
+            return null;
+        }
+
+        @Override
+        public TextClassifier getCustomTextClassifier() {
+            return null;
+        }
     }
 
     /**
