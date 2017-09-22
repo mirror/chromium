@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dec01cc_c404ab10",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T16:47:15Z",
+      "side": 1,
+      "message": "Do you need to use the result of _CalculateCoverageForDirectory call?",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "88020114b24b4a5dfdd589afa7f094a228d50efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
