@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2328aff6_cfdb8c68",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-22T15:44:34Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "55488081e943349f3c5297e12ed1fe190cb74554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd73efa2_6a4bd77c",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-22T15:44:34Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "55488081e943349f3c5297e12ed1fe190cb74554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
