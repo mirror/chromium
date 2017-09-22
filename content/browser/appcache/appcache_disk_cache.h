@@ -32,23 +32,22 @@ class CONTENT_EXPORT AppCacheDiskCache
                           int disk_cache_size,
                           bool force,
                           base::OnceClosure post_cleanup_callback,
-                          const net::CompletionCallback& callback);
+                          OnceCompletionCallback callback);
 
   // Initializes the object to use memory only storage.
   // This is used for Chrome's incognito browsing.
-  int InitWithMemBackend(int disk_cache_size,
-                         const net::CompletionCallback& callback);
+  int InitWithMemBackend(int disk_cache_size, OnceCompletionCallback callback);
 
   void Disable();
   bool is_disabled() const { return is_disabled_; }
 
   int CreateEntry(int64_t key,
                   Entry** entry,
-                  const net::CompletionCallback& callback) override;
+                  OnceCompletionCallback callback) override;
   int OpenEntry(int64_t key,
                 Entry** entry,
-                const net::CompletionCallback& callback) override;
-  int DoomEntry(int64_t key, const net::CompletionCallback& callback) override;
+                OnceCompletionCallback callback) override;
+  int DoomEntry(int64_t key, OnceCompletionCallback callback) override;
 
   void set_is_waiting_to_initialize(bool is_waiting_to_initialize) {
     is_waiting_to_initialize_ = is_waiting_to_initialize;
@@ -76,17 +75,16 @@ class CONTENT_EXPORT AppCacheDiskCache
     PendingCallType call_type;
     int64_t key;
     Entry** entry;
-    net::CompletionCallback callback;
+    OnceCompletionCallback callback;
 
     PendingCall();
 
     PendingCall(PendingCallType call_type,
                 int64_t key,
                 Entry** entry,
-                const net::CompletionCallback& callback);
+                OnceCompletionCallback callback);
 
-    PendingCall(const PendingCall& other);
-
+    PendingCall(PendingCall&& other);
     ~PendingCall();
   };
   typedef std::vector<PendingCall> PendingCalls;
@@ -104,7 +102,7 @@ class CONTENT_EXPORT AppCacheDiskCache
            int cache_size,
            bool force,
            base::OnceClosure post_cleanup_callback,
-           const net::CompletionCallback& callback);
+           OnceCompletionCallback callback);
   void OnCreateBackendComplete(int rv);
   void AddOpenEntry(EntryImpl* entry) { open_entries_.insert(entry); }
   void RemoveOpenEntry(EntryImpl* entry) { open_entries_.erase(entry); }
@@ -112,7 +110,7 @@ class CONTENT_EXPORT AppCacheDiskCache
   bool use_simple_cache_;
   bool is_disabled_;
   bool is_waiting_to_initialize_;
-  net::CompletionCallback init_callback_;
+  OnceCompletionCallback init_callback_;
   scoped_refptr<CreateBackendCallbackShim> create_backend_callback_;
   PendingCalls pending_calls_;
   OpenEntries open_entries_;
