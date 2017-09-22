@@ -374,6 +374,30 @@
     },
     {
       "key": {
+        "uuid": "732eb1c2_b97a8aec",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T13:39:43Z",
+      "side": 1,
+      "message": "By \"expensive\" you mean in terms of implementation effort? I don\u0027t think it\u0027d be *that* bad, but fair enough. I\u0027m also not sure it\u0027s worth the effort.",
+      "parentUuid": "258b935b_b21f1473",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768cdc9c_ba4a6129",
         "filename": "chrome/common/search/instant_types.h",
         "patchSetId": 6
