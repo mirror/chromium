@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e655ef_213d7f4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:51:12Z",
+      "side": 1,
+      "message": "Nit: boolean variables should start with some conditional, like \"is\", \"does\", \"are\".",
+      "range": {
+        "startLine": 1228,
+        "startChar": 53,
+        "endLine": 1228,
+        "endChar": 65
+      },
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc1b94e_032a2d95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:51:12Z",
+      "side": 1,
+      "message": "Nit: probably fine to just inline the \"code\" here.",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd03a8d_3064f9c2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72259,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:51:12Z",
+      "side": 1,
+      "message": "Nit: I think these need to be alphabetical.",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d16f145_45d406e1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72262,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:51:12Z",
+      "side": 1,
+      "message": "You should follow the pattern we use in other histograms: include when it\u0027s logged and on which platfor (Android only).",
+      "range": {
+        "startLine": 72262,
+        "startChar": 0,
+        "endLine": 72262,
+        "endChar": 67
+      },
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
