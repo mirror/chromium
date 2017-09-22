@@ -402,10 +402,6 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXEventGenerator {
   virtual void SendLocationChangeEvents(
       const std::vector<AccessibilityHostMsg_LocationChangeParams>& params);
 
-  virtual void DispatchGeneratedEvent(
-      BrowserAccessibility* event_target,
-      ui::AXEventGenerator::Event event) {}
-
  protected:
   // The object that can perform actions on our behalf.
   BrowserAccessibilityDelegate* delegate_;

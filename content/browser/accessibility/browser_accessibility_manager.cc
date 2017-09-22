@@ -373,7 +373,6 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
   } else {
     connected_to_parent_tree_node_ = false;
   }
-  ClearEvents();
 
   // Based on the changes to the tree, fire focus events if needed.
   // Screen readers might not do the right thing if they're not aware of what
@@ -387,8 +386,9 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
     if (!event_target)
       continue;
 
-    DispatchGeneratedEvent(event_target, targeted_event.event);
+    FireGeneratedEvent(targeted_event.event, event_target);
   }
+  ClearEvents();
 
   // Fire events from Blink.
   for (uint32_t index = 0; index < details.size(); index++) {
