@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "55a63a43_2f8e7526",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-22T18:26:31Z",
+      "side": 1,
+      "message": "Okay, then where is the right place to clear the thread? Without this clean up the layout test fails with \"leak\".",
+      "parentUuid": "0594752a_29df883c",
+      "revId": "b873df74555ef500b0057b5016fa5d228427dc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "527959c4_e53c9a81",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 2
