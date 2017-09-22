@@ -300,9 +300,8 @@ Process LaunchProcess(const std::vector<std::string>& argv,
                       const LaunchOptions& options) {
 #if defined(OS_MACOSX)
   if (FeatureList::IsEnabled(kMacLaunchProcessPosixSpawn)) {
-    // TODO(rsesek): Do this unconditionally. There is one user for each of
-    // these two options. https://crbug.com/179923.
-    if (!options.pre_exec_delegate && options.current_directory.empty())
+    // TODO(rsesek): Do this unconditionally. https://crbug.com/179923.
+    if (options.current_directory.empty())
       return LaunchProcessPosixSpawn(argv, options);
   }
 #endif
