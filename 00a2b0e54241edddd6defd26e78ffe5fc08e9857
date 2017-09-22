@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "860cc5d8_bd002d1e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T04:10:14Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efde6d0f_223f4199",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T04:10:14Z",
+      "side": 1,
+      "message": "nit: just \u0027const aut\u0026 element\u0027 feels okay to me (if falken@ doesn\u0027t disagree)",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e0cde3_e00a0ee9",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T04:10:14Z",
+      "side": 1,
+      "message": "nit: can be a const method\n\nDo we need this method?",
+      "revId": "00a2b0e54241edddd6defd26e78ffe5fc08e9857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
