@@ -646,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "14306aa1_29191716",
+        "filename": "components/multidevice/service/multidevice_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-22T20:35:20Z",
+      "side": 1,
+      "message": "Sorry for the confusion. We are doing an incremental change.\n\nCurrently, there is already a BCKS that holds these members, and we will be constructing the service via that BCKS for now. The users of this Mojo service are BCKSs which depend on the device sync BCKS, so all clients are guaranteed to shut down before these objects are killed.\n\nEventually, we will remove the BCKS implementation and rely solely on the Mojo service. At that point, the DeviceSyncImpl will own these objects itself.",
+      "parentUuid": "064d6ba4_b972d1c1",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b4837f3_51a07105",
         "filename": "components/multidevice/service/multidevice_service.h",
         "patchSetId": 17
