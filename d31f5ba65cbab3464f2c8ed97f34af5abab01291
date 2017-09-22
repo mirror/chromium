@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "f784fbf0_bc8f8793",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T09:33:52Z",
+      "side": 1,
+      "message": "Keep \"URL\" in Objective-C.",
+      "parentUuid": "0bd4b521_1316ba8e",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9c53cd8_22972897",
         "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
         "patchSetId": 33
@@ -186,6 +210,23 @@
     },
     {
       "key": {
+        "uuid": "fe61d84e_842fe465",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T09:33:52Z",
+      "side": 1,
+      "message": "You are probably missing:\n- (instancetype)init NS_UNAVAILABLE;",
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf4618b6_99ab8f98",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 33
@@ -202,6 +243,75 @@
         "startChar": 33,
         "endLine": 21,
         "endChar": 41
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363e8847_9f50e93f",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T09:33:52Z",
+      "side": 1,
+      "message": "This should be the default, it is not needed.",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6a2dcf_29b122e5",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T09:33:52Z",
+      "side": 1,
+      "message": "I just added the PinToSafeArea util which does exactly this if{}else{} block ;)",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3f52c5_966ecb6d",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-22T09:33:52Z",
+      "side": 1,
+      "message": "Nit: Move this to -viewDidLoad, it will allow you to have _contentView as a local var.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 61
       },
       "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
