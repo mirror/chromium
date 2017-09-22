@@ -38,7 +38,8 @@ FetchParameters::FetchParameters(const ResourceRequest& resource_request)
       preload_discovery_time_(0.0),
       defer_(kNoDefer),
       origin_restriction_(kUseDefaultOriginRestrictionForType),
-      placeholder_image_request_type_(kDisallowPlaceholder) {}
+      placeholder_image_request_type_(kDisallowPlaceholder),
+      fetch_group_(FetchGroupValue::Invalid) {}
 
 FetchParameters::FetchParameters(
     std::unique_ptr<CrossThreadFetchParametersData> data)
@@ -106,6 +107,49 @@ void FetchParameters::SetResourceWidth(ResourceWidth resource_width) {
     resource_width_.width = resource_width.width;
     resource_width_.is_set = true;
   }
+}
+
+FetchParameters::FetchGroupValue FetchParameters::FetchGroupStringsToValue(
+    const String& group,
+    const String& position) {
+  // TODO(yoav): Actually translate the strings into values
+  if (group == "critical") {
+    if (position == "before")
+      return FetchGroupValue::BeforeCritical;
+    if (position == "after")
+      return FetchGroupValue::AfterCritical;
+    if (position.IsEmpty())
+      return FetchGroupValue::Critical;
+  } else if (group == "textcritical") {
+    if (position == "before")
+      return FetchGroupValue::AfterCritical;
+    if (position == "after")
+      return FetchGroupValue::AfterTextCritical;
+    if (position.IsEmpty())
+      return FetchGroupValue::TextCritical;
+  } else if (group == "visual") {
+    if (position == "before")
+      return FetchGroupValue::AfterTextCritical;
+    if (position == "after")
+      return FetchGroupValue::AfterVisual;
+    if (position.IsEmpty())
+      return FetchGroupValue::Visual;
+  } else if (group == "functional") {
+    if (position == "before")
+      return FetchGroupValue::AfterVisual;
+    if (position == "after")
+      return FetchGroupValue::AfterFunctional;
+    if (position.IsEmpty())
+      return FetchGroupValue::Functional;
+  } else if (group == "late") {
+    if (position == "before")
+      return FetchGroupValue::AfterFunctional;
+    if (position == "after")
+      return FetchGroupValue::AfterLate;
+    if (position.IsEmpty())
+      return FetchGroupValue::Late;
+  }
+  return FetchGroupValue::Invalid;
 }
 
 void FetchParameters::SetSpeculativePreloadType(

@@ -292,6 +292,8 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
                                  const String& as,
                                  const String& mime_type,
                                  const String& media,
+                                 const String& group,
+                                 const String& position,
                                  CrossOriginAttributeValue cross_origin,
                                  LinkCaller caller,
                                  ViewportDescription* viewport_description,
@@ -351,6 +353,16 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
   ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::link;
   FetchParameters link_fetch_params(resource_request, options);
+  FetchParameters::FetchGroupValue fetch_group =
+      FetchParameters::FetchGroupStringsToValue(group, position);
+  if (!group.IsEmpty() &&
+      fetch_group == FetchParameters::FetchGroupValue::Invalid) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("`group` attribute must have a valid value in order to impact "
+               "resource priorities")));
+  }
+  link_fetch_params.SetFetchGroup(fetch_group);
   link_fetch_params.SetCharset(document.Encoding());
 
   if (cross_origin != kCrossOriginAttributeNotSet) {
@@ -439,9 +451,9 @@ void LinkLoader::LoadLinksFromHeader(
       CrossOriginAttributeValue cross_origin =
           GetCrossOriginAttributeValue(header.CrossOrigin());
       PreloadIfNeeded(rel_attribute, url, *document, header.As(),
-                      header.MimeType(), header.Media(), cross_origin,
-                      kLinkCalledFromHeader, viewport_description,
-                      kReferrerPolicyDefault);
+                      header.MimeType(), header.Media(), header.Group(),
+                      header.Position(), cross_origin, kLinkCalledFromHeader,
+                      viewport_description, kReferrerPolicyDefault);
       PrefetchIfNeeded(*document, url, rel_attribute, cross_origin,
                        kReferrerPolicyDefault);
     }
@@ -458,6 +470,8 @@ bool LinkLoader::LoadLink(
     const String& type,
     const String& as,
     const String& media,
+    const String& group,
+    const String& position,
     ReferrerPolicy referrer_policy,
     const KURL& href,
     Document& document,
@@ -476,8 +490,8 @@ bool LinkLoader::LoadLink(
                      kLinkCalledFromMarkup);
 
   Resource* resource = PreloadIfNeeded(
-      rel_attribute, href, document, as, type, media, cross_origin,
-      kLinkCalledFromMarkup, nullptr, referrer_policy);
+      rel_attribute, href, document, as, type, media, group, position,
+      cross_origin, kLinkCalledFromMarkup, nullptr, referrer_policy);
   if (!resource) {
     resource = PrefetchIfNeeded(document, href, rel_attribute, cross_origin,
                                 referrer_policy);

@@ -119,7 +119,7 @@ TEST_P(LinkLoaderPreloadTest, Preload) {
   KURL href_url = KURL(NullURL(), test_case.href);
   URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
   loader->LoadLink(LinkRelAttribute("preload"), kCrossOriginAttributeNotSet,
-                   test_case.type, test_case.as, test_case.media,
+                   test_case.type, test_case.as, test_case.media, "", "",
                    test_case.referrer_policy, href_url,
                    dummy_page_holder->GetDocument(), NetworkHintsMock());
   if (test_case.expecting_load &&
@@ -306,7 +306,7 @@ TEST(LinkLoaderTest, Prefetch) {
     KURL href_url = KURL(NullURL(), test_case.href);
     URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
     loader->LoadLink(LinkRelAttribute("prefetch"), kCrossOriginAttributeNotSet,
-                     test_case.type, "", test_case.media,
+                     test_case.type, "", test_case.media, "", "",
                      test_case.referrer_policy, href_url,
                      dummy_page_holder->GetDocument(), NetworkHintsMock());
     ASSERT_TRUE(dummy_page_holder->GetDocument().Fetcher());
@@ -354,7 +354,7 @@ TEST(LinkLoaderTest, DNSPrefetch) {
     NetworkHintsMock network_hints;
     loader->LoadLink(LinkRelAttribute("dns-prefetch"),
                      kCrossOriginAttributeNotSet, String(), String(), String(),
-                     kReferrerPolicyDefault, href_url,
+                     String(), String(), kReferrerPolicyDefault, href_url,
                      dummy_page_holder->GetDocument(), network_hints);
     EXPECT_FALSE(network_hints.DidPreconnect());
     EXPECT_EQ(test_case.should_load, network_hints.DidDnsPrefetch());
@@ -389,8 +389,9 @@ TEST(LinkLoaderTest, Preconnect) {
              test_case.href);
     NetworkHintsMock network_hints;
     loader->LoadLink(LinkRelAttribute("preconnect"), test_case.cross_origin,
-                     String(), String(), String(), kReferrerPolicyDefault,
-                     href_url, dummy_page_holder->GetDocument(), network_hints);
+                     String(), String(), String(), String(), String(),
+                     kReferrerPolicyDefault, href_url,
+                     dummy_page_holder->GetDocument(), network_hints);
     EXPECT_EQ(test_case.should_load, network_hints.DidPreconnect());
     EXPECT_EQ(test_case.is_https, network_hints.IsHTTPS());
     EXPECT_EQ(test_case.is_cross_origin, network_hints.IsCrossOrigin());
@@ -410,7 +411,7 @@ TEST(LinkLoaderTest, PreloadAndPrefetch) {
   URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
   loader->LoadLink(LinkRelAttribute("preload prefetch"),
                    kCrossOriginAttributeNotSet, "application/javascript",
-                   "script", "", kReferrerPolicyDefault, href_url,
+                   "script", "", "", "", kReferrerPolicyDefault, href_url,
                    dummy_page_holder->GetDocument(), NetworkHintsMock());
   ASSERT_EQ(1, fetcher->CountPreloads());
   Resource* resource = loader->GetResourceForTesting();

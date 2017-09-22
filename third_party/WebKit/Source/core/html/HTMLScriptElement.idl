@@ -28,6 +28,8 @@ interface HTMLScriptElement : HTMLElement {
     [CEReactions, Reflect] attribute boolean defer;
     [CEReactions, Reflect, ReflectOnly=("anonymous","use-credentials"), ReflectEmpty="anonymous", ReflectInvalid="anonymous"] attribute DOMString? crossOrigin;
     [CEReactions] attribute DOMString text;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("critical", "visual", "textcritical", "functional", "late")] attribute DOMString group;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("before", "after")] attribute DOMString position;
 
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLScriptElement-partial

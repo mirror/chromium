@@ -30,6 +30,8 @@ interface HTMLLinkElement : HTMLElement {
     [CEReactions, Reflect] attribute DOMString rel;
     [CEReactions, PutForwards=value] readonly attribute DOMTokenList relList;
     [CEReactions, Reflect] attribute DOMString media;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("critical", "visual", "textcritical", "functional", "late")] attribute DOMString group;
+    [CEReactions, RuntimeEnabled=PriorityHints, Reflect, ReflectOnly=("before", "after")] attribute DOMString position;
     [CEReactions, Reflect] attribute DOMString hreflang;
     [CEReactions, Reflect] attribute DOMString type;
     [Reflect, ReflectOnly=("script","style","image","video", "audio", "track", "font", "fetch")] attribute DOMString as;
