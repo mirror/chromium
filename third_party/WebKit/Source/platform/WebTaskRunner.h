@@ -103,7 +103,7 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
                              TimeDelta delay);
 
  protected:
-  friend ThreadSafeRefCounted<WebTaskRunner>;
+  friend base::RefCountedThreadSafe<WebTaskRunner>;
   WebTaskRunner() = default;
   virtual ~WebTaskRunner();
 

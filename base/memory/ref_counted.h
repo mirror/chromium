@@ -37,6 +37,7 @@ enum StartRefCountFromOneTag { kStartRefCountFromOneTag };
 class BASE_EXPORT RefCountedBase {
  public:
   bool HasOneRef() const { return ref_count_ == 1; }
+  size_t GetRefCountForTesting() const { return ref_count_; }
 
  protected:
   explicit RefCountedBase(StartRefCountFromZeroTag) {

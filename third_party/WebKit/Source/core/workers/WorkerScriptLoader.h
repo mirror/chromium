@@ -120,7 +120,7 @@ class CORE_EXPORT WorkerScriptLoader final
   void DidFailRedirectCheck() override;
 
  private:
-  friend class WTF::RefCounted<WorkerScriptLoader>;
+  friend class base::RefCounted<WorkerScriptLoader>;
 
   WorkerScriptLoader();
   ~WorkerScriptLoader() override;
