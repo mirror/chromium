@@ -1024,13 +1024,14 @@ TEST_F(CastMediaSinkServiceImplTest,
        TestInitRetryParametersWithFeatureDisabled) {
   // Feature not enabled.
   base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(kEnableCastChannelRetry);
+  scoped_feature_list.InitAndDisableFeature(kEnableCastDiscovery);
 
   net::BackoffEntry::Policy backoff_policy;
   int max_retry_attempts;
   CastMediaSinkServiceImpl::InitRetryParameters(&backoff_policy,
                                                 &max_retry_attempts);
-  EXPECT_EQ(0, max_retry_attempts);
+  EXPECT_EQ(CastMediaSinkServiceImpl::kDefaultMaxRetryAttempts,
+            max_retry_attempts);
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParameters) {
@@ -1039,8 +1040,8 @@ TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParameters) {
   params[CastMediaSinkServiceImpl::kParamNameMaxRetryAttempts] = "20";
   params[CastMediaSinkServiceImpl::kParamNameInitialDelayMS] = "2000";
   params[CastMediaSinkServiceImpl::kParamNameExponential] = "2.0";
-  scoped_feature_list.InitAndEnableFeatureWithParameters(
-      kEnableCastChannelRetry, params);
+  scoped_feature_list.InitAndEnableFeatureWithParameters(kEnableCastDiscovery,
+                                                         params);
 
   net::BackoffEntry::Policy backoff_policy;
   int max_retry_attempts;
@@ -1053,7 +1054,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParameters) {
 
 TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParametersWithDefaultValue) {
   base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kEnableCastChannelRetry);
+  scoped_feature_list.InitAndEnableFeature(kEnableCastDiscovery);
 
   net::BackoffEntry::Policy backoff_policy;
   int max_retry_attempts;
