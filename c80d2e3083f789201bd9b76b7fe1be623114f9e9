@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "618c9962_d046fca1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-22T10:17:41Z",
+      "side": 1,
+      "message": "We should check with Rachel, but my impression was this should only be enabled in Chrome Home. In that case, check with FeatureUtilities.isChromeHomeEnabled().",
+      "range": {
+        "startLine": 194,
+        "startChar": 12,
+        "endLine": 194,
+        "endChar": 29
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81daadbe_2197f9fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-22T10:17:41Z",
+      "side": 1,
+      "message": "Resources#getColor(int) was deprecated in API level 23, so this is causing a build warning now. Use ApiCompatibilityUtils#getColor(Resources, int) to avoid that.",
+      "range": {
+        "startLine": 199,
+        "startChar": 53,
+        "endLine": 199,
+        "endChar": 65
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337a1941_496908b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-22T10:17:41Z",
+      "side": 1,
+      "message": "Ah, we were still using the old color for the placeholder background. Please use modern_light_grey instead, and also update that in ic_snippet_thumbnail_placeholder.xml.",
+      "range": {
+        "startLine": 200,
+        "startChar": 54,
+        "endLine": 200,
+        "endChar": 75
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d679c6e_a38f3f82",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2538,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-22T10:17:41Z",
+      "side": 1,
+      "message": "nit: There\u0027s no need to prefix the name and description constants with \"Enable\". It\u0027s a long enough name already :-)",
+      "range": {
+        "startLine": 2538,
+        "startChar": 24,
+        "endLine": 2538,
+        "endChar": 75
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
