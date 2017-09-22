@@ -13,13 +13,8 @@
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/search_engines/ui_thread_search_terms_data.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/search/search_model.h"
-#include "chrome/browser/ui/search/search_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/common/search/instant_types.h"
 #include "chrome/common/url_constants.h"
-#include "components/omnibox/browser/omnibox_popup_model.h"
-#include "components/omnibox/browser/omnibox_view.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/render_process_host.h"
@@ -80,8 +75,6 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(TabReloader);
 BrowserInstantController::BrowserInstantController(Browser* browser)
     : browser_(browser),
       instant_(this) {
-  search_delegate_ = base::MakeUnique<SearchDelegate>(&search_model_);
-
   TemplateURLService* template_url_service =
       TemplateURLServiceFactory::GetForProfile(profile());
   // TemplateURLService can be null in tests.
@@ -101,25 +94,19 @@ Profile* BrowserInstantController::profile() const {
   return browser_->profile();
 }
 
-content::WebContents* BrowserInstantController::GetActiveWebContents() const {
-  return browser_->tab_strip_model()->GetActiveWebContents();
-}
-
 void BrowserInstantController::OnTabActivated(
     content::WebContents* web_contents) {
-  // Note: Order matters, |search_delegate_| must be notified first.
-  search_delegate_->OnTabActivated(web_contents);
-  instant_.ActiveTabChanged();
+  instant_.OnTabActivated(web_contents);
 }
 
 void BrowserInstantController::OnTabDeactivated(
     content::WebContents* web_contents) {
-  search_delegate_->OnTabDeactivated(web_contents);
+  instant_.OnTabDeactivated(web_contents);
 }
 
 void BrowserInstantController::OnTabDetached(
     content::WebContents* web_contents) {
-  search_delegate_->OnTabDetached(web_contents);
+  instant_.OnTabDetached(web_contents);
 }
 
 void BrowserInstantController::OnSearchEngineBaseURLChanged(
@@ -146,9 +133,13 @@ void BrowserInstantController::OnSearchEngineBaseURLChanged(
     bool google_base_url_domain_changed =
         change_reason ==
         SearchEngineBaseURLTracker::ChangeReason::GOOGLE_BASE_URL;
-    SearchModel* model = SearchTabHelper::FromWebContents(contents)->model();
+    // Note: We can't use search::IsInstantNTP here, because here we're
+    // specifically handling the case where a page *stopped* being an Instant
+    // NTP due to a changed base URL.
+    // TODO(treib): The "is NTP" check shouldn't even be necessary: Only NTPs
+    // should ever be rendered in an Instant process.
     if (google_base_url_domain_changed &&
-        model->origin() == SearchModel::Origin::NTP) {
+        contents->GetVisibleURL() == chrome::kChromeUINewTabURL) {
       GURL local_ntp_url(chrome::kChromeSearchLocalNtpUrl);
       // Replace the server NTP with the local NTP.
       content::NavigationController::LoadURLParams params(local_ntp_url);
