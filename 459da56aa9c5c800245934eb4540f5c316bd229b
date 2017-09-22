@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b24663b_b1d801ac",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T20:35:04Z",
+      "side": 1,
+      "message": "run is complete",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eecaaa_f6b35ca2",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T20:35:04Z",
+      "side": 1,
+      "message": "Can we allow the user to specify a value for -j here? Definitely a nice thing to have for Goma users.",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fae9920_2747934c",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T20:35:04Z",
+      "side": 1,
+      "message": "nit: \"this can take...\"",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9c9a2c_51ba8574",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-22T20:35:04Z",
+      "side": 1,
+      "message": "Ahhhh, that\u0027s nice.",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
