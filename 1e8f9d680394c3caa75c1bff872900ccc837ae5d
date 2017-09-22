@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d833e90c_c240d4fd",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "nit: two blank lines between module-level blocks.",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4405535_859dc3d2",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "nit: two blank lines between module-level blocks.",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fb3d80_f193377c",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "I guess this needs updating to match https://codereview.chromium.org/3011293002/ ?",
+      "revId": "1e8f9d680394c3caa75c1bff872900ccc837ae5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

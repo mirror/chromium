@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "cda2c922_24415d7b",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "Answered below.",
+      "parentUuid": "eb8ad327_af2b0e1e",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2f4ffff_5045dcda",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -271,6 +289,30 @@
       "side": 1,
       "message": "Just loading the page with accessibility enabled\nforces us to build the accessibility tree for the page\nonce, which is one case we\u0027d like to optimize.\nScrolling would end up doing nothing on some pages\nother than just waste time, but it\u0027s a huge bottleneck\non other pages (like the cs.chromium.org one).\nWe need to separate those.",
       "parentUuid": "a2f4ffff_5045dcda",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e79e126_ebedd937",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "Ack. Keeping this as just loading sgtm",
+      "parentUuid": "c711dfed_6dfaeea2",
       "range": {
         "startLine": 72,
         "startChar": 10,
@@ -353,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "4f06fe69_eeda974e",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "To be fair, we haven\u0027t been able to come up with some good rules that work well all the time, but these are more or less our guidelines:\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/memory-infra/memory_benchmarks.md#User-stories\n\nRe-reading those, maybe \"accessibility:*\" is fine.\n\nNed, do you have any opinions?",
+      "parentUuid": "cca2b1f9_c4815616",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33deb71e_256b38f1",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -400,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "6d6255f9_82cf204c",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "725f5240_95157bd5",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 35
+      },
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d2dcda_410bbd3a",
         "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
         "patchSetId": 4
@@ -429,6 +513,24 @@
       "side": 1,
       "message": "Agreed, but I\u0027m not sure that other clients would necessarily\nwant the same behavior.\n\nPerhaps it\u0027s ambiguous as to what key event to sent with a \u0027\\n\u0027?",
       "parentUuid": "05d2dcda_410bbd3a",
+      "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73bed7c_c478ec52",
+        "filename": "tools/perf/page_sets/system_health/accessibility_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-22T08:47:28Z",
+      "side": 1,
+      "message": "Ack. It\u0027s fine to leave as is. Also you don\u0027t really need it for your use case.",
+      "parentUuid": "e94f01d0_26dd6a78",
       "revId": "1f18132ea1d7a1b2969749dc6cce7b52a0a3cca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
