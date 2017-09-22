@@ -22,6 +22,30 @@
       "revId": "5e04c99681feca6e2147e9d25812a3605ec43992",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5700807_e65cbeee",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 36
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-22T16:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52630ad9_40cc4a3e",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "5e04c99681feca6e2147e9d25812a3605ec43992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
