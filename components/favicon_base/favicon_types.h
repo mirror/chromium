@@ -22,8 +22,15 @@ typedef int64_t FaviconID;
 
 // Defines the icon types. They are also stored in icon_type field of favicons
 // table.
+//
 // The values of the IconTypes are used to select the priority in which favicon
 // data is returned in HistoryBackend and ThumbnailDatabase.
+//
+// These values must stay in sync with the FaviconType enum in
+// histograms/enums.xml.
+//
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.favicon
 enum IconType {
   INVALID_ICON = 0x0,
   FAVICON = 1 << 0,
@@ -156,6 +163,13 @@ enum class GoogleFaviconServerRequestStatus {
   // Insert new values here.
   COUNT
 };
+
+// Returns a value corresponding to the UMA enum values for FaviconType in
+// histograms/enums.xml.
+int GetUmaFaviconType(IconType icon_type);
+
+// Returns the maximum possible value returned by GetUmaFaviconType().
+int GetLastUmaFaviconType();
 
 }  // namespace favicon_base
 

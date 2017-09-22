@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
@@ -159,7 +160,8 @@ public class NtpUiCaptureTestData {
             public boolean getLargeIconForUrl(
                     String url, int desiredSizePx, LargeIconCallback callback) {
                 ThreadUtils.postOnUiThread(() -> {
-                    callback.onLargeIconAvailable(iconMap.get(url), colorMap.get(url), true);
+                    callback.onLargeIconAvailable(
+                            iconMap.get(url), colorMap.get(url), true, IconType.INVALID_ICON);
                 });
                 return true;
             }

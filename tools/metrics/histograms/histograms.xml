@@ -49047,6 +49047,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NewTabPage.TileFaviconType" enum="FaviconType">
+  <owner>mastiz@chromium.org</owner>
+  <summary>
+    The best favicon type that chosen to represent a most visited tile displayed
+    on the new tab page.
+  </summary>
+</histogram>
+
 <histogram name="NewTabPage.TileOfflineAvailable" enum="MostVisitedTileIndex">
   <owner>treib@chromium.org</owner>
   <summary>
@@ -98970,6 +98978,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </suffix>
   <affected-histogram name="NewTabPage.MostVisited"/>
   <affected-histogram name="NewTabPage.SuggestionsImpression"/>
+  <affected-histogram name="NewTabPage.TileFaviconType"/>
   <affected-histogram name="NewTabPage.TileType"/>
   <affected-histogram name="NewTabPage.TileTypeClicked"/>
 </histogram_suffixes>

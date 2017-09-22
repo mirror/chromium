@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.suggestions;
 
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.chrome.browser.favicon.IconType;
 
 import java.util.List;
 
@@ -88,11 +89,12 @@ public interface MostVisitedSites {
      * its visual type.
      * @param index The index of the tile that was impressed (0-based).
      * @param type The visual type of the item as defined in {@link TileVisualType}.
+     * @param iconType The icon type of the item as defined in {@link IconType}.
      * @param source The {@link TileSource} that generated this item.
      * @param url The URL of the tile.
      */
-    void recordTileImpression(
-            int index, @TileVisualType int type, @TileSource int source, String url);
+    void recordTileImpression(int index, @TileVisualType int type, @IconType int iconType,
+            @TileSource int source, String url);
 
     /**
      * Records the opening of a Most Visited Item.
