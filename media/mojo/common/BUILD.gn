@@ -8,6 +8,8 @@ source_set("common") {
     "media_type_converters.h",
     "mojo_decoder_buffer_converter.cc",
     "mojo_decoder_buffer_converter.h",
+    "mojo_video_frame_provider.cc",
+    "mojo_video_frame_provider.h",
   ]
 
   deps = [
