@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e6979e4_08fd1712",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-22T20:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c05f1f2_f8d15787",
+      "revId": "3e281f22ee42eeadaf47073c013c392743fd723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55f3489f_5eaba81a",
         "filename": "net/http/http_auth_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3e281f22ee42eeadaf47073c013c392743fd723e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db9677b_baeaeea9",
+        "filename": "net/http/http_auth_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-22T20:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f3489f_5eaba81a",
+      "revId": "3e281f22ee42eeadaf47073c013c392743fd723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
