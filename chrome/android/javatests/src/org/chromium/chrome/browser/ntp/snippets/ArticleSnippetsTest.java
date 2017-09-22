@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -261,6 +262,31 @@ public class ArticleSnippetsTest {
     }
 
     // TODO(bauerb): Test top, middle, and bottom card backgrounds.
+
+    @Test
+    @MediumTest
+    @Feature({"ArticleSnippets", "ContentSuggestionsThumbnailDominantColor", "RenderTest"})
+    public void testSnippetAppearanceWithThumbnailDominantColor() throws IOException {
+        SuggestionsCategoryInfo fullCategoryInfo = new SuggestionsCategoryInfo(FULL_CATEGORY,
+                "Section Title", ContentSuggestionsCardLayout.FULL_CARD,
+                ContentSuggestionsAdditionalAction.NONE,
+                /* show_if_empty = */ true, "No suggestions");
+
+        SnippetArticle shortSnippet = new SnippetArticle(FULL_CATEGORY, "id1", "Snippet",
+                "Publisher", "Preview Text", "www.google.com",
+                mTimestamp, // Publish timestamp
+                10f, // Score
+                mTimestamp, // Fetch timestamp
+                false, // Is video suggestion
+                Color.RED); // Thumbnail dominant color
+        Bitmap watch = BitmapFactory.decodeFile(
+                UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/watch.jpg"));
+        Drawable drawable = ThumbnailGradient.createDrawableWithGradientIfNeeded(
+                watch, mActivityTestRule.getActivity().getResources());
+        shortSnippet.setThumbnail(mUiDelegate.getReferencePool().put(drawable));
+
+        renderSuggestion(shortSnippet, fullCategoryInfo, "short_snippet");
+    }
 
     @Test
     @MediumTest
