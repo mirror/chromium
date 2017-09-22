@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "f639a903_8220cb88",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T23:30:04Z",
+      "side": 1,
+      "message": "clang-format allows both ways. Try to be consistent with existing / surrounding code.",
+      "parentUuid": "93234dd3_34a6b62b",
+      "revId": "3ec9ecceb6984c34a68bf87d9693fee5d2804c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b712325_8db11469",
         "filename": "base/files/file_util_posix.cc",
         "patchSetId": 8
