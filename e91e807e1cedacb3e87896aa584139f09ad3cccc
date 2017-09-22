@@ -16,6 +16,24 @@
       "revId": "e91e807e1cedacb3e87896aa584139f09ad3cccc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7c8b5b_845d8937",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-22T22:07:09Z",
+      "side": 1,
+      "message": "doesn\u0027t make unique require a public ctor?",
+      "parentUuid": "176bbf71_84665b0a",
+      "revId": "e91e807e1cedacb3e87896aa584139f09ad3cccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
