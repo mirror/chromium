@@ -325,6 +325,24 @@
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f62c189_b5f2fb36",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-22T21:24:41Z",
+      "side": 1,
+      "message": "This file is used to generate an entry in chromium.perf.fyi.json. This is the source of truth; it\u0027s copied over to chromium.perf.fyi.json by generate_perf_data.",
+      "parentUuid": "2d3154b7_fefb69ea",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

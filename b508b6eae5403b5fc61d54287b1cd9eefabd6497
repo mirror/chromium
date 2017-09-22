@@ -16,6 +16,24 @@
       "revId": "b508b6eae5403b5fc61d54287b1cd9eefabd6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bd25ab_00b2bf94",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2951,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-22T21:24:41Z",
+      "side": 1,
+      "message": "Yeah, I missed that.\n\nI\u0027m not exactly sure; I (as you can tell) copied the above comment. I think ned wrote this? IIRC there\u0027s a smoke test as part of telemetry_perf_unittests which runs run_telemetry_benchmark_as_googletest.py",
+      "parentUuid": "55647f63_9fd145be",
+      "revId": "b508b6eae5403b5fc61d54287b1cd9eefabd6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
