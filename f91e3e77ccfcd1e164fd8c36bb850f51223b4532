@@ -22,6 +22,30 @@
       "revId": "f91e3e77ccfcd1e164fd8c36bb850f51223b4532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6502e96f_f74c26d0",
+        "filename": "headless/lib/browser/devtools_api/devtools_connection.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-22T08:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0479d8_8504a3a4",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "f91e3e77ccfcd1e164fd8c36bb850f51223b4532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
