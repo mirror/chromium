@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9945a55a_a1d0b19c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-09-22T19:13:09Z",
+      "side": 1,
+      "message": "That\u0027s a good question. I didn\u0027t check on how the cache entry was made in the first place. I think a bug in using kDisallow is unlikely but I\u0027m not sure.",
+      "parentUuid": "52277bf5_04a8af39",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "27e400e6125d1de4b8840e223b765ccd19d46792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63bf6e93_41eedb5a",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 2
