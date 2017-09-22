@@ -584,6 +584,46 @@ TEST_P(KeyboardControllerTest, CloseKeyboard) {
   EXPECT_TRUE(IsKeyboardClosed());
 }
 
+// Test to make sure the keyboard controller distinguishes getting programmatic
+// focus to a text field when the preceding blur was for a short (transient)
+// amount of time, and when it was not..
+TEST_P(KeyboardControllerTest, ShowOnTransientBlurEnd) {
+  // This flag needs to be removed.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kDisableNewVirtualKeyboardBehavior)) {
+    return;
+  }
+
+  ScopedAccessibilityKeyboardEnabler scoped_keyboard_enabler;
+  ui::DummyTextInputClient input_client(ui::TEXT_INPUT_TYPE_TEXT);
+  ui::DummyTextInputClient no_input_client(ui::TEXT_INPUT_TYPE_NONE);
+
+  base::RunLoop run_loop;
+  aura::Window* keyboard_container(controller()->GetContainerWindow());
+  std::unique_ptr<KeyboardContainerObserver> keyboard_container_observer(
+      new KeyboardContainerObserver(keyboard_container, &run_loop));
+  root_window()->AddChild(keyboard_container);
+
+  ui::InputMethod* input_method = ui()->GetInputMethod();
+
+  // programmatically apply focus to the input client. No keyboard.
+  input_method->SetFocusedTextInputClient(&input_client);
+  EXPECT_FALSE(keyboard_container->IsVisible());
+
+  // Show-and-hide the keyboard.
+  ShowKeyboard();
+  EXPECT_TRUE(keyboard_container->IsVisible());
+  SetFocus(&no_input_client);
+  EXPECT_TRUE(WillHideKeyboard());
+  run_loop.Run();
+  EXPECT_FALSE(keyboard_container->IsVisible());
+
+  // programmatically apply focus to the input client, again. This time there's
+  // a keyboard.
+  input_method->SetFocusedTextInputClient(&input_client);
+  EXPECT_TRUE(keyboard_container->IsVisible());
+}
+
 class KeyboardControllerAnimationTest : public KeyboardControllerTest {
  public:
   KeyboardControllerAnimationTest() {}

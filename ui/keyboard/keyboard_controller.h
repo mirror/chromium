@@ -192,7 +192,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void CheckStateTransition(KeyboardControllerState prev,
                             KeyboardControllerState next);
 
-  // Changes the current state with validating the transition.
+  // Changes the current state with transition validation.
   void ChangeState(KeyboardControllerState state);
 
   // Reports error histogram in case lingering in an intermediate state.
@@ -201,7 +201,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   std::unique_ptr<KeyboardUI> ui_;
   KeyboardLayoutDelegate* layout_delegate_;
   std::unique_ptr<aura::Window> container_;
-  // CallbackAnimationObserver should destructed before container_ because it
+  // CallbackAnimationObserver should be destructed before container_ because it
   // uses container_'s animator.
   std::unique_ptr<CallbackAnimationObserver> animation_observer_;
 
@@ -220,6 +220,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   gfx::Rect current_keyboard_bounds_;
 
   KeyboardControllerState state_;
+
+  // Timestamp in seconds of the last time the keyboard was hidden.
+  double keyboard_hide_timestamp_seconds_;
 
   static KeyboardController* instance_;
 

@@ -24,6 +24,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/path.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
@@ -57,6 +58,10 @@ constexpr int kReportLingeringStateDelayMs = 5000;
 // keyboard window before setting the opacity back to 1.0. Since windows are not
 // allowed to be shown with zero opacity, we always animate to 0.01 instead.
 constexpr float kAnimationStartOrAfterHideOpacity = 0.01f;
+
+// Amount of time that can pass between hiding the keyboard and programmatically
+// setting focus to a text field in order for the keyboard to be shown.
+constexpr int kTransientBlurToleranceMs = 2000;
 
 // State transition diagram (document linked from crbug.com/719905)
 bool isAllowedStateStansition(keyboard::KeyboardControllerState from,
@@ -241,6 +246,7 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       show_on_content_update_(false),
       keyboard_locked_(false),
       state_(KeyboardControllerState::UNKNOWN),
+      keyboard_hide_timestamp_seconds_(0.0),
       weak_factory_report_lingering_state_(this),
       weak_factory_will_hide_(this) {
   ui_->GetInputMethod()->AddObserver(this);
@@ -502,15 +508,25 @@ void KeyboardController::OnTextInputStateChanged(
       default:
         return;
     }
-  } else {
+  } else if (WillHideKeyboard()) {
     // Abort a pending keyboard hide.
-    if (WillHideKeyboard())
-      ChangeState(KeyboardControllerState::SHOWN);
+    ChangeState(KeyboardControllerState::SHOWN);
     // Do not explicitly show the Virtual keyboard unless it is in the process
     // of hiding. Instead, the virtual keyboard is shown in response to a user
     // gesture (mouse or touch) that is received while an element has input
     // focus. Showing the keyboard requires an explicit call to
     // OnShowImeIfNeeded.
+  } else {
+    // If text has focus, but this is otherwise a situation where showing the
+    // keyboard is not warranted, go ahead and show the keyboard, as this is
+    // probably indicative that the current text focus session is part
+    // of the previous text edit session, as far as the user is concerned.
+    const double time_since_keyboard_hide =
+        ui::EventTimeStampToSeconds(ui::EventTimeForNow()) -
+        keyboard_hide_timestamp_seconds_;
+    if (client && client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE &&
+        time_since_keyboard_hide < kTransientBlurToleranceMs / 1000.0)
+      ShowKeyboardInternal(display::kInvalidDisplayId);
   }
 }
 
@@ -715,6 +731,12 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
                          weak_factory_report_lingering_state_.GetWeakPtr()),
           base::TimeDelta::FromMilliseconds(kReportLingeringStateDelayMs));
       break;
+
+    case KeyboardControllerState::HIDDEN:
+      keyboard_hide_timestamp_seconds_ =
+          ui::EventTimeStampToSeconds(ui::EventTimeForNow());
+      break;
+
     default:
       // Do nothing
       break;
