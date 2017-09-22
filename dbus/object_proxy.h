@@ -16,6 +16,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "dbus/dbus_export.h"
@@ -24,10 +25,10 @@
 namespace dbus {
 
 class Bus;
+class Error;
 class ErrorResponse;
 class MethodCall;
 class Response;
-class ScopedDBusError;
 class Signal;
 
 // ObjectProxy is used to communicate with remote objects, mainly for
@@ -101,7 +102,7 @@ class CHROME_DBUS_EXPORT ObjectProxy
   virtual std::unique_ptr<Response> CallMethodAndBlockWithErrorDetails(
       MethodCall* method_call,
       int timeout_ms,
-      ScopedDBusError* error);
+      base::Optional<Error>* error_out);
 
   // Calls the method of the remote object and blocks until the response
   // is returned. Returns NULL on error.
@@ -274,8 +275,7 @@ class CHROME_DBUS_EXPORT ObjectProxy
   // Helper method for logging response errors appropriately.
   void LogMethodCallFailure(const base::StringPiece& interface_name,
                             const base::StringPiece& method_name,
-                            const base::StringPiece& error_name,
-                            const base::StringPiece& error_message) const;
+                            const base::Optional<Error>& error) const;
 
   // Used as CallMethodInternalCallback by CallMethod(). (i.e. ErrorCallback
   // wasn't provided, hence response_callback will be used for handling the

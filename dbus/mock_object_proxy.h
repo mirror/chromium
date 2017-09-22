@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "dbus/error.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
 #include "dbus/object_proxy.h"
@@ -25,7 +26,7 @@ class MockObjectProxy : public ObjectProxy {
   MOCK_METHOD3(CallMethodAndBlockWithErrorDetails,
                std::unique_ptr<Response>(MethodCall* method_call,
                                          int timeout_ms,
-                                         ScopedDBusError* error));
+                                         base::Optional<Error>* error));
   MOCK_METHOD2(CallMethodAndBlock,
                std::unique_ptr<Response>(MethodCall* method_call,
                                          int timeout_ms));
