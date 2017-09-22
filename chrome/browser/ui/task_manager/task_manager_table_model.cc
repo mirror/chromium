@@ -646,51 +646,79 @@ int TaskManagerTableModel::CompareValues(int row1,
 void TaskManagerTableModel::GetRowsGroupRange(int row_index,
                                               int* out_start,
                                               int* out_length) {
-  const base::ProcessId process_id =
-      observed_task_manager()->GetProcessId(tasks_[row_index]);
-  int i = row_index;
-  int limit = row_index + 1;
-  while (i > 0 &&
-         observed_task_manager()->GetProcessId(tasks_[i - 1]) == process_id) {
-    --i;
+  const int length =
+      static_cast<int>(observed_task_manager()->GetNumberOfTasksOnSameProcess(
+          tasks_[row_index]));
+
+  int i = std::min(row_index, RowCount() - length);
+  int least_possible_group_index = std::max(0, row_index - (length - 1));
+
+  // If length is 1 (as it often is), or this is the first row, we'll don't even
+  // need to look up the process ID.
+  if (i != least_possible_group_index) {
+    const base::ProcessId process_id =
+        observed_task_manager()->GetProcessId(tasks_[row_index]);
+    while (i > least_possible_group_index &&
+           observed_task_manager()->GetProcessId(tasks_[i - 1]) == process_id) {
+      --i;
+    }
   }
-  while (limit < RowCount() &&
-         observed_task_manager()->GetProcessId(tasks_[limit]) == process_id) {
-    ++limit;
+  DCHECK_LE(i, row_index);
+  DCHECK_LT(row_index, i + length);
+#if DCHECK_IS_ON()
+  for (int j = i; j < i + length; j++) {
+    DCHECK_EQ(observed_task_manager()->GetProcessId(tasks_[row_index]),
+              observed_task_manager()->GetProcessId(tasks_[j]));
   }
+#endif
+
   *out_start = i;
-  *out_length = limit - i;
+  *out_length = length;
 }
 
 void TaskManagerTableModel::OnTaskAdded(TaskId id) {
-  // For the table view scrollbar to behave correctly we must inform it that
-  // a new task has been added.
-
-  // We will get a newly sorted list from the task manager as opposed to just
-  // adding |id| to |tasks_| because we want to keep |tasks_| sorted by proc IDs
-  // and then by Task IDs.
-  tasks_ = observed_task_manager()->GetTaskIdsList();
+  int index = FindInsertionRow(id);
+  tasks_.insert(tasks_.begin() + index, id);
 
   if (table_model_observer_) {
-    std::vector<TaskId>::difference_type index =
-        std::find(tasks_.begin(), tasks_.end(), id) - tasks_.begin();
-    table_model_observer_->OnItemsAdded(static_cast<int>(index), 1);
+    table_model_observer_->OnItemsAdded(index, 1);
   }
 }
 
 void TaskManagerTableModel::OnTaskToBeRemoved(TaskId id) {
-  auto index = std::find(tasks_.begin(), tasks_.end(), id);
-  if (index == tasks_.end())
-    return;
-  auto removed_index = index - tasks_.begin();
-  tasks_.erase(index);
+  int index = FindExistingRow(id);
+  DCHECK(index != -1);
+  tasks_.erase(tasks_.begin() + index);
   if (table_model_observer_)
-    table_model_observer_->OnItemsRemoved(removed_index, 1);
+    table_model_observer_->OnItemsRemoved(index, 1);
+}
+
+void TaskManagerTableModel::OnTaskReplaced(TaskId old_task_id,
+                                           TaskId new_task_id) {
+  int old_index = FindExistingRow(old_task_id);
+  int new_index = FindInsertionRow(new_task_id);
+  DCHECK(old_index != -1);
+
+  tasks_[old_index] = new_task_id;
+  if (new_index > old_index)
+    new_index--;  // Adjust for effect of removing |old_task_id|.
+
+  if (new_index < old_index) {
+    MoveTasksToLowerIndex(old_index, 1, new_index);
+  } else if (new_index > old_index) {
+    // Moving old_index up to new_index is the same as moving [old_index+1 ...
+    // new_index] down by one to old_index.
+    MoveTasksToLowerIndex(old_index + 1, new_index - old_index, old_index);
+  }
+
+  if (table_model_observer_) {
+    table_model_observer_->OnItemsChanged(new_index, 1);
+  }
 }
 
 void TaskManagerTableModel::OnTasksRefreshed(
     const TaskIdList& task_ids) {
-  tasks_ = task_ids;
+  DCHECK_EQ(task_ids.size(), tasks_.size());
   OnRefresh();
 }
 
@@ -904,12 +932,8 @@ void TaskManagerTableModel::ToggleColumnVisibility(int column_id) {
 
 int TaskManagerTableModel::GetRowForWebContents(
     content::WebContents* web_contents) {
-  TaskId task_id =
-      observed_task_manager()->GetTaskIdForWebContents(web_contents);
-  auto index = std::find(tasks_.begin(), tasks_.end(), task_id);
-  if (index == tasks_.end())
-    return -1;
-  return static_cast<int>(index - tasks_.begin());
+  return FindExistingRow(
+      observed_task_manager()->GetTaskIdForWebContents(web_contents));
 }
 
 void TaskManagerTableModel::StartUpdating() {
@@ -935,11 +959,48 @@ void TaskManagerTableModel::OnRefresh() {
 }
 
 bool TaskManagerTableModel::IsTaskFirstInGroup(int row_index) const {
+  // The first row is always the start of its group.
   if (row_index == 0)
     return true;
 
-  return observed_task_manager()->GetProcessId(tasks_[row_index - 1]) !=
+  base::ProcessId pid =
       observed_task_manager()->GetProcessId(tasks_[row_index]);
+  base::ProcessId previous_pid =
+      observed_task_manager()->GetProcessId(tasks_[row_index - 1]);
+
+  // Rows with unknown PIDs aren't subject to grouping.
+  return (pid != previous_pid) || pid == base::kNullProcessId;
+}
+
+void TaskManagerTableModel::MoveTasksToLowerIndex(int old_index,
+                                                  int length,
+                                                  int new_index) {
+  DCHECK_LT(new_index, old_index);
+  std::rotate(tasks_.begin() + new_index, tasks_.begin() + old_index,
+              tasks_.begin() + old_index + length);
+
+  if (table_model_observer_)
+    table_model_observer_->OnItemsMoved(old_index, length, new_index);
+}
+
+int TaskManagerTableModel::FindInsertionRow(TaskId id) {
+  TaskManagerInterface* task_manager = observed_task_manager();
+  // Find the insertion position per the Task::SortKey ordering. The order
+  // itself is determined by the contents of the key provided by the TaskManager
+  // implementation.
+  const Task::SortKey& key = task_manager->GetSortKey(id);
+  auto ordering = [task_manager](const Task::SortKey& a, TaskId b) {
+    return a < task_manager->GetSortKey(b);
+  };
+  auto position = std::upper_bound(tasks_.begin(), tasks_.end(), key, ordering);
+  return base::checked_cast<int>(position - tasks_.begin());
+}
+
+int TaskManagerTableModel::FindExistingRow(TaskId task_id) {
+  auto index = std::find(tasks_.begin(), tasks_.end(), task_id);
+  if (index == tasks_.end())
+    return -1;
+  return base::checked_cast<int>(index - tasks_.begin());
 }
 
 }  // namespace task_manager

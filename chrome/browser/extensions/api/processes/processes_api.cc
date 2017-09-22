@@ -343,13 +343,15 @@ bool ProcessesEventRouter::HasEventListeners(
 bool ProcessesEventRouter::ShouldReportOnCreatedOrOnExited(
     task_manager::TaskId id,
     int* out_child_process_host_id) const {
-  // Is it the first task to be created or the last one to be removed?
-  if (observed_task_manager()->GetNumberOfTasksOnSameProcess(id) != 1)
+  // Is it the first task to be created or the last one to be removed?  Is the
+  // PID of this task known?
+  if (observed_task_manager()->GetNumberOfTasksOnSameProcess(id) != 1 ||
+      observed_task_manager()->GetProcessId(id) == base::kNullProcessHandle)
     return false;
 
   // Ignore tasks that don't have a valid child process host ID like ARC
   // processes, as well as the browser process (neither onCreated() nor
-  // onExited() shouldn't report the browser process).
+  // onExited() should report the browser process).
   *out_child_process_host_id =
       observed_task_manager()->GetChildProcessUniqueId(id);
   if (*out_child_process_host_id ==
