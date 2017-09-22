@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3224432_3b7875bb",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-22T10:49:39Z",
+      "side": 1,
+      "message": "Done. Also moved it into the if statement (though the if statement looks unnecessary since this method it called with a weak pointer now).",
+      "parentUuid": "56fcf983_492d30a3",
+      "revId": "42c885ac195ce5fcdbeb24005cb27c10ffcfd634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd9235f6_950ec7d1",
         "filename": "media/audio/audio_output_controller.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "42c885ac195ce5fcdbeb24005cb27c10ffcfd634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ebbd3c_b68ef46d",
+        "filename": "media/audio/audio_output_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-22T10:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9235f6_950ec7d1",
+      "revId": "42c885ac195ce5fcdbeb24005cb27c10ffcfd634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
