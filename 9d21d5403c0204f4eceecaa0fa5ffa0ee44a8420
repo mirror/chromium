@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6eedc48_e6d0352f",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-22T01:18:17Z",
+      "side": 1,
+      "message": "nit: auto is usually only used when it\u0027s really necessary to improve readability; in this case I\u0027d prefer:\n\ncontent::SecurityStyleExplanation explanation(l10n_util::GetStringUTF8(IDS_SHA1), ...);",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 56
+      },
+      "revId": "9d21d5403c0204f4eceecaa0fa5ffa0ee44a8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
