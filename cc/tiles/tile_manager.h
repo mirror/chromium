@@ -169,9 +169,6 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
                                    int flags,
                                    bool can_use_lcd_text);
 
-  bool IsReadyToActivate() const;
-  bool IsReadyToDraw() const;
-
   const PaintImageIdFlatSet& TakeImagesToInvalidateOnSyncTree();
   void DidActivateSyncTree();
   void ClearCheckerImageTracking(bool can_clear_decode_policy_tracking);
@@ -185,6 +182,15 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   }
 
   // Public methods for testing.
+  bool IsReadyToActivateForTesting() const { return IsReadyToActivate(); }
+
+  bool IsReadyToDrawForTesting() const { return IsReadyToDraw(); }
+
+  bool AreRasterQueueTilesReadyToDrawForTesting(
+      RasterTilePriorityQueue::Type type) const {
+    return AreRasterQueueTilesReadyToDraw(type);
+  }
+
   void InitializeTilesWithResourcesForTesting(const std::vector<Tile*>& tiles) {
     for (size_t i = 0; i < tiles.size(); ++i) {
       TileDrawInfo& draw_info = tiles[i]->draw_info();
@@ -239,7 +245,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
     all_tiles_that_need_to_be_rasterized_are_scheduled_ = false;
   }
 
-  void ResetSignalsForTesting();
+  void ResetSignalsForTesting() { signals_.reset(); }
 
   bool HasScheduledTileTasksForTesting() const {
     return has_scheduled_tile_tasks_;
@@ -302,12 +308,14 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
 
     void reset();
 
-    bool ready_to_activate;
-    bool did_notify_ready_to_activate;
-    bool ready_to_draw;
-    bool did_notify_ready_to_draw;
-    bool all_tile_tasks_completed;
-    bool did_notify_all_tile_tasks_completed;
+    bool required_for_activation_tile_tasks_completed = false;
+    bool required_for_activation_tiles_ready_to_draw = false;
+    bool did_notify_ready_to_activate = false;
+    bool required_for_draw_tile_tasks_completed = false;
+    bool required_for_draw_tiles_ready_to_draw = false;
+    bool did_notify_ready_to_draw = false;
+    bool all_tile_tasks_completed = false;
+    bool did_notify_all_tile_tasks_completed = false;
   };
 
   struct PrioritizedWorkToSchedule {
@@ -338,10 +346,15 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
       const MemoryUsage& limit,
       const TilePriority& oother_priority,
       MemoryUsage* usage);
+
   bool TilePriorityViolatesMemoryPolicy(const TilePriority& priority);
-  bool AreRequiredTilesReadyToDraw(RasterTilePriorityQueue::Type type) const;
-  void CheckIfMoreTilesNeedToBePrepared();
-  void CheckAndIssueSignals();
+
+  bool IsReadyToActivate() const;
+
+  bool IsReadyToDraw() const;
+
+  bool AreRasterQueueTilesReadyToDraw(RasterTilePriorityQueue::Type type) const;
+
   void MarkTilesOutOfMemory(
       std::unique_ptr<RasterTilePriorityQueue> queue) const;
 
@@ -352,9 +365,20 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   void DidFinishRunningTileTasksRequiredForDraw();
   void DidFinishRunningAllTileTasks();
 
+  void OnRequiredForActivationTilesReadyToDraw();
+  void OnRequiredForDrawTilesReadyToDraw();
+
+  void CheckAndIssueSignals();
+
+  void CheckPendingGpuWorkTiles(bool issue_signals);
+
+  void CheckIfMoreTilesNeedToBePrepared();
+
   scoped_refptr<TileTask> CreateTaskSetFinishedTask(
       void (TileManager::*callback)());
+
   PrioritizedWorkToSchedule AssignGpuMemoryToTiles();
+
   void ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule);
 
   void PartitionImagesForCheckering(const PrioritizedTile& prioritized_tile,
@@ -371,8 +395,6 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   ScheduledTasksStateAsValue() const;
 
   bool UsePartialRaster() const;
-
-  void CheckPendingGpuWorkTiles(bool issue_signals, bool flush);
 
   TileManagerClient* client_;
   base::SequencedTaskRunner* task_runner_;
@@ -412,11 +434,13 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   uint64_t next_tile_id_;
 
   std::unordered_set<Tile*> pending_gpu_work_tiles_;
-  uint64_t pending_required_for_activation_callback_id_ = 0;
-  uint64_t pending_required_for_draw_callback_id_ = 0;
+
   // If true, we should re-compute tile requirements in
   // CheckPendingGpuWorkTiles.
   bool pending_tile_requirements_dirty_ = false;
+
+  bool has_pending_required_for_activation_ready_to_draw_callback_ = false;
+  bool has_pending_required_for_draw_ready_to_draw_callback_ = false;
 
   std::unordered_map<Tile::Id, std::vector<DrawImage>> scheduled_draw_images_;
   std::vector<scoped_refptr<TileTask>> locked_image_tasks_;
@@ -425,12 +449,8 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   // will create a checker-imaged resource.
   int num_of_tiles_with_checker_images_ = 0;
 
-  // We need two WeakPtrFactory objects as the invalidation pattern of each is
-  // different. The |task_set_finished_weak_ptr_factory_| is invalidated any
-  // time new tasks are scheduled, preventing a race when the callback has
-  // been scheduled but not yet executed.
+  // Invalidated on each PrepareTiles.
   base::WeakPtrFactory<TileManager> task_set_finished_weak_ptr_factory_;
-  // The |ready_to_draw_callback_weak_ptr_factory_| is never invalidated.
   base::WeakPtrFactory<TileManager> ready_to_draw_callback_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TileManager);

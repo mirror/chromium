@@ -124,17 +124,16 @@ bool ZeroCopyRasterBufferProvider::CanPartialRasterIntoProvidedResource()
 }
 
 bool ZeroCopyRasterBufferProvider::IsResourceReadyToDraw(
-    viz::ResourceId resource_id) const {
+    viz::ResourceId resource_id) {
   // Zero-copy resources are immediately ready to draw.
   return true;
 }
 
-uint64_t ZeroCopyRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
-    const base::Closure& callback,
-    uint64_t pending_callback_id) const {
+void ZeroCopyRasterBufferProvider::NotifyResourceReadyToDraw(
+    const std::vector<viz::ResourceId>& resource_ids,
+    const base::Closure& callback) {
   // Zero-copy resources are immediately ready to draw.
-  return 0;
+  callback.Run();
 }
 
 void ZeroCopyRasterBufferProvider::Shutdown() {}
