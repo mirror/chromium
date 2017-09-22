@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "903aeb38_10b971ff",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-22T18:28:57Z",
+      "side": 1,
+      "message": "This is needed by the ctor of the WizardController.",
+      "parentUuid": "84000cd1_3fcf2182",
+      "revId": "b5666f834e3d9a59215de49881fe8a66530c897e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5434435_8b88604e",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b5666f834e3d9a59215de49881fe8a66530c897e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8544c564_bba7f268",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-22T18:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5434435_8b88604e",
+      "revId": "b5666f834e3d9a59215de49881fe8a66530c897e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
