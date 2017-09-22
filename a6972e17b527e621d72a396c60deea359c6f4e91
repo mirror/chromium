@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c7a0a0_f9738c15",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-22T01:27:22Z",
+      "side": 1,
+      "message": "I still prefer returning const ref to avoid copying.\n\nAnyway, guess it\u0027s not a big problem...",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "a6972e17b527e621d72a396c60deea359c6f4e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
