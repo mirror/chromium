@@ -234,6 +234,11 @@ void StyleSheetHandler::StartRuleBody(unsigned offset) {
 }
 
 void StyleSheetHandler::EndRuleBody(unsigned offset) {
+  // Pop off data for a previous invalid rule.
+  if (current_rule_data_) {
+    current_rule_data_ = nullptr;
+    current_rule_data_stack_.pop_back();
+  }
   DCHECK(!current_rule_data_stack_.IsEmpty());
   current_rule_data_stack_.back()->rule_body_range.end = offset;
   AddNewRuleToSourceTree(PopRuleData());
@@ -383,14 +388,19 @@ bool VerifyKeyframeKeyText(Document* document, const String& key_text) {
   CSSParser::ParseSheetForInspector(ParserContextForDocument(document),
                                     style_sheet, text, handler);
 
-  // Exactly two should be parsed.
+  // Exactly one should be parsed.
   unsigned rule_count = source_data->size();
-  if (rule_count != 2 || source_data->at(0)->type != StyleRule::kKeyframes ||
-      source_data->at(1)->type != StyleRule::kKeyframe)
+  if (rule_count != 1 || source_data->at(0)->type != StyleRule::kKeyframes)
+    return false;
+
+  const CSSRuleSourceData& keyframe_data = *source_data->at(0);
+  if (keyframe_data.child_rules.size() != 1 ||
+      keyframe_data.child_rules.at(0)->type != StyleRule::kKeyframe)
     return false;
 
   // Exactly one property should be in keyframe rule.
-  unsigned property_count = source_data->at(1)->property_data.size();
+  const unsigned property_count =
+      keyframe_data.child_rules.at(0)->property_data.size();
   if (property_count != 1)
     return false;
 
