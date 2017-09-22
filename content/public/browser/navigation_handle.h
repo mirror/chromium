@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/reload_type.h"
@@ -238,6 +239,12 @@ class CONTENT_EXPORT NavigationHandle {
   // made. The transferred request's ID will not be tracked by the
   // NavigationHandle.
   virtual const GlobalRequestID& GetGlobalRequestID() = 0;
+
+  // Returns true if this navigation resulted in a download, false if this
+  // download did not result in a download, and an unset Optional value if
+  // download status is not yet known for this navigation. Download status is
+  // determined for a navigation when processing HTTP response headers.
+  virtual base::Optional<bool> IsDownload() = 0;
 
   // Testing methods ----------------------------------------------------------
   //

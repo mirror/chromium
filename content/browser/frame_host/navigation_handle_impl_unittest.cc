@@ -1113,4 +1113,15 @@ TEST_F(NavigationHandleImplTest, DeletionByNavigationThrottle) {
   }
 }
 
+TEST_F(NavigationHandleImplTest, DownloadOptionalState) {
+  EXPECT_FALSE(test_handle()->IsDownload().has_value());
+  SimulateWillStartRequest();
+  EXPECT_FALSE(test_handle()->IsDownload().has_value());
+  SimulateWillRedirectRequest();
+  EXPECT_FALSE(test_handle()->IsDownload().has_value());
+  SimulateWillProcessResponse();
+  EXPECT_TRUE(test_handle()->IsDownload().has_value());
+  EXPECT_FALSE(test_handle()->IsDownload().value());
+}
+
 }  // namespace content

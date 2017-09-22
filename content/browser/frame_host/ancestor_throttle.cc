@@ -107,7 +107,8 @@ AncestorThrottle::WillProcessResponse() {
 
   // Downloads should be exempt from checking for X-Frame-Options, so
   // proceed if this is a download.
-  if (handle->is_download())
+  DCHECK(handle->IsDownload().has_value());
+  if (handle->IsDownload().value())
     return NavigationThrottle::PROCEED;
 
   std::string header_value;
