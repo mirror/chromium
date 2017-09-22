@@ -115,6 +115,24 @@
       "revId": "3454472a34762df3b1b9eb7fec98cf0a7577154b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e49ddd8_38d4da8a",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T06:57:30Z",
+      "side": 1,
+      "message": "I honestly don\u0027t know what the right thing to do here is (since I\u0027m not sure why source_frame() itself is wrapped in FrameReference), but this seems reasonable.",
+      "parentUuid": "3f193ea2_224cd4c4",
+      "revId": "3454472a34762df3b1b9eb7fec98cf0a7577154b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
