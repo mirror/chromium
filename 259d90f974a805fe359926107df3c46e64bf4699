@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9b26202_e833ef97",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3605b75b_577812b1",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2795babc_b443e4cd",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87c5f4ce_d3da3bcb",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2795babc_b443e4cd",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1043604e_0a7e3988",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T17:56:52Z",
       "side": 1,
       "message": "is there a corresponding crbug? (it\u0027s good to have crbugs associated with TODO otherwise easy to lose track..",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc86d67b_124ea552",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "I copied this TODO from:\nhttps://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_sensor_event_pump.h?l\u003d35-36\nIt was added in the following CL:\nhttps://codereview.chromium.org/2037513002/diff/520001/content/renderer/device_sensors/device_sensor_event_pump.h\n\nI couldn\u0027t find any crbugs associated with this TODO. If you think it is necessary, I can create a bug and add it to the TODO here.",
+      "parentUuid": "1043604e_0a7e3988",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b0340705_acabd551",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "\u003e hmm, this is a new case?\n\nThis is not a new case, it is already in the device motion event pump code:\nhttps://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_motion_event_pump.cc?l\u003d76-77\nIt was added in the \"Refactor DeviceMotionEventPump to use generic sensor instead of sensors\" CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618162/2..3\n\n\u003e is this check necessary (i.e. when can this fail?)\n\nIt is necessary, and it is used to fix the following issues:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d753263\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d753679\n\nThe following is quoted from the description of the \"Refactor DeviceMotionEventPump to use generic sensor instead of sensors\" CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618162\n\"The latest patch of this CL contains the fix for issue 753263, 753679,\nwhich is caused by RenderFrame not being valid when it is accessed.\nSo instead of passing the |render_frame| to DeviceMotionEventPump\u0027s\nconstructor, DeviceMotionEventPump::SendStartMessage gets the\n|render_frame| from |web_frame| when needed. This will make sure the\n|render_frame| is valid when it is needed.\"\n\nAnd from the RenderFrameImpl::FromWebFrame() implementation, it can return nullptr:\nhttps://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?gsn\u003dFromWebFrame\u0026l\u003d1138\n\nSo here it needs to check if the |render_frame| is nullptr or not.",
+      "parentUuid": "614e6e67_f2f6f175",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4111f12_80aa6754",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-22T17:56:52Z",
       "side": 1,
       "message": "is it worth the trouble to crash here (when trying to start device orientation) ? (i.e. when is this possible to be null?)",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622ab3eb_7a810139",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "I saw other Chromium code does similar thing, for example:\nhttps://cs.chromium.org/chromium/src/content/renderer/pepper/pepper_media_device_manager.cc?l\u003d290\nSo just to be safe, I added this CHECK().",
+      "parentUuid": "b4111f12_80aa6754",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a43b5279_d3fb9002",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "Yes, it is needed, because GetDataFromSharedMemory() may not set any field of the |data| at all if the sensor can not be read. And in that case, it needs to fire a null event and the |absolute| field still needs to be set. So here needs to set its default value using |absolute_|.",
+      "parentUuid": "fd32bc52_040ffb1c",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "460e1cf3_8b9f9ccb",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-22T17:56:52Z",
       "side": 1,
       "message": "can this be optimized to: {\n  if (!absolute_ \u0026\u0026 !relative_orientation_sensor_.sensor) {\n    // fallback\n  }\n  DeviceSensorEventPump::DidStartIfPossible();\n}\nor am I missing something?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a12a601_3271decf",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "When the |absolute_| is false, and the relative sensor initialization fails, the |relative_orientation_sensor_.sensor| is nullptr, and it will try the absolute sensor fallback, and next time DeviceOrientationEventPump::DidStartIfPossible() is called, it will still go to this if branch since the |absolute_| is still false and relative_orientation_sensor_.sensor is still nullptr. So it becomes an infinite loop.\n\nAlso this DeviceOrientationEventPump::DidStartIfPossible() may be called when the sensor is resumed, and if it already uses the absolute sensor fallback, and the relative_orientation_sensor_.sensor is always nullptr, so it will try the fallback again which is not necessary.",
+      "parentUuid": "460e1cf3_8b9f9ccb",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c3c0e666_2b782def",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "This fallback logic is already decoupled from the generic DeviceSensorEventPump, and it has a general purpose DidStartIfPossible() function which can be overridden if needed. The fallback logic is specific for the relative orientation event so I think it is reasonable to implement this logic inside this DeviceOrientationEventPump, and what it really needs is to override the DidStartIfPossible() function to add the fallback logic into it.",
+      "parentUuid": "35e4f218_511cbeb7",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e512559_0f041b04",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5534c0e6_25f3fe27",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e512559_0f041b04",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab026c08_177ef976",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-22T17:56:52Z",
       "side": 1,
       "message": "also, in case the sensor info cannot be provided we should fire a one-off null-event. Does this happen here? if yes, how does this work exactly?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2c0678_46893f42",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "\u003e also, in case the sensor info cannot be provided we should fire a one-off null-event. Does this happen here?\n\nYes.\n\n\u003e if yes, how does this work exactly?\n\nWhen sensor info cannot be provided, the |data| parameter is not set any new value. And the following lines from DeviceOrientationEventPump::FireEvent() will generate a null-event since ShouldFireEvent() returns true if no data can be provided.\nif (ShouldFireEvent(data)) {\n  data_ \u003d data;\n  listener()-\u003eDidChangeDeviceOrientation(data);\n}\n\nIt is similar to the current implementation:\nhttps://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_orientation_event_pump.cc?l\u003d27-29\nhttps://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_orientation_event_pump.cc?l\u003d47-50",
+      "parentUuid": "ab026c08_177ef976",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "793da78c_a4ee0526",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "hmm... Currently the //services/device/generic_sensor backend doesn\u0027t provide any information of which angle data can\u0027t be provided, and the fusion algorithm assumes the alpha is 0.0:\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc?l\u003d40-42\n\nPossible solution: on the generic_sensor backend, set an angle value to Not-A-Number to represent that certain angle data can\u0027t be provided, and here on the event pump side we just needs to check if the angle is Not-A-Number.\n\nWhat do you think?",
+      "parentUuid": "be3b86e2_8c98d981",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d3a80a_15d994e2",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f560568a_6648be69",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d3a80a_15d994e2",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "96dd8efc_fc57ad36",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "This line needs to be moved before PlatformEventObserver\u003cListenerType\u003e::Start(listener) is called, otherwise it won\u0027t work properly because PlatformEventObserver\u003cListenerType\u003e::Start(listener) will eventually call DidStartIfPossible() function, and it checks:\n\"if (state_ !\u003d PumpState::PENDING_START)\n   return;\"\n\nSo if \"state_ \u003d PumpState::PENDING_START\" is executed after PlatformEventObserver\u003cListenerType\u003e::Start(listener) is called, the DidStartIfPossible() will have an early return and the device event pump won\u0027t start. I noticed this when I was testing it on Android, when refreshing the page, the sensor data stopped, and moving this line before PlatformEventObserver\u003cListenerType\u003e::Start(listener) solves the problem.",
+      "parentUuid": "f95642dc_ccf6596c",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f787916a_ad21d110",
         "filename": "content/test/data/device_sensors/device_orientation_fallback_to_absolute_test.html",
         "patchSetId": 9
@@ -234,6 +468,24 @@
       "writtenOn": "2017-09-22T17:56:52Z",
       "side": 1,
       "message": "is this used?",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4249ce4_4b122654",
+        "filename": "content/test/data/device_sensors/device_orientation_fallback_to_absolute_test.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-22T22:03:22Z",
+      "side": 1,
+      "message": "No. Removed it.\n\nDone.",
+      "parentUuid": "f787916a_ad21d110",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
