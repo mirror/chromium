@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<title>Test that gestures are delegated to child frames.</title>
+<iframe allowedactivationdelegation="media" src="http://localhost:8000/media/autoplay/resources/nested-iframe-1a.html"></iframe>
+<script>
+  eventSender.mouseDown();
+
+  if (window.testRunner) {
+    testRunner.clearBackForwardList();
+    testRunner.waitUntilDone();
+  }
+</script>
+</html>
