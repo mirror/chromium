@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729f78dc_64d709b0",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-22T07:34:32Z",
+      "side": 1,
+      "message": "-webkit-padding-end is preferred to consider RTL language environment.",
+      "revId": "b3efd8c9d48296ce75fac50600a75c437abeb3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fe8437_3db2f9ea",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-22T07:34:32Z",
+      "side": 1,
+      "message": "use file-path for the id to be consistent with other ids.",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "b3efd8c9d48296ce75fac50600a75c437abeb3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
