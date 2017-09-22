@@ -51,9 +51,7 @@ Settings.SettingsScreen = class extends UI.VBox {
     tabbedPane.leftToolbar().appendToolbarItem(new UI.ToolbarItem(settingsLabelElement));
     tabbedPane.setShrinkableTabs(false);
     tabbedPane.setVerticalTabLayout(true);
-    var shortcutsView = new UI.SimpleView(Common.UIString('Shortcuts'));
-    UI.shortcutsScreen.createShortcutsTabView().show(shortcutsView.element);
-    this._tabbedLocation.appendView(shortcutsView);
+    this._tabbedLocation.appendView(new UI.ShortcutsScreen());
     tabbedPane.show(this.contentElement);
 
     this.element.addEventListener('keydown', this._keyDown.bind(this), false);

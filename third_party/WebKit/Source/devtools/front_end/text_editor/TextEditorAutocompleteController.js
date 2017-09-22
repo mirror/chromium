@@ -98,7 +98,7 @@ TextEditor.TextEditorAutocompleteController = class {
    * @param {number} columnNumber
    * @return {?TextUtils.TextRange}
    */
-  _substituteRange(lineNumber, columnNumber) {
+  _computeSubstituteRange(lineNumber, columnNumber) {
     var range =
         this._config.substituteRangeCallback ? this._config.substituteRangeCallback(lineNumber, columnNumber) : null;
     if (!range && this._config.isWordChar)
@@ -200,7 +200,7 @@ TextEditor.TextEditorAutocompleteController = class {
       return true;
     var mainSelectionContext = this._textEditor.text(mainSelection);
     for (var i = 0; i < selections.length; ++i) {
-      var wordRange = this._substituteRange(selections[i].head.line, selections[i].head.ch);
+      var wordRange = this._computeSubstituteRange(selections[i].head.line, selections[i].head.ch);
       if (!wordRange)
         return false;
       var context = this._textEditor.text(wordRange);
@@ -221,7 +221,7 @@ TextEditor.TextEditorAutocompleteController = class {
     }
 
     var cursor = this._codeMirror.getCursor('head');
-    var substituteRange = this._substituteRange(cursor.line, cursor.ch);
+    var substituteRange = this._computeSubstituteRange(cursor.line, cursor.ch);
     if (!substituteRange || !this._validateSelectionsContexts(substituteRange)) {
       this.clearAutocomplete();
       return;
@@ -253,6 +253,8 @@ TextEditor.TextEditorAutocompleteController = class {
 
       var oldQueryRange = this._queryRange;
       this._queryRange = queryRange;
+      this._substituteRange = substituteRange;
+
       if (!oldQueryRange || queryRange.startLine !== oldQueryRange.startLine ||
           queryRange.startColumn !== oldQueryRange.startColumn)
         this._updateAnchorBox();
@@ -314,6 +316,7 @@ TextEditor.TextEditorAutocompleteController = class {
     this._suggestBox.hide();
     this._suggestBox = null;
     this._queryRange = null;
+    this._substituteRange = null;
     this._anchorBox = null;
     this._clearHint();
     this._onSuggestionsHiddenForTest();
@@ -376,9 +379,11 @@ TextEditor.TextEditorAutocompleteController = class {
   acceptSuggestion() {
     var selections = this._codeMirror.listSelections().slice();
     var queryLength = this._queryRange.endColumn - this._queryRange.startColumn;
+    var extraLength = this._substituteRange.endColumn - this._queryRange.endColumn;
     for (var i = selections.length - 1; i >= 0; --i) {
-      var start = selections[i].head;
-      var end = new CodeMirror.Pos(start.line, start.ch - queryLength);
+      var head = selections[i].head;
+      var start = new CodeMirror.Pos(head.line, head.ch - queryLength);
+      var end = new CodeMirror.Pos(head.line, head.ch + extraLength);
       this._codeMirror.replaceRange(this._currentSuggestion, start, end, '+autocomplete');
     }
   }

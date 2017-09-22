@@ -248,6 +248,13 @@
             "className": "Sources.OutlineQuickOpen"
         },
         {
+            "type": "action",
+            "actionId": "sources.custom-shortcut-editor",
+            "className": "Sources.CustomShortcutsProject.ActionDelegate",
+            "title": "Edit custom shortcuts",
+            "category": "DevTools"
+        },
+        {
             "type": "context-menu-item",
             "location": "mainMenu/navigate",
             "actionId": "sources.search.toggle"
@@ -860,6 +867,7 @@
     "scripts": [
         "AddSourceMapURLDialog.js",
         "CallStackSidebarPane.js",
+        "CustomShortcutEditor.js",
         "DebuggerPausedMessage.js",
         "SimpleHistoryManager.js",
         "EditingLocationHistoryManager.js",

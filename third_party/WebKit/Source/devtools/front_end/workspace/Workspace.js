@@ -203,7 +203,8 @@ Workspace.projectTypes = {
   Snippets: 'snippets',
   FileSystem: 'filesystem',
   ContentScripts: 'contentscripts',
-  Service: 'service'
+  Service: 'service',
+  Shortcuts: 'shortcuts'
 };
 
 /**

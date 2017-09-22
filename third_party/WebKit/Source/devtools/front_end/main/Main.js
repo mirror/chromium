@@ -198,13 +198,6 @@ Main.Main = class {
     SDK.targetManager.addEventListener(
         SDK.TargetManager.Events.SuspendStateChanged, this._onSuspendStateChanged.bind(this));
 
-    UI.shortcutsScreen = new UI.ShortcutsScreen();
-    // set order of some sections explicitly
-    UI.shortcutsScreen.section(Common.UIString('Elements Panel'));
-    UI.shortcutsScreen.section(Common.UIString('Styles Pane'));
-    UI.shortcutsScreen.section(Common.UIString('Debugger'));
-    UI.shortcutsScreen.section(Common.UIString('Console'));
-
     Workspace.fileManager = new Workspace.FileManager();
     Workspace.workspace = new Workspace.Workspace();
     Persistence.fileSystemMapping = new Persistence.FileSystemMapping(Persistence.isolatedFileSystemManager);
@@ -233,7 +226,6 @@ Main.Main = class {
 
     UI.actionRegistry = new UI.ActionRegistry();
     UI.shortcutRegistry = new UI.ShortcutRegistry(UI.actionRegistry, document);
-    UI.ShortcutsScreen.registerShortcuts();
     this._registerForwardedShortcuts();
     this._registerMessageSinkListener();
 

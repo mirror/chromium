@@ -301,6 +301,8 @@ Sources.SourcesView = class extends UI.VBox {
       sourceView = new SourceFrame.ImageView(uiSourceCode.mimeType(), uiSourceCode);
     else if (contentType === Common.resourceTypes.Font)
       sourceView = new SourceFrame.FontView(uiSourceCode.mimeType(), uiSourceCode);
+    else if (uiSourceCode.project().type() === Workspace.projectTypes.Shortcuts)
+      sourceFrame = new Sources.CustomShortcutsFrame(uiSourceCode);
     else
       sourceFrame = new SourceFrame.UISourceCodeFrame(uiSourceCode);
 
