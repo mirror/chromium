@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7a07e51_68f04592",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e1dd84_20ed3429",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9f5638_a100c48b",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33b791d_1935a3b9",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9f5638_a100c48b",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "584c3a55_343ba917",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2387401b_b8bfcead",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03fbcf21_5dc1b5c8",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dd7524_3e1a1fdc",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03fbcf21_5dc1b5c8",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8d1b2971_bb385343",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c7aafd0_cad02e54",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d0db10_7127dc8c",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d64bcc_16b833b5",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done\n\nI had to jump through a few hoops though to make OnceCallback work with CrosSettings::PrepareTrustedValues.",
+      "parentUuid": "46d0db10_7127dc8c",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2f97e893_373d2e09",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1e4b656_2505c0df",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad5eb03_f361595b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057edac2_00b68644",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9758,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T23:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad5eb03_f361595b",
+      "revId": "d8a0b8f89c4dfa9e1c758a409e917c6a85b9ff92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
