@@ -81,7 +81,6 @@
     flex: auto;
     padding: 0 6px;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: pre;
 }
 
