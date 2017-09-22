@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be746d45_08e0a7a2",
+        "filename": "net/socket/client_socket_pool_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-22T19:51:49Z",
+      "side": 1,
+      "message": "Do this in ConnectJob::NotifyDelegateOfCompletion, and remove motivation()?",
+      "range": {
+        "startLine": 1031,
+        "startChar": 4,
+        "endLine": 1031,
+        "endChar": 23
+      },
+      "revId": "d08b16174476e06b74be92497d411275b6df0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
