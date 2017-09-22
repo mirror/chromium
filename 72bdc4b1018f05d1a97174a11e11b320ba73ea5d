@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "970d2c82_e4afca71",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8467b93_9a3bc5c2",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ff1ec1_fd16cdc5",
         "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9826ff_16ca064b",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ff1ec1_fd16cdc5",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9e7163a1_bfe4d9aa",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "They\u0027re both \"right\", but it\u0027s silly to have two behaviors. Ultimately what happens is the overall enabled flag will cause the UI to not even show, so technically they\u0027re \"disabled\". I\u0027m not sure why I front-loaded this logic below.",
+      "parentUuid": "d36e77bc_510d70a5",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec724d4_0ad19757",
         "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16eb409c_16588cab",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec724d4_0ad19757",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "86ff1507_125da7fb",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0bd5d1fa_89c5b88c",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "893b6c65_4e4e8b82",
         "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b77a54_420f3cd0",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893b6c65_4e4e8b82",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5591b28d_28b070ab",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583e6644_22c6fe23",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dca261f_83833e39",
         "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
         "patchSetId": 7
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e223aa3e_fe98a49c",
+        "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dca261f_83833e39",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd1e552_cb7f9002",
         "filename": "ui/base/ime/chromeos/input_method_manager.h",
         "patchSetId": 7
@@ -152,6 +296,24 @@
       "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2339451c_5a852218",
+        "filename": "ui/base/ime/chromeos/input_method_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-22T01:34:41Z",
+      "side": 1,
+      "message": "This was actually the compile error since it wasn\u0027t updated to match the others.",
+      "parentUuid": "1fd1e552_cb7f9002",
+      "revId": "72bdc4b1018f05d1a97174a11e11b320ba73ea5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
