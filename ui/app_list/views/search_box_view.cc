@@ -228,7 +228,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
       views::BoxLayout::kHorizontal, gfx::Insets(0, kPadding),
       (is_fullscreen_app_list_enabled_ ? kInnerPaddingFullscreen
                                        : kInnerPadding) -
-          views::Textfield::kTextPadding);
+          search_box_->GetInsets().left());
   content_container_->SetLayoutManager(box_layout_);
   box_layout_->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);

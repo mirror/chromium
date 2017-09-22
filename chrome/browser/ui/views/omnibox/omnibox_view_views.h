@@ -102,6 +102,7 @@ class OmniboxViewViews : public OmniboxView,
   bool IsImeComposing() const override;
 
   // views::Textfield:
+  gfx::Insets GetInsets() const override;
   gfx::Size GetMinimumSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;

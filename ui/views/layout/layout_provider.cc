@@ -39,7 +39,7 @@ int LayoutProvider::GetControlHeightForFont(int context,
                                             const gfx::FontList& font) {
   return std::max(views::style::GetLineHeight(context, style),
                   font.GetHeight()) +
-         Get()->GetDistanceMetric(DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING);
+         Get()->GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_TEXT_PADDING) * 2;
 }
 
 gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
@@ -60,6 +60,8 @@ gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
     }
     case InsetsMetric::INSETS_CHECKBOX_RADIO_BUTTON:
       return gfx::Insets(5, 6);
+    case InsetsMetric::INSETS_OMNIBOX:
+      return gfx::Insets(3);
     case InsetsMetric::INSETS_VECTOR_IMAGE_BUTTON:
       return gfx::Insets(4);
   }
@@ -76,8 +78,8 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 0;
     case DistanceMetric::DISTANCE_CLOSE_BUTTON_MARGIN:
       return 7;
-    case DistanceMetric::DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING:
-      return 6;
+    case DistanceMetric::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING:
+      return 3;
     case DistanceMetric::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH:
       return 75;
     case DistanceMetric::DISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL:
@@ -95,6 +97,8 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 10;
     case DistanceMetric::DISTANCE_TABLE_CELL_HORIZONTAL_MARGIN:
       return 10;
+    case DistanceMetric::DISTANCE_TEXTFIELD_HORIZONTAL_TEXT_PADDING:
+      return 3;
     case DistanceMetric::DISTANCE_UNRELATED_CONTROL_VERTICAL:
       return 20;
   }
