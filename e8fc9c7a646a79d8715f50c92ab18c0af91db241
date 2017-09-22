@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbc2855_b4f7bc36",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-22T21:24:33Z",
+      "side": 1,
+      "message": "Obsolete?",
+      "revId": "e8fc9c7a646a79d8715f50c92ab18c0af91db241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
