@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce85ed89_b6e64a81",
+        "filename": "storage/common/fileapi/file_system_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T18:16:03Z",
+      "side": 1,
+      "message": "Nit: usually this goes before the \"end\" enum, since it comes numerically before.",
+      "revId": "22910799aca177151d6307099b6bee17958ecd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
