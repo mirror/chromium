@@ -29,6 +29,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/base/ime/input_method.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
@@ -230,6 +231,7 @@ AppListView::AppListView(AppListViewDelegate* delegate)
       short_animations_for_testing_(false),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       is_background_blur_enabled_(features::IsBackgroundBlurEnabled()),
+      is_app_list_focus_enabled_(features::IsAppListFocusEnabled()),
       display_observer_(this),
       animation_observer_(new HideViewAnimationObserver()) {
   CHECK(delegate);
@@ -1033,6 +1035,22 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
 void AppListView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetName(state_announcement_);
   node_data->role = ui::AX_ROLE_DESKTOP;
+}
+
+void AppListView::OnKeyEvent(ui::KeyEvent* event) {
+  if (is_app_list_focus_enabled_ && event->type() == ui::ET_KEY_PRESSED) {
+    views::Textfield* search_box = search_box_view_->search_box();
+    // Redirect key event to |search_box_|.
+    search_box->OnKeyEvent(event);
+    if (event->handled()) {
+      // Set search box focused if the key event is consumed.
+      search_box->RequestFocus();
+      return;
+    }
+    // Set focused text input client as search box, so that key event is later
+    // dispatched to it.
+    GetInputMethod()->SetFocusedTextInputClient(search_box_view_->search_box());
+  }
 }
 
 void AppListView::OnTabletModeChanged(bool started) {
