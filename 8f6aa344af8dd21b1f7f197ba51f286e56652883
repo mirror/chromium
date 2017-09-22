@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbca66b1_206a0545",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-22T18:03:06Z",
+      "side": 1,
+      "message": "The CL description explains this well, but maybe it\u0027s worth adding a short comment here that the longjmp checks, which are new in vs2017, rely on compiler instrumentation which we don\u0027t have enabled.",
+      "revId": "8f6aa344af8dd21b1f7f197ba51f286e56652883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
