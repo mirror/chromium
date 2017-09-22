@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898f3584_2e9e83f1",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-22T19:45:18Z",
+      "side": 1,
+      "message": "Can you put this in a switch so its a compile time check that action is kDecode instead of the DCHECK below?",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 41
+      },
+      "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafba6e4_0b657554",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-22T19:45:18Z",
+      "side": 1,
+      "message": "Here\u0027s a thought. IIUC then our aim is to try to find a cache entry at a higher mip level than the requested one and scale it. If not, request a decode at the exact size supported, scale it if necessary, and use that.\n\nCould we somehow manage all of this within GetScaledImageDecode? It first checks if a full size decode is required and defaults to GetExactSizeImageDecode. Then it checks the existing ImageKeys for something at a higher mip level (the keys should exist in |frame_key_to_image_keys_|) and scales that instead. Finally it does an exact size decode of the supported size and scales it.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 30
+      },
+      "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
