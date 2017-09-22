@@ -137,6 +137,15 @@ DOMWindow* HTMLFrameOwnerElement::contentWindow() const {
   return content_frame_ ? content_frame_->DomWindow() : 0;
 }
 
+void HTMLFrameOwnerElement::SetActivationDelegationFlags(
+    ActivationDelegationFlags flags) {
+  if (activation_delegation_flags_ != flags) {
+    activation_delegation_flags_ = flags;
+    FrameOwnerPropertiesChanged();
+    UpdateContainerPolicy();
+  }
+}
+
 void HTMLFrameOwnerElement::SetSandboxFlags(SandboxFlags flags) {
   sandbox_flags_ = flags;
   // Recalculate the container policy in case the allow-same-origin flag has
