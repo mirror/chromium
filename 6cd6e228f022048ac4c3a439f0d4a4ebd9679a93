@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b926501f_4b5a1ca8",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-22T22:21:02Z",
+      "side": 1,
+      "message": "should be at line 11. I think `git cl format` or the presubmit might catch this, btw.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 25
+      },
+      "revId": "6cd6e228f022048ac4c3a439f0d4a4ebd9679a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
