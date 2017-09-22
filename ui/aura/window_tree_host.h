@@ -190,6 +190,9 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Releases OS capture of the root window.
   virtual void ReleaseCapture() = 0;
 
+  virtual void LockKeys(const std::vector<int>& keys) {}
+  virtual void UnlockKeys(const std::vector<int>& keys) {}
+
  protected:
   friend class TestScreen;  // TODO(beng): see if we can remove/consolidate.
 

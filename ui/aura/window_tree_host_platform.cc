@@ -191,4 +191,13 @@ void WindowTreeHostPlatform::OnActivationChanged(bool active) {
     OnHostActivated();
 }
 
+void WindowTreeHostPlatform::LockKeys(const std::vector<int>& codes) {
+  // if (platform_window_->IsFullscreen())
+  platform_window_->LockKeys(codes);
+}
+
+void WindowTreeHostPlatform::UnlockKeys(const std::vector<int>& codes) {
+  platform_window_->UnlockKeys(codes);
+}
+
 }  // namespace aura

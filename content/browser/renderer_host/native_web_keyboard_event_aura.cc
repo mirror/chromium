@@ -138,7 +138,7 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(const ui::KeyEvent& key_event,
                                                base::char16 character)
     : WebKeyboardEvent(ui::MakeWebKeyboardEvent(key_event)),
       os_event(nullptr),
-      skip_in_browser(false) {
+      skip_in_browser(key_event.IsReserved()) {
   type_ = blink::WebInputEvent::kChar;
   windows_key_code = character;
   text[0] = character;

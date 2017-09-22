@@ -12,6 +12,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/gfx/win/msg_util.h"
 #include "ui/platform_window/platform_window_delegate.h"
+#include "ui/platform_window/win/low_level_keyboard_proc.h"
 
 namespace ui {
 
@@ -127,6 +128,14 @@ void WinWindow::ConfineCursorToBounds(const gfx::Rect& bounds) {
 
 PlatformImeController* WinWindow::GetPlatformImeController() {
   return nullptr;
+}
+
+void WinWindow::LockKeys(const std::vector<int>& keys) {
+  LowLevelKeyboardProc::GetInstance()->LockKeys(delegate_);
+}
+
+void WinWindow::UnlockKeys(const std::vector<int>& keys) {
+  LowLevelKeyboardProc::GetInstance()->UnlockKeys(delegate_);
 }
 
 LRESULT WinWindow::OnMouseRange(UINT message, WPARAM w_param, LPARAM l_param) {
