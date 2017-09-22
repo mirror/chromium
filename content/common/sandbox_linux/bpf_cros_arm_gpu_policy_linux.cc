@@ -40,51 +40,6 @@ namespace content {
 
 namespace {
 
-inline bool IsChromeOS() {
-#if defined(OS_CHROMEOS)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureArm() {
-#if defined(__arm__) || defined(__aarch64__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-void AddArmMaliGpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
-  // Device file needed by the ARM GPU userspace.
-  static const char kMali0Path[] = "/dev/mali0";
-
-  // Image processor used on ARM platforms.
-  static const char kDevImageProc0Path[] = "/dev/image-proc0";
-
-  permissions->push_back(BrokerFilePermission::ReadWrite(kMali0Path));
-  permissions->push_back(BrokerFilePermission::ReadWrite(kDevImageProc0Path));
-}
-
-void AddArmGpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
-  // On ARM we're enabling the sandbox before the X connection is made,
-  // so we need to allow access to |.Xauthority|.
-  static const char kXAuthorityPath[] = "/home/chronos/.Xauthority";
-  static const char kLdSoCache[] = "/etc/ld.so.cache";
-
-  // Files needed by the ARM GPU userspace.
-  static const char kLibGlesPath[] = "/usr/lib/libGLESv2.so.2";
-  static const char kLibEglPath[] = "/usr/lib/libEGL.so.1";
-
-  permissions->push_back(BrokerFilePermission::ReadOnly(kXAuthorityPath));
-  permissions->push_back(BrokerFilePermission::ReadOnly(kLdSoCache));
-  permissions->push_back(BrokerFilePermission::ReadOnly(kLibGlesPath));
-  permissions->push_back(BrokerFilePermission::ReadOnly(kLibEglPath));
-
-  AddArmMaliGpuWhitelist(permissions);
-}
-
 class CrosArmGpuBrokerProcessPolicy : public CrosArmGpuProcessPolicy {
  public:
   static sandbox::bpf_dsl::Policy* Create() {
@@ -153,30 +108,6 @@ ResultExpr CrosArmGpuProcessPolicy::EvaluateSyscall(int sysno) const {
       // Default to the generic GPU policy.
       return GpuProcessPolicy::EvaluateSyscall(sysno);
   }
-}
-
-bool CrosArmGpuProcessPolicy::PreSandboxHook() {
-  DCHECK(IsChromeOS() && IsArchitectureArm());
-  // Create a new broker process.
-  DCHECK(!broker_process());
-
-  // Add ARM-specific files to whitelist in the broker.
-  std::vector<BrokerFilePermission> permissions;
-
-  AddArmGpuWhitelist(&permissions);
-  InitGpuBrokerProcess(CrosArmGpuBrokerProcessPolicy::Create, permissions);
-
-  const int dlopen_flag = RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE;
-
-  // Preload the Mali library.
-  dlopen("/usr/lib/libmali.so", dlopen_flag);
-  // Preload the Tegra V4L2 (video decode acceleration) library.
-  dlopen("/usr/lib/libtegrav4l2.so", dlopen_flag);
-  // Resetting errno since platform-specific libraries will fail on other
-  // platforms.
-  errno = 0;
-
-  return true;
 }
 
 }  // namespace content

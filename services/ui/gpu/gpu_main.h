@@ -15,6 +15,7 @@
 
 namespace gpu {
 class GpuMemoryBufferFactory;
+class SandboxHelper;
 }
 
 namespace viz {
@@ -25,7 +26,7 @@ class GpuServiceImpl;
 
 namespace ui {
 
-class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
+class GpuMain : public mojom::GpuMain {
  public:
   explicit GpuMain(mojom::GpuMainRequest request);
   ~GpuMain() override;
@@ -69,6 +70,7 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
                                 const gpu::GPUInfo* gpu_info) override;
 
   std::unique_ptr<gpu::GpuInit> gpu_init_;
+  std::unique_ptr<gpu::SandboxHelper> sandbox_helper_;
   std::unique_ptr<viz::GpuServiceImpl> gpu_service_;
 
   // The InCommandCommandBuffer::Service used by the frame sink manager.

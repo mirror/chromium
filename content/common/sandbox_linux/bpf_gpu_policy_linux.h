@@ -29,8 +29,6 @@ class GpuProcessPolicy : public SandboxBPFBasePolicy {
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
-  bool PreSandboxHook() override;
-
  protected:
   // Start a broker process to handle open() inside the sandbox.
   // |broker_sandboxer_allocator| is a function pointer which can allocate a

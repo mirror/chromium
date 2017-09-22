@@ -44,6 +44,19 @@ std::unique_ptr<base::MessagePump> CreateMessagePumpMac() {
 }
 #endif  // defined(OS_MACOSX)
 
+class NullSandboxHelper : public SandboxHelper {
+ public:
+  NullSandboxHelper() : SandboxHelper(nullptr) {}
+
+  void PreSandboxStartup() override {
+    // TODO(sad): https://crbug.com/645602
+  }
+  bool EnsureSandboxInitialized(GpuWatchdogThread* watchdog_thread) override {
+    // TODO(sad): https://crbug.com/645602
+    return false;
+  }
+};
+
 }  // namespace
 
 namespace ui {
@@ -226,16 +239,6 @@ void GpuMain::CreateGpuServiceOnGpuThread(
         std::move(pending_frame_sink_manager_request_),
         std::move(pending_frame_sink_manager_client_info_));
   }
-}
-
-void GpuMain::PreSandboxStartup() {
-  // TODO(sad): https://crbug.com/645602
-}
-
-bool GpuMain::EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
-                                       const gpu::GPUInfo* gpu_info) {
-  // TODO(sad): https://crbug.com/645602
-  return true;
 }
 
 }  // namespace ui

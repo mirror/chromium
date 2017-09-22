@@ -172,7 +172,7 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
 #endif  // OS_WIN
   }
 
-  sandbox_helper_->PreSandboxStartup();
+  sandbox_helper_->PreSandboxStartup(&gpu_info);
 
   bool attempted_startsandbox = false;
 #if defined(OS_LINUX)
