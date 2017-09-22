@@ -23,7 +23,7 @@ class FakeDeviceSyncFactory : public multidevice::DeviceSyncImpl::Factory {
       cryptauth::CryptAuthDeviceManager* device_manager,
       cryptauth::CryptAuthEnrollmentManager* enrollment_manager,
       cryptauth::SecureMessageDelegateFactory* secure_message_delegate_factory,
-      const cryptauth::GcmDeviceInfo& gcm_device_info) override {
+      cryptauth::GcmDeviceInfo gcm_device_info) override {
     return base::MakeUnique<multidevice::FakeDeviceSync>();
   }
 };

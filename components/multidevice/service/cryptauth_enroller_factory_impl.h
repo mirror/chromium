@@ -25,7 +25,7 @@ class CryptAuthEnrollerFactoryImpl
  public:
   CryptAuthEnrollerFactoryImpl(
       identity::mojom::IdentityManager* identity_manager,
-      const AccountInfo& account_info,
+      AccountInfo account_info,
       cryptauth::DeviceClassifier device_classifier,
       scoped_refptr<net::URLRequestContextGetter> url_request_context,
       cryptauth::SecureMessageDelegateFactory* secure_message_delegate_factory);

@@ -29,7 +29,7 @@ MultiDeviceService::MultiDeviceService(
     std::unique_ptr<cryptauth::SecureMessageDelegateFactory>
         secure_message_delegate_factory,
     cryptauth::CryptAuthEnrollmentManager* enrollment_manager,
-    const cryptauth::GcmDeviceInfo& gcm_device_info)
+    cryptauth::GcmDeviceInfo gcm_device_info)
     : identity_manager_(std::move(identity_manager)),
       pref_connector_(std::move(pref_connector)),
       gcm_manager_(gcm_manager),

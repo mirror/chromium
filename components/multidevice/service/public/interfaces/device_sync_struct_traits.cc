@@ -4,11 +4,12 @@
 
 #include "components/multidevice/service/public/interfaces/device_sync_struct_traits.h"
 
+#include "base/base64.h"
 #include "ipc/ipc_message_utils.h"
 
 namespace mojo {
 
-const std::string& StructTraits<
+std::string StructTraits<
     device_sync::mojom::BeaconSeedDataView,
     cryptauth::BeaconSeed>::data(const cryptauth::BeaconSeed& beacon_seed) {
   return beacon_seed.data();
@@ -43,7 +44,43 @@ bool StructTraits<
   return true;
 };
 
-const std::string&
+std::string StructTraits<device_sync::mojom::IneligibleDeviceDataView,
+                         cryptauth::IneligibleDevice>::
+    device_id(const cryptauth::IneligibleDevice& ineligible_device) {
+  std::string device_id;
+  base::Base64Encode(ineligible_device.device().public_key(), &device_id);
+  return device_id;
+}
+
+std::vector<std::string> StructTraits<
+    device_sync::mojom::IneligibleDeviceDataView,
+    cryptauth::IneligibleDevice>::reasons(const cryptauth::IneligibleDevice&
+                                              ineligible_device) {
+  return std::vector<std::string>(ineligible_device.reasons().begin(),
+                                  ineligible_device.reasons().end());
+}
+
+bool StructTraits<device_sync::mojom::IneligibleDeviceDataView,
+                  cryptauth::IneligibleDevice>::
+    Read(device_sync::mojom::IneligibleDeviceDataView data,
+         cryptauth::IneligibleDevice* out) {
+  std::string device_id;
+  std::vector<std::string> reasons;
+  if (!data.ReadDeviceId(&device_id) || !data.ReadReasons(&reasons)) {
+    return false;
+  }
+
+  for (auto reason : reasons) {
+    out->add_reasons(reason);
+  }
+
+  std::string public_key;
+  base::Base64Decode(device_id, &public_key);
+  out->mutable_device()->set_public_key(public_key);
+  return true;
+}
+
+std::string
 StructTraits<device_sync::mojom::RemoteDeviceDataView,
              cryptauth::RemoteDevice>::public_key(const cryptauth::RemoteDevice&
                                                       remote_device) {
@@ -57,21 +94,21 @@ StructTraits<device_sync::mojom::RemoteDeviceDataView,
   return remote_device.GetDeviceId();
 }
 
-const std::string&
+std::string
 StructTraits<device_sync::mojom::RemoteDeviceDataView,
              cryptauth::RemoteDevice>::user_id(const cryptauth::RemoteDevice&
                                                    remote_device) {
   return remote_device.user_id;
 }
 
-const std::string& StructTraits<device_sync::mojom::RemoteDeviceDataView,
-                                cryptauth::RemoteDevice>::
+std::string StructTraits<device_sync::mojom::RemoteDeviceDataView,
+                         cryptauth::RemoteDevice>::
     device_name(const cryptauth::RemoteDevice& remote_device) {
   return remote_device.name;
 }
 
-const std::string& StructTraits<device_sync::mojom::RemoteDeviceDataView,
-                                cryptauth::RemoteDevice>::
+std::string StructTraits<device_sync::mojom::RemoteDeviceDataView,
+                         cryptauth::RemoteDevice>::
     persistent_symmetric_key(const cryptauth::RemoteDevice& remote_device) {
   return remote_device.persistent_symmetric_key;
 }
@@ -106,13 +143,40 @@ bool StructTraits<device_sync::mojom::RemoteDeviceDataView,
       !data.ReadPersistentSymmetricKey(&persistent_symmetric_key) ||
       !data.ReadBeaconSeeds(&beacon_seeds_out))
     return false;
-  *out_remote_device =
-      cryptauth::RemoteDevice(user_id, device_id, public_key,
-                              std::string() /*bluetooth_address - deprecated */,
-                              persistent_symmetric_key, data.unlock_key(),
-                              data.mobile_hotspot_supported());
+  *out_remote_device = cryptauth::RemoteDevice(
+      user_id, device_id, public_key, "" /*bluetooth_address - deprecated */,
+      persistent_symmetric_key, data.unlock_key(),
+      data.mobile_hotspot_supported());
   out_remote_device->LoadBeaconSeeds(beacon_seeds_out);
   return true;
+}
+
+// TODO(khorimoto): Must update this when new capabilities are added.
+device_sync::mojom::RemoteDeviceCapability
+EnumTraits<device_sync::mojom::RemoteDeviceCapability,
+           cryptauth::DeviceCapabilityManager::Capability>::
+    ToMojom(cryptauth::DeviceCapabilityManager::Capability capability) {
+  switch (capability) {
+    case cryptauth::DeviceCapabilityManager::Capability::CAPABILITY_UNLOCK_KEY:
+      return device_sync::mojom::RemoteDeviceCapability::UNLOCK_KEY;
+    default:
+      NOTREACHED();
+  }
+  // TODO(hsuregan): Maybe add INVALID into DeviceCapabilityManager
+  return device_sync::mojom::RemoteDeviceCapability::UNLOCK_KEY;
+}
+
+bool EnumTraits<device_sync::mojom::RemoteDeviceCapability,
+                cryptauth::DeviceCapabilityManager::Capability>::
+    FromMojom(device_sync::mojom::RemoteDeviceCapability data,
+              cryptauth::DeviceCapabilityManager::Capability* out) {
+  switch (data) {
+    case device_sync::mojom::RemoteDeviceCapability::UNLOCK_KEY:
+      *out =
+          cryptauth::DeviceCapabilityManager::Capability::CAPABILITY_UNLOCK_KEY;
+      return true;
+  }
+  return false;
 }
 
 }  // namespace mojo

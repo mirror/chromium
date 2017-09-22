@@ -13,10 +13,10 @@ namespace multidevice {
 
 CryptAuthClientFactoryImpl::CryptAuthClientFactoryImpl(
     identity::mojom::IdentityManager* identity_manager,
-    const AccountInfo& account_info,
+    AccountInfo account_info,
     scoped_refptr<net::URLRequestContextGetter> url_request_context,
     const cryptauth::DeviceClassifier& device_classifier)
-    : url_request_context_(std::move(url_request_context)),
+    : url_request_context_(url_request_context),
       identity_manager_(identity_manager),
       account_info_(account_info),
       device_classifier_(device_classifier) {}
@@ -26,7 +26,7 @@ CryptAuthClientFactoryImpl::~CryptAuthClientFactoryImpl() {}
 std::unique_ptr<cryptauth::CryptAuthClient>
 CryptAuthClientFactoryImpl::CreateInstance() {
   return base::MakeUnique<cryptauth::CryptAuthClientImpl>(
-      base::MakeUnique<cryptauth::CryptAuthApiCallFlow>(),
+      base::WrapUnique(new cryptauth::CryptAuthApiCallFlow()),
       base::WrapUnique(new CryptAuthAccessTokenFetcherImpl(account_info_,
                                                            identity_manager_)),
       url_request_context_, device_classifier_);

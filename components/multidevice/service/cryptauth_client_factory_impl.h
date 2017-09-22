@@ -23,7 +23,7 @@ class CryptAuthClientFactoryImpl : public cryptauth::CryptAuthClientFactory {
  public:
   CryptAuthClientFactoryImpl(
       identity::mojom::IdentityManager* identity_manager,
-      const AccountInfo& account_info,
+      AccountInfo account_info,
       scoped_refptr<net::URLRequestContextGetter> url_request_context,
       const cryptauth::DeviceClassifier& device_classifier);
 

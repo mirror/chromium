@@ -39,7 +39,7 @@ class MultiDeviceService : public service_manager::Service {
                      std::unique_ptr<cryptauth::SecureMessageDelegateFactory>
                          secure_message_delegate_factory,
                      cryptauth::CryptAuthEnrollmentManager* enrollment_manager,
-                     const cryptauth::GcmDeviceInfo& gcm_device_info);
+                     cryptauth::GcmDeviceInfo gcm_device_info);
 
   ~MultiDeviceService() override;
 

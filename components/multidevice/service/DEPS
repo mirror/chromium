@@ -9,6 +9,8 @@ include_rules = [
   "+services/identity",
   "+services/preferences/public",
   "+services/service_manager/public/cpp",
+  "+ui/display",
+  "+ui/gfx",
 ]
 
 specific_include_rules = {

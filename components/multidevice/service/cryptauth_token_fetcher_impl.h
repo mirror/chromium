@@ -15,7 +15,7 @@ class CryptAuthAccessTokenFetcherImpl
     : public cryptauth::CryptAuthAccessTokenFetcher {
  public:
   CryptAuthAccessTokenFetcherImpl(
-      const AccountInfo& account_info,
+      AccountInfo account_info,
       identity::mojom::IdentityManager* identity_manager);
 
   ~CryptAuthAccessTokenFetcherImpl() override;

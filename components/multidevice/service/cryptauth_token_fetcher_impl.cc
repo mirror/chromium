@@ -21,7 +21,7 @@ std::set<std::string> GetScopes() {
 }  // namespace
 
 CryptAuthAccessTokenFetcherImpl::CryptAuthAccessTokenFetcherImpl(
-    const AccountInfo& account_info,
+    AccountInfo account_info,
     identity::mojom::IdentityManager* identity_manager)
     : account_info_(account_info),
       identity_manager_(identity_manager),

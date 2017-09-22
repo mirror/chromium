@@ -17,6 +17,8 @@ static_library("service") {
     "cryptauth_token_fetcher_impl.h",
     "device_sync_impl.cc",
     "device_sync_impl.h",
+    "device_sync_mojom_result_code_util.cc",
+    "device_sync_mojom_result_code_util.h",
     "multidevice_service.cc",
     "multidevice_service.h",
   ]
@@ -44,10 +46,11 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "device_sync_impl_unittest.cc",
+    "fake_device_sync.cc",
+    "fake_device_sync.h",
   ]
   deps = [
     ":service",
-    ":test_support",
     "//base",
     "//components/cryptauth",
     "//components/cryptauth:test_support",
@@ -56,18 +59,6 @@ source_set("unit_tests") {
     "//services/service_manager/public/cpp:service_test_support",
     "//testing/gmock",
     "//testing/gtest",
-  ]
-}
-
-static_library("test_support") {
-  testonly = true
-  sources = [
-    "fake_device_sync.cc",
-    "fake_device_sync.h",
-  ]
-  deps = [
-    "//components/cryptauth",
-    "//mojo/common",
   ]
 }
 
@@ -111,7 +102,6 @@ service_manifest("multidevice_service_unittest_manifest") {
 }
 
 catalog("multidevice_service_unittest_catalog") {
-  testonly = true
   embedded_services = [ ":multidevice_service_unittest_manifest" ]
   standalone_services = [ ":multidevice_manifest" ]
 }
