@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76264c80_f416e7e6",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-22T22:31:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c04e9a1_3d08038b",
+      "revId": "7cce138dda6865a2a4efbe021e786abedde84379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f5431c3_2a17af3e",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 8
