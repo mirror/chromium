@@ -16,6 +16,24 @@
       "revId": "4731d0885b5083aeea78fb00a80f6ffb304c34ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01b0b50_fbfdb3c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-22T18:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51ed0ae9_08c2c0f4",
+      "revId": "4731d0885b5083aeea78fb00a80f6ffb304c34ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
