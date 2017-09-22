@@ -189,6 +189,30 @@
       "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ffcf026_5853398f",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:58:16Z",
+      "side": 1,
+      "message": "Alexander: How do we want to change a scheduling policy between kInternalInitialization and kUnspecedTimer?",
+      "parentUuid": "7a8c3e01_ac33d97b",
+      "range": {
+        "startLine": 397,
+        "startChar": 63,
+        "endLine": 397,
+        "endChar": 77
+      },
+      "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
