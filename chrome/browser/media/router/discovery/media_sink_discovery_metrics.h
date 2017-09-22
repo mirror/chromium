@@ -12,6 +12,31 @@
 
 namespace media_router {
 
+// Possible values for Cast channel connect results. Keep in sync with
+// BooleanSuccess in analysis/uma/configs/chrome/histograms.xml.
+enum class MediaRouterChannelConnectResults {
+  FAILURE = 0,
+  SUCCESS = 1,
+
+  // Note = Add entries only immediately above this line.
+  TOTAL_COUNT = 2
+};
+
+// Possible values for channel open errors.
+enum class MediaRouterChannelError {
+  UNKNOWN = 0,
+  AUTHENTICATION = 1,
+  CONNECT = 2,
+  GENERAL_CERTIFICATE = 3,
+  CERTIFICATE_TIMING = 4,
+  NETWORK = 5,
+  CONNECT_TIMEOUT = 6,
+  PING_TIMEOUT = 7,
+
+  // Note = Add entries only immediately above this line.
+  TOTAL_COUNT = 8
+};
+
 class DeviceCountMetrics {
  public:
   DeviceCountMetrics();
@@ -56,8 +81,10 @@ class CastDeviceCountMetrics : public DeviceCountMetrics {
     kMdns = 1,
     kDial = 2,
     kConnectionRetry = 3,
+    kMdnsDial = 4,  // Device was first discovered via mDNS, then by DIAL.
+    kDialMdns = 5,  // Device was first discovered via DIAL, then by mDNS.
 
-    kTotalCount = 3,
+    kTotalCount = 6,
   };
 
   static const char kHistogramCastKnownDeviceCount[];
@@ -69,6 +96,24 @@ class CastDeviceCountMetrics : public DeviceCountMetrics {
                           size_t known_device_count) override;
   void RecordCachedSinksAvailableCount(size_t cached_sink_count);
   void RecordResolvedFromSource(SinkSource sink_source);
+};
+
+class CastAnalytics {
+ public:
+  static constexpr char const kHistogramCastChannelConnectResult[] =
+      "MediaRouter.Cast.Channel.ConnectResult";
+  static constexpr char const kHistogramCastChannelError[] =
+      "MediaRouter.Cast.Channel.Error";
+  static constexpr char const kHistogramCastMdnsChannelOpenSuccess[] =
+      "MediaRouter.Cast.Mdns.Channel.Open_Success";
+  static constexpr char const kHistogramCastMdnsChannelOpenFailure[] =
+      "MediaRouter.Cast.Mdns.Channel.Open_Failure";
+
+  static void RecordCastChannelConnectResult(
+      MediaRouterChannelConnectResults result);
+  static void RecordDeviceChannelError(MediaRouterChannelError channel_error);
+  static void RecordDeviceChannelOpenDuration(bool success,
+                                              const base::TimeDelta& duration);
 };
 
 }  // namespace media_router
