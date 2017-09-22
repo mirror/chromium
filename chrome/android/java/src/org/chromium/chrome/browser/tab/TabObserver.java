@@ -290,4 +290,10 @@ public interface TabObserver {
      * @param tab The notifying {@link Tab}.
      */
     public void onReparentingFinished(Tab tab);
+
+    /**
+     * Called when the navigation entries of this tab have been pruned.
+     * @param tab The notifying {@link Tab}.
+     */
+    void onNavigationListPruned(Tab tab);
 }
