@@ -136,6 +136,8 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
   // TODO(dougt) Maybe promote this to AXPlatformNode at some point.
   virtual base::string16 GetText();
 
+  base::string16 GetValue();
+
   //
   // Delegate.  This is a weak reference which owns |this|.
   //

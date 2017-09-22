@@ -542,4 +542,15 @@ base::string16 AXPlatformNodeBase::GetText() {
   return GetInnerText();
 }
 
+base::string16 AXPlatformNodeBase::GetValue() {
+  base::string16 value = GetString16Attribute(ui::AX_ATTR_VALUE);
+  // Some screen readers like Jaws and older versions of VoiceOver require a
+  // value to be set in text fields with rich content, even though the same
+  // information is available on the children.
+  if (value.empty() && (IsSimpleTextControl() || IsRichTextControl()) &&
+      !IsNativeTextControl())
+    value = GetInnerText();
+  return value;
+}
+
 }  // namespace ui

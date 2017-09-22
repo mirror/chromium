@@ -170,6 +170,10 @@ IAccessible2UsageObserver::IAccessible2UsageObserver() {
 IAccessible2UsageObserver::~IAccessible2UsageObserver() {
 }
 
+AXHypertext::AXHypertext() {}
+AXHypertext::AXHypertext(const AXHypertext& other) = default;
+AXHypertext::~AXHypertext() {}
+
 // static
 base::ObserverList<IAccessible2UsageObserver>&
     GetIAccessible2UsageObserverList() {
@@ -621,7 +625,7 @@ int AXPlatformNodeWin::GetIndexInParent() {
 base::string16 AXPlatformNodeWin::GetText() {
   if (IsChildOfLeaf())
     return AXPlatformNodeBase::GetText();
-  return hypertext_;
+  return hypertext_.hypertext_;
 }
 
 //
@@ -3380,6 +3384,71 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
   return result;
 }
 
+base::string16 AXPlatformNodeWin::ComputeValue() {
+  base::string16 value = GetValue();
+
+  // Expose slider value.
+  if (IsRangeValueSupported()) {
+    value = GetRangeValueText();
+  } else if (ui::IsDocument(GetData().role)) {
+    // On Windows, the value of a document should be its url.
+    value = base::UTF8ToUTF16(delegate_->GetTreeData().url);
+  }
+  // If this doesn't have a value and is linked then set its value to the url
+  // attribute. This allows screen readers to read an empty link's
+  // destination.
+  if (value.empty() && (MSAAState() & STATE_SYSTEM_LINKED))
+    value = GetString16Attribute(ui::AX_ATTR_URL);
+
+  return value;
+}
+
+AXHypertext AXPlatformNodeWin::ComputeHypertext() {
+  AXHypertext result;
+
+  if (IsSimpleTextControl()) {
+    result.hypertext_ = ComputeValue();
+    return result;
+  }
+
+  int child_count = delegate_->GetChildCount();
+
+  if (!child_count) {
+    if (IsRichTextControl()) {
+      // We don't want to expose any associated label in IA2 Hypertext.
+      return result;
+    }
+    result.hypertext_ = GetString16Attribute(ui::AX_ATTR_NAME);
+    return result;
+  }
+
+  // Construct the hypertext for this node, which contains the concatenation
+  // of all of the static text and widespace of this node's children and an
+  // embedded object character for all the other children. Build up a map from
+  // the character index of each embedded object character to the id of the
+  // child object it points to.
+  base::string16 hypertext;
+  for (int i = 0; i < child_count; ++i) {
+    auto* child = static_cast<AXPlatformNodeWin*>(
+        FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
+
+    DCHECK(child);
+    // Similar to Firefox, we don't expose text-only objects in IA2 hypertext.
+    if (child->IsTextOnlyObject()) {
+      hypertext += child->GetString16Attribute(ui::AX_ATTR_NAME);
+    } else {
+      int32_t char_offset = static_cast<int32_t>(hypertext.size());
+      int32_t child_unique_id = child->unique_id();
+      int32_t index = static_cast<int32_t>(result.hyperlinks_.size());
+      result.hyperlink_offset_to_index_[char_offset] = index;
+      result.hyperlinks_.push_back(child_unique_id);
+      hypertext += kEmbeddedCharacter;
+    }
+  }
+  result.hypertext_ = hypertext;
+  return result;
+}
+
 bool AXPlatformNodeWin::ShouldNodeHaveReadonlyStateByDefault(
     const AXNodeData& data) const {
   switch (data.role) {
@@ -3762,14 +3831,14 @@ bool AXPlatformNodeWin::IsHyperlink() {
 AXPlatformNodeWin* AXPlatformNodeWin::GetHyperlinkFromHypertextOffset(
     int offset) {
   std::map<int32_t, int32_t>::iterator iterator =
-      hyperlink_offset_to_index_.find(offset);
-  if (iterator == hyperlink_offset_to_index_.end())
+      hypertext_.hyperlink_offset_to_index_.find(offset);
+  if (iterator == hypertext_.hyperlink_offset_to_index_.end())
     return nullptr;
 
   int32_t index = iterator->second;
   DCHECK_GE(index, 0);
-  DCHECK_LT(index, static_cast<int32_t>(hyperlinks_.size()));
-  int32_t id = hyperlinks_[index];
+  DCHECK_LT(index, static_cast<int32_t>(hypertext_.hyperlinks_.size()));
+  int32_t id = hypertext_.hyperlinks_[index];
   auto* hyperlink =
       static_cast<AXPlatformNodeWin*>(AXPlatformNodeWin::GetFromUniqueId(id));
   if (!hyperlink)
@@ -3779,20 +3848,20 @@ AXPlatformNodeWin* AXPlatformNodeWin::GetHyperlinkFromHypertextOffset(
 
 int32_t AXPlatformNodeWin::GetHyperlinkIndexFromChild(
     AXPlatformNodeWin* child) {
-  if (hyperlinks_.empty())
+  if (hypertext_.hyperlinks_.empty())
     return -1;
 
-  auto iterator =
-      std::find(hyperlinks_.begin(), hyperlinks_.end(), child->unique_id());
-  if (iterator == hyperlinks_.end())
+  auto iterator = std::find(hypertext_.hyperlinks_.begin(),
+                            hypertext_.hyperlinks_.end(), child->unique_id());
+  if (iterator == hypertext_.hyperlinks_.end())
     return -1;
 
-  return static_cast<int32_t>(iterator - hyperlinks_.begin());
+  return static_cast<int32_t>(iterator - hypertext_.hyperlinks_.begin());
 }
 
 int32_t AXPlatformNodeWin::GetHypertextOffsetFromHyperlinkIndex(
     int32_t hyperlink_index) {
-  for (auto& offset_index : hyperlink_offset_to_index_) {
+  for (auto& offset_index : hypertext_.hyperlink_offset_to_index_) {
     if (offset_index.second == hyperlink_index)
       return offset_index.first;
   }
@@ -3925,8 +3994,8 @@ bool AXPlatformNodeWin::IsSameHypertextCharacter(size_t old_char_index,
                                                  size_t new_char_index) {
   // For anything other than the "embedded character", we just compare the
   // characters directly.
-  base::char16 old_ch = old_hypertext_[old_char_index];
-  base::char16 new_ch = hypertext_[new_char_index];
+  base::char16 old_ch = old_hypertext_.hypertext_[old_char_index];
+  base::char16 new_ch = hypertext_.hypertext_[new_char_index];
   if (old_ch != new_ch)
     return false;
   if (old_ch == new_ch && new_ch != kEmbeddedCharacter)
@@ -3935,8 +4004,8 @@ bool AXPlatformNodeWin::IsSameHypertextCharacter(size_t old_char_index,
   // If it's an embedded character, they're only identical if the child id
   // the hyperlink points to is the same.
   std::map<int32_t, int32_t>& old_offset_to_index =
-      old_hyperlink_offset_to_index_;
-  std::vector<int32_t>& old_hyperlinks = old_hyperlinks_;
+      old_hypertext_.hyperlink_offset_to_index_;
+  std::vector<int32_t>& old_hyperlinks = old_hypertext_.hyperlinks_;
   int32_t old_hyperlinks_count = static_cast<int32_t>(old_hyperlinks.size());
   std::map<int32_t, int32_t>::iterator iter;
   iter = old_offset_to_index.find((int32_t)old_char_index);
@@ -3945,8 +4014,9 @@ bool AXPlatformNodeWin::IsSameHypertextCharacter(size_t old_char_index,
                          ? old_hyperlinks[old_index]
                          : -1;
 
-  std::map<int32_t, int32_t>& new_offset_to_index = hyperlink_offset_to_index_;
-  std::vector<int32_t>& new_hyperlinks = hyperlinks_;
+  std::map<int32_t, int32_t>& new_offset_to_index =
+      hypertext_.hyperlink_offset_to_index_;
+  std::vector<int32_t>& new_hyperlinks = hypertext_.hyperlinks_;
   int32_t new_hyperlinks_count = static_cast<int32_t>(new_hyperlinks.size());
   iter = new_offset_to_index.find((int32_t)new_char_index);
   int new_index = (iter != new_offset_to_index.end()) ? iter->second : -1;
@@ -3964,7 +4034,7 @@ void AXPlatformNodeWin::ComputeHypertextRemovedAndInserted(int* start,
   *old_len = 0;
   *new_len = 0;
 
-  const base::string16& old_text = old_hypertext_;
+  const base::string16& old_text = old_hypertext_.hypertext_;
   const base::string16& new_text = GetText();
 
   size_t common_prefix = 0;
