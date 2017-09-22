@@ -360,8 +360,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   void CompleteAllAnimations();
 
-  // Suppresses painting the content by disconnecting |delegate_|.
-  void SuppressPaint();
+  // Suppresses painting the content by deferred paint.
+  void SuppressPaint(bool suppress = true);
 
   // Notifies the layer that the device scale factor has changed.
   void OnDeviceScaleFactorChanged(float device_scale_factor);
@@ -429,6 +429,9 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // surface even if layer is invisible is not a problem.
   void AddCacheRenderSurfaceRequest();
   void RemoveCacheRenderSurfaceRequest();
+
+  void AddDeferredPaintRequest();
+  void RemoveDeferredPaintRequest();
 
   // The back link from the mask layer to it's associated masked layer.
   // We keep this reference for the case that if the mask layer gets deleted
@@ -605,6 +608,11 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // the value > 0, means we need to cache the render surface. If the value
   // == 0, means we should not cache the render surface.
   unsigned cache_render_surface_requests_;
+
+  // The counter to maintain how many deferred paint requests we have. If the
+  // value > 0, means we need to defer painting the layer. If the value == 0,
+  // means we should paint the layer.
+  unsigned deferred_paint_requests_;
 
   DISALLOW_COPY_AND_ASSIGN(Layer);
 };

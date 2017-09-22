@@ -113,7 +113,8 @@ Layer::Layer()
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      deferred_paint_requests_(0) {
   CreateCcLayer();
 }
 
@@ -141,7 +142,8 @@ Layer::Layer(LayerType type)
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      deferred_paint_requests_(0) {
   CreateCcLayer();
 }
 
@@ -161,8 +163,8 @@ Layer::~Layer() {
     SetMaskLayer(NULL);
   if (layer_mask_back_link_)
     layer_mask_back_link_->SetMaskLayer(NULL);
-  for (size_t i = 0; i < children_.size(); ++i)
-    children_[i]->parent_ = NULL;
+  for (auto* child : children_)
+    child->parent_ = NULL;
 
   cc_layer_->RemoveFromParent();
   if (mailbox_release_callback_)
@@ -640,9 +642,9 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   texture_layer_ = NULL;
   surface_layer_ = NULL;
 
-  for (size_t i = 0; i < children_.size(); ++i) {
-    DCHECK(children_[i]->cc_layer_);
-    cc_layer_->AddChild(children_[i]->cc_layer_);
+  for (auto* child : children_) {
+    DCHECK(child->cc_layer_);
+    cc_layer_->AddChild(child->cc_layer_);
   }
   cc_layer_->SetLayerClient(this);
   cc_layer_->SetTransformOrigin(gfx::Point3F());
@@ -682,6 +684,25 @@ void Layer::RemoveCacheRenderSurfaceRequest() {
                     cache_render_surface_requests_);
   if (cache_render_surface_requests_ == 0)
     cc_layer_->SetCacheRenderSurface(false);
+}
+
+void Layer::AddDeferredPaintRequest() {
+  ++deferred_paint_requests_;
+  TRACE_COUNTER_ID1("ui", "DeferredPaintRequests", this,
+                    deferred_paint_requests_);
+}
+
+void Layer::RemoveDeferredPaintRequest() {
+  DCHECK_GT(deferred_paint_requests_, 0u);
+
+  --deferred_paint_requests_;
+  TRACE_COUNTER_ID1("ui", "DeferredPaintRequests", this,
+                    deferred_paint_requests_);
+  if (!deferred_paint_requests_ && !damaged_region_.IsEmpty()) {
+    ScheduleDraw();
+    if (layer_mask_)
+      layer_mask_->ScheduleDraw();
+  }
 }
 
 void Layer::SetTextureMailbox(
@@ -838,15 +859,19 @@ SkColor Layer::background_color() const {
 
 bool Layer::SchedulePaint(const gfx::Rect& invalid_rect) {
   if ((type_ == LAYER_SOLID_COLOR && !texture_layer_.get()) ||
-      type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid()))
+      type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid())) {
     return false;
+  }
 
   damaged_region_.Union(invalid_rect);
-  ScheduleDraw();
-
-  if (layer_mask_) {
+  if (layer_mask_)
     layer_mask_->damaged_region_.Union(invalid_rect);
-    layer_mask_->ScheduleDraw();
+
+  if (!content_layer_ || !deferred_paint_requests_) {
+    ScheduleDraw();
+    if (layer_mask_) {
+      layer_mask_->ScheduleDraw();
+    }
   }
   return true;
 }
@@ -861,6 +886,8 @@ void Layer::SendDamagedRects() {
   if (damaged_region_.IsEmpty())
     return;
   if (!delegate_ && !mailbox_.IsValid())
+    return;
+  if (content_layer_ && deferred_paint_requests_)
     return;
 
   for (cc::Region::Iterator iter(damaged_region_); iter.has_rect(); iter.next())
@@ -884,12 +911,20 @@ void Layer::CompleteAllAnimations() {
   }
 }
 
-void Layer::SuppressPaint() {
+void Layer::SuppressPaint(bool suppress) {
   if (!delegate_)
     return;
-  delegate_ = NULL;
-  for (size_t i = 0; i < children_.size(); ++i)
-    children_[i]->SuppressPaint();
+
+  if (suppress)
+    AddDeferredPaintRequest();
+  else
+    RemoveDeferredPaintRequest();
+  for (auto* child : children_) {
+    if (suppress)
+      child->AddDeferredPaintRequest();
+    else
+      child->RemoveDeferredPaintRequest();
+  }
 }
 
 void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
@@ -908,8 +943,8 @@ void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
   SchedulePaint(gfx::Rect(bounds_.size()));
   if (delegate_)
     delegate_->OnDeviceScaleFactorChanged(device_scale_factor);
-  for (size_t i = 0; i < children_.size(); ++i)
-    children_[i]->OnDeviceScaleFactorChanged(device_scale_factor);
+  for (auto* child : children_)
+    child->OnDeviceScaleFactorChanged(device_scale_factor);
   if (layer_mask_)
     layer_mask_->OnDeviceScaleFactorChanged(device_scale_factor);
 }
