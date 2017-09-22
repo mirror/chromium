@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32571f5_26c6af4e",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T21:35:58Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right. If the mouse is pressed and you move out you\u0027ll get an exit and in that case I wouldn\u0027t expect the button to hide. Also, you\u0027ll need to deal with capture loss.",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "6c6654573bfd9630c1c832b348fa6699a9dc2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c832b8e_ea8bdb56",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T21:35:58Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually animate. Do you need is to animate? Also, be aware that if you don\u0027t change the visibility this button is still really there, which could effect screen readers and other things.",
+      "range": {
+        "startLine": 536,
+        "startChar": 4,
+        "endLine": 536,
+        "endChar": 42
+      },
+      "revId": "6c6654573bfd9630c1c832b348fa6699a9dc2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
