@@ -16,6 +16,24 @@
       "revId": "9887f96c8e0fbb21741e89f4bdc4589949cf6899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0990150b_5c822c3e",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-22T01:11:52Z",
+      "side": 1,
+      "message": "I remember that I didn\u0027t use display:block (it is the default) because then\nthe padding between the right edge and the buttons become larger than we want, and I didn\u0027t find a way to \"inject\" the right padding we want to paper-toolbar.\nBut rethinking about it, I came up with two ways to resolve the problem without position:absolute (not 100% sure if 1 will work).\n\n1. Use mix-in and configure the style of paper-toolbar.\n--paper-toolbar {\n  padding-right: 0px;\n};\ncf. https://www.webcomponents.org/element/PolymerElements/paper-toolbar\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/elements/files_quick_view.css?q\u003d%22--paper-%22+file:%5Esrc/ui/file_manager/file_manager/foreground/elements/+package:%5Echromium$\u0026l\u003d119\n\n2. Replace paper-toolbar with div. For this approach, you may find display:inline-flex useful. Feel free to ask the details if 1 doesn\u0027t work well.",
+      "parentUuid": "b6b3c01b_7f2691a7",
+      "revId": "9887f96c8e0fbb21741e89f4bdc4589949cf6899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
