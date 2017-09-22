@@ -11,6 +11,7 @@
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/worker_scheduler_impl.h"
+#include "platform/scheduler/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,15 +19,6 @@ using ::testing::ElementsAreArray;
 
 namespace blink {
 namespace scheduler {
-
-namespace {
-
-void AppendToVectorTestTask(std::vector<std::string>* vector,
-                            std::string value) {
-  vector->push_back(value);
-}
-
-}  // namespace
 
 class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
  public:

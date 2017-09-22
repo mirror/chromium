@@ -149,6 +149,8 @@ source_set("test_support") {
     "test/fake_renderer_scheduler.cc",
     "test/fake_web_task_runner.cc",
     "test/fake_web_task_runner.h",
+    "test/idle_test_task.cc",
+    "test/idle_test_task.h",
     "test/lazy_scheduler_message_loop_delegate_for_tests.cc",
     "test/lazy_scheduler_message_loop_delegate_for_tests.h",
     "test/renderer_scheduler_test_support.cc",
@@ -200,6 +202,8 @@ source_set("unit_tests") {
     "renderer/web_frame_scheduler_impl_unittest.cc",
     "renderer/web_view_scheduler_impl_unittest.cc",
     "renderer/webthread_impl_for_renderer_scheduler_unittest.cc",
+    "test/test_utils.cc",
+    "test/test_utils.h",
   ]
 
   deps = [
