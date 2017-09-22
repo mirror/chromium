@@ -21,6 +21,20 @@ struct NET_EXPORT RedirectInfo {
   RedirectInfo(const RedirectInfo& other);
   ~RedirectInfo();
 
+  // Computes a new RedirectInfo.
+  static std::unique_ptr<net::RedirectInfo> ComputeRedirectInfo(
+      int http_status_code,
+      const std::string& method,
+      const GURL& original_url,
+      const GURL& location,
+      bool copy_fragment,
+      const GURL& site_for_cookies,
+      URLRequest::FirstPartyURLPolicy first_party_url_policy,
+      URLRequest::ReferrerPolicy original_referrer_policy,
+      const std::string& referrer,
+      bool token_binding_negotiated,
+      const HttpResponseHeaders* headers);
+
   // The status code for the redirect response. This is almost redundant with
   // the response headers, but some URLRequestJobs emit redirects without
   // headers.
