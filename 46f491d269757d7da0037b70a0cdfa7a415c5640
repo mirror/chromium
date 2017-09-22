@@ -22,6 +22,30 @@
       "revId": "46f491d269757d7da0037b70a0cdfa7a415c5640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7549bec3_f4ac74df",
+        "filename": "net/spdy/platform/impl/spdy_string_utils_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-22T14:14:42Z",
+      "side": 1,
+      "message": "Mostly \u0027cause I stole the CL from wangyix. Would you prefer I move it do the .cc file? (Looks like there isn\u0027t a .cc file at the moment)",
+      "parentUuid": "a75d160a_6eee142e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "46f491d269757d7da0037b70a0cdfa7a415c5640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
