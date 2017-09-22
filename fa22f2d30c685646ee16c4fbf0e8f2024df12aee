@@ -164,6 +164,30 @@
       "revId": "fa22f2d30c685646ee16c4fbf0e8f2024df12aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7829e27a_a1df41ef",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-22T22:25:29Z",
+      "side": 1,
+      "message": "the dialog delegate will overwrite the (empty) size that\u0027s passed in. This will happen for any caller of ShowConstrainedWebDialog() as opposed to ShowConstrainedWebDialogWithAutoResize(). The certificate viewer and print preview are the two dialogs that call the former; I tested print preview and it still works as expected.",
+      "parentUuid": "d731847c_3a6a307e",
+      "range": {
+        "startLine": 236,
+        "startChar": 46,
+        "endLine": 236,
+        "endChar": 60
+      },
+      "revId": "fa22f2d30c685646ee16c4fbf0e8f2024df12aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
