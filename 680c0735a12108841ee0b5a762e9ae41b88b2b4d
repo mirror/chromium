@@ -16,6 +16,24 @@
       "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fd43c9_75833972",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1244275
+      },
+      "writtenOn": "2017-09-22T00:04:14Z",
+      "side": 0,
+      "message": "I tested moving focus from the browser chrome to the webpage with input fields on Android. The  bug (https://bugs.webkit.org/show_bug.cgi?id\u003d101369) mentions OS X as the platform where it was occurring. However, I don\u0027t have easy access to OS X builds to be able to test it there.",
+      "parentUuid": "474014f7_37d87226",
+      "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
