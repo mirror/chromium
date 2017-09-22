@@ -308,6 +308,14 @@ class PersonalDataManager : public KeyedService,
     return context_getter_.get();
   }
 
+  // Extract credit card from the form structure. This function allows
+  // duplicated field types in the form.
+  CreditCard ExtractCreditCardFromForm(const FormStructure& form);
+
+  // Returns |true| if the card number or |TypeAndLastFourDigits| of
+  // |credit_card| is equal to any card in record.
+  bool DoesCardMatchAnyCardInRecord(const CreditCard& credit_card);
+
  protected:
   // Only PersonalDataManagerFactory and certain tests can create instances of
   // PersonalDataManager.
@@ -503,6 +511,16 @@ class PersonalDataManager : public KeyedService,
       bool should_return_local_card,
       std::unique_ptr<CreditCard>* imported_credit_card,
       bool* imported_credit_card_matches_masked_server_credit_card);
+
+  // Extracts credit card from the form structure. |hasDuplicateFieldType| will
+  // be set as true if there are duplicated field types in the form.
+  CreditCard ExtractCreditCardFromForm(const FormStructure& form,
+                                       bool* hasDuplicateFieldType);
+
+  // Returns true if |card_a| and |card_b| have same card number or
+  // |TypeAndLastFourDigits|.
+  bool HasSameNumberOrTypeAndLastFourDigits(const CreditCard& card_a,
+                                            const CreditCard& card_b);
 
   // Functionally equivalent to GetProfiles(), but also records metrics if
   // |record_metrics| is true. Metrics should be recorded when the returned

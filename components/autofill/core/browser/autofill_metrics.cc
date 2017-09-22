@@ -1107,6 +1107,8 @@ AutofillMetrics::FormEventLogger::FormEventLogger(
       has_logged_will_submit_(false),
       has_logged_submitted_(false),
       has_logged_bank_name_available_(false),
+      has_logged_detected_card_in_submitted_form_(false),
+      has_logged_submitted_card_that_google_knows_(false),
       logged_suggestion_filled_was_server_data_(false),
       logged_suggestion_filled_was_masked_server_card_(false),
       form_interactions_ukm_logger_(form_interactions_ukm_logger) {}
@@ -1294,11 +1296,31 @@ void AutofillMetrics::FormEventLogger::OnFormSubmitted() {
 
   if (has_logged_suggestions_shown_) {
     Log(AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE);
+    if (!has_logged_suggestion_filled_) {
+      if (!has_logged_detected_card_in_submitted_form_) {
+        Log(AutofillMetrics::
+                FORM_EVENT_SUBMITTED_WITH_CARD_NOT_DETECTED_WHEN_SUGGESTIONS_DECLINED);
+      } else if (has_logged_submitted_card_that_google_knows_) {
+        Log(AutofillMetrics::
+                FORM_EVENT_SUBMITTED_WITH_CARD_THAT_GOOGLE_KNOWS_WHEN_SUGGESTIONS_DECLIEND);
+      } else {
+        Log(AutofillMetrics::
+                FORM_EVENT_SUBMITTED_WITH_CARD_THAT_GOOGLE_DOES_NOT_KNOW_WHEN_SUGGESTIONS_DECLIEND);
+      }
+    }
   }
 }
 
 void AutofillMetrics::FormEventLogger::SetBankNameAvailable() {
   has_logged_bank_name_available_ = true;
+}
+
+void AutofillMetrics::FormEventLogger::DetectedCardInSubmittedForm() {
+  has_logged_detected_card_in_submitted_form_ = true;
+}
+
+void AutofillMetrics::FormEventLogger::SubmittedCardThatGoogleKnows() {
+  has_logged_submitted_card_that_google_knows_ = true;
 }
 
 void AutofillMetrics::FormEventLogger::Log(FormEvent event) const {
