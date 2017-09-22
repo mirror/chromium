@@ -1136,6 +1136,13 @@ bool AcceleratorController::CanPerformAction(
 
 void AcceleratorController::PerformAction(AcceleratorAction action,
                                           const ui::Accelerator& accelerator) {
+  // Handle a11y alert for actions performed with no windows.
+  if (Shell::Get()->mru_window_tracker()->BuildMruWindowList().empty() &&
+      actions_needing_window_.find(action) != actions_needing_window_.end()) {
+    Shell::Get()->accessibility_delegate()->TriggerAccessibilityAlert(
+        A11Y_ALERT_WINDOW_NEEDED);
+  }
+
   AcceleratorProcessingRestriction restriction =
       GetAcceleratorProcessingRestriction(action);
   if (restriction != RESTRICTION_NONE)
@@ -1427,8 +1434,6 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) const {
   }
   if (Shell::Get()->mru_window_tracker()->BuildMruWindowList().empty() &&
       actions_needing_window_.find(action) != actions_needing_window_.end()) {
-    Shell::Get()->accessibility_delegate()->TriggerAccessibilityAlert(
-        A11Y_ALERT_WINDOW_NEEDED);
     return RESTRICTION_PREVENT_PROCESSING_AND_PROPAGATION;
   }
   return RESTRICTION_NONE;
