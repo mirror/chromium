@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0879d61a_ffdfd4ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T18:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f936edac_c48a510d",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d4077b9_64789bdb",
         "filename": "content/browser/appcache/appcache_update_job.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00382453_904739a8",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T18:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4077b9_64789bdb",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9dc5cc08_a8a6c93d",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T18:36:55Z",
+      "side": 1,
+      "message": "removed the user-agent header, i hadn\u0027t thought that one thru\n\nThe origin doesn\u0027t vary because it\u0027s always the appcacheUpdateJob that\u0027s initiating the requests for resources that get appcached, the origin header isn\u0027t set for these requests.",
+      "parentUuid": "c8c40e5e_5beb39ef",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0455857_911a4f58",
         "filename": "content/browser/appcache/appcache_update_job.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e934834b_644cd439",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-22T18:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0455857_911a4f58",
+      "revId": "3d29666b63a7a1be3b118c9af6a59dbbba1f80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
