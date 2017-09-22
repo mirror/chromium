@@ -188,6 +188,14 @@ class V8RuntimeStatsMobileBrowsingBenchmark(
   PLATFORM = 'mobile'
   SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
 
+  def GetExpectations(self):
+    class StoryExpectations(story.expectations.StoryExpectations):
+      def SetExpectations(self):
+        self.DisableBenchmark(
+            [story.expectations.ANDROID_ONE],
+            'crbug.com/767970')
+    return StoryExpectations()
+
   @classmethod
   def Name(cls):
     return 'v8.runtimestats.browsing_mobile'
