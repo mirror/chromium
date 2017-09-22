@@ -1472,7 +1472,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   std::unique_ptr<InputEventAckWaiter> ack_observer =
       base::MakeUnique<InputEventAckWaiter>(
-          blink::WebInputEvent::kGestureScrollBegin);
+          blink::WebInputEvent::kGestureScrollUpdate);
   root->current_frame_host()->GetRenderWidgetHost()->AddInputEventObserver(
       ack_observer.get());
 
