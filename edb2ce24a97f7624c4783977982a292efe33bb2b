@@ -16,6 +16,24 @@
       "revId": "edb2ce24a97f7624c4783977982a292efe33bb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53373abd_b740e200",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/blacklist_load_analyzer_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-22T21:31:07Z",
+      "side": 0,
+      "message": "Good catch! Done.",
+      "parentUuid": "3194d981_f351b19d",
+      "revId": "edb2ce24a97f7624c4783977982a292efe33bb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
