@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "50c912bc_7cc0ac5f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-22T01:54:39Z",
+      "side": 1,
+      "message": "This seems to only be used to decide whether it can handle the intent; the URL isn\u0027t actually used.\n\nI came here to ask about resolving the URL against the base manifest URL (which I don\u0027t see any logic for). You had logic for this in the previous patch set.",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 37
+      },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "026b046a_8f7ecabb",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity.java",
         "patchSetId": 4
@@ -76,6 +99,29 @@
       "writtenOn": "2017-09-21T15:22:42Z",
       "side": 1,
       "message": "Can you use WebApkUtils#readMetaDataFromManifest() instead?",
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b89f22_17fc2503",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-22T01:54:39Z",
+      "side": 1,
+      "message": "Could this be called \"share_target\" to match the manifest key?\n\nAlso, note that in the manifest, we currently only allow a single entry (not a list), but this is fine to keep this as a list (future proof).",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 17
+      },
       "revId": "d76078f660ac19e826da1ce573f5610030c01849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +144,29 @@
         "startChar": 19,
         "endLine": 23,
         "endChar": 27
+      },
+      "revId": "d76078f660ac19e826da1ce573f5610030c01849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978d2fd6_01b451e9",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-22T01:54:39Z",
+      "side": 1,
+      "message": "Similarly, can this be \"url_template\" to match the manifest key? (Also, the name \"url_template\" makes more sense; this is a template for a URL, not a valid URL in itself.)",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 16
       },
       "revId": "d76078f660ac19e826da1ce573f5610030c01849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
