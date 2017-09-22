@@ -268,7 +268,7 @@ config("cfi_linker") {
   # TODO(thakis): Turn this on with lld once supported, https://crbug.com/693709
   if (!is_debug && !use_lld) {
     # Turn on CFG in msvc linker, regardless of compiler used.
-    ldflags = [ "/guard:cf" ]
+    ldflags = [ "/guard:cf,nolongjmp" ]
   }
 }
 
