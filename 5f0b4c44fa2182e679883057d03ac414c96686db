@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66afbe1f_e038d758",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T01:47:57Z",
+      "side": 1,
+      "message": "Can you please link to https://www.sqlite.org/compile.html and to the Google Doc that has the explanations (https://docs.google.com/document/d/13nuwRmM-RQgibE8-2DbQD0G6zSvbuGevI5KYfxWjBBw/)? The doc is hosted on chromium.org so it should live forever, and it should already be set up to allow anonymous access.",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1f04d7_50750bc9",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T01:47:57Z",
+      "side": 1,
+      "message": "Is there any reasoning that\u0027d allow us to be sure this isn\u0027t going to break Web content?\n\nIf not, we can still pursue this, we\u0027d just do it in a later stage.",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47506679_5a4e5b78",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-22T01:47:57Z",
+      "side": 1,
+      "message": "Same question about Web content as before.",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
