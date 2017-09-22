@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce412667_29a125a0",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-22T16:14:55Z",
+      "side": 1,
+      "message": "So If I understand correctly, it simulates the DidFinishLoad(..) get called, right?  Could you add a comment somewhere to state that?",
+      "revId": "8bba38be19dd7e4c9e4eeea0d0d0fe59994135bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
