@@ -9,6 +9,7 @@
 #include "core/CoreExport.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/geometry/LayoutSize.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -49,7 +50,8 @@ class CORE_EXPORT CSSPaintImageGenerator
   // representing an invalid image if an error occurred.
   virtual RefPtr<Image> Paint(const ImageResourceObserver&,
                               const IntSize&,
-                              const CSSStyleValueVector*) = 0;
+                              const CSSStyleValueVector*,
+                              const LayoutSize&) = 0;
 
   virtual const Vector<CSSPropertyID>& NativeInvalidationProperties() const = 0;
   virtual const Vector<AtomicString>& CustomInvalidationProperties() const = 0;

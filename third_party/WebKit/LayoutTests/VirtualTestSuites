@@ -296,6 +296,11 @@
   },
   {
     "prefix": "scalefactor150",
+    "base": "external/wpt/css-paint-api/hidpi",
+    "args": ["--force-device-scale-factor=1.5"]
+  },
+  {
+    "prefix": "scalefactor150",
     "base": "fast/hidpi/static",
     "args": ["--force-device-scale-factor=1.5"]
   },
