@@ -22,6 +22,30 @@
       "revId": "faea1e5a4a4ddbaae128597e8f9443a4cf2c283b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a723dc_2bc53ae3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T15:09:07Z",
+      "side": 1,
+      "message": "Happy to do so in case you prefer that. Note that I have just copied over exactly the code you had previously in webui_login_view.cc. Please double-check and let me know which check you\u0027d like to see.",
+      "parentUuid": "1abd3594_6f6c0a0d",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 4
+      },
+      "revId": "faea1e5a4a4ddbaae128597e8f9443a4cf2c283b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
