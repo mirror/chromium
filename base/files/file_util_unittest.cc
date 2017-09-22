@@ -1600,6 +1600,72 @@ TEST_F(FileUtilTest, CopyDirectoryWithNonRegularFiles) {
   EXPECT_FALSE(PathExists(symlink_name_to));
   EXPECT_FALSE(PathExists(fifo_name_to));
 }
+
+TEST_F(FileUtilTest, CopyDirectoryWithSymlinkInDestination) {
+  // Create a directory.
+  FilePath dir_name_from =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_From_Subdir"));
+  ASSERT_TRUE(CreateDirectory(dir_name_from));
+  ASSERT_TRUE(PathExists(dir_name_from));
+
+  // Create a file under the directory.
+  FilePath file_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  CreateTextFile(file_name_from, L"Gooooooooooooooooooooogle");
+  ASSERT_TRUE(PathExists(file_name_from));
+
+  // Create the destination directory.
+  FilePath dir_name_to =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_To_Subdir"));
+  ASSERT_TRUE(CreateDirectory(dir_name_to));
+  ASSERT_TRUE(PathExists(dir_name_to));
+
+  // Add a symlink in the destination with the same name as |file_name_from|
+  // but pointing to something else.
+  FilePath file_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Linked_Test_File.txt"));
+  CreateTextFile(file_name_to, L"Hoooooooooooooooooooooli");
+  ASSERT_TRUE(PathExists(file_name_to));
+
+  FilePath symlink_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  ASSERT_TRUE(CreateSymbolicLink(file_name_to, symlink_name_to));
+  ASSERT_TRUE(PathExists(symlink_name_to));
+
+  // Copying into a symlink should cause the operation to fail.
+  EXPECT_FALSE(
+      CopyDirectoryWithDestinationChecks(dir_name_from, dir_name_to, false));
+}
+
+TEST_F(FileUtilTest, CopyDirectoryWithFifoInDestination) {
+  // Create a directory.
+  FilePath dir_name_from =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_From_Subdir"));
+  ASSERT_TRUE(CreateDirectory(dir_name_from));
+  ASSERT_TRUE(PathExists(dir_name_from));
+
+  // Create a file under the directory.
+  FilePath file_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  CreateTextFile(file_name_from, L"Gooooooooooooooooooooogle");
+  ASSERT_TRUE(PathExists(file_name_from));
+
+  // Create the destination directory.
+  FilePath dir_name_to =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_To_Subdir"));
+  ASSERT_TRUE(CreateDirectory(dir_name_to));
+  ASSERT_TRUE(PathExists(dir_name_to));
+
+  // Add a fifo in the destination with the same name as |file_name_from|.
+  FilePath fifo_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  ASSERT_EQ(0, mkfifo(fifo_name_to.value().c_str(), 0644));
+  ASSERT_TRUE(PathExists(fifo_name_to));
+
+  // Copying into a symlink should cause the operation to fail.
+  EXPECT_FALSE(
+      CopyDirectoryWithDestinationChecks(dir_name_from, dir_name_to, false));
+}
 #endif  // !defined(OS_FUCHSIA) && defined(OS_POSIX)
 
 TEST_F(FileUtilTest, CopyFile) {
