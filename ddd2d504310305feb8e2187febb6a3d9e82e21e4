@@ -1,0 +1,325 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e128c1a_edcbaf1f",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "What is \"the current set of cookies\"? |nscookies|?",
+      "range": {
+        "startLine": 191,
+        "startChar": 54,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89321779_1380356f",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "This is |cookie_name| now",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 10
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83eb8169_7b192b4e",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "Is |cookie_name| the same thing as |name| from UpdateCacheForCookieFromSystem? If so, then how about using the same variable name?",
+      "range": {
+        "startLine": 196,
+        "startChar": 48,
+        "endLine": 196,
+        "endChar": 59
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5a67e5_f980f906",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "nit: \nif ([cookie.name isEqual:base::SysUTF8ToNSString(cookie_name)]) {\n\nshould fit 80 symbols",
+      "range": {
+        "startLine": 480,
+        "startChar": 23,
+        "endLine": 480,
+        "endChar": 27
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6f8e68_d3343a47",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "Is there a guarantee that system_store_ will be alive when this callback is called?",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 482,
+        "endChar": 25
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee231ba8_b5327b74",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "UTF8String usage was banned in chrome for iOS code (it may unexpectedly return null). Please use sys_string_conversions instead.",
+      "range": {
+        "startLine": 715,
+        "startChar": 22,
+        "endLine": 715,
+        "endChar": 32
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dc26c4_c5dfd6d5",
+        "filename": "ios/net/cookies/cookie_store_ios_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "No need for static keyword for variables placed into anonymous namespace.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31585e06_9bf34573",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "We need something like ScopedTestingWebClient here. The test should not assume that original client was null.",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37a652d_647ae15b",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "Do we still need sync methods in public API? If these methods are only used in tests, then we should delete them and only tests methods which are used in production code.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46caa86f_4e2b1cc1",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "Please add tests for all public async methods",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c808521_4bea0ced",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "s/Do/Run ?",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47801d6_6a3c40bb",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "No need for DCHECK. The next line will crash anyway.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111dfd1a_dc10d137",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd99e52_ba8cd395",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "Is this method used by SystemCookieStore clients? Should it be protected instead?",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f2101f_1ab456b7",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-22T18:23:18Z",
+      "side": 1,
+      "message": "nit: Avoid using \"we\" in the comments (go/avoidwe)",
+      "range": {
+        "startLine": 77,
+        "startChar": 60,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
