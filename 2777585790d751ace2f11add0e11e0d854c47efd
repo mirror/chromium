@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "106318f6_4a4cbca7",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-22T19:42:32Z",
+      "side": 1,
+      "message": "Thank you for the while loop.  It\u0027s easier to reason about in this case.",
+      "revId": "2777585790d751ace2f11add0e11e0d854c47efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
