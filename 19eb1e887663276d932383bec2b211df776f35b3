@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c0f9de9_f5ec7bda",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483b961f_3bf66cde",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc3c10c4_969d5b98",
         "filename": "chrome/common/extensions/api/schemas.md",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "19eb1e887663276d932383bec2b211df776f35b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c352403_a06fd84e",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Two spaces or one after a period is a widely controversial topic (try googling \"two spaces after period\" and you\u0027ll see a bunch of results both praising and condemning the practice).  In docs, we haven\u0027t established a rule, and I think our markdown renderer standardizes, so I choose to do two spaces. :)",
+      "parentUuid": "cc3c10c4_969d5b98",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "93b22ed8_44fdbf20",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c248cf37_f5ac295c",
+      "range": {
+        "startLine": 55,
+        "startChar": 58,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea04d2e_9fe921ba",
         "filename": "chrome/common/extensions/api/schemas.md",
         "patchSetId": 2
@@ -91,6 +163,54 @@
       "revId": "19eb1e887663276d932383bec2b211df776f35b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e78cd0f_3197e295",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea04d2e_9fe921ba",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "238bb207_d359e021",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea04d2e_9fe921ba",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0656da79_0c5de340",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Good idea!  Realistically, this probably warrants its own whole doc, but I\u0027ve added a little bit of detail here.",
+      "parentUuid": "3b6fb022_69af0b41",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 53
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6424730_da924e80",
         "filename": "chrome/common/extensions/api/schemas.md",
         "patchSetId": 2
@@ -137,6 +281,30 @@
       "revId": "19eb1e887663276d932383bec2b211df776f35b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459e35d4_71639346",
+        "filename": "chrome/common/extensions/api/schemas.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T02:05:11Z",
+      "side": 1,
+      "message": "Good point, this was unclear.  I was referring to how we can selectively include/exclude APIs for certain aspects of the compilation, like strong type generation or function registration.  I\u0027ve included this in the compilation section, and added an example here to clarify.",
+      "parentUuid": "b6424730_da924e80",
+      "range": {
+        "startLine": 65,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 49
+      },
+      "revId": "19eb1e887663276d932383bec2b211df776f35b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
