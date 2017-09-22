@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a8aa555_a1e953cd",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1244555
+      },
+      "writtenOn": "2017-09-22T18:31:09Z",
+      "side": 1,
+      "message": "Question: \nWhat\u0027s our token error definition here? Failed to obtain access token or authenticate with access token?\nDoes it include the case that LST is revoked?",
+      "range": {
+        "startLine": 344,
+        "startChar": 35,
+        "endLine": 344,
+        "endChar": 46
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96843f8_673ce257",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1244555
+      },
+      "writtenOn": "2017-09-22T18:31:09Z",
+      "side": 1,
+      "message": "To double check, false means reconcile right after session change without chrome restart?",
+      "range": {
+        "startLine": 347,
+        "startChar": 40,
+        "endLine": 347,
+        "endChar": 77
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00a66f93_7e5f41a2",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -64,6 +110,75 @@
         "startChar": 40,
         "endLine": 355,
         "endChar": 41
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2af6d88_29e30f8d",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1244555
+      },
+      "writtenOn": "2017-09-22T18:31:09Z",
+      "side": 1,
+      "message": "So A has Sync enabled in this case?",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 11
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1d0fe0_75bc44f3",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1244555
+      },
+      "writtenOn": "2017-09-22T18:31:09Z",
+      "side": 1,
+      "message": "Is it caused by this scenario?\n\na. sign in B\nb. sign in A and enable sync for A\nc. restart chrome",
+      "range": {
+        "startLine": 356,
+        "startChar": 6,
+        "endLine": 356,
+        "endChar": 20
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20e9ff5_b0e74a38",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1244555
+      },
+      "writtenOn": "2017-09-22T18:31:09Z",
+      "side": 1,
+      "message": "Is it caused by this case?\n\na .sign in B\nb. sign in A and enables sync for A\nc. single session sign out A\nd. immediately restart chrome (so that A\u0027s cookie is cleared but token hasn\u0027t been revoked)",
+      "range": {
+        "startLine": 358,
+        "startChar": 7,
+        "endLine": 358,
+        "endChar": 20
       },
       "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
