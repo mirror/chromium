@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09de9196_6769fbd7",
+        "filename": "content/public/browser/devtools_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-22T02:01:55Z",
+      "side": 1,
+      "message": "Whoops! Updated comment.",
+      "parentUuid": "6ac66e6e_61b38abe",
+      "revId": "76a74024f6d73a7d5d69765f6327017c5fc9e247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "556d2160_5f0f18ef",
         "filename": "content/public/browser/devtools_manager_delegate.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "76a74024f6d73a7d5d69765f6327017c5fc9e247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceadb635_bf4e543c",
+        "filename": "content/public/browser/devtools_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-22T02:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556d2160_5f0f18ef",
+      "revId": "76a74024f6d73a7d5d69765f6327017c5fc9e247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
