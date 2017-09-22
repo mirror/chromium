@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9aec292_661add34",
+        "filename": "chrome/browser/extensions/install_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T15:31:08Z",
+      "side": 1,
+      "message": "I find alias functions are often confusing, because it\u0027s unclear what the difference is.  If this is sufficient for us, I think we should probably just remove it and use UpdatesFromGallery() where it\u0027s called.",
+      "revId": "eaf2456bfdea030f5bdc7cdc23a34e85fd94c1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

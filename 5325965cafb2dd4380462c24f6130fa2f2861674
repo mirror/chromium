@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b91023b_7d20fe43",
+        "filename": "chrome/browser/extensions/install_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-22T15:31:08Z",
+      "side": 0,
+      "message": "I wonder - what are the cases when from_webstore() is different than UpdatesFromGallery()?  I can think of a few potential cases:\n- pref corruption (the \"from_webstore\" bit gets set in the preferences file incorrectly)\n- an extension that updates from the webstore being installed from a source other than the webstore\n\nAre there any other cases that you\u0027ve run across?",
+      "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
