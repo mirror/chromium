@@ -148,8 +148,8 @@ std::vector<off_hours::OffHoursInterval> ConvertIntervalsToGmt(
     return {};
   std::vector<off_hours::OffHoursInterval> gmt_intervals;
   for (const auto& interval : intervals) {
-    auto gmt_start = ConvertWeeklyTimeToGmt(interval.start(), gmt_offset);
-    auto gmt_end = ConvertWeeklyTimeToGmt(interval.end(), gmt_offset);
+    auto gmt_start = interval.start().ConvertToGmt(gmt_offset);
+    auto gmt_end = interval.end().ConvertToGmt(gmt_offset);
     gmt_intervals.push_back(off_hours::OffHoursInterval(gmt_start, gmt_end));
   }
   return gmt_intervals;
