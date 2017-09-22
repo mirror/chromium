@@ -12,6 +12,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/supervised_user/supervised_user_service_observer.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "components/user_manager/user_manager.h"
@@ -39,7 +40,8 @@ class SessionControllerClient
       public user_manager::UserManager::Observer,
       public session_manager::SessionManagerObserver,
       public SupervisedUserServiceObserver,
-      public content::NotificationObserver {
+      public content::NotificationObserver,
+      public policy::DeviceOffHoursController::Observer {
  public:
   SessionControllerClient();
   ~SessionControllerClient() override;
@@ -96,6 +98,9 @@ class SessionControllerClient
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
+  // DeviceOffHoursController::Observer:
+  void OnOffHoursModeChanged() override;
+
   // TODO(xiyuan): Remove after SessionStateDelegateChromeOS is gone.
   static bool CanLockScreen();
   static bool ShouldLockScreenAutomatically();
@@ -134,6 +139,11 @@ class SessionControllerClient
 
   // Sends the session length time limit to ash.
   void SendSessionLengthLimit();
+
+  // Sends "OffHours" session start time and duration to ash.
+  void SendOffHoursTime();
+  // Sends current "OffHours" mode status.
+  void SendOffHoursMode();
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::SessionControllerClient> binding_;
