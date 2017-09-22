@@ -166,10 +166,16 @@ static_library("utility") {
 
   if (enable_print_preview || (enable_basic_printing && is_win)) {
     sources += [
+      "printing/print_backend_handler_impl.cc",
+      "printing/print_backend_handler_impl.h",
       "printing_handler.cc",
       "printing_handler.h",
     ]
-    deps += [ "//pdf" ]
+    deps += [
+      "//pdf",
+      "//printing",
+      "//printing/backend/mojo",
+    ]
   }
 
   if (enable_basic_printing || enable_print_preview) {

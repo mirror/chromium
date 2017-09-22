@@ -3378,6 +3378,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
       </if>
       <if expr="is_win">
+        <message name="IDS_UTILITY_PROCESS_PRINTING_BACKEND_NAME" desc="The name of the utility process used to talk to printer drivers.">
+          Printing Backend
+        </message>
         <message name="IDS_UTILITY_PROCESS_PDF_CONVERTOR_NAME" desc="The name of the utility process used for converting PDFs to a different format.">
           PDF Convertor
         </message>

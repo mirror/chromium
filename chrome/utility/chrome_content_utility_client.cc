@@ -50,6 +50,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include "chrome/utility/printing/print_backend_handler_impl.h"
 #include "chrome/utility/shell_handler_impl_win.h"
 #endif
 
@@ -309,6 +310,12 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
 #if defined(FULL_SAFE_BROWSING)
     registry->AddInterface(base::Bind(&SafeArchiveAnalyzerImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
+#endif
+#if (BUILDFLAG(ENABLE_PRINT_PREVIEW) || BUILDFLAG(ENABLE_BASIC_PRINTING)) && \
+    defined(OS_WIN)
+    registry->AddInterface(
+        base::Bind(&printing::PrintBackendHandlerImpl::Create),
+        base::ThreadTaskRunnerHandle::Get());
 #endif
   }
 
