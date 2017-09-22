@@ -149,7 +149,7 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
         ToBoolean(isolate, animated_before.V8Value(), ASSERT_NO_EXCEPTION))
         << "animate function is invoked early";
 
-    global_scope->Mutate();
+    global_scope->MutateInternal();
 
     ScriptValue animated_after =
         global_scope->ScriptController()->EvaluateAndReturnValueForTest(
