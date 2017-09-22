@@ -22,6 +22,30 @@
       "revId": "afd656d49f1d25bbf05babeac8d315a4049d4177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7164832d_ee844f05",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-22T01:23:38Z",
+      "side": 1,
+      "message": "Yes, we may want to use |AssociatedLayoutObject()| for legacy layout tree.\n\nI think for layout NG, we could use text content in block flow to search\nword/paragraph boundary, rather than collecting from Text node by using\nSimplifiedBackwardsTextIterator.",
+      "parentUuid": "a0c07e22_d417edb0",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 67
+      },
+      "revId": "afd656d49f1d25bbf05babeac8d315a4049d4177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
