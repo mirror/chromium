@@ -11,6 +11,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/containers/flat_set.h"
@@ -201,7 +202,10 @@ KeyedServiceBaseFactory* ArcVoiceInteractionFrameworkService::GetFactory() {
 ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
     content::BrowserContext* context,
     ArcBridgeService* bridge_service)
-    : context_(context), arc_bridge_service_(bridge_service), binding_(this) {
+    : context_(context),
+      arc_bridge_service_(bridge_service),
+      binding_(this),
+      weak_ptr_factory_(this) {
   arc_bridge_service_->voice_interaction_framework()->AddObserver(this);
   ArcSessionManager::Get()->AddObserver(this);
   session_manager::SessionManager::Get()->AddObserver(this);
@@ -316,7 +320,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
         value_prop_accepted &&
         (!prefs->GetUserPrefValue(prefs::kVoiceInteractionEnabled) ||
          prefs->GetBoolean(prefs::kVoiceInteractionEnabled));
-    SetVoiceInteractionEnabled(enable_voice_interaction);
+    SetVoiceInteractionEnabled(enable_voice_interaction,
+                               base::Bind(base::DoNothing));
 
     SetVoiceInteractionContextEnabled(
         (enable_voice_interaction &&
@@ -358,7 +363,7 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
   // TODO(xiaohuic): remove deprecated prefs::kVoiceInteractionPrefSynced.
   prefs->SetBoolean(prefs::kVoiceInteractionPrefSynced, false);
   SetVoiceInteractionSetupCompletedInternal(false);
-  SetVoiceInteractionEnabled(false);
+  SetVoiceInteractionEnabled(false, base::Bind(base::DoNothing));
   SetVoiceInteractionContextEnabled(false);
 }
 
@@ -395,21 +400,10 @@ void ArcVoiceInteractionFrameworkService::OnHotwordTriggered(uint64_t tv_sec,
 void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
-          StartVoiceInteractionSetupWizard);
-
-  if (!framework_instance)
-    return;
-
-  if (should_start_runtime_flow_) {
-    VLOG(1) << "Starting runtime setup flow.";
-    framework_instance->StartVoiceInteractionSession();
-    return;
-  }
-
-  framework_instance->StartVoiceInteractionSetupWizard();
+  SetVoiceInteractionEnabled(
+      true, base::Bind(&ArcVoiceInteractionFrameworkService::
+                           StartVoiceInteractionSetupWizardActivity,
+                       weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ArcVoiceInteractionFrameworkService::ShowVoiceInteractionSettings() {
@@ -436,19 +430,26 @@ void ArcVoiceInteractionFrameworkService::NotifyMetalayerStatusChanged(
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
-    bool enable) {
+    bool enable,
+    const base::Closure& setting_complete_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   ash::Shell::Get()->NotifyVoiceInteractionEnabled(enable);
 
   PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
 
-  // We assume voice interaction is always enabled on in ARC, but we guard
-  // all possible entry points on CrOS side with this flag. In this case,
-  // we only need to set CrOS side flag.
   prefs->SetBoolean(prefs::kVoiceInteractionEnabled, enable);
   if (!enable)
     prefs->SetBoolean(prefs::kVoiceInteractionContextEnabled, false);
+
+  mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service_->voice_interaction_framework(),
+          SetVoiceInteractionEnabled);
+  if (!framework_instance)
+    return;
+  framework_instance->SetVoiceInteractionEnabled(enable,
+                                                 setting_complete_callback);
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
@@ -473,7 +474,7 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionSetupCompleted() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   SetVoiceInteractionSetupCompletedInternal(true);
-  SetVoiceInteractionEnabled(true);
+  SetVoiceInteractionEnabled(true, base::Bind(base::DoNothing));
   SetVoiceInteractionContextEnabled(true);
 }
 
@@ -598,6 +599,27 @@ void ArcVoiceInteractionFrameworkService::
   prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, completed);
 
   ash::Shell::Get()->NotifyVoiceInteractionSetupCompleted(completed);
+}
+
+void ArcVoiceInteractionFrameworkService::
+    StartVoiceInteractionSetupWizardActivity() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service_->voice_interaction_framework(),
+          StartVoiceInteractionSetupWizard);
+
+  if (!framework_instance)
+    return;
+
+  if (should_start_runtime_flow_) {
+    should_start_runtime_flow_ = false;
+    VLOG(1) << "Starting runtime setup flow.";
+    framework_instance->StartVoiceInteractionSession();
+    return;
+  }
+  framework_instance->StartVoiceInteractionSetupWizard();
 }
 
 }  // namespace arc
