@@ -6,7 +6,7 @@
 #define SERVICES_DEVICE_DEVICE_SERVICE_H_
 
 #include "base/memory/ref_counted.h"
-#include "device/hid/public/interfaces/hid.mojom.h"
+#include "build/build_config.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
 #include "device/sensors/public/interfaces/orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -28,13 +28,20 @@
 #include "base/android/scoped_java_ref.h"
 #endif
 
+#if !defined(OS_ANDROID)
+#include "device/hid/public/interfaces/hid.mojom.h"
+#endif
+
 namespace base {
 class SingleThreadTaskRunner;
 }
 
 namespace device {
 
+#if !defined(OS_ANDROID)
 class HidManagerImpl;
+#endif
+
 class PowerMonitorMessageBroadcaster;
 class TimeZoneMonitor;
 
@@ -75,14 +82,14 @@ class DeviceService : public service_manager::Service {
 
   void BindFingerprintRequest(mojom::FingerprintRequest request);
 
-  void BindHidManagerRequest(mojom::HidManagerRequest request);
-
   void BindOrientationSensorRequest(mojom::OrientationSensorRequest request);
 
   void BindOrientationAbsoluteSensorRequest(
       mojom::OrientationAbsoluteSensorRequest request);
 
 #if !defined(OS_ANDROID)
+  void BindHidManagerRequest(mojom::HidManagerRequest request);
+
   void BindBatteryMonitorRequest(mojom::BatteryMonitorRequest request);
   void BindNFCProviderRequest(mojom::NFCProviderRequest request);
   void BindVibrationManagerRequest(mojom::VibrationManagerRequest request);
@@ -104,7 +111,10 @@ class DeviceService : public service_manager::Service {
 
   void BindSerialIoHandlerRequest(mojom::SerialIoHandlerRequest request);
 
+#if !defined(OS_ANDROID)
   std::unique_ptr<HidManagerImpl> hid_manager_;
+#endif
+
   std::unique_ptr<PowerMonitorMessageBroadcaster>
       power_monitor_message_broadcaster_;
   std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
