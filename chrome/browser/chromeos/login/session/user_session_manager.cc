@@ -1991,6 +1991,7 @@ void UserSessionManager::CreateTokenUtilIfMissing() {
 }
 
 bool UserSessionManager::ShouldShowEolNotification(Profile* profile) {
+#if 0
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kDisableEolNotification)) {
     return false;
@@ -2003,7 +2004,7 @@ bool UserSessionManager::ShouldShowEolNotification(Profile* profile) {
           ->IsEnterpriseManaged()) {
     return false;
   }
-
+#endif
   // Do not show end of life notification if this is a guest session
   return !profile->IsGuestSession();
 }

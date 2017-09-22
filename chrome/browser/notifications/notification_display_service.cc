@@ -42,10 +42,10 @@ void NotificationDisplayService::AddNotificationHandler(
 
 NotificationHandler* NotificationDisplayService::GetNotificationHandler(
     NotificationCommon::Type notification_type) {
-  DCHECK(notification_handlers_.find(notification_type) !=
-         notification_handlers_.end())
-      << notification_type << " is not registered.";
-  return notification_handlers_[notification_type].get();
+  auto found = notification_handlers_.find(notification_type);
+  if (found != notification_handlers_.end())
+    return found->second.get();
+  return nullptr;
 }
 
 void NotificationDisplayService::ProcessNotificationOperation(
@@ -56,6 +56,7 @@ void NotificationDisplayService::ProcessNotificationOperation(
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
     const base::Optional<bool>& by_user) {
+NOTIMPLEMENTED() << " operation " << notification_type;
   NotificationHandler* handler = GetNotificationHandler(notification_type);
   DCHECK(handler);
   if (!handler) {

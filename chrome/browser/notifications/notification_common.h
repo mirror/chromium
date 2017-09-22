@@ -39,7 +39,8 @@ class NotificationCommon {
     PERSISTENT = 0,
     NON_PERSISTENT = 1,
     EXTENSION = 2,
-    TYPE_MAX = EXTENSION
+    PRODUCT_EOL = 3,
+    TYPE_MAX = PRODUCT_EOL,
   };
 
   // Open the Notification settings screen when clicking the right button.
