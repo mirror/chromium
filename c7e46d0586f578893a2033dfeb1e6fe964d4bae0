@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93f4714c_fe6228a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-22T20:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3036e2d_bdb97134",
+      "range": {
+        "startLine": 305,
+        "startChar": 9,
+        "endLine": 305,
+        "endChar": 71
+      },
+      "revId": "c7e46d0586f578893a2033dfeb1e6fe964d4bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5f978c_1c12671e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingManager.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "45cb0456_2861bf04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-22T20:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5f978c_1c12671e",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 61
+      },
+      "revId": "c7e46d0586f578893a2033dfeb1e6fe964d4bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62f6510_3144fd7e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingManager.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "c7e46d0586f578893a2033dfeb1e6fe964d4bae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb929ee_5d411cb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-22T20:27:42Z",
+      "side": 1,
+      "message": "I got rid of this, and moved the appropriate logic to the BottomSheetContentController to be handled when the content is created and cached.",
+      "parentUuid": "d62f6510_3144fd7e",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "c7e46d0586f578893a2033dfeb1e6fe964d4bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
