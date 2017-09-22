@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dda1b54b_6686345b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T18:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cea3eea_c611a6b7",
+      "range": {
+        "startLine": 87,
+        "startChar": 51,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "b7b8eb53f371d69df1df468c76c07e6c2048e8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "526c4ed8_d835ea23",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b7b8eb53f371d69df1df468c76c07e6c2048e8ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c15d95_b2e0dfc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T18:43:01Z",
+      "side": 1,
+      "message": "Done, added a test.",
+      "parentUuid": "526c4ed8_d835ea23",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "b7b8eb53f371d69df1df468c76c07e6c2048e8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
