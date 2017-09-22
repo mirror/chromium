@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a130c33_ca2073c7",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T00:40:48Z",
+      "side": 1,
+      "message": "Comment. something like\n\n// Normally |accelerator| is used to determine the text in the bubble. However,\n// for the fullscreen type set in SetFullscreen(), the bubble currently ignores\n// it, and will always use IDS_APP_ESC_KEY. Be explicit here anyway.\n\n\n(that\u0027s all assuming it is actually ESC and not a Chromebook\u0027s \"F4\" key a user should be pressing).",
+      "revId": "422775d80dc9308b86154566d7fc255f156fff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "345321f0_bfcd2113",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 15
