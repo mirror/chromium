@@ -108,6 +108,29 @@
       "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2de010_5a56d4de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchCaptionControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T17:27:49Z",
+      "side": 1,
+      "message": "Nit: Please rename:\ntranslate -\u003e transition (or vertical motion...etc)\nWe sometimes use the caption for presenting a translation but it\u0027s also used for other things and this usage seems to be animating it up from the bottom of the Bar.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
