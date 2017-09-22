@@ -101,9 +101,7 @@
                chromeCleanupExplanation or with the title_ (if showDetails_ is
                false) despite these two elements being on different lines. -->
           <div></div>
-          <span class="secondary">
-            $i18n{chromeCleanupExplanation}
-          </span>
+          <span class="secondary">[[explanation_]]</span>
         </template>
         <a id="learn-more" href="$i18n{chromeCleanupLearnMoreUrl}"
             on-tap="learnMore_" target="_blank" hidden="[[!showLearnMore_]]">
@@ -125,7 +123,7 @@
         on-settings-boolean-control-change="changeLogsPermission_">
     </settings-toggle-button>
     <div id="show-files-button" class="settings-box" actionable
-        on-tap="toggleExpandButton_" hidden="[[!showDetails_]]">
+        on-tap="toggleExpandButton_" hidden="[[!showFilesToRemoveSection_]]">
       <div class="start">
         $i18n{chromeCleanupLinkShowFiles}
       </div>

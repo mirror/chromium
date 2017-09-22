@@ -12,6 +12,12 @@ cr.define('settings', function() {
     registerChromeCleanerObserver() {}
 
     /**
+     * Scans the user's computer.
+     * @param {boolean} logsUploadEnabled
+     */
+    scan(logsUploadEnabled) {}
+
+    /**
      * Starts a cleanup on the user's computer.
      * @param {boolean} logsUploadEnabled
      */
@@ -53,6 +59,11 @@ cr.define('settings', function() {
     /** @override */
     registerChromeCleanerObserver() {
       chrome.send('registerChromeCleanerObserver');
+    }
+
+    /** @override */
+    scan(logsUploadEnabled) {
+      chrome.send('scan', [logsUploadEnabled]);
     }
 
     /** @override */

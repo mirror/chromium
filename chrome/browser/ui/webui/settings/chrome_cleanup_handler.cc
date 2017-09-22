@@ -13,6 +13,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/web_contents.h"
@@ -82,6 +83,9 @@ void ChromeCleanupHandler::RegisterMessages() {
       "registerChromeCleanerObserver",
       base::Bind(&ChromeCleanupHandler::HandleRegisterChromeCleanerObserver,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "scan",
+      base::Bind(&ChromeCleanupHandler::HandleScan, base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "restartComputer",
       base::Bind(&ChromeCleanupHandler::HandleRestartComputer,
@@ -192,6 +196,30 @@ void ChromeCleanupHandler::HandleRegisterChromeCleanerObserver(
 
   // Send the current logs upload state.
   OnLogsEnabledChanged(controller_->logs_enabled());
+}
+
+void ChromeCleanupHandler::HandleScan(const base::ListValue* args) {
+  CHECK_EQ(1U, args->GetSize());
+  bool allow_logs_upload = false;
+  args->GetBoolean(0, &allow_logs_upload);
+
+  // The state is propagated to all open tabs and should be consistent.
+  DCHECK_EQ(controller_->logs_enabled(), allow_logs_upload);
+
+  // safe_browsing::RecordCleanupStartedHistogram(
+  //     safe_browsing::CLEANUP_STARTED_FROM_PROMPT_IN_SETTINGS);
+  // base::RecordAction(
+  //     base::UserMetricsAction("SoftwareReporter.CleanupWebui_StartCleanup"));
+
+  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
+  command_line.AppendSwitchASCII("engine", "1");
+  safe_browsing::SwReporterInvocation invocation =
+      safe_browsing::SwReporterInvocation::FromCommandLine(command_line);
+  invocation.supported_behaviours =
+      safe_browsing::SwReporterInvocation::BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS |
+      safe_browsing::SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT |
+      safe_browsing::SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
+  controller_->Scan(/*allow_logs_upload, */ invocation);
 }
 
 void ChromeCleanupHandler::HandleRestartComputer(const base::ListValue* args) {

@@ -302,6 +302,16 @@
               <settings-reset-page></settings-reset-page>
             </settings-section>
           </template>
+
+<if expr="is_win">
+        <!-- THIS SHOULD BE THE LAST ITEM ON THE LIST. -->
+        <template is="dom-if" if="[[!showChromeCleanup]]" restamp>
+          <settings-section page-title="Chrome Cleanup" section="chromeCleanup">
+            <settings-chrome-cleanup-page></settings-chrome-cleanup-page>
+          </settings-section>
+        </template>
+</if>
+
         </div>
       </template>
     </template>

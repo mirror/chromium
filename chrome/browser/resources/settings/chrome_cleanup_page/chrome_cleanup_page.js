@@ -55,6 +55,12 @@ Polymer({
     },
 
     /** @private */
+    explanation_: {
+      type: String,
+      value: '',
+    },
+
+    /** @private */
     isRemoving_: {
       type: Boolean,
       value: '',
@@ -90,6 +96,12 @@ Polymer({
 
     /** @private */
     showLogsPermission_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /** @private */
+    showFilesToRemoveSection_: {
       type: Boolean,
       value: false,
     },
@@ -145,6 +157,8 @@ Polymer({
 
   /** @override */
   attached: function() {
+    console.log('attached');
+
     this.browserProxy_ = settings.ChromeCleanupProxyImpl.getInstance();
 
     this.addWebUIListener('chrome-cleanup-on-idle', this.onIdle_.bind(this));
@@ -162,6 +176,8 @@ Polymer({
         'chrome-cleanup-upload-permission-change',
         this.onUploadPermissionChange_.bind(this));
     this.browserProxy_.registerChromeCleanerObserver();
+
+
   },
 
   /**
@@ -226,31 +242,125 @@ Polymer({
    * @private
    */
   onIdle_: function(idleReason) {
-    if (idleReason == settings.ChromeCleanupIdleReason.CLEANING_SUCCEEDED) {
-      this.title_ = this.i18n('chromeCleanupTitleRemoved');
-      this.enableActionButton_(
-          this.i18n('chromeCleanupDoneButtonLabel'),
-          this.dismiss_.bind(
-              this,
-              settings.ChromeCleanupDismissSource.CLEANUP_SUCCESS_DONE_BUTTON));
-      this.setIconDone_();
-      this.showLearnMore_ = false;
-    } else if (idleReason == settings.ChromeCleanupIdleReason.INITIAL) {
-      this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);
-    } else {
-      // Scanning-related idle reasons are unexpected. Show an error message for
-      // all reasons other than |CLEANING_SUCCEEDED| and |INITIAL|.
-      this.title_ = this.i18n('chromeCleanupTitleErrorCantRemove');
-      this.enableActionButton_(
-          this.i18n('chromeCleanupDoneButtonLabel'),
-          this.dismiss_.bind(
-              this,
-              settings.ChromeCleanupDismissSource.CLEANUP_FAILURE_DONE_BUTTON));
-      this.setIconWarning_();
-      this.showLearnMore_ = true;
-    }
-
+    console.log('onIdle_ ' + idleReason);
     this.isRemoving_ = false;
+    switch (idleReason) {
+      case settings.ChromeCleanupIdleReason.INITIAL:
+      case settings.ChromeCleanupIdleReason.USER_DECLINED_CLEANUP:
+        this.updateInitialState_();
+        break;
+
+      case settings.ChromeCleanupIdleReason.SCANNING_FOUND_NOTHING:
+        this.updateScanningFoundNothing_();
+        break;
+
+      case settings.ChromeCleanupIdleReason.SCANNING_FAILED:
+        this.updateScanningFailed_();
+        break;
+
+      case settings.ChromeCleanupIdleReason.CONNECTION_LOST:
+        if (this.scanning_)
+          this.updateScanningFailed_();
+        else if (this.cleaning_)
+          this.updateCleaningFailed_();
+        break;
+
+      case settings.ChromeCleanupIdleReason.CLEANING_FAILED:
+        this.updateCleaningFailed_();
+        break;
+
+      case settings.ChromeCleanupIdleReason.CLEANING_SUCCEEDED:
+        this.updateCleaningSucceeded_();
+        break;
+
+      default:
+        // Scanning-related idle reasons are unexpected. Show an error message
+        // for all reasons other than |CLEANING_SUCCEEDED| and |INITIAL|.
+    }
+  },
+
+  updateInitialState_: function() {
+    // this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);
+    this.title_ =
+        'Detect and remove harmful software';  // this.i18n('chromeCleanupTitleRemoved');
+    this.explanation_ =
+        'Chrome can scan your computer to detected and remove harmful software.';
+    this.enableActionButton_(
+        'Scan' /*this.i18n('chromeCleanupDoneButtonLabel')*/,
+        this.scan_.bind(this));
+    this.setIconRemove_();
+    this.enableDetails_([]);
+    console.log('showDetails_: ' + this.showDetails_);
+  },
+
+  updateScanningFoundNothing_: function() {
+    // this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);
+    this.title_ =
+        'No harmful software detected';  // this.i18n('chromeCleanupTitleRemoved');
+    this.explanation_ =
+        'Chrome did not detect any harmful software that could be removed from your computer.';
+    this.enableActionButton_(
+        this.i18n('chromeCleanupDoneButtonLabel'),
+        this.dismiss_.bind(
+            this,
+            settings.ChromeCleanupDismissSource.CLEANUP_SUCCESS_DONE_BUTTON));
+    this.setIconDone_();
+    // this.enableDetails_();
+    // this.showLearnMore_ = true;
+    // this.showLogsPermission_ = false;
+    // console.log('showDetails_: ' + this.showDetails_);
+
+    this.showLearnMore_ = true;
+    this.showDetails_ = true;
+    this.showLogsPermission_ = false;
+    // Note: doesn't change the state of this.showFilesToRemove_.
+    this.filesToRemove_ = [];
+    this.showFilesToRemoveSection_ = false;
+  },
+
+  updateScanningFailed_: function() {
+    // this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);
+    this.title_ = 'Scanning failed';  // this.i18n('chromeCleanupTitleRemoved');
+    this.explanation_ =
+        'An error occurred while Chrome was searching for harmful software.';
+    this.enableActionButton_(
+        'Retry' /*this.i18n('chromeCleanupDoneButtonLabel')*/,
+        this.scan_.bind(this));
+    this.setIconWarning_();
+    this.showLearnMore_ = true;
+    this.showDetails_ = true;
+    this.showLogsPermission_ = true;
+    // Note: doesn't change the state of this.showFilesToRemove_.
+    this.filesToRemove_ = [];
+    this.showFilesToRemoveSection_ = false;
+  },
+
+  updateCleaningFailed_: function() {
+    this.title_ = this.i18n('chromeCleanupTitleErrorCantRemove');
+    this.explanation_ =
+        'An error occurred while Chrome was removing harmful software.';
+    this.enableActionButton_(
+        'Retry' /*this.i18n('chromeCleanupDoneButtonLabel')*/,
+        this.scan_.bind(this));
+    this.setIconWarning_();
+    this.showLearnMore_ = true;
+    this.showDetails_ = true;
+    this.showLogsPermission_ = true;
+    // Note: doesn't change the state of this.showFilesToRemove_.
+    this.filesToRemove_ = [];
+    this.showFilesToRemoveSection_ = false;
+  },
+
+  updateCleaningSucceeded_: function() {
+    this.title_ = this.i18n('chromeCleanupTitleRemoved');
+    this.explanation_ = '';
+    this.enableActionButton_(
+        this.i18n('chromeCleanupDoneButtonLabel'),
+        this.dismiss_.bind(
+            this,
+            settings.ChromeCleanupDismissSource.CLEANUP_SUCCESS_DONE_BUTTON));
+    this.setIconDone_();
+    this.showLearnMore_ = false;
     this.disableDetails_();
   },
 
@@ -261,10 +371,14 @@ Polymer({
    * @private
    */
   onScanning_: function() {
-    this.title_ = '';
-    this.isRemoving_ = false;
+    this.title_ = 'Looking for harmful software...';
+    this.explanation_ =
+        'Chrome is looking for harmful software that could be removed from your computer.';
+    this.isRemoving_ = true;
+    this.resetIcon_();
     this.disableActionButton_();
-    this.disableDetails_();
+    this.enableDetails_([]);
+    this.showLogsPermission_ = false;
   },
 
   /**
@@ -275,6 +389,7 @@ Polymer({
    */
   onInfected_: function(files) {
     this.title_ = this.i18n('chromeCleanupTitleRemove');
+    this.explanation_ = this.i18n('chromeCleanupExplanation');
     this.isRemoving_ = false;
     this.setIconRemove_();
     this.enableActionButton_(
@@ -292,6 +407,7 @@ Polymer({
    */
   onCleaning_: function(files) {
     this.title_ = this.i18n('chromeCleanupTitleRemoving');
+    this.explanation_ = this.i18n('chromeCleanupExplanation');
     this.isRemoving_ = true;
     this.resetIcon_();
     this.disableActionButton_();
@@ -307,6 +423,7 @@ Polymer({
    */
   onRebootRequired_: function() {
     this.title_ = this.i18n('chromeCleanupTitleRestart');
+    this.explanation_ = '';
     this.isRemoving_ = false;
     this.showLearnMore_ = false;
     this.setIconDone_();
@@ -387,6 +504,7 @@ Polymer({
     this.showLogsPermission_ = false;
     this.showFilesToRemove_ = false;
     this.filesToRemove_ = [];
+    this.showFilesToRemoveSection_ = false;
   },
 
   /**
@@ -400,6 +518,12 @@ Polymer({
     this.showLearnMore_ = true;
     // Note: doesn't change the state of this.showFilesToRemove_.
     this.filesToRemove_ = files;
+    this.showFilesToRemoveSection_ = (files.length > 0);
+  },
+
+  scan_: function() {
+    console.log('scanning');
+    this.browserProxy_.scan(this.$.chromeCleanupLogsUploadControl.checked);
   },
 
   /**
