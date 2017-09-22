@@ -355,7 +355,7 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       did_call_start_loading_(false),
       stop_scrolling_(false),
       background_color_(0),
-      top_toolbar_height_(0),
+      top_toolbar_height_in_viewport_coords_(0),
       accessibility_state_(ACCESSIBILITY_STATE_OFF),
       is_print_preview_(false) {
   callback_factory_.Initialize(this);
@@ -423,7 +423,8 @@ bool OutOfProcessInstance::Init(uint32_t argc,
     else if (strcmp(argn[i], "background-color") == 0)
       success = base::HexStringToUInt(argv[i], &background_color_);
     else if (strcmp(argn[i], "top-toolbar-height") == 0)
-      success = base::StringToInt(argv[i], &top_toolbar_height_);
+      success =
+          base::StringToInt(argv[i], &top_toolbar_height_in_viewport_coords_);
 
     if (!success)
       return false;
@@ -763,7 +764,8 @@ void OutOfProcessInstance::DidChangeView(const pp::View& view) {
     // JS), so we need to subtract the toolbar height to convert them into
     // viewport coordinates.
     pp::FloatPoint scroll_offset_float(
-        scroll_offset_.x(), scroll_offset_.y() - top_toolbar_height_);
+        scroll_offset_.x(),
+        scroll_offset_.y() - top_toolbar_height_in_viewport_coords_);
     scroll_offset_float = BoundScrollOffsetToDocument(scroll_offset_float);
     engine_->ScrolledToXPosition(scroll_offset_float.x() * device_scale_);
     engine_->ScrolledToYPosition(scroll_offset_float.y() * device_scale_);
@@ -888,7 +890,8 @@ void OutOfProcessInstance::SendNextAccessibilityPage(int32_t page_index) {
 void OutOfProcessInstance::SendAccessibilityViewportInfo() {
   PP_PrivateAccessibilityViewportInfo viewport_info;
   viewport_info.scroll.x = 0;
-  viewport_info.scroll.y = -top_toolbar_height_ * device_scale_;
+  viewport_info.scroll.y =
+      -top_toolbar_height_in_viewport_coords_ * device_scale_;
   viewport_info.offset = available_area_.point();
   viewport_info.zoom = zoom_ * device_scale_;
   pp::PDF::SetAccessibilityViewportInfo(GetPluginInstance(), &viewport_info);
@@ -1187,17 +1190,22 @@ void OutOfProcessInstance::Scroll(const pp::Point& point) {
     paint_manager_.ScrollRect(available_area_, point);
 }
 
-void OutOfProcessInstance::ScrollToX(int x) {
+void OutOfProcessInstance::ScrollToX(int x_in_screen_coords) {
   pp::VarDictionary position;
   position.Set(kType, kJSSetScrollPositionType);
-  position.Set(kJSPositionX, pp::Var(x / device_scale_));
+  position.Set(kJSPositionX, pp::Var(x_in_screen_coords / device_scale_));
   PostMessage(position);
 }
 
-void OutOfProcessInstance::ScrollToY(int y) {
+void OutOfProcessInstance::ScrollToY(int y_in_screen_coords,
+                                     bool compensate_for_toolbar) {
   pp::VarDictionary position;
   position.Set(kType, kJSSetScrollPositionType);
-  position.Set(kJSPositionY, pp::Var(y / device_scale_));
+  float new_y_viewport_coords = y_in_screen_coords / device_scale_;
+  if (compensate_for_toolbar) {
+    new_y_viewport_coords -= top_toolbar_height_in_viewport_coords_;
+  }
+  position.Set(kJSPositionY, pp::Var(new_y_viewport_coords));
   PostMessage(position);
 }
 
@@ -1643,7 +1651,8 @@ void OutOfProcessInstance::OnGeometryChanged(double old_zoom,
     available_area_.set_width(doc_width);
   }
   int bottom_of_document =
-      GetDocumentPixelHeight() + (top_toolbar_height_ * device_scale_);
+      GetDocumentPixelHeight() +
+      (top_toolbar_height_in_viewport_coords_ * device_scale_);
   if (bottom_of_document < available_area_.height())
     available_area_.set_height(bottom_of_document);
 
@@ -1787,7 +1796,7 @@ pp::FloatPoint OutOfProcessInstance::BoundScrollOffsetToDocument(
     const pp::FloatPoint& scroll_offset) {
   float max_x = document_size_.width() * zoom_ - plugin_dip_size_.width();
   float x = std::max(std::min(scroll_offset.x(), max_x), 0.0f);
-  float min_y = -top_toolbar_height_;
+  float min_y = -top_toolbar_height_in_viewport_coords_;
   float max_y = document_size_.height() * zoom_ - plugin_dip_size_.height();
   float y = std::max(std::min(scroll_offset.y(), max_y), min_y);
   return pp::FloatPoint(x, y);
