@@ -723,6 +723,7 @@ public class VrShellDelegate
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
+        mActivity.onEnterVr();
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode && !mAutopresentWebVr;
         mVrShell.initializeNative(mActivity.getActivityTab(), webVrMode, mAutopresentWebVr,
                 mActivity instanceof CustomTabActivity);
@@ -1196,6 +1197,7 @@ public class VrShellDelegate
         restoreWindowMode();
         mVrShell.pause();
         removeVrViews();
+        mActivity.onExitVr();
         destroyVrShell();
         if (disableVrMode) mVrClassesWrapper.setVrModeEnabled(mActivity, false);
 
@@ -1413,12 +1415,10 @@ public class VrShellDelegate
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         decor.addView(mVrShell.getContainer(), params);
-        mActivity.onEnterVr();
     }
 
     private void removeVrViews() {
         mVrShell.onBeforeWindowDetached();
-        mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
     }
