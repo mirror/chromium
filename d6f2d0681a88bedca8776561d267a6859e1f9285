@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd76350_8c4e1bc3",
+        "filename": "third_party/WebKit/Source/core/dom/trustedtypes/TrustedURL.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-22T10:25:37Z",
+      "side": 1,
+      "message": "oops!",
+      "revId": "d6f2d0681a88bedca8776561d267a6859e1f9285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
