@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1efab7_8e32d278",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-22T18:53:54Z",
+      "side": 1,
+      "message": "Edit of this comment:\n\n// Minimum size for modal dialogs. Used when multiline text won\u0027t wrap\n// without a small container (because its preferred size defaults to\n// the full unwrapped text length).\n// TODO(pbos): Remove need for this hack by adding a reasonable text-wrap\n// default preferred width (ideally smaller than this size).",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d3f2ec_93940c70",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-22T18:53:54Z",
+      "side": 1,
+      "message": "DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be0d0d9_e9974efb",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-22T18:53:54Z",
+      "side": 1,
+      "message": "These don\u0027t need to be static. I would also call them \"small,\" \"medium,\" and \"large\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 7
+      },
+      "revId": "29d819550782044c62cb306211b1aa38f5921505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
