@@ -16,6 +16,24 @@
       "revId": "9a2305ceb06911e8afd2196b47a4f30a25ce413e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc25e47_294c3537",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-22T01:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d59a75db_5f30595b",
+      "revId": "9a2305ceb06911e8afd2196b47a4f30a25ce413e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
