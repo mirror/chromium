@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ea5acb4_50b550db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T15:39:54Z",
+      "side": 1,
+      "message": "I think this would be better done in the background task that I\u0027m adding in https://chromium-review.googlesource.com/c/chromium/src/+/675583",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a319ef8b_c2a9b6ee",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T15:39:54Z",
+      "side": 1,
+      "message": "I think this is better named something like \"FreshOfflineContentObserver\" since the notification is not limited to prefetched content.",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba3593b_9e6354a8",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T15:39:54Z",
+      "side": 1,
+      "message": "nit: I prefer something like \"RecordFreshOfflineContentAvailableForNotification\" or something since \"OnPageAdded\" is vague and implementation-dependent.",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
