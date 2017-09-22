@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e6c321_b9350f7c",
+        "filename": "chromecast/media/cdm/cast_cdm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-22T16:45:19Z",
+      "side": 1,
+      "message": "nit: this probably should be GetHdcpVersionX10 to avoid confusion.",
+      "range": {
+        "startLine": 148,
+        "startChar": 40,
+        "endLine": 148,
+        "endChar": 54
+      },
+      "revId": "b9648b45b6922ba6144e97717c77115da2d79655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
