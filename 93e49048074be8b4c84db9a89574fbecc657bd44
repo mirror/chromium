@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2406ed3_fe866e94",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T14:22:36Z",
+      "side": 1,
+      "message": "It seems to overlap with web/web_state/js/resources/form.js (see \"form.activity\" there). Can you come up with something more password manager specific?",
+      "range": {
+        "startLine": 68,
+        "startChar": 35,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97f648e_df60fb13",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T14:22:36Z",
+      "side": 1,
+      "message": "It would be right to declare NiceMock\u003cMockLogManager\u003e log_manager; instead of putting this expectation.",
+      "range": {
+        "startLine": 1446,
+        "startChar": 2,
+        "endLine": 1446,
+        "endChar": 13
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f308f5_325a93a5",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T14:22:36Z",
+      "side": 1,
+      "message": "buttons.length !\u003d 1 ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "93e49048074be8b4c84db9a89574fbecc657bd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
