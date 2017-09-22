@@ -16,6 +16,23 @@
       "revId": "6a556c8b8d17c44203541bb6dad747275702b3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd5f6a53_e5797882",
+        "filename": "ui/file_manager/file_manager/foreground/js/metadata/metadata_model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-22T05:11:38Z",
+      "side": 1,
+      "message": "Since using modifiedByMeTime instead of modifiedTime is a UI tweak to improve Recent folder, ideally it would be better to have a switch to use modifiedByMeTime in a UI component like FileTable instead of metadata model.\n(i.e. using modificationByMeTime in https://codesearch.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/ui/file_table.js?type\u003dcs\u0026q\u003dmodificationTime+file:%5Esrc/ui/file_manager/+package:%5Echromium$\u0026l\u003d873 and other places)\n\nAre we going to have much bigger diff if we have a switch in FileTable or other UI component instead of metadata model?",
+      "revId": "6a556c8b8d17c44203541bb6dad747275702b3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
