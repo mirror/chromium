@@ -50,6 +50,24 @@
       "revId": "22f4755684f029406f247fc1ae417395520d47ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a050d977_23d1c2a3",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-22T00:10:59Z",
+      "side": 1,
+      "message": "Ack. This indeed is one less condition, but I think is a bit harder to understand because of the plus/minus. Seems easier to get it wrong than current version.\n\nAlso I had to modify this to address RTL case, so prefer to keep it to what it seems simpler to understand (see latest patch).",
+      "parentUuid": "b18f9212_9c946022",
+      "revId": "22f4755684f029406f247fc1ae417395520d47ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
