@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9ac2851a_ccb18d81",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-22T13:36:00Z",
+      "side": 1,
+      "message": "This is a fun one to bikeshed :-)\n\nI think it\u0027s easier to read if you invert the logic (positive logic is almost always more readable than negative).  It\u0027s also helpful to add a nicely-named variable to eliminate the need for the explanatory comment.  I\u0027d write:\n\nbool keyPermissionsPolicyUnchanged \u003d \n    ((previous_value \u003d\u003d current_value) ||\n     (previous_value \u0026\u0026 current_value \u0026\u0026 *previous_value \u003d\u003d *current_value));\nif (!keyPermissionsPolicyUnchanged) UpdateFromKeyPermissionsPolicy();",
+      "parentUuid": "60d1b40f_397fa956",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 269,
+        "endChar": 76
+      },
+      "revId": "13ab8c165b69734ddb85aff28811ea9d873e7ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2bcf82e_8d9b3fad",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 17
