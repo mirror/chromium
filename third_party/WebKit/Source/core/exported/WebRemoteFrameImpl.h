@@ -73,6 +73,7 @@ class CORE_EXPORT WebRemoteFrameImpl final
   bool IsIgnoredForHitTest() const override;
   void WillEnterFullscreen() override;
   void SetHasReceivedUserGesture() override;
+  void SetHasReceivedUserGestureBeforeNavigation() override;
   v8::Local<v8::Object> GlobalProxy() const override;
 
   void InitializeCoreFrame(Page&, FrameOwner*, const AtomicString& name);

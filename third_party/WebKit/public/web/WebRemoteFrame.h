@@ -104,6 +104,7 @@ class WebRemoteFrame : public WebFrame {
   virtual void WillEnterFullscreen() = 0;
 
   virtual void SetHasReceivedUserGesture() = 0;
+  virtual void SetHasReceivedUserGestureBeforeNavigation() = 0;
 
  protected:
   explicit WebRemoteFrame(WebTreeScopeType scope) : WebFrame(scope) {}
