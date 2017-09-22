@@ -93,6 +93,30 @@
       "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a1aa86_e46daad6",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-22T19:16:30Z",
+      "side": 1,
+      "message": "Ah, I get it.  Then comment by the for loop is misleading.\n  // Find the index of the first character that isn\u0027t whitespace, a control\n  // character, or a part of a JavaScript: scheme.\n  size_t trimbefore \u003d 0;\nIt doesn\u0027t set trim_before to 1 for the input \" ab\".",
+      "parentUuid": "d24b8794_55c42813",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "0f2390b2fcc0ea8cb102dde43e6ebcf6112f1c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
