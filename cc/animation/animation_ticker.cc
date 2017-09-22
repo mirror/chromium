@@ -124,8 +124,6 @@ void AnimationTicker::RemoveFromTicking() {
 void AnimationTicker::UpdateState(bool start_ready_animations,
                                   AnimationEvents* events) {
   DCHECK(has_bound_element_animations());
-  if (!element_animations_->has_element_in_active_list())
-    return;
 
   // Animate hasn't been called, this happens if an element has been added
   // between the Commit and Draw phases.
@@ -582,17 +580,8 @@ void AnimationTicker::PushNewAnimationsToImplThread(
         !animation->curve()
              ->ToScrollOffsetAnimationCurve()
              ->HasSetInitialValue()) {
-      gfx::ScrollOffset current_scroll_offset;
-      if (animation_ticker_impl->HasElementInActiveList()) {
-        current_scroll_offset =
-            animation_ticker_impl->ScrollOffsetForAnimation();
-      } else {
-        // The owning layer isn't yet in the active tree, so the main thread
-        // scroll offset will be up to date.
-        current_scroll_offset = ScrollOffsetForAnimation();
-      }
       animation->curve()->ToScrollOffsetAnimationCurve()->SetInitialValue(
-          current_scroll_offset);
+          animation_ticker_impl->ScrollOffsetForAnimation());
     }
 
     // The new animation should be set to run as soon as possible.
@@ -944,6 +933,24 @@ void AnimationTicker::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
   }
   if (animation_finished)
     element_animations_->UpdateClientAnimationState();
+}
+
+bool AnimationTicker::HasActiveAnimations() const {
+  for (const auto& animation : animations_) {
+    // TODO(wkorman): Make sure including !is_finished() is reasonable.
+    if (!animation->is_finished() || animation->affects_active_elements())
+      return true;
+  }
+  return false;
+}
+
+bool AnimationTicker::HasPendingAnimations() const {
+  for (const auto& animation : animations_) {
+    // TODO(wkorman): Make sure including !is_finished() is reasonable.
+    if (!animation->is_finished() || animation->affects_pending_elements())
+      return true;
+  }
+  return false;
 }
 
 bool AnimationTicker::HasElementInActiveList() const {
