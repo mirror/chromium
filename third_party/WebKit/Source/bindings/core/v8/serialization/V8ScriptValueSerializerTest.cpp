@@ -1805,14 +1805,14 @@ TEST(V8ScriptValueSerializerTest, DecodeFileListIndex) {
   EXPECT_EQ("text/plain", new_file->type());
 }
 
-class ScopedEnableCompositorWorker {
+class ScopedEnableAnimationWorklet {
  public:
-  ScopedEnableCompositorWorker()
-      : was_enabled_(RuntimeEnabledFeatures::CompositorWorkerEnabled()) {
-    RuntimeEnabledFeatures::SetCompositorWorkerEnabled(true);
+  ScopedEnableAnimationWorklet()
+      : was_enabled_(RuntimeEnabledFeatures::AnimationWorkletEnabled()) {
+    RuntimeEnabledFeatures::SetAnimationWorkletEnabled(true);
   }
-  ~ScopedEnableCompositorWorker() {
-    RuntimeEnabledFeatures::SetCompositorWorkerEnabled(was_enabled_);
+  ~ScopedEnableAnimationWorklet() {
+    RuntimeEnabledFeatures::SetAnimationWorkletEnabled(was_enabled_);
   }
 
  private:
