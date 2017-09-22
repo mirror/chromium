@@ -11,15 +11,12 @@
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/work_queue_sets.h"
+#include "platform/scheduler/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace blink {
 namespace scheduler {
 namespace internal {
-namespace {
-void NopTask() {}
-}
-
 class WorkQueueTest : public ::testing::Test {
  public:
   void SetUp() override {

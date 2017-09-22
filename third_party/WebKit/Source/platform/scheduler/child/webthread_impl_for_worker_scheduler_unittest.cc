@@ -22,7 +22,7 @@ namespace blink {
 namespace scheduler {
 namespace {
 
-class MockTask {
+class MockTaskForWorkerScheduler {
  public:
   MOCK_METHOD0(Run, void());
 };
@@ -106,7 +106,7 @@ class WebThreadImplForWorkerSchedulerTest : public ::testing::Test {
 };
 
 TEST_F(WebThreadImplForWorkerSchedulerTest, TestDefaultTask) {
-  MockTask task;
+  MockTaskForWorkerScheduler task;
   base::WaitableEvent completion(
       base::WaitableEvent::ResetPolicy::AUTOMATIC,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
@@ -117,13 +117,14 @@ TEST_F(WebThreadImplForWorkerSchedulerTest, TestDefaultTask) {
   }));
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForWorkerScheduler::Run, WTF::Unretained(&task)));
   completion.Wait();
 }
 
 TEST_F(WebThreadImplForWorkerSchedulerTest,
        TestTaskExecutedBeforeThreadDeletion) {
-  MockTask task;
+  MockTaskForWorkerScheduler task;
   base::WaitableEvent completion(
       base::WaitableEvent::ResetPolicy::AUTOMATIC,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
@@ -134,7 +135,8 @@ TEST_F(WebThreadImplForWorkerSchedulerTest,
   }));
 
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForWorkerScheduler::Run, WTF::Unretained(&task)));
   thread_.reset();
 }
 
@@ -178,18 +180,20 @@ TEST_F(WebThreadImplForWorkerSchedulerTest, TestTaskObserver) {
 }
 
 TEST_F(WebThreadImplForWorkerSchedulerTest, TestShutdown) {
-  MockTask task;
-  MockTask delayed_task;
+  MockTaskForWorkerScheduler task;
+  MockTaskForWorkerScheduler delayed_task;
 
   EXPECT_CALL(task, Run()).Times(0);
   EXPECT_CALL(delayed_task, Run()).Times(0);
 
   RunOnWorkerThread(FROM_HERE, base::Bind(&ShutdownOnThread, thread_.get()));
   thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&MockTask::Run, WTF::Unretained(&task)));
+      BLINK_FROM_HERE,
+      WTF::Bind(&MockTaskForWorkerScheduler::Run, WTF::Unretained(&task)));
   thread_->GetWebTaskRunner()->PostDelayedTask(
       BLINK_FROM_HERE,
-      WTF::Bind(&MockTask::Run, WTF::Unretained(&delayed_task)),
+      WTF::Bind(&MockTaskForWorkerScheduler::Run,
+                WTF::Unretained(&delayed_task)),
       TimeDelta::FromMilliseconds(50));
   thread_.reset();
 }

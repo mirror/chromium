@@ -16,6 +16,8 @@
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
+#include "platform/scheduler/test/append_to_vector.h"
+#include "platform/scheduler/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -26,27 +28,6 @@ using ::testing::Return;
 
 namespace blink {
 namespace scheduler {
-
-namespace {
-void AppendToVectorTestTask(std::vector<std::string>* vector,
-                            std::string value) {
-  vector->push_back(value);
-}
-
-void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
-                                 std::vector<int>* vector,
-                                 int* reentrant_count,
-                                 int max_reentrant_count) {
-  vector->push_back((*reentrant_count)++);
-  if (*reentrant_count < max_reentrant_count) {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::Bind(AppendToVectorReentrantTask, base::Unretained(task_runner),
-                   vector, reentrant_count, max_reentrant_count));
-  }
-}
-
-};  // namespace
 
 class SchedulerHelperTest : public ::testing::Test {
  public:
@@ -150,17 +131,16 @@ TEST_F(SchedulerHelperTest, GetNumberOfPendingTasks) {
 }
 
 namespace {
-class MockTaskObserver : public base::MessageLoop::TaskObserver {
+class MockTaskObserverForSchedulerHelper
+    : public base::MessageLoop::TaskObserver {
  public:
   MOCK_METHOD1(DidProcessTask, void(const base::PendingTask& task));
   MOCK_METHOD1(WillProcessTask, void(const base::PendingTask& task));
 };
-
-void NopTask() {}
 }  // namespace
 
 TEST_F(SchedulerHelperTest, ObserversNotifiedFor_DefaultTaskRunner) {
-  MockTaskObserver observer;
+  MockTaskObserverForSchedulerHelper observer;
   scheduler_helper_->AddTaskObserver(&observer);
 
   scheduler_helper_->DefaultWorkerTaskQueue()->PostTask(FROM_HERE,
@@ -172,7 +152,7 @@ TEST_F(SchedulerHelperTest, ObserversNotifiedFor_DefaultTaskRunner) {
 }
 
 TEST_F(SchedulerHelperTest, ObserversNotNotifiedFor_ControlTaskQueue) {
-  MockTaskObserver observer;
+  MockTaskObserverForSchedulerHelper observer;
   scheduler_helper_->AddTaskObserver(&observer);
 
   scheduler_helper_->ControlWorkerTaskQueue()->PostTask(FROM_HERE,
@@ -185,7 +165,7 @@ TEST_F(SchedulerHelperTest, ObserversNotNotifiedFor_ControlTaskQueue) {
 
 namespace {
 
-class MockObserver : public SchedulerHelper::Observer {
+class MockObserverForSchedulerHelper : public SchedulerHelper::Observer {
  public:
   MOCK_METHOD0(OnTriedToExecuteBlockedTask, void());
   MOCK_METHOD0(OnBeginNestedRunLoop, void());
@@ -194,7 +174,7 @@ class MockObserver : public SchedulerHelper::Observer {
 }  // namespace
 
 TEST_F(SchedulerHelperTest, OnTriedToExecuteBlockedTask) {
-  MockObserver observer;
+  MockObserverForSchedulerHelper observer;
   scheduler_helper_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = scheduler_helper_->NewTaskQueue(
