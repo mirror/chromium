@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "9673b5d6_437dae62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:58:44Z",
+      "side": 1,
+      "message": "To keep things simple I think it\u0027s best to just not log here.",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73868791_c02c3f97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:58:44Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we can just use the doForceTranslate flag here instead of having our own... the only difference is the check for null on the searchRequest, right?  I think that check is only there to prevent a crash... so probably almost always true.  What do you think?",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee06c86_6b16121e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-22T23:58:44Z",
+      "side": 1,
+      "message": "I\u0027m thinking we might do something similar here too, but in that case we\u0027re just duplicating logTranslateOnebox.   Humm, maybe there\u0027s some other logic problem with this CL.  I think maybe the logging is in the wrong place.  What do you think?",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66e655ef_213d7f4c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
         "patchSetId": 1
