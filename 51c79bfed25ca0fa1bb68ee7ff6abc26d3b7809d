@@ -70,6 +70,30 @@
       "revId": "51c79bfed25ca0fa1bb68ee7ff6abc26d3b7809d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a27cdb_ff34aab1",
+        "filename": "content/browser/media/media_color_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-09-22T19:39:03Z",
+      "side": 1,
+      "message": "My plan is not to disable these and never fix them. I just want to be able to disable these in order to land this large change, which affects thousands of tests, but disabling these 4 temporarily, unless someone is willing to help me debug these quickly. As layout tests get modified rather frequently, my window of opportunity to land this is generally rather small. I already notified watk@ and plan to work with him next week to solve these.",
+      "parentUuid": "c26790c2_9f366def",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "51c79bfed25ca0fa1bb68ee7ff6abc26d3b7809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
