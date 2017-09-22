@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28f3da3_0cc95879",
+        "filename": "dbus/exported_object.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-22T14:24:27Z",
+      "side": 1,
+      "message": "would it be good to also log the path here to aid in debugging?\n\ni seem to recall that we might compile out CHECK streams in release builds, so maybe LOG(FATAL) instead?",
+      "revId": "dc46df7b8ea342167a7395399cb23dd7533320e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
