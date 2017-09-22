@@ -537,7 +537,7 @@ ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
   DCHECK(raw_input->IsStaticBitmapImage());
   RefPtr<StaticBitmapImage> input =
       static_cast<StaticBitmapImage*>(raw_input.Get());
-  raw_input.Clear();
+  raw_input = nullptr;
 
   if (status != kNormalSourceImageStatus)
     return;
@@ -891,7 +891,7 @@ ScriptPromise ImageBitmap::CreateAsync(ImageElementBase* image,
 void ImageBitmap::close() {
   if (!image_ || is_neutered_)
     return;
-  image_.Clear();
+  image_ = nullptr;
   is_neutered_ = true;
 }
 
