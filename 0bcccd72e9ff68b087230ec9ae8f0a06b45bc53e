@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75c997c7_a70b4514",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "blank line after",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bd9545_44529bbc",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Is there a reason these defaults are in the initialization list?",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc48130_e507486b",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Document this requirement in the header, please.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1931e8_a8645509",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "How to make your reviewer nervous:  \n\n1)  leave a comment that says \"How safe is this?\"\n\n:)",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56c003e4_5530360f",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "You need to make sure your value *is* a list before you do this:\n\nhttps://cs.chromium.org/chromium/src/base/values.cc?rcl\u003da016b412009d090a2339eb0f1b203bde02bc2f3e\u0026l\u003d249\n\nI don\u0027t see anything else unsafe (except maybe OOM risk from too big a JSON blob?  Do we have an appropriate limitation there somewhere?)",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b2cd3d_d6615465",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Is coping-with-some-bad-input the right strategy here?  (as opposed to reject-completely-if-anything-smells-funny)\n\nI don\u0027t have a strong opinion here, just want to make sure it\u0027s been considered.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf95ac09_37f008eb",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "You have a few\n\nfoo.clear()\nfoo.insert(all of bar)\n\npairs, aren\u0027t they equivalent to\n\nfoo \u003d bar\n\n?",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10863e9_0a4a1d87",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Should there be any sort of check of printers_ready_ here?",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0177033_7f6fa4dc",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Is it both true that\n\na)  This object may be long lived\nb)  There may be a lot of printers?\n\nIf so, consider cleaning up memory via the swap-with-an-empty-vector trick (since shrink_to_fit is apparently not yet allowed by style guide.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901ace24_c68f2c1b",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "I\u0027d argue for consolidating IsWhitelistReady, IsBlacklistReady, and the mode_ \u003d\u003d ALL_ACCESS check at 140 into a single IsReady function that switch()es based on the mode.  \n\nIt was nonintuitive for me that we need *one* of the Ready condition functions to be true. \n\nTHis is subjective, though.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f907cb1c_2ce4759b",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Do you need to define the constructors/destructor explicitly?  The defaults should do exactly what you want.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d1d7eb_5ec27c3c",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "restrictions",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d32e8f4_d107b68e",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "Describe these in a comment or refer to where they are described.",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b58dea_b49566a8",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-22T19:50:29Z",
+      "side": 1,
+      "message": "I think \u0027\u003d default\u0027 is the preferred way to do this now.  (I don\u0027t actually know of a reason to prefer one over the other though).",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
