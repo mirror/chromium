@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221cbc2b_798e1165",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/geometry-1/DOMMatrix2DInit-validate-fixup-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T05:51:01Z",
+      "side": 1,
+      "message": "Whoops. Something\u0027s wrong here. I think setTransform is supposed to go through the validate and fixup method?",
+      "range": {
+        "startLine": 3,
+        "startChar": 30,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "0b595d22fc8cb2cac37a07e07b20ad990927203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607ae611_e45bd8a1",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMMatrixReadOnly.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T05:51:01Z",
+      "side": 1,
+      "message": "Seems we\u0027re losing something here. Was nice to give the dev more precise feedback. Is there a reason for this?",
+      "range": {
+        "startLine": 79,
+        "startChar": 29,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "0b595d22fc8cb2cac37a07e07b20ad990927203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8bc830_4c1d7838",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T05:51:01Z",
+      "side": 1,
+      "message": "So this implementation just does nothing if the argument is omitted? Then I don\u0027t understand the point of making the argument optional.",
+      "range": {
+        "startLine": 571,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 10
+      },
+      "revId": "0b595d22fc8cb2cac37a07e07b20ad990927203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a27ca9_e0f294b7",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T05:51:01Z",
+      "side": 1,
+      "message": "Are you implementing and shipping in one step? If not you need to hide this behind a flag. If so, we need to add a blink API owner to this code review.\n\nCould you fix a few details with the spec:\na) the xref in the IDL points to the wrong version of setTransform.\nb) the IDL says that the argument is optional but the spec does not say what is supposed to happen if the argument is omitted. I am guessing we\u0027d want to set to identity in that case? Not clear.  Better check what other implementations are doing, especially if other browsers have already shipped.",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "0b595d22fc8cb2cac37a07e07b20ad990927203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
