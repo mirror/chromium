@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41f397d1_0224a3bd",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterTestBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T18:00:45Z",
+      "side": 1,
+      "message": "Not sure why StringBuilder is used here. I will switch to concat of string literals.",
+      "parentUuid": "75038516_a5bc35cd",
+      "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c64316b_2fb14ef9",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProviderTest.java",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3845cb2a_227eebb4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProviderTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T18:00:45Z",
+      "side": 1,
+      "message": "Yep. I added a comment to clarify.",
+      "parentUuid": "1c64316b_2fb14ef9",
+      "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd316faf_b43289b8",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/presentation-api/controlling-ua/common.js",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-20T21:13:12Z",
       "side": 1,
       "message": "This will get upstreamed to the WPT repo, so any tests using a too-old browser will break.  What is the minimum version that supports cast: URLs?",
+      "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddd7798c_db12fff3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/presentation-api/controlling-ua/common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T18:00:45Z",
+      "side": 1,
+      "message": "For desktop, M62. For Android it will be M63. I could include both the new and legacy URLs here and add a TODO to remove the legacy URL after M63 is stable. Not sure what can be done if one insists on running the test on a \u003c63 browser though -- maybe this isn\u0027t a big deal since the cast URLs are only compatible with Chrome right now?",
+      "parentUuid": "fd316faf_b43289b8",
       "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
