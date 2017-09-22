@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca60e33b_a3567b83",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e !\n\nDone. I removed the comment.",
+      "parentUuid": "7a2e4564_6d936d00",
+      "range": {
+        "startLine": 269,
+        "startChar": 3,
+        "endLine": 269,
+        "endChar": 9
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85dc6cf7_52a37001",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6d6389f_074ceaa0",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e I would restore comments for each category.\n\nDone.",
+      "parentUuid": "85dc6cf7_52a37001",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 63
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73508f33_b92da0dc",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-22T06:26:43Z",
       "side": 1,
       "message": "I would remove this method and CategoryName. We can define kPositiveCategories or so that will include the categories listed in the method except kNegativeCategory.",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 52
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb1193c_1c5ee2fc",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e I would remove this method and CategoryName. We can define kPositiveCategories or so that will include the categories listed in the method except kNegativeCategory.\n\ndone.",
+      "parentUuid": "73508f33_b92da0dc",
       "range": {
         "startLine": 289,
         "startChar": 0,
@@ -106,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "2b075c6d_02981074",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f84c8746_ba2a8300",
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65e574b2_3f5748d8",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -117,6 +207,30 @@
       "writtenOn": "2017-09-22T06:26:43Z",
       "side": 1,
       "message": "base::string16()?",
+      "range": {
+        "startLine": 319,
+        "startChar": 47,
+        "endLine": 319,
+        "endChar": 69
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999e3132_08478855",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e base::string16()?\n\nDone.",
+      "parentUuid": "65e574b2_3f5748d8",
       "range": {
         "startLine": 319,
         "startChar": 47,
@@ -152,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "2e696304_b7b80b27",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e why do you need a temporary variable? you insert directly to the set (the std::inserter should be used).\n\nFor now, I cannot remove the temporary variable, because it helps me to convert between base::StringPiece16 and base::string16.",
+      "parentUuid": "c42a7c81_1cd17432",
+      "range": {
+        "startLine": 321,
+        "startChar": 35,
+        "endLine": 321,
+        "endChar": 48
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4a9c33e_0aec7c94",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -163,6 +301,30 @@
       "writtenOn": "2017-09-22T06:26:43Z",
       "side": 1,
       "message": "for vectors, std::back_inserter is usually used.",
+      "range": {
+        "startLine": 323,
+        "startChar": 15,
+        "endLine": 323,
+        "endChar": 28
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbbfeb7f_6ef8242b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e for vectors, std::back_inserter is usually used.\n\nDone.",
+      "parentUuid": "e4a9c33e_0aec7c94",
       "range": {
         "startLine": 323,
         "startChar": 15,
@@ -198,6 +360,30 @@
     },
     {
       "key": {
+        "uuid": "96230d8b_e76c570a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e Pass by const reference\n\nDone, sorry for forgetting.",
+      "parentUuid": "a44c18f0_098eba81",
+      "range": {
+        "startLine": 380,
+        "startChar": 29,
+        "endLine": 381,
+        "endChar": 64
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ee8db61_b13b27c2",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -209,6 +395,30 @@
       "writtenOn": "2017-09-22T06:26:43Z",
       "side": 1,
       "message": "const reference! :)",
+      "range": {
+        "startLine": 387,
+        "startChar": 11,
+        "endLine": 387,
+        "endChar": 25
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e40c0a_f1d56d06",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e const reference! :)\n\nDone.",
+      "parentUuid": "5ee8db61_b13b27c2",
       "range": {
         "startLine": 387,
         "startChar": 11,
@@ -244,6 +454,30 @@
     },
     {
       "key": {
+        "uuid": "c79f116a_b9e1d029",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e I would move the comment before the return.\n\nDone.",
+      "parentUuid": "9897aa73_ee7d20ff",
+      "range": {
+        "startLine": 405,
+        "startChar": 6,
+        "endLine": 405,
+        "endChar": 9
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06b11bf9_20be7fa3",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -267,6 +501,30 @@
     },
     {
       "key": {
+        "uuid": "fd9871e3_bb71d3c1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e Why? :) not to pass kNegativeCategory\n\nDone.",
+      "parentUuid": "06b11bf9_20be7fa3",
+      "range": {
+        "startLine": 431,
+        "startChar": 46,
+        "endLine": 431,
+        "endChar": 71
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c3c3d6d_ebf83d36",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 17
@@ -278,6 +536,30 @@
       "writtenOn": "2017-09-22T06:26:43Z",
       "side": 1,
       "message": "use reference (\u0026) to prevent copying.",
+      "range": {
+        "startLine": 481,
+        "startChar": 13,
+        "endLine": 481,
+        "endChar": 25
+      },
+      "revId": "6d4871af6095529d659d8ce22117e59c58633922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35729192_3193baff",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-22T14:13:50Z",
+      "side": 1,
+      "message": "\u003e use reference (\u0026) to prevent copying.\n\nDone.",
+      "parentUuid": "9c3c3d6d_ebf83d36",
       "range": {
         "startLine": 481,
         "startChar": 13,
