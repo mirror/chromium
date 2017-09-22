@@ -34,9 +34,12 @@ using StreamStatusChangeCB =
 class MEDIA_EXPORT MediaResource {
  public:
   enum Type {
+    REMOTE,  // Indicates GetRemoteId() should be used
     STREAM,  // Indicates GetAllStreams() or GetFirstStream() should be used
     URL,     // Indicates GetUrl() should be used
   };
+
+  static const int kInvalidRemoteId;
 
   MediaResource();
   virtual ~MediaResource();
@@ -68,6 +71,11 @@ class MEDIA_EXPORT MediaResource {
   // Other types:
   //   Should not be called.
   virtual MediaUrlParams GetMediaUrlParams() const;
+
+  virtual int32_t GetRemoteId() const;
+
+ protected:
+  int32_t remote_id_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MediaResource);

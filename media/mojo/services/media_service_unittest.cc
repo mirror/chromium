@@ -139,7 +139,8 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
         .WillOnce(InvokeWithoutArgs(run_loop_.get(), &base::RunLoop::Quit));
     std::vector<mojom::DemuxerStreamPtr> streams;
     streams.push_back(std::move(video_stream_proxy));
-    renderer_->Initialize(std::move(client_ptr_info), std::move(streams),
+    renderer_->Initialize(std::move(client_ptr_info),
+                          MediaResource::kInvalidRemoteId, std::move(streams),
                           nullptr, nullptr, base::nullopt, base::nullopt,
                           base::Bind(&MediaServiceTest::OnRendererInitialized,
                                      base::Unretained(this)));
