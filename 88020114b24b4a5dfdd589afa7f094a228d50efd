@@ -22,6 +22,30 @@
       "revId": "88020114b24b4a5dfdd589afa7f094a228d50efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7f49b7_65972a2e",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-22T20:44:20Z",
+      "side": 1,
+      "message": "No. Nice catch!",
+      "parentUuid": "3dec01cc_c404ab10",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "88020114b24b4a5dfdd589afa7f094a228d50efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
