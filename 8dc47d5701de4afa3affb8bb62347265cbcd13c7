@@ -93,6 +93,30 @@
       "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6054aea9_09eb060d",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T14:29:01Z",
+      "side": 1,
+      "message": "Who is triggering showing the tray in this case?",
+      "parentUuid": "569f379d_9807a6a3",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "8dc47d5701de4afa3affb8bb62347265cbcd13c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
