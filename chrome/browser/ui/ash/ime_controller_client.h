@@ -66,6 +66,13 @@ class ImeControllerClient
 
   void FlushMojoForTesting();
 
+  // Send the state of the extra input options to the ImeController. The overall
+  // state is toggle-able independently of the individual options.
+  void OnExtraInputEnabledStateChange(bool is_extra_input_options_enabled,
+                                      bool is_emoji_enabled,
+                                      bool is_handwriting_enabled,
+                                      bool is_voice_enabled) override;
+
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
