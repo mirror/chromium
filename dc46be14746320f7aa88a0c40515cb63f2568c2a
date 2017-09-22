@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5511a50_260ba0a4",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a1da5c1_118d81bc",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d81922a3_2bcb8bdb",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T14:28:59Z",
       "side": 1,
       "message": "Does this CL exercise RESOURCE_TYPE_SCRIPT yet? If not, I vote we just add it when it\u0027s needed.",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd106a07_d03cb796",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:19:05Z",
+      "side": 1,
+      "message": "Not yet. Yeah, that\u0027s the best practice. Removed the RESOURCE_TYPE_SCRIPT case.",
+      "parentUuid": "d81922a3_2bcb8bdb",
       "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ccf2e614_84e77f2e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ed9c48c_5c0be101",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed37f9f_ea7e980c",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e4094b9b_f0fa2900",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed37f9f_ea7e980c",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f82200_e12dd2af",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5416aa_77b9c4a9",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T00:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f82200_e12dd2af",
+      "revId": "dc46be14746320f7aa88a0c40515cb63f2568c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
