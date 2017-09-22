@@ -16,6 +16,24 @@
       "revId": "8bba38be19dd7e4c9e4eeea0d0d0fe59994135bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22017247_c2e9d48d",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-22T18:25:32Z",
+      "side": 1,
+      "message": "Yeah, I couldn\u0027t find a way for the simulator or test frame to trigger this event. It seems most classes that override DidFinishload have browser tests instead of unittests. But one example of unittests does also invoke this method directly, and I couldn\u0027t really find anything in content/public/test that helps unfortunately.\n\nComment added.",
+      "parentUuid": "ce412667_29a125a0",
+      "revId": "8bba38be19dd7e4c9e4eeea0d0d0fe59994135bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
