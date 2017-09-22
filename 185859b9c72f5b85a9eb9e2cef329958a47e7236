@@ -46,6 +46,30 @@
       "revId": "185859b9c72f5b85a9eb9e2cef329958a47e7236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c1d6dee_f5f5c216",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T14:00:41Z",
+      "side": 1,
+      "message": "True, I\u0027m surprised. There is nothing password specific in that class.\n\nYou can land it as is and create a bug to reuse SQLTableBuilder.",
+      "parentUuid": "bea71149_abbc57be",
+      "range": {
+        "startLine": 363,
+        "startChar": 19,
+        "endLine": 363,
+        "endChar": 57
+      },
+      "revId": "185859b9c72f5b85a9eb9e2cef329958a47e7236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
