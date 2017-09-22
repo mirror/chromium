@@ -180,6 +180,7 @@ group("gn_all") {
       "//components/viz:viz_perftests",
       "//components/viz:viz_unittests",
       "//components/viz/common:viz_benchmark",
+      "//content/browser/accessibility:ax_dump_events",
       "//content/shell:content_shell",
       "//content/test:content_browsertests",
       "//content/test:content_perftests",

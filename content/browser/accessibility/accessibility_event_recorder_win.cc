@@ -75,6 +75,8 @@ std::string AccessibilityEventToStringUTF8(int32_t event_id) {
 class AccessibilityEventRecorderWin : public AccessibilityEventRecorder {
  public:
   explicit AccessibilityEventRecorderWin(BrowserAccessibilityManager* manager);
+  explicit AccessibilityEventRecorderWin();  // For standalone event recorder
+
   ~AccessibilityEventRecorderWin() override;
 
   // Callback registered by SetWinEventHook. Just calls OnWinEventHook.
@@ -139,14 +141,24 @@ AccessibilityEventRecorderWin::AccessibilityEventRecorderWin(
   CHECK(!instance_) << "There can be only one instance of"
                     << " WinAccessibilityEventMonitor at a time.";
   instance_ = this;
-  win_event_hook_handle_ = SetWinEventHook(
-      EVENT_MIN,
-      EVENT_MAX,
-      GetModuleHandle(NULL),
-      &AccessibilityEventRecorderWin::WinEventHookThunk,
-      GetCurrentProcessId(),
-      0,  // Hook all threads
-      WINEVENT_INCONTEXT);
+  if (manager) {
+    // Browser unit testsonly.
+    win_event_hook_handle_ =
+        SetWinEventHook(EVENT_MIN, EVENT_MAX, GetModuleHandle(NULL),
+                        &AccessibilityEventRecorderWin::WinEventHookThunk,
+                        0,  // GetCurrentProcessId(),  // 0 for all?
+                        0,  // Hook all threads
+                        WINEVENT_INCONTEXT);
+  } else {
+    // Record events in all apps.
+    win_event_hook_handle_ = SetWinEventHook(
+        EVENT_MIN, EVENT_MAX, GetModuleHandle(NULL),
+        &AccessibilityEventRecorderWin::WinEventHookThunk,
+        0,                       // Hook all processes
+        0,                       // Hook all threads
+        WINEVENT_OUTOFCONTEXT);  // Avoids potentially crashing Windows explorer
+                                 // as WINEVENT_INCONTEXT can
+  }
   CHECK(win_event_hook_handle_);
 }
 
@@ -275,6 +287,9 @@ HRESULT AccessibilityEventRecorderWin::AccessibleObjectFromWindowWrapper(
   HRESULT hr = ::AccessibleObjectFromWindow(hwnd, dw_id, riid, ppv_object);
   if (SUCCEEDED(hr))
     return hr;
+
+  if (!manager_)
+    return E_FAIL;
 
   // The above call to ::AccessibleObjectFromWindow fails for unknown
   // reasons every once in a while on the bots.  Work around it by grabbing
