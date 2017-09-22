@@ -8,6 +8,10 @@
 #include "WebCommon.h"
 #include "cc/layers/video_frame_provider.h"
 
+namespace media {
+class GpuVideoAcceleratorFactories;
+}  // namespace media
+
 namespace viz {
 class FrameSinkId;
 }  // namespace viz
@@ -20,7 +24,9 @@ class BLINK_PLATFORM_EXPORT WebVideoFrameSubmitter
     : public cc::VideoFrameProvider::Client {
  public:
   static std::unique_ptr<WebVideoFrameSubmitter> Create(
-      cc::VideoFrameProvider*);
+      cc::VideoFrameProvider*,
+      const base::Callback<
+          void(base::Callback<void(media::GpuVideoAcceleratorFactories*)>)>&);
   virtual ~WebVideoFrameSubmitter() = default;
   virtual void StartSubmitting(const viz::FrameSinkId&) = 0;
 };

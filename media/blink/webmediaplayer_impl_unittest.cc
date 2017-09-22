@@ -271,10 +271,12 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(),
-            base::Bind(&CreateCapabilitiesRecorder),
+            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
-                       base::Unretained(this))));
+                       base::Unretained(this)),
+            base::Bind(
+                [](base::Callback<void(media::GpuVideoAcceleratorFactories*)>) {
+                })));
 }
 
   ~WebMediaPlayerImplTest() override {

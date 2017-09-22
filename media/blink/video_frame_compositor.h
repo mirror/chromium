@@ -32,6 +32,7 @@ class FrameSinkId;
 }
 
 namespace media {
+class GpuVideoAcceleratorFactories;
 class VideoFrame;
 
 // VideoFrameCompositor acts as a bridge between the media and cc layers for
@@ -68,7 +69,10 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // |task_runner| is the task runner on which this class will live,
   // though it may be constructed on any thread.
   explicit VideoFrameCompositor(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      const base::Callback<
+          void(base::Callback<void(media::GpuVideoAcceleratorFactories*)>)>&
+          media_context_provider_callback);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.

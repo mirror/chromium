@@ -39,6 +39,7 @@ class WebMediaPlayerEncryptedMediaClient;
 namespace media {
 class CdmFactory;
 class DecoderFactory;
+class GpuVideoAcceleratorFactories;
 class MediaLog;
 class MediaObserver;
 class RendererWebMediaPlayerDelegate;
@@ -78,6 +79,15 @@ class MediaFactory {
   MediaFactory(RenderFrameImpl* render_frame,
                media::RequestRoutingTokenCallback request_routing_token_cb);
   ~MediaFactory();
+
+  // Obtains the media ContextProvider and calls the given callback on the same
+  // thread this is called on. Obtaining the media ContextProvider requires
+  // getting GPuVideoAcceleratorFactories, which must be done on the main
+  // thread.
+  static void PostMediaContextProviderToCallback(
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
+      base::Callback<void(media::GpuVideoAcceleratorFactories*)>
+          set_context_provider_callback);
 
   // Instruct MediaFactory to establish Mojo channels as needed to perform its
   // factory duties. This should be called by RenderFrameImpl as soon as its own

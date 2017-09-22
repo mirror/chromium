@@ -22,6 +22,10 @@ namespace base {
 class SharedMemory;
 }
 
+namespace viz {
+class ContextProvider;
+}
+
 namespace media {
 
 class MockGpuVideoAcceleratorFactories : public GpuVideoAcceleratorFactories {
@@ -54,6 +58,7 @@ class MockGpuVideoAcceleratorFactories : public GpuVideoAcceleratorFactories {
                VideoDecodeAccelerator::Capabilities());
   MOCK_METHOD0(GetVideoEncodeAcceleratorSupportedProfiles,
                VideoEncodeAccelerator::SupportedProfiles());
+  MOCK_METHOD0(GetMediaContextProvider, viz::ContextProvider*());
 
   std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBuffer(
       const gfx::Size& size,
