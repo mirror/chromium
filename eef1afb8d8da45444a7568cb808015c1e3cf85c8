@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79dde8b2_ee519c22",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-22T15:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fe43848_1a12638b",
+      "range": {
+        "startLine": 805,
+        "startChar": 2,
+        "endLine": 805,
+        "endChar": 26
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b59955ae_11544ff9",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05de8cc_c441bcc7",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-22T15:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59955ae_11544ff9",
+      "range": {
+        "startLine": 816,
+        "startChar": 5,
+        "endLine": 816,
+        "endChar": 38
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48fa63c2_e72de995",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-22T15:15:03Z",
+      "side": 1,
+      "message": "None of the overflow indicators are displayed when a given edge has a header, scrollbar or border. Because of that, I just positioned them without regard for their presence. If that behavior changes, then this code will need to change.",
+      "parentUuid": "87fc5632_066b41a8",
+      "range": {
+        "startLine": 890,
+        "startChar": 2,
+        "endLine": 890,
+        "endChar": 43
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ab4bb2_a0fe71af",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e4512088_c18c8802",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-22T15:15:03Z",
+      "side": 1,
+      "message": "See above comment.",
+      "parentUuid": "b9ab4bb2_a0fe71af",
+      "range": {
+        "startLine": 892,
+        "startChar": 2,
+        "endLine": 892,
+        "endChar": 64
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba59d59e_4fb80b2f",
         "filename": "ui/views/controls/scroll_view.h",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b3b44c_768d751c",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-22T15:15:03Z",
+      "side": 1,
+      "message": "Unlike the above, these can be unique_ptr\u003c\u003e. The scrollbars can be explicitly set externally using the SetXXXScrollBar() functions. Because of that, there is no way to know who \"owns\" the scrollbar.",
+      "parentUuid": "ba59d59e_4fb80b2f",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "eef1afb8d8da45444a7568cb808015c1e3cf85c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
