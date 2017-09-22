@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2196c6a3_5a4b34cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "When does this get used? What about #launchUrl()?",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 9
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e0fffd_f474f84a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "Can we rely on the super class\u0027s #isTabStateInitialized() rather than tracking a separate boolean in this class?",
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fb8918_ac155e7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "nit: If we override #markTabStateInitialize() this code can be dropped in there. I think that makes this a bit more consistent with TabModelSelectorImpl.",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617ba92c_f5901c1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "Can this be initialize(false, normalModel, incognitoModel)?",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db4c01c_9bb575ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "It\u0027s unlikely but theoretically possible for multiple tab creation requests to occur before the tab model is finished initializing, so I think we should use a list to track the tabs that need to be loaded when the model is finished initializing.",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 32
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82aaeb6c_eb7507f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "nit: Put this in a helper method that can be called from here and the runnable\n\nThen this method could be something like:\n\nif (isTabStateInitialized()) {\n    // call new method\n    return;\n}\n\n// all the other code initialize\n\n\nThe early return gets rid of some of the indentation and I think will make this a bit easier to read.",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e339fe2_f384d97e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "This should be able to rely on the super class implementation, rather than re-implementing.",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 5
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec643340_0dfa9d66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "nit: JavaDocs for this public method and the one below",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 36
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4d7d00_3a99fd64",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "nit: add in some blank lines above comments to break up the various sections",
+      "range": {
+        "startLine": 375,
+        "startChar": 8,
+        "endLine": 375,
+        "endChar": 40
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04882b67_72468b3c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "What causes the disk write when opening the selected items?",
+      "range": {
+        "startLine": 379,
+        "startChar": 51,
+        "endLine": 379,
+        "endChar": 84
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32d3cee_179c48ea",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "Can this be combined with the CriteriaHelper above in a single condition, e.g.:\n\nBrowserActionService.hasBrowserActionsNotification() \u0026\u0026 BrowserActionsService.isBackgroundService()",
+      "range": {
+        "startLine": 394,
+        "startChar": 8,
+        "endLine": 399,
+        "endChar": 11
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eda1c9_5dfb7b5e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "s/RestId/ResId",
+      "range": {
+        "startLine": 401,
+        "startChar": 38,
+        "endLine": 401,
+        "endChar": 52
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240ddd0c_c0fe863c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "Instead of polling the UI thread, can we use a CallbackHelper to observer changes on the tab model? I think #didAddTab() should work.",
+      "range": {
+        "startLine": 404,
+        "startChar": 8,
+        "endLine": 409,
+        "endChar": 12
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f5e275_45c98224",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T00:58:05Z",
+      "side": 1,
+      "message": "nit: extract this block into a helper method that executes #onItemSelected and waits for the necessary criteria to be met",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 445,
+        "endChar": 0
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
