@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ed3fb7_d98c3ccb",
+        "filename": "chrome/browser/ui/browser_instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T10:15:18Z",
+      "side": 0,
+      "message": "This was just forwarding the ModelChanged events to InstantController. Now InstantController observes directly.",
+      "range": {
+        "startLine": 23,
+        "startChar": 61,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "b84f2a74c24fd7a6d8c651cf195d26f187258c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "135ec631_68c8c032",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-22T10:15:18Z",
+      "side": 0,
+      "message": "Really unrelated change, but it\u0027s simpler and more robust to just query this on-demand.",
+      "range": {
+        "startLine": 78,
+        "startChar": 37,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "b84f2a74c24fd7a6d8c651cf195d26f187258c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
