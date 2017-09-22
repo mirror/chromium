@@ -10,9 +10,21 @@ test(function(t) {
     ctx.ellipse(10, 10, 10, 0, 0, 0, 1, false);
     ctx.ellipse(10, 10, -0, 5, 0, 0, 1, false);
 
-    assert_throws(null, function() {ctx.ellipse(10, 10, -2, 5, 0, 0, 1, false);});
-    assert_throws(null, function() {ctx.ellipse(10, 10, 0, -1.5, 0, 0, 1, false);});
-    assert_throws(null, function() {ctx.ellipse(10, 10, -2, -5, 0, 0, 1, false);});
+    try {
+      ctx.ellipse(10, 10, -2, 5, 0, 0, 1, false);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
+    try {
+      ctx.ellipse(10, 10, 0, -1.5, 0, 0, 1, false);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
+    try {
+      ctx.ellipse(10, 10, -2, -5, 0, 0, 1, false);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
 
     // FIXME: When this is exposed on Path as well as CanvasRenderingContext2D, add tests for Path as well.
 }, 'Tests CanvasPath ellipse with negative radii.');
