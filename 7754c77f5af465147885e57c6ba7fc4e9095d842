@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb6308b8_b57a8f9e",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-22T22:19:23Z",
+      "side": 0,
+      "message": "This was not tested but did appear as a warning that it was called in some tests making noise.",
+      "revId": "7754c77f5af465147885e57c6ba7fc4e9095d842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e17008_a9a5e39e",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-22T22:19:23Z",
+      "side": 0,
+      "message": "Unfortunately, this test was in practice a duplicate of the TwoCompositors_MainReleasedFirst test above. The blocking test runner was doing nothing, it is simply releasing 2 impl-side references and observing that only the 2nd one calls the ReleaseCallback, since that is the last reference in the mailbox holder.",
+      "revId": "7754c77f5af465147885e57c6ba7fc4e9095d842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

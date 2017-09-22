@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65267998_0a91fe99",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-22T22:19:23Z",
+      "side": 1,
+      "message": "The holder used to grab the task runner from an argument to the callback, now we bind it into the callback.",
+      "revId": "6d6ca90c10a61647bc1477aa09705dbf3cd8ebb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b320a3ea_1736e783",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-22T22:19:23Z",
+      "side": 1,
+      "message": "This was one the edge case tested where BlockingTaskRunner did something. The layer is not drawable (empty size), so the RemoveFromParent would have the impl-ref released and the main thread callback run at the end of commit form step 7. Then in step 8, the main thread ref is the last ref and immediately would call the ReleaseCallback.\n\nInstead, we wait for the in-flight callback from the impl thread when the TextureLayerImpl is destroyed, and ensure that we didn\u0027t need a commit to happen to get it. Then verify that the main thread ref is the last one and removing it immediately calls the ReleaseCallback.",
+      "revId": "6d6ca90c10a61647bc1477aa09705dbf3cd8ebb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
