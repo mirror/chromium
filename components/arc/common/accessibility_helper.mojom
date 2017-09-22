@@ -275,7 +275,7 @@ interface AccessibilityHelperHost {
   OnAccessibilityEvent@1(AccessibilityEventData event_data);
 };
 
-// Next method ID: 5
+// Next method ID: 6
 interface AccessibilityHelperInstance {
   Init@0(AccessibilityHelperHost host);
 
@@ -289,4 +289,9 @@ interface AccessibilityHelperInstance {
   // Perform an action on a node requested by a Chrome client.
   [MinVersion=4]PerformAction@4(AccessibilityActionData action_data)
       => (bool result);
+
+  // Sets the package to use ChromeVox (true) or TalkBack (false). Returns true
+  // if the request was processed.
+  [MinVersion=5]SetNativeChromeVoxArcSupport@5(
+    string package_name, bool enabled) => (bool processed);
 };
