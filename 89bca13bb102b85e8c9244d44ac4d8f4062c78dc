@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "85d620bb_ba8c7f5f",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T09:55:31Z",
+      "side": 1,
+      "message": "In this CL, I\u0027m only concerned with the Mojo interface. Security review of the feature as is will happen as part of the launch process.",
+      "parentUuid": "542d4aab_c4d3e661",
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03750f2d_3343c346",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 10
