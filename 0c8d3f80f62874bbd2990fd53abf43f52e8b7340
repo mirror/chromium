@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cdd47f3_e78065d7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-22T03:39:59Z",
+      "side": 1,
+      "message": "Since I have added an extra parameter to the below called InsertText, so this parameter is added. The extra parameter was added because of the other caller Editor::InsertTextWithoutSendingTextEvent.\nEditor::InsertTextWithoutSendingTextEvent after calling does operations so before that IsAborted was checked.",
+      "parentUuid": "88f21b66_d54e000c",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db9f6c47_8cfc1e93",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9dba772b_a7b5b160",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-22T03:39:59Z",
+      "side": 1,
+      "message": "In CanAppendNewLineFeedToSelection if Abort is done, then I have returned false. So if i Add this condition then it may not hit.",
+      "parentUuid": "db9f6c47_8cfc1e93",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67a17ff_30ab1680",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T01:25:11Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e9c79c_6039e1b6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-22T03:39:59Z",
+      "side": 1,
+      "message": "In CanAppendNewLineFeedToSelection if Abort is done, then I have returned false. So if i Add this condition then it may not hit.",
+      "parentUuid": "d67a17ff_30ab1680",
       "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
