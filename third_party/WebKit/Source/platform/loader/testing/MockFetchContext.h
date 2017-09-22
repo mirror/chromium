@@ -89,6 +89,10 @@ class MockFetchContext : public FetchContext {
     return frame_scheduler_.get();
   }
 
+  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override {
+    return frame_scheduler_->LoadingTaskRunner();
+  }
+
  private:
   class MockFrameScheduler final : public WebFrameScheduler {
    public:

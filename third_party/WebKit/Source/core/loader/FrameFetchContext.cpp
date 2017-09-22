@@ -227,8 +227,7 @@ struct FrameFetchContext::FrozenState final
 ResourceFetcher* FrameFetchContext::CreateFetcher(DocumentLoader* loader,
                                                   Document* document) {
   FrameFetchContext* context = new FrameFetchContext(loader, document);
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(context, context->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(context);
 
   if (context->GetSettings()->GetSavePreviousDocumentResources() !=
       SavePreviousDocumentResources::kNever) {
@@ -285,8 +284,10 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
-  return GetFrame()->FrameScheduler()->LoadingTaskRunner();
+RefPtr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
+  if (IsDetached())
+    return FetchContext::GetLoadingTaskRunner();
+  return TaskRunnerHelper::Get(TaskType::kNetworking, GetFrame());
 }
 
 WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
@@ -1148,7 +1149,7 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     task_runner =
         Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
   } else {
-    task_runner = GetTaskRunner();
+    task_runner = GetLoadingTaskRunner();
   }
 
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {

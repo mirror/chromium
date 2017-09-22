@@ -495,7 +495,9 @@ TEST(ImageResourceTest, CancelOnRemoveObserver) {
 
   // Trigger the cancel timer, ensure the load was cancelled and the resource
   // was evicted from the cache.
-  blink::testing::RunPendingTasks();
+  static_cast<scheduler::FakeWebTaskRunner*>(
+      fetcher->Context().GetLoadingTaskRunner().Get())
+      ->RunUntilIdle();
   EXPECT_EQ(ResourceStatus::kLoadError, image_resource->GetStatus());
   EXPECT_FALSE(GetMemoryCache()->ResourceForURL(test_url));
 }
