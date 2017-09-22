@@ -2,6 +2,259 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a65b442_49f42105",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "You mention the error return twice, and don\u0027t mention the other side of the pipe closing?\n\nETA: It\u0027s part of the behavior, so I\u0027d vote in favor of specifying what happens if the other side of the pipe is closed in this comment.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af740040_29bf01b6",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "If we ever exposed this interface more publicly I\u0027d want to find a way to make the safety guarantees consistent between the different delegate methods.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bc8208_17b8b7b4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "nit: period after \u0027once\u0027",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11917ed_e2678c6c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "nit: lower case \u0027without\u0027",
+      "range": {
+        "startLine": 68,
+        "startChar": 54,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd41dcb0_a609e645",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Thought (not even a suggestion): This could be done in the constructor, couldn\u0027t it?",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 38
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9787e89_5128cad4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "There\u0027s probably something basic I\u0027m missing, but where is peer closed handled?",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb9e900_462f925a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Is this comment still accurate?  It seems to ascribe responsibility for driving the pipe for reading the body to BodyHandler rather than BodyReader.\n\nMore generally, I think it would be valuable to have a comment somewhere in here about the relationship between BodyHandler and BodyReader (E.g. \"BodyHandler is an ABC from which a concrete class specific to to use case (e.g. read to string, download to file) will derive.  That concrete class may use BodyReader as a utility\"), maybe before the BodyReader comment?",
+      "range": {
+        "startLine": 160,
+        "startChar": 3,
+        "endLine": 160,
+        "endChar": 10
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1b43c7_b1323452",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Nit, Suggestion: I\u0027m not sure this is proper grammar, but a comma after the \"once\" would help me with the flow of this paragraph.  I kept trying to parse \"when\" as an addition to the \"once either\" unit, and kept failing.",
+      "range": {
+        "startLine": 170,
+        "startChar": 46,
+        "endLine": 170,
+        "endChar": 50
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61851165_cdec5d6d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "This seems like it uses two different definitions of consumer--the proximate consumer (SimpleURLLoaderImpl) that\u0027s driving the BodyHandler, and the ultimate consumer from which any data received by the proximate consumer should be withheld.  That accurate?  If so, I\u0027m tempted to suggest replacing the first usage of \"consumer\" with SimpleURLLoaderImpl.",
+      "range": {
+        "startLine": 180,
+        "startChar": 23,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6093ecac_9d3f90c4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "I remember a comment around the motivation for the size_t -\u003e int64_t change, but can\u0027t find it--remind me?",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43d879d_26a6267d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "nit: paragraph justification/filling?",
+      "range": {
+        "startLine": 247,
+        "startChar": 15,
+        "endLine": 247,
+        "endChar": 16
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f86c1729_4c824eb9",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 6
@@ -18,6 +271,76 @@
         "startChar": 17,
         "endLine": 437,
         "endChar": 43
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932e6396_69e9e987",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Fine by me.  This is all around fiddling with the SimpleURLLoaderImpl\u003c-\u003eBodyHandler API in prep for a new BodyHandler, which strikes me as a fine thing to have in this CL.",
+      "parentUuid": "f86c1729_4c824eb9",
+      "range": {
+        "startLine": 437,
+        "startChar": 17,
+        "endLine": 437,
+        "endChar": 43
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57cc244d_77d8ecb2",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Not needed in this CL?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc8fcb7_5bdaffe7",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "I think you want to leave this comment untouched for this CL?",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 30
       },
       "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

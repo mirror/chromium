@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "ccadc685_5875797d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "I don\u0027t have any brilliant ideas around this.  I presume the URLFetcher implementation doesn\u0027t have anything useful to be guided by?  \n\nWe can provide setters to allow this to be specified, but that seems like a lot of API surface for something that most callers are going to ignore.  Maybe just record the idea with a TODO(), use the mapping you describe, and come back to this if we have consumers that need finer grained control?",
+      "parentUuid": "d4a580b9_d2e2b64e",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4afb87d_0b936189",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -262,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "72440527_3b49e5d4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b04f5e86_f4c2b53a",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 36
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0430c57_377bf846",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 4
@@ -321,6 +369,30 @@
       "side": 1,
       "message": "I\u0027m not sure what you mean by \"shoving all the temp file logic into URLFetcher\" - URLFetcher will no longer exist.\n\nNote that base::CreateTemporaryFile uses various methods to try and ensure success (On windows, has a loop, on POSIX, uses a system API), and creates an empty file, hopefully preventing any conflict.  It also needs to be done off the main thread, so it\u0027s just convenient to have a method on SimpleURLLoader that uses it.\n\nThere are only 3 consumers of URLFetcher::SaveResponseToTemporaryFile, but that\u0027s still 3 consumers that potentially have to all do the exact same thing: Jump over to another thread, create a temp file, jump back, start the SimpleURLLoader with the temporary file path...And if the parent class is destroyed before that happens, they\u0027d ideally delete the temporary file, too.  If we bake it into SimpleURLLoader, we avoid all that - it\u0027s like 10-20 extra lines of code on top of this CL to get all that working.",
       "parentUuid": "d38a6c7c_a2c6d0d9",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ff617d_87557086",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-22T20:59:02Z",
+      "side": 1,
+      "message": "Right, ooops, translate \"shoving all the temp file logic into the method for downloading to a temporary file\".  But the rest of your response means that collisions in the temporary file case are handled (attempted to be handled? :-}) at a fairly low level, so the temporary file distinction needs to go down pretty far.  So never mind, this is good.",
+      "parentUuid": "d6481858_86ca2be8",
       "range": {
         "startLine": 64,
         "startChar": 36,
