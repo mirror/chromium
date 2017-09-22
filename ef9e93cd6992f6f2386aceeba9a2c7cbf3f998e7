@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29ee15e1_e28bcb64",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-22T05:55:25Z",
+      "side": 1,
+      "message": "This is allowed to go negative, inline_start isn\u0027t, but the FC might be larger than the layout opportunity (overflow). Since we position in LineLeft coordinate system, the resulting line_offset might be -ve.",
+      "parentUuid": "18d540c3_3bf3a561",
+      "revId": "ef9e93cd6992f6f2386aceeba9a2c7cbf3f998e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ccc0e3_477f6eb1",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-13T18:59:06Z",
       "side": 1,
       "message": "A six-line ternary operation statement is pushing it a bit. Let\u0027s rewrite this to make it more readable.\n\nbool ltr \u003d direction \u003d\u003d TextDirection::kLtr;\nbool auto_left \u003d (ltr \u0026\u0026 child_style.MarginStart().IsAuto())\n    || (!ltr \u0026\u0026 child_style.MarginEnd().IsAuto());\nLayoutUnit line_left_auto_margin \u003d auto_left\n          ? margins.LineLeft(direction)\n          : LayoutUnit();\n\nPerhaps? Or use a regular if statement.",
+      "range": {
+        "startLine": 891,
+        "startChar": 13,
+        "endLine": 891,
+        "endChar": 34
+      },
+      "revId": "ef9e93cd6992f6f2386aceeba9a2c7cbf3f998e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76202251_481cee27",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-22T05:55:25Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "26ccc0e3_477f6eb1",
       "range": {
         "startLine": 891,
         "startChar": 13,
