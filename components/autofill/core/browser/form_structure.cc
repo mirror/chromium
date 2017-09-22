@@ -793,11 +793,25 @@ void FormStructure::LogQualityMetrics(
         DCHECK(submission_time > interaction_time);
         base::TimeDelta elapsed = submission_time - interaction_time;
         if (did_autofill_some_possible_fields) {
-          AutofillMetrics::LogFormFillDurationFromInteractionWithAutofill(
-              elapsed);
+          if (HasCreditCardFields()) {
+            AutofillMetrics::
+                LogCreditCardFormFillDurationFromInteractionWithAutofill(
+                    elapsed);
+          } else {
+            // Count a form as address form if it doesn't contain cc fields.
+            AutofillMetrics::
+                LogAddressFormFillDurationFromInteractionWithAutofill(elapsed);
+          }
         } else {
-          AutofillMetrics::LogFormFillDurationFromInteractionWithoutAutofill(
-              elapsed);
+          if (HasCreditCardFields()) {
+            AutofillMetrics::
+                LogCreditCardFormFillDurationFromInteractionWithAutofill(
+                    elapsed);
+          } else {
+            // Count a form as address form if it doesn't contain cc fields.
+            AutofillMetrics::
+                LogAddressFormFillDurationFromInteractionWithAutofill(elapsed);
+          }
         }
       }
     }
@@ -1419,6 +1433,15 @@ base::string16 FormStructure::FindLongestCommonPrefix(
     }
   }
   return filtered_strings[0];
+}
+
+bool FormStructure::HasCreditCardFields() const {
+  for (const auto& field : fields_) {
+    if (field->Type().group() == CREDIT_CARD) {
+      return true;
+    }
+  }
+  return false;
 }
 
 }  // namespace autofill
