@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0e3c20d7_ac22a963",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-22T08:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "383eaeb4_5c9217c6",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e1f04d7_50750bc9",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "writtenOn": "2017-09-22T02:28:26Z",
       "side": 1,
       "message": "Please add a note in the doc describing why we\u0027re leaving this one in for now. If it\u0027s really only used by fuzzers, we should (in follow up patches) try to change the fuzzers and then remove the feature.",
+      "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075c7f20_9fe88996",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-22T08:41:14Z",
+      "side": 1,
+      "message": "I\u0027m gonna do it as soon as I get all try bots happy.",
+      "parentUuid": "54aaa48d_2d5248cc",
       "revId": "5f0b4c44fa2182e679883057d03ac414c96686db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
