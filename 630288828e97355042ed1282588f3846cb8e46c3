@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "68ba9bc0_497d541e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:55:25Z",
+      "side": 1,
+      "message": "Agreed about maybe wanting an AXPosition, since a lot of code\nwill need to operate on both the start and end.\n\nDavid, Nektarios was planning to build up this code separately\nand replace existing AXObject code once it\u0027s more mature. So\nfor now I\u0027d say just avoid a name conflict with the existing\nAXRange but otherwise this is fine.",
+      "parentUuid": "a70511c2_5bf63257",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e848dc8_b628a067",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
         "patchSetId": 1
@@ -67,6 +85,23 @@
       "revId": "630288828e97355042ed1282588f3846cb8e46c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c060d374_799a679a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:55:25Z",
+      "side": 1,
+      "message": "Technically don\u0027t you need affinity for both the anchor and\nfocus?",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
