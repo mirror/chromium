@@ -3491,6 +3491,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "libfuzzer_tests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "media_blink_unittests"
       },
       {

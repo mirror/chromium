@@ -676,7 +676,9 @@ def UpdateClang(args):
   if sys.platform != 'win32':
     compiler_rt_args += ['-DLLVM_CONFIG_PATH=' +
                          os.path.join(LLVM_BUILD_DIR, 'bin', 'llvm-config'),
-                        '-DSANITIZER_MIN_OSX_VERSION="10.7"']
+                        '-DSANITIZER_MIN_OSX_VERSION="10.7"',
+                        '-DLIBFUZZER_ENABLE=YES',
+                        '-DLIBFUZZER_ENABLE_TESTS=ON']
   # compiler-rt is part of the llvm checkout on Windows but a stand-alone
   # directory elsewhere, see the TODO above COMPILER_RT_DIR.
   RmCmakeCache('.')
@@ -684,6 +686,8 @@ def UpdateClang(args):
              [LLVM_DIR if sys.platform == 'win32' else COMPILER_RT_DIR],
              msvc_arch='x86', env=deployment_env)
   RunCommand(['ninja', 'compiler-rt'], msvc_arch='x86')
+  if sys.platform != 'win32':
+    RunCommand(['ninja', 'fuzzer'], msvc_arch='x86')
 
   # Copy select output to the main tree.
   # TODO(hans): Make this (and the .gypi and .isolate files) version number
