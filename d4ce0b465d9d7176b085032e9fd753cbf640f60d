@@ -157,6 +157,24 @@
       "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24fc3c8_e73159ca",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-22T16:21:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7cf936c_26aa39a5",
+      "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
