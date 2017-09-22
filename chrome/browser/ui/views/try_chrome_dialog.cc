@@ -126,6 +126,38 @@ std::unique_ptr<views::LabelButton> CreateWin10StyleButton(
 
 }  // namespace
 
+// TryChromeDialogWidget -------------------------------------------------------
+
+// A custom Widget for the TryChromeDialog that ferries mouse enter and exit
+// events to the dialog.
+class TryChromeDialogWidget : public views::Widget {
+ public:
+  explicit TryChromeDialogWidget(TryChromeDialog* dialog)
+      : views::Widget(), dialog_(dialog) {}
+
+  // NativeWidgetDelegate:
+  void OnMouseEvent(ui::MouseEvent* event) override;
+
+ private:
+  TryChromeDialog* dialog_;
+
+  DISALLOW_COPY_AND_ASSIGN(TryChromeDialogWidget);
+};
+
+void TryChromeDialogWidget::OnMouseEvent(ui::MouseEvent* event) {
+  switch (event->type()) {
+    case ui::ET_MOUSE_ENTERED:
+      dialog_->OnMouseEntered();
+      break;
+    case ui::ET_MOUSE_EXITED:
+      dialog_->OnMouseExited();
+      break;
+    default:
+      break;
+  }
+  Widget::OnMouseEvent(event);
+}
+
 // TryChromeDialog::ModalShowDelegate ------------------------------------------
 
 // A delegate for use by the modal Show() function to update the experiment
@@ -261,7 +293,7 @@ void TryChromeDialog::OnTaskbarIconRect(const gfx::Rect& icon_rect) {
   params.activatable = views::Widget::InitParams::ACTIVATABLE_YES;
   // An approximate window size. Layout() can adjust.
   params.bounds = gfx::Rect(kToastWidth, 120);
-  popup_ = new views::Widget;
+  popup_ = new TryChromeDialogWidget(this);
   popup_->Init(params);
   popup_->AddObserver(this);
 
@@ -327,6 +359,10 @@ void TryChromeDialog::OnTaskbarIconRect(const gfx::Rect& icon_rect) {
 
   // The close button is custom.
   auto close_button = base::MakeUnique<views::ImageButton>(this);
+  close_button->SetPaintToLayer();
+  close_button_layer_ = close_button->layer();
+  close_button_layer_->SetFillsBoundsOpaquely(false);
+  close_button_layer_->SetOpacity(0.0f);
   close_button->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kInactiveToastCloseIcon, kBodyColor));
@@ -493,6 +529,16 @@ void TryChromeDialog::OnWindowMessage(HWND window,
   result_ = NOT_NOW;
   state_ = installer::ExperimentMetrics::kUserLogOff;
   delegate_->SetExperimentState(state_);
+}
+
+void TryChromeDialog::OnMouseEntered() {
+  if (close_button_layer_)
+    close_button_layer_->SetOpacity(1.0f);
+}
+
+void TryChromeDialog::OnMouseExited() {
+  if (close_button_layer_)
+    close_button_layer_->SetOpacity(0.0f);
 }
 
 void TryChromeDialog::ButtonPressed(views::Button* sender,
