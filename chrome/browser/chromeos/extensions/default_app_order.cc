@@ -39,26 +39,31 @@ const char kImportDefaultOrderAttr[] = "import_default_order";
 const char* const kDefaultAppOrder[] = {
     extension_misc::kChromeAppId,
     arc::kPlayStoreAppId,
-    extensions::kWebStoreAppId,
-    "nplnnjkbeijcggmpdcecpabgbjgeiedc",  // Play Games
-    genius_app::kGeniusAppId,
-    extension_misc::kYoutubeAppId,
+    "hhaomjibdihmijegdhdafkllkbggdgoj",  // Files
     extension_misc::kGmailAppId,
     "ejjicmeblgpmajnghnpcppodonldlgfn",  // Calendar
-    "lneaknkopdijkpnocmklfnjbeapigfbh",  // Google Maps
-    "apdfllckaahabafndbhieahigkjlhalf",  // Drive
     extension_misc::kGoogleDocAppId,
-    extension_misc::kGoogleSheetsAppId,
     extension_misc::kGoogleSlidesAppId,
-    "dlppkpafhbajpcmmoheippocdidnckmm",  // Google+
-    "hcglmfcclpfgljeaiahehebeoaiicbko",  // Google Photos
-    "hhaomjibdihmijegdhdafkllkbggdgoj",  // Files
-    extension_misc::kGooglePlayMusicAppId,
-    extension_misc::kGooglePlayBooksAppId,   // Play Books
-    extension_misc::kGooglePlayMoviesAppId,  // Play Movies & TV
-    "joodangkbfjnajiiifokapkpmhfnpleo",      // Calculator
+    extension_misc::kGoogleSheetsAppId,
+    "hmjkmjkepdijhoojdojkdfohbdgmmhki",      // Keep
+    "hcglmfcclpfgljeaiahehebeoaiicbko",      // Google Photos
+    extension_misc::kYoutubeAppId,           // Youtube
+    "dbbihmicnlldbflflckpafphlekmjfnm",      // Play Movies & TV ARC app
+    extension_misc::kGooglePlayMoviesAppId,  // Play Movies & TV Chrome app
+    "ophbaopahelaolbjliokocojjbgfadfn",      // Play Music ARC app
+    extension_misc::kGooglePlayMusicAppId,   // Play Music Chrome app
+    "nplnnjkbeijcggmpdcecpabgbjgeiedc",      // Play Games
+    "cafegjnmmjpfibnlddppihpnkbkgicbg",      // Play Books ARC app
+    extension_misc::kGooglePlayBooksAppId,   // Play Books Chrome app
+    "lneaknkopdijkpnocmklfnjbeapigfbh",      // Google Maps
+    "apdfllckaahabafndbhieahigkjlhalf",      // Drive
     "hfhhnacclhffhdffklopdkcgdhifgngh",      // Camera
+    "joodangkbfjnajiiifokapkpmhfnpleo",      // Calculator
+    "mmfbcljfglbokpmkimbfghdkjmjhdgbg",      // Text
+    "dlppkpafhbajpcmmoheippocdidnckmm",      // Google+
     "gbchcmhmhahfdphkhkmpfmihenigjmpp",      // Chrome Remote Desktop
+    extensions::kWebStoreAppId,              // Webstore
+    genius_app::kGeniusAppId,                // Get Help app
 };
 
 // Reads external ordinal json file and returned the parsed value. Returns NULL
