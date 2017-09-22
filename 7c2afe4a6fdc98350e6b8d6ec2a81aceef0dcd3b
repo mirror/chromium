@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "510e5522_8211231c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T18:55:52Z",
+      "side": 1,
+      "message": "Most likely yes, but I figure no reason to attempt to change the value.",
+      "parentUuid": "ac222b12_7f90b436",
+      "range": {
+        "startLine": 660,
+        "startChar": 56,
+        "endLine": 660,
+        "endChar": 68
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b0d7c6_699a3764",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5883eb58_172f58b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T18:55:52Z",
+      "side": 1,
+      "message": "Nope, it\u0027ll return the scroll position of the first character in LTR as well.  The problem is 0 will return 0 in both LTR and RTL where 1 will return a valid offset.  I guess it could be a problem if you had just a single character though since this only check it is greater than 0 above.  That shouldn\u0027t ever be the case in urls, but no reason not to make sure of that.",
+      "parentUuid": "79b0d7c6_699a3764",
+      "range": {
+        "startLine": 666,
+        "startChar": 56,
+        "endLine": 667,
+        "endChar": 49
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991a2b3b_1d567e48",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-22T17:21:16Z",
       "side": 1,
       "message": "Should we do this outside the if-else block?",
+      "range": {
+        "startLine": 701,
+        "startChar": 12,
+        "endLine": 701,
+        "endChar": 42
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8951a56_866fb4dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T18:55:52Z",
+      "side": 1,
+      "message": "it was there to skip the first layout, but since there won\u0027t be any text anyway, I think that is just overzealous and likely a source of confusion.  I\u0027ll just remove the !\u003d 0 check.",
+      "parentUuid": "991a2b3b_1d567e48",
       "range": {
         "startLine": 701,
         "startChar": 12,
