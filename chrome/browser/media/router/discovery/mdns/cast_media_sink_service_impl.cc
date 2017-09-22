@@ -37,6 +37,12 @@ media_router::MediaSinkInternal CreateCastSinkFromDialSink(
   return media_router::MediaSinkInternal(sink, extra_data);
 }
 
+constexpr char kParamNameConnectTimeoutInSeconds[] =
+    "connect_timeout_in_seconds";
+
+// Connect timeout for connect calls.
+const int kDefaultConnectTimeoutInSeconds = 10;
+
 }  // namespace
 
 namespace media_router {
@@ -261,8 +267,13 @@ void CastMediaSinkServiceImpl::OpenChannel(
   DVLOG(2) << "Start OpenChannel " << ip_endpoint.ToString()
            << " name: " << cast_sink.sink().name();
 
+  int connect_timeout_in_seconds = base::GetFieldTrialParamByFeatureAsInt(
+      kEnableCastDiscovery, kParamNameConnectTimeoutInSeconds,
+      kDefaultConnectTimeoutInSeconds);
+
   cast_socket_service_->OpenSocket(
       ip_endpoint, net_log_,
+      base::TimeDelta::FromSeconds(connect_timeout_in_seconds),
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
                      cast_sink, std::move(backoff_entry), sink_source),
       this);
@@ -380,21 +391,17 @@ void CastMediaSinkServiceImpl::InitRetryParameters(
   DCHECK(max_retry_attempts);
 
   *backoff_policy = kDefaultBackoffPolicy;
-  if (!CastChannelRetryEnabled()) {
-    *max_retry_attempts = 0;
-    return;
-  }
 
   *max_retry_attempts = base::GetFieldTrialParamByFeatureAsInt(
-      kEnableCastChannelRetry, kParamNameMaxRetryAttempts,
+      kEnableCastDiscovery, kParamNameMaxRetryAttempts,
       kDefaultMaxRetryAttempts);
 
   backoff_policy->initial_delay_ms = base::GetFieldTrialParamByFeatureAsInt(
-      kEnableCastChannelRetry, kParamNameInitialDelayMS,
+      kEnableCastDiscovery, kParamNameInitialDelayMS,
       kDefaultBackoffPolicy.initial_delay_ms);
 
   backoff_policy->multiply_factor = base::GetFieldTrialParamByFeatureAsDouble(
-      kEnableCastChannelRetry, kParamNameExponential,
+      kEnableCastDiscovery, kParamNameExponential,
       kDefaultBackoffPolicy.multiply_factor);
 
   DVLOG(2) << "Retry strategy parameters "
