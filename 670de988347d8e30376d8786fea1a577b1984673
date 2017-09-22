@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2f8ea7_16b5d792",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T02:17:08Z",
+      "side": 1,
+      "message": "ditto. Can we merge this and Evaluate()?",
+      "revId": "670de988347d8e30376d8786fea1a577b1984673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79f64cd_06e5f123",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImplBase.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T02:17:08Z",
+      "side": 1,
+      "message": "This and ExecuteModule() is mostly the same.\nCan we merge them into one method (with rethrow errors flag argument or something), to make code smaller and avoid unintentional inconsistency between two methods in the future?",
+      "revId": "670de988347d8e30376d8786fea1a577b1984673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
