@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c656205b_036372f1",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fe846e5_abb3b642",
+      "range": {
+        "startLine": 345,
+        "startChar": 48,
+        "endLine": 345,
+        "endChar": 0
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d5f7fd_f4bf842f",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-22T11:36:53Z",
       "side": 1,
       "message": "I think we said we actually want this to continue to leave B in the cookies (so API calls this should be \"\").",
+      "range": {
+        "startLine": 357,
+        "startChar": 18,
+        "endLine": 357,
+        "endChar": 19
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fef752_e32a5a8e",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "This is fixed in the next CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/674870/5/chrome/browser/signin/account_reconcilor_unittest.cc",
+      "parentUuid": "99d5f7fd_f4bf842f",
       "range": {
         "startLine": 357,
         "startChar": 18,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d124904e_5270397f",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "Yeah, it means \"first\" in that case. Reworded.",
+      "parentUuid": "bace5e88_6d2f807a",
+      "range": {
+        "startLine": 377,
+        "startChar": 54,
+        "endLine": 377,
+        "endChar": 61
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6e509cc_dca851a9",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 5
@@ -114,6 +186,30 @@
       "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557fda08_e88f6344",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6e509cc_dca851a9",
+      "range": {
+        "startLine": 383,
+        "startChar": 27,
+        "endLine": 383,
+        "endChar": 28
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "de5edc66_c916b02d",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81841c7_29caa1e7",
+      "range": {
+        "startLine": 395,
+        "startChar": 14,
+        "endLine": 395,
+        "endChar": 21
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98988154_e9682932",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 5
@@ -160,6 +280,30 @@
       "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbaf3cff_4979044c",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-22T12:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98988154_e9682932",
+      "range": {
+        "startLine": 406,
+        "startChar": 4,
+        "endLine": 406,
+        "endChar": 13
+      },
+      "revId": "61b1f89ae1851e27e732e042a8aaeb8ceca1fa6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
