@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ce75d0_a7222bb1",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "What are these lines for?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 75
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2706843d_ffba45b9",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: There shouldn\u0027t be a need for static_cast\u0027s with the UMA_HISTOGRAM_ENUMERATION macro.",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1984e670_36553669",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "If the intent is for this to remain boolean, then please just use UMA_HISTOGRAM_BOOLEAN.  It\u0027s not appropriate to change BooleanSuccess to contain more values if you decide you want additional values for this histogram, as it\u0027s used by a number of other histograms as well.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d67112_fd810d45",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: My understanding is that defining these inline will cause the strings to be compiled into the binary multiple times, depending on who #includes this header.  Please define these as externs instead.",
+      "range": {
+        "startLine": 104,
+        "startChar": 47,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5b2486_46d92fe6",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: I\u0027d use dots throughout, rather than using an underscore here.  Ditto below.",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 42
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744bb975_8b45ec19",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25835,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: Maybe something like \"First by mDNS, then by DIAL\"?",
+      "range": {
+        "startLine": 25835,
+        "startChar": 24,
+        "endLine": 25835,
+        "endChar": 32
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341c4585_c7d7800d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33557,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: respond",
+      "range": {
+        "startLine": 33557,
+        "startChar": 45,
+        "endLine": 33557,
+        "endChar": 53
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b326aac3_bdc9ec11",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33597,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:38:14Z",
+      "side": 1,
+      "message": "nit: s/an cast/a cast (throughout this file)",
+      "range": {
+        "startLine": 33597,
+        "startChar": 51,
+        "endLine": 33597,
+        "endChar": 53
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
