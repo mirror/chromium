@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb67649_3f9a2457",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57453,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-22T19:38:19Z",
+      "side": 1,
+      "message": "Does this really need to be an enum?",
+      "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
