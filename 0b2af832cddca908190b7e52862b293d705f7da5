@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d176f21c_7bf51570",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T14:42:00Z",
+      "side": 1,
+      "message": "It would be less error prone to push this to the Border. Is that possible? If you really need this override, I think you should first try to change View::GetContentsBounds() to call GetInsets() rather than border_-\u003eGetInsets().",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 1
+      },
+      "revId": "0b2af832cddca908190b7e52862b293d705f7da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d70b419_f642519d",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T14:42:00Z",
+      "side": 1,
+      "message": "Should this flip when in rtl? Alternatively should this call to the layout provider?",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 39
+      },
+      "revId": "0b2af832cddca908190b7e52862b293d705f7da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cbe600_46c38000",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T14:42:00Z",
+      "side": 1,
+      "message": "This should be in chrome, not views.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "0b2af832cddca908190b7e52862b293d705f7da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
