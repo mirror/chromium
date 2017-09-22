@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf38c58b_60d33995",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T09:50:10Z",
+      "side": 1,
+      "message": "Don\u0027t we need to call gin::V8Initializer::LoadV8Snapshot() if fd is not valid?  Is the line 209 cover everything?",
+      "revId": "34798d135b478a5659083f3e3ec86e2493deff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0715c4b4_c5b1472f",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T09:50:10Z",
+      "side": 1,
+      "message": "Ditto, wasn\u0027t super sure as the if/def is hard to decrypt...",
+      "revId": "34798d135b478a5659083f3e3ec86e2493deff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
