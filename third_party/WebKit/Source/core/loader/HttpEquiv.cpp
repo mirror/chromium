@@ -7,6 +7,7 @@
 #include "core/css/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/ScriptableDocumentParser.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -125,13 +126,22 @@ void HttpEquiv::ProcessHttpEquivSetCookie(Document& document,
   if (!document.IsHTMLDocument())
     return;
 
-  UseCounter::Count(document, WebFeature::kMetaSetCookie);
+  Deprecation::CountDeprecation(document, WebFeature::kMetaSetCookie);
+
   if (!document.GetContentSecurityPolicy()->AllowInlineScript(
           element, NullURL(), "", OrdinalNumber(), "",
           ContentSecurityPolicy::InlineType::kBlock,
           SecurityViolationReportingPolicy::kSuppressReporting)) {
     UseCounter::Count(document,
                       WebFeature::kMetaSetCookieWhenCSPBlocksInlineScript);
+  }
+
+  if (RuntimeEnabledFeatures::BlockMetaSetCookieEnabled()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kSecurityMessageSource, kErrorMessageLevel,
+        String::Format("Blocked setting the `%s` cookie from a `<meta>` tag.",
+                       content.Utf8().data())));
+    return;
   }
 
   // Exception (for sandboxed documents) ignored.
