@@ -11,6 +11,7 @@ static_library("internal") {
   visibility = [
     ":*",
     "//components/download/content/factory",
+    "//components/download/content/factory:test_support",
     "//components/download/content/internal",
     "//components/download/internal/test:test_support",
   ]
