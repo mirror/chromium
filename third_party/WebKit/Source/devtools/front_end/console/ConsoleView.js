@@ -152,8 +152,6 @@ Console.ConsoleView = class extends UI.VBox {
     var selectAllFixer = this._messagesElement.createChild('div', 'console-view-fix-select-all');
     selectAllFixer.textContent = '.';
 
-    this._registerShortcuts();
-
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
 
     this._linkifier = new Components.Linkifier(Console.ConsoleViewMessage.MaxLengthForLinks);
@@ -590,7 +588,7 @@ Console.ConsoleView = class extends UI.VBox {
 
     contextMenu.appendSeparator();
     contextMenu.appendAction('console.clear');
-    contextMenu.appendAction('console.clear.history');
+    contextMenu.appendAction('console.clear-history');
     contextMenu.appendItem(Common.UIString('Save as...'), this._saveConsole.bind(this));
 
     var request = consoleMessage ? consoleMessage.request : null;
@@ -688,43 +686,6 @@ Console.ConsoleView = class extends UI.VBox {
     this._updateMessageList();
   }
 
-  _registerShortcuts() {
-    this._shortcuts = {};
-
-    var shortcut = UI.KeyboardShortcut;
-    var section = UI.shortcutsScreen.section(Common.UIString('Console'));
-
-    var shortcutL = shortcut.makeDescriptor('l', UI.KeyboardShortcut.Modifiers.Ctrl);
-    var keys = [shortcutL];
-    if (Host.isMac()) {
-      var shortcutK = shortcut.makeDescriptor('k', UI.KeyboardShortcut.Modifiers.Meta);
-      keys.unshift(shortcutK);
-    }
-    section.addAlternateKeys(keys, Common.UIString('Clear console'));
-
-    keys = [shortcut.makeDescriptor(shortcut.Keys.Tab), shortcut.makeDescriptor(shortcut.Keys.Right)];
-    section.addRelatedKeys(keys, Common.UIString('Accept suggestion'));
-
-    var shortcutU = shortcut.makeDescriptor('u', UI.KeyboardShortcut.Modifiers.Ctrl);
-    this._shortcuts[shortcutU.key] = this._clearPromptBackwards.bind(this);
-    section.addAlternateKeys([shortcutU], Common.UIString('Clear console prompt'));
-
-    keys = [shortcut.makeDescriptor(shortcut.Keys.Down), shortcut.makeDescriptor(shortcut.Keys.Up)];
-    section.addRelatedKeys(keys, Common.UIString('Next/previous line'));
-
-    if (Host.isMac()) {
-      keys =
-          [shortcut.makeDescriptor('N', shortcut.Modifiers.Alt), shortcut.makeDescriptor('P', shortcut.Modifiers.Alt)];
-      section.addRelatedKeys(keys, Common.UIString('Next/previous command'));
-    }
-
-    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Enter), Common.UIString('Execute command'));
-  }
-
-  _clearPromptBackwards() {
-    this._prompt.setText('');
-  }
-
   /**
    * @param {!Event} event
    */
@@ -733,13 +694,6 @@ Console.ConsoleView = class extends UI.VBox {
     if (keyboardEvent.key === 'PageUp') {
       this._updateStickToBottomOnWheel();
       return;
-    }
-
-    var shortcut = UI.KeyboardShortcut.makeKeyFromEvent(keyboardEvent);
-    var handler = this._shortcuts[shortcut];
-    if (handler) {
-      handler();
-      keyboardEvent.preventDefault();
     }
   }
 
@@ -1410,7 +1364,7 @@ Console.ConsoleView.ActionDelegate = class {
       case 'console.clear':
         Console.ConsoleView.clearConsole();
         return true;
-      case 'console.clear.history':
+      case 'console.clear-history':
         Console.ConsoleView.instance()._clearHistory();
         return true;
     }

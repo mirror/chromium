@@ -79,7 +79,8 @@ UI.ShortcutRegistry = class {
    * @return {boolean}
    */
   eventMatchesAction(event, actionId) {
-    console.assert(this._defaultActionToShortcut.has(actionId), 'Unknown action ' + actionId);
+    if (!this._defaultActionToShortcut.has(actionId))
+      return false;
     var key = UI.KeyboardShortcut.makeKeyFromEvent(event);
     return this._defaultActionToShortcut.get(actionId).valuesArray().some(descriptor => descriptor.key === key);
   }

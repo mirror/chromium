@@ -37,7 +37,6 @@ Sources.CSSSourceFrame = class extends SourceFrame.UISourceCodeFrame {
    */
   constructor(uiSourceCode) {
     super(uiSourceCode);
-    this._registerShortcuts();
     this._swatchPopoverHelper = new InlineEditor.SwatchPopoverHelper();
     this._muteSwatchProcessing = false;
     this.configureAutocomplete(
@@ -46,18 +45,26 @@ Sources.CSSSourceFrame = class extends SourceFrame.UISourceCodeFrame {
       if (this._swatchPopoverHelper.isShowing())
         this._swatchPopoverHelper.hide(true);
     });
+    this.element.addEventListener('keydown', this._handleKeyDown.bind(this), false);
   }
 
-  _registerShortcuts() {
-    var shortcutKeys = UI.ShortcutsScreen.SourcesPanelShortcuts;
-    for (var i = 0; i < shortcutKeys.IncreaseCSSUnitByOne.length; ++i)
-      this.addShortcut(shortcutKeys.IncreaseCSSUnitByOne[i].key, this._handleUnitModification.bind(this, 1));
-    for (var i = 0; i < shortcutKeys.DecreaseCSSUnitByOne.length; ++i)
-      this.addShortcut(shortcutKeys.DecreaseCSSUnitByOne[i].key, this._handleUnitModification.bind(this, -1));
-    for (var i = 0; i < shortcutKeys.IncreaseCSSUnitByTen.length; ++i)
-      this.addShortcut(shortcutKeys.IncreaseCSSUnitByTen[i].key, this._handleUnitModification.bind(this, 10));
-    for (var i = 0; i < shortcutKeys.DecreaseCSSUnitByTen.length; ++i)
-      this.addShortcut(shortcutKeys.DecreaseCSSUnitByTen[i].key, this._handleUnitModification.bind(this, -10));
+  /**
+   * @param {!Event} event
+   */
+  _handleKeyDown(event) {
+    var keyboardEvent = /** @type {!KeyboardEvent} */ (event);
+    var handled = false;
+    if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'sources.increase-unit-by-one'))
+      handled = this._handleUnitModification(1);
+    else if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'sources.decrease-unit-by-one'))
+      handled = this._handleUnitModification(-1);
+    else if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'sources.increase-unit-by-ten'))
+      handled = this._handleUnitModification(10);
+    else if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'sources.decrease-unit-by-ten'))
+      handled = this._handleUnitModification(-10);
+
+    if (handled)
+      keyboardEvent.consume(true);
   }
 
   /**

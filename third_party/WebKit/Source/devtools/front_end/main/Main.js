@@ -305,7 +305,6 @@ Main.Main = class {
 
   _lateInitialization() {
     console.timeStamp('Main._lateInitialization');
-    this._registerShortcuts();
     Extensions.extensionServer.initializeExtensions();
     if (!Host.isUnderTest())
       Help.showReleaseNoteIfNeeded();
@@ -360,51 +359,6 @@ Main.Main = class {
     }
 
     Workspace.workspace.addEventListener(Workspace.Workspace.Events.UISourceCodeAdded, listener);
-  }
-
-  _registerShortcuts() {
-    var shortcut = UI.KeyboardShortcut;
-    var section = UI.shortcutsScreen.section(Common.UIString('All Panels'));
-    var keys = [
-      shortcut.makeDescriptor('[', shortcut.Modifiers.CtrlOrMeta),
-      shortcut.makeDescriptor(']', shortcut.Modifiers.CtrlOrMeta)
-    ];
-    section.addRelatedKeys(keys, Common.UIString('Go to the panel to the left/right'));
-
-    var toggleConsoleLabel = Common.UIString('Show console');
-    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Tilde, shortcut.Modifiers.Ctrl), toggleConsoleLabel);
-    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Esc), Common.UIString('Toggle drawer'));
-    if (Components.dockController.canDock()) {
-      section.addKey(
-          shortcut.makeDescriptor('M', shortcut.Modifiers.CtrlOrMeta | shortcut.Modifiers.Shift),
-          Common.UIString('Toggle device mode'));
-      section.addKey(
-          shortcut.makeDescriptor('D', shortcut.Modifiers.CtrlOrMeta | shortcut.Modifiers.Shift),
-          Common.UIString('Toggle dock side'));
-    }
-    section.addKey(shortcut.makeDescriptor('f', shortcut.Modifiers.CtrlOrMeta), Common.UIString('Search'));
-
-    var advancedSearchShortcutModifier = Host.isMac() ?
-        UI.KeyboardShortcut.Modifiers.Meta | UI.KeyboardShortcut.Modifiers.Alt :
-        UI.KeyboardShortcut.Modifiers.Ctrl | UI.KeyboardShortcut.Modifiers.Shift;
-    var advancedSearchShortcut = shortcut.makeDescriptor('f', advancedSearchShortcutModifier);
-    section.addKey(advancedSearchShortcut, Common.UIString('Search across all sources'));
-
-    var inspectElementModeShortcuts =
-        UI.shortcutRegistry.shortcutDescriptorsForAction('elements.toggle-element-search');
-    if (inspectElementModeShortcuts.length)
-      section.addKey(inspectElementModeShortcuts[0], Common.UIString('Select node to inspect'));
-
-    var openResourceShortcut = UI.KeyboardShortcut.makeDescriptor('p', UI.KeyboardShortcut.Modifiers.CtrlOrMeta);
-    section.addKey(openResourceShortcut, Common.UIString('Go to source'));
-
-    if (Host.isMac()) {
-      keys = [
-        shortcut.makeDescriptor('g', shortcut.Modifiers.Meta),
-        shortcut.makeDescriptor('g', shortcut.Modifiers.Meta | shortcut.Modifiers.Shift)
-      ];
-      section.addRelatedKeys(keys, Common.UIString('Find next/previous'));
-    }
   }
 
   _postDocumentKeyDown(event) {

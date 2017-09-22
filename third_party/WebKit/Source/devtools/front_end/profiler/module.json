@@ -68,6 +68,8 @@
                 "Profiler.HeapProfilerPanel"
             ],
             "className": "Profiler.HeapProfilerPanel",
+            "helpSection": "Memory Panel",
+            "helpDescription": "Start/stop recording",
             "bindings": [
                 {
                     "platform": "windows,linux",

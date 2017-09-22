@@ -28,6 +28,8 @@
             "type": "action",
             "actionId": "console.show",
             "className": "Console.ConsoleView.ActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Show console",
             "bindings": [
                 {
                     "shortcut": "Ctrl+`"
@@ -41,6 +43,7 @@
             "title": "Clear console",
             "iconClass": "largeicon-clear",
             "className": "Console.ConsoleView.ActionDelegate",
+            "helpSection": "Console",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -55,9 +58,41 @@
         {
             "type": "action",
             "category": "Console",
-            "actionId": "console.clear.history",
+            "actionId": "console.clear-history",
             "title": "Clear console history",
             "className": "Console.ConsoleView.ActionDelegate"
+        },
+        {
+            "type": "action",
+            "actionId": "console.clear-prompt",
+            "title": "Clear console prompt",
+            "helpSection": "Console"
+        },
+        {
+            "type": "action",
+            "actionId": "console.next-history",
+            "helpSection": "Console",
+            "helpDescription": "Next/previous command",
+            "title": "Next/previous command",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+N"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "console.previous-history",
+            "helpSection": "Console",
+            "helpDescription": "Next/previous command",
+            "title": "Next/previous command",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+P"
+                }
+            ]
         },
         {
             "type": "setting",

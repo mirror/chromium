@@ -235,6 +235,8 @@
             "className": "Elements.InspectElementModeController.ToggleSearchActionDelegate",
             "title": "Select an element in the page to inspect it",
             "iconClass": "largeicon-node-search",
+            "helpSection": "All Panels",
+            "helpDescription": "Select node to inspect",
             "bindings": [
                 {
                     "platform": "windows,linux",

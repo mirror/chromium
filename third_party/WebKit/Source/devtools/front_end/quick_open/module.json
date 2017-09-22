@@ -32,6 +32,8 @@
             "title": "Open file",
             "className": "QuickOpen.QuickOpen.ShowActionDelegate",
             "order": 100,
+            "helpSection": "All Panels",
+            "helpDescription": "Go to source",
             "bindings": [
                 {
                     "platform": "mac",

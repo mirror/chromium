@@ -105,37 +105,24 @@ Console.ConsolePrompt = class extends UI.Widget {
     var newText;
     var isPrevious;
 
-    switch (keyboardEvent.keyCode) {
-      case UI.KeyboardShortcut.Keys.Up.code:
-        if (keyboardEvent.shiftKey || this._editor.selection().endLine > 0)
-          break;
-        newText = this._history.previous(this.text());
-        isPrevious = true;
-        break;
-      case UI.KeyboardShortcut.Keys.Down.code:
-        if (keyboardEvent.shiftKey || this._editor.selection().endLine < this._editor.fullRange().endLine)
-          break;
-        newText = this._history.next();
-        break;
-      case UI.KeyboardShortcut.Keys.P.code:  // Ctrl+P = Previous
-        if (Host.isMac() && keyboardEvent.ctrlKey && !keyboardEvent.metaKey && !keyboardEvent.altKey &&
-            !keyboardEvent.shiftKey) {
-          newText = this._history.previous(this.text());
-          isPrevious = true;
-        }
-        break;
-      case UI.KeyboardShortcut.Keys.N.code:  // Ctrl+N = Next
-        if (Host.isMac() && keyboardEvent.ctrlKey && !keyboardEvent.metaKey && !keyboardEvent.altKey &&
-            !keyboardEvent.shiftKey)
-          newText = this._history.next();
-        break;
-      case UI.KeyboardShortcut.Keys.Enter.code:
-        this._enterKeyPressed(keyboardEvent);
-        break;
-      case UI.KeyboardShortcut.Keys.Tab.code:
-        if (!this.text())
-          keyboardEvent.consume();
-        break;
+    if (keyboardEvent.keyCode === UI.KeyboardShortcut.Keys.Up.code && !keyboardEvent.shiftKey &&
+        this._editor.selection().endLine === 0) {
+      newText = this._history.previous(this.text());
+      isPrevious = true;
+    } else if (
+        keyboardEvent.keyCode === UI.KeyboardShortcut.Keys.Down.code && !keyboardEvent.shiftKey &&
+        this._editor.selection().endLine === this._editor.fullRange().endLine) {
+      newText = this._history.next();
+    } else if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'console.previous-history')) {
+      newText = this._history.previous(this.text());
+      isPrevious = true;
+    } else if (UI.shortcutRegistry.eventMatchesAction(keyboardEvent, 'console.next-history')) {
+      newText = this._history.next();
+    } else if (isEnterKey(keyboardEvent)) {
+      this._enterKeyPressed(keyboardEvent);
+    } else if (keyboardEvent.keyCode === UI.KeyboardShortcut.Keys.Tab.code) {
+      if (!this.text())
+        keyboardEvent.consume();
     }
 
     if (newText === undefined)

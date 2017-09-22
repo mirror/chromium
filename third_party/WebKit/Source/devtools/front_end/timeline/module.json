@@ -52,6 +52,8 @@
                 "Timeline.TimelinePanel"
             ],
             "className": "Timeline.TimelinePanel.ActionDelegate",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Start/stop recording",
             "options": [
                 {
                     "value": true,
@@ -83,6 +85,8 @@
             "category": "Performance",
             "title": "Start profiling and reload page",
             "className": "Timeline.TimelinePanel.ActionDelegate",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Record page reload",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -103,6 +107,8 @@
             ],
             "className": "Timeline.TimelinePanel.ActionDelegate",
             "title": "Save profile\u2026",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Save profile",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -124,6 +130,8 @@
             "order": 10,
             "className": "Timeline.TimelinePanel.ActionDelegate",
             "title": "Load profile\u2026",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Load profile",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -142,6 +150,8 @@
                 "Timeline.TimelinePanel"
             ],
             "className": "Timeline.TimelinePanel.ActionDelegate",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Jump to previous/next frame",
             "bindings": [
                 {
                     "shortcut": "["
@@ -155,6 +165,8 @@
                 "Timeline.TimelinePanel"
             ],
             "className": "Timeline.TimelinePanel.ActionDelegate",
+            "helpSection": "Performance Panel",
+            "helpDescription": "Jump to previous/next frame",
             "bindings": [
                 {
                     "shortcut": "]"
@@ -171,6 +183,8 @@
             "contextTypes": [
                 "Timeline.TimelinePanel"
             ],
+            "helpSection": "Performance Panel",
+            "helpDescription": "Pick a recording from history",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -190,6 +204,8 @@
             "contextTypes": [
                 "Timeline.TimelinePanel"
             ],
+            "helpSection": "Performance Panel",
+            "helpDescription": "Show previous/next recording",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -209,6 +225,8 @@
             "contextTypes": [
                 "Timeline.TimelinePanel"
             ],
+            "helpSection": "Performance Panel",
+            "helpDescription": "Show previous/next recording",
             "bindings": [
                 {
                     "platform": "windows,linux",
