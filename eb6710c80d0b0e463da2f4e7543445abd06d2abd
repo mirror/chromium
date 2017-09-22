@@ -22,6 +22,30 @@
       "revId": "eb6710c80d0b0e463da2f4e7543445abd06d2abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744632e7_00733799",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-22T07:12:11Z",
+      "side": 1,
+      "message": "Sorry, the patch landed before I saw your comment. I\u0027ll address this in a following CL.",
+      "parentUuid": "4db55399_8d9991eb",
+      "range": {
+        "startLine": 357,
+        "startChar": 17,
+        "endLine": 357,
+        "endChar": 57
+      },
+      "revId": "eb6710c80d0b0e463da2f4e7543445abd06d2abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
