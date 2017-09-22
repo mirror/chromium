@@ -276,7 +276,7 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
       data.media_flags |= WebContextMenuData::kMediaPaused;
     if (media_element->muted())
       data.media_flags |= WebContextMenuData::kMediaMuted;
-    if (media_element->Loop())
+    if (media_element->loop())
       data.media_flags |= WebContextMenuData::kMediaLoop;
     if (media_element->SupportsSave())
       data.media_flags |= WebContextMenuData::kMediaCanSave;

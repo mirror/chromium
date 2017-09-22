@@ -18,7 +18,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/blink/cache_util.h"
 #include "media/blink/media_blink_export.h"
-#include "media/blink/resource_fetch_context.h"
 #include "media/blink/url_index.h"
 #include "net/http/http_byte_range.h"
 #include "net/http/http_request_headers.h"
@@ -26,6 +25,7 @@
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoader.h"
+#include "third_party/WebKit/public/web/WebFetchContext.h"
 
 using blink::WebAssociatedURLLoader;
 using blink::WebString;

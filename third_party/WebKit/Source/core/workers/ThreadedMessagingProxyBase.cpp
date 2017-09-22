@@ -14,6 +14,7 @@
 #include "core/loader/WorkerFetchContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerInspectorProxy.h"
+#include "core/workers/WorkerMediaPlayerFactory.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CurrentTime.h"
@@ -41,10 +42,14 @@ ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
   DCHECK(IsParentContextThread());
   g_live_messaging_proxy_count++;
 
+  Document* document = ToDocument(execution_context_);
+  WebLocalFrameImpl* web_frame =
+      WebLocalFrameImpl::FromFrame(document->GetFrame());
+
+  WorkerMediaPlayerFactory::ProvideTo(
+      worker_clients_, web_frame->Client()->CreateMediaPlayerFactory());
+
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    Document* document = ToDocument(execution_context_);
-    WebLocalFrameImpl* web_frame =
-        WebLocalFrameImpl::FromFrame(document->GetFrame());
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
         web_frame->Client()->CreateWorkerFetchContext();
     DCHECK(web_worker_fetch_context);

@@ -62,6 +62,7 @@
 #include "public/platform/WebFileSystemType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
+#include "public/platform/WebMediaPlayerFactory.h"
 #include "public/platform/WebPageVisibilityState.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebSetSinkIdCallbacks.h"
@@ -137,6 +138,11 @@ class BLINK_EXPORT WebFrameClient {
 
   // May return null.
   virtual WebPlugin* CreatePlugin(const WebPluginParams&) { return nullptr; }
+
+  // May return null.
+  virtual std::unique_ptr<WebMediaPlayerFactory> CreateMediaPlayerFactory() {
+    return nullptr;
+  }
 
   // May return null.
   // WebContentDecryptionModule* may be null if one has not yet been set.
