@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140bdd16_46ffc741",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 34
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-22T11:22:45Z",
+      "side": 1,
+      "message": "Where is the corresponding call to removeChildViewController?\n\nIs it ok if this is invoked multiple times simultaneously for different tabs?",
+      "revId": "1219aa6b863558996e725e2ff7765834dab8d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
