@@ -32,7 +32,8 @@ class UtilityMojoMediaClient : public MojoMediaClient {
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,
       OutputWithReleaseMailboxCB output_cb,
-      RequestOverlayInfoCB request_overlay_info_cb) final;
+      RequestOverlayInfoCB request_overlay_info_cb,
+      const std::string& decoder_name) final;
 
   DISALLOW_COPY_AND_ASSIGN(UtilityMojoMediaClient);
 };

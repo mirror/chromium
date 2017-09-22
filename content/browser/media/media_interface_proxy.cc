@@ -55,9 +55,11 @@ void MediaInterfaceProxy::CreateAudioDecoder(
 }
 
 void MediaInterfaceProxy::CreateVideoDecoder(
-    media::mojom::VideoDecoderRequest request) {
+    media::mojom::VideoDecoderRequest request,
+    const std::string& decoder_name) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  GetMediaInterfaceFactory()->CreateVideoDecoder(std::move(request));
+  GetMediaInterfaceFactory()->CreateVideoDecoder(std::move(request),
+                                                 decoder_name);
 }
 
 void MediaInterfaceProxy::CreateRenderer(

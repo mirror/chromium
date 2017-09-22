@@ -37,7 +37,8 @@ class GpuMojoMediaClient : public MojoMediaClient {
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,
       OutputWithReleaseMailboxCB output_cb,
-      RequestOverlayInfoCB request_overlay_info_cb) final;
+      RequestOverlayInfoCB request_overlay_info_cb,
+      const std::string& decoder_name) final;
   std::unique_ptr<CdmFactory> CreateCdmFactory(
       service_manager::mojom::InterfaceProvider* interface_provider) final;
 
