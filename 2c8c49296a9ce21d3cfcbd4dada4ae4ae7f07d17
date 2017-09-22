@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06978046_d3f12267",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T01:59:41Z",
+      "side": 1,
+      "message": "DVLOG",
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60ae59e_912a1705",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T01:59:41Z",
+      "side": 1,
+      "message": "Nit: DVLOG",
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
