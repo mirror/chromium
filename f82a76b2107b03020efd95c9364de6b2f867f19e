@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c42849c4_913d25aa",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T17:35:49Z",
+      "side": 1,
+      "message": "would\n[[configProperties_.Type \u003d\u003d NetworkType.WI_FI]]\ndo the job here?",
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962ac9b3_c907bffe",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T17:35:49Z",
+      "side": 1,
+      "message": "nit: nl after this",
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c65d65_838b3209",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-22T17:35:49Z",
+      "side": 1,
+      "message": "nit: cannot",
+      "range": {
+        "startLine": 462,
+        "startChar": 45,
+        "endLine": 462,
+        "endChar": 52
+      },
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
