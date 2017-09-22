@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eac4a70_fb5a1139",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T23:08:05Z",
+      "side": 1,
+      "message": "optional nit: we probably can remove this, since there is a command line flag to enable a feature.\n\nhttps://g3doc.corp.google.com/analysis/uma/g3doc/finch/feature-api.md?cl\u003dhead",
+      "range": {
+        "startLine": 197,
+        "startChar": 57,
+        "endLine": 197,
+        "endChar": 99
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fc271c_e7e6c207",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3494,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T23:08:05Z",
+      "side": 1,
+      "message": "Is download foreground android only feature? Also this block needs to be in a defined(OS_ANDROID) macro.",
+      "range": {
+        "startLine": 3494,
+        "startChar": 57,
+        "endLine": 3494,
+        "endChar": 63
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d61fec_0072062f",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-22T23:08:05Z",
+      "side": 1,
+      "message": "nit: Can this be sorted in alphabetical order?\n\nAlso I see some feature are defined in chrome/browser/android/chrome_feature_list.h, so no \"features::\" is needed, but this is optional because people also put things in chrome/common.",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
