@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "30e9adaf_33eabb3f",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-22T04:01:43Z",
+      "side": 1,
+      "message": "Summary how RESOURCE_TYPE_GPU_MEMORY_BUFFER maybe used by *ResourceProvider here. Currently there are three possible places: \nLayerTreeResourceProvider in UI Compositor (MacOS only); LayerTreeResourceProvider in RenderWidgetCompositor; DisplayResourceProvider in Display compositor (MacOS/IOS). \n\n1), LayerTreeResourceProvider in UI Compositor (MacOS only): \nRelated code: \nCompositor::Compositor () {\n#if defined(OS_MACOSX)\n  // Using CoreAnimation to composite requires using GpuMemoryBuffers, which\n  // require zero copy.\n  settings.resource_settings.use_gpu_memory_buffer_resources \u003d\n      settings.use_zero_copy;\n#endif\n}\n\n2), LayerTreeResourceProvider in RenderWidgetCompositor: \nRelated code: RenderWidgetCompositor::GenerateLayerTreeSettings\n\n3), DisplayResourceProvider in Display compositor (MacOS/IOS): \nRelated code: GLRenderer::CopyRenderPassDrawQuadToOverlayResource\n\n\nDetails about how DisplayResourceProvider::ScopedLocalWriteGL::AllocateGpuMemoryBuffer is being used by GLRenderer::CopyRenderPassDrawQuadToOverlayResource \n\nFirst, CreateGpuResource with RESOURCE_TYPE_GPU_MEMORY_BUFFER\nresource_provider_-\u003eCreateGpuMemoryBufferResource\nScopedResource::AllocateWithGpuMemoryBuffer\nResourcePool::CreateResource\nResourcePool::AcquireResource\noverlay_resource_pool_-\u003eAcquireResource\nGLRenderer::CopyRenderPassDrawQuadToOverlayResource\n\nSecond, \nIf type RESOURCE_TYPE_GPU_MEMORY_BUFFER: DisplayResourceProvider::ScopedLocalWriteGL::AllocateGpuMemoryBuffer\ncc::DisplayResourceProvider::ScopedLocalWriteGL\nGLRenderer::CopyRenderPassDrawQuadToOverlayResource",
+      "parentUuid": "e4c1fe67_1ca0a97b",
+      "revId": "db5c5409078f3143b9e6cf5be82966c4ef0b1ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c04dd01b_ad57c6e6",
         "filename": "cc/resources/display_resource_provider.cc",
         "patchSetId": 21
