@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c684117f_b3c61647",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8bdd911_9da8ddc0",
+      "range": {
+        "startLine": 34,
+        "startChar": 73,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706dcfe4_ee3f6713",
         "filename": "components/offline_pages/core/model/clear_storage_task.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-21T22:12:52Z",
       "side": 1,
       "message": "do we really do it that often?",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 77
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08760f8_49f6c62f",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Yes, based on UMA, we do 168,696,682 in one day, and among those 69,587,853 are UNNECESSARY. For the clearing, only 5,388,667 of them cleared more than 1 page.\nI think this number should be changed, but I think some research is needed here...",
+      "parentUuid": "706dcfe4_ee3f6713",
       "range": {
         "startLine": 58,
         "startChar": 75,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "770d4412_17dd2e8d",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done\nthis is a boolean right now, it had 3 values long ago.",
+      "parentUuid": "22154df3_d73fac79",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 9
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d41645c_07fa7c1e",
         "filename": "components/offline_pages/core/model/clear_storage_task.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc373d8_d14fa8b3",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done\nand i\u0027ll wait for that one for dependency.",
+      "parentUuid": "1d41645c_07fa7c1e",
+      "range": {
+        "startLine": 111,
+        "startChar": 52,
+        "endLine": 111,
+        "endChar": 77
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b12cc748_7f6665c7",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2355fa_33848e36",
+      "range": {
+        "startLine": 120,
+        "startChar": 39,
+        "endLine": 120,
+        "endChar": 58
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85fa520_6adeb4bd",
         "filename": "components/offline_pages/core/model/clear_storage_task.h",
         "patchSetId": 6
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "4c44857d_15b1c44f",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85fa520_6adeb4bd",
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bb76fe4_2374b198",
         "filename": "components/offline_pages/core/model/clear_storage_task.h",
         "patchSetId": 6
@@ -148,6 +286,24 @@
       "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b1d5fb_b1ec5a1b",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb76fe4_2374b198",
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "8711d359_f8a0a19a",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f918cae1_c836db1f",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 14
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df5fa5f9_403070c2",
         "filename": "components/offline_pages/core/model/clear_storage_task.h",
         "patchSetId": 6
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "67a48505_cdf8329d",
+        "filename": "components/offline_pages/core/model/clear_storage_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df5fa5f9_403070c2",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 82,
+        "endChar": 37
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f887963_5cc3b968",
         "filename": "components/offline_pages/core/model/clear_storage_task_unittest.cc",
         "patchSetId": 6
@@ -217,6 +421,30 @@
       "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3983f5b2_22ea0442",
+        "filename": "components/offline_pages/core/model/clear_storage_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-22T02:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f887963_5cc3b968",
+      "range": {
+        "startLine": 165,
+        "startChar": 44,
+        "endLine": 165,
+        "endChar": 45
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
