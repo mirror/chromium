@@ -16,6 +16,24 @@
       "revId": "327029e8f639d1e17749185e69608e8e5b4e34cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6270a25e_a8624897",
+        "filename": "net/http/http_stream_factory_impl_job_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-22T20:36:13Z",
+      "side": 1,
+      "message": "Thanks, Asanka! I will abandon this. If a QUIC HttpStreamFactoryImpl::Job can be restarted, we might need to clear the underlying Job::|quic_request_| before restarting.",
+      "parentUuid": "0213b5d8_9ab89245",
+      "revId": "327029e8f639d1e17749185e69608e8e5b4e34cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
