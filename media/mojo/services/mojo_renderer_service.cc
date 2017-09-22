@@ -16,6 +16,7 @@
 #include "media/base/video_renderer_sink.h"
 #include "media/mojo/common/media_type_converters.h"
 #include "media/mojo/services/media_resource_shim.h"
+#include "media/mojo/services/mojo_audio_renderer_sink_adapter.h"
 #include "media/mojo/services/mojo_cdm_service_context.h"
 #include "media/mojo/services/mojo_video_renderer_sink_adapter.h"
 
@@ -80,6 +81,7 @@ MojoRendererService::~MojoRendererService() {}
 void MojoRendererService::Initialize(
     mojom::RendererClientAssociatedPtrInfo client,
     base::Optional<std::vector<mojom::DemuxerStreamPtr>> streams,
+    mojom::AudioRendererSinkPtr audio_renderer_sink_ptr,
     mojom::VideoRendererSinkPtr video_renderer_sink_ptr,
     const base::Optional<GURL>& media_url,
     const base::Optional<GURL>& site_for_cookies,
@@ -89,6 +91,12 @@ void MojoRendererService::Initialize(
 
   client_.Bind(std::move(client));
   state_ = STATE_INITIALIZING;
+
+  if (audio_renderer_sink_ptr) {
+    DCHECK(audio_sink_);
+    static_cast<MojoAudioRendererSinkAdapter*>(audio_sink_.get())
+        ->SetClient(std::move(audio_renderer_sink_ptr));
+  }
 
   if (video_renderer_sink_ptr) {
     DCHECK(video_sink_);

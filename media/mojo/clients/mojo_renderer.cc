@@ -10,10 +10,12 @@
 #include "base/callback_helpers.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
+#include "media/base/audio_renderer_sink.h"
 #include "media/base/media_resource.h"
 #include "media/base/pipeline_status.h"
 #include "media/base/renderer_client.h"
 #include "media/base/video_renderer_sink.h"
+#include "media/mojo/clients/mojo_audio_renderer_sink_impl.h"
 #include "media/mojo/clients/mojo_demuxer_stream_impl.h"
 #include "media/mojo/clients/mojo_video_renderer_sink_impl.h"
 #include "media/mojo/common/media_type_converters.h"
@@ -26,14 +28,17 @@ namespace media {
 MojoRenderer::MojoRenderer(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     std::unique_ptr<VideoOverlayFactory> video_overlay_factory,
+    AudioRendererSink* audio_renderer_sink,
     VideoRendererSink* video_renderer_sink,
     mojom::RendererPtr remote_renderer)
     : task_runner_(task_runner),
       video_overlay_factory_(std::move(video_overlay_factory)),
+      audio_renderer_sink_(audio_renderer_sink),
       video_renderer_sink_(video_renderer_sink),
       remote_renderer_info_(remote_renderer.PassInterface()),
       client_binding_(this),
       media_time_interpolator_(&media_clock_),
+      mojo_audio_renderer_sink_(nullptr),
       mojo_video_renderer_sink_(nullptr) {
   DVLOG(1) << __func__;
 }
@@ -97,6 +102,18 @@ void MojoRenderer::InitializeRendererFromStreams(
     stream_proxies.push_back(std::move(stream_proxy));
   }
 
+  mojom::AudioRendererSinkPtr audio_renderer_sink_ptr;
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  if (audio_renderer_sink_) {
+    mojo_audio_renderer_sink_.reset(
+        new MojoAudioRendererSinkImpl(task_runner_, audio_renderer_sink_,
+                                      MakeRequest(&audio_renderer_sink_ptr)));
+    mojo_audio_renderer_sink_->set_connection_error_handler(
+        base::Bind(&MojoRenderer::OnAudioRendererSinkConnectionError,
+                   base::Unretained(this)));
+  }
+#endif
+
   mojom::VideoRendererSinkPtr video_renderer_sink_ptr;
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
   if (video_renderer_sink_) {
@@ -122,7 +139,8 @@ void MojoRenderer::InitializeRendererFromStreams(
   // |remote_renderer_| is destroyed.
   remote_renderer_->Initialize(
       std::move(client_ptr_info), std::move(stream_proxies),
-      std::move(video_renderer_sink_ptr), base::nullopt, base::nullopt,
+      std::move(audio_renderer_sink_ptr), std::move(video_renderer_sink_ptr),
+      base::nullopt, base::nullopt,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
 
@@ -143,8 +161,8 @@ void MojoRenderer::InitializeRendererFromUrl(media::RendererClient* client) {
   std::vector<mojom::DemuxerStreamPtr> streams;
   remote_renderer_->Initialize(
       std::move(client_ptr_info), std::move(streams),
-      mojom::VideoRendererSinkPtr(), url_params.media_url,
-      url_params.site_for_cookies,
+      mojom::AudioRendererSinkPtr(), mojom::VideoRendererSinkPtr(),
+      url_params.media_url, url_params.site_for_cookies,
       base::Bind(&MojoRenderer::OnInitialized, base::Unretained(this), client));
 }
 
@@ -350,6 +368,14 @@ void MojoRenderer::OnDemuxerStreamConnectionError(
     }
   }
   NOTREACHED() << "Unrecognized demuxer stream=" << stream;
+}
+
+void MojoRenderer::OnAudioRendererSinkConnectionError() {
+  DVLOG(1) << __func__;
+  CHECK(task_runner_->BelongsToCurrentThread());
+
+  mojo_audio_renderer_sink_.reset();
+  audio_renderer_sink_ = nullptr;
 }
 
 void MojoRenderer::OnVideoRendererSinkConnectionError() {
