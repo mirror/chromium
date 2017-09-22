@@ -76,6 +76,7 @@ class ScrollToOptions;
 class ShadowRoot;
 class ShadowRootInit;
 class StringOrTrustedHTML;
+class StringOrTrustedScriptURL;
 class StylePropertySet;
 class StylePropertyMap;
 class V0CustomElementDefinition;
@@ -197,6 +198,9 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void setAttribute(const AtomicString& name,
                     const AtomicString& value,
+                    ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setAttribute(const QualifiedName&,
+                    const StringOrTrustedScriptURL&,
                     ExceptionState& = ASSERT_NO_EXCEPTION);
   static bool ParseAttributeName(QualifiedName&,
                                  const AtomicString& namespace_uri,
@@ -552,6 +556,8 @@ class CORE_EXPORT Element : public ContainerNode {
   KURL HrefURL() const;
 
   KURL GetURLAttribute(const QualifiedName&) const;
+  void GetURLAttribute(const QualifiedName&, StringOrTrustedScriptURL&) const;
+
   KURL GetNonEmptyURLAttribute(const QualifiedName&) const;
 
   virtual const AtomicString ImageSourceURL() const;
