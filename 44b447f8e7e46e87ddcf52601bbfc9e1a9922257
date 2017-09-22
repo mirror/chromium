@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca610b42_fbb8e0ca",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T20:01:24Z",
+      "side": 1,
+      "message": "And in the follow-up CL HandleInput will become part of the Ui interface?",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0215641d_2d5389ad",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T20:01:24Z",
+      "side": 1,
+      "message": "I\u0027m a bit apprehensive how the ownership of WebVR presentation works today. IIUC,\nVrShellGl owns one bit and UiScene owns another bit. I feel it should be in one place.",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c330f8_facf70d5",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T20:01:24Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909ef108_0d13a5e2",
+        "filename": "chrome/browser/vr/ui_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T20:01:24Z",
+      "side": 1,
+      "message": "Is that used anywhere else than in VrShellGl? If not, can we add that to the Ui class?",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
