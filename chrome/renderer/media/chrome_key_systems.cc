@@ -224,9 +224,9 @@ static void AddPepperBasedWidevine(
       media::EmeFeatureSupport::REQUESTABLE,    // Persistent state.
       media::EmeFeatureSupport::REQUESTABLE));  // Distinctive identifier.
 #else   // (Desktop)
-      Robustness::SW_SECURE_CRYPTO,                 // Maximum audio robustness.
-      Robustness::SW_SECURE_DECODE,                 // Maximum video robustness.
-      media::EmeSessionTypeSupport::NOT_SUPPORTED,  // persistent-license.
+      Robustness::SW_SECURE_CRYPTO,             // Maximum audio robustness.
+      Robustness::SW_SECURE_DECODE,             // Maximum video robustness.
+      media::EmeSessionTypeSupport::SUPPORTED,  // persistent-license.
       media::EmeSessionTypeSupport::
           NOT_SUPPORTED,                          // persistent-release-message.
       media::EmeFeatureSupport::REQUESTABLE,      // Persistent state.
