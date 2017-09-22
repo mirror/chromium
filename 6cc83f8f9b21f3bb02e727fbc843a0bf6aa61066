@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9738ab96_988be292",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-22T00:55:15Z",
+      "side": 1,
+      "message": "I see. Another option would be to have a per-test namespace, but just renaming these symbols is probably cleaner.",
+      "parentUuid": "09c0904e_3c01f7b3",
+      "range": {
+        "startLine": 284,
+        "startChar": 5,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc17608c_7cd90aab",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/message_loop_task_counter.h",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "53890f17_0b49d1df",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/message_loop_task_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-22T00:55:15Z",
+      "side": 1,
+      "message": "Ah, I only saw two. Still, please see the comment in nop_task.h.",
+      "parentUuid": "de6dda7f_70ba9e47",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9624d9_9644f21a",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/nop_task.h",
         "patchSetId": 5
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "\u003e at the call site: \"[]() { }\".\n\nMake that 92 call sites. This will be more readable at least.",
       "parentUuid": "ce9624d9_9644f21a",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "6cc83f8f9b21f3bb02e727fbc843a0bf6aa61066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcaabad6_a469a9a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/nop_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-22T00:55:15Z",
+      "side": 1,
+      "message": "Fair enough. I think it\u0027s still a little silly to add a header for trivial things like this. How about merging them to a test_utils.h or similar?",
+      "parentUuid": "be142834_ec631b45",
       "range": {
         "startLine": 11,
         "startChar": 12,
