@@ -16,7 +16,6 @@ android_aar_prebuilt("gvr_common_java") {
   aar_path = "src/libraries/sdk-common-1.80.0.aar"
   proguard_configs = [ "proguard-gvr-chromium.txt" ]
   ignore_native_libraries = true
-
   # Ignore unused auto generated classes. Proguard will not strip them automatically because they
   # implemented an interface that is called by VrEvent.
   jar_excluded_patterns = [
@@ -53,6 +52,37 @@ android_aar_prebuilt("gvr_controller_java") {
     ":gvr_common_java",
   ]
 }
+
+#android_aar_prebuilt("gvr_audio_java") {
+#  aar_path = "src/libraries/sdk-audio-1.60.1.aar"
+#  ignore_native_libraries = true
+#}
+
+#source_set("libgvr_audio") {
+#  deps = [
+#    ":libgvr_audio_shared_library",
+#  ]
+#  libs = [ "$root_out_dir/libgvr_audio.so" ]
+#}
+#
+#copy("libgvr_audio_shared_library") {
+#  if (target_cpu == "arm") {
+#    sources = [
+#      "src/lib/android_arm/libgvr_audio.so",
+#    ]
+#  } else if (target_cpu == "arm64") {
+#    sources = [
+#      "src/lib/android_arm64/libgvr_audio.so",
+#    ]
+#  } else if (target_cpu == "x86") {
+#    sources = [
+#      "src/lib/android_x86/libgvr_audio.so",
+#    ]
+#  }
+#  outputs = [
+#    "${root_out_dir}/libgvr_audio.so",
+#  ]
+#}
 
 config("libgvr_config") {
   include_dirs = [ "src/libraries/headers/" ]
