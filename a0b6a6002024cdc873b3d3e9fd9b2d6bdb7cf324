@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21e750c2_08019202",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-22T07:09:58Z",
+      "side": 1,
+      "message": "This is pretty hard to get rid of -- I need to refactor lots of tests (and serialization code, and a bunch of other stuff) for this.\n\nI\u0027m hoping that my next patch can get rid of this.",
+      "parentUuid": "4f39d9d6_2e5933af",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f9bf29_feb98420",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T06:18:16Z",
       "side": 1,
       "message": "Why the snake_case? \nStyle guide says CamelCase for all function names: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-for-all-function-names",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6a0709_e48963a5",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-22T07:09:58Z",
+      "side": 1,
+      "message": "I don\u0027t know why we often use sake case for things like color_space() and pixel_format() -- I don\u0027t see it in the style guide.\n\nI was using it because I previously had linear_pixel_math_ as a member variable, and I was following the behavior of color_space() and pixel_format().\n\nI can change it back, though (maybe I\u0027ll change color_space and pixel_format while I\u0027m there).",
+      "parentUuid": "60f9bf29_feb98420",
       "range": {
         "startLine": 48,
         "startChar": 7,
