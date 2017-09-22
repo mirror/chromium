@@ -47,6 +47,8 @@ static_library("vr_common") {
     "elements/full_screen_rect.h",
     "elements/grid.cc",
     "elements/grid.h",
+    "elements/hit_target.cc",
+    "elements/hit_target.h",
     "elements/insecure_content_permanent_texture.cc",
     "elements/insecure_content_permanent_texture.h",
     "elements/insecure_content_transient_texture.cc",
