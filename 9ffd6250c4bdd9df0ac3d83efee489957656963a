@@ -22,6 +22,46 @@
       "revId": "9ffd6250c4bdd9df0ac3d83efee489957656963a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc0ee3e_22fe8778",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T19:41:27Z",
+      "side": 1,
+      "message": "nit: it\u0027s ok to pass base::TimeDelta by value.",
+      "revId": "9ffd6250c4bdd9df0ac3d83efee489957656963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bc0c7c_615d1c27",
+        "filename": "components/cast_channel/cast_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-22T19:41:27Z",
+      "side": 1,
+      "message": "ditto on pass by value",
+      "range": {
+        "startLine": 75,
+        "startChar": 53,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "9ffd6250c4bdd9df0ac3d83efee489957656963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
