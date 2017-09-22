@@ -6,6 +6,7 @@
 #define UI_PLATFORM_WINDOW_PLATFORM_WINDOW_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/strings/string16.h"
 #include "ui/base/cursor/cursor.h"
@@ -62,6 +63,15 @@ class PlatformWindow {
   // The PlatformImeController is owned by the PlatformWindow, the ownership is
   // not transferred.
   virtual PlatformImeController* GetPlatformImeController() = 0;
+
+  // Requests underlying OS to reserve |keys| for current window. |keys| are
+  // NativeKeyCode, see
+  // https://cs.chromium.org/chromium/src/ui/events/keycodes/dom/keycode_converter.h
+  // for the meaning.
+  virtual void LockKeys(const std::vector<int>& keys) {}
+
+  // Cancels the reserved |keys|.
+  virtual void UnlockKeys(const std::vector<int>& keys) {}
 };
 
 }  // namespace ui

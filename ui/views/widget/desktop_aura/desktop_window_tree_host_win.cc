@@ -31,6 +31,7 @@
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/views/widget/widget_hwnd_utils.h"
 #include "ui/views/win/fullscreen_handler.h"
+#include "ui/views/win/low_level_keyboard_proc.h"
 #include "ui/views/win/hwnd_message_handler.h"
 #include "ui/views/win/hwnd_util.h"
 #include "ui/views/window/native_frame_view.h"
@@ -575,6 +576,14 @@ void DesktopWindowTreeHostWin::MoveCursorToScreenLocationInPixels(
   POINT cursor_location = location_in_pixels.ToPOINT();
   ::ClientToScreen(GetHWND(), &cursor_location);
   ::SetCursorPos(cursor_location.x, cursor_location.y);
+}
+
+void DesktopWindowTreeHostWin::LockKeys(const std::vector<int>& keys) {
+  LowLevelKeyboardProc::GetInstance()->LockKeys(keys);
+}
+
+void DesktopWindowTreeHostWin::UnlockKeys(const std::vector<int>& keys) {
+  LowLevelKeyboardProc::GetInstance()->UnlockKeys(keys);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

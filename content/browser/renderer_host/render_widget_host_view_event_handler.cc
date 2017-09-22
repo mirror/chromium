@@ -251,7 +251,7 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 
   bool mark_event_as_handled = true;
   // We need to handle the Escape key for Pepper Flash.
-  if (host_view_->is_fullscreen() && event->key_code() == ui::VKEY_ESCAPE) {
+  if (host_view_->is_fullscreen() && event->key_code() == ui::VKEY_ESCAPE && !event->IsReserved()) {
     // Focus the window we were created from.
     if (host_tracker_.get() && !host_tracker_->windows().empty()) {
       aura::Window* host = *(host_tracker_->windows().begin());
@@ -288,7 +288,7 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
     delegate_->ForwardKeyboardEventWithLatencyInfo(
         webkit_event, *event->latency(), &mark_event_as_handled);
   }
-  if (mark_event_as_handled)
+  if (mark_event_as_handled || event->IsReserved())
     event->SetHandled();
 }
 
