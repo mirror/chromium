@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1977dad6_6df97035",
+        "filename": "chrome/browser/ui/browser_instant_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "nit: add a class comment, it\u0027s not immediately clear why we have an InstantController and a BrowserInstantController.",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc906be_550ff158",
+        "filename": "chrome/browser/ui/browser_instant_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "This class should be a TabStripModelObserver instead of relying on custom browser calls.",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6771bd_bd759d7a",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "q: is it safe to combine these conditionals?",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fafab91_19fbbc7a",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "nit: still needed?",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6e8058_93bdf085",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "nit: comment belongs in the cc\u0027s impl now",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fd434d_7615ccd4",
+        "filename": "chrome/browser/ui/search/search_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-22T17:12:37Z",
+      "side": 1,
+      "message": "nit: use a pointer instead of a reference",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
