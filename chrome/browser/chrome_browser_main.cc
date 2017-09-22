@@ -662,10 +662,10 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
   // a ChromeNetworkDelegate attached that selectively allows cookies again.
   net::URLRequest::SetDefaultCookiePolicyToBlock();
 
-  base::StatisticsRecorder::SetRecordChecker(
-      std::make_unique<metrics::ExpiredHistogramsChecker>(
-          chrome_metrics::kExpiredHistogramsHashes,
-          chrome_metrics::kNumExpiredHistograms));
+  // base::StatisticsRecorder::SetRecordChecker(
+  //     std::make_unique<metrics::ExpiredHistogramsChecker>(
+  //         chrome_metrics::kExpiredHistogramsHashes,
+  //         chrome_metrics::kNumExpiredHistograms));
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
