@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adb48594_e253b9a0",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-22T01:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b8e5603_990c5f2e",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6f0828e_53ab3e4a",
         "filename": "chromeos/components/tether/ble_advertiser.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T00:51:44Z",
       "side": 1,
       "message": "I assume this is needed to copy over the service data because of tricky ownership issues. Can you make a quick comment about why it\u0027s needed? (It looks weird because metadata\u0027s device id is simply passed as metadata-\u003edevice_id)",
+      "range": {
+        "startLine": 140,
+        "startChar": 29,
+        "endLine": 140,
+        "endChar": 41
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3398856_e180bfbf",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-22T01:07:40Z",
+      "side": 1,
+      "message": "Used its own local variable instead.",
+      "parentUuid": "e6f0828e_53ab3e4a",
       "range": {
         "startLine": 140,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2c62bebd_e52edd3c",
+        "filename": "chromeos/components/tether/ble_advertiser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-22T01:07:40Z",
+      "side": 1,
+      "message": "It\u0027s just creating an array of two unique_ptrs (kMaxConcurrentAdvertisements \u003d\u003d 2). It just has some nice convenience methods that unique_ptr[2] doesn\u0027t have.",
+      "parentUuid": "ae454dbe_46115b29",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee5089c_f9c1d284",
         "filename": "chromeos/components/tether/ble_constants.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1076f5fc_a22f49d5",
+        "filename": "chromeos/components/tether/ble_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-22T01:07:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ee5089c_f9c1d284",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "aa4d6ea3d8504e25e885b38e7a8e22749d928746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
