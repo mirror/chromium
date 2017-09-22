@@ -40,7 +40,10 @@ PropertyTreeState FragmentData::ContentsProperties() const {
   if (auto* properties = PaintProperties()) {
     if (properties->ScrollTranslation())
       contents.SetTransform(properties->ScrollTranslation());
-    if (properties->OverflowClip())
+
+    if (properties->ScrollingContentsClip())
+      contents.SetClip(properties->ScrollingContentsClip());
+    else if (properties->OverflowClip())
       contents.SetClip(properties->OverflowClip());
     else if (properties->CssClip())
       contents.SetClip(properties->CssClip());

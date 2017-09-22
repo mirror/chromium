@@ -238,6 +238,12 @@ class PaintPropertyTreeBuilder {
       PaintPropertyTreeBuilderFragmentContext&,
       bool& force_subtree_update,
       bool& clip_changed);
+  ALWAYS_INLINE static void UpdateScrollingContentsClip(
+      const LayoutObject&,
+      ObjectPaintProperties&,
+      PaintPropertyTreeBuilderFragmentContext&,
+      bool& force_subtree_update,
+      bool& clip_changed);
   ALWAYS_INLINE static void UpdatePerspective(
       const LayoutObject&,
       ObjectPaintProperties&,

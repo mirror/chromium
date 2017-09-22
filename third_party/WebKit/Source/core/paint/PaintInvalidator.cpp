@@ -258,11 +258,11 @@ namespace {
 
 // This is a helper to handle paint invalidation for frames in
 // non-RootLayerScrolling mode.
-// It undoes LocalFrameView's content clip and scroll for paint invalidation of
-// frame scroll controls to which the content clip and scroll don't apply.
-class ScopedUndoFrameViewContentClipAndScroll {
+// It undoes LocalFrameView's clip and scroll for paint invalidation of
+// frame scroll controls to which the clip and scroll don't apply.
+class ScopedUndoFrameViewClipAndScroll {
  public:
-  ScopedUndoFrameViewContentClipAndScroll(
+  ScopedUndoFrameViewClipAndScroll(
       const LocalFrameView& frame_view,
       const PaintPropertyTreeBuilderFragmentContext& tree_builder_context)
       : tree_builder_context_(
@@ -283,11 +283,17 @@ class ScopedUndoFrameViewContentClipAndScroll {
     DCHECK_EQ(frame_view.PreTranslation(),
               tree_builder_context_.current.transform);
 
-    DCHECK_EQ(frame_view.ContentClip(), saved_context_.clip);
-    tree_builder_context_.current.clip = saved_context_.clip->Parent();
+    if (const auto* scrolling_contents_clip =
+            frame_view.ScrollingContentsClip()) {
+      DCHECK_EQ(scrolling_contents_clip, saved_context_.clip);
+      tree_builder_context_.current.clip = saved_context_.clip->Parent();
+    }
+    DCHECK_EQ(frame_view.ViewportClip(), tree_builder_context_.current.clip);
+    tree_builder_context_.current.clip =
+        tree_builder_context_.current.clip->Parent();
   }
 
-  ~ScopedUndoFrameViewContentClipAndScroll() {
+  ~ScopedUndoFrameViewClipAndScroll() {
     tree_builder_context_.current = saved_context_;
   }
 
@@ -434,7 +440,7 @@ void PaintInvalidator::InvalidatePaint(
   }
 
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    Optional<ScopedUndoFrameViewContentClipAndScroll> undo;
+    Optional<ScopedUndoFrameViewClipAndScroll> undo;
     if (tree_builder_context)
       undo.emplace(frame_view, *context.tree_builder_context_);
     frame_view.InvalidatePaintOfScrollControlsIfNeeded(context);
