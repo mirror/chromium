@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0b36b5e_163e33d4",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a142e6ed_56e5531b",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b4976cf_02a1804e",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ab82a9_48fe717c",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4976cf_02a1804e",
+      "range": {
+        "startLine": 331,
+        "startChar": 11,
+        "endLine": 331,
+        "endChar": 30
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "beefad68_a2ca56b9",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc3dd99_e192e3dc",
+      "range": {
+        "startLine": 353,
+        "startChar": 27,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7692424a_e0fec014",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34b4d80_ababa4d9",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7692424a_e0fec014",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1b32430f_3ddfdade",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256572ef_cf52a00a",
+      "range": {
+        "startLine": 504,
+        "startChar": 36,
+        "endLine": 504,
+        "endChar": 39
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8bcb9f3_2ac6d871",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "879af4c5_2c7b646c",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8bcb9f3_2ac6d871",
+      "range": {
+        "startLine": 508,
+        "startChar": 36,
+        "endLine": 508,
+        "endChar": 39
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77c82282_cce30887",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "c5be5978_bfda193d",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Good findings! I manually tried, when focus is on AppListItemView in fullscreen all apps state, if you drag to peeking state, the focus transition is not efficient. The reason is that in AppsGridView::UpdateControlVisibility, the AppListItemView is set invisible one by one. When the focused AppListItemView is set invisible, FocusManager automatically set next AppListItemView focused, which is soon set invisible. So in the end, the focus will transition all the way back to search box. But this is not efficient. Maybe we should set focus back to search box before updating visibility everytime we call AppListView::SetState().\nAlso, added the test coverage.",
+      "parentUuid": "77c82282_cce30887",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac877c5_e57f79bc",
         "filename": "ui/app_list/views/search_result_tile_item_view.cc",
         "patchSetId": 1
@@ -159,6 +309,24 @@
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850b447a_13f52b61",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Yes, you are right. Removed.",
+      "parentUuid": "bac877c5_e57f79bc",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "454979dd_2dcc9d74",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b3780d_1e94c2d6",
+      "range": {
+        "startLine": 90,
+        "startChar": 19,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55da0294_d2e0b3ed",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 1
@@ -196,6 +388,24 @@
       "writtenOn": "2017-09-21T21:46:19Z",
       "side": 1,
       "message": "Does this and the next function have to  be behind the is_app_list_focus_enabled_ flag?",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b77e17_53221fb1",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "SetFocusBehavior(FocusBehavior::ALWAYS) is behind flag. If the view is not focusable, these function will not get called.",
+      "parentUuid": "55da0294_d2e0b3ed",
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "05ae1401_375b2d9f",
+        "filename": "ui/app_list/views/suggestions_container_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc7628dc_bb07ae05",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef07ab43_0f557b68",
         "filename": "ui/app_list/views/tile_item_view.cc",
         "patchSetId": 1
@@ -239,6 +473,24 @@
       "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb893641_e50b16bc",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-22T03:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef07ab43_0f557b68",
+      "revId": "7be1d96413950436da5f328e24f5dc940b1be9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
