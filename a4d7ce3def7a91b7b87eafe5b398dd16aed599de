@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ed7d7b_55443684",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:09:57Z",
+      "side": 0,
+      "message": "The rest seems OK to move, but I suspect we want to keep this code here, in WebContentsViewMac (which probably means duplicating the logic in :GetNativeViewForFocus()).\n\nThen, we do\n\n  if (delegate_)\n    delegate_-\u003eFocus();\n\nafter the [window makeKeyAndOrderFront:nil]; below.\n\n\nThis means mac_views_browser will also run this code. That may even be what we want anyway, or it could mean we repeat some things that views::WebView is also doing, but I think it will be robust/safe.",
+      "revId": "a4d7ce3def7a91b7b87eafe5b398dd16aed599de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
