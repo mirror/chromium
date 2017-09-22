@@ -16,15 +16,14 @@
 
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
-#include "base/memory/memory_pressure_listener.h"
 #include "base/synchronization/lock.h"
 #include "media/base/byte_queue.h"
 #include "media/base/demuxer.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/media_tracks.h"
 #include "media/base/ranges.h"
+#include "media/base/source_buffer.h"
 #include "media/base/stream_parser.h"
-#include "media/filters/source_buffer_parse_warnings.h"
 #include "media/filters/source_buffer_range_by_dts.h"
 #include "media/filters/source_buffer_range_by_pts.h"
 #include "media/filters/source_buffer_state.h"
@@ -177,13 +176,8 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
 
 // Demuxer implementation that allows chunks of media data to be passed
 // from JavaScript to the media stack.
-class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
+class MEDIA_EXPORT ChunkDemuxer : public Demuxer, public SourceBuffer {
  public:
-  enum Status {
-    kOk,              // ID added w/o error.
-    kNotSupported,    // Type specified is not supported.
-    kReachedIdLimit,  // Reached ID limit. We can't handle any more IDs.
-  };
 
   // |open_cb| Run when Initialize() is called to signal that the demuxer
   //   is ready to receive media data via AppendData().
@@ -230,35 +224,36 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   //    now.
   Status AddId(const std::string& id,
                const std::string& type,
-               const std::string& codecs);
+               const std::string& codecs) final;
 
   // Notifies a caller via |tracks_updated_cb| that the set of media tracks
   // for a given |id| has changed.
   void SetTracksWatcher(const std::string& id,
-                        const MediaTracksUpdatedCB& tracks_updated_cb);
+                        const MediaTracksUpdatedCB& tracks_updated_cb) final;
 
   // Notifies a caller via |parse_warning_cb| of a parse warning.
   void SetParseWarningCallback(
       const std::string& id,
-      const SourceBufferParseWarningCB& parse_warning_cb);
+      const SourceBufferParseWarningCB& parse_warning_cb) final;
 
   // Removed an ID & associated resources that were previously added with
   // AddId().
-  void RemoveId(const std::string& id);
+  void RemoveId(const std::string& id) final;
 
   // Gets the currently buffered ranges for the specified ID.
-  Ranges<base::TimeDelta> GetBufferedRanges(const std::string& id) const;
+  Ranges<base::TimeDelta> GetBufferedRanges(const std::string& id) const final;
 
   // Gets the highest buffered PTS for the specified |id|. If there is nothing
   // buffered, returns base::TimeDelta().
-  base::TimeDelta GetHighestPresentationTimestamp(const std::string& id) const;
+  base::TimeDelta GetHighestPresentationTimestamp(
+      const std::string& id) const final;
 
   void OnEnabledAudioTracksChanged(const std::vector<MediaTrack::Id>& track_ids,
-                                   base::TimeDelta curr_time) override;
+                                   base::TimeDelta curr_time) final;
   // |track_id| either contains the selected video track id or is null,
   // indicating that all video tracks are deselected/disabled.
   void OnSelectedVideoTrackChanged(base::Optional<MediaTrack::Id> track_id,
-                                   base::TimeDelta curr_time) override;
+                                   base::TimeDelta curr_time) final;
 
   // Appends media data to the source buffer associated with |id|, applying
   // and possibly updating |*timestamp_offset| during coded frame processing.
@@ -271,7 +266,7 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
                   size_t length,
                   base::TimeDelta append_window_start,
                   base::TimeDelta append_window_end,
-                  base::TimeDelta* timestamp_offset);
+                  base::TimeDelta* timestamp_offset) final;
 
   // Aborts parsing the current segment and reset the parser to a state where
   // it can accept a new segment.
@@ -280,12 +275,13 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   void ResetParserState(const std::string& id,
                         base::TimeDelta append_window_start,
                         base::TimeDelta append_window_end,
-                        base::TimeDelta* timestamp_offset);
+                        base::TimeDelta* timestamp_offset) final;
 
   // Remove buffers between |start| and |end| for the source buffer
   // associated with |id|.
-  void Remove(const std::string& id, base::TimeDelta start,
-              base::TimeDelta end);
+  void Remove(const std::string& id,
+              base::TimeDelta start,
+              base::TimeDelta end) final;
 
   // If the buffer is full, attempts to try to free up space, as specified in
   // the "Coded Frame Eviction Algorithm" in the Media Source Extensions Spec.
@@ -293,55 +289,57 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   // https://w3c.github.io/media-source/#sourcebuffer-coded-frame-eviction
   bool EvictCodedFrames(const std::string& id,
                         base::TimeDelta currentMediaTime,
-                        size_t newDataSize);
+                        size_t newDataSize) final;
 
   void OnMemoryPressure(
       base::TimeDelta currentMediaTime,
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
-      bool force_instant_gc);
+      bool force_instant_gc) final;
 
   // Returns the current presentation duration.
-  double GetDuration();
-  double GetDuration_Locked();
+  double GetDuration() final;
+  double GetDuration_Locked() final;
 
   // Notifies the demuxer that the duration of the media has changed to
   // |duration|.
-  void SetDuration(double duration);
+  void SetDuration(double duration) final;
 
   // Returns true if the source buffer associated with |id| is currently parsing
   // a media segment, or false otherwise.
-  bool IsParsingMediaSegment(const std::string& id);
+  bool IsParsingMediaSegment(const std::string& id) final;
 
   // Set the append mode to be applied to subsequent buffers appended to the
   // source buffer associated with |id|. If |sequence_mode| is true, caller
   // is requesting "sequence" mode. Otherwise, caller is requesting "segments"
   // mode.
-  void SetSequenceMode(const std::string& id, bool sequence_mode);
+  void SetSequenceMode(const std::string& id, bool sequence_mode) final;
 
   // Signals the coded frame processor for the source buffer associated with
   // |id| to update its group start timestamp to be |timestamp_offset| if it is
   // in sequence append mode.
-  void SetGroupStartTimestampIfInSequenceMode(const std::string& id,
-                                              base::TimeDelta timestamp_offset);
+  void SetGroupStartTimestampIfInSequenceMode(
+      const std::string& id,
+      base::TimeDelta timestamp_offset) final;
 
   // Called to signal changes in the "end of stream"
   // state. UnmarkEndOfStream() must not be called if a matching
   // MarkEndOfStream() has not come before it.
-  void MarkEndOfStream(PipelineStatus status);
-  void UnmarkEndOfStream();
+  void MarkEndOfStream(PipelineStatus status) final;
+  void UnmarkEndOfStream() final;
 
-  void Shutdown();
+  void Shutdown() final;
 
   // Sets the memory limit on each stream of a specific type.
   // |memory_limit| is the maximum number of bytes each stream of type |type|
   // is allowed to hold in its buffer.
-  void SetMemoryLimitsForTest(DemuxerStream::Type type, size_t memory_limit);
+  void SetMemoryLimitsForTest(DemuxerStream::Type type,
+                              size_t memory_limit) final;
 
   // Returns the ranges representing the buffered data in the demuxer.
   // TODO(wolenetz): Remove this method once MediaSourceDelegate no longer
   // requires it for doing hack browser seeks to I-frame on Android. See
   // http://crbug.com/304234.
-  Ranges<base::TimeDelta> GetBufferedRanges() const;
+  Ranges<base::TimeDelta> GetBufferedRanges() const final;
 
  private:
   enum State {

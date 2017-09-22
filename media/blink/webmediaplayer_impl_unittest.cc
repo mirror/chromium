@@ -27,6 +27,7 @@
 #include "media/base/video_frame_provider_factory.h"
 #include "media/blink/webmediaplayer_delegate.h"
 #include "media/blink/webmediaplayer_params.h"
+#include "media/filters/default_demuxer_factory.h"
 #include "media/mojo/services/video_decode_stats_recorder.h"
 #include "media/mojo/services/watch_time_recorder.h"
 #include "media/renderers/default_renderer_factory.h"
@@ -262,6 +263,7 @@ class WebMediaPlayerImplTest : public testing::Test {
 
     wmpi_ = base::MakeUnique<WebMediaPlayerImpl>(
         web_local_frame_, &client_, nullptr, &delegate_,
+        base::MakeUnique<DefaultDemuxerFactory>(media_log_),
         std::move(factory_selector), url_index_.get(),
         base::MakeUnique<WebMediaPlayerParams>(
             std::move(media_log), WebMediaPlayerParams::DeferLoadCB(),
@@ -272,8 +274,7 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(),
-            base::Bind(&CreateCapabilitiesRecorder),
+            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
                        base::Unretained(this))));
 }

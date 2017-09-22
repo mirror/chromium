@@ -13,11 +13,11 @@
 #include "third_party/WebKit/public/platform/WebMediaSource.h"
 
 namespace media {
-class ChunkDemuxer;
+class SourceBuffer;
 
 class MEDIA_BLINK_EXPORT WebMediaSourceImpl : public blink::WebMediaSource {
  public:
-  WebMediaSourceImpl(ChunkDemuxer* demuxer);
+  WebMediaSourceImpl(SourceBuffer* demuxer);
   ~WebMediaSourceImpl() override;
 
   // blink::WebMediaSource implementation.
@@ -30,7 +30,7 @@ class MEDIA_BLINK_EXPORT WebMediaSourceImpl : public blink::WebMediaSource {
   void UnmarkEndOfStream() override;
 
  private:
-  ChunkDemuxer* demuxer_;  // Owned by WebMediaPlayerImpl.
+  SourceBuffer* source_buffer_;  // Owned by WebMediaPlayerImpl.
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaSourceImpl);
 };

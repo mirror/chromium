@@ -18,6 +18,7 @@ interface Renderer {
   // or a |media_url| executing the callback with whether the initialization
   // succeeded.
   Initialize(associated RendererClient client,
+             int32 demuxer_id,
              array<DemuxerStream>? streams,
              AudioRendererSink? audio_renderer_sink,
              VideoRendererSink? video_renderer_sink,
