@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "450f5d06_6d913e99",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:50:53Z",
+      "side": 1,
+      "message": "Could this just be a SelectToSpeak method as part of the\nprototype below, rather than a function-typed variable?",
+      "revId": "515621e36949345f6c69ca831ab40e1d6957d40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95288fc9_3ac93fbd",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:50:53Z",
+      "side": 1,
+      "message": "Add a concise docstring - the inteveralID from a call to setInterval,\nset whenever speech is in progress.",
+      "revId": "515621e36949345f6c69ca831ab40e1d6957d40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa936a6e_ee5f00d8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:50:53Z",
+      "side": 1,
+      "message": "Add units, like NODE_STATE_TEST_INTERVAL_MS",
+      "revId": "515621e36949345f6c69ca831ab40e1d6957d40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542de444_c9ecdaba",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:50:53Z",
+      "side": 1,
+      "message": "Speech could be coming from something other than this extension,\nso we want to stop it either way.\n\nIf it is coming from this extension, then we\u0027ll get an\n\u0027interrupted\u0027 callback and should be able to handle the cleanup\nfrom there.",
+      "revId": "515621e36949345f6c69ca831ab40e1d6957d40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba8eb29_c60461fc",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-22T20:50:53Z",
+      "side": 1,
+      "message": "Ideally doesn\u0027t chrome.tts.stop() trigger the \u0027interrupted\u0027\ncallback, which ends up calling clearFocusRingAndNode?\n\nIf there are corner cases or race conditions where this\ndoesn\u0027t work, it\u0027s definitely fine to leave this line here.",
+      "revId": "515621e36949345f6c69ca831ab40e1d6957d40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
