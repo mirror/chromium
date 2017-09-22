@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eefeecd_a22cfa25",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-22T05:06:10Z",
+      "side": 1,
+      "message": "Is this still used?",
+      "revId": "de38d6296aef9461379dc469f21bab9bade11b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

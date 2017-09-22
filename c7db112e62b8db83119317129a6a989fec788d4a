@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00ec328_a9db1056",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-22T05:06:10Z",
+      "side": 0,
+      "message": "How about keeping this AsyncMethodCallback typedef (or using) while adding a comment about what the returned int value means?\nWith this change, there will be no info which tells that the returned integer value is an async ID.",
+      "revId": "c7db112e62b8db83119317129a6a989fec788d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
