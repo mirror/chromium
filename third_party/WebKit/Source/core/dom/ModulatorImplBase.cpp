@@ -218,11 +218,52 @@ void ModulatorImplBase::ExecuteModule(const ModuleScript* module_script) {
   CHECK(!record.IsNull());
 
   // Step 6. "Let evaluationStatus be record.ModuleEvaluation()." [spec text]
-  record.Evaluate(script_state_.Get());
-
   // Step 7. "If evaluationStatus is an abrupt completion, then report the
   // exception given by evaluationStatus.[[Value]] for s." [spec text]
-  // TODO(kouhei): Implement this.
+  record.Evaluate(script_state_.Get());
+
+  // Step 8. "Clean up after running script with settings." [spec text]
+  // Implemented as the ScriptState::Scope destructor.
+}
+
+void ModulatorImplBase::ExecuteModuleWithRethrowError(
+    const ModuleScript* module_script,
+    ExceptionState& exception_state) {
+  // https://html.spec.whatwg.org/#run-a-module-script with rethrow errors flag
+  // set
+
+  // We ensure module-related code is not executed without the flag.
+  // https://crbug.com/715376
+  CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled());
+
+  // Step 1. "Let settings be the settings object of s." [spec text]
+  // The settings object is |this|.
+
+  // Step 2. "Check if we can run script with settings.
+  //          If this returns "do not run" then abort these steps." [spec text]
+  if (!GetExecutionContext()->CanExecuteScripts(kAboutToExecuteScript))
+    return;
+
+  // Step 4. "Prepare to run script given settings." [spec text]
+  // This is placed here to also cover ScriptModule::ReportException().
+  ScriptState::Scope scope(script_state_.Get());
+
+  // Step 3. "If s is errored, then report the exception given by s's error for
+  // s and abort these steps." [spec text]
+  if (module_script->IsErrored()) {
+    ScriptValue error = GetError(module_script);
+    ScriptModule::ReportException(script_state_.Get(), error.V8Value());
+    return;
+  }
+
+  // Step 5. "Let record be s's module record." [spec text]
+  const ScriptModule& record = module_script->Record();
+  CHECK(!record.IsNull());
+
+  // Step 6. "Let evaluationStatus be record.ModuleEvaluation()." [spec text]
+  // Step 7. "If evaluationStatus is an abrupt completion, then report the
+  // exception given by evaluationStatus.[[Value]] for s." [spec text]
+  record.EvaluateWithRethrowError(script_state_.Get(), exception_state);
 
   // Step 8. "Clean up after running script with settings." [spec text]
   // Implemented as the ScriptState::Scope destructor.

@@ -57,6 +57,7 @@ class CORE_EXPORT ScriptModule final {
   ScriptValue Instantiate(ScriptState*);
 
   void Evaluate(ScriptState*) const;
+  void EvaluateWithRethrowError(ScriptState*, ExceptionState&) const;
   static void ReportException(ScriptState*, v8::Local<v8::Value> exception);
 
   Vector<String> ModuleRequests(ScriptState*);

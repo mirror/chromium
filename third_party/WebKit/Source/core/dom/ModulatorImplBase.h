@@ -75,6 +75,8 @@ class ModulatorImplBase : public Modulator {
   ScriptValue GetError(const ModuleScript*) override;
   Vector<ModuleRequest> ModuleRequestsFromScriptModule(ScriptModule) override;
   void ExecuteModule(const ModuleScript*) override;
+  void ExecuteModuleWithRethrowError(const ModuleScript*,
+                                     ExceptionState&) override;
 
   RefPtr<ScriptState> script_state_;
   RefPtr<WebTaskRunner> task_runner_;

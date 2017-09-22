@@ -113,6 +113,10 @@ void ScriptModule::Evaluate(ScriptState* script_state) const {
   // should not interfere with javascript code we might evaluate from C++ when
   // returning from here.
   v8::TryCatch try_catch(isolate);
+
+  // "If rethrow errors is true, .... Otherwise, report the exception
+  // given by evaluationStatus.[[Value]]." [spec text]
+  // TODO(kouhei): Link to the spec text once the change is committed.
   try_catch.SetVerbose(true);
 
   probe::ExecuteScript probe(ExecutionContext::From(script_state));
@@ -122,6 +126,34 @@ void ScriptModule::Evaluate(ScriptState* script_state) const {
   if (!V8ScriptRunner::EvaluateModule(module_->NewLocal(isolate),
                                       script_state->GetContext(), isolate)
            .ToLocal(&result)) {
+    DCHECK(try_catch.HasCaught());
+    return;
+  }
+}
+
+void ScriptModule::EvaluateWithRethrowError(
+    ScriptState* script_state,
+    ExceptionState& exception_state) const {
+  v8::Isolate* isolate = script_state->GetIsolate();
+
+  // Isolate exceptions that occur when executing the code. These exceptions
+  // should not interfere with javascript code we might evaluate from C++ when
+  // returning from here.
+  v8::TryCatch try_catch(isolate);
+
+  probe::ExecuteScript probe(ExecutionContext::From(script_state));
+  // TODO(kouhei): We currently don't have a code-path which use return value of
+  // EvaluateModule. Stop ignoring result once we have such path.
+  v8::Local<v8::Value> result;
+  if (!V8ScriptRunner::EvaluateModule(module_->NewLocal(isolate),
+                                      script_state->GetContext(), isolate)
+           .ToLocal(&result)) {
+    DCHECK(try_catch.HasCaught());
+
+    // "If rethrow errors is true, rethrow the exception given by
+    // evaluationStatus.Value"
+    // TODO(kouhei): Link to the spec text once the change is committed.
+    exception_state.RethrowV8Exception(try_catch.Exception());
     return;
   }
 }
