@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a62bc9d0_1887efb2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-22T21:03:10Z",
+      "side": 1,
+      "message": "I know that this is temporary naming but ui_ and ui_instance_ throw me a little since they\u0027re so similar. Maybe we could be completely explicit and switch ui_ to ui_scene_manager_ for now, both for clarity and as a cue to remove it later. ui_instance_ could be named ui_ which, I believe is the long term goal?",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca610b42_fbb8e0ca",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 2
@@ -87,6 +104,23 @@
       "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad016227_9edc297e",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-22T21:03:10Z",
+      "side": 1,
+      "message": "I also presume that once we\u0027ve got all of this behind the UI interface that we can make vr::Ui inherit from the interface rather than vend it out (and VrShellGl won\u0027t need to have two pointers to the UI). This seems reasonable as an intermediate step.",
+      "revId": "44b447f8e7e46e87ddcf52601bbfc9e1a9922257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
