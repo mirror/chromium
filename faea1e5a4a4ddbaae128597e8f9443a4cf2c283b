@@ -46,6 +46,30 @@
       "revId": "faea1e5a4a4ddbaae128597e8f9443a4cf2c283b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f29ca6_b4f84fee",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-22T15:35:39Z",
+      "side": 1,
+      "message": "Yes, that code was introduced by me actually and I\u0027m sorry I\u0027ve missed this part when I wrote it. I prefer the version\nif (requirement !\u003d AutoEnrollmentController::EXPLICITLY_REQUIRED)\nAs it will avoid possible confusion when trying to power-wash. Thank you.",
+      "parentUuid": "b5a723dc_2bc53ae3",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 4
+      },
+      "revId": "faea1e5a4a4ddbaae128597e8f9443a4cf2c283b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
