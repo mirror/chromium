@@ -86,14 +86,15 @@ enum HostCache::EraseReason : int {
 HostCache::Entry::Entry(int error,
                         const AddressList& addresses,
                         base::TimeDelta ttl)
-    : error_(error), addresses_(addresses), ttl_(ttl) {
+    : error_(error), addresses_(addresses), ttl_(ttl), refreshing_(false) {
   DCHECK(ttl >= base::TimeDelta());
 }
 
 HostCache::Entry::Entry(int error, const AddressList& addresses)
     : error_(error),
       addresses_(addresses),
-      ttl_(base::TimeDelta::FromSeconds(-1)) {}
+      ttl_(base::TimeDelta::FromSeconds(-1)),
+      refreshing_(false) {}
 
 HostCache::Entry::~Entry() {}
 
@@ -107,7 +108,8 @@ HostCache::Entry::Entry(const HostCache::Entry& entry,
       expires_(now + ttl),
       network_changes_(network_changes),
       total_hits_(0),
-      stale_hits_(0) {}
+      stale_hits_(0),
+      refreshing_(entry.refreshing()) {}
 
 HostCache::Entry::Entry(int error,
                         const AddressList& addresses,
@@ -118,8 +120,27 @@ HostCache::Entry::Entry(int error,
       ttl_(base::TimeDelta::FromSeconds(-1)),
       expires_(expires),
       network_changes_(network_changes),
+      refreshing_(false) {}
+
+HostCache::Entry::Entry(const HostCache::Entry& entry)
+    : error_(entry.error()),
+      addresses_(entry.addresses()),
+      ttl_(entry.ttl()),
+      expires_(entry.expires()),
+      network_changes_(entry.network_changes()),
       total_hits_(0),
-      stale_hits_(0) {}
+      stale_hits_(0),
+      refreshing_(entry.refreshing()) {}
+
+HostCache::Entry::Entry(const HostCache::Entry& entry, bool refreshing)
+    : error_(entry.error()),
+      addresses_(entry.addresses()),
+      ttl_(entry.ttl()),
+      expires_(entry.expires()),
+      network_changes_(entry.network_changes()),
+      total_hits_(0),
+      stale_hits_(0),
+      refreshing_(refreshing) {}
 
 bool HostCache::Entry::IsStale(base::TimeTicks now, int network_changes) const {
   EntryStaleness stale;
@@ -223,6 +244,10 @@ void HostCache::Set(const Key& key,
     result_changed =
         entry.error() == OK &&
         (it->second.error() != entry.error() || delta != DELTA_IDENTICAL);
+
+    // If nothing has changed, don't reduce the expiration
+    if (!result_changed && (ttl + now) < it->second.expires())
+      ttl = it->second.expires() - now;
     entries_.erase(it);
   } else {
     result_changed = true;

@@ -2017,6 +2017,7 @@ HostResolverImpl::HostResolverImpl(
       last_ipv6_probe_result_(true),
       additional_resolver_flags_(0),
       fallback_to_proctask_(true),
+      async_dns_refresher_enabled_(false),
       worker_task_runner_(std::move(worker_task_runner)),
       persist_initialized_(false),
       weak_ptr_factory_(this),
@@ -2150,6 +2151,10 @@ void HostResolverImpl::SetDnsClientEnabled(bool enabled) {
 #endif
 }
 
+void HostResolverImpl::SetDnsRefresherEnabled(bool enabled) {
+  async_dns_refresher_enabled_ = enabled;
+}
+
 HostCache* HostResolverImpl::GetHostCache() {
   return cache_.get();
 }
@@ -2220,6 +2225,32 @@ bool HostResolverImpl::ResolveAsIP(const Key& key,
   return true;
 }
 
+class DnsRefresher : public base::RefCountedThreadSafe<DnsRefresher> {
+  friend class base::RefCountedThreadSafe<DnsRefresher>;
+
+ public:
+  DnsRefresher(const HostResolver::RequestInfo& info) : info_(info) {
+    info_.set_allow_cached_response(false);
+  }
+
+  static void Refresh(const HostResolver::RequestInfo& info,
+                      HostResolver* resolver) {
+    scoped_refptr<DnsRefresher> dr(new DnsRefresher(info));
+    HostCache::Key key(info.hostname(), ADDRESS_FAMILY_UNSPECIFIED, 0);
+    resolver->Resolve(dr->info_, IDLE, &dr->addresses_,
+                      base::Bind(&DnsRefresher::OnRefreshComplete, dr),
+                      &dr->request_, NetLogWithSource());
+  }
+
+  void OnRefreshComplete(int status) {}
+
+ private:
+  virtual ~DnsRefresher() {}
+  HostResolver::RequestInfo info_;
+  AddressList addresses_;
+  std::unique_ptr<HostResolver::Request> request_;
+};
+
 bool HostResolverImpl::ServeFromCache(const Key& key,
                                       const RequestInfo& info,
                                       int* net_error,
@@ -2239,12 +2270,25 @@ bool HostResolverImpl::ServeFromCache(const Key& key,
     cache_entry = cache_->Lookup(key, base::TimeTicks::Now());
   if (!cache_entry)
     return false;
+  if (cache_entry->addresses().empty())
+    return false;
 
   *net_error = cache_entry->error();
   if (*net_error == OK) {
+    *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
+    base::TimeDelta ttl(cache_entry->has_ttl()
+                            ? cache_entry->ttl()
+                            : base::TimeDelta::FromMinutes(1));
+    if (async_dns_refresher_enabled_ && !cache_entry->refreshing() &&
+        ttl / 2 > cache_entry->expires() - base::TimeTicks::Now()) {
+      HostCache::Entry new_entry(*cache_entry, true);
+      base::TimeTicks old_now = cache_entry->expires() - cache_entry->ttl();
+      cache_->Set(key, new_entry, old_now, cache_entry->ttl());
+      cache_->Set(key, new_entry, old_now, cache_entry->ttl());
+      DnsRefresher::Refresh(info, this);
+    }
     if (cache_entry->has_ttl())
       RecordTTL(cache_entry->ttl());
-    *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
   }
   return true;
 }
