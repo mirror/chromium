@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da96f5e_74cd4c3d",
+        "filename": "chrome/browser/vr/web_contents_event_forwarder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T14:34:59Z",
+      "side": 1,
+      "message": "Nit: I would prefer curly braces here and below since you use them for the if ... else if ... block below.",
+      "revId": "fa037393208e48195eab2ddb76736b4a7c3ac47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7a577b_214232b2",
+        "filename": "chrome/browser/vr/web_contents_event_forwarder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T14:34:59Z",
+      "side": 1,
+      "message": "Nit: I think the term Chrome VR should not be used. Maybe something like \u0027...events in VR...\u0027?",
+      "range": {
+        "startLine": 20,
+        "startChar": 45,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "fa037393208e48195eab2ddb76736b4a7c3ac47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a89db27_20f610bb",
+        "filename": "chrome/browser/vr/web_contents_event_forwarder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-22T14:34:59Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 21,
+        "startChar": 65,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "fa037393208e48195eab2ddb76736b4a7c3ac47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
