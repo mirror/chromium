@@ -199,9 +199,6 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
                              base::RefCountedMemory* thumbnail,
                              const ThumbnailScore& score);
 
-  // Called by our timer. Starts the query for the most visited sites.
-  void TimerFired();
-
   // Finds the given URL in the redirect chain for the given TopSite, and
   // returns the distance from the destination in hops that the given URL is.
   // The URL is assumed to be in the list. The destination is 0.
@@ -229,10 +226,6 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   // Returns an MD5 hash of the URL. Hashing is required for blacklisted URLs.
   static std::string GetURLHash(const GURL& url);
 
-  // Returns the delay until the next update of history is needed.
-  // Uses |last_num_urls_changed_|.
-  base::TimeDelta GetUpdateDelay() const;
-
   // Updates URLs in |cache_| and the db (in the background).
   // The non-forced URLs in |new_top_sites| replace those in |cache_|.
   // The forced URLs of |new_top_sites| are merged with those in |cache_|,
@@ -255,8 +248,9 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
 
   void ResetThreadSafeImageCache();
 
-  // Stops and starts timer with a delay of |delta|.
-  void RestartQueryForTopSitesTimer(base::TimeDelta delta);
+  // Initializes the one-shot timer to query top sites with a delay of |delta|.
+  // Does nothing if there is already a request queued.
+  void InitializeTimerForQueryingTopSites(base::TimeDelta delta);
 
   // Callback from TopSites with the top sites/thumbnails. Should be called
   // from the UI thread.
@@ -295,12 +289,6 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   // Timer that asks history for the top sites. This is used to make sure our
   // data stays in sync with history.
   base::OneShotTimer timer_;
-
-  // The time we started |timer_| at. Only valid if |timer_| is running.
-  base::TimeTicks timer_start_time_;
-
-  // The number of URLs changed on the last update.
-  size_t last_num_urls_changed_;
 
   // The pending requests for the top sites list. Can only be non-empty at
   // startup. After we read the top sites from the DB, we'll always have a
