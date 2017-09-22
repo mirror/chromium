@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb93855a_904a3157",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T07:44:49Z",
+      "side": 1,
+      "message": "This is hard to read. It is not clear to the reader what the first argument is.  Should use a variable to improve readability.  Something like:\nsize_t frame_index \u003d 0;\nSetHasAlpha(frame_index, true);\n\nAlternately, you could call the method SetFrameHasAlpha, which would also clarify the meaning of the first arg",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 13
+      },
+      "revId": "3ff6fe6f81d4ab77ea3b6609ca5ec933c8b0c9a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bfc793_41c07c40",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T07:44:49Z",
+      "side": 1,
+      "message": "Nit: Maybe this is fine, but it occurred to me that the test would be more complete if it covered multi-frame use cases.",
+      "range": {
+        "startLine": 446,
+        "startChar": 11,
+        "endLine": 446,
+        "endChar": 12
+      },
+      "revId": "3ff6fe6f81d4ab77ea3b6609ca5ec933c8b0c9a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
