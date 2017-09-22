@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d8ef5b80_61986280",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-22T09:34:34Z",
+      "side": 1,
+      "message": "The reason why I ask is this commits us to loading all functions including any future ones we use, potentially breaking downstream support.\n\nWith the old-fashioned LoadLibrary+GetProcAddress, we could declare what we needed and if that subset was there, we would be good to go.\n\nIf another file started using a new function unavailable on some versions of Windows, that would cause this to unnecessarily fail.",
+      "parentUuid": "72720549_6adefd88",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b550d7c2_9b6da75b",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 15
