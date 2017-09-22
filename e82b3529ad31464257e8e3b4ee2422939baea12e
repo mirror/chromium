@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6f977bc_0dee8aea",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T07:23:38Z",
+      "side": 1,
+      "message": "I think after detach happens GetFrameScheduler becomes nullptr, would we want to return platform\u0027s task runner for the case?  (For keepalive requests this context will be kept around a bit longer than frame)",
+      "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1abcbfef_cc65fffc",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
         "patchSetId": 7
@@ -13,6 +30,23 @@
       "writtenOn": "2017-09-22T06:44:51Z",
       "side": 1,
       "message": "What is the reason behind turning RefPtr\u003cWebTaskRunner\u003e to WebTaskRunner*?\nI prefer use of RefPtr\u003cWebTaskRunner\u003e to ensure there\u0027s no accidential use-after-free.",
+      "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9861b39_02b898c2",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-22T07:23:38Z",
+      "side": 1,
+      "message": "I think one of the reason we removed this from Context is that we sometime want to use different task runner depending on request, i.e. if we\u0027re creating loader for keepalive requests we want to use platforms task runner.  If we\u0027re re-introducing this method it might be good to have some comment about that?",
       "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
