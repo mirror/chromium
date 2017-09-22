@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d884c60_1cd3f92c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-22T22:18:05Z",
+      "side": 1,
+      "message": "If possible, please provide a TEST\u003d line when submitting patches, to explain how a change was tested and verified.",
+      "revId": "fd4616ea996fb2dd546fce2cf9075c50a909a80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994c9f71_e32f5ee0",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-22T22:18:05Z",
+      "side": 1,
+      "message": "output_dpb_size_ is required by the decoder, while kDpbOutputBufferExtraCount is an additional requirement, in addition to output_dpb_size_. These buffers are to fill the pipeline in the client, so while decoder is decoding, the client has some buffers to work with. Similarly, if we have a longer pipeline that includes an image processor, we need additional buffers for it to work with as well.\n\nSo we need a sum of all, not a max, otherwise we will stall if for example the processor or the client holds a frame (or more) in conversion/rendering, because we will not have enough buffers to decode.",
+      "revId": "fd4616ea996fb2dd546fce2cf9075c50a909a80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
