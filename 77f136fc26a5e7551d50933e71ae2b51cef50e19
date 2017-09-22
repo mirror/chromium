@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c295450e_ee4aabd1",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-22T00:30:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2646cc71_f92c7b09",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06e4192_0a3b785a",
         "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
         "patchSetId": 13
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-21T21:35:03Z",
       "side": 1,
       "message": "Make your session implement FrontendChannel and pass it into the dispatcher. You need a way to send the response to the client...\n\n@Dima, why is UberDispatcher responsible for sending the response? Looks like a layering issue to me...",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b85cac5_c8224f0c",
+        "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-22T00:30:03Z",
+      "side": 1,
+      "message": "I think this is currently difficult because of how HandleCommand() is used in DevToolsSession. I have put up https://chromium-review.googlesource.com/c/chromium/src/+/677954 as a proposal, which would make this much easier to do. (I was going to take a stab at changing HandleAsyncCommand() too, but it is currently only used headless, and I do not understand the requirements well enough to change this yet. Perhaps a follow up CL ... or perhaps someone more familiar with headless could have opinions here?)\n\nAs a sidenote: the headless code looks fairly different (as in, the command handling happens without UberDispatcher etc.). Do you know if there are plans to convert to using UberDispatcher/FrontendChannel?",
+      "parentUuid": "c06e4192_0a3b785a",
       "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
