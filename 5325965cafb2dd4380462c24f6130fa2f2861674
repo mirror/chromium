@@ -16,6 +16,24 @@
       "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d30c46c_04079818",
+        "filename": "chrome/browser/extensions/install_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-22T20:55:44Z",
+      "side": 0,
+      "message": "I can\u0027t think of other cases (which worries me, since I don\u0027t think this statement would have been written with the || just to cover the pref corruption).",
+      "parentUuid": "7b91023b_7d20fe43",
+      "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
