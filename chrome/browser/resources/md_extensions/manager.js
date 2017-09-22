@@ -32,7 +32,7 @@ cr.define('extensions', function() {
   const Manager = Polymer({
     is: 'extensions-manager',
 
-    behaviors: [I18nBehavior],
+    behaviors: [I18nBehavior, ContainerShadowBehavior],
 
     properties: {
       /** @type {extensions.Toolbar} */
