@@ -1254,6 +1254,10 @@ int HttpStreamFactoryImpl::Job::DoCreateStreamComplete(int result) {
 }
 
 int HttpStreamFactoryImpl::Job::DoRestartTunnelAuth() {
+  // QUIC and HTTP2 do not support multiround authentication.
+  DCHECK_NE(ALTERNATIVE, job_type_);
+  DCHECK(!using_quic_);
+
   next_state_ = STATE_RESTART_TUNNEL_AUTH_COMPLETE;
   ProxyClientSocket* proxy_socket =
       static_cast<ProxyClientSocket*>(connection_->socket());
@@ -1281,12 +1285,13 @@ int HttpStreamFactoryImpl::Job::DoRestartTunnelAuthComplete(int result) {
 
 void HttpStreamFactoryImpl::Job::ReturnToStateInitConnection(
     bool close_connection) {
+  DCHECK(!using_quic_);
+
   if (close_connection && connection_->socket())
     connection_->socket()->Disconnect();
   connection_->Reset();
 
-  if (!using_quic_)
-    delegate_->RemoveRequestFromSpdySessionRequestMapForJob(this);
+  delegate_->RemoveRequestFromSpdySessionRequestMapForJob(this);
 
   next_state_ = STATE_INIT_CONNECTION;
 }
