@@ -40,7 +40,7 @@ void OfflinePageStorageManager::ClearPagesIfNeeded(
   if (IsInProgress())
     return;
   clear_time_ = clock_->Now();
-  archive_manager_->GetStorageStats(base::Bind(
+  archive_manager_->GetTemporaryStorageStats(base::Bind(
       &OfflinePageStorageManager::OnGetStorageStatsDoneForClearingPages,
       weak_ptr_factory_.GetWeakPtr(), callback));
 }

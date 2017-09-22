@@ -178,9 +178,9 @@ class TestArchiveManager : public ArchiveManager {
  public:
   explicit TestArchiveManager(StorageStats stats) : stats_(stats) {}
 
-  void GetStorageStats(const base::Callback<
-                       void(const ArchiveManager::StorageStats& storage_stats)>&
-                           callback) const override {
+  void GetTemporaryStorageStats(
+      const base::Callback<void(const ArchiveManager::StorageStats&
+                                    storage_stats)>& callback) const override {
     callback.Run(stats_);
   }
 
