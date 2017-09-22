@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7cedbfb7_25242212",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T17:24:22Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "48d842a5_943d31f5",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8f50615_39f3b58e",
         "filename": "components/omnibox/browser/omnibox_view.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbfaa50_0fc7e97b",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T17:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f50615_39f3b58e",
+      "range": {
+        "startLine": 30,
+        "startChar": 58,
+        "endLine": 30,
+        "endChar": 59
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d8f42c5f_9bcd4bb0",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T17:24:22Z",
+      "side": 1,
+      "message": "I\u0027ve added a test, although this function is now gone.",
+      "parentUuid": "7ab9172f_76d65189",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2c71bc9_d5ff3cca",
         "filename": "components/omnibox/browser/omnibox_view.cc",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2017-09-21T21:50:07Z",
       "side": 1,
       "message": "This code makes the function StripJavascriptSchemas() always strip control characters, even if the text is not a javascript scheme.  That seems wrong, or at least an abuse of the function name.  Can you please revise the code and add a test for this situation?",
+      "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea96c61_1715ddd0",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-22T17:24:22Z",
+      "side": 1,
+      "message": "Test added, and behavior corrected.",
+      "parentUuid": "e2c71bc9_d5ff3cca",
       "revId": "6ad5427f477ad54d82cae84c52e9e74bbf73e6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
