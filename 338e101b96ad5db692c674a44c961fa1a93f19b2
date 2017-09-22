@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9d6a81_02eae774",
+        "filename": "content/common/fileapi/file_system_messages.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T00:57:09Z",
+      "side": 1,
+      "message": "This should not include kFileSystemInternalTypeEnumEnd: it\u0027s a sentinel value and not actually valid.\n\nInstead, the usual convention is to define kLast and set it equal to the last \"real\" enumerator.",
+      "revId": "338e101b96ad5db692c674a44c961fa1a93f19b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
