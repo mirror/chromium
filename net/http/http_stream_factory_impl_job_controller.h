@@ -72,6 +72,8 @@ class HttpStreamFactoryImpl::JobController
 
   // Called to resume the HttpStream creation process when necessary
   // Proxy authentication credentials are collected.
+  // Not called when HTTP2 or QUIC is used, because they do not support
+  // multiround authentication.
   int RestartTunnelWithProxyAuth() override;
 
   // Called when the priority of transaction changes.
