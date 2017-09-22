@@ -1277,4 +1277,12 @@ bool CanCreateBookmarkApp(const Browser* browser) {
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
+#if defined(OS_CHROMEOS)
+void QueryAndDisplayArcApps(Browser* browser, GURL url) {
+  if (url.is_empty())
+    url = GetURLToBookmark(browser->tab_strip_model()->GetActiveWebContents());
+  browser->window()->ShowIntentPickerBubble(url);
+}
+#endif  // defined(OS_CHROMEOS)
+
 }  // namespace chrome
