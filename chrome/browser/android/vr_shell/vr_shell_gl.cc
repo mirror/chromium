@@ -737,6 +737,67 @@ void VrShellGl::SendGestureToContent(
   browser_->ProcessContentGesture(std::move(event));
 }
 
+void VrShellGl::ResizeForWebVR(int16_t frame_index,
+                               bool* is_valid,
+                               bool* was_changed) {
+  // Process all pending_bounds_ changes targeted for before this
+  // frame, being careful of wrapping frame indices.
+  static constexpr unsigned max =
+      std::numeric_limits<decltype(frame_index_)>::max();
+  static_assert(max > kPoseRingBufferSize * 2,
+                "To detect wrapping, kPoseRingBufferSize must be smaller "
+                "than half of frame_index_ range.");
+  while (!pending_bounds_.empty()) {
+    uint16_t index = pending_bounds_.front().first;
+    // If index is less than the frame_index it's possible we've
+    // wrapped, so we extend the range and 'un-wrap' to account
+    // for this.
+    if (index < frame_index)
+      index += max;
+    // If the pending bounds change is for an upcoming frame
+    // within our buffer size, wait to apply it. Otherwise, apply
+    // it immediately. This guarantees that even if we miss many
+    // frames, the queue can't fill up with stale bounds.
+    if (index > frame_index && index <= frame_index + kPoseRingBufferSize)
+      break;
+
+    const WebVrBounds& bounds = pending_bounds_.front().second;
+    webvr_left_viewport_->SetSourceUv(UVFromGfxRect(bounds.left_bounds));
+    webvr_right_viewport_->SetSourceUv(UVFromGfxRect(bounds.right_bounds));
+    DVLOG(1) << __FUNCTION__ << ": resize from pending_bounds to "
+             << bounds.source_size.width() << "x"
+             << bounds.source_size.height();
+    CreateOrResizeWebVRSurface(bounds.source_size);
+    pending_bounds_.pop();
+  }
+  if (render_info_primary_.surface_texture_size != webvr_surface_size_) {
+    if (!webvr_surface_size_.width()) {
+      // Don't try to resize to 0x0 pixels, drop frames until we get a
+      // valid size.
+      if (was_changed)
+        *was_changed = false;
+      if (is_valid)
+        *is_valid = false;
+      return;
+    }
+
+    render_info_primary_.surface_texture_size = webvr_surface_size_;
+    DVLOG(1) << __FUNCTION__ << ": resize GVR to "
+             << webvr_surface_size_.width() << "x"
+             << webvr_surface_size_.height();
+    swap_chain_->ResizeBuffer(
+        kFramePrimaryBuffer,
+        {webvr_surface_size_.width(), webvr_surface_size_.height()});
+    if (was_changed)
+      *was_changed = true;
+  } else {
+    if (was_changed)
+      *was_changed = false;
+  }
+  if (is_valid)
+    *is_valid = true;
+}
+
 void VrShellGl::DrawFrame(int16_t frame_index) {
   TRACE_EVENT1("gpu", "VrShellGl::DrawFrame", "frame", frame_index);
 
@@ -758,56 +819,15 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   // If needed, resize the primary buffer for use with WebVR. Resizing
   // needs to happen before acquiring a frame.
   if (ShouldDrawWebVr()) {
-    // Process all pending_bounds_ changes targeted for before this
-    // frame, being careful of wrapping frame indices.
-    static constexpr unsigned max =
-        std::numeric_limits<decltype(frame_index_)>::max();
-    static_assert(max > kPoseRingBufferSize * 2,
-                  "To detect wrapping, kPoseRingBufferSize must be smaller "
-                  "than half of frame_index_ range.");
-    while (!pending_bounds_.empty()) {
-      uint16_t index = pending_bounds_.front().first;
-      // If index is less than the frame_index it's possible we've
-      // wrapped, so we extend the range and 'un-wrap' to account
-      // for this.
-      if (index < frame_index)
-        index += max;
-      // If the pending bounds change is for an upcoming frame
-      // within our buffer size, wait to apply it. Otherwise, apply
-      // it immediately. This guarantees that even if we miss many
-      // frames, the queue can't fill up with stale bounds.
-      if (index > frame_index && index <= frame_index + kPoseRingBufferSize)
-        break;
-
-      const WebVrBounds& bounds = pending_bounds_.front().second;
-      webvr_left_viewport_->SetSourceUv(UVFromGfxRect(bounds.left_bounds));
-      webvr_right_viewport_->SetSourceUv(UVFromGfxRect(bounds.right_bounds));
-      DVLOG(1) << __FUNCTION__ << ": resize from pending_bounds to "
-               << bounds.source_size.width() << "x"
-               << bounds.source_size.height();
-      CreateOrResizeWebVRSurface(bounds.source_size);
-      pending_bounds_.pop();
+    bool is_valid;
+    ResizeForWebVR(frame_index, &is_valid, nullptr);
+    if (!is_valid) {
+      return;
     }
     buffer_viewport_list_->SetBufferViewport(GVR_LEFT_EYE,
                                              *webvr_left_viewport_);
     buffer_viewport_list_->SetBufferViewport(GVR_RIGHT_EYE,
                                              *webvr_right_viewport_);
-    if (render_info_primary_.surface_texture_size != webvr_surface_size_) {
-      if (!webvr_surface_size_.width()) {
-        // Don't try to resize to 0x0 pixels, drop frames until we get a
-        // valid size.
-        return;
-      }
-
-      render_info_primary_.surface_texture_size = webvr_surface_size_;
-      DVLOG(1) << __FUNCTION__ << ": resize GVR to "
-               << render_info_primary_.surface_texture_size.width() << "x"
-               << render_info_primary_.surface_texture_size.height();
-      swap_chain_->ResizeBuffer(
-          kFramePrimaryBuffer,
-          {render_info_primary_.surface_texture_size.width(),
-           render_info_primary_.surface_texture_size.height()});
-    }
   } else {
     if (render_info_primary_.surface_texture_size != render_size_default_) {
       render_info_primary_.surface_texture_size = render_size_default_;

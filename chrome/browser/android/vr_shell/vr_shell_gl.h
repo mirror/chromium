@@ -119,6 +119,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
+  void ResizeForWebVR(int16_t frame_index, bool* is_valid, bool* was_changed);
   void DrawFrame(int16_t frame_index);
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 gvr_frame* frame_ptr,
