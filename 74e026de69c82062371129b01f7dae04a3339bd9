@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03bd5581_42157d17",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "nit: while (!found_files.empty()), return false outside of the loop.",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 13
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039ff0eb_6bd1a930",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "Does the filter callback actually need all of these params?  Having a big params object makes it tempting to pass that around everywhere, but that also makes it harder to see what data various pieces of code actually need.",
+      "range": {
+        "startLine": 486,
+        "startChar": 18,
+        "endLine": 486,
+        "endChar": 24
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069356e4_0f29c9b9",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "base::Time is not guaranteed to be monotonically increasing.  How important is it for the file to be the newest file in the directory?",
+      "range": {
+        "startLine": 493,
+        "startChar": 38,
+        "endLine": 493,
+        "endChar": 0
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d84ad3_26c8abbf",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "This seems equivalent to using default argument values, which seems to be allowed by the style guide [1].  Could you please do that instead of adding all of this boilerplate?\n\n[1] https://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc8c33b_a6fe89f6",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like an appropriate use of rvalue references, per the style guide: https://google.github.io/styleguide/cppguide.html#Rvalue_references",
+      "range": {
+        "startLine": 130,
+        "startChar": 33,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f21b27e_2cb85f9d",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "nit: s/schedule/scheduled",
+      "range": {
+        "startLine": 217,
+        "startChar": 15,
+        "endLine": 217,
+        "endChar": 23
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ce557a_d4bcdcd5",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "Should this be an ASSERT rather than a DCHECK?  It\u0027s quite unusual to use DCHECKs in test code.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b27127_d4e51b97",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-22T23:20:49Z",
+      "side": 1,
+      "message": "Same comment.  Also, could you please swap the order of the args, so that the code reads as \"assert foo \u003e 0\" rather than \"assert 0 \u003c foo\"?",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 12
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
