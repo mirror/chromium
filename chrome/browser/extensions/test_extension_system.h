@@ -52,6 +52,7 @@ class TestExtensionSystem : public ExtensionSystem {
   void InitForRegularProfile(bool extensions_enabled) override {}
   void SetExtensionService(ExtensionService* service);
   ExtensionService* extension_service() override;
+  ExtensionRegistrar* extension_registrar() override;
   RuntimeData* runtime_data() override;
   ManagementPolicy* management_policy() override;
   ServiceWorkerManager* service_worker_manager() override;
@@ -91,6 +92,7 @@ class TestExtensionSystem : public ExtensionSystem {
   std::unique_ptr<ManagementPolicy> management_policy_;
   std::unique_ptr<RuntimeData> runtime_data_;
   std::unique_ptr<ExtensionService> extension_service_;
+  std::unique_ptr<ExtensionRegistrar> extension_registrar_;
   scoped_refptr<InfoMap> info_map_;
   std::unique_ptr<QuotaService> quota_service_;
   std::unique_ptr<AppSorting> app_sorting_;
