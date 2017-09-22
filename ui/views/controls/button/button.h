@@ -85,7 +85,7 @@ class VIEWS_EXPORT Button : public InkDropHostView,
   int tag() const { return tag_; }
   void set_tag(int tag) { tag_ = tag; }
 
-  void SetAccessibleName(const base::string16& name);
+  virtual void SetAccessibleName(const base::string16& name);
 
   // Get/sets the current display state of the button.
   ButtonState state() const { return state_; }
@@ -238,14 +238,14 @@ class VIEWS_EXPORT Button : public InkDropHostView,
   // The button's listener. Notified when clicked.
   ButtonListener* listener_;
 
+  // Accessibility data.
+  base::string16 accessible_name_;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(BlueButtonTest, Border);
 
   // The text shown in a tooltip.
   base::string16 tooltip_text_;
-
-  // Accessibility data.
-  base::string16 accessible_name_;
 
   // The id tag associated with this button. Used to disambiguate buttons in
   // the ButtonListener implementation.

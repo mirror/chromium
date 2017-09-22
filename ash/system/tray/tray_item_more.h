@@ -32,7 +32,9 @@ class TrayItemMore : public ActionableView {
 
   void SetLabel(const base::string16& label);
   void SetImage(const gfx::ImageSkia& image_skia);
-  void SetAccessibleName(const base::string16& name);
+
+  // ActionableView:
+  void SetAccessibleName(const base::string16& name) override;
 
  protected:
   // Returns a style that will be applied to the elements in the UpdateStyle()
@@ -65,7 +67,6 @@ class TrayItemMore : public ActionableView {
   views::ImageView* icon_;
   views::Label* label_;
   views::ImageView* more_;
-  base::string16 accessible_name_;
 
   DISALLOW_COPY_AND_ASSIGN(TrayItemMore);
 };
