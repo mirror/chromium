@@ -38,6 +38,7 @@ ObjectManager::ObjectManager(Bus* bus,
       setup_success_(false),
       cleanup_called_(false),
       weak_ptr_factory_(this) {
+  CHECK(object_path_.IsValid());
   DVLOG(1) << "Creating ObjectManager for " << service_name_
            << " " << object_path_.value();
   DCHECK(bus_);
