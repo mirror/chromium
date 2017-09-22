@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eed788e_16fc9355",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:24:24Z",
+      "side": 1,
+      "message": "No, \u003d\u003d isn\u0027t recognized by Polymer in html, unfortunately.",
+      "parentUuid": "c42849c4_913d25aa",
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "962ac9b3_c907bffe",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8e5a4c_b2d5765b",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962ac9b3_c907bffe",
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e9a690_28123f49",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-22T19:24:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24c65d65_838b3209",
+      "range": {
+        "startLine": 462,
+        "startChar": 45,
+        "endLine": 462,
+        "endChar": 52
+      },
+      "revId": "f82a76b2107b03020efd95c9364de6b2f867f19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
