@@ -48,11 +48,15 @@ namespace networking.onc {
   };
 
   enum NetworkType {
-    All, Cellular, Ethernet, VPN, Wireless, WiFi, WiMAX
+    All, Cellular, Ethernet, Tether, VPN, Wireless, WiFi, WiMAX
   };
 
   enum ProxySettingsType {
     Direct, Manual, PAC, WPAD
+  };
+
+  enum VPNType {
+    L2TP_IPsec, OpenVPN, ThirdPartyVPN, ARCVPN
   };
 
   enum ClientCertificateType {
@@ -560,7 +564,7 @@ namespace networking.onc {
     // The VPN host.
     DOMString? Host;
     // The VPN type.
-    DOMString? Type;
+    VPNType Type;
   };
 
   dictionary ManagedVPNProperties {

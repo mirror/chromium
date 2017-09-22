@@ -120,6 +120,9 @@ CrOnc.IPConfigType = chrome.networkingPrivate.IPConfigType;
 CrOnc.ProxySettingsType = chrome.networkingPrivate.ProxySettingsType;
 
 /** @enum {string} */
+CrOnc.VPNType = chrome.networkingPrivate.VPNType;
+
+/** @enum {string} */
 CrOnc.Type = chrome.networkingPrivate.NetworkType;
 
 /** @enum {string} */

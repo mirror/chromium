@@ -97,6 +97,17 @@ chrome.networkingPrivate.ProxySettingsType = {
 };
 
 /**
+ * @enum {string}
+ * @see https://developer.chrome.com/extensions/networkingPrivate#type-VPNType
+ */
+chrome.networkingPrivate.VPNType = {
+  L2TP_IPSEC: 'L2TP_IPsec',
+  OPEN_VPN: 'OpenVPN',
+  THIRD_PARTY_VPN: 'ThirdPartyVPN',
+  ARCVPN: 'ARCVPN',
+};
+
+/**
  * @typedef {{
  *   Active: (boolean|undefined),
  *   Effective: (string|undefined),
@@ -678,6 +689,7 @@ chrome.networkingPrivate.ManagedThirdPartyVPNProperties;
  *   PaymentPortal: (!chrome.networkingPrivate.PaymentPortal|undefined),
  *   PRLVersion: (number|undefined),
  *   RoamingState: (string|undefined),
+ *   Scanning: (boolean|undefined),
  *   ServingOperator: (!chrome.networkingPrivate.CellularProviderProperties|undefined),
  *   SIMLockStatus: (!chrome.networkingPrivate.SIMLockStatus|undefined),
  *   SIMPresent: (boolean|undefined),
@@ -716,6 +728,7 @@ chrome.networkingPrivate.CellularProperties;
  *   PaymentPortal: (!chrome.networkingPrivate.PaymentPortal|undefined),
  *   PRLVersion: (number|undefined),
  *   RoamingState: (string|undefined),
+ *   Scanning: (boolean|undefined),
  *   ServingOperator: (!chrome.networkingPrivate.CellularProviderProperties|undefined),
  *   SIMLockStatus: (!chrome.networkingPrivate.SIMLockStatus|undefined),
  *   SIMPresent: (boolean|undefined),
@@ -786,7 +799,7 @@ chrome.networkingPrivate.TetherProperties;
  *   L2TP: (!chrome.networkingPrivate.L2TPProperties|undefined),
  *   OpenVPN: (!chrome.networkingPrivate.OpenVPNProperties|undefined),
  *   ThirdPartyVPN: (!chrome.networkingPrivate.ThirdPartyVPNProperties|undefined),
- *   Type: (string|undefined)
+ *   Type: !chrome.networkingPrivate.VPNType
  * }}
  * @see https://developer.chrome.com/extensions/networkingPrivate#type-VPNProperties
  */
