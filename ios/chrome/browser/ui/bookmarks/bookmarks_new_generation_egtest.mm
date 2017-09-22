@@ -152,6 +152,30 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 #pragma mark - Tests
 
+// Test that swiping left to right navigate back.
+- (void)testNavigateBackWithGesture {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
+
+  [BookmarksNewGenTestCase setupStandardBookmarks];
+  [BookmarksNewGenTestCase openBookmarks];
+  [BookmarksNewGenTestCase openMobileBookmarks];
+
+  // Make sure the Mobile Bookmarks is not present.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Mobile Bookmarks")]
+      assertWithMatcher:grey_nil()];
+
+  // Back using swipe left gesture.
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(@"bookmarksTableView")]
+      performAction:grey_swipeFastInDirectionWithStartPoint(kGREYDirectionRight,
+                                                            0.01, 0.5)];
+
+  // Check we navigated back to the Mobile Bookmarks.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Mobile Bookmarks")]
+      assertWithMatcher:grey_sufficientlyVisible()];
+}
+
 - (void)testUndoDeleteBookmarkFromSwipe {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
