@@ -81,6 +81,30 @@
       "revId": "422775d80dc9308b86154566d7fc255f156fff3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f751b9_ba7454a7",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T14:16:27Z",
+      "side": 1,
+      "message": "No. It\u0027s better to push such decisions to subclasses. Having a default implementation means it\u0027s easy to miss that a subclass may need to override. Additionally having to override means you document in the subclass why it isn\u0027t applicable.",
+      "parentUuid": "b7062d32_b77094ae",
+      "range": {
+        "startLine": 496,
+        "startChar": 2,
+        "endLine": 496,
+        "endChar": 15
+      },
+      "revId": "422775d80dc9308b86154566d7fc255f156fff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
