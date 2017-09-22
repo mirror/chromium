@@ -190,8 +190,7 @@ TransformNode* TransformTree::FindNodeFromElementId(ElementId id) {
 bool TransformTree::OnTransformAnimated(ElementId element_id,
                                         const gfx::Transform& transform) {
   TransformNode* node = FindNodeFromElementId(element_id);
-  DCHECK(node);
-  if (node->local == transform)
+  if (!node || node->local == transform)
     return false;
   node->local = transform;
   node->needs_local_transform_update = true;
@@ -855,8 +854,7 @@ EffectNode* EffectTree::FindNodeFromElementId(ElementId id) {
 
 bool EffectTree::OnOpacityAnimated(ElementId id, float opacity) {
   EffectNode* node = FindNodeFromElementId(id);
-  DCHECK(node);
-  if (node->opacity == opacity)
+  if (!node || node->opacity == opacity)
     return false;
   node->opacity = opacity;
   node->effect_changed = true;
@@ -868,8 +866,7 @@ bool EffectTree::OnOpacityAnimated(ElementId id, float opacity) {
 bool EffectTree::OnFilterAnimated(ElementId id,
                                   const FilterOperations& filters) {
   EffectNode* node = FindNodeFromElementId(id);
-  DCHECK(node);
-  if (node->filters == filters)
+  if (!node || node->filters == filters)
     return false;
   node->filters = filters;
   node->effect_changed = true;
