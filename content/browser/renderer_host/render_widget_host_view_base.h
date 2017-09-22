@@ -40,6 +40,10 @@
 #include "ui/gfx/range/range.h"
 #include "ui/surface/transport_dib.h"
 
+#if defined(USE_AURA)
+#include "content/common/render_widget_window_tree_client_factory.mojom.h"
+#include "services/ui/public/interfaces/window_tree.mojom.h"
+#endif
 class SkBitmap;
 
 struct ViewHostMsg_SelectionBounds_Params;
@@ -72,6 +76,7 @@ namespace content {
 class BrowserAccessibilityDelegate;
 class BrowserAccessibilityManager;
 class CursorManager;
+class RenderFrameProxyHost;
 class RenderWidgetHostImpl;
 class RenderWidgetHostViewBaseObserver;
 class SyntheticGestureTarget;
@@ -450,6 +455,13 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
     web_contents_accessibility_ = wcax;
   }
 
+#if defined(USE_AURA)
+  void EmbedChildFrameRendererWindowTreeClient(
+      int routing_id,
+      ui::mojom::WindowTreeClientPtr renderer_window_tree_client);
+  void OnChildFrameDestroyed(int routing_id);
+#endif
+
   // Exposed for testing.
   virtual bool IsChildFrameForTesting() const;
   virtual viz::SurfaceId SurfaceIdForTesting() const;
@@ -459,6 +471,10 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHostViewBase();
 
   void NotifyObserversAboutShutdown();
+
+#if defined(USE_AURA)
+  ui::mojom::WindowTreeClientPtr GetWindowTreeClientFromRenderer();
+#endif
 
   // Is this a fullscreen view?
   bool is_fullscreen_;
@@ -494,11 +510,20 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   WebContentsAccessibility* web_contents_accessibility_;
 
  private:
+#if defined(USE_AURA)
+  void OnRenderFrameProxyHostDestroyed(
+      RenderFrameProxyHost* render_frame_proxy_host);
+#endif
+
   gfx::Rect current_display_area_;
 
   uint32_t renderer_frame_number_;
 
   base::ObserverList<RenderWidgetHostViewBaseObserver> observers_;
+
+#if defined(USE_AURA)
+  mojom::RenderWidgetWindowTreeClientPtr render_widget_window_tree_client_;
+#endif
 
   base::WeakPtrFactory<RenderWidgetHostViewBase> weak_factory_;
 

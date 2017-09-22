@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
@@ -25,11 +26,11 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/size_f.h"
 
+#if defined(USE_AURA)
+#include "content/common/render_widget_window_tree_client_factory.mojom.h"
+#endif
+
 namespace content {
-
-namespace {
-
-}
 
 RenderWidgetHostViewBase::RenderWidgetHostViewBase()
     : is_fullscreen_(false),
@@ -494,6 +495,21 @@ RenderWidgetHostViewBase::GetTouchSelectionControllerClientManager() {
   return nullptr;
 }
 
+#if defined(USE_AURA)
+void RenderWidgetHostViewBase::EmbedChildFrameRendererWindowTreeClient(
+    int routing_id,
+    ui::mojom::WindowTreeClientPtr renderer_window_tree_client) {
+  DCHECK(render_widget_window_tree_client_);
+  render_widget_window_tree_client_->Embed(
+      routing_id, std::move(renderer_window_tree_client));
+}
+
+void RenderWidgetHostViewBase::OnChildFrameDestroyed(int routing_id) {
+  DCHECK(render_widget_window_tree_client_);
+  render_widget_window_tree_client_->DestroyFrame(routing_id);
+}
+#endif
+
 bool RenderWidgetHostViewBase::IsChildFrameForTesting() const {
   return false;
 }
@@ -501,5 +517,24 @@ bool RenderWidgetHostViewBase::IsChildFrameForTesting() const {
 viz::SurfaceId RenderWidgetHostViewBase::SurfaceIdForTesting() const {
   return viz::SurfaceId();
 }
+
+#if defined(USE_AURA)
+ui::mojom::WindowTreeClientPtr
+RenderWidgetHostViewBase::GetWindowTreeClientFromRenderer() {
+  // NOTE: it's possible for the renderer to switch processes, in which case
+  // this function may be called multiple times.
+  RenderWidgetHost* render_widget_host = GetRenderWidgetHost();
+  mojom::RenderWidgetWindowTreeClientFactoryPtr factory;
+  BindInterface(render_widget_host->GetProcess(), &factory);
+
+  ui::mojom::WindowTreeClientPtr window_tree_client;
+  factory->CreateWindowTreeClientForRenderWidget(
+      render_widget_host->GetRoutingID(),
+      mojo::MakeRequest(&window_tree_client),
+      mojo::MakeRequest(&render_widget_window_tree_client_));
+  return window_tree_client;
+}
+
+#endif
 
 }  // namespace content
