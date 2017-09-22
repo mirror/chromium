@@ -104,6 +104,24 @@
       "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39d89e00_5a02454d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/presentation-api/controlling-ua/common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-22T18:04:28Z",
+      "side": 1,
+      "message": "This is OK.  I sent a message to the working group to give them a heads up.",
+      "parentUuid": "ddd7798c_db12fff3",
+      "revId": "812ddc0e290ad2e5f5456ac56fb8f511c3be3fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
