@@ -76,6 +76,9 @@ namespace blink {
 
 using namespace HTMLNames;
 
+// In ARIA 1.1, default value of aria-level was changed to 2.
+const int kDefaultHeadingLevel = 2;
+
 class SparseAttributeSetter {
   USING_FAST_MALLOC(SparseAttributeSetter);
 
@@ -1386,7 +1389,7 @@ int AXNodeObject::HeadingLevel() const {
     if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
       if (level >= 1 && level <= 9)
         return level;
-      return 1;
+      return kDefaultHeadingLevel;
     }
   }
 
@@ -1412,6 +1415,9 @@ int AXNodeObject::HeadingLevel() const {
   if (element.HasTagName(h6Tag))
     return 6;
 
+  if (RoleValue() == kHeadingRole)
+    return kDefaultHeadingLevel;
+
   return 0;
 }
 
@@ -1424,7 +1430,7 @@ unsigned AXNodeObject::HierarchicalLevel() const {
   if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
     if (level >= 1 && level <= 9)
       return level;
-    return 1;
+    return kDefaultHeadingLevel;
   }
 
   // Only tree item will calculate its level through the DOM currently.
