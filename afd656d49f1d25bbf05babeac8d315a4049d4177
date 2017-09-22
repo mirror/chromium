@@ -46,6 +46,30 @@
       "revId": "afd656d49f1d25bbf05babeac8d315a4049d4177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c7fc85a_94b95bc0",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-22T01:49:37Z",
+      "side": 1,
+      "message": "That\u0027s going to fail when, e.g., there are text nodes hidden by display:none.\n\nAnd TI NG shouldn\u0027t be very heavy, so maybe we don\u0027t need a lightweight alternative.",
+      "parentUuid": "7164832d_ee844f05",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 67
+      },
+      "revId": "afd656d49f1d25bbf05babeac8d315a4049d4177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
