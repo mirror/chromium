@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e8c315a_83c275ce",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 33
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "We agreed to remove it.",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bfc5c4_0fb805d6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b9acaa_7db4f2eb",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "I think you will be surprised to know that you just declared a global variable here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 43
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07914dd_051d794d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "What\u0027s the point of this check?",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 66
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd4b521_1316ba8e",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "url",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c53cd8_22972897",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "Do you need this type?",
+      "range": {
+        "startLine": 90,
+        "startChar": 47,
+        "endLine": 90,
+        "endChar": 58
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89660a51_3b7e4157",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "They are required for autosign-in",
+      "range": {
+        "startLine": 92,
+        "startChar": 10,
+        "endLine": 92,
+        "endChar": 18
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99a99d2_e205c72b",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "We call it username everywhere",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4618b6_99ab8f98",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-22T09:22:12Z",
+      "side": 1,
+      "message": "0x4285F4",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "d31f5ba65cbab3464f2c8ed97f34af5abab01291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
