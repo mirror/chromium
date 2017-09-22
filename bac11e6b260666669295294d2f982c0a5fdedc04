@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ff1f1d_078ff27a",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-22T07:03:33Z",
+      "side": 1,
+      "message": "Protect the registration since version-\u003eDoom() can stop |version|, which destroys start worker callbacks, which might be the only things holding a reference to |this|.",
+      "revId": "bac11e6b260666669295294d2f982c0a5fdedc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
