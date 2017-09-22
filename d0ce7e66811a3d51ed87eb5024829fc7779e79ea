@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f13894e7_921109d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-22T15:27:33Z",
+      "side": 1,
+      "message": "Is this still WIP?",
+      "revId": "d0ce7e66811a3d51ed87eb5024829fc7779e79ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6393fdc_74ae2bc7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-22T15:27:33Z",
+      "side": 1,
+      "message": "Are you still investigating this? If not, this should be a TODO and cite a bug number.",
+      "revId": "d0ce7e66811a3d51ed87eb5024829fc7779e79ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7103dc1_a5b4c04c",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-22T15:27:33Z",
+      "side": 1,
+      "message": "nit: no else after return",
+      "revId": "d0ce7e66811a3d51ed87eb5024829fc7779e79ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51568540_a44c6f9f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-22T15:27:33Z",
+      "side": 1,
+      "message": "This is fine. Code in chrome can call into //chrome/browser/ui/ash. That code lives in the browser process. It just can\u0027t call into code in //ash (except code in //ash/public). For mustash we\u0027re trying to make code in ash run in a separate process. See //ash/README.md or go/mustash.",
+      "revId": "d0ce7e66811a3d51ed87eb5024829fc7779e79ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
