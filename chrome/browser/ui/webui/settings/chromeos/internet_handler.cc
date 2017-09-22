@@ -9,6 +9,7 @@
 #include "chrome/browser/chromeos/options/network_config_view.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/onc/onc_constants.h"
@@ -108,14 +109,19 @@ void InternetHandler::ConfigureNetwork(const base::ListValue* args) {
     return;
   }
 
-  if (network->type() == shill::kTypeVPN &&
-      network->vpn_provider_type() == shill::kProviderThirdPartyVpn) {
-    // Request that the third-party VPN provider used by the |network| show a
-    // configuration dialog for it.
-    VpnServiceFactory::GetForBrowserContext(GetProfileForPrimaryUser())
-        ->SendShowConfigureDialogToExtension(
-            network->third_party_vpn_provider_extension_id(), network->name());
-    return;
+  if (network->type() == shill::kTypeVPN) {
+    if (network->vpn_provider_type() == shill::kProviderThirdPartyVpn) {
+      // Request that the third-party VPN provider used by the |network| show a
+      // configuration dialog for it.
+      VpnServiceFactory::GetForBrowserContext(GetProfileForPrimaryUser())
+          ->SendShowConfigureDialogToExtension(
+              network->third_party_vpn_provider_extension_id(),
+              network->name());
+      return;
+    } else if (network->vpn_provider_type() == shill::kProviderArcVpn) {
+      SystemTrayClient::Get()->ShowNetworkSettings(network->guid());
+      return;
+    }
   }
 
   NetworkConfigView::ShowForNetworkId(network->guid());

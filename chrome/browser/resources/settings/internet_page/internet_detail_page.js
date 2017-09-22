@@ -459,6 +459,10 @@ Polymer({
     var type = networkProperties.Type;
     if (type != CrOnc.Type.WI_FI && type != CrOnc.Type.VPN)
       return false;
+    if (type == CrOnc.Type.VPN &&
+        CrOnc.getActiveValue(this.networkProperties.VPN.Type == 'ARCVPN')) {
+      return false;
+    }
     return !this.isPolicySource(networkProperties.Source) &&
         this.isRemembered_(networkProperties);
   },
