@@ -17,6 +17,8 @@ static_library("service") {
     "cryptauth_token_fetcher_impl.h",
     "device_sync_impl.cc",
     "device_sync_impl.h",
+    "device_sync_mojom_result_code_util.cc",
+    "device_sync_mojom_result_code_util.h",
     "multidevice_service.cc",
     "multidevice_service.h",
   ]
