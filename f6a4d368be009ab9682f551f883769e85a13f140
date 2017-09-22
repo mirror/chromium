@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61aedbb9_2fbbd9cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T21:21:37Z",
+      "side": 1,
+      "message": "nit: insert indent to align with the start of previous line\ni.e.\n1. Override ...\n   event ...\n   Textfield...\n2. Make...\n   SearchBoxView...\n...",
+      "revId": "f6a4d368be009ab9682f551f883769e85a13f140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
