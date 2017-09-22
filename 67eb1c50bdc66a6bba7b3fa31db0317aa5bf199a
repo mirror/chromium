@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b1c344d_5fc10f88",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T21:50:26Z",
+      "side": 1,
+      "message": "what does \"by namespace checked\" mean?  Could this just be ReadPagesByNamepsaceSync?",
+      "revId": "67eb1c50bdc66a6bba7b3fa31db0317aa5bf199a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fef3fe_1e35539d",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T21:50:26Z",
+      "side": 1,
+      "message": "CHECK does not seem correct. Use DCHECK, or even better, pass in a const sql::Connection\u0026 and make all pointer problems happen in the caller.",
+      "revId": "67eb1c50bdc66a6bba7b3fa31db0317aa5bf199a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c90a3b_452f8b04",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-22T21:50:26Z",
+      "side": 1,
+      "message": "nit: this seems somewhat unnecessary, since it\u0027s easy enough to call\nReadPagesByMultipleNamespacesSync({ kNamespace }, db)",
+      "revId": "67eb1c50bdc66a6bba7b3fa31db0317aa5bf199a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
