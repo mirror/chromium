@@ -16,6 +16,24 @@
       "revId": "43c09b0fd0388dcb4f21851a0963a383ffeab0e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b975285c_e2ab1a86",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T00:05:08Z",
+      "side": 1,
+      "message": "Updated as you outlined. One quirk I had to deal with is that because the IPC message ordering is not the same as that of mojom Embed() can be processed before the renderer has created the RenderFrameProxy. Addressed by keeping a set of pending WindowTreeClients and an explicit destroy (for the case of the frame being created and destroyed before Embed() is received). The latter is unlikely, but added.",
+      "parentUuid": "82cbb0e4_b933f96a",
+      "revId": "43c09b0fd0388dcb4f21851a0963a383ffeab0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
