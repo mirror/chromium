@@ -14,6 +14,7 @@ using base::ProcessId;
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryAllocatorDumpGuid;
 using base::trace_event::ProcessMemoryDump;
+using Edge = memory_instrumentation::GlobalDumpGraph::Edge;
 using Node = memory_instrumentation::GlobalDumpGraph::Node;
 using Process = memory_instrumentation::GlobalDumpGraph::Process;
 
@@ -76,6 +77,26 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
   }
 }
 
+void AddEdges(const base::trace_event::ProcessMemoryDump& source,
+              GlobalDumpGraph* global_graph) {
+  for (auto& guid_to_edge : source.allocator_dumps_edges_for_testing()) {
+    auto& edge = guid_to_edge.second;
+    auto& nodes_by_guid = global_graph->nodes_by_guid();
+
+    // Find the source and target nodes in the global map by guid.
+    auto source = nodes_by_guid.find(edge.source);
+    auto target = nodes_by_guid.find(edge.target);
+    if (source == nodes_by_guid.end() || target == nodes_by_guid.end()) {
+      continue;  // TODO add a log message here.
+    }
+
+    // Add an edge indicating the source node owns the memory of the
+    // target node with the given importance of the edge.
+    global_graph->AddNodeOwnershipEdge(source->second, target->second,
+                                       edge.importance);
+  }
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
@@ -88,6 +109,11 @@ std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
     // Collects the allocator dumps into a graph and populates the graph
     // with entries.
     CollectAllocatorDumps(pid_to_dump.second, global_graph.get(), graph);
+  }
+
+  // Second pass: generate the graph of edges between the nodes.
+  for (auto& id_to_dump : process_dumps) {
+    AddEdges(id_to_dump.second, global_graph.get());
   }
   return global_graph;
 }
