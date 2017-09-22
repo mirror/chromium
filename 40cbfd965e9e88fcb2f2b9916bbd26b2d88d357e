@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "366d49c7_76347ec3",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T22:13:21Z",
+      "side": 1,
+      "message": "Event is not handled in the \"else\" branch. Should we forward it to Button here? Same question goes for other gesture event types.\n\nIt might make sense to change all \"return\" to \"break\" and do this forwarding at the end when event is not handled.\n\ni.e.\n  switch (event-\u003etype()) {\n    case ui::ET_GESTURE_TAP_DOWN:\n      ...\n      break;\n    ...\n    default:\n      break;\n  }\n\n  if (!event-\u003ehandled())\n    return Button::OnGestureEvent(event);",
+      "revId": "40cbfd965e9e88fcb2f2b9916bbd26b2d88d357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf60eac_559b5492",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-22T22:13:21Z",
+      "side": 1,
+      "message": "nit: Get rid of |transform| and use it in-place since it is used only when |scale_up| is true.",
+      "revId": "40cbfd965e9e88fcb2f2b9916bbd26b2d88d357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
