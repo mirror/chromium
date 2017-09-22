@@ -138,7 +138,8 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
   // with moduleMap[url], and abort these steps.
   // Step 10. Set moduleMap[url] to module script, and asynchronously complete
   // this algorithm with module script.
-  entry->AddClient(client);
+  if (client)
+    entry->AddClient(client);
 }
 
 ModuleScript* ModuleMap::GetFetchedModuleScript(const KURL& url) const {

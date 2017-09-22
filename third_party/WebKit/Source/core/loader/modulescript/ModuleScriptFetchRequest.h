@@ -40,7 +40,18 @@ class ModuleScriptFetchRequest final {
                                  parser_state,
                                  credentials_mode,
                                  Referrer::NoReferrer(),
-                                 TextPosition::MinimumPosition()) {}
+                                 TextPosition::MinimumPosition(),
+                                 false) {}
+  // For link rel=modulepreload requests
+  ModuleScriptFetchRequest(const KURL& url,
+                           WebURLRequest::FetchCredentialsMode credentials_mode)
+      : ModuleScriptFetchRequest(url,
+                                 String(),
+                                 kParserInserted,
+                                 credentials_mode,
+                                 Referrer::NoReferrer(),
+                                 TextPosition::MinimumPosition(),
+                                 true) {}
   ~ModuleScriptFetchRequest() = default;
 
   const KURL& Url() const { return url_; }
@@ -51,6 +62,7 @@ class ModuleScriptFetchRequest final {
   }
   const AtomicString& GetReferrer() const { return referrer_; }
   const TextPosition& GetReferrerPosition() const { return referrer_position_; }
+  bool IsModulePreload() const { return is_module_preload_; }
 
  private:
   // Referrer is set only for internal module script fetch algorithms triggered
@@ -61,13 +73,15 @@ class ModuleScriptFetchRequest final {
                            ParserDisposition parser_state,
                            WebURLRequest::FetchCredentialsMode credentials_mode,
                            const String& referrer,
-                           const TextPosition& referrer_position)
+                           const TextPosition& referrer_position,
+                           bool is_module_preload)
       : url_(url),
         nonce_(nonce),
         parser_state_(parser_state),
         credentials_mode_(credentials_mode),
         referrer_(referrer),
-        referrer_position_(referrer_position) {}
+        referrer_position_(referrer_position),
+        is_module_preload_(is_module_preload) {}
 
   const KURL url_;
   const String nonce_;
@@ -75,6 +89,7 @@ class ModuleScriptFetchRequest final {
   const WebURLRequest::FetchCredentialsMode credentials_mode_;
   const AtomicString referrer_;
   const TextPosition referrer_position_;
+  const bool is_module_preload_;
 };
 
 }  // namespace blink

@@ -343,7 +343,7 @@ void ModuleTreeLinker::FetchDescendants(ModuleScript* module_script) {
     ModuleScriptFetchRequest request(
         urls[i], module_script->Nonce(), module_script->ParserState(),
         module_script->CredentialsMode(), module_script->BaseURL().GetString(),
-        positions[i]);
+        positions[i], false);
     InitiateInternalModuleScriptGraphFetching(
         request, ModuleGraphLevel::kDependentModuleFetch);
   }
