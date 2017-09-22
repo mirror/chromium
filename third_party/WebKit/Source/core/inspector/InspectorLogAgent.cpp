@@ -9,6 +9,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/IdentifiersFactory.h"
+#include "core/inspector/InspectorDOMAgent.h"
 
 namespace blink {
 
@@ -48,6 +49,8 @@ String MessageSourceValue(MessageSource source) {
       return protocol::Log::LogEntry::SourceEnum::Violation;
     case kInterventionMessageSource:
       return protocol::Log::LogEntry::SourceEnum::Intervention;
+    case kRecommendationMessageSource:
+      return protocol::Log::LogEntry::SourceEnum::Recommendation;
     default:
       return protocol::Log::LogEntry::SourceEnum::Other;
   }
@@ -72,10 +75,12 @@ String MessageLevelValue(MessageLevel level) {
 using protocol::Log::ViolationSetting;
 
 InspectorLogAgent::InspectorLogAgent(ConsoleMessageStorage* storage,
-                                     PerformanceMonitor* performance_monitor)
+                                     PerformanceMonitor* performance_monitor,
+                                     InspectorDOMAgent* dom_agent)
     : enabled_(false),
       storage_(storage),
-      performance_monitor_(performance_monitor) {}
+      performance_monitor_(performance_monitor),
+      dom_agent_(dom_agent) {}
 
 InspectorLogAgent::~InspectorLogAgent() {}
 
@@ -100,7 +105,6 @@ void InspectorLogAgent::Restore() {
 
 void InspectorLogAgent::ConsoleMessageAdded(ConsoleMessage* message) {
   DCHECK(enabled_);
-
   std::unique_ptr<protocol::Log::LogEntry> entry =
       protocol::Log::LogEntry::create()
           .setSource(MessageSourceValue(message->Source()))
@@ -123,6 +127,19 @@ void InspectorLogAgent::ConsoleMessageAdded(ConsoleMessage* message) {
       message->RequestIdentifier())
     entry->setNetworkRequestId(
         IdentifiersFactory::RequestId(message->RequestIdentifier()));
+
+  if (!message->Nodes().IsEmpty()) {
+    std::unique_ptr<
+        protocol::Array<v8_inspector::protocol::Runtime::API::RemoteObject>>
+        remote_objects = protocol::Array<
+            v8_inspector::protocol::Runtime::API::RemoteObject>::create();
+    for (Node* node : message->Nodes()) {
+      auto remote_object = dom_agent_->ResolveNode(node, "console");
+      if (remote_object)
+        remote_objects->addItem(std::move(remote_object));
+    }
+    entry->setArgs(std::move(remote_objects));
+  }
 
   GetFrontend()->entryAdded(std::move(entry));
   GetFrontend()->flush();

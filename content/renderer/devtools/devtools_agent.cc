@@ -117,7 +117,6 @@ bool DevToolsAgent::OnMessageReceived(const IPC::Message& message) {
 
   if (message.type() == FrameMsg_Navigate::ID)
     ContinueProgram();  // Don't want to swallow the message.
-
   return handled;
 }
 
