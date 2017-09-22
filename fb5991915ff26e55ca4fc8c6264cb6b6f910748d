@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1b7d01_912b3a37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Update comment",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb0d18d_cff36894",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Use an else instead of an early return.\n\nIn general, non-precondition early returns make it a harder to follow the flow of a function, since it is something extra to think about/consider. In this case it is pretty obvious since the function is short, though.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cdde0d_4c7f0472",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Add a TODO here (and file a bug) to only call shift+tab once, as the user dropdown button is not in the right focus order. shift+tab from password should go directly to status area.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c45855b_8d950189",
+        "filename": "ash/login/ui/login_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "nit: newline above",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc3ae8a_53de0d7a",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Nice! I\u0027d make it a bit more obvious that it got focus, ie,\n\n\"LoginShelfView was focused, but this should never happen. Forwarded focus to shelf widget with an unknown direction\".",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae7187c_1dab88d5",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Use else instead of early return.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5b3cea_bb62622e",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Why isn\u0027t this in SetUp()?",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e03a3c_474b599b",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Can you lookup the shelf widget via this-\u003ewidget()? This code should not assume it is on the primary display / in the login/lock screen scenario.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b331a046_4b99f56e",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-22T21:32:37Z",
+      "side": 1,
+      "message": "Ditto here, I don\u0027t think you should assume this is on the primary display.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
