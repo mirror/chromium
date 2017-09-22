@@ -110,6 +110,13 @@ chrome.accessibilityPrivate.darkenScreen = function(enabled) {};
 chrome.accessibilityPrivate.setSwitchAccessKeys = function(key_codes) {};
 
 /**
+ * Sets current ARC app to use native ARC support.
+ * @param {boolean} value True for ChromeVox (native), false for TalkBack.
+ * @see https://developer.chrome.com/extensions/accessibilityPrivate#method-setNativeChromeVoxArcSupportForCurrentApp
+ */
+chrome.accessibilityPrivate.setNativeChromeVoxArcSupportForCurrentApp = function(value) {};
+
+/**
  * Fired whenever ChromeVox should output introduction.
  * @type {!ChromeEvent}
  * @see https://developer.chrome.com/extensions/accessibilityPrivate#event-onIntroduceChromeVox
