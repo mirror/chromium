@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9418484_a3684e1f",
+        "filename": "chrome/test/v8/wasm_trap_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-22T21:18:43Z",
+      "side": 1,
+      "message": "This should be after all the functions (line 59).",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "7b4dc102c99315ca59683b245cc5b58761992d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
