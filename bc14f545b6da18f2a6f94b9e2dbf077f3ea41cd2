@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0edce391_fdef5ed5",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "I haven\u0027t put much thought into this, but, as another approach for dealing with the naming here, you may look at this from a different angle: these fixture classes can be named just based on what are their parameters: like SingleWeeklyTimeTest, TwoWeeklyTimesTest. This may help with avoiding the duplication.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228863d7_15b27d2a",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "What people usually do in order to make this less weird is a trick like this:\n\n   class WeeklyTimeConstructorAndToValue {\n     ...\n     int day_of_week() const { return GetParam().get\u003c0\u003e(); }\n     int minutes() const { return GetParam().get\u003c1\u003e(); }\n     ...\n   };",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 46
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4511ac_b02c81c1",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "Combine() is intended to be used for a different purpose - like when you have two arrays xs\u003d[1,2,3], ys\u003d[100,200,300] and you want to instantiate the test for each combination of those: [(1,100), (1,200), ...].\n\nWhat you want here is, I think, simply:\n\n  std::make_tuple(1, 0).\n\nAs a next (although optional) simplification, you can merge multiple INSTANTIATE_TEST_CASE_P invocations under a single one, by passing:\n\n  testing::Combine(std::make_tuple(...), std::make_tuple(...), ...)",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 40
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6554e663_99ca6aec",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "It\u0027s better to have a named constant like \"kSunday\", instead of just magic constant \"7\".",
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be36d8de_3e741a7c",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "It\u0027s better to introduce a constant for \"minutes in hour\" too.",
+      "range": {
+        "startLine": 65,
+        "startChar": 62,
+        "endLine": 65,
+        "endChar": 64
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b98f7c_c2eff911",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-22T18:33:42Z",
+      "side": 1,
+      "message": "This value is the test expectation - it\u0027s better if it were specified as another test parameter, instead of being calculated inside the test (as its calculation itself is subject to bugs).",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
