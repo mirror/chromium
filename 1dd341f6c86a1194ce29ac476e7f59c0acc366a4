@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "703b5c87_9afa7602",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-22T23:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eac4a70_fb5a1139",
+      "range": {
+        "startLine": 197,
+        "startChar": 57,
+        "endLine": 197,
+        "endChar": 99
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fc271c_e7e6c207",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ce6e2336_696ad156",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3494,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-22T23:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fc271c_e7e6c207",
+      "range": {
+        "startLine": 3494,
+        "startChar": 57,
+        "endLine": 3494,
+        "endChar": 63
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d61fec_0072062f",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b84b41c_bac3dd35",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-22T23:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d61fec_0072062f",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "1dd341f6c86a1194ce29ac476e7f59c0acc366a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
