@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac222b12_7f90b436",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:21:16Z",
+      "side": 1,
+      "message": "Is scrollY always 0?",
+      "range": {
+        "startLine": 660,
+        "startChar": 56,
+        "endLine": 660,
+        "endChar": 68
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b0d7c6_699a3764",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:21:16Z",
+      "side": 1,
+      "message": "In LTR do 1 \u0026 0 return the same value?",
+      "range": {
+        "startLine": 666,
+        "startChar": 56,
+        "endLine": 667,
+        "endChar": 49
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991a2b3b_1d567e48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-22T17:21:16Z",
+      "side": 1,
+      "message": "Should we do this outside the if-else block?",
+      "range": {
+        "startLine": 701,
+        "startChar": 12,
+        "endLine": 701,
+        "endChar": 42
+      },
+      "revId": "7c2afe4a6fdc98350e6b8d6ec2a81aceef0dcd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
