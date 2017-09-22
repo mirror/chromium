@@ -78,6 +78,11 @@ def AddIntermediateResults(chartjson, base_results, diff_results):
 
 
 def _CreateArgparser():
+  def chromium_path(arg):
+    if arg.startswith('//'):
+      return os.path.join(host_paths.DIR_SOURCE_ROOT, arg[2:])
+    return arg
+
   argparser = argparse.ArgumentParser(
       description='Diff resource sizes of two APKs. Arguments not listed here '
                   'will be passed on to both invocations of resource_sizes.py.')
@@ -102,10 +107,12 @@ def _CreateArgparser():
                          help='Directory to save chartjson to.')
   argparser.add_argument('--base-apk',
                          required=True,
+                         type=chromium_path,
                          help='Path to the base APK, i.e. what the size '
                               'increase/decrease will be measured from.')
   argparser.add_argument('--diff-apk',
                          required=True,
+                         type=chromium_path,
                          help='Path to the diff APK, i.e. the APK whose size '
                               'increase/decrease will be measured against the '
                               'base APK.')
