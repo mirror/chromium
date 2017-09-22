@@ -93,6 +93,30 @@
       "revId": "43f686aa21b636352e2851e95eff27afdb11eb88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181a7b46_fe486fb3",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T12:46:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13428d69_96bb7788",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "43f686aa21b636352e2851e95eff27afdb11eb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
