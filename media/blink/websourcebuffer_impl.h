@@ -13,16 +13,16 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "media/filters/source_buffer_parse_warnings.h"
+#include "media/base/source_buffer_parse_warnings.h"
 #include "third_party/WebKit/public/platform/WebSourceBuffer.h"
 
 namespace media {
-class ChunkDemuxer;
+class SourceBuffer;
 class MediaTracks;
 
 class WebSourceBufferImpl : public blink::WebSourceBuffer {
  public:
-  WebSourceBufferImpl(const std::string& id, ChunkDemuxer* demuxer);
+  WebSourceBufferImpl(const std::string& id, SourceBuffer* source_buffer);
   ~WebSourceBufferImpl() override;
 
   // blink::WebSourceBuffer implementation.
@@ -51,7 +51,7 @@ class WebSourceBufferImpl : public blink::WebSourceBuffer {
   void NotifyParseWarning(const SourceBufferParseWarning warning);
 
   std::string id_;
-  ChunkDemuxer* demuxer_;  // Owned by WebMediaPlayerImpl.
+  SourceBuffer* source_buffer_;  // Owned by WebMediaPlayerImpl.
 
   blink::WebSourceBufferClient* client_;
 

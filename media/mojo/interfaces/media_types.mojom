@@ -33,6 +33,10 @@ enum DecodeStatus;
 [Native]
 struct MediaLogEvent;
 
+// See base/memory/memory_pressure_listener.h for descriptions.
+[Native]
+enum MemoryPressureLevel;
+
 // See media/base/output_device_info.h for descriptions.
 [Native]
 enum OutputDeviceStatus;
@@ -45,6 +49,10 @@ enum PipelineStatus;
 [Native]
 enum SampleFormat;
 
+// See media/base/source_buffer_parse_warnings.h for descriptions.
+[Native]
+enum SourceBufferParseWarning;
+
 // See media/base/video_codecs.h for descriptions.
 [Native]
 enum VideoCodec;
@@ -56,6 +64,10 @@ enum VideoCodecProfile;
 // See media/base/video_types.h for descriptions.
 [Native]
 enum VideoPixelFormat;
+
+// See media/base/video_rotation.h for descriptions.
+[Native]
+enum VideoRotation;
 
 // See media/base/watch_time_keys.h for descriptions.
 [Native]
@@ -143,6 +155,7 @@ struct VideoDecoderConfig {
   EncryptionScheme encryption_scheme;
   VideoColorSpace color_space_info;
   HDRMetadata? hdr_metadata;
+  VideoRotation video_rotation;
 };
 
 // Native struct media::SubsampleEntry;
@@ -155,6 +168,49 @@ struct DecryptConfig {
   string key_id;
   string iv;
   array<SubsampleEntry> subsamples;
+};
+
+// This defines a mojo transport format for media::MediaTrack.
+struct MediaTrack {
+  uint32 type;
+  string id;
+  int32 bytestream_track_id;
+  string kind;
+  string label;
+  string language;
+};
+
+// This defines a mojo transport format for media::MediaTracks.
+struct MediaTracks {
+  array<MediaTrack> tracks;
+  map<int32, AudioDecoderConfig> audio_decoder_configs;
+  map<int32, VideoDecoderConfig> video_decoder_configs;
+};
+
+// This defines a mojo transport format for std::pair<base::TimeDelta, base::TimeDelta>.
+struct TimeDeltaPair {
+  mojo.common.mojom.TimeDelta start;
+  mojo.common.mojom.TimeDelta end;
+};
+
+// This defines a mojo transport format for media::Ranges<base::TimeDelta>.
+struct RangesTimeDelta {
+  array<TimeDeltaPair> ranges;
+};
+
+// This defines a mojo transport format for media::DataBuffer.
+struct DataBuffer {
+  mojo.common.mojom.TimeDelta timestamp;
+  mojo.common.mojom.TimeDelta duration;
+
+  // Whether the buffer is an end-of-stream (EOS) buffer.
+  bool is_end_of_stream;
+
+  // The number of bytes present in this buffer. The data is not serialized
+  // along with this structure and must be read from a separate DataPipe.
+  // Note that |data_size| could be zero even for a non-EOS buffer (e.g.
+  // with non-empty |size_data|). See http://crbug.com/663438
+  uint32 data_size;
 };
 
 // This defines a mojo transport format for media::DecoderBuffer.

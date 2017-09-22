@@ -37,6 +37,8 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
   ~MediaInterfaceProxy() final;
 
   // media::mojom::InterfaceFactory implementation.
+  void CreateDemuxer(media::mojom::DemuxerRequest request) final;
+  void CreateSourceBuffer(media::mojom::SourceBufferRequest request) final;
   void CreateAudioDecoder(media::mojom::AudioDecoderRequest request) final;
   void CreateVideoDecoder(media::mojom::VideoDecoderRequest request,
                           const std::string& decoder_name) final;

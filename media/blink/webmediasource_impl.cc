@@ -6,8 +6,8 @@
 
 #include "base/guid.h"
 #include "media/base/mime_util.h"
+#include "media/base/source_buffer.h"
 #include "media/blink/websourcebuffer_impl.h"
-#include "media/filters/chunk_demuxer.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 
 using ::blink::WebString;
@@ -16,17 +16,17 @@ using ::blink::WebMediaSource;
 namespace media {
 
 #define STATIC_ASSERT_MATCHING_STATUS_ENUM(webkit_name, chromium_name) \
-  static_assert(static_cast<int>(WebMediaSource::webkit_name) == \
-                static_cast<int>(ChunkDemuxer::chromium_name),  \
+  static_assert(static_cast<int>(WebMediaSource::webkit_name) ==       \
+                    static_cast<int>(SourceBuffer::chromium_name),     \
                 "mismatching status enum values: " #webkit_name)
 STATIC_ASSERT_MATCHING_STATUS_ENUM(kAddStatusOk, kOk);
 STATIC_ASSERT_MATCHING_STATUS_ENUM(kAddStatusNotSupported, kNotSupported);
 STATIC_ASSERT_MATCHING_STATUS_ENUM(kAddStatusReachedIdLimit, kReachedIdLimit);
 #undef STATIC_ASSERT_MATCHING_STATUS_ENUM
 
-WebMediaSourceImpl::WebMediaSourceImpl(ChunkDemuxer* demuxer)
-    : demuxer_(demuxer) {
-  DCHECK(demuxer_);
+WebMediaSourceImpl::WebMediaSourceImpl(SourceBuffer* source_buffer)
+    : source_buffer_(source_buffer) {
+  DCHECK(source_buffer_);
 }
 
 WebMediaSourceImpl::~WebMediaSourceImpl() {}
@@ -38,21 +38,21 @@ WebMediaSource::AddStatus WebMediaSourceImpl::AddSourceBuffer(
   std::string id = base::GenerateGUID();
 
   WebMediaSource::AddStatus result = static_cast<WebMediaSource::AddStatus>(
-      demuxer_->AddId(id, type.Utf8().data(), codecs.Utf8().data()));
+      source_buffer_->AddId(id, type.Utf8().data(), codecs.Utf8().data()));
 
   if (result == WebMediaSource::kAddStatusOk)
-    *source_buffer = new WebSourceBufferImpl(id, demuxer_);
+    *source_buffer = new WebSourceBufferImpl(id, source_buffer_);
 
   return result;
 }
 
 double WebMediaSourceImpl::Duration() {
-  return demuxer_->GetDuration();
+  return source_buffer_->GetDuration();
 }
 
 void WebMediaSourceImpl::SetDuration(double new_duration) {
   DCHECK_GE(new_duration, 0);
-  demuxer_->SetDuration(new_duration);
+  source_buffer_->SetDuration(new_duration);
 }
 
 void WebMediaSourceImpl::MarkEndOfStream(
@@ -70,11 +70,11 @@ void WebMediaSourceImpl::MarkEndOfStream(
       break;
   }
 
-  demuxer_->MarkEndOfStream(pipeline_status);
+  source_buffer_->MarkEndOfStream(pipeline_status);
 }
 
 void WebMediaSourceImpl::UnmarkEndOfStream() {
-  demuxer_->UnmarkEndOfStream();
+  source_buffer_->UnmarkEndOfStream();
 }
 
 }  // namespace media

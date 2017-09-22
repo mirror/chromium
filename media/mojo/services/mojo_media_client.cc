@@ -8,6 +8,7 @@
 #include "media/base/audio_decoder.h"
 #include "media/base/audio_renderer_sink.h"
 #include "media/base/cdm_factory.h"
+#include "media/base/demuxer_factory.h"
 #include "media/base/media_log.h"
 #include "media/base/renderer_factory.h"
 #include "media/base/video_decoder.h"
@@ -55,6 +56,11 @@ std::unique_ptr<RendererFactory> MojoMediaClient::CreateRendererFactory(
 
 std::unique_ptr<CdmFactory> MojoMediaClient::CreateCdmFactory(
     service_manager::mojom::InterfaceProvider* host_interfaces) {
+  return nullptr;
+}
+
+std::unique_ptr<DemuxerFactory> MojoMediaClient::CreateDemuxerFactory(
+    MediaLog* media_log) {
   return nullptr;
 }
 

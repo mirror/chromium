@@ -1,0 +1,62 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/data_source.mojom";
+import "media/mojo/interfaces/media_types.mojom";
+import "mojo/common/time.mojom";
+
+[Native]
+enum EmeInitDataType;
+
+interface Demuxer {
+  [Native]
+  enum LoadType;
+
+  Initialize(associated DemuxerClient client, int32 demuxer_id, LoadType load_type, DataSource? data_source) => (PipelineStatus status);
+
+  StartWaitingForSeek(mojo.common.mojom.TimeDelta seek_time);
+
+  CancelPendingSeek(mojo.common.mojom.TimeDelta seek_time);
+
+  Seek(mojo.common.mojom.TimeDelta seek_time) => (PipelineStatus status);
+
+  Stop();
+
+  AbortPendingReads();
+
+  [Sync]
+  GetStartTime() => (mojo.common.mojom.TimeDelta start_time);
+
+  [Sync]
+  GetTimelineOffset() => (mojo.common.mojom.Time timeline_offset);
+
+  [Sync]
+  GetMemoryUsage() => (int64 memory_usage);
+
+  OnEnabledAudioTracksChanged(array<string> track_ids, mojo.common.mojom.TimeDelta current_time);
+
+  OnSelectedVideoTrackChanged(string? selected_track_id, mojo.common.mojom.TimeDelta current_time);
+
+  [Sync]
+  GetAllStreams() => (array<AudioDecoderConfig> audio_decoder_configs, array<VideoDecoderConfig> video_decoder_configs);
+};
+
+interface DemuxerClient {
+
+  OnEncryptedMediaInitData(EmeInitDataType init_data_type, array<uint8> init_data);
+
+  OnMediaTracksUpdated(MediaTracks? media_tracks);
+
+  OnBufferedTimeRangesChanged(RangesTimeDelta? ranges);
+
+  OnSetDuration(mojo.common.mojom.TimeDelta duration);
+
+  OnOpened();
+
+  OnProgress();
+
+  OnDemuxerError(PipelineStatus error);
+};
