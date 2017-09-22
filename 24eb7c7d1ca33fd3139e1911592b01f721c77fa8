@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "3d15d5ef_fe68c66f",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T20:55:33Z",
+      "side": 1,
+      "message": "Interesting point. It seems unavoidable and okay to me.\n\nIn terms of Register, I\u0027d prefer the simpler interface, but can see wanting to postpone that. How about a TODO?",
+      "parentUuid": "d7b48495_429a8d02",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93b58f6_32ba50c9",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
@@ -380,6 +404,30 @@
       "side": 1,
       "message": "Doneish.... It does remove some code, though feels a bit more brittle.\nMakes me think that I should have the refcount in tracker, just in case...",
       "parentUuid": "468e819a_b3d364d6",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c177b987_30dcbafa",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T20:55:33Z",
+      "side": 1,
+      "message": "So here is my suggestion with the latest code:\n\nstd::unique_ptr\u003cFileHandle\u003e Acquire(...);\n\nThat way, any consumer gets a safe object and they can pass it around as they like, instead of the unsafe raw File*s that are floating around in simple_synchronous_entry.",
+      "parentUuid": "c2ace4b4_b0aa7248",
       "range": {
         "startLine": 62,
         "startChar": 2,

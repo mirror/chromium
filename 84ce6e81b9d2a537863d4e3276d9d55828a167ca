@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af85641f_5eabb56b",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T20:55:33Z",
+      "side": 1,
+      "message": "Why set this in the method body instead of initialization?",
+      "range": {
+        "startLine": 1793,
+        "startChar": 2,
+        "endLine": 1794,
+        "endChar": 79
+      },
+      "revId": "84ce6e81b9d2a537863d4e3276d9d55828a167ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9e231d_95e01be4",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-22T20:55:33Z",
+      "side": 1,
+      "message": "See my other point about returning std::unique_ptr\u003cFileHandle\u003e from the file tracker. In which case, this would need to move.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 20
+      },
+      "revId": "84ce6e81b9d2a537863d4e3276d9d55828a167ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
