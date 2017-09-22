@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e1c8516b_c66c22da",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-22T00:51:24Z",
+      "side": 1,
+      "message": "To support async commands, we\u0027d actually need to implement FrontendChannel and instead of returning base::DictionaryValue from here, return bool (whether we handled it or now) which will be true when status is not kFallThrough. And separately, from implementation of FrontendChannel, send messages to the session (I think Pavel linked the patch which does roughly that?).\nThis way we\u0027ll also have nice error messages and ability to return something from the commands. Right now this nullptr means we never return anything, which will break Browser domain commands at least.",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2646cc71_f92c7b09",
         "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
         "patchSetId": 13
@@ -83,6 +100,24 @@
       "side": 1,
       "message": "I think this is currently difficult because of how HandleCommand() is used in DevToolsSession. I have put up https://chromium-review.googlesource.com/c/chromium/src/+/677954 as a proposal, which would make this much easier to do. (I was going to take a stab at changing HandleAsyncCommand() too, but it is currently only used headless, and I do not understand the requirements well enough to change this yet. Perhaps a follow up CL ... or perhaps someone more familiar with headless could have opinions here?)\n\nAs a sidenote: the headless code looks fairly different (as in, the command handling happens without UberDispatcher etc.). Do you know if there are plans to convert to using UberDispatcher/FrontendChannel?",
       "parentUuid": "c06e4192_0a3b785a",
+      "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea76a8ab_3426cac2",
+        "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-22T00:51:24Z",
+      "side": 1,
+      "message": "Dispatcher knows how to serialize responses/notifications. FrontendChannel actually sends the response.",
+      "parentUuid": "7b85cac5_c8224f0c",
       "revId": "77f136fc26a5e7551d50933e71ae2b51cef50e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
