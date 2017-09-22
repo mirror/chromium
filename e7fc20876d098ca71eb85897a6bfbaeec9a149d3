@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c600e0_0286ba14",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T12:53:00Z",
+      "side": 1,
+      "message": "In this version both hotkeys work on all platforms, e.g. on Linux both Ctrl+Z and Windows+Z perform Undo, and on Mac both Ctrl+Z and Command+Z do it. If this is undesirable (since Meta is uncommon on Linux and Ctrl is odd for Mac), we need to do some platform checking, e.g. with |cr.isMac|. As I don\u0027t think it is possible to have conditionals in object literals, we need to perform the check somewhere else. For example, we could wrap the contents of onUndoKeyBinding_ in\n\n  if (cr.isMac \u003d\u003d event.detail.metaKey) {\n    ...\n  }\n\nThat way only the \"normal\" keybindings work. What do you think?",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 18
+      },
+      "revId": "e7fc20876d098ca71eb85897a6bfbaeec9a149d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ec12149_6f1a7cfa",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T12:53:00Z",
+      "side": 1,
+      "message": "It\u0027s still used in getOnOffLabel_ (very bottom of this file).",
+      "parentUuid": "6ee4029a_1844e7ef",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 16
+      },
+      "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a677670e_902be24d",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9154f9_e2bcd21c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T12:53:00Z",
+      "side": 1,
+      "message": "No, it didn\u0027t. Added a new keybinding for this.",
+      "parentUuid": "a677670e_902be24d",
+      "range": {
+        "startLine": 248,
+        "startChar": 5,
+        "endLine": 248,
+        "endChar": 11
+      },
+      "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750736c3_633d5ceb",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-22T12:53:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b177345f_629b4414",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 27
+      },
+      "revId": "bd0f41450302278fe15c3fc9d656a557708901d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
