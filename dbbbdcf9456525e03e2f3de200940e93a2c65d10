@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9700772_dc2110a2",
+        "filename": "chrome/browser/chromeos/login/reset_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T19:04:16Z",
+      "side": 1,
+      "message": "Doh, thanks for pointing out. I reverted the changes in this file now though as they\u0027re no longer needed with the FRE requirement logic change requested by Igor.",
+      "parentUuid": "77c2fe45_424f4731",
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39da5264_e5da09d4",
         "filename": "chrome/browser/chromeos/login/wizard_controller.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd829086_c1737a39",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T19:04:16Z",
+      "side": 1,
+      "message": "std::unique_ptr needs to know the size since it generates a dtor...",
+      "parentUuid": "39da5264_e5da09d4",
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57009ed1_9afbcb5d",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-22T19:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "143eea7a_782e17a0",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "dbbbdcf9456525e03e2f3de200940e93a2c65d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
