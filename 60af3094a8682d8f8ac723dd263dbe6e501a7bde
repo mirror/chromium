@@ -22,6 +22,30 @@
       "revId": "60af3094a8682d8f8ac723dd263dbe6e501a7bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d3dea4_a6bd6d63",
+        "filename": "ios/showcase/payments/sc_payments_picker_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-22T16:53:27Z",
+      "side": 1,
+      "message": "Yes, it is. When the search box is focused, for some reason, this doesn\u0027t scroll to top. Starting from the center of the screen fixes that. I assume it is because scrollToContentEdge scrolls from the top of the element (unless there\u0027s a starting point specified). When the search box is focused, it is not possible to initiate a scroll from within there.",
+      "parentUuid": "8b7148e8_e2509c12",
+      "range": {
+        "startLine": 87,
+        "startChar": 44,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "60af3094a8682d8f8ac723dd263dbe6e501a7bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
