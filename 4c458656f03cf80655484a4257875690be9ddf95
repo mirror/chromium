@@ -1,0 +1,381 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ad7964_10113cf1",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "How does one run this unit test? I only see it included as part of a test service below.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92379245_676c1384",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "These look like test support libraries and should be factored out into a separate GN target (it\u0027s unusual for unit_tests to not be a leaf target and to be deps on below)",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76449d4_83466537",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Add testonly \u003d true please\n\n(above too in service_manifest as well)",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998b5953_27fd7588",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure why these deps are needed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75be7e38_b89880a1",
+        "filename": "components/multidevice/service/cryptauth_client_factory_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Nit: use std::move() when passing scoped_refptr by value.",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 46
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929c8bc7_1dbff5b3",
+        "filename": "components/multidevice/service/cryptauth_client_factory_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Nit: base::MakeUnique\u003cT\u003e()",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee496f2_ecbe1257",
+        "filename": "components/multidevice/service/cryptauth_client_factory_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Nit: please pass by const ref: this struct is somewhat expensive to copy, given how many strings it contains",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c92d38_178b5c50",
+        "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "And similarly, pass by std::move() here.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b97f723_03573269",
+        "filename": "components/multidevice/service/cryptauth_enroller_factory_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Ditto: pass by reference here please.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f2ae01_a6f6a9b9",
+        "filename": "components/multidevice/service/cryptauth_token_fetcher_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Pass by const ref please.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4540d9b_f805f9d2",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Please pass by const ref (ditto elsewhere)",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a505ae7_31805fe0",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "What keeps the object pointed to by |identity_manager_| alive?",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fa7ced_18c51d81",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Similar question here. Also, if it\u0027s supposed to be null when managers_were_injected_is true, shouldn\u0027t we just set nullptr directly rather than passing gcm_manager as a ctor arg?",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d2406e_8ef9f2c1",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Nit: T",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980dafcc_f27acf4a",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "While you can use the callback version of a Mojo method for calling sync APIs, it\u0027s much more standard to do:\n\nstd::vector\u003ccryptauth::RemoteDevice\u003e actual_synced_devices;\ndevice_sync_-\u003eGetSyncedDevices(\u0026actual_synced_devices);\nEXPECT_EQ(expected_synced_devices, actual_synced_devices);\n\n(Same comment applies in several other places in this test as well.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36115cfa_af10b505",
+        "filename": "components/multidevice/service/multidevice_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "How do we guarantee all these objects will last longer than the DeviceSyncImpl? They\u0027re owned by the MultiDeviceService rather than the DeviceSyncImpl, and it\u0027s not clear to me how that DeviceSyncImpl will have its message pipe closed when this class is destroyed.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4837f3_51a07105",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "This should probably be passed by const ref as well.",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e0c45e_17e746ff",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "Nit: please write std::string() instead of \"\" -- it\u0027s slightly more efficient.",
+      "range": {
+        "startLine": 110,
+        "startChar": 38,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03f5eab_26f19a23",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-22T17:48:02Z",
+      "side": 1,
+      "message": "All the methods that return std::string should return const refs--it\u0027s less copies.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
