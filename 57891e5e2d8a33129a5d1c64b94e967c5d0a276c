@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc062cfd_7ce0b9fe",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:19:42Z",
+      "side": 1,
+      "message": "How about removing this DCHECK_EQ() and using switch() in Line 130 instead?",
+      "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3027da62_30651ac8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-22T06:19:42Z",
+      "side": 1,
+      "message": "nit: s/capture_error/kCapture/?",
+      "revId": "57891e5e2d8a33129a5d1c64b94e967c5d0a276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
