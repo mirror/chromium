@@ -57,19 +57,71 @@ test(function(t) {
     }
 
     // Test exception cases.
-    assert_throws(null, function() {ctx.clip(null);});
-    assert_throws(null, function() {ctx.clip(null, null);});
-    assert_throws(null, function() {ctx.clip(null, 'nonzero');});
-    assert_throws(null, function() {ctx.clip(path, null);});
-    assert_throws(null, function() {ctx.clip([], 'nonzero');});
-    assert_throws(null, function() {ctx.clip({}, 'nonzero');});
-    assert_throws(null, function() {ctx.clip(null, 'evenodd');});
-    assert_throws(null, function() {ctx.clip([], 'evenodd');});
-    assert_throws(null, function() {ctx.clip({}, 'evenodd');});
-    assert_throws(null, function() {ctx.clip('gazonk');});
-    assert_throws(null, function() {ctx.clip(path, 'gazonk');});
-    assert_throws(null, function() {ctx.clip(undefined, undefined);});
-    assert_throws(null, function() {ctx.clip(undefined, 'nonzero');});
+    try {
+      ctx.clip(null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(null, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(null, 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(path, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip([], 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+        ctx.clip({}, 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(null, 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip([], 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip({}, 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip('gazonk');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(path, 'gazonk');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(undefined, undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.clip(undefined, 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
 }, 'Series of tests to ensure clip() works with path and winding rule parameters.');
 </script>
 </body>

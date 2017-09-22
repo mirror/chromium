@@ -10,20 +10,36 @@ test(function(t) {
 
     ctx.arc(10, 10, 5, 0, 1, false);
     ctx.arc(10, 10, 0, 0, 1, false);
-    assert_throws(null, function() {ctx.arc(10, 10, -5, 0, 1, false);});
+    try {
+      ctx.arc(10, 10, -5, 0, 1, false);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
 
     ctx.arcTo(10, 10, 20, 20, 5);
     ctx.arcTo(10, 10, 20, 20, 0);
-    assert_throws(null, function() {ctx.arcTo(10, 10, 20, 20, -5);});
+    try {
+      ctx.arcTo(10, 10, 20, 20, -5);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
 
     var path = new Path2D();
 
     path.arc(10, 10, 5, 0, 1, false);
     path.arc(10, 10, 0, 0, 1, false);
-    assert_throws(null, function() {path.arc(10, 10, -5, 0, 1, false);});
+    try {
+      path.arc(10, 10, -5, 0, 1, false);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
 
     path.arcTo(10, 10, 20, 20, 5);
     path.arcTo(10, 10, 20, 20, 0);
-    assert_throws(null, function() {path.arcTo(10, 10, 20, 20, -5);});
+    try {
+      path.arcTo(10, 10, 20, 20, -5);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
 }, 'Tests CanvasPath arc and arcTo with negative radii.');
 </script>

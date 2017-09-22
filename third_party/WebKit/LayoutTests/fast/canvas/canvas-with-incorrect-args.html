@@ -22,7 +22,11 @@ test(function () {
 
     context.fill();
     context.arc(2, 2, 0, 0, 90, true);
-    assert_throws(null, function() {context.arc(2, 2, -10, 0, 90, true);});  
+    try {
+      context.arc(2, 2, -10, 0, 90, true);
+    } catch (ex) {
+      assert_equals(ex.name, "IndexSizeError");
+    }
     context.arc(2, 2, Infinity, 0, 90, true);
     context.arc(2, 2, NaN, 0, 90, true);
 
@@ -33,7 +37,7 @@ test(function () {
 
     context.beginPath();
     context.moveTo(10, 10);
-    assert_throws(null, function() {context.arcTo(2, 2, 4, 4, -10);});
+    context.arc(2, 2, 4, 4, -10);
     context.closePath();
 
     context.beginPath();
@@ -228,7 +232,11 @@ test(function () {
 
     var canvas2 = document.createElement('canvas');
     canvas2.width = canvas2.height = 0;
-    assert_throws(null, function() {var pattern = ctx.createPattern(canvas2, 'repeat');});
+    try {
+      var pattern = context.createPattern(canvas2, 'repeat');
+    } catch (ex) {
+      assert_equals(ex.name, "InvalidStateError");
+    }
     context.fillStyle = '#0f0';
     context.fillRect(0, 0, canvas.width, canvas.height);
     
