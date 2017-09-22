@@ -46,6 +46,30 @@
       "revId": "11a8e6ad4fb14c1d05d10ca25b665f9de1a46ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02fe747_91505980",
+        "filename": "components/arc/arc_session_runner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-22T15:20:11Z",
+      "side": 0,
+      "message": "Yeah, I think that\u0027s accurate: GENERIC_BOOT_FAILURE should only appear when arcnetwork fails to start, which means there\u0027s no point in restarting.",
+      "parentUuid": "098130fc_286881a3",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "11a8e6ad4fb14c1d05d10ca25b665f9de1a46ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
