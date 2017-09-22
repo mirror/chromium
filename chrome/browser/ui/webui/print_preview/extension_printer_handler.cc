@@ -19,6 +19,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/printing/pwg_raster_converter.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "components/cloud_devices/common/cloud_device_description.h"
 #include "components/cloud_devices/common/printer_description.h"
 #include "device/base/device_client.h"
@@ -308,7 +309,7 @@ void ExtensionPrinterHandler::WrapGetCapabilityCallback(
   std::unique_ptr<base::DictionaryValue> capabilities =
       base::DictionaryValue::From(
           std::make_unique<base::Value>(capability.Clone()));
-  callback.Run(std::move(capabilities));
+  callback.Run(printing::ValidateCddForPrintPreview(capabilities));
 }
 
 void ExtensionPrinterHandler::WrapPrintCallback(
