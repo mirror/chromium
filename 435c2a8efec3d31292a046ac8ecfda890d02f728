@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97d9cf5_06fdfaa1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "I feel this should probably belong in the LaunchDispatcher with a potential helper function their (isMainLauncherIntent or something)",
+      "range": {
+        "startLine": 219,
+        "startChar": 32,
+        "endLine": 219,
+        "endChar": 59
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a02093b_20fd3124",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "Is the redispatching mainly to handle the multi-window case?  In my mind, I don\u0027t think we should need to do that (long term).  We should be able to detect that a CTA2 is running (or exists in Android recents) and assume those tabs and remove the tasks.  With tab reparenting, we could do this without incurring much if any cost and would get rid of the need for this bouncing.\n\nThat being said, multi-window/multi-instance of Chrome likely isn\u0027t used heavily enough to say that we need to do that right now and this might be fine for an initial solution.",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35882aa2_b9fa1a5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "interesting...it passes the alias instead of the actual resolved class name?  You might want to verify that across a sampling of devices/android versions (particularly targeting samsung).",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26f100f_50621bd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "Use ints and an @IntDef instead of an enum.",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53c6762_2c0cc783",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to handle all of these cases for MAIN intents.  I\u0027d actually want to discourage us supporting anything but the tabbed mode multi-window case.  If someone sends an invalid CustomTab intent via a MAIN action, we should not honor it.\n\nThe rest of these are really tied to the ACTION_VIEW and shouldn\u0027t be shared with MAIN",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d085bea_4c6a8961",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "looks like you have some debug logs still in the CL",
+      "range": {
+        "startLine": 254,
+        "startChar": 24,
+        "endLine": 254,
+        "endChar": 25
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12fbca2_640652d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-22T16:39:00Z",
+      "side": 1,
+      "message": "Hmm...this will be weird I think.  If CTA gets an intent that needs to bounce to another activity, then the CTA will be brought to the foreground and likely visible to the user before sending to the other one.  The other case in onCreate will end up killing/finishing the activity and will probably not look bad to the user.\n\nBut, I wonder if this case can be hit assuming the dispatcher is only needed for multi-window in CTA.  The main problem I see is that you open CTA, enter multi-window, move tabs to the other window (menu -\u003e move to other window), then fullscreen the second activity, which will be CTA2.  At this point, CTA2 is the only tabbed activity as it will have killed off the other.  Now you hit home and tab the chrome launcher icon.  I \"think\" CTA (not 2) will always be in the dead state and will consistently bounce via onCreate.\n\nIn general, I don\u0027t think we can have this like this as it will look like a chrome glitch everytime where the onCreate one likely wouldn\u0027t.  If we can just remove this then that is good, if we can\u0027t, then we might need to do my longer term approach for handling multi-window w/o the redispatch.",
+      "range": {
+        "startLine": 445,
+        "startChar": 30,
+        "endLine": 445,
+        "endChar": 52
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
