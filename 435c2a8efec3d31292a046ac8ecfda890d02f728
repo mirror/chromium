@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfc07f34_d7831303",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this. We can move the constant, and use it in the check, but I feel it\u0027s coupled with CTA, which is targetActivity for LauncherMain activity.\n\nI.e. in a way it\u0027s a hack to know that CTA is invoked as LauncherMain, and not as CTA. Other places shouldn\u0027t care about this.",
+      "parentUuid": "d97d9cf5_06fdfaa1",
+      "range": {
+        "startLine": 219,
+        "startChar": 32,
+        "endLine": 219,
+        "endChar": 59
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a02093b_20fd3124",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "03bd4d9d_8ee27aac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "I was playing safe and tried to preserve all usecases that were possible before. I.e. before any MAIN/LAUNCHER event was properly dispatched, and I preserved that. That includes multiwindow, first run, etc.\n\nI don\u0027t have any insight on how widespread incorrect usage of MAIN/LAUNCHER is, but I think we need to play safe and get some statistics (or error in the log, etc.) before changing our behavior.",
+      "parentUuid": "0a02093b_20fd3124",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35882aa2_b9fa1a5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 6
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-22T16:39:00Z",
       "side": 1,
       "message": "interesting...it passes the alias instead of the actual resolved class name?  You might want to verify that across a sampling of devices/android versions (particularly targeting samsung).",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc507f6_df075f12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "Yes, this is the only thing that makes LauncherMain with targetActivity\u003dCTA possible. I\u0027ll ask Android folks about possible issues. I can check on couple of devices, but I feel it\u0027s safer to ask.",
+      "parentUuid": "35882aa2_b9fa1a5d",
       "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "dd372ae9_905e691b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e26f100f_50621bd6",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d53c6762_2c0cc783",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 6
@@ -93,6 +177,30 @@
       "writtenOn": "2017-09-22T16:39:00Z",
       "side": 1,
       "message": "I\u0027m not sure we want to handle all of these cases for MAIN intents.  I\u0027d actually want to discourage us supporting anything but the tabbed mode multi-window case.  If someone sends an invalid CustomTab intent via a MAIN action, we should not honor it.\n\nThe rest of these are really tied to the ACTION_VIEW and shouldn\u0027t be shared with MAIN",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c461024_54924b17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "But we don\u0027t know how widespread this is, right? I.e. how many MAIN intents get dispatched by ChromeLauncherActivity?",
+      "parentUuid": "d53c6762_2c0cc783",
       "range": {
         "startLine": 106,
         "startChar": 26,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "fa82c515_3ed26623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "Oops.",
+      "parentUuid": "0d085bea_4c6a8961",
+      "range": {
+        "startLine": 254,
+        "startChar": 24,
+        "endLine": 254,
+        "endChar": 25
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b12fbca2_640652d6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 6
@@ -139,6 +271,30 @@
       "writtenOn": "2017-09-22T16:39:00Z",
       "side": 1,
       "message": "Hmm...this will be weird I think.  If CTA gets an intent that needs to bounce to another activity, then the CTA will be brought to the foreground and likely visible to the user before sending to the other one.  The other case in onCreate will end up killing/finishing the activity and will probably not look bad to the user.\n\nBut, I wonder if this case can be hit assuming the dispatcher is only needed for multi-window in CTA.  The main problem I see is that you open CTA, enter multi-window, move tabs to the other window (menu -\u003e move to other window), then fullscreen the second activity, which will be CTA2.  At this point, CTA2 is the only tabbed activity as it will have killed off the other.  Now you hit home and tab the chrome launcher icon.  I \"think\" CTA (not 2) will always be in the dead state and will consistently bounce via onCreate.\n\nIn general, I don\u0027t think we can have this like this as it will look like a chrome glitch everytime where the onCreate one likely wouldn\u0027t.  If we can just remove this then that is good, if we can\u0027t, then we might need to do my longer term approach for handling multi-window w/o the redispatch.",
+      "range": {
+        "startLine": 445,
+        "startChar": 30,
+        "endLine": 445,
+        "endChar": 52
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186d8fef_fbdff5ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-22T17:49:54Z",
+      "side": 1,
+      "message": "But that\u0027s no different than before, right? Except that now CTA bounces and not ChromeLauncherActivity.\n\nDo you think user will see white screen flash during that bounce, because ChromeLauncherActivity is Translucent.NoTitleBar and CTA is not?\n\nI\u0027ll check this case and report here. I think we can also try setting theme to Translucent.NoTitleBar in abortLaunch().",
+      "parentUuid": "b12fbca2_640652d6",
       "range": {
         "startLine": 445,
         "startChar": 30,
