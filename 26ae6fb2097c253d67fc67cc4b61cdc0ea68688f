@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ae95cadb_628db898",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-22T14:03:08Z",
+      "side": 1,
+      "message": "Thanks! I like Optional\u003cbool\u003e for cases like this. I\u0027ll make that change, thanks!",
+      "parentUuid": "9ed63795_b5cf2e20",
+      "revId": "26ae6fb2097c253d67fc67cc4b61cdc0ea68688f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba8ff5_3ce1dbab",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 47
