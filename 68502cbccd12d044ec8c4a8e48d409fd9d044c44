@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561b5189_7c34534a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-22T17:54:09Z",
+      "side": 1,
+      "message": "nit: not sure if this can happen, but maybe update the hash before firing the Changed event, just in case handlers of the event expect the state to be updated?",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 23
+      },
+      "revId": "68502cbccd12d044ec8c4a8e48d409fd9d044c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
