@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a63c01e_a0adc9ae",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 4562,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eca3c402_5e23f93f",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4fee343_ec342571",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4df407_497d0475",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4fee343_ec342571",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e62b3efa_8d7bf528",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b74748_691aeb45",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6df727a_c4f4e18e",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-20T13:31:05Z",
       "side": 1,
       "message": "Why this extension?  If it\u0027s just because we assume it will always be installed, I\u0027d actually prefer we add our own extension.",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123f8623_92c7cca7",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Yup - it\u0027s always installed and has an actual/interesting icon. The jigsaw piece is OK too i guess.. Done.",
+      "parentUuid": "a6df727a_c4f4e18e",
       "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7b2cc2bf_121fb300",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f6ac210_5702182a",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc1681a_737f852e",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a82bd274_e3722e59",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "Without this, the test fails. extensions::Blacklist only observes NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE for a source of the SafeBrowsingDatabaseManager in g_database_manager at the time extensions::Blacklist was created. extensions::TestBlacklist makes a new SafeBrowsingDatabaseManager and it is set via Blacklist::SetDatabaseManager, but the notification source in the NotificationRegistrar on extensions::Blacklist is never updated.\n\nIt probably wouldn\u0027t hurt to change \n\n  if (database_manager.get()) {\n    registrar_.Add(\n        this, chrome::NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE,\n        content::Source\u003cSafeBrowsingDatabaseManager\u003e(database_manager.get()));\n  }\n\nto\n\n  if (database_manager.get()) {\n    registrar_.Add(\n        this, chrome::NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE,\n        content::NotificationService::AllSources());\n  }\n\nin Blacklist::Blacklist()..\n\nFor now I\u0027ve expanded on the comment here.",
+      "parentUuid": "ebc1681a_737f852e",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b04f18b4_694a7ca9",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-20T13:31:05Z",
       "side": 1,
       "message": "Heh, fun trick.  Is this better than RunAllBlockingPoolTasksUntilIdle()?",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a158b3f4_3ca5b1d6",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-22T07:44:24Z",
+      "side": 1,
+      "message": "confusingly, BrowserThread::IO is the thread for non-blocking IO (network/IPC). There\u0027s nothing in test_utils.cc to flush it. Usually it needs an asynchronous-possibly-delayed response, so I expect flushing it would normally not work as intended, but BlacklistStateFetcherMock::Request() posts tasks immediately, so I think this is OK.",
+      "parentUuid": "b04f18b4_694a7ca9",
       "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
