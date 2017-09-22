@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09d722c4_7268e2bb",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-22T07:54:41Z",
+      "side": 1,
+      "message": "A follow up is going to change this anyway (removing icon sizes), so I\u0027ll do it there.",
+      "parentUuid": "8dbd03f8_ac88e5af",
+      "revId": "fdc1c11866f712ef339fe130c6a9d343e014307b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce5807d_b2fda2a8",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 10
