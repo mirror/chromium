@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f39d9d6_2e5933af",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T06:18:16Z",
+      "side": 1,
+      "message": "Can we get rid of this guy in this CL? We should never be using it now that color correction is always on.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f9bf29_feb98420",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-22T06:18:16Z",
+      "side": 1,
+      "message": "Why the snake_case? \nStyle guide says CamelCase for all function names: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-for-all-function-names",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "a0b6a6002024cdc873b3d3e9fd9b2d6bdb7cf324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
