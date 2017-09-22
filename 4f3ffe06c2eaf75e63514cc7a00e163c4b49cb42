@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db18772_4d8ff6a0",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:56:58Z",
+      "side": 1,
+      "message": "Would you help me understand why these maps need to use TraceWrapperMembers?",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ec3aa6_5a066e9d",
+        "filename": "third_party/WebKit/Source/modules/geolocation/PositionCallback.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:56:58Z",
+      "side": 1,
+      "message": "Per the spec, can we add the callback to Geolocation.idl?",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6daa9d75_79a7d34a",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:56:58Z",
+      "side": 1,
+      "message": "mis-edit",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c82922e_1e071149",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:56:58Z",
+      "side": 1,
+      "message": "If you add the callback to GeoLocation.idl, you won\u0027t need to make this change.",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17acd775_e28fa72d",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-22T11:56:58Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
