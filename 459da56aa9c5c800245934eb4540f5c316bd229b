@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "96acc029_3bb9a217",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-22T22:21:44Z",
+      "side": 1,
+      "message": "OK, removed.\n\nHmm, I don\u0027t actually use autoninja, but I think the point of it was to work with goma, so that seems unfortunate.",
+      "parentUuid": "5faa6121_7679b39a",
+      "revId": "459da56aa9c5c800245934eb4540f5c316bd229b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fae9920_2747934c",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
