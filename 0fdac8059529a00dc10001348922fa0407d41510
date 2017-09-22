@@ -16,6 +16,24 @@
       "revId": "0fdac8059529a00dc10001348922fa0407d41510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5c8d5b_bcadc1ed",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-22T19:45:32Z",
+      "side": 1,
+      "message": "Since windows start occluded, sky@ suggested that I use true as default https://chromium-review.googlesource.com/c/chromium/src/+/646277/1/ui/aura/window.cc#66",
+      "parentUuid": "ef898ace_ec1a514a",
+      "revId": "0fdac8059529a00dc10001348922fa0407d41510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
