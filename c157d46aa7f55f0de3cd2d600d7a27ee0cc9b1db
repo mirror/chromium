@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101a998e_32babf2d",
+        "filename": "media/audio/pulse/pulse_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Start()/Stop() looks almost the same for input and output, and also shares the same problem now (? maybe it\u0027s WAD and I\u0027m missing something?) with stream_started_ set to true even if start fails.\nAlso StreamNotifyCallback looks similar for both input and output.\n\nLooks like a candidate for a common helper? Though I may just be confused by copy-paste errors here: AudioInputCallback::OnError() seems to require a pointer to stream.",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929bed53_1b494137",
+        "filename": "media/audio/pulse/pulse_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Drive-by: would checking for (!callback_) be enough? (If |stream_started_| is needed then it should be set to true if (stream_-\u003eStart()) only)",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038e51fb_e3c13cce",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Reacquiring lock here to do cleanup looks a bit dangerous: we end up in a messy state between unlock/lock. Should stream_-\u003eStart() be self-sufficient and cleanup after itself in case of failure?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfc7cde_b2e082cd",
+        "filename": "media/audio/pulse/pulse_output.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "I suppose it\u0027s a misprint and intended to be pulse::Glue*?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1492d4_b66c6bee",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Maybe also DCHECK(!pa_threaded_mainloop_in_thread(pa_mainloop_))?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34583f29_a61c3bfa",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Is releasing/reacquiring lock here something we want to do?\nAlso, having a factory method which returns non-null stream only in case creation succeeds would be safer than having a living dead stream after Destroy() below. See l.317",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e45eb5d_8239e517",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "How do we make sure that it has been stopped?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a49e5e9_4704bf75",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "pa_stream_ can be nullptr if Destroy() was called in the constructor",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cf7f58_9d9ba03f",
+        "filename": "media/audio/pulse/pulse_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "drive-by: make it const?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe7ceef_16b58361",
+        "filename": "media/audio/pulse/pulse_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Threading requirements are not clear.",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08eb863_4873c8bb",
+        "filename": "media/audio/pulse/pulse_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "What are threading requirements for the class? How do we make sure Start/Stop are serialized in the correct order?",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae7b3cb_7c178526",
+        "filename": "media/audio/pulse/pulse_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-22T15:08:22Z",
+      "side": 1,
+      "message": "Especially thread safety of these two operations is unclear from the interface.",
+      "revId": "c157d46aa7f55f0de3cd2d600d7a27ee0cc9b1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
