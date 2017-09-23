@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f663e6c8_2851fcbe",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-23T00:57:19Z",
+      "side": 1,
+      "message": "const ref?",
+      "revId": "c4ae72b44d43fbda96fe25b3317d2d80d2304c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354dd0ec_69c76158",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-23T00:57:19Z",
+      "side": 1,
+      "message": "Nit: why is this one qualified with gpu (and the previous one isn\u0027t)",
+      "range": {
+        "startLine": 210,
+        "startChar": 38,
+        "endLine": 210,
+        "endChar": 43
+      },
+      "revId": "c4ae72b44d43fbda96fe25b3317d2d80d2304c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
