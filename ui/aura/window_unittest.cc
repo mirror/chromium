@@ -389,19 +389,19 @@ TEST_P(WindowTest, MoveCursorTo) {
       CreateTestWindow(SK_ColorRED, 1111, gfx::Rect(5, 5, 50, 50), w111.get()));
 
   Window* root = root_window();
-  root->MoveCursorTo(gfx::Point(10, 10));
+  root->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("10,10",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
-  w1->MoveCursorTo(gfx::Point(10, 10));
+  w1->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("20,20",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
-  w11->MoveCursorTo(gfx::Point(10, 10));
+  w11->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("25,25",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
-  w111->MoveCursorTo(gfx::Point(10, 10));
+  w111->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("30,30",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
-  w1111->MoveCursorTo(gfx::Point(10, 10));
+  w1111->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("35,35",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
 }
@@ -412,9 +412,9 @@ TEST_P(WindowTest, ContainsMouse) {
   w->Show();
   WindowTestApi w_test_api(w.get());
   Window* root = root_window();
-  root->MoveCursorTo(gfx::Point(10, 10));
+  root->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_TRUE(w_test_api.ContainsMouse());
-  root->MoveCursorTo(gfx::Point(9, 10));
+  root->MoveCursorTo(gfx::PointF(9, 10));
   EXPECT_FALSE(w_test_api.ContainsMouse());
 }
 
@@ -425,7 +425,7 @@ TEST_P(WindowTest, MoveCursorToWithTransformRootWindow) {
   transform.Rotate(90.0);
   transform.Scale(2.0, 5.0);
   host()->SetRootTransform(transform);
-  host()->MoveCursorToLocationInDIP(gfx::Point(10, 10));
+  host()->MoveCursorToLocationInDIP(gfx::PointF(10, 10));
 #if !defined(OS_WIN)
   // TODO(yoshiki): fix this to build on Windows. See crbug.com/133413.OD
   EXPECT_EQ("50,120", QueryLatestMousePositionRequestInHost(host()).ToString());
@@ -442,21 +442,21 @@ TEST_P(WindowTest, MoveCursorToWithTransformWindow) {
   gfx::Transform transform1;
   transform1.Scale(2, 2);
   w1->SetTransform(transform1);
-  w1->MoveCursorTo(gfx::Point(10, 10));
+  w1->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("30,30",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
 
   gfx::Transform transform2;
   transform2.Translate(-10, 20);
   w1->SetTransform(transform2);
-  w1->MoveCursorTo(gfx::Point(10, 10));
+  w1->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("10,40",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
 
   gfx::Transform transform3;
   transform3.Rotate(90.0);
   w1->SetTransform(transform3);
-  w1->MoveCursorTo(gfx::Point(5, 5));
+  w1->MoveCursorTo(gfx::PointF(5, 5));
   EXPECT_EQ("5,15",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
 
@@ -465,7 +465,7 @@ TEST_P(WindowTest, MoveCursorToWithTransformWindow) {
   transform4.Rotate(90.0);
   transform4.Scale(2.0, 5.0);
   w1->SetTransform(transform4);
-  w1->MoveCursorTo(gfx::Point(10, 10));
+  w1->MoveCursorTo(gfx::PointF(10, 10));
   EXPECT_EQ("60,130",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());
 }
@@ -500,11 +500,11 @@ TEST_P(WindowTest, MoveCursorToWithComplexTransform) {
   w111->SetTransform(transform);
   w1111->SetTransform(transform);
 
-  w1111->MoveCursorTo(gfx::Point(10, 10));
+  w1111->MoveCursorTo(gfx::PointF(10, 10));
 
 #if !defined(OS_WIN)
   // TODO(yoshiki): fix this to build on Windows. See crbug.com/133413.
-  EXPECT_EQ("169,80", QueryLatestMousePositionRequestInHost(host()).ToString());
+  EXPECT_EQ("170,78", QueryLatestMousePositionRequestInHost(host()).ToString());
 #endif
   EXPECT_EQ("20,53",
             display::Screen::GetScreen()->GetCursorScreenPoint().ToString());

@@ -101,7 +101,7 @@ class CORE_EXPORT EventHandler final
   void DispatchFakeMouseMoveEventSoonInQuad(const FloatQuad&);
 
   HitTestResult HitTestResultAtPoint(
-      const LayoutPoint&,
+      const FloatPoint&,
       HitTestRequest::HitTestRequestType hit_type = HitTestRequest::kReadOnly |
                                                     HitTestRequest::kActive,
       const LayoutSize& padding = LayoutSize());
