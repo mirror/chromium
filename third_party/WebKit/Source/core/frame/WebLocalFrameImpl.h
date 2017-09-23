@@ -190,7 +190,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   bool SelectWordAroundCaret() override;
   void SelectRange(const WebPoint& base, const WebPoint& extent) override;
   void SelectRange(const WebRange&,
-                   HandleVisibilityBehavior = kHideSelectionHandle) override;
+                   HandleVisibilityBehavior = kHideSelectionHandle,
+                   bool show_selection_menu = false) override;
   WebString RangeAsText(const WebRange&) override;
   void MoveRangeSelectionExtent(const WebPoint&) override;
   void MoveRangeSelection(

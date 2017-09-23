@@ -127,10 +127,12 @@ void LegacyIPCFrameInputHandler::SelectRange(const gfx::Point& point,
   SendInput(base::MakeUnique<InputMsg_SelectRange>(routing_id_, point, extent));
 }
 
-void LegacyIPCFrameInputHandler::AdjustSelectionByCharacterOffset(int32_t start,
-                                                                  int32_t end) {
+void LegacyIPCFrameInputHandler::AdjustSelectionByCharacterOffset(
+    int32_t start,
+    int32_t end,
+    bool show_selection_menu) {
   SendInput(base::MakeUnique<InputMsg_AdjustSelectionByCharacterOffset>(
-      routing_id_, start, end));
+      routing_id_, start, end, show_selection_menu));
 }
 
 void LegacyIPCFrameInputHandler::MoveRangeSelectionExtent(

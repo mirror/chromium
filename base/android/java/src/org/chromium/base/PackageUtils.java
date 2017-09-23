@@ -22,6 +22,7 @@ public class PackageUtils {
     public static int getPackageVersion(Context context, String packageName) {
         int versionCode = -1;
         PackageManager pm = context.getPackageManager();
+        if (pm == null) return versionCode;
         try {
             PackageInfo packageInfo = pm.getPackageInfo(packageName, 0);
             if (packageInfo != null) versionCode = packageInfo.versionCode;
