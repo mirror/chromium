@@ -85,11 +85,15 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
                            : it->second;
 
   DrawImage adjusted_image(draw_image, 1.f, frame_index, target_color_space_);
-  auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
-
-  return ScopedDecodedDrawImage(
-      decoded_draw_image,
-      base::BindOnce(&UnrefImageFromCache, std::move(adjusted_image), cache_));
+  if (in_raster_) {
+    auto decoded_draw_image = cache_->GetPredecodedImageForDraw(adjusted_image);
+    return ScopedDecodedDrawImage(decoded_draw_image);
+  } else {
+    auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
+    return ScopedDecodedDrawImage(
+        decoded_draw_image, base::BindOnce(&UnrefImageFromCache,
+                                           std::move(adjusted_image), cache_));
+  }
 }
 
 }  // namespace cc

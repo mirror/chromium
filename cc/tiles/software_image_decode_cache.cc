@@ -463,6 +463,12 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
   return GetScaledImageDecode(key, paint_image);
 }
 
+DecodedDrawImage SoftwareImageDecodeCache::GetPredecodedImageForDraw(
+    const DrawImage& image) {
+  // TODO(enne)
+  return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+}
+
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
     const DrawImage& draw_image) {
   ImageKey key = ImageKey::FromDrawImage(draw_image, color_type_);
