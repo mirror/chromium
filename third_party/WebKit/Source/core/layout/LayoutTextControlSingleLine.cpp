@@ -178,7 +178,7 @@ bool LayoutTextControlSingleLine::NodeAtPoint(
   //  - we hit the <input> element (e.g. we're over the border or padding), or
   //  - we hit regions not in any decoration buttons.
   Element* container = ContainerElement();
-  if (result.InnerNode()->IsDescendantOf(InnerEditorElement()) ||
+  if (result.InnerNode() == InnerEditorElement() ||
       result.InnerNode() == GetNode() ||
       (container && container == result.InnerNode())) {
     LayoutPoint point_in_parent = location_in_container.Point();
