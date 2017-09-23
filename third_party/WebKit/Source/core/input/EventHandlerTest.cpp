@@ -421,14 +421,15 @@ TEST_F(EventHandlerTest, InputFieldsCanStartSelection) {
   Element* const field = ToElement(GetDocument().body()->firstChild());
   ShadowRoot* const shadow_root = field->UserAgentShadowRoot();
 
-  Element* const text = shadow_root->getElementById("inner-editor");
+  Node* const text = shadow_root->getElementById("inner-editor")->firstChild();
   LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
   HitTestResult hit =
       GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
           location);
-  EXPECT_TRUE(text->CanStartSelection());
+  Node* const node = hit.InnerPossiblyPseudoNode();
+  EXPECT_TRUE(node->CanStartSelection());
   EXPECT_TRUE(
-      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(node,
                                                                          hit));
 }
 

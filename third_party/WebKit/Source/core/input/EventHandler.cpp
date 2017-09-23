@@ -408,7 +408,7 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
   if (node->IsTextNode() && (node->CanStartSelection() || result.IsOverLink()))
     return true;
 
-  return HasEditableStyle(*node);
+  return false;
 }
 
 OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
