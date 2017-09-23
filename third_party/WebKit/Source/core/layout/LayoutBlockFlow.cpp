@@ -78,6 +78,8 @@ struct SameSizeAsMarginInfo {
 static_assert(sizeof(LayoutBlockFlow::MarginValues) == sizeof(LayoutUnit[4]),
               "MarginValues should stay small");
 
+static HashMap<LayoutBlockFlow*, int>* layout_pass_count_map = nullptr;
+
 // Caches all our current margin collapsing state.
 class MarginInfo {
   // Collapsing flags for whether we can collapse our margins with our
@@ -253,6 +255,8 @@ class BlockChildrenLayoutInfo {
 LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
   static_assert(sizeof(MarginInfo) == sizeof(SameSizeAsMarginInfo),
                 "MarginInfo should stay small");
+  if (RuntimeEnabledFeatures::TrackLayoutPassesPerBlockEnabled())
+    layout_pass_count_map = new HashMap<LayoutBlockFlow*, int>;
   SetChildrenInline(true);
 }
 
@@ -408,6 +412,15 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   if (!relayout_children && SimplifiedLayout())
     return;
+
+  if (RuntimeEnabledFeatures::TrackLayoutPassesPerBlockEnabled()) {
+    int layout_pass_count = 0;
+    HashMap<LayoutBlockFlow*, int>::iterator layout_count_iterator =
+        layout_pass_count_map->find(this);
+    if (layout_count_iterator != layout_pass_count_map->end())
+      layout_pass_count = layout_count_iterator->value;
+    layout_pass_count_map->Set(this, ++layout_pass_count);
+  }
 
   LayoutAnalyzer::BlockScope analyzer(*this);
   SubtreeLayoutScope layout_scope(*this);
@@ -4750,6 +4763,10 @@ void LayoutBlockFlow::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
   BlockFlowPaintInvalidator(*this).InvalidateDisplayItemClients(
       invalidation_reason);
+}
+
+int LayoutBlockFlow::GetLayoutPassCountForTesting() {
+  return layout_pass_count_map->find(this)->value;
 }
 
 }  // namespace blink
