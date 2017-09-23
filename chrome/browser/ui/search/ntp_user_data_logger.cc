@@ -293,9 +293,10 @@ void NTPUserDataLogger::EmitNtpStatistics(base::TimeDelta load_time) {
       has_server_side_suggestions = true;
     }
     // No URL and rappor service passed - not interested in favicon-related
-    // Rappor metrics.
+    // metrics.
     ntp_tiles::metrics::RecordTileImpression(i, impression_tile_source_[i],
-                                             impression_tile_type_[i], GURL(),
+                                             impression_tile_type_[i],
+                                             favicon_base::INVALID_ICON, GURL(),
                                              /*rappor_service=*/nullptr);
     ++tiles_count;
   }
