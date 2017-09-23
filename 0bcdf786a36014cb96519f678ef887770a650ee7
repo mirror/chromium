@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed1271be_4958545a",
+        "filename": "device/hid/hid_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-23T06:10:47Z",
+      "side": 1,
+      "message": "Before this CL, the HidService is owned by ChromeDeviceClient which is owned by BrowserProcessImpl. It means HidService lives as longer as the BrowserProcess.\n\nNow, HidService is owned by HidManagerImpl which is owned by Device Service. So the lifetime of HidService is shorter than before, while it is safe.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "0bcdf786a36014cb96519f678ef887770a650ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
