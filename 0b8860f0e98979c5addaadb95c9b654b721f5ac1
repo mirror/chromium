@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72f4000_810bd63e",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-23T02:12:53Z",
+      "side": 1,
+      "message": "new: intentional?",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40dbd4a1_a7d18291",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-23T02:12:53Z",
+      "side": 1,
+      "message": "Do we want two movies apps?  Or is this one of the ones where we ensure that if the android app can be installed, we uninstall the chrome app, and so we guarantee that only one is shown?",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b0a63a_1c5b7fea",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-23T02:12:53Z",
+      "side": 1,
+      "message": "same question for music apps :)",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c53e3a_29451a64",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-23T02:12:53Z",
+      "side": 1,
+      "message": "and books",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a810e_cc3411a3",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-23T02:12:53Z",
+      "side": 1,
+      "message": "new: intentional?",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
