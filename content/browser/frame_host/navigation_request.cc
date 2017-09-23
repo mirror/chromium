@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
+#include "build/build_config.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -414,6 +415,22 @@ void NavigationRequest::BeginNavigation() {
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
                                "BeginNavigation");
 
+  LOG(WARNING) << "SELIM NavigationRequest::BeginNavigation "
+               << common_params_.url.spec();
+
+#if defined(OS_ANDROID)
+  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
+          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
+          request_params_.original_url,
+          request_params_.original_method,
+          request_params_.has_user_gesture, false,
+          frame_tree_node_->IsMainFrame())) {
+    CreateNavigationHandle();
+    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+    return;
+  }
+#endif
+
   state_ = STARTED;
 
   // Check Content Security Policy before the NavigationThrottles run. This
@@ -542,6 +559,19 @@ void NavigationRequest::TransferNavigationHandleOwnership(
 void NavigationRequest::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
     const scoped_refptr<ResourceResponse>& response) {
+#if defined(OS_ANDROID)
+  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
+          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
+          redirect_info.new_url,
+          redirect_info.new_method,
+          request_params_.has_user_gesture, true,
+          frame_tree_node_->IsMainFrame())) {
+    CreateNavigationHandle();
+    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+    return;
+  }
+#endif
+
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanRedirectToURL(
           redirect_info.new_url)) {
     DVLOG(1) << "Denied redirect for "

@@ -150,6 +150,14 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
   CreateURLLoaderThrottles(
       const base::Callback<content::WebContents*()>& wc_getter) override;
 
+  bool ShouldOverrideUrlLoading(int frame_tree_node_id,
+                                bool browser_initiated,
+                                const GURL& gurl,
+                                const std::string& request_method,
+                                bool has_user_gesture,
+                                bool is_redirect,
+                                bool is_main_frame) override;
+
  private:
   safe_browsing::UrlCheckerDelegate* GetSafeBrowsingUrlCheckerDelegate();
 
