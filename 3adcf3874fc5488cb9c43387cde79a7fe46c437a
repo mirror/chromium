@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbac92dc_a990d983",
+        "filename": "chromeos/components/tether/ble_advertisement_synchronizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-23T01:41:12Z",
+      "side": 1,
+      "message": "nit: no underscore after",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "3adcf3874fc5488cb9c43387cde79a7fe46c437a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9392004_e87f5fbe",
+        "filename": "chromeos/components/tether/ble_advertisement_synchronizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-23T01:41:12Z",
+      "side": 1,
+      "message": "as discussed offline, last_command_timestamp_ needs to bechecked for is_null()",
+      "range": {
+        "startLine": 91,
+        "startChar": 27,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "3adcf3874fc5488cb9c43387cde79a7fe46c437a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
