@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c18380_53fab3f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-23T00:25:00Z",
+      "side": 1,
+      "message": "nit: Wrap to 72 char.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 115
+      },
+      "revId": "858f1ffc989e63fdec44b4890572aa34b89af10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19657330_fa79446e",
+        "filename": "chromeos/components/tether/host_scan_device_prioritizer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-23T00:25:00Z",
+      "side": 1,
+      "message": "This is backwards. We want the devices updated most recently in the front.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 49
+      },
+      "revId": "858f1ffc989e63fdec44b4890572aa34b89af10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
