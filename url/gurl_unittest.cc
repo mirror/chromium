@@ -9,6 +9,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/url_canon.h"
+#include "url/url_constants.h"
 #include "url/url_test_utils.h"
 
 namespace url {
@@ -878,6 +879,39 @@ TEST(GURLTest, EqualsIgnoringRef) {
     // B versus A.
     EXPECT_EQ(test_case.are_equals,
               GURL(test_case.url_b).EqualsIgnoringRef(GURL(test_case.url_a)));
+  }
+}
+
+TEST(GURLTest, LongURLCanonicalize) {
+  const std::string kSchemeAndHost = "https://example.com";
+  // Reserve space for the scheme, host, and the initial '/'.
+  const size_t kPathLength = kMaxURLChars - kSchemeAndHost.size() - 1;
+
+  // URLs that canonicalize to the same size.
+  {
+    // A canonicalized GURL with a spec that's exactly kMaxURLChars should be
+    // valid.
+    GURL url(kSchemeAndHost + "/" + std::string(kPathLength, 'a'));
+    EXPECT_TRUE(url.is_valid());
+  }
+  {
+    // One that exceeds it in length should not be considered valid though.
+    GURL url(kSchemeAndHost + "/" + std::string(kPathLength + 1, 'a'));
+    EXPECT_FALSE(url.is_valid());
+  }
+
+  // URLs that canonicalize to a smaller size.
+  {
+    // Even though the input spec to canonicalize is longer than kMaxURLChars,
+    // the canonicalized result is under the limit so the url should be valid.
+    GURL url(kSchemeAndHost + ":443/" + std::string(kPathLength, 'a'));
+    EXPECT_TRUE(url.is_valid());
+  }
+
+  // URLs that canonicalize to a bigger size.
+  {
+    GURL url(kSchemeAndHost + "/a" + std::string(kPathLength - 2, ' ') + "a");
+    EXPECT_FALSE(url.is_valid());
   }
 }
 
