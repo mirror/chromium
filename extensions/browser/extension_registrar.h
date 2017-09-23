@@ -1,0 +1,142 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef EXTENSIONS_BROWSER_EXTENSION_REGISTRAR_H_
+#define EXTENSIONS_BROWSER_EXTENSION_REGISTRAR_H_
+
+#include <memory>
+
+#include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
+#include "extensions/common/extension.h"
+
+namespace content {
+class BrowserContext;
+}  // namespace content
+
+namespace extensions {
+
+class Extension;
+class ExtensionPrefs;
+class ExtensionRegistry;
+class ExtensionSystem;
+class RendererStartupHelper;
+
+// ExtensionRegistrar drives the stages of registering and unregistering
+// extensions for a BrowserContext. It uses the ExtensionRegistry to track
+// extension states. Other classes may query the ExtensionRegistry directly,
+// but eventually only ExtensionRegistrar will be able to make changes to it.
+class ExtensionRegistrar {
+ public:
+  // Specifies the state a newly added extension should start in.
+  enum class InitialState {
+    ENABLED,
+    DISABLED,
+    BLACKLISTED,
+    BLOCKED,
+  };
+
+  // Delegate for embedder-specific functionality like policy and permissions.
+  class Delegate {
+   public:
+    Delegate() = default;
+    virtual ~Delegate() = default;
+
+    // Handles updating the browser context when an extension is activated
+    // (becomes enabled).
+    virtual void PostEnableExtension(
+        scoped_refptr<const Extension> extension) = 0;
+
+    // Handles updating the browser context when an enabled extension is
+    // deactivated (whether disabled or removed).
+    virtual void PostDisableExtension(
+        scoped_refptr<const Extension> extension) = 0;
+
+    // Returns true if the extension is allowed to be enabled or disabled,
+    // respectively.
+    virtual bool CanEnableExtension(const Extension* extension) = 0;
+    virtual bool CanDisableExtension(const Extension* extension) = 0;
+
+    // Returns true if the extension should be blocked.
+    virtual bool ShouldBlockExtension(const ExtensionId& extension_id) = 0;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(Delegate);
+  };
+
+  explicit ExtensionRegistrar(content::BrowserContext* browser_context,
+                              ExtensionPrefs* extension_prefs,
+                              std::unique_ptr<Delegate> delegate);
+  virtual ~ExtensionRegistrar();
+
+  // Adds the extension to the ExtensionRegistry. If |initial_state| is ENABLED,
+  // activates the extension by notifying others that the extension can be used.
+  // Otherwise, the extension is added without being activated.
+  void AddExtension(scoped_refptr<const Extension> extension,
+                    InitialState initial_state);
+
+  // Removes the enabled |extension| from the extension system by deactivating
+  // it if necessary and notifying that it was removed.
+  // Blocked or blacklisted extensions will remain in their respective sets in
+  // the ExtensionRegistry.
+  // TODO(michaelpg): Support moving extensions to and from blocked/blacklisted
+  // sets.
+  void RemoveExtension(const ExtensionId& extension_id,
+                       UnloadedExtensionReason reason);
+
+  // If the extension is disabled, marks it as enabled and activates it for use.
+  // Otherwise, simply updates the ExtensionPrefs. (Blacklisted or blocked
+  // extensions cannot be enabled.)
+  // Returns the extension if it was activated.
+  const Extension* EnableExtension(const ExtensionId& extension_id);
+
+  // Marks |extension| as disabled and deactivates it. The ExtensionRegistry
+  // retains a reference to it, so it can be enabled later.
+  void DisableExtension(const ExtensionId& extension_id, int disable_reasons);
+
+  // Given an extension that was disabled for reloading, completes the reload
+  // by replacing the old extension with the new version and enabling it.
+  // Returns true on success.
+  bool ReplaceReloadedExtension(scoped_refptr<const Extension> extension);
+
+  // TODO(michaelpg): Add methods for blacklisting and blocking extensions.
+
+  // Returns true if the extension is enabled, or if it is not loaded but isn't
+  // explicitly disabled in preferences.
+  bool IsExtensionEnabled(const ExtensionId& extension_id) const;
+
+ private:
+  // Registers |extension| with the extension system by marking it enabled, then
+  // notifying other components about it.
+  void ActivateExtension(const Extension* extension);
+
+  // Unregisters the extension with the extension system. Used when disabling or
+  // removing an extension.
+  void UnregisterExtension(scoped_refptr<const Extension> extension,
+                           UnloadedExtensionReason reason);
+
+  // Marks the extension ready after URLRequestContexts have been updated on
+  // the IO thread.
+  void OnExtensionRegisteredWithRequestContexts(
+      scoped_refptr<const Extension> extension);
+
+  // We are owned by the ExtensionSystem, which guarantees that these objects
+  // outlive us.
+  content::BrowserContext* browser_context_;
+  ExtensionPrefs* extension_prefs_;
+  ExtensionSystem* const extension_system_;
+  ExtensionRegistry* const registry_;
+  RendererStartupHelper* renderer_helper_;
+
+  std::unique_ptr<Delegate> delegate_;
+
+  base::WeakPtrFactory<ExtensionRegistrar> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(ExtensionRegistrar);
+};
+
+}  // namespace extensions
+
+#endif  // EXTENSIONS_BROWSER_EXTENSION_REGISTRAR_H_

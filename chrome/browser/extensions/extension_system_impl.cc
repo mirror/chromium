@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/extension_system_impl.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/base_switches.h"
 #include "base/bind.h"
@@ -20,6 +21,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/chrome_app_sorting.h"
 #include "chrome/browser/extensions/chrome_content_verifier_delegate.h"
+#include "chrome/browser/extensions/chrome_extension_registrar_delegate.h"
 #include "chrome/browser/extensions/component_loader.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_garbage_collector.h"
@@ -48,6 +50,7 @@
 #include "extensions/browser/extension_pref_value_map.h"
 #include "extensions/browser/extension_pref_value_map_factory.h"
 #include "extensions/browser/extension_prefs.h"
+#include "extensions/browser/extension_registrar.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/info_map.h"
@@ -212,6 +215,7 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
     autoupdate_enabled = false;
   }
 #endif  // defined(OS_CHROMEOS)
+
   extension_service_.reset(new ExtensionService(
       profile_, base::CommandLine::ForCurrentProcess(),
       profile_->GetPath().AppendASCII(extensions::kInstallDirectoryName),
@@ -239,6 +243,11 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
 #endif
     management_policy_.reset(new ManagementPolicy);
     RegisterManagementPolicyProviders();
+    extension_registrar_ = std::make_unique<ExtensionRegistrar>(
+        profile_, ExtensionPrefs::Get(profile_),
+        std::make_unique<ChromeExtensionRegistrarDelegate>(
+            extension_service_.get(), profile_,
+            ExtensionRegistry::Get(profile_), management_policy_.get()));
   }
 
   // Extension API calls require QuotaService, so create it before loading any
@@ -305,6 +314,10 @@ scoped_refptr<ValueStoreFactory> ExtensionSystemImpl::Shared::store_factory()
 
 ExtensionService* ExtensionSystemImpl::Shared::extension_service() {
   return extension_service_.get();
+}
+
+ExtensionRegistrar* ExtensionSystemImpl::Shared::extension_registrar() {
+  return extension_registrar_.get();
 }
 
 RuntimeData* ExtensionSystemImpl::Shared::runtime_data() {
@@ -378,6 +391,10 @@ void ExtensionSystemImpl::InitForRegularProfile(bool extensions_enabled) {
 
 ExtensionService* ExtensionSystemImpl::extension_service() {
   return shared_->extension_service();
+}
+
+ExtensionRegistrar* ExtensionSystemImpl::extension_registrar() {
+  return shared_->extension_registrar();
 }
 
 RuntimeData* ExtensionSystemImpl::runtime_data() {

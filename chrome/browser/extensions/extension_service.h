@@ -63,7 +63,6 @@ class ExtensionSystem;
 class ExtensionUpdater;
 class ExternalInstallManager;
 class OneShotEvent;
-class RendererStartupHelper;
 class SharedModuleService;
 class UpdateObserver;
 }  // namespace extensions
@@ -150,7 +149,7 @@ class ExtensionServiceInterface
   virtual void CheckForUpdatesSoon() = 0;
 
   // Adds |extension| to this ExtensionService and notifies observers that the
-  // extensions have been loaded.
+  // extension has been loaded.
   virtual void AddExtension(const extensions::Extension* extension) = 0;
 
   // Check if we have preferences for the component extension and, if not or if
@@ -296,12 +295,15 @@ class ExtensionService
   // This state is stored in preferences, so persists until Chrome restarts.
   //
   // Component, external component and whitelisted policy installed extensions
-  // are exempt from being Blocked (see CanBlockExtension).
+  // are exempt from being Blocked (see CanBlockExtension in .cc file).
   void BlockAllExtensions();
 
   // All blocked extensions are reverted to their previous state, and are
   // reloaded. Newly added extensions are no longer automatically blocked.
   void UnblockAllExtensions();
+
+  // Returns true if extensions are in a blocked state.
+  bool AreExtensionsBlocked();
 
   // Updates the |extension|'s granted permissions lists to include all
   // permissions in the |extension|'s manifest and re-enables the
@@ -501,7 +503,7 @@ class ExtensionService
 
   // Removes the extension with the given id from the list of
   // terminated extensions if it is there.
-  void UntrackTerminatedExtension(const std::string& id);
+  void UntrackTerminatedExtension(const std::string& extension_id);
 
   // Update preferences for a new or updated extension; notify observers that
   // the extension is installed, e.g., to update event handlers on background
@@ -514,18 +516,6 @@ class ExtensionService
                                 const syncer::StringOrdinal& page_ordinal,
                                 const std::string& install_parameter);
 
-  // Handles sending notification that |extension| was loaded.
-  void NotifyExtensionLoaded(const extensions::Extension* extension);
-
-  // Completes extension loading after URLRequestContexts have been updated
-  // on the IO thread.
-  void OnExtensionRegisteredWithRequestContexts(
-      scoped_refptr<const extensions::Extension> extension);
-
-  // Handles sending notification that |extension| was unloaded.
-  void NotifyExtensionUnloaded(const extensions::Extension* extension,
-                               extensions::UnloadedExtensionReason reason);
-
   // Common helper to finish installing the given extension.
   void FinishInstallation(const extensions::Extension* extension);
 
@@ -533,9 +523,6 @@ class ExtensionService
   // (e.g., due to an upgrade).
   void CheckPermissionsIncrease(const extensions::Extension* extension,
                                 bool is_extension_loaded);
-
-  // Helper that updates the active extension list used for crash reporting.
-  void UpdateActiveExtensionsInCrashReporter();
 
   // Helper to get the disable reasons for an installed (or upgraded) extension.
   // A return value of disable_reason::DISABLE_NONE indicates that we should
@@ -699,7 +686,7 @@ class ExtensionService
 
   // Store the ids of reloading extensions. We use this to re-enable extensions
   // which were disabled for a reload.
-  std::set<std::string> reloading_extensions_;
+  extensions::ExtensionIdSet reloading_extensions_;
 
   // A set of the extension ids currently being terminated. We use this to
   // avoid trying to unload the same extension twice.
@@ -718,10 +705,6 @@ class ExtensionService
 
   // The SharedModuleService used to check for import dependencies.
   std::unique_ptr<extensions::SharedModuleService> shared_module_service_;
-
-  // The associated RendererStartupHelper. Guaranteed to outlive the
-  // ExtensionSystem, and thus us.
-  extensions::RendererStartupHelper* renderer_helper_;
 
   base::ObserverList<extensions::UpdateObserver, true> update_observers_;
 

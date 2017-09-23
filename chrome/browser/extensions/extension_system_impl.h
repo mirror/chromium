@@ -49,6 +49,7 @@ class ExtensionSystemImpl : public ExtensionSystem {
   void InitForRegularProfile(bool extensions_enabled) override;
 
   ExtensionService* extension_service() override;  // shared
+  ExtensionRegistrar* extension_registrar() override;  // shared
   RuntimeData* runtime_data() override;            // shared
   ManagementPolicy* management_policy() override;  // shared
   ServiceWorkerManager* service_worker_manager() override;  // shared
@@ -99,6 +100,7 @@ class ExtensionSystemImpl : public ExtensionSystem {
     StateStore* rules_store();
     scoped_refptr<ValueStoreFactory> store_factory() const;
     ExtensionService* extension_service();
+    ExtensionRegistrar* extension_registrar();
     RuntimeData* runtime_data();
     ManagementPolicy* management_policy();
     ServiceWorkerManager* service_worker_manager();
@@ -133,6 +135,7 @@ class ExtensionSystemImpl : public ExtensionSystem {
     std::unique_ptr<RuntimeData> runtime_data_;
     // ExtensionService depends on StateStore, Blacklist and RuntimeData.
     std::unique_ptr<ExtensionService> extension_service_;
+    std::unique_ptr<ExtensionRegistrar> extension_registrar_;
     std::unique_ptr<ManagementPolicy> management_policy_;
     // extension_info_map_ needs to outlive process_manager_.
     scoped_refptr<InfoMap> extension_info_map_;
