@@ -34,6 +34,23 @@
       "revId": "e155238b5261e4c603c9be0db16fb3af61363b29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95006592_5d25bec8",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-23T13:55:41Z",
+      "side": 1,
+      "message": "Why the check here? Don\u0027t we make sure that the element is not null in the previous line?",
+      "revId": "e155238b5261e4c603c9be0db16fb3af61363b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
