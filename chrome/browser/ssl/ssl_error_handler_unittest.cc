@@ -26,6 +26,7 @@
 #include "components/network_time/network_time_test_utils.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/security_interstitials/core/ssl_error_ui.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "net/base/net_errors.h"
@@ -142,6 +143,7 @@ class TestSSLErrorHandler : public SSLErrorHandler {
                         callback) {}
 
   using SSLErrorHandler::StartHandlingError;
+  using SSLErrorHandler::CalculateOptionsMask;
 };
 
 class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
@@ -1418,4 +1420,49 @@ TEST_F(SSLErrorAssistantTest,
   SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
 
   TestNoMITMSoftwareInterstitial();
+}
+
+// Create a class alias for testing.
+typedef testing::Test SSLErrorHandlerStaticTest;
+
+TEST_F(SSLErrorHandlerStaticTest, CalculateOptionsMask) {
+  int mask;
+
+  // Non-overridable cert error.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(
+      net::ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN, false, false);
+  EXPECT_EQ(0, mask);
+
+  // Non-overridable cert error with expired decision.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(
+      net::ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN, false, true);
+  EXPECT_EQ(security_interstitials::SSLErrorUI::EXPIRED_BUT_PREVIOUSLY_ALLOWED,
+            mask);
+
+  // Overridable cert error.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(net::ERR_CERT_DATE_INVALID,
+                                                   false, false);
+  EXPECT_EQ(security_interstitials::SSLErrorUI::SOFT_OVERRIDE_ENABLED, mask);
+
+  // Overridable cert error with strict enforcement.
+  // Strict enforcement should trump overridability.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(net::ERR_CERT_DATE_INVALID,
+                                                   true, false);
+  EXPECT_EQ(security_interstitials::SSLErrorUI::STRICT_ENFORCEMENT, mask);
+
+  // Overridable cert error with expired decision.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(net::ERR_CERT_DATE_INVALID,
+                                                   false, true);
+  EXPECT_EQ(
+      security_interstitials::SSLErrorUI::SOFT_OVERRIDE_ENABLED |
+          security_interstitials::SSLErrorUI::EXPIRED_BUT_PREVIOUSLY_ALLOWED,
+      mask);
+
+  // Overridable cert error with strict enforcement and expired decision.
+  mask = TestSSLErrorHandler::CalculateOptionsMask(net::ERR_CERT_DATE_INVALID,
+                                                   true, true);
+  EXPECT_EQ(
+      security_interstitials::SSLErrorUI::STRICT_ENFORCEMENT |
+          security_interstitials::SSLErrorUI::EXPIRED_BUT_PREVIOUSLY_ALLOWED,
+      mask);
 }

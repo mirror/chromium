@@ -112,7 +112,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
       int cert_error,
       const net::SSLInfo& ssl_info,
       const GURL& request_url,
-      int options_mask,
+      bool should_ssl_errors_be_fatal,
+      bool expired_previous_decision,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const base::Callback<void(content::CertificateRequestResultType)>&
           callback);
@@ -153,6 +154,18 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   // check and fires a one shot timer to wait for a "captive portal detected"
   // result to arrive. Protected for testing.
   void StartHandlingError();
+
+  // Calculates a value encoded using flags in SSLErrorUI::SSLErrorOptionsMask,
+  // as follows:
+  //
+  // - |SOFT_OVERRIDE_ENABLED|             Depends on |cert_error| and
+  //                                         on |should_ssl_errors_be_fatal|.
+  // - |HARD_OVERRIDE_DISABLED|            Not set by this function.
+  // - |STRICT_ENFORCEMENT|                Set if |should_ssl_errors_be_fatal|
+  // - |EXPIRED_BUT_PREVIOUSLY_ALLOWED|    Set if |expired_previous_decision|
+  static int CalculateOptionsMask(int cert_error,
+                                  bool should_ssl_errors_be_fatal,
+                                  bool expired_previous_decision);
 
  private:
   void ShowCaptivePortalInterstitial(const GURL& landing_url);
