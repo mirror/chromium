@@ -15,7 +15,7 @@
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/gurl.h"
@@ -76,11 +76,11 @@ TEST(DriveMetadataDBMigrationUtilTest, RollbackFromV4ToV3) {
   base::ScopedTempDir base_dir;
   ASSERT_TRUE(base_dir.CreateUniqueTempDir());
   {
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.create_if_missing = true;
     std::string db_dir =
         storage::FilePathToString(base_dir.GetPath().Append(kDatabaseName));
-    leveldb::Status status = leveldb_env::OpenDB(options, db_dir, &db);
+    leveldb::Status status = leveldb_chrome::OpenDB(options, db_dir, &db);
     ASSERT_TRUE(status.ok());
   }
 

@@ -26,6 +26,7 @@
 #include "google_apis/gcm/base/mcs_util.h"
 #include "google_apis/gcm/protocol/mcs.pb.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
@@ -297,11 +298,11 @@ LoadStatus GCMStoreImpl::Backend::OpenStoreAndLoadData(StoreOpenMode open_mode,
     return STORE_DOES_NOT_EXIST;
   }
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = open_mode == CREATE_IF_MISSING;
   options.paranoid_checks = true;
   leveldb::Status status =
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_);
+      leveldb_chrome::OpenDB(options, path_.AsUTF8Unsafe(), &db_);
   UMA_HISTOGRAM_ENUMERATION("GCM.Database.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(status),
                             leveldb_env::LEVELDB_STATUS_MAX);
@@ -411,7 +412,7 @@ void GCMStoreImpl::Backend::Destroy(const UpdateCallback& callback) {
   DVLOG(1) << "Destroying GCM store.";
   db_.reset();
   const leveldb::Status s =
-      leveldb::DestroyDB(path_.AsUTF8Unsafe(), leveldb_env::Options());
+      leveldb::DestroyDB(path_.AsUTF8Unsafe(), leveldb_chrome::Options());
   if (s.ok()) {
     foreground_task_runner_->PostTask(FROM_HERE, base::Bind(callback, true));
     return;

@@ -16,6 +16,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/leveldb_chrome.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 namespace sync_file_system {
@@ -75,11 +76,11 @@ class LevelDBWrapperTest : public testing::Test {
  private:
   void InitializeLevelDB() {
     std::unique_ptr<leveldb::DB> db;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(
+    leveldb::Status status = leveldb_chrome::OpenDB(
         options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
     ASSERT_TRUE(status.ok());
 
