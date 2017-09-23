@@ -1032,6 +1032,29 @@ viz::FrameSinkId Window::GetFrameSinkId() const {
   return port_->GetFrameSinkId();
 }
 
+void Window::LockKeys(const std::vector<int>& codes) {
+  locked_keys_.clear();
+  locked_keys_.insert(codes.begin(), codes.end());
+  ForwardLockedKeysToHost();
+}
+
+void Window::UnlockKeys() {
+  locked_keys_.clear();
+  ForwardLockedKeysToHost();
+}
+
+void Window::ForwardLockedKeysToHost() {
+  // TODO: How to get the focus state?
+  // TODO: How to get the fullscreen state?
+  WindowTreeHost* host = GetRootWindow()->GetHost();
+  if (locked_keys_.empty()) {
+    // TODO: Here we should unlock the previous locked keys
+    host->UnlockKeys(std::vector<int>());
+  } else {
+    host->LockKeys(std::vector<int>(locked_keys_.begin(), locked_keys_.end()));
+  }
+}
+
 void Window::OnPaintLayer(const ui::PaintContext& context) {
   Paint(context);
 }

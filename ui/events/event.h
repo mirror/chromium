@@ -116,6 +116,8 @@ class EVENTS_EXPORT Event {
 
   bool IsSynthesized() const { return (flags_ & EF_IS_SYNTHESIZED) != 0; }
 
+  bool IsReserved() const { return (flags_ & EF_RESERVED) != 0; }
+
   bool IsCancelModeEvent() const {
     return type_ == ET_CANCEL_MODE;
   }
