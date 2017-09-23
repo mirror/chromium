@@ -25,6 +25,7 @@
 #import "remoting/ios/app/host_setup_view_controller.h"
 #import "remoting/ios/app/host_view_controller.h"
 #import "remoting/ios/app/remoting_menu_view_controller.h"
+#import "remoting/ios/app/remoting_refresh_control.h"
 #import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/domain/client_session_details.h"
 #import "remoting/ios/facade/remoting_service.h"
@@ -131,13 +132,6 @@ ConnectionType GetConnectionType() {
                                         action:@selector(didSelectMenu)];
     self.navigationItem.leftBarButtonItem = menuButton;
 
-    UIBarButtonItem* refreshButton =
-        [[UIBarButtonItem alloc] initWithImage:RemotingTheme.refreshIcon
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(didSelectRefresh)];
-    self.navigationItem.rightBarButtonItem = refreshButton;
-
     _appBar.headerViewController.headerView.backgroundColor =
         RemotingTheme.hostListBackgroundColor;
     _appBar.navigationBar.backgroundColor =
@@ -145,6 +139,8 @@ ConnectionType GetConnectionType() {
     MDCNavigationBarTextColorAccessibilityMutator* mutator =
         [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
     [mutator mutate:_appBar.navigationBar];
+    _appBar.navigationBar.titleAlignment =
+        MDCNavigationBarTitleAlignmentLeading;
 
     MDCFlexibleHeaderView* headerView = self.headerViewController.headerView;
     headerView.backgroundColor = [UIColor clearColor];
@@ -156,6 +152,22 @@ ConnectionType GetConnectionType() {
           CGFloat elevation = MDCShadowElevationAppBar * intensity;
           [(MDCShadowLayer*)layer setElevation:elevation];
         }];
+
+    __weak RemotingViewController* weakSelf = self;
+    void (^refreshCallback)() = ^{
+      [weakSelf didSelectRefresh];
+    };
+
+    RemotingRefreshControl* collectionViewRefreshControl =
+        [[RemotingRefreshControl alloc] initWithFrame:CGRectZero];
+    collectionViewRefreshControl.refreshCallback = refreshCallback;
+    [_collectionViewController.collectionView
+        addSubview:collectionViewRefreshControl];
+
+    RemotingRefreshControl* setupViewRefreshControl =
+        [[RemotingRefreshControl alloc] initWithFrame:CGRectZero];
+    setupViewRefreshControl.refreshCallback = refreshCallback;
+    [_setupViewController.collectionView addSubview:setupViewRefreshControl];
   }
   return self;
 }

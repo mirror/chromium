@@ -53,6 +53,8 @@ source_set("common_source_set") {
     "physical_keyboard_detector.mm",
     "pin_entry_view.h",
     "pin_entry_view.mm",
+    "remoting_refresh_control.h",
+    "remoting_refresh_control.mm",
     "remoting_theme.h",
     "remoting_theme.mm",
     "remoting_view_controller.h",
