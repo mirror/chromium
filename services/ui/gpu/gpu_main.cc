@@ -44,6 +44,26 @@ std::unique_ptr<base::MessagePump> CreateMessagePumpMac() {
 }
 #endif  // defined(OS_MACOSX)
 
+class NullGpuSandboxHelper : public gpu::GpuSandboxHelper {
+ public:
+  NullGpuSandboxHelper() : GpuSandboxHelper(nullptr) {}
+
+  void PreSandboxStartup() override {
+    // TODO(sad): https://crbug.com/645602
+  }
+  bool EnsureSandboxInitialized(
+      gpu::GpuWatchdogThread* watchdog_thread) override {
+    // TODO(sad): https://crbug.com/645602
+    return false;
+  }
+#if defined(OS_LINUX)
+  std::vector<sandbox::syscall_broker::BrokerFilePermission>
+  EnumerateFilePermissions() override {
+    return std::vector<sandbox::syscall_broker::BrokerFilePermission>();
+  }
+#endif
+};
+
 }  // namespace
 
 namespace ui {
@@ -154,7 +174,7 @@ void GpuMain::InitOnGpuThread(
   constexpr bool kInProcessGpu = true;
 
   gpu_init_.reset(new gpu::GpuInit());
-  gpu_init_->set_sandbox_helper(this);
+  gpu_init_->set_sandbox_helper(new NullGpuSandboxHelper());
   bool success = gpu_init_->InitializeAndStartSandbox(
       base::CommandLine::ForCurrentProcess(), kInProcessGpu);
   if (!success)
@@ -226,16 +246,6 @@ void GpuMain::CreateGpuServiceOnGpuThread(
         std::move(pending_frame_sink_manager_request_),
         std::move(pending_frame_sink_manager_client_info_));
   }
-}
-
-void GpuMain::PreSandboxStartup() {
-  // TODO(sad): https://crbug.com/645602
-}
-
-bool GpuMain::EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
-                                       const gpu::GPUInfo* gpu_info) {
-  // TODO(sad): https://crbug.com/645602
-  return true;
 }
 
 }  // namespace ui

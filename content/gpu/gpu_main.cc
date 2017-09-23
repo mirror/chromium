@@ -118,61 +118,6 @@ bool GpuProcessLogMessageHandler(int severity,
   return false;
 }
 
-class ContentSandboxHelper : public gpu::GpuSandboxHelper {
- public:
-  ContentSandboxHelper() {}
-  ~ContentSandboxHelper() override {}
-
-#if defined(OS_WIN)
-  void set_sandbox_info(const sandbox::SandboxInterfaceInfo* info) {
-    sandbox_info_ = info;
-  }
-#endif
-
- private:
-  // SandboxHelper:
-  void PreSandboxStartup() override {
-    // Warm up resources that don't need access to GPUInfo.
-    {
-      TRACE_EVENT0("gpu", "Warm up rand");
-      // Warm up the random subsystem, which needs to be done pre-sandbox on all
-      // platforms.
-      (void)base::RandUint64();
-    }
-
-#if BUILDFLAG(USE_VAAPI)
-    media::VaapiWrapper::PreSandboxInitialization();
-#endif
-#if defined(OS_WIN)
-    media::DXVAVideoDecodeAccelerator::PreSandboxInitialization();
-    media::MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization();
-#endif
-
-    // On Linux, reading system memory doesn't work through the GPU sandbox.
-    // This value is cached, so access it here to populate the cache.
-    base::SysInfo::AmountOfPhysicalMemory();
-  }
-
-  bool EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
-                                const gpu::GPUInfo* gpu_info) override {
-#if defined(OS_LINUX)
-    return StartSandboxLinux(watchdog_thread, gpu_info);
-#elif defined(OS_WIN)
-    return StartSandboxWindows(sandbox_info_);
-#elif defined(OS_MACOSX)
-    return Sandbox::SandboxIsCurrentlyActive();
-#else
-    return false;
-#endif
-  }
-
-#if defined(OS_WIN)
-  const sandbox::SandboxInterfaceInfo* sandbox_info_ = nullptr;
-#endif
-
-  DISALLOW_COPY_AND_ASSIGN(ContentSandboxHelper);
-};
-
 }  // namespace
 
 // Main function for starting the Gpu process.

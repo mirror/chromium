@@ -25,7 +25,7 @@ class GpuServiceImpl;
 
 namespace ui {
 
-class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
+class GpuMain : public mojom::GpuMain {
  public:
   explicit GpuMain(mojom::GpuMainRequest request);
   ~GpuMain() override;
@@ -63,12 +63,8 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
   void TearDownOnCompositorThread();
   void TearDownOnGpuThread();
 
-  // gpu::GpuSandboxHelper:
-  void PreSandboxStartup() override;
-  bool EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
-                                const gpu::GPUInfo* gpu_info) override;
-
   std::unique_ptr<gpu::GpuInit> gpu_init_;
+  std::unique_ptr<gpu::GpuSandboxHelper> sandbox_helper_;
   std::unique_ptr<viz::GpuServiceImpl> gpu_service_;
 
   // The InCommandCommandBuffer::Service used by the frame sink manager.

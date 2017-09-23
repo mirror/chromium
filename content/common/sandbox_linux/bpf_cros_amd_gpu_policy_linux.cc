@@ -32,43 +32,6 @@ namespace content {
 
 namespace {
 
-inline bool IsChromeOS() {
-#if defined(OS_CHROMEOS)
-  return true;
-#else
-  return false;
-#endif
-}
-
-void AddAmdGpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
-  static const char* kReadOnlyList[] = {"/etc/ld.so.cache",
-                                        "/usr/lib64/libEGL.so.1",
-                                        "/usr/lib64/libGLESv2.so.2"};
-  int listSize = arraysize(kReadOnlyList);
-
-  for (int i = 0; i < listSize; i++) {
-    permissions->push_back(BrokerFilePermission::ReadOnly(kReadOnlyList[i]));
-  }
-
-  static const char* kReadWriteList[] = {
-      "/dev/dri",
-      "/dev/dri/card0",
-      "/dev/dri/controlD64",
-      "/dev/dri/renderD128",
-      "/sys/class/drm/card0/device/config",
-      "/sys/class/drm/controlD64/device/config",
-      "/sys/class/drm/renderD128/device/config",
-      "/usr/share/libdrm/amdgpu.ids"};
-
-  listSize = arraysize(kReadWriteList);
-
-  for (int i = 0; i < listSize; i++) {
-    permissions->push_back(BrokerFilePermission::ReadWrite(kReadWriteList[i]));
-  }
-
-  static const char kCharDevices[] = "/sys/dev/char/";
-  permissions->push_back(BrokerFilePermission::ReadOnlyRecursive(kCharDevices));
-}
 
 class CrosAmdGpuBrokerProcessPolicy : public CrosAmdGpuProcessPolicy {
  public:
@@ -131,37 +94,6 @@ ResultExpr CrosAmdGpuProcessPolicy::EvaluateSyscall(int sysno) const {
       // Default to the generic GPU policy.
       return GpuProcessPolicy::EvaluateSyscall(sysno);
   }
-}
-
-bool CrosAmdGpuProcessPolicy::PreSandboxHook() {
-  DCHECK(IsChromeOS());
-  // Create a new broker process.
-  DCHECK(!broker_process());
-
-  // Add AMD-specific files to whitelist in the broker.
-  std::vector<BrokerFilePermission> permissions;
-
-  AddAmdGpuWhitelist(&permissions);
-  InitGpuBrokerProcess(CrosAmdGpuBrokerProcessPolicy::Create, permissions);
-
-  const int dlopen_flag = RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE;
-
-  // Preload the amdgpu-dependent libraries.
-  errno = 0;
-  if (NULL == dlopen("libglapi.so", dlopen_flag)) {
-    LOG(ERROR) << "dlopen(libglapi.so) failed with error: " << dlerror();
-    return false;
-  }
-  if (NULL == dlopen("/usr/lib64/dri/swrast_dri.so", dlopen_flag)) {
-    LOG(ERROR) << "dlopen(swrast_dri.so) failed with error: " << dlerror();
-    return false;
-  }
-  if (NULL == dlopen("/usr/lib64/dri/radeonsi_dri.so", dlopen_flag)) {
-    LOG(ERROR) << "dlopen(radeonsi_dri.so) failed with error: " << dlerror();
-    return false;
-  }
-
-  return true;
 }
 
 }  // namespace content
