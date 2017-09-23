@@ -16,6 +16,24 @@
       "revId": "79cd919891958c00e8d8b87b504d478cc0eb437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88375ee8_80b43615",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-23T00:21:53Z",
+      "side": 1,
+      "message": "Nope, I did mean that most downstream packagers build Chromium with |is_component_build\u003dfalse| and |use_sysroot\u003dfalse|.\n\nThis CL makes the Linux packaging code in GN only be run if |use_sysroot\u003dtrue|, otherwise the `gn gen\u0027 would fail due to its referencing of the |sysroot| variable even though downstreams are not interested in Chromium\u0027s official packaging infrastructure.",
+      "parentUuid": "a2a224bc_693efdba",
+      "revId": "79cd919891958c00e8d8b87b504d478cc0eb437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
