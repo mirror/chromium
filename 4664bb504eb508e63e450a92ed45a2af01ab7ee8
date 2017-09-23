@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fe3e0ca1_c55fd797",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T01:14:20Z",
+      "side": 1,
+      "message": "That\u0027s a bit ugly. I\u0027d move one of the ctors to an Init() function instead of having this helper with a comment explaining why we need deferred initialization.",
+      "parentUuid": "995a2d77_5742624f",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "472e7e07_05a25aa8",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b20e2479_ea9dd3fa",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T01:14:20Z",
+      "side": 1,
+      "message": "Sure, only calling when there is/isn\u0027t input is fine (make sure to deal with the case of \u003e1 char being inputted at once though, discussed in a different comment), but Cleared is a confusing name. How about\n\n  enum PasswordFieldState {\n    kEmpty, kNonEmpty\n  };\n  OnPasswordFieldStateChanged(PasswordFieldState state);\n\nI wonder if this is worthwhile though - I think it is a bit more flexible and clear to just call it whenever the text has changed, despite the slight performance loss.",
+      "parentUuid": "30fee2f5_a64dfc4c",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8187d0a_11436da7",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Somehow after using ImageButton, SetPreferredSize won\u0027t be able to set the height to the correct value (20), the size is 36 (H) * 20 (W) instead, and the submit button image is at the top.\n\nBut if we use SetImageAlignment in line 129, we can place the image in the center, and I think the default size is acceptable as long as the image is in center?",
       "parentUuid": "c8187d0a_11436da7",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d631375_f46133b1",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T01:14:20Z",
+      "side": 1,
+      "message": "Add a test that verifies the icon is rendered at the right size (according to spec) then.",
+      "parentUuid": "2607929d_63453b65",
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
