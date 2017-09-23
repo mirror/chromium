@@ -355,6 +355,7 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
       NOTREACHED();
       break;
   }
+  NotifyDividerPositionChanged();
 
   // Check if one of the snapped windows needs to be closed.
   if (divider_position_ == 0 ||
@@ -538,6 +539,11 @@ void SplitViewController::NotifySplitViewStateChanged(State previous_state,
     observer.OnSplitViewStateChanged(previous_state, state);
 }
 
+void SplitViewController::NotifyDividerPositionChanged() {
+  for (Observer& observer : observers_)
+    observer.OnSplitViewDividerPositionChanged();
+}
+
 int SplitViewController::GetDefaultDividerPosition(aura::Window* window) const {
   const gfx::Rect work_area_bounds_in_screen =
       GetDisplayWorkAreaBoundsInScreen(window);
@@ -707,6 +713,7 @@ void SplitViewController::UpdateDividerPosition(
       break;
   }
   divider_position_ = (divider_position_ < 0) ? 0 : divider_position_;
+  NotifyDividerPositionChanged();
 }
 
 }  // namespace ash

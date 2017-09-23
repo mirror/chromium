@@ -157,6 +157,7 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // SplitViewController::Observer:
   void OnSplitViewStateChanged(SplitViewController::State previous_state,
                                SplitViewController::State state) override;
+  void OnSplitViewDividerPositionChanged() override;
 
  private:
   friend class WindowSelectorTest;
@@ -178,6 +179,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // Removes all observers that were registered during construction and/or
   // initialization.
   void RemoveAllObservers();
+
+  // Called when the display area for the overview window grids changed.
+  void OnDisplayBoundsChanged();
 
   // Tracks observed windows.
   std::set<aura::Window*> observed_windows_;
