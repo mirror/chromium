@@ -15,9 +15,11 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_connection_handler.h"
+#include "chromeos/network/network_device_handler.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
@@ -33,6 +35,9 @@ namespace {
 
 constexpr int kGetNetworksListLimit = 100;
 
+const std::vector<chromeos::ShillDeviceClient::WakeOnPacketType>
+    kWakeupPacketTypes = {chromeos::ShillDeviceClient::WakeOnPacketType::TCP};
+
 chromeos::NetworkStateHandler* GetStateHandler() {
   return chromeos::NetworkHandler::Get()->network_state_handler();
 }
@@ -44,6 +49,10 @@ chromeos::ManagedNetworkConfigurationHandler* GetManagedConfigurationHandler() {
 
 chromeos::NetworkConnectionHandler* GetNetworkConnectionHandler() {
   return chromeos::NetworkHandler::Get()->network_connection_handler();
+}
+
+chromeos::NetworkDeviceHandler* GetNetworkDeviceHandler() {
+  return chromeos::NetworkHandler::Get()->network_device_handler();
 }
 
 bool IsDeviceOwner() {
@@ -322,6 +331,21 @@ void ArcVpnSuccessCallback() {
 void ArcVpnErrorCallback(const std::string& error_name,
                          std::unique_ptr<base::DictionaryValue> error_data) {
   LOG(ERROR) << "ArcVpnErrorCallback: " << error_name;
+}
+
+void SetWakeOnPacketStateSuccessCallback(
+    const arc::ArcNetHostImpl::SetWakeOnPacketStateCallback& callback) {
+  callback.Run(true);
+}
+
+void SetWakeOnPacketStateFailureCallback(
+    const arc::ArcNetHostImpl::SetWakeOnPacketStateCallback& callback,
+    bool state,
+    const std::string& error_name,
+    std::unique_ptr<base::DictionaryValue> error_data) {
+  VLOG(1) << "SetWakeOnPacketStateFailureCallback state: " << state
+          << " Error: " << error_name;
+  callback.Run(false);
 }
 
 }  // namespace
@@ -907,6 +931,16 @@ void ArcNetHostImpl::AndroidVpnStateChanged(mojom::ConnectionStateType state) {
   GetNetworkConnectionHandler()->DisconnectNetwork(
       service_path, base::Bind(&ArcVpnSuccessCallback),
       base::Bind(&ArcVpnErrorCallback));
+}
+
+void ArcNetHostImpl::SetWakeOnPacketState(
+    bool is_enabled,
+    const SetWakeOnPacketStateCallback& callback) {
+  if (is_enabled)
+    GetNetworkDeviceHandler()->AddWifiWakeOnPacketsOfType(
+        kWakeupPacketTypes,
+        base::Bind(&SetWakeOnPacketStateSuccessCallback, callback),
+        base::Bind(&SetWakeOnPacketStateFailureCallback, callback, is_enabled));
 }
 
 void ArcNetHostImpl::DisconnectArcVpn() {
