@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec803fd9_535440e5",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-23T01:25:19Z",
+      "side": 1,
+      "message": "I thought this wasn\u0027t allowed on \"new\" code. Can you not use the thread checker in FrameServiceBase?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcf926c_44595588",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-23T01:25:19Z",
+      "side": 1,
+      "message": "Should this be in the class list at line 17?",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4929e70f_3fedea29",
+        "filename": "chrome/browser/media/output_protection_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-23T01:25:19Z",
+      "side": 1,
+      "message": "I think this should use the new thread checker added to FrameServiceBase.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e10cb4_e399568c",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-23T01:25:19Z",
+      "side": 1,
+      "message": "Will this name cause problems if the Interface class wants to use Close() itself?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
