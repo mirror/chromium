@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0898c8_4aff335d",
+        "filename": "content/browser/sandbox_ipc_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001558
+      },
+      "writtenOn": "2017-09-23T00:39:47Z",
+      "side": 1,
+      "message": "\"const struct tm zeroed_time \u003d {};\" ?\n\n(I would use \"\u003d\" since it avoids using C++11 when it doesn\u0027t feel required, but it doesn\u0027t matter).",
+      "revId": "8f00ccf73699fdd909455bd0671c71ebd29c3821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
