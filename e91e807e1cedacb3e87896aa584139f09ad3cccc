@@ -34,6 +34,24 @@
       "revId": "e91e807e1cedacb3e87896aa584139f09ad3cccc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78650ad0_44c01f05",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-23T00:43:19Z",
+      "side": 1,
+      "message": "Yep, my mistake.",
+      "parentUuid": "4d7c8b5b_845d8937",
+      "revId": "e91e807e1cedacb3e87896aa584139f09ad3cccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
