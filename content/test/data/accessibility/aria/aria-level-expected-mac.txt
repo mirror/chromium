@@ -3,7 +3,7 @@ AXWebArea
 ++++AXStaticText AXValue='Level 2'
 ++AXHeading AXTitle='Level 9' AXValue='9'
 ++++AXStaticText AXValue='Level 9'
-++AXHeading AXTitle='Level 1' AXValue='1'
+++AXHeading AXTitle='Level 1' AXValue='2'
 ++++AXStaticText AXValue='Level 1'
 ++AXHeading AXTitle='Level 3' AXValue='3'
 ++++AXStaticText AXValue='Level 3'
