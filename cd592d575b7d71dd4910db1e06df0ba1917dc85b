@@ -343,6 +343,24 @@
       "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "684c5e45_5e13d317",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-23T00:22:20Z",
+      "side": 1,
+      "message": "Oh, I missed that this was in //tools/perf ; sorry for the confusion.",
+      "parentUuid": "3f62c189_b5f2fb36",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
