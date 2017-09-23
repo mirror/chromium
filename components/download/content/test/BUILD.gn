@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Target mainly used for browser test.
+source_set("test_support") {
+  testonly = true
+
+  sources = [
+    "test_utils.cc",
+    "test_utils.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/download/content/factory",
+    "//components/download/content/internal",
+    "//components/download/internal",
+    "//components/download/internal/proto",
+    "//components/download/internal/test:test_support",
+    "//components/keyed_service/core",
+    "//components/leveldb_proto",
+  ]
+}
