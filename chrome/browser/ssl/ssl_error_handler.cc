@@ -29,6 +29,7 @@
 #include "chrome/common/features.h"
 #include "chrome/grit/browser_resources.h"
 #include "components/network_time/network_time_tracker.h"
+#include "components/security_interstitials/core/ssl_error_ui.h"
 #include "components/ssl_errors/error_classification.h"
 #include "components/ssl_errors/error_info.h"
 #include "content/public/browser/browser_thread.h"
@@ -697,6 +698,29 @@ void SSLErrorHandlerDelegateImpl::ShowBadClockInterstitial(
       ->Show();
 }
 
+int IsCertErrorFatal(int cert_error) {
+  switch (cert_error) {
+    case net::ERR_CERT_COMMON_NAME_INVALID:
+    case net::ERR_CERT_DATE_INVALID:
+    case net::ERR_CERT_AUTHORITY_INVALID:
+    case net::ERR_CERT_WEAK_SIGNATURE_ALGORITHM:
+    case net::ERR_CERT_WEAK_KEY:
+    case net::ERR_CERT_NAME_CONSTRAINT_VIOLATION:
+    case net::ERR_CERT_VALIDITY_TOO_LONG:
+    case net::ERR_CERTIFICATE_TRANSPARENCY_REQUIRED:
+      return false;
+    case net::ERR_CERT_CONTAINS_ERRORS:
+    case net::ERR_CERT_REVOKED:
+    case net::ERR_CERT_INVALID:
+    case net::ERR_SSL_WEAK_SERVER_EPHEMERAL_DH_KEY:
+    case net::ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN:
+      return true;
+    default:
+      NOTREACHED();
+      return true;
+  }
+}
+
 }  // namespace
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(SSLErrorHandler);
@@ -710,7 +734,8 @@ void SSLErrorHandler::HandleSSLError(
     int cert_error,
     const net::SSLInfo& ssl_info,
     const GURL& request_url,
-    int options_mask,
+    bool should_ssl_errors_be_fatal,
+    bool expired_previous_decision,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     const base::Callback<void(content::CertificateRequestResultType)>&
         callback) {
@@ -718,6 +743,8 @@ void SSLErrorHandler::HandleSSLError(
 
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  int options_mask = CalculateOptionsMask(
+      cert_error, should_ssl_errors_be_fatal, expired_previous_decision);
 
   SSLErrorHandler* error_handler = new SSLErrorHandler(
       std::unique_ptr<SSLErrorHandler::Delegate>(
@@ -1089,4 +1116,23 @@ bool SSLErrorHandler::IsOnlyCertError(
              net::MapCertStatusToNetError(only_cert_error_expected) &&
          (!net::IsCertStatusError(other_errors) ||
           net::IsCertStatusMinorError(ssl_info_.cert_status));
+}
+
+// static
+int SSLErrorHandler::CalculateOptionsMask(int cert_error,
+                                          bool should_ssl_errors_be_fatal,
+                                          bool expired_previous_decision) {
+  int options_mask = 0;
+  if (should_ssl_errors_be_fatal) {
+    options_mask |= security_interstitials::SSLErrorUI::STRICT_ENFORCEMENT;
+  } else {
+    if (!IsCertErrorFatal(cert_error)) {
+      options_mask |= security_interstitials::SSLErrorUI::SOFT_OVERRIDE_ENABLED;
+    }
+  }
+  if (expired_previous_decision) {
+    options_mask |=
+        security_interstitials::SSLErrorUI::EXPIRED_BUT_PREVIOUSLY_ALLOWED;
+  }
+  return options_mask;
 }
