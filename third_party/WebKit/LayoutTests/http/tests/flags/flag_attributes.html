@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>Origin Flags API: Flag Attributes</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  const flag = await requestFlag(['r1', 'r2'], 'shared')
+  assert_array_equals(flag.scope, ['r1', 'r2']);
+  assert_equals(flag.mode, 'shared');
+}, 'Flag attributes reflect requested properties (shared)');
+
+promise_test(async t => {
+  const flag = await requestFlag(['r1', 'r2'], 'exclusive')
+  assert_array_equals(flag.scope, ['r1', 'r2']);
+  assert_equals(flag.mode, 'exclusive');
+}, 'Flag attributes reflect requested properties (exclusive)');
+
+promise_test(async t => {
+  const flag = await requestFlag(['r2', 'r1'], 'shared')
+  assert_array_equals(flag.scope, ['r1', 'r2']);
+}, 'Flag.scope is in sorted order');
+
+</script>

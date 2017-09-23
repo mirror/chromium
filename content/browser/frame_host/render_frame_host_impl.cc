@@ -28,6 +28,7 @@
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/download/mhtml_generation_manager.h"
+#include "content/browser/flags/flags_context.h"
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -141,6 +142,7 @@
 #include "services/shape_detection/public/interfaces/facedetection_provider.mojom.h"
 #include "services/shape_detection/public/interfaces/textdetection.mojom.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/public/platform/modules/flags/flags_service.mojom.h"
 #include "ui/accessibility/ax_tree.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/accessibility/ax_tree_update.h"
@@ -3058,6 +3060,17 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   registry_->AddInterface(
       base::Bind(&CreatePaymentManager, base::Unretained(this)));
+
+  registry_->AddInterface(base::Bind(
+      [](RenderFrameHostImpl* rfh, blink::mojom::FlagsServiceRequest request) {
+        static_cast<StoragePartitionImpl*>(
+            BrowserContext::GetStoragePartition(
+                rfh->GetSiteInstance()->GetBrowserContext(),
+                rfh->GetSiteInstance()))
+            ->GetFlagsContext()
+            ->CreateService(std::move(request));
+      },
+      base::Unretained(this)));
 
   if (base::FeatureList::IsEnabled(features::kWebAuth)) {
     registry_->AddInterface(

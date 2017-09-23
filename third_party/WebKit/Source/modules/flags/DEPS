@@ -1,0 +1,7 @@
+include_rules = [
+    "-modules",
+    "+modules/FlagsNames.h",
+    "+modules/ModulesExport.h",
+    "+modules/flags",
+    "+mojo/public/cpp/bindings/binding.h",
+]

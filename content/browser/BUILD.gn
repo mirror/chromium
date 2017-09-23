@@ -723,6 +723,8 @@ source_set("browser") {
     "fileapi/upload_file_system_file_element_reader.h",
     "find_request_manager.cc",
     "find_request_manager.h",
+    "flags/flags_context.cc",
+    "flags/flags_context.h",
     "font_list_async.cc",
     "frame_host/ancestor_throttle.cc",
     "frame_host/ancestor_throttle.h",

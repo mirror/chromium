@@ -1,0 +1,11 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// https://github.com/inexorabletash/origin-flags
+// TODO(jsbell): SecureContext
+[
+    ImplementedAs=GlobalFlagEnvironment
+] partial interface WorkerGlobalScope {
+    [CallWith=ScriptState, RaisesException] Promise<Flag> requestFlag((DOMString or sequence<DOMString>) scope, FlagMode mode, optional FlagOptions options);
+};

@@ -1,0 +1,11 @@
+{
+  metadata: {
+    namespace: "Flags",
+  },
+
+  data: [
+    // https://github.com/inexorabletash/origin-flags
+    "shared",
+    "exclusive",
+  ],
+}

@@ -79,6 +79,7 @@
 #include "content/browser/dom_storage/dom_storage_message_filter.h"
 #include "content/browser/field_trial_recorder.h"
 #include "content/browser/fileapi/fileapi_message_filter.h"
+#include "content/browser/flags/flags_context.h"
 #include "content/browser/frame_host/render_frame_message_filter.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_client.h"
@@ -1835,6 +1836,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&BackgroundSyncContext::CreateService,
                  base::Unretained(
                      storage_partition_impl_->GetBackgroundSyncContext())));
+  // Used for Workers; Windows go through registration in RenderFrameHostImpl.
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&FlagsContext::CreateService,
+                 base::Unretained(storage_partition_impl_->GetFlagsContext())));
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&PlatformNotificationContextImpl::CreateService,
