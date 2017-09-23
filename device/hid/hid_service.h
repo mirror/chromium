@@ -55,6 +55,8 @@ class HidService {
   // This function should be called on a thread with a MessageLoopForUI.
   static std::unique_ptr<HidService> Create();
 
+  static void SetHidServiceForTesting(device::HidService* hid_service);
+
   virtual ~HidService();
 
   // Enumerates available devices. The provided callback will always be posted
@@ -94,7 +96,7 @@ class HidService {
 
   bool enumeration_ready_ = false;
   std::vector<GetDevicesCallback> pending_enumerations_;
-  base::ObserverList<Observer, true> observer_list_;
+  base::ObserverList<Observer, false> observer_list_;
 
   DISALLOW_COPY_AND_ASSIGN(HidService);
 };
