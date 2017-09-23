@@ -34,6 +34,24 @@
       "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d55c119_a5a2d6a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57453,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-23T05:33:20Z",
+      "side": 1,
+      "message": "Hmm, it does create buckets for ranges when there is a lot of variation in responses.  But it seems to deal with smallish integers in a fairly reasonable way:\n\nhttps://screenshot.googleplex.com/S9mYgUg6u8z\n\nNetwork.Shill.Wifi.PortalAttemptsToOnline is another one to look at.",
+      "parentUuid": "3922b1dc_7e272806",
+      "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
