@@ -133,6 +133,24 @@
     },
     {
       "key": {
+        "uuid": "8beba17a_ebc3a8ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-23T22:56:50Z",
+      "side": 1,
+      "message": "Hey so, I\u0027m a little confused. Do we wan to make an anon namespace function in this class, that takes in a callback\u003cvoid(ContextProvider*)\u003e and a gpu factory and bind it to the context_provider_callback? I am having a hard time doing this in MediaFactory, since we can\u0027t bind Initialize.",
+      "parentUuid": "1419a87e_e920e303",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93dea21_5080b0d5",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 5
