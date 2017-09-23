@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5997d6a8_61de972b",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-23T00:55:46Z",
+      "side": 1,
+      "message": "Why is this 0 and not 1?\n\nIf it has to be 0, please document why. (I would expect that to add it *before* the app list.)",
+      "revId": "c7076377112f864cd1d3a4bb659763d9bbad1f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
