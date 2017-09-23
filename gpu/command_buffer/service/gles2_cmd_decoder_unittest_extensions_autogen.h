@@ -85,4 +85,55 @@ TEST_P(GLES2DecoderTestWithBlendEquationAdvanced, BlendBarrierKHRValidArgs) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
 }
+
+TEST_P(GLES2DecoderTestWithCHROMIUMTextureStorageImage,
+       TexStorage2DImageCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, TexStorage2DImageCHROMIUM(GL_TEXTURE_2D, GL_RGB565,
+                                              GL_SCANOUT_CHROMIUM, 4, 5));
+  SpecializedSetup<cmds::TexStorage2DImageCHROMIUM, 0>(true);
+  cmds::TexStorage2DImageCHROMIUM cmd;
+  cmd.Init(GL_TEXTURE_2D, GL_RGB565, 4, 5);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTestWithCHROMIUMTextureStorageImage,
+       TexStorage2DImageCHROMIUMInvalidArgs0_0) {
+  EXPECT_CALL(*gl_, TexStorage2DImageCHROMIUM(_, _, _, _, _)).Times(0);
+  SpecializedSetup<cmds::TexStorage2DImageCHROMIUM, 0>(false);
+  cmds::TexStorage2DImageCHROMIUM cmd;
+  cmd.Init(GL_TEXTURE_1D, GL_RGB565, 4, 5);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+}
+
+TEST_P(GLES2DecoderTestWithCHROMIUMTextureStorageImage,
+       TexStorage2DImageCHROMIUMInvalidArgs0_1) {
+  EXPECT_CALL(*gl_, TexStorage2DImageCHROMIUM(_, _, _, _, _)).Times(0);
+  SpecializedSetup<cmds::TexStorage2DImageCHROMIUM, 0>(false);
+  cmds::TexStorage2DImageCHROMIUM cmd;
+  cmd.Init(GL_TEXTURE_3D, GL_RGB565, 4, 5);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+}
+
+TEST_P(GLES2DecoderTestWithCHROMIUMTextureStorageImage,
+       TexStorage2DImageCHROMIUMInvalidArgs3_0) {
+  EXPECT_CALL(*gl_, TexStorage2DImageCHROMIUM(_, _, _, _, _)).Times(0);
+  SpecializedSetup<cmds::TexStorage2DImageCHROMIUM, 0>(false);
+  cmds::TexStorage2DImageCHROMIUM cmd;
+  cmd.Init(GL_TEXTURE_2D, GL_RGB565, -1, 5);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
+
+TEST_P(GLES2DecoderTestWithCHROMIUMTextureStorageImage,
+       TexStorage2DImageCHROMIUMInvalidArgs4_0) {
+  EXPECT_CALL(*gl_, TexStorage2DImageCHROMIUM(_, _, _, _, _)).Times(0);
+  SpecializedSetup<cmds::TexStorage2DImageCHROMIUM, 0>(false);
+  cmds::TexStorage2DImageCHROMIUM cmd;
+  cmd.Init(GL_TEXTURE_2D, GL_RGB565, 4, -1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
 #endif  // GPU_COMMAND_BUFFER_SERVICE_GLES2_CMD_DECODER_UNITTEST_EXTENSIONS_AUTOGEN_H_
