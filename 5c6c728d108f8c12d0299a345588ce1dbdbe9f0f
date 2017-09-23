@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "9814d395_c3ed0ceb",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-23T05:22:31Z",
+      "side": 1,
+      "message": "\u003e nit: move out of loop.\nIt\u0027s not \"in\" the loop, it\u0027s the value being iterated over.  It\u0027ll only be evaluated once I think.\n\n\u003e Also, isn\u0027t there a proto equivalent of vector for a repeated field, which we can directly return and use?\nThere is, but it\u0027s pretty awkward to use.",
+      "parentUuid": "6bd1870f_7b62b8f7",
+      "range": {
+        "startLine": 453,
+        "startChar": 7,
+        "endLine": 453,
+        "endChar": 24
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5975830f_6fe6f410",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -151,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "35a58880_9799d194",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-23T05:22:31Z",
+      "side": 1,
+      "message": "\u003e These are only protected static to facilitate testing I believe? A comment along these lines would be helpful. \n\nSee line 48.\n\n\u003e Can\u0027t we just expose these as free functions? If not, can we expose ForTesting free functions, which call into the actual functions in an anon namespace.\n\nDo we have an \"expose for testing\" annotation in C++?",
+      "parentUuid": "9296b8d3_fc1753fe",
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8afe4491_0585bcdb",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -174,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "c47aba8d_3401c9d3",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-23T05:22:31Z",
+      "side": 1,
+      "message": "\u003e nit: Add comments recommending to keep this in sync with Manifest::Location, Manifest::Type etc. Here and elsewhere in the file.\n\nI think it makes more sense to put the comments on those other files, not here.  No one will add something here that\u0027s not in those other files--it doesn\u0027t make sense.  But if someone adds something in those other files, they probably want to add it here as well.",
+      "parentUuid": "8afe4491_0585bcdb",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48353e82_ba01f4d4",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -185,6 +251,30 @@
       "writtenOn": "2017-09-23T00:55:40Z",
       "side": 1,
       "message": "nit: Rename to INVALID_LOCATION like in Manifest::Location?",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb622af8_404959c6",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-23T05:22:31Z",
+      "side": 1,
+      "message": "\u003e nit: Rename to INVALID_LOCATION like in Manifest::Location?\n\nA typical logging best practice for enum histograms is to have an \"unknown\" entry first.  If you want an \"invalid\" entry, it should be in addition to an \"unknown\" entry.  If you\u0027re using \"invalid\" to mean \"unknown\", I think the logs should call it unknown.",
+      "parentUuid": "48353e82_ba01f4d4",
       "range": {
         "startLine": 32,
         "startChar": 4,
