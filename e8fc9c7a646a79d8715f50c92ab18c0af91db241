@@ -16,6 +16,24 @@
       "revId": "e8fc9c7a646a79d8715f50c92ab18c0af91db241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781d61f9_d1c77191",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-23T00:14:37Z",
+      "side": 1,
+      "message": "\u003e Obsolete?\n\nI don’t really know what this TODO means, but I guess if we haven’t needed it by now, we won’t ever.",
+      "parentUuid": "5cbc2855_b4f7bc36",
+      "revId": "e8fc9c7a646a79d8715f50c92ab18c0af91db241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
