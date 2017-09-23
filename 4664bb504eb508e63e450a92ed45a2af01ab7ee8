@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaca6e51_d357351c",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "pin_view_ should never be null.",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809d1e03_e8bdda06",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "Bind directly to LoginPinView::PasswordFieldCleared instead of creating this helper method.",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472e7e07_05a25aa8",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "OnPasswordTextChanged?\n\nCleared is very confusing if it is not empty, because cleared implies empty.",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8187d0a_11436da7",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "Why did you remove the SetPreferredSize call?",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ece60ce_f60b0bf0",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b48051c_31aba5cd",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-23T00:12:26Z",
+      "side": 1,
+      "message": "Why not an else?\n\nThis might break if the user manages to input multiple characters at the same time.\n\nCode might be a bit cleaner if you did:\n\n  bool is_enabled \u003d !new_contents.empty();\n  submit_button_-\u003eSetEnabled(is_enabled);\n  on_password_field_cleared_.Run(!is_enabled);\n  separator_-\u003eSetColor(...);",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
