@@ -996,6 +996,9 @@
       name: "TouchpadAndWheelScrollLatching",
     },
     {
+      name: "TrackLayoutPassesPerBlock",
+    },
+    {
       name: "TrustedDOMTypes",
       status: "experimental",
     },

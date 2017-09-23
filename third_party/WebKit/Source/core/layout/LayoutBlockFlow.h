@@ -742,6 +742,8 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
   static void UpdateAncestorShouldPaintFloatingObject(
       const LayoutBox& float_box);
 
+  int GetLayoutPassCountForTesting();
+
  protected:
   LayoutUnit MaxPositiveMarginBefore() const {
     return rare_data_
