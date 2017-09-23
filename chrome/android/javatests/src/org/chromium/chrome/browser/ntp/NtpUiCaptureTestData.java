@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
@@ -164,7 +165,8 @@ public class NtpUiCaptureTestData {
                 ThreadUtils.postOnUiThread(() -> {
                     int fallbackColor =
                             colorMap.containsKey(url) ? colorMap.get(url) : DEFAULT_ICON_COLOR;
-                    callback.onLargeIconAvailable(iconMap.get(url), fallbackColor, true);
+                    callback.onLargeIconAvailable(
+                            iconMap.get(url), fallbackColor, true, IconType.INVALID_ICON);
                 });
                 return true;
             }

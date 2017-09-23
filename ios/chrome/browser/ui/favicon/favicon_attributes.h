@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "components/favicon_base/favicon_types.h"
+
 // Attributes of a favicon. A favicon is represented either with an image or
 // with a fallback monogram of a given color and background color.
 @interface FaviconAttributes : NSObject
@@ -24,6 +26,8 @@
 // no image.
 @property(nonatomic, readonly, assign, getter=isDefaultBackgroundColor)
     BOOL defaultBackgroundColor;
+// Icon type.
+@property(nonatomic, readonly, assign) favicon_base::IconType iconType;
 
 + (nullable instancetype)attributesWithImage:(nonnull UIImage*)image;
 + (nullable instancetype)attributesWithMonogram:(nonnull NSString*)monogram

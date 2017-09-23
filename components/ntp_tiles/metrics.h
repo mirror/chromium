@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "components/favicon_base/favicon_types.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #include "components/ntp_tiles/tile_visual_type.h"
 #include "url/gurl.h"
@@ -28,6 +29,7 @@ void RecordPageImpression(int number_of_tiles);
 void RecordTileImpression(int index,
                           TileSource source,
                           TileVisualType type,
+                          favicon_base::IconType icon_type,
                           const GURL& url,
                           rappor::RapporService* rappor_service);
 
