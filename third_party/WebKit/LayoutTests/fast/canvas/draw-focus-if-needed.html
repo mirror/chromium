@@ -13,16 +13,28 @@ test(function(t) {
     document.getElementById("button1").focus();
     
     var canvas = document.getElementById("canvas").getContext("2d");
-    
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded();});
+   
+    try {
+      canvas.drawFocusIfNeeded(null);
+    } catch(ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      canvas.drawFocusIfNeeded();
+    } catch(ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     
     canvas.beginPath();
     canvas.rect(50, 50, 200, 100);
     canvas.fillStyle = "#ccf";
     canvas.fill();
     // re-test null case after having defined a path (regression test for crbug.com/353248)
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null);});
+    try {
+      canvas.drawFocusIfNeeded(null);
+    } catch(ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     canvas.drawFocusIfNeeded(document.getElementById("button1"));
     
     canvas.beginPath();

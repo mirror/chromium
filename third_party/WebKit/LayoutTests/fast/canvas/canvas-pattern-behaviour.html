@@ -34,15 +34,47 @@ test(function () {
     pixelShouldBe(98, 1, [0, 128, 0, 255]);
     pixelShouldBe(1, 48, [0, 128, 0, 255]);
     pixelShouldBe(98, 48, [0, 128, 0, 255]);
- 
-    assert_throws(null, function() {context.createPattern(green1x1, 'null');});
-    assert_throws(null, function() {context.createPattern(green1x1, undefined);});
-    assert_throws(null, function() {context.createPattern(green1x1, 'undefined');});
-    assert_throws(null, function() {context.createPattern(green1x1, {toString:function(){ return null;}});});
-    assert_throws(null, function() {context.createPattern(null, '');});
-    assert_throws(null, function() {context.createPattern(undefined, '');});
-    assert_throws(null, function() {context.createPattern({}, '');});
-    assert_throws(null, function() {context.createPattern([], '');});
+
+    try {
+      context.createPattern(green1x1, 'null');
+    } catch (ex) {
+      assert_equals(ex.name, "SyntaxError");
+    } 
+    try {
+      context.createPattern(green1x1, undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "SyntaxError");
+    } 
+    try {
+      context.createPattern(green1x1, 'undefined');
+    } catch (ex) {
+      assert_equals(ex.name, "SyntaxError");
+    } 
+    try {
+        context.createPattern(green1x1, {oString:function(){ return null;}});
+    } catch (ex) {
+      assert_equals(ex.name, "SyntaxError");
+    } 
+    try {
+      context.createPattern(null, '');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      context.createPattern(undefined, '');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      context.createPattern({}, '');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      context.createPattern([], '');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
 
     pattern = context.createPattern(green1x1, '');
     context.fillStyle = pattern;

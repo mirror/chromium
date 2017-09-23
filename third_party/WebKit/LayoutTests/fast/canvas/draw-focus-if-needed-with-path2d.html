@@ -12,20 +12,48 @@ test(function(t) {
     document.getElementById("button1").focus();
     
     var canvas = document.getElementById("canvas").getContext("2d");
-    
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(undefined);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(undefined, undefined);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null, null);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded();});
+   
+    try {
+      canvas.drawFocusIfNeeded(undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      canvas.drawFocusIfNeeded(undefined, undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      canvas.drawFocusIfNeeded(null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      canvas.drawFocusIfNeeded(null, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      canvas.drawFocusIfNeeded();
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
     
     var path = new Path2D();
     path.rect(50, 50, 200, 100);
     canvas.fillStyle = "#ccf";
     canvas.fill(path);
     // re-test null case after having defined a path (regression test for crbug.com/353248)
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null);});
-    assert_throws(null, function(){canvas.drawFocusIfNeeded(null, null);});
+    try {
+      canvas.drawFocusIfNeeded(null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
+    try {
+      canvas.drawFocusIfNeeded(null, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    } 
     canvas.drawFocusIfNeeded(path, document.getElementById("button1"));
     
     path = new Path2D();

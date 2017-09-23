@@ -56,7 +56,6 @@ var fontSettings = "12px 'Arial'";
 
 function verifyDrawText(canvasId, text, expectedDirection)
 {
-    console.log(canvasId, text, expectedDirection);
     var canvasElement = document.getElementById(canvasId);
     var ctx = canvasElement.getContext('2d');
     var width = canvasElement.width/2;
@@ -71,7 +70,6 @@ function verifyDrawText(canvasId, text, expectedDirection)
 
 function verifyDrawTextWithSpecifiedDirection(testItem)
 {
-    console.log(testItem);
     var canvasElement = document.getElementById(testItem['canvasId']);
     var ctx = canvasElement.getContext('2d');
     var width = canvasElement.width/2;
@@ -191,9 +189,9 @@ test(function(t) {
     generate_tests(verifyDirectionAfterReset, directionAfterResetTests);
     
     var directionAfterAttributeChangeTests = [
-        ['DirectionAfterResetTest1',
+        ['DirectionAfterResetTest3',
          {canvasId: 'canvas9', text: 'Right-to-Left text', newDirection: 'rtl', forParentElement: true}],
-        ['DirectionAfterResetTest2',
+        ['DirectionAfterResetTest4',
          {canvasId: 'canvas10', text: 'Left-to-Right text', newDirection: 'ltr', forParentElement: false}],
     ];
     generate_tests(verifyDirectionAfterAttributeChange, directionAfterAttributeChangeTests);
