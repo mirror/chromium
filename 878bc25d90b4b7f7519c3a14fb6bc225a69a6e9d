@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2adc7f07_2d0367de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-23T00:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e10bd3a4_7a66e885",
+      "range": {
+        "startLine": 2032,
+        "startChar": 12,
+        "endLine": 2032,
+        "endChar": 51
+      },
+      "revId": "878bc25d90b4b7f7519c3a14fb6bc225a69a6e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9552ff26_eaec3603",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T23:46:38Z",
       "side": 1,
       "message": "My understanding was that Tab#updateAccessibilityVisibility() took care calling CVC#setObscuredByAnotherView() when necessary. What happens if this block is removed?",
+      "range": {
+        "startLine": 2034,
+        "startChar": 0,
+        "endLine": 2037,
+        "endChar": 9
+      },
+      "revId": "878bc25d90b4b7f7519c3a14fb6bc225a69a6e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91a91c8_f56d93b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-23T00:54:00Z",
+      "side": 1,
+      "message": "Yes but in tab switcher mode, Tab#updateAccessibilityVisibility() won\u0027t be accessed because the current tab is set to null. If this block is removed, there is an extra view (which is the compositor view holder) get focused that reads nothing and does nothing when double click. Also, the user needs to swipe twice (one for FadingBackgroundView and one for CompositorViewHolder) when using \"read from top\" since it stops reading at FadingBackgroundView focused.",
+      "parentUuid": "9552ff26_eaec3603",
       "range": {
         "startLine": 2034,
         "startChar": 0,
