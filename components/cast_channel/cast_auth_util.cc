@@ -152,6 +152,19 @@ enum CertVerificationStatus {
   CERT_STATUS_COUNT,
 };
 
+enum CrlVerificationStatus {
+  CRL_OK,
+  CRL_ISSUER_PARSE_FAILED,
+  CRL_ISSUER_DATE_FAILED,
+  CRL_ISSUER_VERIFICATION_FAILED,
+  CRL_SIGNATURE_FAILED,
+  CRL_MALFORMED,
+  CRL_DATE_PARSE_FAILED,
+  CRL_DATE_FAILED,
+  CRL_UNEXPECTED_FAILED,
+  CRL_COUNT,
+};
+
 // Must match with histogram enum CastNonce.
 // This should never be reordered.
 enum NonceVerificationStatus {
@@ -177,6 +190,12 @@ void RecordCertificateEvent(CertVerificationStatus event) {
                             CERT_STATUS_COUNT);
 }
 
+// Record CRL verification histogram events.
+void RecordCrlEvent(CrlVerificationStatus event) {
+  UMA_HISTOGRAM_ENUMERATION("Cast.Channel.CRL", event,
+                            CRL_COUNT);
+}
+
 // Record nonce verification histogram events.
 void RecordNonceEvent(NonceVerificationStatus event) {
   UMA_HISTOGRAM_ENUMERATION("Cast.Channel.Nonce", event, NONCE_COUNT);
@@ -189,36 +208,36 @@ void RecordSignatureEvent(SignatureStatus event) {
 
 // Maps CastCertError to AuthResult.
 // If crl_required is set to false, all revocation related errors are ignored.
-AuthResult MapToAuthResult(cast_certificate::CastCertError error,
+AuthResult MapToAuthResult(cast_crypto::CastCertError error,
                            bool crl_required) {
   switch (error) {
-    case cast_certificate::CastCertError::ERR_CERTS_MISSING:
+    case cast_crypto::CastCertError::ERR_CERTS_MISSING:
       RecordCertificateEvent(CERT_STATUS_MISSING_CERTS);
       return AuthResult("Failed to locate certificates.",
                         AuthResult::ERROR_PEER_CERT_EMPTY);
-    case cast_certificate::CastCertError::ERR_CERTS_PARSE:
+    case cast_crypto::CastCertError::ERR_CERTS_PARSE:
       RecordCertificateEvent(CERT_STATUS_PARSE_FAILED);
       return AuthResult("Failed to parse certificates.",
                         AuthResult::ERROR_CERT_PARSING_FAILED);
-    case cast_certificate::CastCertError::ERR_CERTS_DATE_INVALID:
+    case cast_crypto::CastCertError::ERR_CERTS_DATE_INVALID:
       RecordCertificateEvent(CERT_STATUS_DATE_INVALID);
       return AuthResult("Failed date validity check.",
                         AuthResult::ERROR_CERT_NOT_SIGNED_BY_TRUSTED_CA);
-    case cast_certificate::CastCertError::ERR_CERTS_VERIFY_GENERIC:
+    case cast_crypto::CastCertError::ERR_CERTS_VERIFY_GENERIC:
       RecordCertificateEvent(CERT_STATUS_VERIFICATION_FAILED);
       return AuthResult("Failed with a generic certificate verification error.",
                         AuthResult::ERROR_CERT_NOT_SIGNED_BY_TRUSTED_CA);
-    case cast_certificate::CastCertError::ERR_CERTS_RESTRICTIONS:
+    case cast_crypto::CastCertError::ERR_CERTS_RESTRICTIONS:
       RecordCertificateEvent(CERT_STATUS_RESTRICTIONS_FAILED);
       return AuthResult("Failed certificate restrictions.",
                         AuthResult::ERROR_CERT_NOT_SIGNED_BY_TRUSTED_CA);
-    case cast_certificate::CastCertError::ERR_CRL_INVALID:
+    case cast_crypto::CastCertError::ERR_CRL_INVALID:
       // Histogram events are recorded during CRL verification.
       // This error is only encountered if |crl_required| is true.
       DCHECK(crl_required);
       return AuthResult("Failed to provide a valid CRL.",
                         AuthResult::ERROR_CRL_INVALID);
-    case cast_certificate::CastCertError::ERR_CERTS_REVOKED:
+    case cast_crypto::CastCertError::ERR_CERTS_REVOKED:
       RecordCertificateEvent(CERT_STATUS_REVOKED);
       // Revocation check is the last step of Cast certificate verification.
       // If this error is encountered, the rest of certificate verification has
@@ -227,14 +246,46 @@ AuthResult MapToAuthResult(cast_certificate::CastCertError error,
         return AuthResult();
       return AuthResult("Failed certificate revocation check.",
                         AuthResult::ERROR_CERT_REVOKED);
-    case cast_certificate::CastCertError::ERR_UNEXPECTED:
+    case cast_crypto::CastCertError::ERR_UNEXPECTED:
       RecordCertificateEvent(CERT_STATUS_UNEXPECTED_FAILED);
       return AuthResult("Failed verifying cast device certificate.",
                         AuthResult::ERROR_CERT_NOT_SIGNED_BY_TRUSTED_CA);
-    case cast_certificate::CastCertError::OK:
+    case cast_crypto::CastCertError::OK:
       return AuthResult();
   }
   return AuthResult();
+}
+
+void RecordCrlErrorMetrics(cast_crypto::CastCrlError error) {
+  switch (error) {
+    case cast_crypto::CastCrlError::ERR_ISSUER_PARSE:
+      RecordCrlEvent(CRL_ISSUER_PARSE_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_ISSUER_DATE:
+      RecordCrlEvent(CRL_ISSUER_DATE_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_ISSUER_VERIFY_GENERIC:
+      RecordCrlEvent(CRL_ISSUER_VERIFICATION_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_SIGNATURE:
+      RecordCrlEvent(CRL_SIGNATURE_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_MALFORMED:
+      RecordCrlEvent(CRL_MALFORMED);
+      break;
+    case cast_crypto::CastCrlError::ERR_DATE_PARSE:
+      RecordCrlEvent(CRL_DATE_PARSE_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_DATE:
+      RecordCrlEvent(CRL_DATE_FAILED);
+      break;
+    case cast_crypto::CastCrlError::ERR_UNEXPECTED:
+      RecordCrlEvent(CRL_UNEXPECTED_FAILED);
+      break;
+    case cast_crypto::CastCrlError::OK:
+      RecordCrlEvent(CRL_OK);
+      break;
+  }
 }
 
 }  // namespace
@@ -404,11 +455,13 @@ AuthResult VerifyCredentialsImpl(const AuthResponse& response,
   if (response.crl().empty()) {
     RecordCertificateEvent(CERT_STATUS_MISSING_CRL);
   } else {
+    cast_crypto::CastCrlError crl_error;
     crl = cast_crypto::ParseAndVerifyCRLUsingCustomTrustStore(
-        response.crl(), verification_time, crl_trust_store);
+        response.crl(), verification_time, crl_trust_store, &crl_error);
     if (!crl) {
       RecordCertificateEvent(CERT_STATUS_INVALID_CRL);
     }
+    RecordCrlErrorMetrics(crl_error);
   }
 
   // Perform certificate verification.
