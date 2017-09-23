@@ -23,6 +23,12 @@
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/view.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
+#include "components/arc/common/intent_helper.mojom.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
+#endif  // defined(OS_CHROMEOS)
+
 class AppMenuButton;
 class Browser;
 class BrowserActionsContainer;
@@ -76,6 +82,18 @@ class ToolbarView : public views::AccessiblePaneView,
   bool IsAppMenuFocused();
 
   virtual bool GetAcceleratorInfo(int id, ui::Accelerator* accel);
+
+#if defined(OS_CHROMEOS)
+  void ShowIntentPickerBubble(const GURL& url);
+  void OnAppCandidatesReceived(
+      std::vector<arc::mojom::IntentHandlerInfoPtr> handlers);
+  void OnAppIconsReceived(
+      std::vector<arc::mojom::IntentHandlerInfoPtr> handlers,
+      std::unique_ptr<arc::ArcIntentHelperBridge::ActivityToIconsMap> icons);
+  void OnIntentPickerClosed(
+      const std::string& package_name,
+      arc::ArcNavigationThrottle::CloseReason close_reason);
+#endif  // defined(OS_CHROMEOS)
 
   // Shows a bookmark bubble and anchors it appropriately.
   void ShowBookmarkBubble(const GURL& url,
