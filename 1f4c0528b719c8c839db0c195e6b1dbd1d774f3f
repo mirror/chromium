@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e970ca_bb5ca3df",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "This is effectively DCHECK(backup), so as-is this code is an anti-pattern - there\u0027s no caller input that can impact whether this succeeds or fails.\n\nShould we replace this entire if block with DCHECK(backup)?",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3c9b0c_a88aee80",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "Similarly, this is asserting that transaction_nesting is not more than zero, in debug builds, but then handling it in release - the same antipattern as above. Is this failure mode just another case of caller error?",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795c1d6f_43af6871",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "nit: Feels like this should be DCHECK_EQ(SQLITE_DONE, rc) \u003c\u003c \"...\"",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3879758_f9a99564",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "And here, DCHECK_EQ(...)?",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8dc5ea_61a4f1ac",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "This comment implies that we have to treat SQLITE_ERROR as fatal even in production?",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38465d5_cbf7f71b",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE(...)",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be200bd_a2a6be82",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-23T05:59:15Z",
+      "side": 1,
+      "message": "DCHECK_NE(...)",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
