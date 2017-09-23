@@ -71,6 +71,7 @@ class PrintersSyncBridge::StoreProxy {
     store_->CommitWriteBatch(
         std::move(batch),
         base::Bind(&StoreProxy::OnCommit, weak_ptr_factory_.GetWeakPtr()));
+    owner_->NotifyChange();
   }
 
  private:
@@ -289,6 +290,16 @@ ConflictResolution PrintersSyncBridge::ResolveConflict(
   return ConflictResolution::UseRemote();
 }
 
+void PrintersSyncBridge::AddObserver(Observer* observer) {
+  DCHECK(!observers_.HasObserver(observer));
+  observers_.AddObserver(observer);
+}
+
+void PrintersSyncBridge::RemoveObserver(Observer* observer) {
+  DCHECK(observers_.HasObserver(observer));
+  observers_.RemoveObserver(observer);
+}
+
 void PrintersSyncBridge::AddPrinter(
     std::unique_ptr<sync_pb::PrinterSpecifics> printer) {
   base::AutoLock lock(data_lock_);
@@ -402,6 +413,12 @@ bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
   }
 
   return false;
+}
+
+void PrintersSyncBridge::NotifyChange() {
+  for (auto& obs : observers_) {
+    obs.OnPrintersChanged();
+  }
 }
 
 }  // namespace chromeos

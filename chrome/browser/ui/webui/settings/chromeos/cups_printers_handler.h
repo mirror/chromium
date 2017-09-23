@@ -122,6 +122,9 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
       const std::string& manufacturer,
       const std::string& model);
 
+  // Emits the updated discovered printer list after new printers are received.
+  void UpdateDiscoveredPrinters();
+
   // Attempt to add a discovered printer.
   void HandleAddDiscoveredPrinter(const base::ListValue* args);
 
@@ -143,6 +146,8 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
                     void* params) override;
 
   Profile* profile_;
+
+  bool started_ = false;
 
   // Discovery support.  discovery_active_ tracks whether or not the UI
   // currently wants updates about printer availability.  The two vectors track

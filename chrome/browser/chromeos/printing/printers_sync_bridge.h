@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/lock.h"
@@ -31,6 +32,12 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
                      const base::RepeatingClosure& error_callback);
   ~PrintersSyncBridge() override;
 
+  // Observer for listening to printer updates.
+  class Observer {
+   public:
+    virtual void OnPrintersChanged() = 0;
+  };
+
   // ModelTypeSyncBridge implementation.
   std::unique_ptr<syncer::MetadataChangeList> CreateMetadataChangeList()
       override;
@@ -47,6 +54,10 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   syncer::ConflictResolution ResolveConflict(
       const syncer::EntityData& local_data,
       const syncer::EntityData& remote_data) const override;
+
+  // Attach or remove observers of printer changes.
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
 
   // Stores a |printer|.  Overwrites a printer with a matching id if it exists.
   void AddPrinter(std::unique_ptr<sync_pb::PrinterSpecifics> printer);
@@ -76,6 +87,8 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   // change. |data_lock_| must be acquired before calling this function.
   bool DeleteSpecifics(const std::string& id,
                        syncer::ModelTypeStore::WriteBatch* batch);
+  // Notify all observers that there has been a change.
+  void NotifyChange();
 
   std::unique_ptr<StoreProxy> store_delegate_;
 
@@ -84,6 +97,8 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   // In memory cache of printer information. Access to this is synchronized with
   // |data_lock_|.
   std::map<std::string, std::unique_ptr<sync_pb::PrinterSpecifics>> all_data_;
+
+  base::ObserverList<Observer> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(PrintersSyncBridge);
 };
