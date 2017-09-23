@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbf69432_5ccc5bf1",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-23T00:56:18Z",
+      "side": 1,
+      "message": "Currently we bind this function in the ctor of LoginPasswordView(), technically it can call this function right after its creation (it doesn\u0027t but there\u0027s no way of controlling this..), and at this point pin_view_ is still null.\n\nThis won\u0027t be an issue if we can bind directly to LoginPinView::PasswordFieldCleared (please see the other comment).",
+      "parentUuid": "aaca6e51_d357351c",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "809d1e03_e8bdda06",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-23T00:12:26Z",
       "side": 1,
       "message": "Bind directly to LoginPinView::PasswordFieldCleared instead of creating this helper method.",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995a2d77_5742624f",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-23T00:56:18Z",
+      "side": 1,
+      "message": "If we look at line 109-121, by the time LoginPasswordView is created, the pointer of LoginPinView is still null. And LoginPinView needs pointer of LoginPasswordView in its ctor too, so I guess I have to use a helper function?..",
+      "parentUuid": "809d1e03_e8bdda06",
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "30fee2f5_a64dfc4c",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-23T00:56:18Z",
+      "side": 1,
+      "message": "Basically I only want to call this function when the input string length changes from 0 to 1, or 1 to 0, since that\u0027s the only two cases when the button colors should change. So techinically it\u0027s not OnPasswordTextChanged(). However if we don\u0027t mind having unnecessary calls then it\u0027s a better name.",
+      "parentUuid": "472e7e07_05a25aa8",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8187d0a_11436da7",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-23T00:12:26Z",
       "side": 1,
       "message": "Why did you remove the SetPreferredSize call?",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2607929d_63453b65",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-23T00:56:18Z",
+      "side": 1,
+      "message": "Somehow after using ImageButton, SetPreferredSize won\u0027t be able to set the height to the correct value (20), the size is 36 (H) * 20 (W) instead, and the submit button image is at the top.\n\nBut if we use SetImageAlignment in line 129, we can place the image in the center, and I think the default size is acceptable as long as the image is in center?",
+      "parentUuid": "c8187d0a_11436da7",
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +170,24 @@
       "writtenOn": "2017-09-23T00:12:26Z",
       "side": 1,
       "message": "Why not an else?\n\nThis might break if the user manages to input multiple characters at the same time.\n\nCode might be a bit cleaner if you did:\n\n  bool is_enabled \u003d !new_contents.empty();\n  submit_button_-\u003eSetEnabled(is_enabled);\n  on_password_field_cleared_.Run(!is_enabled);\n  separator_-\u003eSetColor(...);",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d9d9f5_5d317af8",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-23T00:56:18Z",
+      "side": 1,
+      "message": "The cleaner codes will make additional calls, is it a problem? If not we\u0027ll use the cleaner version.",
+      "parentUuid": "4b48051c_31aba5cd",
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
