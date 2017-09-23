@@ -13,6 +13,7 @@
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {
 
@@ -23,11 +24,19 @@ class VirtualKeyboardDelegate {
   using OnKeyboardSettingsCallback =
       base::Callback<void(std::unique_ptr<base::DictionaryValue> settings)>;
 
+  using RestrictFeaturesCallback =
+      base::OnceCallback<void(const api::virtual_keyboard::FeatureRestrictions,
+                              const std::string)>;
+
   // Fetch information about the preferred configuration of the keyboard. On
   // exit, |settings| is populated with the keyboard configuration if execution
   // is successful, otherwise it's set to nullptr.
   virtual void GetKeyboardConfig(
       OnKeyboardSettingsCallback on_settings_callback) = 0;
+
+  // Notify keyboard config change through
+  // |chrome.virtualKeyboard.onKeyboardConfigChanged| event.
+  virtual void OnKeyboardConfigChanged() = 0;
 
   // Dismiss the virtual keyboard without changing input focus. Returns true if
   // successful.
@@ -46,10 +55,6 @@ class VirtualKeyboardDelegate {
 
   // Sets the state of the hotrod virtual keyboad.
   virtual void SetHotrodKeyboard(bool enable) = 0;
-
-  // Sets the virtual keyboard in restricted state - i.e. state where advanced
-  // features like auto-correct, auto-complete, voice input are disabled.
-  virtual void SetKeyboardRestricted(bool restricted) = 0;
 
   // Activate and lock the virtual keyboad on screen or dismiss the keyboard
   // regardless of the state of text focus. Used in a11y mode to allow typing
@@ -76,6 +81,12 @@ class VirtualKeyboardDelegate {
 
   // Sets requested virtual keyboard state.
   virtual bool SetRequestedKeyboardState(int state_enum) = 0;
+
+  // Restricts the virtual keyboard IME features.
+  // |callback| is called with error message if any, or the empty string.
+  virtual void RestrictFeatures(
+      const api::virtual_keyboard::RestrictFeatures::Params& params,
+      RestrictFeaturesCallback callback) = 0;
 };
 
 }  // namespace extensions
