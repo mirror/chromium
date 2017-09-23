@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbedc29_71b0c42d",
+        "filename": "chrome/browser/chromeos/device/input_service_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-23T13:18:04Z",
+      "side": 0,
+      "message": "Remove the GetDeviceInfo() because it is only used by input_service_proxy_browsertest.cc. \nEven the input_service_proxy.cc and its browsertest will be removed during the mojofication.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "d2eea9362404bba232176bd46903690336b31f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
