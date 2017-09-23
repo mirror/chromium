@@ -52,6 +52,15 @@ namespace blink {
 
 using namespace HTMLNames;
 
+namespace {
+
+bool g_is_finding_scroll_anchor = false;
+
+}  // namespace
+
+LayoutTable::DisableUpdatingCollapsedBorders::DisableUpdatingCollapsedBorders()
+    : disabler_(&g_is_finding_scroll_anchor, true) {}
+
 LayoutTable::LayoutTable(Element* element)
     : LayoutBlock(element),
       head_(nullptr),
@@ -1643,6 +1652,9 @@ LayoutUnit LayoutTable::PaddingRight() const {
 
 void LayoutTable::UpdateCollapsedOuterBorders() const {
   if (collapsed_outer_borders_valid_)
+    return;
+
+  if (g_is_finding_scroll_anchor)
     return;
 
   collapsed_outer_borders_valid_ = true;
