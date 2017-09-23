@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38963f47_51ab95be",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-23T00:33:44Z",
+      "side": 1,
+      "message": "Done, also added the touch_drag_timer_.Stop() at the GESTURE_END event. Please check.",
+      "parentUuid": "366d49c7_76347ec3",
+      "revId": "40cbfd965e9e88fcb2f2b9916bbd26b2d88d357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bf60eac_559b5492",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "40cbfd965e9e88fcb2f2b9916bbd26b2d88d357e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c8fc4d_326c440d",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-23T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf60eac_559b5492",
+      "revId": "40cbfd965e9e88fcb2f2b9916bbd26b2d88d357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
