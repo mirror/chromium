@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d19d3c_baf8c20f",
+        "filename": "third_party/leveldatabase/leveldb_exports.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-23T01:11:07Z",
+      "side": 1,
+      "message": "Can you please add // defined(WIN32)",
+      "revId": "a9caaf2e2ae50740af286360109a5f72f2807438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
