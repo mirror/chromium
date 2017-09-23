@@ -7,6 +7,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/layout/LayoutBlockFlow.h"
+#include "core/layout/LayoutTable.h"
 #include "core/layout/api/LayoutBoxItem.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/paint/PaintLayer.h"
@@ -229,6 +230,7 @@ bool ScrollAnchor::ComputeScrollAnchorDisablingStyleChanged() {
 }
 
 void ScrollAnchor::NotifyBeforeLayout() {
+  LayoutTable::DisableUpdatingCollapsedBorders scoped_disabler;
   if (queued_) {
     scroll_anchor_disabling_style_changed_ |=
         ComputeScrollAnchorDisablingStyleChanged();
