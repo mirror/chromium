@@ -33,6 +33,10 @@ class ASH_EXPORT ScreenPositionController
 
   // aura::client::ScreenPositionClient overrides:
   void ConvertPointToScreen(const aura::Window* window,
+                            gfx::PointF* point) override;
+  void ConvertPointFromScreen(const aura::Window* window,
+                              gfx::PointF* point) override;
+  void ConvertPointToScreen(const aura::Window* window,
                             gfx::Point* point) override;
   void ConvertPointFromScreen(const aura::Window* window,
                               gfx::Point* point) override;

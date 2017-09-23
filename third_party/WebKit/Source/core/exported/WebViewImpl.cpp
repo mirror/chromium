@@ -449,7 +449,7 @@ void WebViewImpl::HandleMouseDown(LocalFrame& main_frame,
   // Take capture on a mouse down on a plugin so we can send it mouse events.
   // If the hit node is a plugin but a scrollbar is over it don't start mouse
   // capture because it will interfere with the scrollbar receiving events.
-  IntPoint point(event.PositionInWidget().x, event.PositionInWidget().y);
+  FloatPoint point(event.PositionInWidget().x, event.PositionInWidget().y);
   if (event.button == WebMouseEvent::Button::kLeft &&
       page_->MainFrame()->IsLocalFrame()) {
     point =
@@ -512,8 +512,7 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
   WebMouseEvent transformed_event =
       TransformWebMouseEvent(MainFrameImpl()->GetFrameView(), event);
   transformed_event.menu_source_type = kMenuSourceMouse;
-  IntPoint position_in_root_frame =
-      FlooredIntPoint(transformed_event.PositionInRootFrame());
+  FloatPoint position_in_root_frame = transformed_event.PositionInRootFrame();
 
   // Find the right target frame. See issue 1186900.
   HitTestResult result = HitTestResultForRootFramePos(position_in_root_frame);
@@ -1096,8 +1095,8 @@ WebRect WebViewImpl::ComputeBlockBound(const WebPoint& point_in_root_frame,
     return WebRect();
 
   // Use the point-based hit test to find the node.
-  IntPoint point = MainFrameImpl()->GetFrameView()->RootFrameToContents(
-      IntPoint(point_in_root_frame.x, point_in_root_frame.y));
+  FloatPoint point = MainFrameImpl()->GetFrameView()->RootFrameToContents(
+      FloatPoint(point_in_root_frame.x, point_in_root_frame.y));
   HitTestRequest::HitTestRequestType hit_type =
       HitTestRequest::kReadOnly | HitTestRequest::kActive |
       (ignore_clipping ? HitTestRequest::kIgnoreClipping : 0);
@@ -3127,7 +3126,8 @@ void WebViewImpl::ResetScrollAndScaleState() {
 
 void WebViewImpl::PerformMediaPlayerAction(const WebMediaPlayerAction& action,
                                            const WebPoint& location) {
-  HitTestResult result = HitTestResultForViewportPos(location);
+  HitTestResult result =
+      HitTestResultForViewportPos(FloatPoint(location.x, location.y));
   Node* node = result.InnerNode();
   if (!isHTMLVideoElement(*node) && !isHTMLAudioElement(*node))
     return;
@@ -3158,7 +3158,8 @@ void WebViewImpl::PerformMediaPlayerAction(const WebMediaPlayerAction& action,
 void WebViewImpl::PerformPluginAction(const WebPluginAction& action,
                                       const WebPoint& location) {
   // FIXME: Location is probably in viewport coordinates
-  HitTestResult result = HitTestResultForRootFramePos(location);
+  HitTestResult result =
+      HitTestResultForRootFramePos(FloatPoint(location.x, location.y));
   Node* node = result.InnerNode();
   if (!isHTMLObjectElement(*node) && !isHTMLEmbedElement(*node))
     return;
@@ -3196,7 +3197,7 @@ HitTestResult WebViewImpl::CoreHitTestResultAt(
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       MainFrameImpl()->GetFrame()->GetDocument()->Lifecycle());
   LocalFrameView* view = MainFrameImpl()->GetFrameView();
-  IntPoint point_in_root_frame =
+  FloatPoint point_in_root_frame =
       view->ContentsToFrame(view->ViewportToContents(point_in_viewport));
   return HitTestResultForRootFramePos(point_in_root_frame);
 }
@@ -3540,17 +3541,17 @@ Element* WebViewImpl::FocusedElement() const {
 }
 
 HitTestResult WebViewImpl::HitTestResultForViewportPos(
-    const IntPoint& pos_in_viewport) {
-  IntPoint root_frame_point(
+    const FloatPoint& pos_in_viewport) {
+  FloatPoint root_frame_point(
       page_->GetVisualViewport().ViewportToRootFrame(pos_in_viewport));
   return HitTestResultForRootFramePos(root_frame_point);
 }
 
 HitTestResult WebViewImpl::HitTestResultForRootFramePos(
-    const IntPoint& pos_in_root_frame) {
+    const FloatPoint& pos_in_root_frame) {
   if (!page_->MainFrame()->IsLocalFrame())
     return HitTestResult();
-  IntPoint doc_point(
+  FloatPoint doc_point(
       page_->DeprecatedLocalMainFrame()->View()->RootFrameToContents(
           pos_in_root_frame));
   HitTestResult result =

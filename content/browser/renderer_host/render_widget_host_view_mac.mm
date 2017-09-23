@@ -1518,12 +1518,12 @@ viz::FrameSinkId RenderWidgetHostViewMac::GetFrameSinkId() {
 
 viz::FrameSinkId RenderWidgetHostViewMac::FrameSinkIdAtPoint(
     viz::SurfaceHittestDelegate* delegate,
-    const gfx::Point& point,
-    gfx::Point* transformed_point) {
+    const gfx::PointF& point,
+    gfx::PointF* transformed_point) {
   // The surface hittest happens in device pixels, so we need to convert the
   // |point| from DIPs to pixels before hittesting.
   float scale_factor = ui::GetScaleFactorForNativeView(cocoa_view_);
-  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
   viz::SurfaceId id =
       browser_compositor_->GetDelegatedFrameHost()->SurfaceIdAtPoint(
           delegate, point_in_pixels, transformed_point);
@@ -1571,13 +1571,13 @@ void RenderWidgetHostViewMac::ProcessGestureEvent(
 }
 
 bool RenderWidgetHostViewMac::TransformPointToLocalCoordSpace(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     const viz::SurfaceId& original_surface,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   // Transformations use physical pixels rather than DIP, so conversion
   // is necessary.
   float scale_factor = ui::GetScaleFactorForNativeView(cocoa_view_);
-  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
   if (!browser_compositor_->GetDelegatedFrameHost()
            ->TransformPointToLocalCoordSpace(point_in_pixels, original_surface,
                                              transformed_point))
@@ -1587,9 +1587,9 @@ bool RenderWidgetHostViewMac::TransformPointToLocalCoordSpace(
 }
 
 bool RenderWidgetHostViewMac::TransformPointToCoordSpaceForView(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     RenderWidgetHostViewBase* target_view,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   if (target_view == this) {
     *transformed_point = point;
     return true;
@@ -2524,8 +2524,8 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 }
 
 - (void)showLookUpDictionaryOverlayAtPoint:(NSPoint)point {
-  gfx::Point rootPoint(point.x, NSHeight([self frame]) - point.y);
-  gfx::Point transformedPoint;
+  gfx::PointF rootPoint(point.x, NSHeight([self frame]) - point.y);
+  gfx::PointF transformedPoint;
   if (!renderWidgetHostView_->render_widget_host_ ||
       !renderWidgetHostView_->render_widget_host_->delegate() ||
       !renderWidgetHostView_->render_widget_host_->delegate()
@@ -2543,7 +2543,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   int32_t targetWidgetProcessId = widgetHost->GetProcess()->GetID();
   int32_t targetWidgetRoutingId = widgetHost->GetRoutingID();
   TextInputClientMac::GetInstance()->GetStringAtPoint(
-      widgetHost, transformedPoint,
+      widgetHost, gfx::ToFlooredPoint(transformedPoint),
       ^(NSAttributedString* string, NSPoint baselinePoint) {
         if (!content::RenderWidgetHost::FromID(targetWidgetProcessId,
                                                targetWidgetRoutingId)) {
@@ -3149,8 +3149,8 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
            ->GetInputEventRouter())
     return NSNotFound;
 
-  gfx::Point rootPoint(thePoint.x, thePoint.y);
-  gfx::Point transformedPoint;
+  gfx::PointF rootPoint(thePoint.x, thePoint.y);
+  gfx::PointF transformedPoint;
   RenderWidgetHostImpl* widgetHost =
       renderWidgetHostView_->render_widget_host_->delegate()
           ->GetInputEventRouter()
@@ -3161,7 +3161,7 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
 
   NSUInteger index =
       TextInputClientMac::GetInstance()->GetCharacterIndexAtPoint(
-          widgetHost, transformedPoint);
+          widgetHost, gfx::ToFlooredPoint(transformedPoint));
   return index;
 }
 
