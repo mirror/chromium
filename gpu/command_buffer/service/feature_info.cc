@@ -13,6 +13,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/texture_definition.h"
 #include "gpu/config/gpu_switches.h"
@@ -1421,6 +1422,13 @@ void FeatureInfo::InitializeFeatures() {
       gl::HasExtension(extensions, "GL_NV_pixel_buffer_object");
   feature_flags_.oes_rgb8_rgba8 =
       gl::HasExtension(extensions, "GL_OES_rgb8_rgba8");
+
+#if defined(OS_MACOSX) || (defined(OS_LINUX) && defined(USE_OZONE))
+  if (!IsWebGLContext()) {
+    AddExtensionString("GL_CHROMIUM_texture_storage_image");
+    feature_flags_.chromium_texture_storage_image = true;
+  }
+#endif
 }
 
 void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
