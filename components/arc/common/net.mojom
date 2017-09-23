@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 8
+// Next MinVersion: 9
 
 module arc.mojom;
 
@@ -208,6 +208,12 @@ interface NetHost {
 
   // Inform Chrome OS that a VPN is disconnected, reconnecting, or reconnected.
   [MinVersion=7] AndroidVpnStateChanged@12(ConnectionStateType state);
+
+  // Send a request to enable or disable wake on packet state. This enables the
+  // device to wake from sleep to show notification. The |result| is true in the
+  // desired state. It is false if the state manupilation fails.
+  [MinVersion=8] SetWakeOnPacketState@13(bool is_enabled) => (bool result);
+
 };
 
 interface NetInstance {
