@@ -46,6 +46,30 @@
       "revId": "ecc0af740f5249c5b53ee09b57f8073c6ef46d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eaea1fc_958fe041",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/BindingManagerIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-23T01:17:12Z",
+      "side": 0,
+      "message": "\u003e \u003e so i get that this is a layer violation, but it\u0027s also useful. Now it seems like there are test for moderate binding management but nothing for the more critical strong binding behaviour. Do we have equivalent coverage (minus moderate binding) in ChildProcessLauncher{Helper,Integration}Test? Doesn\u0027t look as thorough\n\u003e \n\u003e No actually :p\n\u003e \n\u003e The more \"end-to-end\" test for moderate binding test is here: https://cs.chromium.org/chromium/src/content/public/android/javatests/src/org/chromium/content/browser/webcontents/WebContentsTest.java?rcl\u003d74e7cb9771bc7d065f6647f0c2310255687728d6\u0026l\u003d373\n\u003e \n\u003e In chrome, the strong binding is controlled purely by visibility, so could add a similar test for that.\n\nAnd added that test as testVisibilityControlsBinding",
+      "parentUuid": "49a76cad_9cbaac02",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 32
+      },
+      "revId": "ecc0af740f5249c5b53ee09b57f8073c6ef46d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
