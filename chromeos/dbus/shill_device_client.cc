@@ -4,6 +4,7 @@
 
 #include "chromeos/dbus/shill_device_client.h"
 
+#include <map>
 #include <utility>
 
 #include "base/bind.h"
@@ -23,6 +24,31 @@
 namespace chromeos {
 
 namespace {
+
+// Converts the WakeupTypeEnum to corresponding WakeupType string that shill
+// understands.
+const std::string GetWakeupPacketTypeStringFromEnum(
+    const ShillDeviceClient::WakeOnPacketType& packet_type) {
+  switch (packet_type) {
+    case ShillDeviceClient::WakeOnPacketType::TCP:
+      return shill::kWakeOnTCP;
+    case ShillDeviceClient::WakeOnPacketType::UDP:
+      return shill::kWakeOnUDP;
+    case ShillDeviceClient::WakeOnPacketType::IDP:
+      return shill::kWakeOnIDP;
+    case ShillDeviceClient::WakeOnPacketType::IPIP:
+      return shill::kWakeOnIPIP;
+    case ShillDeviceClient::WakeOnPacketType::IGMP:
+      return shill::kWakeOnIGMP;
+    case ShillDeviceClient::WakeOnPacketType::ICMP:
+      return shill::kWakeOnICMP;
+    case ShillDeviceClient::WakeOnPacketType::IP:
+      return shill::kWakeOnIP;
+  }
+  NOTREACHED() << "Unhandled wakeup packet type "
+               << static_cast<int>(packet_type);
+  return "";
+}
 
 // The ShillDeviceClient implementation.
 class ShillDeviceClientImpl : public ShillDeviceClient {
@@ -216,6 +242,24 @@ class ShillDeviceClientImpl : public ShillDeviceClient {
                                                             error_callback);
   }
 
+  void AddWakeOnPacketOfTypes(
+      const dbus::ObjectPath& device_path,
+      const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) override {
+    std::vector<std::string> packet_type_strs;
+    for (auto it = packet_types.begin(); it != packet_types.end(); ++it) {
+      packet_type_strs.push_back(GetWakeupPacketTypeStringFromEnum(*it));
+    }
+    dbus::MethodCall method_call(shill::kFlimflamDeviceInterface,
+                                 shill::kAddWakeOnPacketOfTypesFunction);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendArrayOfStrings(packet_type_strs);
+    GetHelper(device_path)
+        ->CallVoidMethodWithErrorCallback(&method_call, callback,
+                                          error_callback);
+  }
+
   void RemoveWakeOnPacketConnection(
       const dbus::ObjectPath& device_path,
       const net::IPEndPoint& ip_endpoint,
@@ -232,6 +276,24 @@ class ShillDeviceClientImpl : public ShillDeviceClient {
     GetHelper(device_path)->CallVoidMethodWithErrorCallback(&method_call,
                                                             callback,
                                                             error_callback);
+  }
+
+  void RemoveWakeOnPacketOfTypes(
+      const dbus::ObjectPath& device_path,
+      const std::vector<ShillDeviceClient::WakeOnPacketType>& packet_types,
+      const base::Closure& callback,
+      const ErrorCallback& error_callback) override {
+    std::vector<std::string> packet_type_strs;
+    for (auto it = packet_types.begin(); it != packet_types.end(); ++it) {
+      packet_type_strs.push_back(GetWakeupPacketTypeStringFromEnum(*it));
+    }
+    dbus::MethodCall method_call(shill::kFlimflamDeviceInterface,
+                                 shill::kRemoveWakeOnPacketOfTypesFunction);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendArrayOfStrings(packet_type_strs);
+    GetHelper(device_path)
+        ->CallVoidMethodWithErrorCallback(&method_call, callback,
+                                          error_callback);
   }
 
   void RemoveAllWakeOnPacketConnections(
