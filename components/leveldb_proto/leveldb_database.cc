@@ -12,10 +12,10 @@
 #include "base/metrics/histogram.h"
 #include "base/strings/string_split.h"
 #include "base/threading/thread_checker.h"
+#include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/cache.h"
-#include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
@@ -27,8 +27,8 @@ namespace leveldb_proto {
 
 // static
 bool LevelDB::Destroy(const base::FilePath& database_dir) {
-  const leveldb::Status s =
-      leveldb::DestroyDB(database_dir.AsUTF8Unsafe(), leveldb_env::Options());
+  const leveldb::Status s = leveldb::DestroyDB(database_dir.AsUTF8Unsafe(),
+                                               leveldb_chrome::Options());
   return s.ok();
 }
 
@@ -46,9 +46,9 @@ LevelDB::~LevelDB() {
 }
 
 bool LevelDB::Init(const base::FilePath& database_dir,
-                   const leveldb_env::Options& options) {
+                   const leveldb_chrome::Options& options) {
   DFAKE_SCOPED_LOCK(thread_checker_);
-  leveldb_env::Options open_options = options;
+  leveldb_chrome::Options open_options = options;
 
   if (database_dir.empty()) {
     env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
@@ -57,13 +57,13 @@ bool LevelDB::Init(const base::FilePath& database_dir,
 
   std::string path = database_dir.AsUTF8Unsafe();
 
-  leveldb::Status status = leveldb_env::OpenDB(open_options, path, &db_);
+  leveldb::Status status = leveldb_chrome::OpenDB(open_options, path, &db_);
   if (open_histogram_)
     open_histogram_->Add(leveldb_env::GetLevelDBStatusUMAValue(status));
   if (status.IsCorruption()) {
     // TODO(cmumford): Log this corruption and use leveldb::DestroyDB.
     base::DeleteFile(database_dir, true);
-    status = leveldb_env::OpenDB(open_options, path, &db_);
+    status = leveldb_chrome::OpenDB(open_options, path, &db_);
   }
 
   if (status.ok())

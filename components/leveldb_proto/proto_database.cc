@@ -6,8 +6,8 @@
 
 namespace leveldb_proto {
 
-leveldb_env::Options CreateSimpleOptions() {
-  leveldb_env::Options options;
+leveldb_chrome::Options CreateSimpleOptions() {
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.max_open_files = 0;  // Use minimum.
   return options;

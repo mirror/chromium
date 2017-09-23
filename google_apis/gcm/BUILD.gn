@@ -62,12 +62,12 @@ component("gcm") {
 
   public_deps = [
     ":proto",
+    "//third_party/leveldatabase",
   ]
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
     "//net",
-    "//third_party/leveldatabase",
     "//url",
   ]
 }

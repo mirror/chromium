@@ -43,7 +43,7 @@ enum SharedReadCache {
 // with the struct in leveldb's options.h.)
 //
 // Note: This struct does not have default values. The values are set by a
-// struct trait which copies values to/from a leveldb_env::Options instance.
+// struct trait which copies values to/from a leveldb_chrome::Options instance.
 struct OpenOptions {
   // TODO(erg): Find all comparators and copy them into the service.
 
