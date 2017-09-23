@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c787f0dc_e3c8a7e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-23T17:45:33Z",
+      "side": 1,
+      "message": "We should definitely be calling this no matter what when we exit VR...",
+      "range": {
+        "startLine": 2154,
+        "startChar": 8,
+        "endLine": 2154,
+        "endChar": 54
+      },
+      "revId": "665a9959fbbfc39a6e62846b8e4cb9e84abcad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
