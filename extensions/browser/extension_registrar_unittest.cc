@@ -12,8 +12,11 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extensions_test.h"
+#include "extensions/browser/runtime_data.h"
+#include "extensions/browser/test_extension_registrar_delegate.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/test_extensions_browser_client.h"
 #include "extensions/common/extension.h"
@@ -26,17 +29,21 @@ namespace {
 class TestExtensionSystem : public MockExtensionSystem {
  public:
   explicit TestExtensionSystem(content::BrowserContext* context)
-      : MockExtensionSystem(context) {}
+      : MockExtensionSystem(context),
+        runtime_data_(ExtensionRegistry::Get(context)) {}
 
   ~TestExtensionSystem() override {}
 
+  // MockExtensionSystem:
   void RegisterExtensionWithRequestContexts(
       const Extension* extension,
       const base::Closure& callback) override {
     base::SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
   }
+  RuntimeData* runtime_data() override { return &runtime_data_; }
 
  private:
+  RuntimeData runtime_data_;
   DISALLOW_COPY_AND_ASSIGN(TestExtensionSystem);
 };
 
@@ -51,81 +58,214 @@ class ExtensionRegistrarTest : public ExtensionsTest {
   void SetUp() override {
     ExtensionsTest::SetUp();
     extensions_browser_client()->set_extension_system_factory(&factory_);
+    extension_ = ExtensionBuilder("extension").Build();
   }
+
+ protected:
+  // Verifies that the extentsion is in the given set in the ExtensionRegistry
+  // and not in other sets.
+  void ExpectInSet(ExtensionRegistry::IncludeFlag set_id) {
+    ExtensionRegistry* registry = ExtensionRegistry::Get(browser_context());
+
+    bool expect_in_enabled = set_id & ExtensionRegistry::ENABLED;
+    EXPECT_EQ(expect_in_enabled,
+              registry->enabled_extensions().Contains(extension_->id()));
+
+    bool expect_in_disabled = set_id & ExtensionRegistry::DISABLED;
+    EXPECT_EQ(expect_in_disabled,
+              registry->disabled_extensions().Contains(extension_->id()));
+
+    bool expect_in_terminated = set_id & ExtensionRegistry::TERMINATED;
+    EXPECT_EQ(expect_in_terminated,
+              registry->terminated_extensions().Contains(extension_->id()));
+
+    bool expect_in_blacklisted = set_id & ExtensionRegistry::BLACKLISTED;
+    EXPECT_EQ(expect_in_blacklisted,
+              registry->blacklisted_extensions().Contains(extension_->id()));
+
+    bool expect_in_blocked = set_id & ExtensionRegistry::BLOCKED;
+    EXPECT_EQ(expect_in_blocked,
+              registry->blocked_extensions().Contains(extension_->id()));
+  }
+
+  bool IsExtensionReady() {
+    return ExtensionRegistry::Get(browser_context())
+        ->ready_extensions()
+        .Contains(extension_->id());
+  }
+
+  scoped_refptr<const Extension> extension() const { return extension_; }
 
  private:
   MockExtensionSystemFactory<TestExtensionSystem> factory_;
+  scoped_refptr<const Extension> extension_;
 };
 
-// Registers and unregisters an extension.
-TEST_F(ExtensionRegistrarTest, ActivateAndRemove) {
+// Adds and removes an extension.
+TEST_F(ExtensionRegistrarTest, Basic) {
   ExtensionRegistry* extension_registry =
       ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
 
-  scoped_refptr<const Extension> extension =
-      ExtensionBuilder("extension").Build();
-  ExtensionRegistrar registrar(browser_context());
-
-  registrar.ActivateExtension(extension);
-  EXPECT_TRUE(
-      extension_registry->enabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->ready_extensions().Contains(extension->id()));
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::ENABLED);
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  EXPECT_FALSE(IsExtensionReady());
 
   TestExtensionRegistryObserver observer(extension_registry);
   observer.WaitForExtensionReady();
-  EXPECT_TRUE(extension_registry->ready_extensions().Contains(extension->id()));
+  EXPECT_TRUE(IsExtensionReady());
 
-  // Calling DeactivateAndRemoveExtension removes its entry from the disabled
-  // list and then removes the extension.
-  registrar.DeactivateAndRemoveExtension(extension->id(),
-                                         UnloadedExtensionReason::UNINSTALL);
-  EXPECT_FALSE(
-      extension_registry->disabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->enabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->ready_extensions().Contains(extension->id()));
+  // Calling RemoveExtension removes its entry from the enabled list and then
+  // removes the extension.
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+  ExpectInSet(ExtensionRegistry::NONE);
 }
 
-// Registers and unregisters an extension.
-TEST_F(ExtensionRegistrarTest, ActivateDeactivateAndRemove) {
+// Disables an extension before removing it.
+TEST_F(ExtensionRegistrarTest, DisableAndRemove) {
   ExtensionRegistry* extension_registry =
       ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
 
-  scoped_refptr<const Extension> extension =
-      ExtensionBuilder("extension").Build();
-  ExtensionRegistrar registrar(browser_context());
-
-  registrar.ActivateExtension(extension);
-  EXPECT_TRUE(
-      extension_registry->enabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->ready_extensions().Contains(extension->id()));
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::ENABLED);
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  EXPECT_FALSE(IsExtensionReady());
 
   TestExtensionRegistryObserver observer(extension_registry);
   observer.WaitForExtensionReady();
-  EXPECT_TRUE(extension_registry->ready_extensions().Contains(extension->id()));
+  EXPECT_TRUE(IsExtensionReady());
 
-  // Deactivating the extension marks it disabled.
-  registrar.DeactivateExtension(extension);
-  EXPECT_TRUE(
-      extension_registry->disabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->enabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->ready_extensions().Contains(extension->id()));
+  // Disable the extension before removing it.
+  registrar.DisableExtension(extension()->id(),
+                             disable_reason::DISABLE_USER_ACTION);
+  ExpectInSet(ExtensionRegistry::DISABLED);
+  EXPECT_FALSE(IsExtensionReady());
 
-  // We can still call DeactivateAndRemoveExtension to remove its entry from
-  // the disabled list and remove the extension.
-  registrar.DeactivateAndRemoveExtension(extension->id(),
-                                         UnloadedExtensionReason::UNINSTALL);
-  EXPECT_FALSE(
-      extension_registry->disabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->enabled_extensions().Contains(extension->id()));
-  EXPECT_FALSE(
-      extension_registry->ready_extensions().Contains(extension->id()));
+  // We can still call RemoveExtension to remove its entry from the disabled
+  // list and remove the extension.
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+  ExpectInSet(ExtensionRegistry::NONE);
+}
+
+// Adds, disables and re-enables an extension.
+TEST_F(ExtensionRegistrarTest, DisableAndEnable) {
+  ExtensionRegistry* extension_registry =
+      ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
+
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::ENABLED);
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  EXPECT_FALSE(IsExtensionReady());
+
+  {
+    TestExtensionRegistryObserver observer(extension_registry);
+    observer.WaitForExtensionReady();
+  }
+  EXPECT_TRUE(IsExtensionReady());
+
+  // Disable then enable the extension.
+  registrar.DisableExtension(extension()->id(),
+                             disable_reason::DISABLE_USER_ACTION);
+  ExpectInSet(ExtensionRegistry::DISABLED);
+  EXPECT_FALSE(IsExtensionReady());
+
+  registrar.EnableExtension(extension()->id());
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  EXPECT_FALSE(IsExtensionReady());
+
+  {
+    TestExtensionRegistryObserver observer(extension_registry);
+    observer.WaitForExtensionReady();
+  }
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  EXPECT_TRUE(IsExtensionReady());
+
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+  ExpectInSet(ExtensionRegistry::NONE);
+  EXPECT_FALSE(IsExtensionReady());
+}
+
+// Adds a disabled extension.
+TEST_F(ExtensionRegistrarTest, AddDisabled) {
+  ExtensionRegistry* extension_registry =
+      ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
+
+  // An extension can be added as disabled, then removed.
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::DISABLED);
+  ExpectInSet(ExtensionRegistry::DISABLED);
+
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+  ExpectInSet(ExtensionRegistry::NONE);
+
+  // An extension can be added as disabled, then enabled.
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::DISABLED);
+  ExpectInSet(ExtensionRegistry::DISABLED);
+  EXPECT_FALSE(IsExtensionReady());
+
+  registrar.EnableExtension(extension()->id());
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  {
+    TestExtensionRegistryObserver observer(extension_registry);
+    observer.WaitForExtensionReady();
+  }
+  EXPECT_TRUE(IsExtensionReady());
+
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+  ExpectInSet(ExtensionRegistry::NONE);
+  EXPECT_FALSE(IsExtensionReady());
+}
+
+// Adds a blacklisted extension.
+TEST_F(ExtensionRegistrarTest, AddBlacklisted) {
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
+
+  // An extension can be added as blacklisted.
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::BLACKLISTED);
+  ExpectInSet(ExtensionRegistry::BLACKLISTED);
+
+  // RemoveExtension does not un-blacklist the extension.
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::BLACKLIST);
+  ExpectInSet(ExtensionRegistry::BLACKLISTED);
+}
+
+// Adds a blocked extension.
+TEST_F(ExtensionRegistrarTest, AddBlocked) {
+  ExtensionRegistrar registrar(
+      browser_context(), ExtensionPrefs::Get(browser_context()),
+      std::make_unique<TestExtensionRegistrarDelegate>());
+
+  // An extension can be added as blocked.
+  registrar.AddExtension(extension(),
+                         ExtensionRegistrar::InitialState::BLOCKED);
+  ExpectInSet(ExtensionRegistry::BLOCKED);
+
+  // RemoveExtension does not un-block the extension.
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::LOCK_ALL);
+  ExpectInSet(ExtensionRegistry::BLOCKED);
 }
 
 }  // namespace extensions
