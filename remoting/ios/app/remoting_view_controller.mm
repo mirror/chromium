@@ -25,6 +25,7 @@
 #import "remoting/ios/app/host_setup_view_controller.h"
 #import "remoting/ios/app/host_view_controller.h"
 #import "remoting/ios/app/remoting_menu_view_controller.h"
+#import "remoting/ios/app/remoting_refresh_control.h"
 #import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/domain/client_session_details.h"
 #import "remoting/ios/facade/remoting_service.h"
@@ -88,12 +89,10 @@ ConnectionType GetConnectionType() {
   HostFetchingViewController* _fetchingViewController;
   HostSetupViewController* _setupViewController;
   RemotingService* _remotingService;
+
+  RemotingRefreshControl* _refreshControl;
 }
 @end
-
-// TODO(nicholss): Localize this file.
-// TODO(nicholss): This file is not finished with integration, the app flow is
-// still pending development.
 
 @implementation RemotingViewController
 
@@ -131,13 +130,6 @@ ConnectionType GetConnectionType() {
                                         action:@selector(didSelectMenu)];
     self.navigationItem.leftBarButtonItem = menuButton;
 
-    UIBarButtonItem* refreshButton =
-        [[UIBarButtonItem alloc] initWithImage:RemotingTheme.refreshIcon
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(didSelectRefresh)];
-    self.navigationItem.rightBarButtonItem = refreshButton;
-
     _appBar.headerViewController.headerView.backgroundColor =
         RemotingTheme.hostListBackgroundColor;
     _appBar.navigationBar.backgroundColor =
@@ -156,6 +148,12 @@ ConnectionType GetConnectionType() {
           CGFloat elevation = MDCShadowElevationAppBar * intensity;
           [(MDCShadowLayer*)layer setElevation:elevation];
         }];
+
+    _refreshControl = [[RemotingRefreshControl alloc] initWithFrame:CGRectZero];
+    __weak RemotingViewController* weakSelf = self;
+    _refreshControl.refreshCallback = ^{
+      [weakSelf didSelectRefresh];
+    };
   }
   return self;
 }
@@ -233,6 +231,7 @@ ConnectionType GetConnectionType() {
   [MDCSnackbarManager
       showMessage:[MDCSnackbarMessage
                       messageWithText:l10n_util::GetNSString(messageId)]];
+  [_refreshControl endRefreshing];
 }
 
 #pragma mark - HostCollectionViewControllerDelegate
@@ -335,29 +334,33 @@ animationControllerForDismissedController:(UIViewController*)dismissed {
 }
 
 - (void)refreshContent {
+  if (_remotingService.hostListState == HostListStateFetching) {
+    if (!_refreshControl.isRefreshing) {
+      self.contentViewController = _fetchingViewController;
+    }
+    return;
+  }
+
   if (_remotingService.hostListState == HostListStateNotFetched) {
     self.contentViewController = nil;
     return;
   }
 
-  if (_remotingService.hostListState == HostListStateFetching) {
-    self.contentViewController = _fetchingViewController;
-    _fetchingViewController.view.frame = self.view.bounds;
-    return;
-  }
-
   DCHECK(_remotingService.hostListState == HostListStateFetched);
 
+  [_refreshControl endRefreshing];
+
+  UICollectionViewController* contentViewController;
   if (_remotingService.hosts.count > 0) {
     [_collectionViewController.collectionView reloadData];
-    self.headerViewController.headerView.trackingScrollView =
-        _collectionViewController.collectionView;
-    self.contentViewController = _collectionViewController;
+    contentViewController = _collectionViewController;
   } else {
-    self.contentViewController = _setupViewController;
-    self.headerViewController.headerView.trackingScrollView =
-        _setupViewController.collectionView;
+    contentViewController = _setupViewController;
   }
+  self.headerViewController.headerView.trackingScrollView =
+      contentViewController.collectionView;
+  _refreshControl.trackingScrollView = contentViewController.collectionView;
+  self.contentViewController = contentViewController;
   self.contentViewController.view.frame = self.view.bounds;
 
   if (@available(iOS 11.0, *)) {
