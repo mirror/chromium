@@ -16,6 +16,24 @@
       "revId": "c7076377112f864cd1d3a4bb659763d9bbad1f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946c9880_a0aa51a4",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-23T16:04:51Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to be 0, that\u0027s just what was done prior to my http://crrev.com/c/578547\nItems are ordered by type/\u0027weight\u0027, so it\u0027ll go to index 1, added a comment.",
+      "parentUuid": "5997d6a8_61de972b",
+      "revId": "c7076377112f864cd1d3a4bb659763d9bbad1f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
