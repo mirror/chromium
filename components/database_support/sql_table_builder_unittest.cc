@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/password_manager/core/browser/sql_table_builder.h"
+#include "components/database_support/sql_table_builder.h"
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -14,7 +14,7 @@
 
 using ::testing::UnorderedElementsAre;
 
-namespace password_manager {
+namespace database_support {
 
 class SQLTableBuilderTest : public testing::Test {
  public:
@@ -377,4 +377,4 @@ TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddAndDropIndices) {
   EXPECT_THAT(builder()->AllIndexNames(), UnorderedElementsAre("new_name"));
 }
 
-}  // namespace password_manager
+}  // namespace database_support

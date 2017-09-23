@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/password_manager/core/browser/sql_table_builder.h"
+#include "components/database_support/sql_table_builder.h"
 
 #include <algorithm>
 #include <set>
@@ -15,7 +15,7 @@
 #include "sql/connection.h"
 #include "sql/transaction.h"
 
-namespace password_manager {
+namespace database_support {
 
 namespace {
 
@@ -532,4 +532,4 @@ bool SQLTableBuilder::IsIndexInLastVersion(const Index& index) const {
            index.max_version >= sealed_version_));
 }
 
-}  // namespace password_manager
+}  // namespace database_support

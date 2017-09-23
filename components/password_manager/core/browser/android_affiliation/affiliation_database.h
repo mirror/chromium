@@ -11,11 +11,14 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
-#include "components/password_manager/core/browser/sql_table_builder.h"
 
 namespace base {
 class FilePath;
 }  // namespace base
+
+namespace database_support {
+class SQLTableBuilder;
+}  // namespace database_support
 
 namespace sql {
 class Connection;
@@ -92,19 +95,21 @@ class AffiliationDatabase {
   // Initializes the passed in table builders and defines the structure of the
   // tables.
   static void InitializeTableBuilders(
-      SQLTableBuilder* eq_classes_builder,
-      SQLTableBuilder* eq_class_members_builder);
+      database_support::SQLTableBuilder* eq_classes_builder,
+      database_support::SQLTableBuilder* eq_class_members_builder);
 
   // Creates the tables in the database using the provided table builders.
   // Returns |false| on error, |true| on success.
-  bool CreateTables(const SQLTableBuilder& eq_classes_builder,
-                    const SQLTableBuilder& eq_class_members_builder);
+  bool CreateTables(
+      const database_support::SQLTableBuilder& eq_classes_builder,
+      const database_support::SQLTableBuilder& eq_class_members_builder);
 
   // Migrates an existing database from an earlier |version| using the provided
   // table builders. Returns |false| on error, |true| on success.
-  bool MigrateTablesFrom(const SQLTableBuilder& eq_classes_builder,
-                         const SQLTableBuilder& eq_class_members_builder,
-                         unsigned version);
+  bool MigrateTablesFrom(
+      const database_support::SQLTableBuilder& eq_classes_builder,
+      const database_support::SQLTableBuilder& eq_class_members_builder,
+      unsigned version);
 
   // Called when SQLite encounters an error.
   void SQLErrorCallback(int error_number, sql::Statement* statement);

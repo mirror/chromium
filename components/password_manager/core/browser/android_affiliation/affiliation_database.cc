@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "components/database_support/sql_table_builder.h"
 #include "sql/connection.h"
 #include "sql/error_delegate_util.h"
 #include "sql/meta_table.h"
@@ -62,8 +63,9 @@ bool AffiliationDatabase::Init(const base::FilePath& path) {
     return false;
   }
 
-  SQLTableBuilder eq_classes_builder("eq_classes");
-  SQLTableBuilder eq_class_members_builder("eq_class_members");
+  database_support::SQLTableBuilder eq_classes_builder("eq_classes");
+  database_support::SQLTableBuilder eq_class_members_builder(
+      "eq_class_members");
   InitializeTableBuilders(&eq_classes_builder, &eq_class_members_builder);
 
   if (!CreateTables(eq_classes_builder, eq_class_members_builder)) {
@@ -275,8 +277,8 @@ int AffiliationDatabase::GetDatabaseVersionForTesting() {
 
 // static
 void AffiliationDatabase::InitializeTableBuilders(
-    SQLTableBuilder* eq_classes_builder,
-    SQLTableBuilder* eq_class_members_builder) {
+    database_support::SQLTableBuilder* eq_classes_builder,
+    database_support::SQLTableBuilder* eq_class_members_builder) {
   // Version 1 of the affiliation database.
   eq_classes_builder->AddColumnToPrimaryKey("id", "INTEGER");
   eq_classes_builder->AddColumn("last_update_time", "INTEGER");
@@ -313,15 +315,15 @@ void AffiliationDatabase::InitializeTableBuilders(
 }
 
 bool AffiliationDatabase::CreateTables(
-    const SQLTableBuilder& eq_classes_builder,
-    const SQLTableBuilder& eq_class_members_builder) {
+    const database_support::SQLTableBuilder& eq_classes_builder,
+    const database_support::SQLTableBuilder& eq_class_members_builder) {
   return eq_classes_builder.CreateTable(sql_connection_.get()) &&
          eq_class_members_builder.CreateTable(sql_connection_.get());
 }
 
 bool AffiliationDatabase::MigrateTablesFrom(
-    const SQLTableBuilder& eq_classes_builder,
-    const SQLTableBuilder& eq_class_members_builder,
+    const database_support::SQLTableBuilder& eq_classes_builder,
+    const database_support::SQLTableBuilder& eq_class_members_builder,
     unsigned version) {
   return eq_classes_builder.MigrateFrom(version, sql_connection_.get()) &&
          eq_class_members_builder.MigrateFrom(version, sql_connection_.get());

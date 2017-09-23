@@ -26,12 +26,12 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/database_support/sql_table_builder.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/browser/psl_matching_helper.h"
-#include "components/password_manager/core/browser/sql_table_builder.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "sql/connection.h"
@@ -346,7 +346,7 @@ void LogPasswordReuseMetrics(const std::vector<std::string>& signon_realms) {
 }
 
 // Teaches |builder| about the different DB schemes in different versions.
-void InitializeBuilder(SQLTableBuilder* builder) {
+void InitializeBuilder(database_support::SQLTableBuilder* builder) {
   // Versions 0 and 1, which are the same.
   builder->AddColumnToUniqueKey("origin_url", "VARCHAR NOT NULL");
   builder->AddColumn("action_url", "VARCHAR");
@@ -452,7 +452,7 @@ void InitializeBuilder(SQLTableBuilder* builder) {
 // Call this after having called InitializeBuilder, to migrate the database from
 // the current version to kCurrentVersionNumber.
 bool MigrateLogins(unsigned current_version,
-                   SQLTableBuilder* builder,
+                   database_support::SQLTableBuilder* builder,
                    sql::Connection* db) {
   if (!builder->MigrateFrom(current_version, db))
     return false;
@@ -568,7 +568,7 @@ bool LoginDatabase::Init() {
     return false;
   }
 
-  SQLTableBuilder builder("logins");
+  database_support::SQLTableBuilder builder("logins");
   InitializeBuilder(&builder);
   InitializeStatementStrings(builder);
 
@@ -1309,7 +1309,8 @@ bool LoginDatabase::StatementToForms(
   return true;
 }
 
-void LoginDatabase::InitializeStatementStrings(const SQLTableBuilder& builder) {
+void LoginDatabase::InitializeStatementStrings(
+    const database_support::SQLTableBuilder& builder) {
   // This method may be called multiple times, if Chrome switches backends and
   // LoginDatabase::DeleteAndRecreateDatabaseFile ends up being called. In those
   // case do not recompute the SQL statements, because they would end up the

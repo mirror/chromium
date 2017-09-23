@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//testing/test.gni")
+
+source_set("database_support") {
+  sources = [
+    "sql_table_builder.cc",
+    "sql_table_builder.h",
+  ]
+
+  deps = [
+    "//base",
+    "//sql",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "sql_table_builder_unittest.cc",
+  ]
+  deps = [
+    ":database_support",
+    "//base",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}

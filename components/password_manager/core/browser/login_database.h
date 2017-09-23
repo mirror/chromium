@@ -26,9 +26,11 @@
 #include "base/gtest_prod_util.h"
 #endif
 
-namespace password_manager {
-
+namespace database_support {
 class SQLTableBuilder;
+}  // namespace database_support
+
+namespace password_manager {
 
 extern const int kCurrentVersionNumber;
 extern const int kCompatibleVersionNumber;
@@ -210,7 +212,8 @@ class LoginDatabase {
 
   // Initializes all the *_statement_ data members with appropriate SQL
   // fragments based on |builder|.
-  void InitializeStatementStrings(const SQLTableBuilder& builder);
+  void InitializeStatementStrings(
+      const database_support::SQLTableBuilder& builder);
 
   base::FilePath db_path_;
   mutable sql::Connection db_;

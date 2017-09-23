@@ -1,5 +1,6 @@
 include_rules = [
   "+components/autofill/core/common",
+  "+components/database_support",
   "+components/os_crypt",
   "+components/password_manager/core",
   "+components/prefs",

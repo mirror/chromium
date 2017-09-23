@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_SQL_TABLE_BUILDER_H_
-#define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_SQL_TABLE_BUILDER_H_
+#ifndef COMPONENTS_DATABASE_SUPPORT_SQL_TABLE_BUILDER_H_
+#define COMPONENTS_DATABASE_SUPPORT_SQL_TABLE_BUILDER_H_
 
 #include <limits>
 #include <string>
@@ -16,7 +16,7 @@ namespace sql {
 class Connection;
 }
 
-namespace password_manager {
+namespace database_support {
 
 // Use this class to represent the versioned evolution of a SQLite table
 // structure and generate creating and migrating statements for it.
@@ -200,6 +200,6 @@ class SQLTableBuilder {
   DISALLOW_COPY_AND_ASSIGN(SQLTableBuilder);
 };
 
-}  // namespace password_manager
+}  // namespace database_support
 
-#endif  // COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_SQL_TABLE_BUILDER_H_
+#endif  // COMPONENTS_DATABASE_SUPPORT_SQL_TABLE_BUILDER_H_
