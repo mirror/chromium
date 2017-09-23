@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b1ea8a6_61cbfc34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-23T00:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7c18380_53fab3f9",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 115
+      },
+      "revId": "858f1ffc989e63fdec44b4890572aa34b89af10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19657330_fa79446e",
         "filename": "chromeos/components/tether/host_scan_device_prioritizer_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "858f1ffc989e63fdec44b4890572aa34b89af10c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e00bf4_ced78945",
+        "filename": "chromeos/components/tether/host_scan_device_prioritizer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-23T00:31:39Z",
+      "side": 1,
+      "message": "Oops :p Fixed.",
+      "parentUuid": "19657330_fa79446e",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 49
+      },
+      "revId": "858f1ffc989e63fdec44b4890572aa34b89af10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
