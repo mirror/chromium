@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0dc64ad1_55e396c9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-23T20:22:09Z",
+      "side": 1,
+      "message": "I removed this test case in the latest patch set because I don\u0027t quite understand how svg filter works especially about the filter bounds.",
+      "parentUuid": "f3430cc3_04fc88fe",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c46c287_84a6b5ac",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "6b21438b_95708072",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-23T20:22:09Z",
+      "side": 1,
+      "message": "Added check for paint offset in all existing PaintPropertyTreeBuilderTest cases testing filters.",
+      "parentUuid": "c3d05ffa_053376b7",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df177cd_658ca2d9",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/FEComposite.cpp",
         "patchSetId": 4
@@ -191,6 +227,24 @@
       "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51dc8aa_3d3c0d91",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEComposite.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-23T20:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df177cd_658ca2d9",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
