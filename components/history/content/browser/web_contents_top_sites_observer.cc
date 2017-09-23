@@ -38,6 +38,15 @@ WebContentsTopSitesObserver::~WebContentsTopSitesObserver() {
 void WebContentsTopSitesObserver::NavigationEntryCommitted(
     const content::LoadCommittedDetails& load_details) {
   DCHECK(load_details.entry);
+
+  // We only care about navigating to a new page, or renavigating to an existing
+  // navigation entry for top sites.
+  if (load_details.type != content::NavigationType::NAVIGATION_TYPE_NEW_PAGE &&
+      load_details.type !=
+          content::NavigationType::NAVIGATION_TYPE_EXISTING_PAGE) {
+    return;
+  }
+
   if (top_sites_)
     top_sites_->OnNavigationCommitted(load_details.entry->GetURL());
 }
