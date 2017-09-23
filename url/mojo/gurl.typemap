@@ -5,6 +5,9 @@
 mojom = "//url/mojo/url.mojom"
 public_headers = [ "//url/gurl.h" ]
 traits_headers = [ "//url/mojo/url_gurl_struct_traits.h" ]
+sources = [
+  "//url/mojo/url_gurl_struct_traits.cc",
+]
 deps = [
   "//url",
 ]

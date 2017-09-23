@@ -6,6 +6,9 @@ mojom = "//url/mojo/url.mojom"
 public_headers = [ "//third_party/WebKit/Source/platform/weborigin/KURL.h" ]
 traits_headers =
     [ "//third_party/WebKit/Source/platform/mojo/KURLStructTraits.h" ]
+sources = [
+  "//third_party/WebKit/Source/platform/mojo/KURLStructTraits.cpp",
+]
 
 # Note: consumers of this typemap must themselves depend on platform.
 deps = [
