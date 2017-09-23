@@ -55,19 +55,71 @@ test(function(t) {
     }
 
     // Test exception cases.
-    assert_throws(null, function() {ctx.fill(null);});
-    assert_throws(null, function() {ctx.fill(null, null);});
-    assert_throws(null, function() {ctx.fill(null, 'nonzero');});
-    assert_throws(null, function() {ctx.fill(path, null);});
-    assert_throws(null, function() {ctx.fill([], 'nonzero');});
-    assert_throws(null, function() {ctx.fill({}, 'nonzero');});
-    assert_throws(null, function() {ctx.fill(null, 'evenodd');});
-    assert_throws(null, function() {ctx.fill([], 'evenodd');});
-    assert_throws(null, function() {ctx.fill({}, 'evenodd');});
-    assert_throws(null, function() {ctx.fill('gazonk');});
-    assert_throws(null, function() {ctx.fill(path, 'gazonk');});
-    assert_throws(null, function() {ctx.fill(undefined, undefined);});
-    assert_throws(null, function() {ctx.fill(undefined, path);});
+    try {
+      ctx.fill(null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(null, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(null, 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(path, null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill([], 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill({}, 'nonzero');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(null, 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill([], 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill({}, 'evenodd');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill('gazonk');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(path, 'gazonk');
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(undefined, undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.fill(undefined, path);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
 }, "Series of tests to ensure fill() works with path and winding rule parameters.");
 </script>
 </body>

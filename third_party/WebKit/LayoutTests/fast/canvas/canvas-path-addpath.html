@@ -53,8 +53,16 @@ test(function(t) {
     var p8 = new Path2D();
     p8.rect(100,100,100,100);
     p7.addPath(p8, null);
-    assert_throws(null, function() {p7.addPath(p8, []);});
-    assert_throws(null, function() {p7.addPath(p8, {});});
+    try {
+      p7.addPath(p8, []);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      p7.addPath(p8, {});
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     ctx.fillStyle = 'red';
     ctx.fill(p7);
     assert_array_equals(ctx.getImageData(101, 100, 1, 1).data, [255, 0, 0, 255]);
@@ -71,9 +79,21 @@ test(function(t) {
     
     var p9 = new Path2D();
     p9.rect(0,0,100,100);
-    assert_throws(null, function() {p7.addPath(null, m);});
-    assert_throws(null, function() {p7.addPath([], m);});
-    assert_throws(null, function() {p7.addPath({}, m);});
+    try {
+      p7.addPath(null, m);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      p7.addPath([], m);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+        p7.addPath({}, m);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     
 }, "Test addPath() method.");
 </script>

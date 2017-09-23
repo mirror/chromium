@@ -186,11 +186,23 @@ test(function(t) {
     setCurrentTransform(ctx, 1, 0, 0, 1, 0, 0);
     
     // throws: TypeError: Failed to set the \'currentTransform\' property on \'CanvasRenderingContext2D\': The provided value is not of type \'SVGMatrix\'.
-    assert_throws(null, function() {ctx.currentTransform = ctx;});
+    try {
+      ctx.currentTransform = ctx;
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     // throws: TypeError: Failed to set the \'currentTransform\' property on \'CanvasRenderingContext2D\': The provided value is not of type \'SVGMatrix\'.
-    assert_throws(null, function() {ctx.currentTransform = undefined;});
+    try {
+      ctx.currentTransform = undefined;
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     // throws: TypeError: Failed to set the \'currentTransform\' property on \'CanvasRenderingContext2D\': The provided value is not of type \'SVGMatrix\'.
-    assert_throws(null, function() {ctx.currentTransform = null;});
+    try {
+      ctx.currentTransform = null;
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
     
     ctx.fillStyle = 'red';
     ctx.fillRect(0, 0, 100, 100);

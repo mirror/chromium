@@ -40,10 +40,26 @@ test(function(t) {
     testStrokeWith(path);
 
     // Test exception cases.
-    assert_throws(null, function() {ctx.stroke(null);});
-    assert_throws(null, function() {ctx.stroke(undefined);});
-    assert_throws(null, function() {ctx.stroke([]);});
-    assert_throws(null, function() {ctx.stroke({});});
+    try {
+      ctx.stroke(null);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.stroke(undefined);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.stroke([]);
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
+    try {
+      ctx.stroke({});
+    } catch (ex) {
+      assert_equals(ex.name, "TypeError");
+    }
 }, "Series of tests to ensure stroke() works with optional path parameter.");
 </script>
 </body>
