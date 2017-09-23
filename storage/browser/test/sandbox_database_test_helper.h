@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 
-#include "third_party/leveldatabase/src/db/filename.h"
+#include "third_party/leveldatabase/leveldb_chrome_testing.h"
 
 namespace base {
 class FilePath;
