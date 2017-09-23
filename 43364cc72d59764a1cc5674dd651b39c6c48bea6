@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f53cf9f9_5c32d2f3",
+        "filename": "net/http/http_auth_handler_ntlm_portable.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-23T02:01:39Z",
+      "side": 1,
+      "message": "}else{ unnecessary for early returns.",
+      "revId": "43364cc72d59764a1cc5674dd651b39c6c48bea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
