@@ -398,6 +398,7 @@
 #endif
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "chrome/common/printing/pdf_to_pwg_raster_converter.mojom.h"
+#include "chrome/common/printing/print_backend_handler.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
@@ -3011,6 +3012,8 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   (*services)[printing::mojom::kPdfToPwgRasterConverterServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PWG_RASTER_CONVERTOR_NAME);
+  (*services)[printing::mojom::kPrintBackendHandlerServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_BACKEND_NAME);
 #endif
 
   (*services)[profiling::mojom::kServiceName] =
