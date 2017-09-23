@@ -34,15 +34,6 @@
   return color;
 }
 
-+ (UIColor*)hostListRefreshIndicatorColor {
-  static UIColor* color;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    color = [UIColor colorWithRed:0.50f green:0.87f blue:0.92f alpha:1.f];
-  });
-  return color;
-}
-
 + (UIColor*)menuBlueColor {
   static UIColor* color;
   static dispatch_once_t onceToken;
@@ -131,6 +122,17 @@
     color = [UIColor colorWithWhite:0.f alpha:0.54f];
   });
   return color;
+}
+
++ (NSArray<UIColor*>*)refreshIndicatorColors {
+  static NSArray<UIColor*>* colors;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    UIColor* cyan =
+        [UIColor colorWithRed:0.50f green:0.87f blue:0.92f alpha:1.f];
+    colors = @[ UIColor.whiteColor, cyan ];
+  });
+  return colors;
 }
 
 #pragma mark - Icons

@@ -19,7 +19,6 @@
 @property(class, nonatomic, readonly) UIColor* flatButtonTextColor;
 @property(class, nonatomic, readonly) UIColor* hostErrorColor;
 @property(class, nonatomic, readonly) UIColor* hostListBackgroundColor;
-@property(class, nonatomic, readonly) UIColor* hostListRefreshIndicatorColor;
 @property(class, nonatomic, readonly) UIColor* hostOfflineColor;
 @property(class, nonatomic, readonly) UIColor* hostOnlineColor;
 @property(class, nonatomic, readonly) UIColor* menuBlueColor;
@@ -27,6 +26,8 @@
 @property(class, nonatomic, readonly) UIColor* setupListNumberColor;
 @property(class, nonatomic, readonly) UIColor* setupListTextColor;
 @property(class, nonatomic, readonly) UIColor* sideMenuIconColor;
+
+@property(class, nonatomic, readonly) NSArray<UIColor*>* refreshIndicatorColors;
 
 // Icons
 
