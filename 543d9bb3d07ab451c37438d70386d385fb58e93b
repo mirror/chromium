@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7d2044_338388da",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-23T00:03:51Z",
+      "side": 1,
+      "message": "Shelf can be left-aligned. Is this covered by this change?",
+      "range": {
+        "startLine": 1267,
+        "startChar": 50,
+        "endLine": 1267,
+        "endChar": 60
+      },
+      "revId": "543d9bb3d07ab451c37438d70386d385fb58e93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
