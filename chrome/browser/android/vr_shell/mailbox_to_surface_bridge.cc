@@ -14,6 +14,7 @@
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/browser_thread.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
@@ -162,12 +163,18 @@ void MailboxToSurfaceBridge::OnContextAvailable(
   }
 
   gl_ = context_provider_->ContextGL();
+  context_support_ = context_provider_->ContextSupport();
 
   if (!gl_) {
     DLOG(ERROR) << "Did not get a GL context";
     return;
   }
+  if (!context_support_) {
+    DLOG(ERROR) << "Did not get a ContextSupport";
+    return;
+  }
   InitializeRenderer();
+  is_initialized_ = true;
 }
 
 void MailboxToSurfaceBridge::CreateSurface(
@@ -268,6 +275,43 @@ bool MailboxToSurfaceBridge::CopyMailboxToSurfaceAndSwap(
   gl_->DeleteTextures(1, &sourceTexture);
   gl_->SwapBuffers();
   return true;
+}
+
+void MailboxToSurfaceBridge::FetchSyncTokenNativeFd(
+    const gpu::SyncToken& sync_token,
+    const base::Callback<void(int32_t)>& callback) {
+  if (!context_support_) {
+    LOG(WARNING) << __FUNCTION__ << "ContextSupport not yet available";
+    std::move(callback).Run(-1);
+    return;
+  }
+  context_support_->FetchNativeSyncPointFd(sync_token, callback);
+}
+
+void MailboxToSurfaceBridge::GenerateMailbox(gpu::Mailbox& out_mailbox) {
+  if (!gl_) {
+    LOG(WARNING) << __FUNCTION__ << "GL not yet available";
+    return;
+  }
+  gl_->GenMailboxCHROMIUM(out_mailbox.name);
+}
+
+void MailboxToSurfaceBridge::CreateSharedBuffer(const gpu::Mailbox& mailbox) {
+  if (!context_support_) {
+    LOG(WARNING) << __FUNCTION__ << "ContextSupport not yet available";
+    return;
+  }
+  context_support_->CreateSharedBuffer(mailbox);
+}
+
+void MailboxToSurfaceBridge::SetSharedBufferHandle(
+    const gpu::Mailbox& mailbox,
+    const gfx::GpuMemoryBufferHandle& handle) {
+  if (!context_support_) {
+    LOG(WARNING) << __FUNCTION__ << "ContextSupport not yet available";
+    return;
+  }
+  context_support_->SetSharedBufferHandle(mailbox, handle);
 }
 
 void MailboxToSurfaceBridge::DestroyContext() {

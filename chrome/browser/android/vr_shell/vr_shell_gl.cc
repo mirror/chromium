@@ -1246,16 +1246,30 @@ int64_t VrShellGl::GetPredictedFrameTimeNanos() {
 }
 
 void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
-  uint8_t frame_index = frame_index_++;
+  TRACE_EVENT1("input", "VrShellGl::SendVSync", "frame", frame_index_);
 
-  TRACE_EVENT1("input", "VrShellGl::SendVSync", "frame", frame_index);
+  if (!mailbox_bridge_->IsInitialized()) {
+    LOG(INFO) << __FUNCTION__
+              << ";;; Mailbox bridge not ready, try again later";
+    // Try again next vsync
+    pending_time_ = time;
+    pending_vsync_ = true;
+    callback_ = std::move(callback);
+    return;
+  }
 
   int64_t prediction_nanos = GetPredictedFrameTimeNanos();
 
   gfx::Transform head_mat;
+  TRACE_EVENT_BEGIN0("gpu", "VrShellGl::GetVRPosePtrWithNeckModel");
   device::mojom::VRPosePtr pose =
       device::GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), &head_mat,
                                                      prediction_nanos);
+  TRACE_EVENT_END0("gpu", "VrShellGl::GetVRPosePtrWithNeckModel");
+
+  // From here on, we're committed to using this VSync, increment the frame
+  // index.
+  uint8_t frame_index = frame_index_++;
 
   webvr_head_pose_[frame_index % kPoseRingBufferSize] = head_mat;
   webvr_frame_oustanding_[frame_index % kPoseRingBufferSize] = true;
