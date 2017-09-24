@@ -34,6 +34,9 @@ class GPU_EXPORT MailboxManagerImpl : public MailboxManager {
   void PullTextureUpdates(const SyncToken& token) override {}
   void TextureDeleted(TextureBase* texture) override;
 
+  void CreateSharedBuffer(const Mailbox& mailbox) override;
+  SharedBuffer* GetSharedBuffer(const Mailbox& mailbox) override;
+
  private:
   void InsertTexture(const Mailbox& mailbox, TextureBase* texture);
 
@@ -48,6 +51,8 @@ class GPU_EXPORT MailboxManagerImpl : public MailboxManager {
   MailboxToTextureMap mailbox_to_textures_;
   TextureToMailboxMap textures_to_mailboxes_;
 
+  std::map<Mailbox, std::unique_ptr<SharedBuffer>> mailbox_to_sharedbuffers_;
+
   DISALLOW_COPY_AND_ASSIGN(MailboxManagerImpl);
 };
 
@@ -55,4 +60,3 @@ class GPU_EXPORT MailboxManagerImpl : public MailboxManager {
 }  // namespace gpu
 
 #endif  // GPU_COMMAND_BUFFER_SERVICE_MAILBOX_MANAGER_IMPL_H_
-

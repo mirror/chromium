@@ -54,6 +54,8 @@
 #include "ui/gl/gl_workarounds.h"
 #include "ui/gl/init/gl_factory.h"
 
+#include <iomanip>
+
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
 #endif
@@ -323,6 +325,10 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
                         OnFetchNativeSyncPointFd)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateImage, OnCreateImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateSharedBuffer,
+                        OnCreateSharedBuffer);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SetSharedBufferHandle,
+                        OnSetSharedBufferHandle);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
                         OnCreateStreamTexture)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -986,6 +992,28 @@ void GpuCommandBufferStub::CheckCompleteWaits() {
   }
 }
 
+void GpuCommandBufferStub::OnCreateSharedBuffer(const Mailbox& mailbox) {
+  // LOG(INFO) << __FUNCTION__ << ";;; mailbox=" << mailbox.DebugString();
+  gles2::MailboxManager* mailbox_manager = context_group_->mailbox_manager();
+  mailbox_manager->CreateSharedBuffer(mailbox);
+  LOG(INFO) << __FUNCTION__ << ";;; DONE";
+}
+
+void GpuCommandBufferStub::OnSetSharedBufferHandle(
+    const Mailbox& mailbox,
+    const gfx::GpuMemoryBufferHandle& handle) {
+  // LOG(INFO) << __FUNCTION__ << ";;; mailbox=" << mailbox.DebugString();
+  gles2::MailboxManager* mailbox_manager = context_group_->mailbox_manager();
+  gles2::SharedBuffer* buf = mailbox_manager->GetSharedBuffer(mailbox);
+  // CHECK(buf);
+  if (buf) {
+    buf->handle = handle;
+  } else {
+    LOG(ERROR) << __FUNCTION__ << ";;; GetSharedBuffer returned null";
+  }
+  // LOG(INFO) << __FUNCTION__ << ";;; DONE";
+}
+
 void GpuCommandBufferStub::OnAsyncFlush(
     int32_t put_offset,
     uint32_t flush_id,
@@ -1149,7 +1177,7 @@ void GpuCommandBufferStub::OnCreateNativeSyncPoint(uint64_t buffer_fence) {
   TRACE_EVENT_END0("gpu", "CreateSyncKHR");
 
   if (native_fence == EGL_NO_SYNC_KHR) {
-    LOG(INFO) << __FUNCTION__ << ";;; ERROR, EGL_NO_SYNC_KHR";
+    LOG(WARNING) << __FUNCTION__ << ";;; ERROR, EGL_NO_SYNC_KHR";
   }
   {
     TRACE_EVENT0("gpu", "Flush");
@@ -1358,8 +1386,28 @@ void GpuCommandBufferStub::OnCreateImage(
     return;
   }
 
-  scoped_refptr<gl::GLImage> image = channel()->CreateImageForGpuMemoryBuffer(
-      handle, size, format, internalformat, surface_handle_);
+  scoped_refptr<gl::GLImage> image;
+
+  if (handle.type == gfx::MAILBOX_SHARED_BUFFER) {
+    // LOG(INFO) << __FUNCTION__ << ";;; got MAILBOX_SHARED_BUFFER
+    // handle_mailbox=" << handle.MailboxSharedBufferString();
+    gpu::Mailbox mailbox;
+    std::copy(std::begin(handle.mailbox_shared_buffer),
+              std::end(handle.mailbox_shared_buffer), std::begin(mailbox.name));
+    // LOG(INFO) << __FUNCTION__ << ";;; mailbox=" << mailbox.DebugString();
+    gles2::MailboxManager* mailbox_manager = context_group_->mailbox_manager();
+    gles2::SharedBuffer* buf = mailbox_manager->GetSharedBuffer(mailbox);
+    if (buf) {
+      // LOG(INFO) << __FUNCTION__ << ";;; found SharedBuffer, replacing
+      // handle";
+      image = channel()->CreateImageForGpuMemoryBuffer(
+          buf->handle, size, format, internalformat, surface_handle_);
+    }
+  } else {
+    image = channel()->CreateImageForGpuMemoryBuffer(
+        handle, size, format, internalformat, surface_handle_);
+  }
+
   if (!image.get())
     return;
 

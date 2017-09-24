@@ -131,6 +131,31 @@ void ParamTraits<gfx::SelectionBound>::Log(const param_type& p,
   l->append(")");
 }
 
+void ParamTraits<gfx::GpuMemoryBufferHandle::MailboxName>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  m->WriteBytes(&p, sizeof(p));
+}
+
+bool ParamTraits<gfx::GpuMemoryBufferHandle::MailboxName>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* p) {
+  const char* bytes = NULL;
+  if (!iter->ReadBytes(&bytes, sizeof(*p)))
+    return false;
+  DCHECK(bytes);
+  memcpy(p, bytes, sizeof(*p));
+  return true;
+}
+
+void ParamTraits<gfx::GpuMemoryBufferHandle::MailboxName>::Log(
+    const param_type& p,
+    std::string* l) {
+  for (size_t i = 0; i < sizeof(*p); ++i)
+    *l += base::StringPrintf("%02x", p[i]);
+}
+
 }  // namespace IPC
 
 // Generate param traits write methods.

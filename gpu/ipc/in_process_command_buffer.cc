@@ -1061,6 +1061,16 @@ void InProcessCommandBuffer::AddLatencyInfo(
                         latency_info.end());
 }
 
+void InProcessCommandBuffer::CreateSharedBuffer(const Mailbox& mailbox) {
+  NOTIMPLEMENTED();
+}
+
+void InProcessCommandBuffer::SetSharedBufferHandle(
+    const Mailbox& mailbox,
+    const gfx::GpuMemoryBufferHandle& handle) {
+  NOTIMPLEMENTED();
+}
+
 #if defined(OS_WIN)
 void InProcessCommandBuffer::DidCreateAcceleratedSurfaceChildWindow(
     SurfaceHandle parent_window,

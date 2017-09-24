@@ -11,6 +11,12 @@
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/gpu_export.h"
 
+#include "ui/gfx/gpu_memory_buffer.h"
+
+namespace gfx {
+struct GpuMemoryBufferHandle;
+}
+
 namespace gpu {
 
 struct GpuPreferences;
@@ -19,6 +25,10 @@ struct SyncToken;
 namespace gles2 {
 
 class TextureBase;
+
+struct GPU_EXPORT SharedBuffer {
+  gfx::GpuMemoryBufferHandle handle;
+};
 
 // Manages resources scoped beyond the context or context group level.
 class GPU_EXPORT MailboxManager {
@@ -41,6 +51,11 @@ class GPU_EXPORT MailboxManager {
   // Destroy any mailbox that reference the given texture.
   virtual void TextureDeleted(TextureBase* texture) = 0;
 
+  // TODO(klausw): currently just implemented in mailbox_manager_impl,
+  // move to a shared non-abstract base class or a mixin?
+  virtual void CreateSharedBuffer(const Mailbox& mailbox) = 0;
+  virtual SharedBuffer* GetSharedBuffer(const Mailbox& mailbox) = 0;
+
   static std::unique_ptr<MailboxManager> Create(
       const GpuPreferences& gpu_preferences);
 };
@@ -49,4 +64,3 @@ class GPU_EXPORT MailboxManager {
 }  // namespace gpu
 
 #endif  // GPU_COMMAND_BUFFER_SERVICE_MAILBOX_MANAGER_H_
-

@@ -205,6 +205,10 @@ class GPU_EXPORT GpuCommandBufferStub
 
   void ReportState();
 
+  void OnCreateSharedBuffer(const Mailbox&);
+  void OnSetSharedBufferHandle(const Mailbox&,
+                               const gfx::GpuMemoryBufferHandle&);
+
   // Poll the command buffer to execute work.
   void PollWork();
   void PerformWork();

@@ -151,6 +151,11 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
       !data.ReadHardwareBufferHandle(&out->hardware_buffer_handle))
     return false;
 #endif
+  if (out->type == gfx::MAILBOX_SHARED_BUFFER) {
+    base::span<int8_t> mailbox_shared_buffer(out->mailbox_shared_buffer);
+    if (!data.ReadMailboxSharedBuffer(&mailbox_shared_buffer))
+      return false;
+  }
   return true;
 }
 

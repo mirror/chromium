@@ -24,6 +24,11 @@
 #include "ui/gfx/android/hardware_buffer_handle.h"
 #endif
 
+// From gl2/gl2ext.h.
+#ifndef GL_MAILBOX_SIZE_CHROMIUM
+#define GL_MAILBOX_SIZE_CHROMIUM 16
+#endif
+
 extern "C" typedef struct _ClientBuffer* ClientBuffer;
 
 namespace gfx {
@@ -35,6 +40,7 @@ enum GpuMemoryBufferType {
   SHARED_MEMORY_BUFFER,
   IO_SURFACE_BUFFER,
   NATIVE_PIXMAP,
+  MAILBOX_SHARED_BUFFER,
   ANDROID_HARDWARE_BUFFER,
   GPU_MEMORY_BUFFER_TYPE_LAST = ANDROID_HARDWARE_BUFFER
 };
@@ -42,6 +48,7 @@ enum GpuMemoryBufferType {
 using GpuMemoryBufferId = GenericSharedMemoryId;
 
 struct GFX_EXPORT GpuMemoryBufferHandle {
+  using MailboxName = int8_t[GL_MAILBOX_SIZE_CHROMIUM];
   GpuMemoryBufferHandle();
   GpuMemoryBufferHandle(const GpuMemoryBufferHandle& other);
   ~GpuMemoryBufferHandle();
@@ -51,6 +58,7 @@ struct GFX_EXPORT GpuMemoryBufferHandle {
   base::SharedMemoryHandle handle;
   uint32_t offset;
   int32_t stride;
+  MailboxName mailbox_shared_buffer;
 #if defined(OS_LINUX)
   NativePixmapHandle native_pixmap_handle;
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
@@ -58,6 +66,8 @@ struct GFX_EXPORT GpuMemoryBufferHandle {
 #elif defined(OS_ANDROID)
   AndroidHardwareBufferHandle hardware_buffer_handle;
 #endif
+
+  std::string MailboxSharedBufferString() const;
 };
 
 // This interface typically correspond to a type of shared memory that is also

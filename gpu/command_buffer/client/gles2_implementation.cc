@@ -6141,6 +6141,18 @@ void GLES2Implementation::CompleteLockDiscardableTexureOnContextThread(
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
 }
 
+void GLES2Implementation::CreateSharedBuffer(const Mailbox& mailbox) {
+  // TODO(klausw): use via ClientDiscardableManager? What does that add?
+  // ClientDiscardableManager* manager = share_group()->discardable_manager();
+  gpu_control_->CreateSharedBuffer(mailbox);
+}
+
+void GLES2Implementation::SetSharedBufferHandle(
+    const Mailbox& mailbox,
+    const gfx::GpuMemoryBufferHandle& handle) {
+  gpu_control_->SetSharedBufferHandle(mailbox, handle);
+}
+
 void GLES2Implementation::SetLostContextCallback(
     const base::Closure& callback) {
   lost_context_callback_ = callback;

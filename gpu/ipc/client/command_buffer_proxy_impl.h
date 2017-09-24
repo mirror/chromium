@@ -45,6 +45,10 @@ namespace base {
 class SharedMemory;
 }
 
+namespace gfx {
+struct GpuMemoryBufferHandle;
+}
+
 namespace gpu {
 struct GpuProcessHostedCALayerTreeParamsMac;
 struct Mailbox;
@@ -136,6 +140,10 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
   bool CanWaitUnverifiedSyncToken(const gpu::SyncToken& sync_token) override;
   void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) override;
+
+  void CreateSharedBuffer(const Mailbox&) override;
+  void SetSharedBufferHandle(const Mailbox&,
+                             const gfx::GpuMemoryBufferHandle&) override;
 
   void TakeFrontBuffer(const gpu::Mailbox& mailbox);
   void ReturnFrontBuffer(const gpu::Mailbox& mailbox,

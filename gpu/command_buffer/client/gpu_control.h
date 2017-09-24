@@ -24,6 +24,10 @@ namespace base {
 class Lock;
 }
 
+namespace gfx {
+struct GpuMemoryBufferHandle;
+}
+
 namespace ui {
 class LatencyInfo;
 }
@@ -131,6 +135,10 @@ class GPU_EXPORT GpuControl {
   // components next time there is a GPU buffer swap.
   virtual void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) = 0;
+
+  virtual void CreateSharedBuffer(const Mailbox&) = 0;
+  virtual void SetSharedBufferHandle(const Mailbox&,
+                                     const gfx::GpuMemoryBufferHandle&) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GpuControl);

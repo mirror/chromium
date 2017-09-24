@@ -47,6 +47,7 @@ enum GpuMemoryBufferType {
   SHARED_MEMORY_BUFFER,
   IO_SURFACE_BUFFER,
   NATIVE_PIXMAP,
+  MAILBOX_SHARED_BUFFER,
   ANDROID_HARDWARE_BUFFER,
   LAST = ANDROID_HARDWARE_BUFFER
 };
@@ -88,4 +89,5 @@ struct GpuMemoryBufferHandle {
   NativePixmapHandle? native_pixmap_handle;
   handle? mach_port;
   AndroidHardwareBufferHandle? hardware_buffer_handle;
+  array<int8,16> mailbox_shared_buffer;
 };

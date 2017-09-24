@@ -492,6 +492,9 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
       gfx::CloneHandleForIPC(gpu_memory_buffer->GetHandle());
   bool requires_sync_token = handle.type == gfx::IO_SURFACE_BUFFER;
 
+  // LOG(INFO) << __FUNCTION__ << ";;; handle.type=" << handle.type << "
+  // handle_mailbox=" << handle.MailboxSharedBufferString();
+
   uint64_t image_fence_sync = 0;
   if (requires_sync_token) {
     image_fence_sync = GenerateFenceSyncRelease();
@@ -652,6 +655,21 @@ void CommandBufferProxyImpl::AddLatencyInfo(
   CheckLock();
   for (size_t i = 0; i < latency_info.size(); i++)
     latency_info_.push_back(latency_info[i]);
+}
+
+void CommandBufferProxyImpl::CreateSharedBuffer(const Mailbox& mailbox) {
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  Send(new GpuCommandBufferMsg_CreateSharedBuffer(route_id_, mailbox));
+}
+
+void CommandBufferProxyImpl::SetSharedBufferHandle(
+    const Mailbox& mailbox,
+    const gfx::GpuMemoryBufferHandle& handle) {
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  Send(new GpuCommandBufferMsg_SetSharedBufferHandle(route_id_, mailbox,
+                                                     handle));
 }
 
 void CommandBufferProxyImpl::SignalQuery(uint32_t query,

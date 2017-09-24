@@ -183,6 +183,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
         return gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP;
+      case gfx::GpuMemoryBufferType::MAILBOX_SHARED_BUFFER:
+        return gfx::mojom::GpuMemoryBufferType::MAILBOX_SHARED_BUFFER;
       case gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
         return gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
     }
@@ -204,6 +206,9 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return true;
       case gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP:
         *out = gfx::GpuMemoryBufferType::NATIVE_PIXMAP;
+        return true;
+      case gfx::mojom::GpuMemoryBufferType::MAILBOX_SHARED_BUFFER:
+        *out = gfx::GpuMemoryBufferType::MAILBOX_SHARED_BUFFER;
         return true;
       case gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
         *out = gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
@@ -319,6 +324,10 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
       const gfx::GpuMemoryBufferHandle& handle);
   static const gfx::AndroidHardwareBufferHandle& hardware_buffer_handle(
       const gfx::GpuMemoryBufferHandle& handle);
+  static base::span<const int8_t> mailbox_shared_buffer(
+      const gfx::GpuMemoryBufferHandle& handle) {
+    return handle.mailbox_shared_buffer;
+  }
   static mojo::ScopedHandle mach_port(const gfx::GpuMemoryBufferHandle& handle);
   static bool Read(gfx::mojom::GpuMemoryBufferHandleDataView data,
                    gfx::GpuMemoryBufferHandle* handle);
