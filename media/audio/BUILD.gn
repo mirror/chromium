@@ -79,6 +79,8 @@ source_set("audio") {
     "audio_device_thread.h",
     "audio_features.cc",
     "audio_features.h",
+    "audio_input_stream_data_interceptor.cc",
+    "audio_input_stream_data_interceptor.h",
     "audio_input_controller.cc",
     "audio_input_controller.h",
     "audio_input_device.cc",
