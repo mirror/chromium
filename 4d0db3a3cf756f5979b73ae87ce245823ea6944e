@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42724b4e_14ef0959",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T01:47:13Z",
+      "side": 1,
+      "message": "Why is the old hypertext set to the current hypertext here?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbe3bf0_40165b6f",
+        "filename": "ui/accessibility/ax_role_properties.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T01:47:13Z",
+      "side": 1,
+      "message": "Is there a document role too?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3eee78_bdd47167",
+        "filename": "ui/accessibility/ax_role_properties.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T01:47:13Z",
+      "side": 1,
+      "message": "Why is this function exported?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1f1080_fe1d05f1",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T01:47:13Z",
+      "side": 1,
+      "message": "Sometimes Get sometimes Compute?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
