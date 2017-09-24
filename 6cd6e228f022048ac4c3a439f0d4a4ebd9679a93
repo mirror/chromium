@@ -22,6 +22,30 @@
       "revId": "6cd6e228f022048ac4c3a439f0d4a4ebd9679a93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef728bb_46b74263",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-24T23:43:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b926501f_4b5a1ca8",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 25
+      },
+      "revId": "6cd6e228f022048ac4c3a439f0d4a4ebd9679a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
