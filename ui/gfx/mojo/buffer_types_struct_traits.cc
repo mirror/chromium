@@ -41,6 +41,31 @@ bool StructTraits<
 #endif
 }
 
+mojo::ScopedHandle StructTraits<gfx::mojom::AndroidHardwareBufferHandleDataView,
+                                gfx::AndroidHardwareBufferHandle>::
+    socket_fd(const gfx::AndroidHardwareBufferHandle& buffer_handle) {
+  return mojo::WrapPlatformFile(
+      buffer_handle.scoped_ahardwarebuffer.GetSingleUseReadFDForIPC().get());
+}
+
+bool StructTraits<gfx::mojom::AndroidHardwareBufferHandleDataView,
+                  gfx::AndroidHardwareBufferHandle>::
+    Read(gfx::mojom::AndroidHardwareBufferHandleDataView data,
+         gfx::AndroidHardwareBufferHandle* out) {
+#if defined(OS_ANDROID)
+  base::PlatformFile platform_file;
+  if (mojo::UnwrapPlatformFile(data.TakeSocketFd(), &platform_file) !=
+      MOJO_RESULT_OK)
+    return false;
+  constexpr bool auto_close = true;
+  out->scoped_ahardwarebuffer.AdoptFromSingleUseReadFD(
+      base::ScopedFD(base::FileDescriptor(platform_file, auto_close).fd));
+  return true;
+#else
+  return false;
+#endif
+}
+
 mojo::ScopedSharedBufferHandle
 StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
              gfx::GpuMemoryBufferHandle>::
@@ -60,6 +85,18 @@ StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
 #else
   static gfx::NativePixmapHandle pixmap_handle;
   return pixmap_handle;
+#endif
+}
+
+const gfx::AndroidHardwareBufferHandle&
+StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
+             gfx::GpuMemoryBufferHandle>::
+    hardware_buffer_handle(const gfx::GpuMemoryBufferHandle& handle) {
+#if defined(OS_ANDROID)
+  return handle.hardware_buffer_handle;
+#else
+  static gfx::AndroidHardwareBufferHandle hardware_buffer_handle;
+  return hardware_buffer_handle;
 #endif
 }
 
@@ -108,6 +145,11 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
       return false;
     out->mach_port.reset(mach_port);
   }
+#endif
+#if defined(OS_ANDROID)
+  if (out->type == gfx::ANDROID_HARDWARE_BUFFER &&
+      !data.ReadHardwareBufferHandle(&out->hardware_buffer_handle))
+    return false;
 #endif
   return true;
 }
