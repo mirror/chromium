@@ -696,6 +696,9 @@
       name: "OrientationEvent",
     },
     {
+      name: "OriginManifest",
+    },
+    {
       name: "OriginTrials",
       status: "stable",
     },
