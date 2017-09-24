@@ -38,13 +38,17 @@ class WebMouseEvent;
 namespace gl {
 class GLContext;
 class GLFenceEGL;
+class GLImageEGL;
 class GLSurface;
+class GPUTimingClient;
+class GPUTimer;
 class ScopedJavaSurface;
 class SurfaceTexture;
 }  // namespace gl
 
 namespace gpu {
 struct MailboxHolder;
+struct SyncToken;
 }  // namespace gpu
 
 namespace vr {
@@ -61,6 +65,8 @@ class MailboxToSurfaceBridge;
 class GlBrowserInterface;
 class VrController;
 class VrShell;
+
+class GLFenceNativeEGL;
 
 struct WebVrBounds {
   WebVrBounds(const gfx::RectF& left,
@@ -126,7 +132,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
   bool ShouldDrawWebVr();
-  void DrawWebVr();
+  void DrawWebVr(int16_t frame_index);
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
   void UpdateController(const gfx::Transform& head_pose);
@@ -178,6 +184,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void GetVSync(GetVSyncCallback callback) override;
   void SubmitFrame(int16_t frame_index,
                    const gpu::MailboxHolder& mailbox) override;
+  void SubmitFrameZeroCopy3(int16_t frame_index,
+                            const gpu::SyncToken&) override;
   void UpdateLayerBounds(int16_t frame_index,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
@@ -220,6 +228,18 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
+
+  bool webvr_zero_copy_submit_ = false;
+  bool UsingZeroCopySubmit() { return webvr_zero_copy_submit_; }
+  std::vector<void*> webvr_frame_presubmit_fence_;
+  void* WebVrWaitForServerFence(int16_t frame_index);
+  void OnWebVRTokenSignaled(int16_t frame_index, int32_t sync_fd);
+  bool webvr_block_vsync_until_sync_token_draw_done_ = false;
+  std::vector<std::unique_ptr<gpu::Mailbox>> webvr_sharedbuffer_mailboxes_;
+  std::vector<std::unique_ptr<gfx::ScopedAndroidHardwareBuffer>>
+      webvr_sharedbuffers_;
+  bool WebVrSharedBufferDraw() { return !webvr_sharedbuffers_.empty(); }
+  std::vector<scoped_refptr<gl::GLImageEGL>> webvr_bufferimages_;
 
   std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
 

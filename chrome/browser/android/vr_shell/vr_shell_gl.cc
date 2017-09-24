@@ -13,6 +13,7 @@
 #include "base/containers/queue.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/gl_browser_interface.h"
@@ -32,14 +33,19 @@
 #include "device/vr/android/gvr/gvr_delegate.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_mailbox_shared_buffer.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
+#include "ui/gfx/android/hardware_buffer_handle.h"
+#include "ui/gfx/android/scoped_android_hardware_buffer.h"
 #include "ui/gfx/geometry/angle_conversions.h"
 #include "ui/gl/android/scoped_java_surface.h"
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_fence_egl.h"
+#include "ui/gl/gl_image_egl.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
@@ -171,6 +177,48 @@ void LoadControllerModelTask(
 
 }  // namespace
 
+// TODO(klausw): make proper subclass, or add constructor to GLFenceEGL?
+
+class GLFenceNativeEGL : public gl::GLFenceEGL {
+ public:
+  explicit GLFenceNativeEGL(EGLSyncKHR fence) : fence_(fence) {
+    display_ = eglGetCurrentDisplay();
+  }
+
+  ~GLFenceNativeEGL() override {
+    CHECK(fence_ != EGL_NO_SYNC_KHR);
+    eglDestroySyncKHR(display_, fence_);
+  }
+
+  void ClientWait() override {
+    CHECK(fence_ != EGL_NO_SYNC_KHR);
+    eglClientWaitSyncKHR(display_, fence_, 0, EGL_FOREVER_KHR);
+  }
+
+  void ServerWait() override {
+    CHECK(fence_ != EGL_NO_SYNC_KHR);
+    eglWaitSyncKHR(display_, fence_, 0);
+  }
+
+  bool HasCompleted() override {
+    CHECK(fence_ != EGL_NO_SYNC_KHR);
+    EGLint val = 0;
+    EGLint ret =
+        eglGetSyncAttribKHR(display_, fence_, EGL_SYNC_STATUS_KHR, &val);
+    if (!ret) {
+      LOG(INFO) << __FUNCTION__ << ";;; ERROR";
+      return true;  // ERROR
+    }
+    // LOG(INFO) << __FUNCTION__ << ";;; EGL_SYNC_STATUS_KHR=0x" << std::hex <<
+    // val;
+    return !val || val == EGL_SIGNALED_KHR;
+  }
+
+ private:
+  EGLSyncKHR fence_ = EGL_NO_SYNC_KHR;
+  EGLDisplay display_;
+};
+
 VrShellGl::VrShellGl(GlBrowserInterface* browser,
                      gvr_context* gvr_api,
                      bool initially_web_vr,
@@ -257,6 +305,9 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
+  webvr_zero_copy_submit_ =
+      base::FeatureList::IsEnabled(features::kWebVRExperimentalRendering);
+
   if (daydream_support_) {
     base::PostTaskWithTraits(
         FROM_HERE, {base::TaskPriority::BACKGROUND},
@@ -305,6 +356,50 @@ void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
     mailbox_bridge_ = base::MakeUnique<MailboxToSurfaceBridge>();
     mailbox_bridge_->CreateSurface(webvr_surface_texture_.get());
   }
+}
+
+void VrShellGl::OnWebVRTokenSignaled(int16_t frame_index, int32_t sync_fd) {
+  TRACE_EVENT1("gpu", "VrShellGl::OnWebVRTokenSignaled", "frame", frame_index);
+  // LOG(INFO) << __FUNCTION__ << ";;; frame_index=" << (int)frame_index << "
+  // sync_fd=" << sync_fd;
+
+  EGLDisplay display = eglGetCurrentDisplay();
+  EGLint attrs[] = {EGL_SYNC_NATIVE_FENCE_FD_ANDROID, sync_fd, EGL_NONE};
+  EGLSyncKHR fence =
+      eglCreateSyncKHR(display, EGL_SYNC_NATIVE_FENCE_ANDROID, attrs);
+  if (fence == EGL_NO_SYNC_KHR) {
+    LOG(ERROR) << __FUNCTION__ << ";;; failed to get a fence";
+    close(sync_fd);
+    return;
+  }
+
+#if 0
+  EGLint val = 0;
+  eglGetSyncAttribKHR(eglGetCurrentDisplay(), fence, EGL_SYNC_STATUS_KHR, &val);
+  LOG(INFO) << __FUNCTION__ << ";;; server_fence status=" << std::hex << val;
+#endif
+
+  webvr_frame_presubmit_fence_[frame_index % kPoseRingBufferSize] = fence;
+
+  // Ensure the fence is sent to the server.
+  glFlush();
+
+  DrawFrame(frame_index);
+}
+
+void VrShellGl::SubmitFrameZeroCopy3(int16_t frame_index,
+                                     const gpu::SyncToken& sync_token) {
+  // LOG(INFO) << __FUNCTION__ << ";;; frame=" << (int)frame_index;
+  TRACE_EVENT1("gpu", "VrShellGl::SubmitWebVRFrameZeroCopy3", "frame",
+               frame_index);
+  webvr_time_js_submit_[frame_index % kPoseRingBufferSize] =
+      base::TimeTicks::Now();
+
+  webvr_block_vsync_until_sync_token_draw_done_ = true;
+
+  mailbox_bridge_->FetchSyncTokenNativeFd(
+      sync_token, base::Bind(&VrShellGl::OnWebVRTokenSignaled,
+                             weak_ptr_factory_.GetWeakPtr(), frame_index));
 }
 
 void VrShellGl::SubmitFrame(int16_t frame_index,
@@ -439,6 +534,7 @@ void VrShellGl::InitializeRenderer() {
   webvr_time_pose_.assign(kPoseRingBufferSize, base::TimeTicks());
   webvr_frame_oustanding_.assign(kPoseRingBufferSize, false);
   webvr_time_js_submit_.assign(kPoseRingBufferSize, base::TimeTicks());
+  webvr_frame_presubmit_fence_.assign(kPoseRingBufferSize, EGL_NO_SYNC_KHR);
 
   std::vector<gvr::BufferSpec> specs;
   // For kFramePrimaryBuffer (primary VrShell and WebVR content)
@@ -847,7 +943,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   frame.BindBuffer(kFramePrimaryBuffer);
 
   if (ShouldDrawWebVr()) {
-    DrawWebVr();
+    DrawWebVr(frame_index);
   }
 
   // When using async reprojection, we need to know which pose was
@@ -942,10 +1038,13 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     frame.Unbind();
   }
 
-  if (ShouldDrawWebVr() && surfaceless_rendering_) {
+  std::unique_ptr<gl::GLFenceEGL> fence = nullptr;
+  if (ShouldDrawWebVr() && surfaceless_rendering_ && !WebVrSharedBufferDraw()) {
     // Continue with submit once a GL fence signals that current drawing
     // operations have completed.
-    std::unique_ptr<gl::GLFenceEGL> fence = base::MakeUnique<gl::GLFenceEGL>();
+    fence = base::MakeUnique<gl::GLFenceEGL>();
+  }
+  if (fence) {
     task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
@@ -981,6 +1080,25 @@ void VrShellGl::UpdateEyeInfos(const gfx::Transform& head_pose,
         buffer_viewport_->GetSourceFov(), kZNear, kZFar);
     eye_info.view_proj_matrix = eye_info.proj_matrix * eye_info.view_matrix;
   }
+}
+
+void* VrShellGl::WebVrWaitForServerFence(int16_t frame_index) {
+  EGLSyncKHR server_fence =
+      webvr_frame_presubmit_fence_[frame_index % kPoseRingBufferSize];
+  webvr_frame_presubmit_fence_[frame_index % kPoseRingBufferSize] =
+      EGL_NO_SYNC_KHR;
+  if (!server_fence) {
+    LOG(ERROR) << "Unexpected: didn't get a fence";
+  }
+  // IMPORTANT: wait as late as possible to insert the server wait. Doing so
+  // blocks the server from doing any further work on this GL context until
+  // the fence signals, this prevents any older fences such as the ones we
+  // may be using for other synchronization from signaling.
+
+  if (server_fence)
+    eglWaitSyncKHR(eglGetCurrentDisplay(), server_fence, 0);
+  glFlush();  // Is this necessary?
+  return server_fence;
 }
 
 void VrShellGl::DrawFrameSubmitWhenReady(
@@ -1048,7 +1166,7 @@ bool VrShellGl::ShouldDrawWebVr() {
   return web_vr_mode_ && scene_->web_vr_rendering_enabled();
 }
 
-void VrShellGl::DrawWebVr() {
+void VrShellGl::DrawWebVr(int16_t frame_index) {
   TRACE_EVENT0("gpu", "VrShellGl::DrawWebVr");
   // Don't need face culling, depth testing, blending, etc. Turn it all off.
   glDisable(GL_CULL_FACE);
@@ -1066,8 +1184,33 @@ void VrShellGl::DrawWebVr() {
   // it's not supported on older devices such as Nexus 5X.
   glClear(GL_COLOR_BUFFER_BIT);
 
+  float ySign = -1.0f;
+  EGLSyncKHR server_fence = EGL_NO_SYNC_KHR;
+  if (WebVrSharedBufferDraw()) {
+    int mailbox_idx = frame_index % 4;
+    server_fence = WebVrWaitForServerFence(frame_index);
+
+    scoped_refptr<gl::GLImageEGL> img(new gl::GLImageEGL(webvr_surface_size_));
+    EGLint attribs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
+    bool ret = img->InitializeFromHardwareBuffer(
+        static_cast<void*>(webvr_sharedbuffers_[mailbox_idx]->get()), attribs);
+    // LOG(INFO) << __FUNCTION__ << ";;; InitializeFromHardwareBuffer ret=" <<
+    // ret;
+    if (!ret)
+      return;
+    glBindTexture(GL_TEXTURE_EXTERNAL_OES, webvr_texture_id_);
+    img->BindTexImage(GL_TEXTURE_EXTERNAL_OES);
+    webvr_bufferimages_[mailbox_idx] = img;
+    // TODO(klausw): figure out how come these drawing modes
+    // need opposite Y directions. Who is flipping one of them?
+    // SurfaceTexture transform?
+    ySign = 1.0f;
+  }
+
   glViewport(0, 0, webvr_surface_size_.width(), webvr_surface_size_.height());
-  vr_shell_renderer_->GetWebVrRenderer()->Draw(webvr_texture_id_);
+  vr_shell_renderer_->GetWebVrRenderer()->Draw(webvr_texture_id_, ySign);
+  if (server_fence)
+    eglDestroySyncKHR(eglGetCurrentDisplay(), server_fence);
 }
 
 void VrShellGl::OnPause() {
@@ -1242,6 +1385,10 @@ int64_t VrShellGl::GetPredictedFrameTimeNanos() {
                  js_micros / 1000.0, "rendering", render_micros / 1000.0);
   TRACE_COUNTER1("gpu", "WebVR pose prediction (ms)",
                  expected_frame_micros / 1000.0);
+  LOG(INFO) << ";;; pose prediction=" << expected_frame_micros / 1000.0
+            << "ms (js=" << js_micros / 1000.0
+            << "ms, render=" << render_micros / 1000.0
+            << "ms), fps=" << fps_meter_->GetFPS();
   return expected_frame_micros * 1000;
 }
 
@@ -1256,6 +1403,45 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
     pending_vsync_ = true;
     callback_ = std::move(callback);
     return;
+  }
+
+  // After a few frames, switch to new render mode.
+  if (frame_index_ == 12 && !WebVrSharedBufferDraw()) {
+    for (int i = 0; i < 4; ++i) {
+      std::unique_ptr<gpu::Mailbox> mailbox = base::MakeUnique<gpu::Mailbox>();
+      mailbox_bridge_->GenerateMailbox(*mailbox);
+      mailbox_bridge_->CreateSharedBuffer(*mailbox);
+      webvr_sharedbuffer_mailboxes_.push_back(std::move(mailbox));
+
+      gfx::ScopedAndroidHardwareBuffer buf;
+      buf = gfx::ScopedAndroidHardwareBuffer::CreateFromSpec(
+          webvr_surface_size_, gfx::BufferFormat::RGBA_8888,
+          gfx::BufferUsage::SCANOUT);
+
+      std::unique_ptr<gfx::ScopedAndroidHardwareBuffer> bufptr =
+          base::MakeUnique<gfx::ScopedAndroidHardwareBuffer>();
+      *bufptr = buf;
+      webvr_sharedbuffers_.push_back(std::move(bufptr));
+
+      // Initialize images, to be filled in later
+      webvr_bufferimages_.push_back(nullptr);
+    }
+  }
+
+  base::Optional<gfx::GpuMemoryBufferHandle> opt_buffer = base::nullopt;
+
+  if (WebVrSharedBufferDraw()) {
+    int mailbox_idx = frame_index_ % 4;
+    gfx::GpuMemoryBufferHandle draw_mailbox_handle =
+        gpu::GpuMemoryBufferImplMailboxSharedBuffer::GetHandleForMailbox(
+            *webvr_sharedbuffer_mailboxes_[mailbox_idx],
+            gfx::GpuMemoryBufferId());
+    opt_buffer = draw_mailbox_handle;
+    mailbox_bridge_->SetSharedBufferHandle(
+        *webvr_sharedbuffer_mailboxes_[mailbox_idx],
+        gpu::GpuMemoryBufferImplAndroidHardwareBuffer::
+            GetHandleFromRawAHardwareBuffer(
+                webvr_sharedbuffers_[mailbox_idx]->get()));
   }
 
   int64_t prediction_nanos = GetPredictedFrameTimeNanos();
@@ -1277,7 +1463,7 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
 
   std::move(callback).Run(
       std::move(pose), time - base::TimeTicks(), frame_index,
-      device::mojom::VRPresentationProvider::VSyncStatus::SUCCESS);
+      device::mojom::VRPresentationProvider::VSyncStatus::SUCCESS, opt_buffer);
 }
 
 void VrShellGl::closePresentationBindings() {
@@ -1289,7 +1475,8 @@ void VrShellGl::closePresentationBindings() {
     // the connection is closing.
     base::ResetAndReturn(&callback_)
         .Run(nullptr, base::TimeDelta(), -1,
-             device::mojom::VRPresentationProvider::VSyncStatus::CLOSING);
+             device::mojom::VRPresentationProvider::VSyncStatus::CLOSING,
+             base::nullopt);
   }
   binding_.Close();
 }
