@@ -79,6 +79,16 @@ struct GFX_IPC_EXPORT ParamTraits<gfx::SelectionBound> {
   static void Log(const param_type& p, std::string* l);
 };
 
+template <>
+struct GFX_IPC_EXPORT ParamTraits<gfx::GpuMemoryBufferHandle::MailboxName> {
+  typedef gfx::GpuMemoryBufferHandle::MailboxName param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
 }  // namespace IPC
 
 #endif  // UI_GFX_IPC_GFX_PARAM_TRAITS_H_
