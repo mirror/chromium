@@ -602,6 +602,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // to the "commit" JS API.
   RefPtr<StaticBitmapImage> GetStaticBitmapImage();
 
+  void SetCustomBackbufferFBO(GLuint fbo);
   uint32_t GetNativeSyncPointFd();
   uint64_t CreateNativeSyncPoint();
 
@@ -1687,6 +1688,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }
+
+  GLuint custom_backbuffer_fbo_ = 0;
 };
 
 // TODO(fserb): remove this.
