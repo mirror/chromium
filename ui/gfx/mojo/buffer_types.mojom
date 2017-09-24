@@ -47,7 +47,8 @@ enum GpuMemoryBufferType {
   SHARED_MEMORY_BUFFER,
   IO_SURFACE_BUFFER,
   NATIVE_PIXMAP,
-  LAST = NATIVE_PIXMAP
+  ANDROID_HARDWARE_BUFFER,
+  LAST = ANDROID_HARDWARE_BUFFER
 };
 
 // gfx::GpuMemoryBufferId
@@ -71,6 +72,12 @@ struct NativePixmapHandle {
   array<NativePixmapPlane> planes;
 };
 
+// gfx::AndroidHardwareBufferHandle
+struct AndroidHardwareBufferHandle {
+  // A file descriptor for the underlying unix domain socket client port.
+  handle socket_fd;
+};
+
 // gfx::GpuMemoryBufferHandle
 struct GpuMemoryBufferHandle {
   GpuMemoryBufferType type;
@@ -80,4 +87,5 @@ struct GpuMemoryBufferHandle {
   uint32 stride;
   NativePixmapHandle? native_pixmap_handle;
   handle? mach_port;
+  AndroidHardwareBufferHandle? hardware_buffer_handle;
 };

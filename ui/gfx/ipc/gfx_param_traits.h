@@ -18,6 +18,10 @@
 #include "ui/gfx/mac/io_surface.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "ui/gfx/android/hardware_buffer_handle.h"
+#endif
+
 namespace gfx {
 class Range;
 }
@@ -49,6 +53,21 @@ struct GFX_IPC_EXPORT ParamTraits<gfx::ScopedRefCountedIOSurfaceMachPort> {
   static void Log(const param_type& p, std::string* l);
 };
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+template <>
+struct GFX_IPC_EXPORT ParamTraits<gfx::ScopedAndroidHardwareBuffer> {
+  typedef gfx::ScopedAndroidHardwareBuffer param_type;
+  static void Write(base::Pickle* m, const param_type p);
+  // Note: Read() consumes the AHardwareBuffer written to the underlying
+  // SocketPair. Therefore, Read() may only be called once for a given message,
+  // a second one would get EOF or wait indefinitely.
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+#endif  // defined(OS_ANDROID)
 
 template <>
 struct GFX_IPC_EXPORT ParamTraits<gfx::SelectionBound> {
