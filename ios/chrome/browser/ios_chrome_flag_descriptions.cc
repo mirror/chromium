@@ -36,6 +36,18 @@ const char kInProductHelpDemoModeDescription[] =
     "an individual promotion causes that promotion but no other promotions to "
     "occur.";
 
+const char kMailtoPromptForUserChoiceName[] =
+    "Mailto Handler Prompt for User Choice";
+const char kMailtoPromptForUserChoiceDescription[] =
+    "Enable prompt for user to choose a mail client app when user taps on a "
+    "mailto:// URL link.";
+
+const char kMainViewControllerPresentsChildrenName[] =
+    "Main View Controller Presents Children";
+const char kMainViewControllerPresentsChildrenDescription[] =
+    "When enabled, the MainViewController will present its children instead "
+    "of adding them as contained children.";
+
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
 const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
@@ -45,12 +57,6 @@ const char kMarkHttpAsNonSecureWhileIncognito[] =
     "Warn on HTTP while in Incognito mode";
 const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[] =
     "Warn on HTTP while in Incognito mode or after editing forms";
-
-const char kMailtoPromptForUserChoiceName[] =
-    "Mailto Handler Prompt for User Choice";
-const char kMailtoPromptForUserChoiceDescription[] =
-    "Enable prompt for user to choose a mail client app when user taps on a "
-    "mailto:// URL link.";
 
 const char kOmniboxUIElideSuggestionUrlAfterHostName[] =
     "Hide the path, query, and ref of omnibox suggestions";
