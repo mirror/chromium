@@ -42,6 +42,12 @@ class ContextSupport {
   // passed the glEndQueryEXT() point.
   virtual void SignalQuery(uint32_t query, const base::Closure& callback) = 0;
 
+  virtual uint32_t GetNativeSyncPointFd() = 0;
+  virtual uint64_t CreateNativeSyncPoint() = 0;
+  virtual void FetchNativeSyncPointFd(
+      const SyncToken& sync_token,
+      const base::Callback<void(int32_t)>& callback) = 0;
+
   // Indicates whether the context should aggressively free allocated resources.
   // If set to true, the context will purge all temporary resources when
   // flushed.

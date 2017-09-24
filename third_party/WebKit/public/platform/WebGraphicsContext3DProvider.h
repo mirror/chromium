@@ -62,6 +62,9 @@ class WebGraphicsContext3DProvider {
   virtual void SetErrorMessageCallback(
       const base::Callback<void(const char* msg, int32_t id)>&) = 0;
   virtual void SignalQuery(uint32_t, const base::Closure&) = 0;
+
+  virtual uint32_t GetNativeSyncPointFd() = 0;
+  virtual uint64_t CreateNativeSyncPoint() = 0;
 };
 
 }  // namespace blink
