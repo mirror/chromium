@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5920bd0_edc93997",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T16:44:26Z",
+      "side": 1,
+      "message": "Optional: You can avoid the if-block by using:\nassert_not_equals(window.eventSender, null, \u0027This test requires window.eventSender\u0027);",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0648115a_6cf1aca5",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T16:44:26Z",
+      "side": 1,
+      "message": "Would this test still pass if the handler were never called? If so, can you somehow assert that it gets called (and only once)?",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcb40e2_8d64dc30",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T16:44:26Z",
+      "side": 1,
+      "message": "I like this approach of moving the pseudo special-case into LayoutObject::NodeForHitTest. Do we need to still handle the case when pseudo content is a LayoutBlockFlow? In other words, this change:\nNode* LayoutBlockFlow::NodeForHitTest() const {\n  // If we are in the margins of block elements that are part of a\n  // continuation we\u0027re actually still inside the enclosing element\n  // that was split. Use the appropriate inner node.\n  return IsAnonymousBlockContinuation() ? Continuation()-\u003eNodeForHitTest() : LayoutBlock::NodeForHitTest();\n}\n(if so, can you add a test?)",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae317e4_748bd9d7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T16:44:26Z",
+      "side": 1,
+      "message": "Should LayoutInline::UpdateHitTestResult also use NodeForHitTest()?",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
