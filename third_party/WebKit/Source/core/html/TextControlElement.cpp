@@ -46,6 +46,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutBlock.h"
@@ -159,8 +160,8 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
-         !IsPlaceholderEmpty();
+  return SupportsPlaceholder() && IsEmptyValue() &&
+         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -969,6 +970,30 @@ String TextControlElement::DirectionForFormData() const {
   }
 
   return "ltr";
+}
+
+void TextControlElement::SetSuggestedValue(const String& value) {
+  LOG(ERROR) << "SuggestedValue " << value;
+  suggested_value_ = value;
+  if (!suggested_value_.IsEmpty() && !InnerEditorValue().IsEmpty()) {
+    LOG(ERROR) << "Saving " << InnerEditorValue() << " to set "
+               << suggested_value_;
+    // If there is a suggested value and the field is not empty
+    value_before_set_suggested_value_ = InnerEditorValue();
+    SetInnerEditorValue("");
+  } else if (suggested_value_.IsEmpty() &&
+             !value_before_set_suggested_value_.IsEmpty()) {
+    LOG(ERROR) << "Setting back " << value_before_set_suggested_value_
+               << " to replace " << InnerEditorValue();
+    SetInnerEditorValue(value_before_set_suggested_value_);
+    value_before_set_suggested_value_ = "";
+  }
+
+  UpdatePlaceholderText();
+}
+
+const String& TextControlElement::SuggestedValue() const {
+  return suggested_value_;
 }
 
 HTMLElement* TextControlElement::InnerEditorElement() const {

@@ -391,6 +391,9 @@ void HTMLTextAreaElement::SetValueCommon(
   normalized_value.Replace("\r\n", "\n");
   normalized_value.Replace('\r', '\n');
 
+  // Prevent TextFieldInputType::setValue from using the suggested value.
+  SetSuggestedValue(String());
+
   // Return early because we don't want to trigger other side effects when the
   // value isn't changing. This is interoperable.
   if (normalized_value == value())
@@ -408,7 +411,6 @@ void HTMLTextAreaElement::SetValueCommon(
   SetNeedsStyleRecalc(
       kSubtreeStyleChange,
       StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
-  suggested_value_ = String();
   SetNeedsValidityCheck();
   if (IsFinishedParsingChildren() &&
       selection == TextControlSetValueSelection::kSetSelectionToEnd) {
@@ -468,17 +470,9 @@ void HTMLTextAreaElement::setDefaultValue(const String& default_value) {
     SetNonDirtyValue(value);
 }
 
-String HTMLTextAreaElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
 void HTMLTextAreaElement::SetSuggestedValue(const String& value) {
-  suggested_value_ = value;
-
-  if (!value.IsNull())
-    SetInnerEditorValue(suggested_value_);
-  else
-    SetInnerEditorValue(value_);
+  TextControlElement::SetSuggestedValue(value);
+  UpdateValue();
   UpdatePlaceholderVisibility();
   SetNeedsStyleRecalc(
       kSubtreeStyleChange,
@@ -588,7 +582,7 @@ void HTMLTextAreaElement::SetPlaceholderVisibility(bool visible) {
 
 void HTMLTextAreaElement::UpdatePlaceholderText() {
   HTMLElement* placeholder = PlaceholderElement();
-  const AtomicString& placeholder_text = FastGetAttribute(placeholderAttr);
+  const String placeholder_text = GetPlaceholderValue();
   if (placeholder_text.IsEmpty()) {
     if (placeholder)
       UserAgentShadowRoot()->RemoveChild(placeholder);
@@ -605,6 +599,11 @@ void HTMLTextAreaElement::UpdatePlaceholderText() {
     UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
   }
   placeholder->setTextContent(placeholder_text);
+}
+
+String HTMLTextAreaElement::GetPlaceholderValue() const {
+  return !SuggestedValue().IsEmpty() ? SuggestedValue()
+                                     : FastGetAttribute(placeholderAttr);
 }
 
 bool HTMLTextAreaElement::IsInteractiveContent() const {
