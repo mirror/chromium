@@ -1936,6 +1936,12 @@ EGL_FUNCTIONS = [
                    'GL_CHROMIUM_egl_khr_fence_sync_hack'
                  ] }],
   'arguments': 'EGLDisplay dpy, EGLSyncKHR sync' },
+{ 'return_type': 'EGLint',
+  'versions': [{ 'name': 'eglDupNativeFenceFDANDROID',
+                 'extensions': ['EGL_ANDROID_native_fence_sync', # Implemented but not reported?
+                                'EGL_ANDROID_get_native_client_buffer']}],
+  'arguments':
+      'EGLDisplay dpy, EGLSyncKHR sync' },
 { 'return_type': 'EGLBoolean',
   'names': ['eglGetConfigAttrib'],
   'arguments':
