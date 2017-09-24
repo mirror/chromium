@@ -8,6 +8,7 @@
 
 #include <algorithm>
 
+#include "base/memory/ptr_util.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 
 namespace gpu {
@@ -69,6 +70,13 @@ void MailboxManagerImpl::TextureDeleted(TextureBase* texture) {
   textures_to_mailboxes_.erase(range.first, range.second);
   DCHECK_EQ(mailbox_to_textures_.size(), textures_to_mailboxes_.size());
 }
+
+void MailboxManagerImpl::CreateSharedBuffer(const Mailbox& mailbox) {
+  mailbox_to_sharedbuffers_[mailbox] = base::MakeUnique<SharedBuffer>();
+};
+SharedBuffer* MailboxManagerImpl::GetSharedBuffer(const Mailbox& mailbox) {
+  return mailbox_to_sharedbuffers_[mailbox].get();
+};
 
 }  // namespace gles2
 }  // namespace gpu

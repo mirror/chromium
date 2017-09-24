@@ -20,6 +20,8 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #endif
 
+#include "gpu/ipc/client/gpu_memory_buffer_impl_mailbox_shared_buffer.h"
+
 namespace gpu {
 
 GpuMemoryBufferImpl::GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,
@@ -64,6 +66,9 @@ std::unique_ptr<GpuMemoryBufferImpl> GpuMemoryBufferImpl::CreateFromHandle(
       return GpuMemoryBufferImplAndroidHardwareBuffer::CreateFromHandle(
           handle, size, format, usage, callback);
 #endif
+    case gfx::MAILBOX_SHARED_BUFFER:
+      return GpuMemoryBufferImplMailboxSharedBuffer::CreateFromHandle(
+          handle, size, format, usage, callback);
     default:
       NOTREACHED();
       return nullptr;

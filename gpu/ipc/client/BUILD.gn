@@ -26,6 +26,8 @@ source_set("ipc_client_sources") {
     "gpu_memory_buffer_impl.h",
     "gpu_memory_buffer_impl_shared_memory.cc",
     "gpu_memory_buffer_impl_shared_memory.h",
+    "gpu_memory_buffer_impl_mailbox_shared_buffer.cc",
+    "gpu_memory_buffer_impl_mailbox_shared_buffer.h",
   ]
   if (is_mac) {
     sources += [

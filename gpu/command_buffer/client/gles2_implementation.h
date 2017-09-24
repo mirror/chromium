@@ -217,6 +217,8 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   bool ThreadSafeShallowLockDiscardableTexture(uint32_t texture_id) override;
   void CompleteLockDiscardableTexureOnContextThread(
       uint32_t texture_id) override;
+  void CreateSharedBuffer(const Mailbox&) override;
+  void SetSharedBufferHandle(const Mailbox&, const gfx::GpuMemoryBufferHandle&) override;
 
   // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
   // intercept it.

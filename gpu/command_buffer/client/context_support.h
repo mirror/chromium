@@ -12,6 +12,7 @@
 #include "ui/gfx/overlay_transform.h"
 
 namespace gfx {
+struct GpuMemoryBufferHandle;
 class Rect;
 class RectF;
 }
@@ -22,6 +23,7 @@ class LatencyInfo;
 
 namespace gpu {
 
+struct Mailbox;
 struct SyncToken;
 
 class ContextSupport {
@@ -91,6 +93,8 @@ class ContextSupport {
   virtual void CompleteLockDiscardableTexureOnContextThread(
       uint32_t texture_id) = 0;
 
+  virtual void CreateSharedBuffer(const Mailbox&) = 0;
+  virtual void SetSharedBufferHandle(const Mailbox&, const gfx::GpuMemoryBufferHandle&) = 0;
  protected:
   ContextSupport() {}
   virtual ~ContextSupport() {}

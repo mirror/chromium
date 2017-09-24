@@ -271,4 +271,7 @@ IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_FetchNativeSyncPointFdComplete,
                     gpu::SyncToken,
                     GpuCommandBufferMsg_SyncPointFd_Return);
 
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_CreateSharedBuffer, gpu::Mailbox);
+IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_SetSharedBufferHandle, gpu::Mailbox, gfx::GpuMemoryBufferHandle);
+
 #endif  // GPU_IPC_COMMON_GPU_MESSAGES_H_

@@ -51,6 +51,7 @@ IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferHandle)
 #elif defined(OS_ANDROID)
   IPC_STRUCT_TRAITS_MEMBER(hardware_buffer_handle)
 #endif
+  IPC_STRUCT_TRAITS_MEMBER(mailbox_shared_buffer)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferId)

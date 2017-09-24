@@ -51,6 +51,7 @@ class GLSurface;
 }
 
 namespace gfx {
+struct GpuMemoryBufferHandle;
 class Size;
 }
 
@@ -147,6 +148,9 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   bool CanWaitUnverifiedSyncToken(const SyncToken& sync_token) override;
   void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) override;
+
+  void CreateSharedBuffer(const Mailbox&) override;
+  void SetSharedBufferHandle(const Mailbox&, const gfx::GpuMemoryBufferHandle&) override;
 
   // CommandBufferServiceClient implementation:
   CommandBatchProcessedResult OnCommandBatchProcessed() override;

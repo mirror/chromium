@@ -6,6 +6,9 @@
 
 #include "ui/gfx/generic_shared_memory_id.h"
 
+#include <iomanip>
+#include <sstream>
+
 namespace gfx {
 
 GpuMemoryBufferHandle::GpuMemoryBufferHandle() : type(EMPTY_BUFFER), id(0) {}
@@ -43,6 +46,15 @@ GpuMemoryBufferHandle CloneHandleForIPC(
 #endif
       return handle;
     }
+    case gfx::MAILBOX_SHARED_BUFFER: {
+      gfx::GpuMemoryBufferHandle handle;
+      handle.type = gfx::MAILBOX_SHARED_BUFFER;
+      handle.id = source_handle.id;
+      std::copy(std::begin(source_handle.mailbox_shared_buffer),
+                std::end(source_handle.mailbox_shared_buffer),
+                std::begin(handle.mailbox_shared_buffer));
+      return handle;
+    }
     case gfx::ANDROID_HARDWARE_BUFFER: {
       gfx::GpuMemoryBufferHandle handle;
       handle.type = gfx::ANDROID_HARDWARE_BUFFER;
@@ -57,6 +69,16 @@ GpuMemoryBufferHandle CloneHandleForIPC(
       return source_handle;
   }
   return gfx::GpuMemoryBufferHandle();
+}
+
+std::string GpuMemoryBufferHandle::MailboxSharedBufferString() const {
+  std::ostringstream ss;
+  ss << "{";
+  for (size_t i = 0; i < sizeof(mailbox_shared_buffer); ++i) {
+    ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(*(reinterpret_cast<const uint8_t*>(&mailbox_shared_buffer[i])));
+  }
+  ss << "}";
+  return ss.str();
 }
 
 base::trace_event::MemoryAllocatorDumpGuid GpuMemoryBuffer::GetGUIDForTracing(

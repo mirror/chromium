@@ -37,6 +37,9 @@ class GPU_EXPORT MailboxManagerSync : public MailboxManager {
   void PullTextureUpdates(const SyncToken& token) override;
   void TextureDeleted(TextureBase* texture) override;
 
+  void CreateSharedBuffer(const Mailbox& mailbox) override;
+  SharedBuffer* GetSharedBuffer(const Mailbox& mailbox) override;
+
  private:
   static bool SkipTextureWorkarounds(const Texture* texture);
 

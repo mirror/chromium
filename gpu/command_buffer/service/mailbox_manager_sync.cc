@@ -371,5 +371,13 @@ void MailboxManagerSync::PullTextureUpdates(const SyncToken& token) {
   }
 }
 
+void MailboxManagerSync::CreateSharedBuffer(const Mailbox& mailbox) {
+  NOTIMPLEMENTED();
+};
+SharedBuffer* MailboxManagerSync::GetSharedBuffer(const Mailbox& mailbox) {
+  NOTIMPLEMENTED();
+  return nullptr;
+};
+
 }  // namespace gles2
 }  // namespace gpu
