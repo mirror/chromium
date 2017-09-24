@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29aba3d3_00d99f5f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 1,
+      "message": "Even with only one occurrence, |!document.GetFrame() || document.GetFrame()-\u003eGetDocument() !\u003d \u0026document| is still very hacky and unintuitive.\n\nThis is exactly the reason I want to turn CompositeEditCommand into a DocumentShutdownObserver.",
+      "parentUuid": "4833a266_9f1508ec",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88f21b66_d54e000c",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
@@ -48,6 +66,52 @@
       "side": 1,
       "message": "Since I have added an extra parameter to the below called InsertText, so this parameter is added. The extra parameter was added because of the other caller Editor::InsertTextWithoutSendingTextEvent.\nEditor::InsertTextWithoutSendingTextEvent after calling does operations so before that IsAborted was checked.",
       "parentUuid": "88f21b66_d54e000c",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399101b4_f5a39fba",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 1,
+      "message": "We should use the EditingState passed in as parameter instead of creating another.",
+      "range": {
+        "startLine": 416,
+        "startChar": 4,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034c4d7e_407faf67",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 1,
+      "message": "A new EditingState is created in CompositeEditCommand::Apply(), with the abort state indicated by the return value of Apply().\n\nHence, we should check the return value of Apply(), and abort the passed in EditingState if Apply() returns false.\n\nNot sure if we need to skip the SetSelection below when aborted. Guess no, at least for now, for minimizing behavior change.",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 16
+      },
       "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "d24f5bfb_0ef63f4a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9dba772b_a7b5b160",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d67a17ff_30ab1680",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
@@ -121,6 +203,24 @@
       "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b2bcc9_ab9b0bd5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00e9c79c_6039e1b6",
+      "revId": "0c8d3f80f62874bbd2990fd53abf43f52e8b7340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

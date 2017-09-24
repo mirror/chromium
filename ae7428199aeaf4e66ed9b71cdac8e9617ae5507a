@@ -46,6 +46,30 @@
       "revId": "ae7428199aeaf4e66ed9b71cdac8e9617ae5507a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c562622_9d7a445d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-24T13:36:31Z",
+      "side": 0,
+      "message": "OK, that use is legit.\n\nThanks for clarifying.",
+      "parentUuid": "56453f6e_3e412fd2",
+      "range": {
+        "startLine": 342,
+        "startChar": 54,
+        "endLine": 371,
+        "endChar": 3
+      },
+      "revId": "ae7428199aeaf4e66ed9b71cdac8e9617ae5507a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
