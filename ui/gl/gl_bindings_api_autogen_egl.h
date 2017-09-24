@@ -77,6 +77,8 @@ EGLDisplay eglGetCurrentDisplayFn(void) override;
 EGLSurface eglGetCurrentSurfaceFn(EGLint readdraw) override;
 EGLDisplay eglGetDisplayFn(EGLNativeDisplayType display_id) override;
 EGLint eglGetErrorFn(void) override;
+EGLClientBuffer eglGetNativeClientBufferANDROIDFn(
+    void* ahardwarebuffer) override;
 EGLDisplay eglGetPlatformDisplayEXTFn(EGLenum platform,
                                       void* native_display,
                                       const EGLint* attrib_list) override;
