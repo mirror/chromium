@@ -2142,7 +2142,10 @@ split_static_library("ui") {
           "views/tabs/window_finder_mus.h",
         ]
 
-        deps += [ "//ui/views/mus" ]
+        deps += [
+          "//ui/base/ime",
+          "//ui/views/mus",
+        ]
       }
 
       if (!is_chromeos) {
