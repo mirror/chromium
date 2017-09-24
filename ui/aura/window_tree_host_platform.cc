@@ -9,6 +9,7 @@
 #include "base/run_loop.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_port.h"
 #include "ui/base/layout.h"
@@ -189,6 +190,17 @@ void WindowTreeHostPlatform::OnAcceleratedWidgetDestroyed() {
 void WindowTreeHostPlatform::OnActivationChanged(bool active) {
   if (active)
     OnHostActivated();
+}
+
+void WindowTreeHostPlatform::LockKeys(const std::vector<int>& codes, const Window& window) {
+  // if (platform_window_->IsFullscreen())
+  if (window.HasFocus()) {
+    platform_window_->LockKeys(codes);
+  }
+}
+
+void WindowTreeHostPlatform::UnlockKeys(const std::vector<int>& codes, const Window& window) {
+  platform_window_->UnlockKeys(codes);
 }
 
 }  // namespace aura

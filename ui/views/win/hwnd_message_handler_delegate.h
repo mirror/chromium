@@ -5,6 +5,8 @@
 #ifndef UI_VIEWS_WIN_HWND_MESSAGE_HANDLER_DELEGATE_H_
 #define UI_VIEWS_WIN_HWND_MESSAGE_HANDLER_DELEGATE_H_
 
+#include "ui/base/ui_base_types.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/views_export.h"
 
 namespace gfx {

@@ -657,6 +657,8 @@ component("views") {
           "widget/desktop_aura/desktop_screen_win.h",
           "widget/desktop_aura/desktop_window_tree_host_win.cc",
           "widget/desktop_aura/desktop_window_tree_host_win.h",
+          "widget/desktop_aura/low_level_keyboard_proc.cc",
+          "widget/desktop_aura/low_level_keyboard_proc.h",
         ]
       } else if (use_ozone) {
         sources += [ "widget/desktop_aura/desktop_window_tree_host_ozone.cc" ]

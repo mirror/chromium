@@ -334,6 +334,11 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // return a valid FrameSinkId.
   viz::FrameSinkId GetFrameSinkId() const;
 
+  void LockKeys(const std::vector<int>& codes);
+  void UnlockKeys();
+
+  void ForwardLockedKeysToHost();
+
  protected:
   // Deletes (or removes if not owned by parent) all child windows. Intended for
   // use from the destructor.
@@ -503,6 +508,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   ui::mojom::EventTargetingPolicy event_targeting_policy_;
 
   base::ObserverList<WindowObserver, true> observers_;
+
+  std::set<int> locked_keys_;
 
   DISALLOW_COPY_AND_ASSIGN(Window);
 };

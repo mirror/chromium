@@ -17,6 +17,8 @@ component("win") {
   defines = [ "WIN_WINDOW_IMPLEMENTATION" ]
 
   sources = [
+    "low_level_keyboard_proc.cc",
+    "low_level_keyboard_proc.h",
     "win_window.cc",
     "win_window.h",
     "win_window_export.h",

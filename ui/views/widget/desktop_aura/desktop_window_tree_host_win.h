@@ -131,6 +131,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostWin
   void OnCursorVisibilityChangedNative(bool show) override;
   void MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) override;
+  void LockKeys(const std::vector<int>& keys, const aura::Window& window) override;
+  void UnlockKeys(const std::vector<int>& keys, const aura::Window& window) override;
 
   // Overridden from aura::client::AnimationHost
   void SetHostTransitionOffsets(

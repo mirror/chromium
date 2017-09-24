@@ -27,6 +27,7 @@
 #include "ui/views/widget/desktop_aura/desktop_drag_drop_client_win.h"
 #include "ui/views/widget/desktop_aura/desktop_native_cursor_manager.h"
 #include "ui/views/widget/desktop_aura/desktop_native_widget_aura.h"
+#include "ui/views/widget/desktop_aura/low_level_keyboard_proc.h"
 #include "ui/views/widget/root_view.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/views/widget/widget_hwnd_utils.h"
@@ -90,6 +91,8 @@ DesktopWindowTreeHostWin::DesktopWindowTreeHostWin(
 DesktopWindowTreeHostWin::~DesktopWindowTreeHostWin() {
   // WARNING: |content_window_| has been destroyed by the time we get here.
   desktop_native_widget_aura_->OnDesktopWindowTreeHostDestroyed(this);
+  // Avoid LowLevelKeyboardProc to call us again.
+  LowLevelKeyboardProc::GetInstance()->UnlockKeys(this);
   DestroyDispatcher();
 }
 
@@ -324,10 +327,12 @@ void DesktopWindowTreeHostWin::SetShape(
 
 void DesktopWindowTreeHostWin::Activate() {
   message_handler_->Activate();
+  // TODO: Forward locked keys to LowLevelKeyboardProc.
 }
 
 void DesktopWindowTreeHostWin::Deactivate() {
   message_handler_->Deactivate();
+  // TODO: Forward locked keys to LowLevelKeyboardProc.
 }
 
 bool DesktopWindowTreeHostWin::IsActive() const {
@@ -575,6 +580,16 @@ void DesktopWindowTreeHostWin::MoveCursorToScreenLocationInPixels(
   POINT cursor_location = location_in_pixels.ToPOINT();
   ::ClientToScreen(GetHWND(), &cursor_location);
   ::SetCursorPos(cursor_location.x, cursor_location.y);
+}
+
+void DesktopWindowTreeHostWin::LockKeys(const std::vector<int>& keys, const aura::Window& window) {
+  if (IsMaximized() && window.HasFocus()) {
+    LowLevelKeyboardProc::GetInstance()->LockKeys(this);
+  }
+}
+
+void DesktopWindowTreeHostWin::UnlockKeys(const std::vector<int>& keys, const aura::Window& window) {
+  LowLevelKeyboardProc::GetInstance()->UnlockKeys(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

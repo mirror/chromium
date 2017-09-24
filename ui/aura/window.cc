@@ -384,6 +384,8 @@ void Window::AddChild(Window* child) {
 
   params.phase = WindowObserver::HierarchyChangeParams::HIERARCHY_CHANGED;
   NotifyWindowHierarchyChange(params);
+
+  // TODO: Forward locked keys of |child| to WindowTreeHost.
 }
 
 void Window::RemoveChild(Window* child) {
@@ -399,6 +401,8 @@ void Window::RemoveChild(Window* child) {
 
   params.phase = WindowObserver::HierarchyChangeParams::HIERARCHY_CHANGED;
   NotifyWindowHierarchyChange(params);
+
+  // TODO: Remove locked keys of |child| from WindowTreeHost.
 }
 
 bool Window::Contains(const Window* other) const {
@@ -525,6 +529,7 @@ void Window::Focus() {
   client::FocusClient* client = client::GetFocusClient(this);
   DCHECK(client);
   client->FocusWindow(this);
+  ForwardLockedKeysToHost();
 }
 
 bool Window::HasFocus() const {
@@ -1030,6 +1035,29 @@ const viz::LocalSurfaceId& Window::GetLocalSurfaceId() const {
 
 viz::FrameSinkId Window::GetFrameSinkId() const {
   return port_->GetFrameSinkId();
+}
+
+void Window::LockKeys(const std::vector<int>& codes) {
+  locked_keys_.clear();
+  locked_keys_.insert(codes.begin(), codes.end());
+  ForwardLockedKeysToHost();
+}
+
+void Window::UnlockKeys() {
+  locked_keys_.clear();
+  ForwardLockedKeysToHost();
+}
+
+void Window::ForwardLockedKeysToHost() {
+  if (HasFocus()) {
+    WindowTreeHost* host = GetRootWindow()->GetHost();
+    if (locked_keys_.empty()) {
+      // TODO: Here we should unlock the previous locked keys
+      host->UnlockKeys(std::vector<int>(), *this);
+    } else {
+      host->LockKeys(std::vector<int>(locked_keys_.begin(), locked_keys_.end()), *this);
+    }
+  }
 }
 
 void Window::OnPaintLayer(const ui::PaintContext& context) {
