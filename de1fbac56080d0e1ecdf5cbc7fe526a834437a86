@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7941614d_e4146267",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 0,
+      "message": "What is the old hypertext set to the first time the class is used? Empty string and empty offset to index map isn\u0027t it? If so, I think it\u0027s fine.",
+      "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

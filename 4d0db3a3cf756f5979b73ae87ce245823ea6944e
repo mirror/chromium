@@ -53,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "61aebcd9_a882bfc0",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Most recent version of VoiceOver requires this too. It took me some time to find this out. Remove \"older\".",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5ea939_180137ad",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "I think now we have the EDITABLE_ROOT attribute. Could you check if it covers the cases that this \"if\" covers and switch to it if so?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28240c38_7fed68f3",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "return InnerText() to avoid the copy?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1f1080_fe1d05f1",
         "filename": "ui/accessibility/platform/ax_platform_node_base.h",
         "patchSetId": 1
@@ -64,6 +115,210 @@
       "writtenOn": "2017-09-24T01:47:13Z",
       "side": 1,
       "message": "Sometimes Get sometimes Compute?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88147137_bc56a4e5",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Default? Could we move constructor and destrucr and copy constructor to header file since they are defaulted?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73695df_5247a6aa",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Default?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c48b69_f74f2cd3",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3388,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Perhaps call both ComputeValue and override?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948c0fa8_d7ca1cd7",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3394,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "URL",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106e1675_e1af4c88",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3400,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "I don\u0027t think that all links have the linked state set. Could you look in the dump tree test files? I vaguely remember adding a test or modifying one where a link didn\u0027t have the linked state but it had a link role.",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51393fd1_d05533be",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "In a followup I want to clean up all this return -1 stuff and replace them with the new C++ 17 feature of std::optional\u003cint\u003e. If the offset is not there we\u0027ll return {} which will call the default constructor of std::optional\u003cint\u003e and this will set the value to \"not present\". Otherwise we could return the number which.",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f7c841_e2e0b420",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Should this be exported?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebeb9f3e_e71e623e",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "I think that struct members don\u0027t have trailing underscores. Could you please read the style guide?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185eeaf7_2c1e8425",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Same here. What does the style guide say about underscores? The member is not private.",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4936234_75286178",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Unnecessary comment?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160819e8_86a5ef1a",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Possibly remove trailing underscore?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c253ead8_c06007d6",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-24T11:48:35Z",
+      "side": 1,
+      "message": "Possibly override base GetValue?",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
