@@ -17,6 +17,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/common/content_export.h"
@@ -165,6 +166,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
+  base::Optional<bool> IsDownload() override;
 
   // Resume and CancelDeferredNavigation must only be called by the
   // NavigationThrottle that is currently deferring the navigation.
@@ -184,11 +186,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // TODO(arthursonzogni): This value is correct only when PlzNavigate is
   // enabled. Make it work in both modes.
   bool is_form_submission() const { return is_form_submission_; }
-
-  // Whether the navigation request is a download. This is useful when the
-  // navigation hasn't committed yet, in which case HasCommitted() will return
-  // false even if the navigation request is not a download.
-  bool is_download() const { return is_download_; }
 
   // The NavigatorDelegate to notify/query for various navigation events.
   // Normally this is the WebContents, except if this NavigationHandle was
@@ -571,8 +568,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   base::Closure transfer_callback_;
 
   // Whether the navigation ended up being a download or a stream.
-  bool is_download_;
-  bool is_stream_;
+  base::Optional<bool> is_download_;
+  base::Optional<bool> is_stream_;
 
   // False by default unless the navigation started within a context menu.
   bool started_from_context_menu_;

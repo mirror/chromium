@@ -121,8 +121,6 @@ NavigationHandleImpl::NavigationHandleImpl(
       navigation_id_(GetUniqueIDInConstructor()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
-      is_download_(false),
-      is_stream_(false),
       started_from_context_menu_(started_from_context_menu),
       reload_type_(ReloadType::NONE),
       restore_type_(RestoreType::NONE),
@@ -515,6 +513,10 @@ void NavigationHandleImpl::SetOnDeferCallbackForTesting(
 const GlobalRequestID& NavigationHandleImpl::GetGlobalRequestID() {
   DCHECK(state_ >= WILL_PROCESS_RESPONSE);
   return request_id_;
+}
+
+base::Optional<bool> NavigationHandleImpl::IsDownload() {
+  return is_download_;
 }
 
 void NavigationHandleImpl::InitServiceWorkerHandle(
@@ -1118,7 +1120,9 @@ bool NavigationHandleImpl::MaybeTransferAndProceedInternal() {
   // Similarly, HTTP 204 (No Content) responses leave the renderer showing the
   // previous page. The navigation should be allowed to finish without running
   // the unload handler or swapping in the pending RenderFrameHost.
-  if (is_download_ || is_stream_ ||
+  DCHECK(is_download_.has_value());
+  DCHECK(is_stream_.has_value());
+  if (is_download_.value() || is_stream_.value() ||
       (response_headers_.get() && response_headers_->response_code() == 204)) {
     return true;
   }
