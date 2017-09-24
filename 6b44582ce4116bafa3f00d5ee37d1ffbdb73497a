@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "3e19a57b_3030e2d5",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-out-of-floated-non-editable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T17:32:23Z",
+      "side": 1,
+      "message": "Is there any way to test this without eventSender? For example, is it possible to use the range api to test this (https://developer.mozilla.org/en-US/docs/Web/API/Range/intersectsNode)? Just trying to think of ways we could ensure we match Edge.",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dc43bd_ea0bb0b3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-24T17:32:23Z",
+      "side": 1,
+      "message": "Do we want to only change hit testing for selection or all of hit testing? If it\u0027s just the former, what do you think about renaming this IsChildPositionForPointCandidate (or similar) and adding a comment? If it\u0027s the latter, do we need to remove the float hit testing phase (see: LayoutObject::HitTest and kHitTestFloat) as well as update LayoutBlock::HitTestChildren (and similar)?",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34570912_cb630c09",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
