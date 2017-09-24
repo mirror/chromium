@@ -7828,4 +7828,30 @@ void WebGLRenderingContextBase::getHTMLOrOffscreenCanvas(
   }
 }
 
+uint32_t WebGLRenderingContextBase::GetNativeSyncPointFd() {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  if (isContextLost())
+    return 0;
+
+  if (!GetDrawingBuffer()) {
+    LOG(INFO) << __FUNCTION__ << ";;; No DrawingBuffer";
+    return 0;
+  }
+
+  return GetDrawingBuffer()->ContextProvider()->GetNativeSyncPointFd();
+}
+
+uint64_t WebGLRenderingContextBase::CreateNativeSyncPoint() {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  if (isContextLost())
+    return 0;
+
+  if (!GetDrawingBuffer()) {
+    LOG(INFO) << __FUNCTION__ << ";;; No DrawingBuffer";
+    return 0;
+  }
+
+  return GetDrawingBuffer()->ContextProvider()->CreateNativeSyncPoint();
+}
+
 }  // namespace blink

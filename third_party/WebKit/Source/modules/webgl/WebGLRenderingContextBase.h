@@ -602,6 +602,9 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // to the "commit" JS API.
   RefPtr<StaticBitmapImage> GetStaticBitmapImage();
 
+  uint32_t GetNativeSyncPointFd();
+  uint64_t CreateNativeSyncPoint();
+
  protected:
   friend class EXTDisjointTimerQuery;
   friend class EXTDisjointTimerQueryWebGL2;

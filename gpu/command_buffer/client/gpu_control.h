@@ -56,6 +56,12 @@ class GPU_EXPORT GpuControl {
   // passed the glEndQueryEXT() point.
   virtual void SignalQuery(uint32_t query, const base::Closure& callback) = 0;
 
+  virtual uint32_t GetNativeSyncPointFd() = 0;
+  virtual void CreateNativeSyncPoint(uint64_t fence) = 0;
+  virtual void FetchNativeSyncPointFd(
+      const SyncToken& sync_token,
+      const base::Callback<void(int32_t)>& callback) = 0;
+
   // Sets a lock this will be held on every callback from the GPU
   // implementation. This lock must be set and must be held on every call into
   // the GPU implementation if it is to be used from multiple threads. This

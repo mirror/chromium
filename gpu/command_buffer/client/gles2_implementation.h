@@ -194,6 +194,11 @@ class GLES2_IMPL_EXPORT GLES2Implementation
                        const base::Closure& callback) override;
   bool IsSyncTokenSignaled(const gpu::SyncToken& sync_token) override;
   void SignalQuery(uint32_t query, const base::Closure& callback) override;
+  uint32_t GetNativeSyncPointFd() override;
+  uint64_t CreateNativeSyncPoint() override;
+  void FetchNativeSyncPointFd(
+      const SyncToken& sync_token,
+      const base::Callback<void(int32_t)>& callback) override;
   void SetAggressivelyFreeResources(bool aggressively_free_resources) override;
   void Swap() override;
   void SwapWithBounds(const std::vector<gfx::Rect>& rects) override;
