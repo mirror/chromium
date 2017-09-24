@@ -19,6 +19,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
+#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
@@ -50,9 +51,13 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
       tick_clock_(new base::DefaultTickClock()),
       skipped_frames_(false),
       background_color_(SK_ColorRED),
-      current_scale_factor_(1.f),
       frame_evictor_(new viz::FrameEvictor(this)),
       weak_ptr_factory_(this) {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  enable_surface_synchronization_ =
+      command_line.HasSwitch(switches::kEnableSurfaceSynchronization);
+
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   factory->GetContextFactory()->AddObserver(this);
   viz::HostFrameSinkManager* host_frame_sink_manager =
@@ -258,8 +263,26 @@ void DelegatedFrameHost::WillDrawSurface(const viz::LocalSurfaceId& id,
 void DelegatedFrameHost::WasResized() {
   if (client_->DelegatedFrameHostDesiredSizeInDIP() !=
           current_frame_size_in_dip_ &&
-      !client_->DelegatedFrameHostIsVisible())
+      !client_->DelegatedFrameHostIsVisible()) {
     EvictDelegatedFrame();
+  }
+
+  if (enable_surface_synchronization_) {
+    ui::Layer* layer = client_->DelegatedFrameHostGetLayer();
+    gfx::Size desired_size_in_pixels =
+        gfx::ConvertSizeToPixel(layer->device_scale_factor(),
+                                client_->DelegatedFrameHostDesiredSizeInDIP());
+
+    viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+    viz::SurfaceInfo surface_info(surface_id, layer->device_scale_factor(),
+                                  desired_size_in_pixels);
+    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+    viz::FrameSinkManagerImpl* manager =
+        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+    client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
+        surface_info, manager->surface_manager()->reference_factory());
+  }
+
   // If |create_resize_lock_after_commit_| is true, we're waiting to recreate
   // an expired resize lock after the next UI frame is submitted, so don't
   // make a lock here.
@@ -276,7 +299,7 @@ SkColor DelegatedFrameHost::GetGutterColor() const {
 }
 
 void DelegatedFrameHost::UpdateGutters() {
-  if (!has_frame_) {
+  if (!has_frame_ || enable_surface_synchronization_) {
     right_gutter_.reset();
     bottom_gutter_.reset();
     return;
@@ -458,55 +481,30 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     DCHECK(frame.resource_list.empty());
     EvictDelegatedFrame();
   } else {
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    viz::FrameSinkManagerImpl* manager =
-        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
-
     frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
                                        skipped_latency_info_list_.begin(),
                                        skipped_latency_info_list_.end());
     skipped_latency_info_list_.clear();
 
-    if (local_surface_id != local_surface_id_ || !has_frame_) {
-      // manager must outlive compositors using it.
-      viz::SurfaceId surface_id(frame_sink_id_, local_surface_id);
-      viz::SurfaceInfo surface_info(surface_id, frame_device_scale_factor,
-                                    frame_size);
-      client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-          surface_info, manager->surface_manager()->reference_factory());
-      current_surface_size_ = frame_size;
-      current_scale_factor_ = frame_device_scale_factor;
-    }
-
-    has_frame_ = true;
-
     // If surface synchronization is off, then OnFirstSurfaceActivation will be
-    // called in the same call stack and so to ensure that the fallback surface
-    // is set, then primary surface must be set prior to calling
-    // CompositorFrameSinkSupport::SubmitCompositorFrame.
+    // called in the same call stack.
     // TODO(kenrb): Supply HitTestRegionList data here as described in
     // crbug.com/750755.
     bool result = support_->SubmitCompositorFrame(local_surface_id,
                                                   std::move(frame), nullptr);
     DCHECK(result);
+
+    // TODO(fsamuel): This is used to detect video. We need to develop an
+    // alternative mechanism to detect video in a frame for Viz.
+    if (!enable_surface_synchronization_ && !damage_rect_in_dip.IsEmpty()) {
+      client_->DelegatedFrameHostGetLayer()->OnDelegatedFrameDamage(
+          damage_rect_in_dip);
+    }
+
+    if (has_frame_)
+      frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
+    // Note: the frame may have been evicted immediately.
   }
-  local_surface_id_ = local_surface_id;
-
-  released_front_lock_ = NULL;
-  current_frame_size_in_dip_ = frame_size_in_dip;
-  CheckResizeLock();
-
-  UpdateGutters();
-
-  if (!damage_rect_in_dip.IsEmpty()) {
-    client_->DelegatedFrameHostGetLayer()->OnDelegatedFrameDamage(
-        damage_rect_in_dip);
-  }
-
-  if (has_frame_) {
-    frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
-  }
-  // Note: the frame may have been evicted immediately.
 }
 
 void DelegatedFrameHost::ClearDelegatedFrame() {
@@ -535,8 +533,24 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  if (has_frame_)
-    client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
+  if (!enable_surface_synchronization_) {
+    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+    viz::FrameSinkManagerImpl* manager =
+        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+    client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
+        surface_info, manager->surface_manager()->reference_factory());
+  }
+  client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
+  local_surface_id_ = surface_info.id().local_surface_id();
+  has_frame_ = true;
+
+  released_front_lock_ = NULL;
+  gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
+      surface_info.device_scale_factor(), surface_info.size_in_pixels());
+  current_frame_size_in_dip_ = frame_size_in_dip;
+  CheckResizeLock();
+
+  UpdateGutters();
 }
 
 void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {

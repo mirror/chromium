@@ -446,6 +446,10 @@ bool BrowserCompositorMac::DelegatedFrameCanCreateResizeLock() const {
   return false;
 }
 
+viz::LocalSurfaceId BrowserCompositorMac::GetLocalSurfaceId() const {
+  return client_->GetLocalSurfaceId();
+}
+
 std::unique_ptr<CompositorResizeLock>
 BrowserCompositorMac::DelegatedFrameHostCreateResizeLock() {
   NOTREACHED();
