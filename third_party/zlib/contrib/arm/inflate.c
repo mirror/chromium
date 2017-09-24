@@ -84,7 +84,7 @@
 #include "inftrees.h"
 #include "inflate.h"
 #include "inffast.h"
-#include <stdio.h>
+#include "contrib/arm/chunkcopy.h"
 
 #ifdef MAKEFIXED
 #  ifndef BUILDFIXED
@@ -199,16 +199,6 @@ int windowBits;
 const char *version;
 int stream_size;
 {
-    FILE *log_file = fopen("/tmp/zlib-test", "a");
-    if (log_file != NULL) {
-      fprintf(log_file, "inflateInit2\n");
-      fwrite(strm, 1, sizeof(z_stream), log_file);
-      fprintf(log_file, "\n\n\n\nwindowBits: %i\n\n\n\n", windowBit);
-      fprintf(log_file, "\n\n\n\nstream_size: %i\n\n\n\n", stream_size);
-      fwrite(strm->next_in, 1, strm->avail_in, log_file);
-      fprintf(log_file, "\n\n\n\n");
-      fclose(log_file);
-   }
     int ret;
     struct inflate_state FAR *state;
 
@@ -239,7 +229,6 @@ int stream_size;
     state->strm = strm;
     state->window = Z_NULL;
     state->mode = HEAD;     /* to pass state test in inflateReset2() */
-    state->check = adler32(0L, Z_NULL, 0);
     ret = inflateReset2(strm, windowBits);
     if (ret != Z_OK) {
         ZFREE(strm, state);
@@ -253,15 +242,6 @@ z_streamp strm;
 const char *version;
 int stream_size;
 {
-    FILE *log_file = fopen("/tmp/zlib-test", "a");
-    if (log_file != NULL) {
-      fprintf(log_file, "inflateInit\n");
-      fwrite(strm, 1, sizeof(z_stream), log_file);
-      fprintf(log_file, "\n\n\n\nstream_size: %i\n\n\n\n", stream_size);
-      fwrite(strm->next_in, 1, strm->avail_in, log_file);
-      fprintf(log_file, "\n\n\n\n");
-      fclose(log_file);
-    }
     return inflateInit2_(strm, DEF_WBITS, version, stream_size);
 }
 
@@ -426,10 +406,20 @@ unsigned copy;
 
     /* if it hasn't been done already, allocate space for the window */
     if (state->window == Z_NULL) {
+        unsigned wsize = 1U << state->wbits;
         state->window = (unsigned char FAR *)
-                        ZALLOC(strm, 1U << state->wbits,
+                        ZALLOC(strm, wsize + CHUNKCOPY_CHUNK_SIZE,
                                sizeof(unsigned char));
         if (state->window == Z_NULL) return 1;
+#ifdef INFLATE_CLEAR_UNUSED_UNDEFINED
+        /* Copies from the overflow portion of this buffer are undefined and
+           may cause analysis tools to raise a warning if we don't initialize
+           it.  However, this undefined data overwrites other undefined data
+           and is subsequently either overwritten or left deliberately
+           undefined at the end of decode; so there's really no point.
+         */
+        memset(state->window + wsize, 0, CHUNKCOPY_CHUNK_SIZE);
+#endif
     }
 
     /* if window not in use yet, initialize */
@@ -644,15 +634,6 @@ int ZEXPORT inflate(strm, flush)
 z_streamp strm;
 int flush;
 {
-    FILE *log_file = fopen("/tmp/zlib-test", "a");
-    if (log_file != NULL) {
-      fprintf(log_file, "inflate\n");
-      fwrite(strm, 1, sizeof(z_stream), log_file);
-      fprintf(log_file, "\n\n\n\nflush: %i\n\n\n\n", flush);
-      fwrite(strm->next_in, 1, strm->avail_in, log_file);
-      fprintf(log_file, "\n\n\n\n");
-      fclose(log_file);
-    }
     struct inflate_state FAR *state;
     z_const unsigned char FAR *next;    /* next input */
     unsigned char FAR *put;     /* next output */
@@ -1205,17 +1186,16 @@ int flush;
                 else
                     from = state->window + (state->wnext - copy);
                 if (copy > state->length) copy = state->length;
+                if (copy > left) copy = left;
+                put = chunkcopy_safe(put, from, copy, put + left);
             }
             else {                              /* copy from output */
-                from = put - state->offset;
                 copy = state->length;
+                if (copy > left) copy = left;
+                put = chunkcopy_lapped_safe(put, state->offset, copy, put + left);
             }
-            if (copy > left) copy = left;
             left -= copy;
             state->length -= copy;
-            do {
-                *put++ = *from++;
-            } while (--copy);
             if (state->length == 0) state->mode = LEN;
             break;
         case LIT:
