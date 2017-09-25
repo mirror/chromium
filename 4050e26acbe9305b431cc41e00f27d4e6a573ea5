@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9140946d_9242bbdc",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T09:46:44Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need \"virtual\", and we can add \"final\" at the class definition.\ni.e.\n  class GeoNotifier final : ... { ... }",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24fe0371_f98e7fcf",
         "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
         "patchSetId": 2
@@ -48,6 +65,29 @@
       "side": 1,
       "message": "If you don\u0027t need to trace notifier_to_id_map_, you shouldn\u0027t change line 35.\n\n(That said, as I asked in the above comment, I don\u0027t fully understand why we need to trace GeolocationWatchers in the first place.)",
       "parentUuid": "9dc87b19_be305967",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b45756_02e8b487",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T09:46:44Z",
+      "side": 1,
+      "message": "Can this be Member\u003cGeoNotifier\u003e as you won\u0027t trace notifier_to_id_map_?",
+      "range": {
+        "startLine": 35,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 40
+      },
       "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
