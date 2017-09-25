@@ -115,6 +115,24 @@
       "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a96bac_c27de38a",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-25T03:15:40Z",
+      "side": 1,
+      "message": "Now, I am writing out the webapk::WebApk proto to the file and parsing the proto later to extract the data I need.",
+      "parentUuid": "8a4ade1e_facdd939",
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
