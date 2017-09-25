@@ -191,3 +191,11 @@ class V8RuntimeStatsMobileBrowsingBenchmark(
   @classmethod
   def Name(cls):
     return 'v8.runtimestats.browsing_mobile'
+
+  def GetExpectations(self):
+    class StoryExpectations(story.expectations.StoryExpectations):
+      def SetExpectations(self):
+        self.DisableStory(
+            'browse:shopping:lazada', [story.expectations.ANDROID_ONE],
+            'crbug.com/768472')
+    return StoryExpectations()
