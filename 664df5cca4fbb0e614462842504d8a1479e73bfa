@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "51bb733d_e1cb3e85",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-25T06:24:54Z",
+      "side": 1,
+      "message": "I\u0027m now not sure whether it is assured that |task_runner_| is available here.",
+      "revId": "664df5cca4fbb0e614462842504d8a1479e73bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cdf41be_53d981de",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 3
@@ -30,6 +47,24 @@
       "writtenOn": "2017-09-25T06:20:21Z",
       "side": 1,
       "message": "I\u0027m not sure that we should be using the per-frame task runner here: the frame might be going away anyway, and then we end up with other problems (I\u0027m assuming this is related to the current problem of running tasks for a discarded frame\u0027s task queue).",
+      "revId": "664df5cca4fbb0e614462842504d8a1479e73bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4473ee_7c575ce9",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-25T06:24:54Z",
+      "side": 1,
+      "message": "Yes true, I\u0027d like to wait for the conclusion how to solve the current problem.",
+      "parentUuid": "8cdf41be_53d981de",
       "revId": "664df5cca4fbb0e614462842504d8a1479e73bfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
