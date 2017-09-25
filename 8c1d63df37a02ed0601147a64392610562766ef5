@@ -151,6 +151,24 @@
       "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa907cc_23e6cc8b",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-25T22:45:43Z",
+      "side": 1,
+      "message": "nice :)",
+      "parentUuid": "d8607302_d421c80e",
+      "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
