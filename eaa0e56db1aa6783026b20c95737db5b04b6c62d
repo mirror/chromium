@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a5f3855_0672586f",
+        "filename": "components/error_page_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-09-25T09:37:01Z",
+      "side": 1,
+      "message": "The abbr was removed, so this should be reflected in the description.",
+      "range": {
+        "startLine": 153,
+        "startChar": 183,
+        "endLine": 153,
+        "endChar": 184
+      },
+      "revId": "eaa0e56db1aa6783026b20c95737db5b04b6c62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
