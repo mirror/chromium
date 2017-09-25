@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcab7bf5_23c920e4",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-25T19:22:55Z",
+      "side": 1,
+      "message": "wdyt of doing something like \nif (!value)\n  value \u003d \u0027\u0027;\nat the top of the function rather than doing (value || \u0027\u0027) repeatedly below?\niiuc, line 141 would still work (\u0027\u0027 is falsey)\n\nThe only real change would be line 142 which would get a string type. Though if that\u0027s an issue, then that\u0027s already being affected by the type change in line 139 (so maybe line 142 should be the first line in this function to get a clean copy of value?).\n\nI guess I\u0027m mostly uncertain what the datatype of this.value should be. It currently looks like it may be undefined, null, number (zero or NaN), boolean, or string.",
+      "revId": "2d51ed8b9d3404c2cf9aadbbc0abb05ec772cb67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
