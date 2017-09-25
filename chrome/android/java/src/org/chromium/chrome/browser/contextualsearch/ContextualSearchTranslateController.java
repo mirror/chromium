@@ -45,7 +45,6 @@ public class ContextualSearchTranslateController  {
      */
     void forceTranslateIfNeeded(ContextualSearchRequest searchRequest, String sourceLanguage) {
         if (mPolicy.isTranslationDisabled()) return;
-
         // Force translation if not disabled and server controlled or client logic says required.
         boolean doForceTranslate = !TextUtils.isEmpty(sourceLanguage)
                 && mPolicy.needsTranslation(sourceLanguage, getReadableLanguages());
@@ -56,6 +55,9 @@ public class ContextualSearchTranslateController  {
         // Log that conditions were right for translation, even though it may be disabled
         // for an experiment so we can compare with the counter factual data.
         ContextualSearchUma.logTranslateOnebox(doForceTranslate);
+
+        // Log whether or not translate conditions are met
+        ContextualSearchUma.logTranslateCondition(doForceTranslate);
     }
 
     /**

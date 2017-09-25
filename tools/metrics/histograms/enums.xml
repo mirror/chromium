@@ -6449,6 +6449,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Tap not suppressed"/>
 </enum>
 
+<enum name="ContextualSearchTranslateCondition">
+  <summary>Indicated if translation conditions were met.</summary>
+  <int value="0" label="Translation conditions met"/>
+  <int value="1" label="Translation conditions not met"/>
+</enum>
+
 <enum name="CookieDeleteEquivalent">
   <int value="0"
       label="Attempt to delete an equivalent cookie during a set cookie
