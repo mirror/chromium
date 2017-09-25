@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc87b19_be305967",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-25T07:47:21Z",
+      "side": 1,
+      "message": "Could you put a comment to say why you don\u0027t have to trace notifier_to_id_map_.Keys()?",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
