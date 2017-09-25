@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826111bf_752cec93",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:56:20Z",
+      "side": 1,
+      "message": "To help maintain layering, could we add Referrer::ComputeReferrerInfo() that outputs an out_referrer and out_referrer_policy, that we use directly here, and Referrer::SetReferrerForRequest internally uses it?",
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0a1fad_21b63cdb",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:56:20Z",
+      "side": 1,
+      "message": "This looks a bit complex for a struct. I\u0027d make this a non-member function instead.",
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
