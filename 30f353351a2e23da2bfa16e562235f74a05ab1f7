@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6890e965_13ae7745",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "I don\u0027t think the key values here are very human-readable. They make sense as IDs, but it might be best to also pass in a human-readable description. I think it could potentially be best to just do map\u003cstring, string\u003e and compose the entire text to display in C++, but you can alternatively define a mojo type of previewStatus that has a bool and a string. Either would be fine by me, so if you have a preference for either go for it.\n\nStrings would be something like:\n      \"Redirecting navigations to an AMP version of the page (AMP previews): Enabled\"\n      \"Showing a stored offline page (Offline page previews): Disabled\"\n      \"Replacing HTTPS images with small placeholders (Client LoFi previews): Enabled\"",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0948754_6a53a75d",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "Can you do something to check if the node is already created, because this should only be called once?\n\nassert(!$(key), \"The same preview status was updated more than once.\") from assert.js, which would get picked up by the browser tests hopefully.\n\nThis would check 2 things:\nThe js harness does not call this twice, and there are no duplicates in the passed in dictionary.\n\nIdeally, this would get checked on a real navigation to this page to make sure no duplicates come in (using the mojo interface in the browser code), but I think verifying that the dictionary returned in the browser code unittest does not have duplicates should be sufficient.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ada496e_b01e89d2",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "Comment about these WRT what they mean for the page.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b6af90_0ac46bf3",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "For symmetry, can you either add \"Previews\" to this or remove \"Previews\" from the others.",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b04a2b_a957f361",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "For tests, we usually include all headers needed, even if they are in the header file for the test. So in this case, string and unordered_map should have a header include.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f40c50_0c8e34b0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "Add tests for amp",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbb192e_4605e3cd",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "I\u0027d remove the default case and just check enabled/disabled.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72af6686_f17fa287",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "Can you instead of using [] use .find()? [] will create the element if it doesn\u0027t exist.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5898b7cf_f29a6fe4",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T19:40:52Z",
+      "side": 1,
+      "message": "Change this to offline previews enabled instead of default. and Explicitly set the feature.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
