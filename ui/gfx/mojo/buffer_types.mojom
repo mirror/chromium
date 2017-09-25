@@ -47,7 +47,8 @@ enum GpuMemoryBufferType {
   SHARED_MEMORY_BUFFER,
   IO_SURFACE_BUFFER,
   NATIVE_PIXMAP,
-  LAST = NATIVE_PIXMAP
+  DXGI_SHARED_HANDLE,
+  LAST = DXGI_SHARED_HANDLE
 };
 
 // gfx::GpuMemoryBufferId
@@ -80,4 +81,5 @@ struct GpuMemoryBufferHandle {
   uint32 stride;
   NativePixmapHandle? native_pixmap_handle;
   handle? mach_port;
+  handle? dxgi_handle;
 };

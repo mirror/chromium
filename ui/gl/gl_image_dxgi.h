@@ -2,14 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef UI_GL_GL_IMAGE_DXGI_H_
+#define UI_GL_GL_IMAGE_DXGI_H_
+
+#include <DXGI1_2.h>
 #include <d3d11.h>
 
 #include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gl/gl_export.h"
 #include "ui/gl/gl_image.h"
 
 typedef void* EGLStreamKHR;
+typedef void* EGLConfig;
+typedef void* EGLSurface;
 
 namespace gl {
 
@@ -107,13 +114,23 @@ class GL_EXPORT GLImageDXGIHandle : public GLImageDXGIBase {
  public:
   GLImageDXGIHandle(const gfx::Size& size,
                     base::win::ScopedHandle handle,
-                    uint32_t level);
+                    uint32_t level,
+                    gfx::BufferFormat format);
 
   bool Initialize();
+
+  // GLImage implementation.
+  bool BindTexImage(unsigned target) override;
+  unsigned GetInternalFormat() override;
+  void ReleaseTexImage(unsigned target) override;
 
  protected:
   ~GLImageDXGIHandle() override;
 
   base::win::ScopedHandle handle_;
+  EGLSurface surface_ = nullptr;
+  gfx::BufferFormat format_;
 };
 }
+
+#endif  // UI_GL_GL_IMAGE_DXGI_H_

@@ -183,6 +183,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
         return gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP;
+      case gfx::GpuMemoryBufferType::DXGI_SHARED_HANDLE:
+        return gfx::mojom::GpuMemoryBufferType::DXGI_SHARED_HANDLE;
     }
     NOTREACHED();
     return gfx::mojom::GpuMemoryBufferType::LAST;
@@ -202,6 +204,9 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return true;
       case gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP:
         *out = gfx::GpuMemoryBufferType::NATIVE_PIXMAP;
+        return true;
+      case gfx::mojom::GpuMemoryBufferType::DXGI_SHARED_HANDLE:
+        *out = gfx::GpuMemoryBufferType::DXGI_SHARED_HANDLE;
         return true;
     }
     return false;
@@ -290,6 +295,8 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
   static const gfx::NativePixmapHandle& native_pixmap_handle(
       const gfx::GpuMemoryBufferHandle& handle);
   static mojo::ScopedHandle mach_port(const gfx::GpuMemoryBufferHandle& handle);
+  static mojo::ScopedHandle dxgi_handle(
+      const gfx::GpuMemoryBufferHandle& handle);
   static bool Read(gfx::mojom::GpuMemoryBufferHandleDataView data,
                    gfx::GpuMemoryBufferHandle* handle);
 };
