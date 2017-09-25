@@ -39,7 +39,7 @@ class FakeWebTaskRunner::Data : public WTF::ThreadSafeRefCounted<Data> {
  private:
   ~Data() {}
 
-  friend ThreadSafeRefCounted<Data>;
+  friend base::RefCountedThreadSafe<Data>;
   DISALLOW_COPY_AND_ASSIGN(Data);
 };
 
