@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b9c3a5_bbd51806",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T08:45:55Z",
+      "side": 1,
+      "message": "I meant it can happen for both the top-level \"main\" frame and iframes. I think we just don\u0027t have to mention frames. I recommend:\n\n\"This request is issued by a navigation to fetch the content of the page that is being navigated to, in the case where a service worker has been registered for the page and is using the Navigation Preload API.\"\n\n(Apparently we should also correct navigation_url_loader_network_service.cc but we can do that later)",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c98b9c_57453b4b",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T08:45:55Z",
+      "side": 1,
+      "message": "You can disable this feature by disabling service workers completely, which can be done by disabling site data. Should we mention that here? If so:\n\n\"You can disable this request by disabling service workers, which can be done by disabling cookie and site data under Chrome\u0027s Settings, Content Settings, Cookies.\"",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0475d5_a03efcf7",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T08:45:55Z",
+      "side": 1,
+      "message": "If I understand correctly, there are two ways to disable this request:\n- Disabling service workers completely for a site or all sites.\n- Using URLBlacklist to disable the request for a specific URL.\n\nSo maybe the prose could be:\n\n\"Chrome would be unable to use service workers if this feature is disabled, which could result in a degraded experience for websites that register a service worker. Using either URLBlacklist or URLWhitelist policies (or a combination of both) limits the scope of these requests. Blocking the request via URLBlacklist can result in a degraded experience for a website that uses service worker with navigation preload.\"",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
