@@ -70,7 +70,7 @@ QuicVersionVector VersionOfIndex(const QuicVersionVector& versions, int index) {
   return version;
 }
 
-QuicTag QuicVersionToQuicTag(const QuicVersion version) {
+QuicVersionLabel QuicVersionToQuicVersionLabel(const QuicVersion version) {
   switch (version) {
     case QUIC_VERSION_35:
       return MakeQuicTag('Q', '0', '3', '5');
@@ -92,15 +92,20 @@ QuicTag QuicVersionToQuicTag(const QuicVersion version) {
   }
 }
 
-QuicVersion QuicTagToQuicVersion(const QuicTag version_tag) {
+string QuicVersionLabelToString(QuicVersionLabel version_label) {
+  return QuicTagToString(version_label);
+}
+
+QuicVersion QuicVersionLabelToQuicVersion(QuicVersionLabel version_label) {
   for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
-    if (version_tag == QuicVersionToQuicTag(kSupportedQuicVersions[i])) {
+    if (version_label ==
+        QuicVersionToQuicVersionLabel(kSupportedQuicVersions[i])) {
       return kSupportedQuicVersions[i];
     }
   }
   // Reading from the client so this should not be considered an ERROR.
-  QUIC_DLOG(INFO) << "Unsupported QuicTag version: "
-                  << QuicTagToString(version_tag);
+  QUIC_DLOG(INFO) << "Unsupported QuicVersionLabel version: "
+                  << QuicVersionLabelToString(version_label);
   return QUIC_VERSION_UNSUPPORTED;
 }
 

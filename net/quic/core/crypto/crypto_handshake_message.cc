@@ -72,15 +72,15 @@ void CryptoHandshakeMessage::MarkDirty() {
 
 void CryptoHandshakeMessage::SetVersionVector(QuicTag tag,
                                               QuicVersionVector versions) {
-  QuicTagVector version_tags;
+  QuicVersionLabelVector version_labels;
   for (QuicVersion version : versions) {
-    version_tags.push_back(QuicVersionToQuicTag(version));
+    version_labels.push_back(QuicVersionToQuicVersionLabel(version));
   }
-  SetVector(tag, version_tags);
+  SetVector(tag, version_labels);
 }
 
 void CryptoHandshakeMessage::SetVersion(QuicTag tag, QuicVersion version) {
-  SetValue(tag, QuicVersionToQuicTag(version));
+  SetValue(tag, QuicVersionToQuicVersionLabel(version));
 }
 
 void CryptoHandshakeMessage::SetStringPiece(QuicTag tag,
@@ -117,6 +117,18 @@ QuicErrorCode CryptoHandshakeMessage::GetTaglist(
     (*out_tags)[i] = tag;
   }
   return ret;
+}
+
+QuicErrorCode CryptoHandshakeMessage::GetVersionLabelList(
+    QuicTag tag,
+    QuicVersionLabelVector* out) const {
+  return GetTaglist(tag, out);
+}
+
+QuicErrorCode CryptoHandshakeMessage::GetVersionLabel(
+    QuicTag tag,
+    QuicVersionLabel* out) const {
+  return GetUint32(tag, out);
 }
 
 bool CryptoHandshakeMessage::GetStringPiece(QuicTag tag,

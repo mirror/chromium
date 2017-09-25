@@ -184,9 +184,9 @@ TEST_F(QuicCryptoClientConfigTest, InchoateChlo) {
   config.FillInchoateClientHello(server_id, QuicVersionMax(), &state, &rand,
                                  /* demand_x509_proof= */ true, params, &msg);
 
-  QuicTag cver;
-  EXPECT_EQ(QUIC_NO_ERROR, msg.GetUint32(kVER, &cver));
-  EXPECT_EQ(QuicVersionToQuicTag(QuicVersionMax()), cver);
+  QuicVersionLabel cver;
+  EXPECT_EQ(QUIC_NO_ERROR, msg.GetVersionLabel(kVER, &cver));
+  EXPECT_EQ(QuicVersionToQuicVersionLabel(QuicVersionMax()), cver);
   QuicStringPiece proof_nonce;
   EXPECT_TRUE(msg.GetStringPiece(kNONP, &proof_nonce));
   EXPECT_EQ(string(32, 'r'), proof_nonce);
@@ -294,10 +294,10 @@ TEST_F(QuicCryptoClientConfigTest, FillClientHello) {
                          nullptr,  // channel_id_key
                          params, &chlo, &error_details);
 
-  // Verify that certain QuicTags have been set correctly in the CHLO.
-  QuicTag cver;
-  EXPECT_EQ(QUIC_NO_ERROR, chlo.GetUint32(kVER, &cver));
-  EXPECT_EQ(QuicVersionToQuicTag(QuicVersionMax()), cver);
+  // Verify that the version label has been set correctly in the CHLO.
+  QuicVersionLabel cver;
+  EXPECT_EQ(QUIC_NO_ERROR, chlo.GetVersionLabel(kVER, &cver));
+  EXPECT_EQ(QuicVersionToQuicVersionLabel(QuicVersionMax()), cver);
 }
 
 TEST_F(QuicCryptoClientConfigTest, ProcessServerDowngradeAttack) {

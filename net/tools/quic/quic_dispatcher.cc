@@ -373,7 +373,7 @@ bool QuicDispatcher::OnUnauthenticatedPublicHeader(
       framer_.SetSupportedVersions(GetSupportedVersions());
     }
     if (!framer_.IsSupportedVersion(packet_version)) {
-      if (ShouldCreateSessionForUnknownVersion(framer_.last_version_tag())) {
+      if (ShouldCreateSessionForUnknownVersion(framer_.last_version_label())) {
         return true;
       }
       // Since the version is not supported, send a version negotiation
@@ -625,17 +625,19 @@ void QuicDispatcher::OnError(QuicFramer* framer) {
   QUIC_DLOG(INFO) << QuicErrorCodeToString(error);
 }
 
-bool QuicDispatcher::ShouldCreateSessionForUnknownVersion(QuicTag version_tag) {
+bool QuicDispatcher::ShouldCreateSessionForUnknownVersion(
+    QuicVersionLabel /*version_label*/) {
   return false;
 }
 
 bool QuicDispatcher::OnProtocolVersionMismatch(
     QuicVersion /*received_version*/) {
-  QUIC_BUG_IF(!time_wait_list_manager_->IsConnectionIdInTimeWait(
-                  current_connection_id_) &&
-              !ShouldCreateSessionForUnknownVersion(framer_.last_version_tag()))
+  QUIC_BUG_IF(
+      !time_wait_list_manager_->IsConnectionIdInTimeWait(
+          current_connection_id_) &&
+      !ShouldCreateSessionForUnknownVersion(framer_.last_version_label()))
       << "Unexpected version mismatch: "
-      << QuicTagToString(framer_.last_version_tag());
+      << QuicVersionLabelToString(framer_.last_version_label());
 
   // Keep processing after protocol mismatch - this will be dealt with by the
   // time wait list or connection that we will create.

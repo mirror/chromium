@@ -162,7 +162,7 @@ QuicFramer::QuicFramer(const QuicVersionVector& supported_versions,
       last_packet_number_(0),
       largest_packet_number_(0),
       last_serialized_connection_id_(0),
-      last_version_tag_(0),
+      last_version_label_(0),
       supported_versions_(supported_versions),
       decrypter_level_(ENCRYPTION_NONE),
       alternative_decrypter_level_(ENCRYPTION_NONE),
@@ -519,7 +519,7 @@ std::unique_ptr<QuicEncryptedPacket> QuicFramer::BuildVersionNegotiationPacket(
   }
 
   for (QuicVersion version : versions) {
-    if (!writer.WriteTag(QuicVersionToQuicTag(version))) {
+    if (!writer.WriteTag(QuicVersionToQuicVersionLabel(version))) {
       return nullptr;
     }
   }
@@ -585,12 +585,12 @@ bool QuicFramer::ProcessVersionNegotiationPacket(
   DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
   // Try reading at least once to raise error if the packet is invalid.
   do {
-    QuicTag version;
+    QuicVersionLabel version;
     if (!reader->ReadTag(&version)) {
       set_detailed_error("Unable to read supported version in negotiation.");
       return RaiseError(QUIC_INVALID_VERSION_NEGOTIATION_PACKET);
     }
-    public_header->versions.push_back(QuicTagToQuicVersion(version));
+    public_header->versions.push_back(QuicVersionLabelToQuicVersion(version));
   } while (!reader->IsDoneReading());
 
   visitor_->OnVersionNegotiationPacket(*public_header);
@@ -726,12 +726,12 @@ bool QuicFramer::AppendPacketHeader(const QuicPacketHeader& header,
 
   if (header.public_header.version_flag) {
     DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
-    QuicTag tag = QuicVersionToQuicTag(quic_version_);
-    if (!writer->WriteTag(tag)) {
+    QuicVersionLabel label = QuicVersionToQuicVersionLabel(quic_version_);
+    if (!writer->WriteTag(label)) {
       return false;
     }
-    QUIC_DVLOG(1) << ENDPOINT << "version = " << quic_version_ << ", tag = '"
-                  << QuicTagToString(tag) << "'";
+    QUIC_DVLOG(1) << ENDPOINT << "version = " << quic_version_ << ", label = '"
+                  << QuicVersionLabelToString(label) << "'";
   }
 
   if (header.public_header.nonce != nullptr &&
@@ -844,8 +844,8 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
   // Read the version only if the packet is from the client.
   // version flag from the server means version negotiation packet.
   if (public_header->version_flag && perspective_ == Perspective::IS_SERVER) {
-    QuicTag version_tag;
-    if (!reader->ReadTag(&version_tag)) {
+    QuicVersionLabel version_label;
+    if (!reader->ReadTag(&version_label)) {
       set_detailed_error("Unable to read protocol version.");
       return false;
     }
@@ -853,8 +853,8 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
     // If the version from the new packet is the same as the version of this
     // framer, then the public flags should be set to something we understand.
     // If not, this raises an error.
-    last_version_tag_ = version_tag;
-    QuicVersion version = QuicTagToQuicVersion(version_tag);
+    last_version_label_ = version_label;
+    QuicVersion version = QuicVersionLabelToQuicVersion(version_label);
     if (version == quic_version_ && public_flags > PACKET_PUBLIC_FLAGS_MAX) {
       set_detailed_error("Illegal public flags value.");
       return false;
