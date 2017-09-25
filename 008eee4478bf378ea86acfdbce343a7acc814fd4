@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cae4499d_0398ef2a",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "Sure. The suggestion sounds good (a bit too long though). So I shortened the constants\u0027 names inside.\n\nAlso, the property is now \u0027scroll-customization\u0027 which is leading to style()-\u003eScrollCustomization() for getter. Should I change the property name accordingly? Say, scroll-customization-direction or *-enabled-direction?",
+      "parentUuid": "bc831cb2_dd8f71d5",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb17c03e_df5dbc3e",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-14T18:54:24Z",
       "side": 1,
       "message": "Why are we using integer literals instead of the constants defined above?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af20b09_598d94ff",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "I am not sure how I could handle the combination of different properties then, such as line 65 for kScrollCustomizationPanLeft | kScrollCustomizationPanUp.",
+      "parentUuid": "fb17c03e_df5dbc3e",
       "range": {
         "startLine": 55,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7635f9c6_c1674c1e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollCustomization.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "\u003e Is there precedent for using a *\u0026 here?\nNot really. Maybe it makes the statement inside if nicer (!pan_x instead of !*pan_x maybe?).\nI did copy this from *TouchAction*.\n\n\u003e In general, we use pointers for out parameters, even when references work.\n\u003e \n\u003e From the style guide:\n\u003e \"Input parameters are usually values or const references, while output and input/output parameters will be pointers to non-const.\"\n\nThanks for the link. Agreed. Changing *\u0026 to **.",
+      "parentUuid": "7fca5788_0cd0e280",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f4265b7_5ca8bb0a",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollCustomization.cpp",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-14T18:54:24Z",
       "side": 1,
       "message": "Will !pan_x ever be true?",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cbc68f_eefd3d3b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollCustomization.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "Looking at the call on line 48 I believe |pan_x| is nullptr. It may remain nullptr in the second call as well.",
+      "parentUuid": "6f4265b7_5ca8bb0a",
       "range": {
         "startLine": 21,
         "startChar": 7,

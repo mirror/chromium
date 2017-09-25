@@ -16,6 +16,24 @@
       "revId": "506dfd1498789b983a0ddf2d9172d11824c10d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce54ed49_9ded15b0",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a258277_df3e012c",
+      "revId": "506dfd1498789b983a0ddf2d9172d11824c10d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

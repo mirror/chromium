@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f53c37_91f0a667",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-25T15:32:33Z",
+      "side": 1,
+      "message": "Putting \"pan-left pan-right\" will cause |value| to be nullptr. This is because\nthe way CSSPropertyAPIScrollCustomization.cpp implements parsing expects only one item for x-direction. But I am not sure if this is correct (actually no idea how it should be treated).\n\nIs this fine, or a correct parsing will convert something like \"pan-left pan-right pan-up pan-up \" to \"pan-x pan-up\"?",
+      "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
