@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7afc6f4f_025f8a33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-25T22:52:25Z",
+      "side": 1,
+      "message": "nit: Right, but this last sentence makes it seem like getting out of sync is still possible (\"If the device gets out of sync...\") even after this patch, which conflicts with the rest of message. Please reword or move words around in some way that makes it clear that this patch entirely works around this issue.",
+      "parentUuid": "83f4cf5a_893a1e98",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "72e511dc358fe2080f91b4ae90ea9ddad56f5eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68144aca_74cdf3e5",
         "filename": "chromeos/components/tether/ble_scanner.cc",
         "patchSetId": 1
