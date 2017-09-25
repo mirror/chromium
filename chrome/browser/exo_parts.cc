@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_switches.h"
@@ -137,7 +138,8 @@ class ExoParts::WaylandWatcher : public base::MessagePumpLibevent::Watcher {
 
 // static
 std::unique_ptr<ExoParts> ExoParts::CreateIfNecessary() {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+  if (chromeos::GetAshConfig() == ash::Config::MASH ||
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableWaylandServer)) {
     return nullptr;
   }
