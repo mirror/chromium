@@ -41,6 +41,7 @@
 #include "chrome/browser/notifications/notifier_state_tracker.h"
 #include "chrome/browser/pepper_flash_settings_manager.h"
 #include "chrome/browser/plugins/plugin_finder.h"
+#include "chrome/browser/plugins/plugin_info_message_filter.h"
 #include "chrome/browser/policy/policy_helpers.h"
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
@@ -459,7 +460,8 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   SCOPED_UMA_HISTOGRAM_TIMER("Settings.RegisterProfilePrefsTime");
   // User prefs. Please keep this list alphabetized.
   autofill::AutofillManager::RegisterProfilePrefs(registry);
-  syncer::SyncPrefs::RegisterProfilePrefs(registry);
+  browsing_data::prefs::RegisterBrowserUserPrefs(registry);
+  certificate_transparency::CTPolicyManager::RegisterPrefs(registry);
   ChromeContentBrowserClient::RegisterProfilePrefs(registry);
   ChromeVersionService::RegisterProfilePrefs(registry);
   chrome_browser_net::HttpServerPropertiesManagerFactory::RegisterProfilePrefs(
@@ -492,6 +494,8 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   password_bubble_experiment::RegisterPrefs(registry);
   password_manager::PasswordManager::RegisterProfilePrefs(registry);
   payments::RegisterProfilePrefs(registry);
+  policy::URLBlacklistManager::RegisterProfilePrefs(registry);
+  PluginInfoMessageFilter::RegisterUserPrefs(registry);
   PrefProxyConfigTrackerImpl::RegisterProfilePrefs(registry);
   PrefsTabHelper::RegisterProfilePrefs(registry);
   Profile::RegisterProfilePrefs(registry);
@@ -502,14 +506,11 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   RegisterBrowserUserPrefs(registry);
   safe_browsing::RegisterProfilePrefs(registry);
   SessionStartupPref::RegisterProfilePrefs(registry);
+  syncer::SyncPrefs::RegisterProfilePrefs(registry);
   TemplateURLPrepopulateData::RegisterProfilePrefs(registry);
   translate::TranslatePrefs::RegisterProfilePrefs(registry);
   UINetworkQualityEstimatorService::RegisterProfilePrefs(registry);
   ZeroSuggestProvider::RegisterProfilePrefs(registry);
-  browsing_data::prefs::RegisterBrowserUserPrefs(registry);
-
-  policy::URLBlacklistManager::RegisterProfilePrefs(registry);
-  certificate_transparency::CTPolicyManager::RegisterPrefs(registry);
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ExtensionWebUI::RegisterProfilePrefs(registry);
