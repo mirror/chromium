@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d07f107_e7392860",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T09:08:03Z",
+      "side": 1,
+      "message": "whyis this change necessary?",
+      "revId": "4c47c6f90f5f54a37b3283db7b3906699cfa684f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a645fa_1b2ebb04",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T09:08:03Z",
+      "side": 1,
+      "message": "Where did this code come from? Is it in the constructor of HidDeviceInfo?",
+      "revId": "4c47c6f90f5f54a37b3283db7b3906699cfa684f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
