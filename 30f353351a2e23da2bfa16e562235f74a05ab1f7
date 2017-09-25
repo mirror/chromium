@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b5bf3393_63a18de4",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T22:30:18Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "faa146f8_92039ed4",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0948754_6a53a75d",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I think having an assert(!$(key)) could be beneficiary. But shouldn\u0027t the map\u0027s keys be unique, and therefore there shouldn\u0027t be any duplicated keys that would result in having components that already existed.",
       "parentUuid": "a0948754_6a53a75d",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b65f21_93e4e286",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T22:30:18Z",
+      "side": 1,
+      "message": "You want to assert that this code isn\u0027t running twice in the harness is all.\n\nI was being dumb about saying there could be duplicates in the map.",
+      "parentUuid": "37703534_1bcee059",
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -288,6 +324,24 @@
       "side": 1,
       "message": "I think the [] operation will return a null/0/false if the key isn\u0027t in the map also.\n\nBy using find(key)-\u003esecond, the test crashes if the key is not in the map. I\u0027m not sure if that behavior is desirable.",
       "parentUuid": "72af6686_f17fa287",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2aa7ba_95d9091d",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T22:30:18Z",
+      "side": 1,
+      "message": "Yea. You want something like:\n\nauto client_lofi \u003d passedInParams[kClientLoFi];\nEXPECT_NE(passedInParams.end(), client_lofi);\nEXPECT_EQ(\"....\", client_lofi-\u003esecond);\n\nIf there are tests where you expect no entry, you only need the first one with EQ instead of NE.\n\nThe point is we want to check that the map is exactly what we expect.",
+      "parentUuid": "1e2fdf08_bccaa83f",
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
