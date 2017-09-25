@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "53647d11_cec15dc4",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-25T17:39:06Z",
+      "side": 1,
+      "message": "I thought listing them in both will cause the error of having the same source files specified in multiple targets?",
+      "parentUuid": "52437364_daa1da7c",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bba5377_073c555b",
         "filename": "content/public/common/presentation.typemap",
         "patchSetId": 3
@@ -53,6 +77,24 @@
       "writtenOn": "2017-09-25T15:53:11Z",
       "side": 1,
       "message": "So I think I could have left this file in //content/common and simply marked the traits as CONTENT_EXPORT. I\u0027m not sure what the right thing to do is: logically, it seems like if //chrome is using it though, it should live in //content/public?",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162c59e9_ed45445b",
+        "filename": "content/public/common/presentation.typemap",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-25T17:39:06Z",
+      "side": 1,
+      "message": "It sounds reasonable to have it in //content/public/common IMO. Did it make your work harder?",
+      "parentUuid": "4bba5377_073c555b",
       "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

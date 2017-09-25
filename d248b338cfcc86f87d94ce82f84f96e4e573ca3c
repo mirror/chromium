@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76150e4a_8a6af762",
+        "filename": "components/pdf/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-25T17:39:06Z",
+      "side": 0,
+      "message": "You probably shouldn\u0027t remove these.\n\n//third_party/WebKit/public:mojo_bindings is built with CONTENT_IMPLEMENTATION\u003d1 (chromium variant) or \"BLINK_PLATFORM_IMPLEMENTATION\u003d1\" (blink variant).\n\nThat means others must depend on \"//content/public/common\" or \"//third_party/WebKit/Source/platform\" components instead of the mojom target itself.\n\nI guess your local build worked because it was non-component?",
+      "parentUuid": "f806434c_e0bbe1b1",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "d248b338cfcc86f87d94ce82f84f96e4e573ca3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b08d97f_e369d5e1",
         "filename": "third_party/WebKit/Source/platform/weborigin/OriginAccessEntry.cpp",
         "patchSetId": 3
