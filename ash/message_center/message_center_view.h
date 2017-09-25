@@ -7,7 +7,6 @@
 
 #include <stddef.h>
 
-#include "ash/ash_export.h"
 #include "ash/message_center/message_list_view.h"
 #include "base/macros.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -39,13 +38,12 @@ class NotifierSettingsView;
 // button bar, settings view, scrol view, and message list view.  Acts as a
 // controller for the message list view, passing data back and forth to message
 // center.
-class ASH_EXPORT MessageCenterView
-    : public views::View,
-      public message_center::MessageCenterObserver,
-      public message_center::MessageCenterController,
-      public MessageListView::Observer,
-      public gfx::AnimationDelegate,
-      public views::FocusChangeListener {
+class MessageCenterView : public views::View,
+                          public message_center::MessageCenterObserver,
+                          public message_center::MessageCenterController,
+                          public MessageListView::Observer,
+                          public gfx::AnimationDelegate,
+                          public views::FocusChangeListener {
  public:
   MessageCenterView(message_center::MessageCenter* message_center,
                     message_center::MessageCenterTray* tray,

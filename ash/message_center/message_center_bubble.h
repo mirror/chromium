@@ -7,7 +7,6 @@
 
 #include <stddef.h>
 
-#include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/views/widget/widget_observer.h"
@@ -54,7 +53,7 @@ class MessageCenterBubble : public views::WidgetObserver,
   // Overridden from views::WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
 
-  size_t ASH_EXPORT NumMessageViewsForTest() const;
+  size_t NumMessageViewsForTest() const;
 
   views::TrayBubbleView* bubble_view() const { return bubble_view_; }
 

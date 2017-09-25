@@ -8,7 +8,6 @@
 #include <memory>
 #include <set>
 
-#include "ash/ash_export.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "ui/message_center/notifier_settings.h"
@@ -31,11 +30,10 @@ namespace ash {
 
 // A class to show the list of notifier extensions / URL patterns and allow
 // users to customize the settings.
-class ASH_EXPORT NotifierSettingsView
-    : public message_center::NotifierSettingsObserver,
-      public views::View,
-      public views::ButtonListener,
-      public views::ComboboxListener {
+class NotifierSettingsView : public message_center::NotifierSettingsObserver,
+                             public views::View,
+                             public views::ButtonListener,
+                             public views::ComboboxListener {
  public:
   explicit NotifierSettingsView(
       message_center::NotifierSettingsProvider* provider);
@@ -57,8 +55,7 @@ class ASH_EXPORT NotifierSettingsView
  private:
   FRIEND_TEST_ALL_PREFIXES(NotifierSettingsViewTest, TestLearnMoreButton);
 
-  class ASH_EXPORT NotifierButton : public views::Button,
-                                    public views::ButtonListener {
+  class NotifierButton : public views::Button, public views::ButtonListener {
    public:
     NotifierButton(message_center::NotifierSettingsProvider* provider,
                    std::unique_ptr<message_center::Notifier> notifier,
