@@ -171,7 +171,6 @@ class MEDIA_EXPORT AudioInputController
   // The audio device will be created on the audio thread, and when that is
   // done, the event handler will receive an OnCreated() call from that same
   // thread. |user_input_monitor| is used for typing detection and can be NULL.
-  // TODO(grunell): Move handling of debug recording to AudioManager.
   static scoped_refptr<AudioInputController> Create(
       AudioManager* audio_manager,
       EventHandler* event_handler,
@@ -186,7 +185,6 @@ class MEDIA_EXPORT AudioInputController
   // |stream|. The stream will be opened on the audio thread, and when that is
   // done, the event  handler will receive an OnCreated() call from that same
   // thread. |user_input_monitor| is used for typing detection and can be NULL.
-  // |params| is used for debug recordings.
   static scoped_refptr<AudioInputController> CreateForStream(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       EventHandler* event_handler,
@@ -213,12 +211,6 @@ class MEDIA_EXPORT AudioInputController
   // Sets the capture volume of the input stream. The value 0.0 corresponds
   // to muted and 1.0 to maximum volume.
   virtual void SetVolume(double volume);
-
-  // Enable debug recording of audio input.
-  virtual void EnableDebugRecording(const base::FilePath& file_name);
-
-  // Disable debug recording of audio input.
-  virtual void DisableDebugRecording();
 
  protected:
   friend class base::RefCountedThreadSafe<AudioInputController>;
@@ -306,13 +298,6 @@ class MEDIA_EXPORT AudioInputController
   // Logs whether an error was encountered suring the stream.
   void LogCallbackError();
 
-#if BUILDFLAG(ENABLE_WEBRTC)
-  // Enable and disable debug recording of audio input. Called on the audio
-  // thread.
-  void DoEnableDebugRecording(const base::FilePath& file_name);
-  void DoDisableDebugRecording();
-#endif
-
   // Called by the stream with log messages.
   void LogMessage(const std::string& message);
 
@@ -379,11 +364,6 @@ class MEDIA_EXPORT AudioInputController
 
   bool is_muted_ = false;
   base::RepeatingTimer check_muted_state_timer_;
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-  // Used for audio debug recordings. Accessed on audio thread.
-  AudioDebugRecordingHelper debug_recording_helper_;
-#endif
 
   class AudioCallback;
   // Holds a pointer to the callback object that receives audio data from

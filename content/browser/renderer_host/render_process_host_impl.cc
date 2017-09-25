@@ -3150,16 +3150,6 @@ void RenderProcessHostImpl::EnableAudioDebugRecordings(
        it != aec_dump_consumers_.end(); ++it) {
     EnableAecDumpForId(file_with_extensions, *it);
   }
-
-  // Enable mic input recording. AudioInputRendererHost is reference counted, so
-  // its lifetime is guaranteed during the lifetime of the closure.
-  if (audio_input_renderer_host_) {
-    // Not null if RenderProcessHostImpl::Init has already been called.
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&AudioInputRendererHost::EnableDebugRecording,
-                       audio_input_renderer_host_, file));
-  }
 }
 
 void RenderProcessHostImpl::DisableAudioDebugRecordings() {
@@ -3172,16 +3162,6 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
       FROM_HERE, base::BindOnce(&base::DoNothing),
       base::BindOnce(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
                      weak_factory_.GetWeakPtr()));
-
-  // AudioInputRendererHost is reference counted, so it's lifetime is
-  // guaranteed during the lifetime of the closure.
-  if (audio_input_renderer_host_) {
-    // Not null if RenderProcessHostImpl::Init has already been called.
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&AudioInputRendererHost::DisableDebugRecording,
-                       audio_input_renderer_host_));
-  }
 }
 
 bool RenderProcessHostImpl::StartWebRTCEventLog(
