@@ -1,0 +1,16 @@
+include_rules = [
+  # Nothing from base.
+  "-base",
+  # Nothing from chrome.
+  "-chrome",
+  # Carefully control local includes.
+  "-chrome_elf",
+  "+chrome_elf/nt_registry/nt_registry.h",
+  "+chrome_elf/whitelist/whitelist.h",
+  "+chrome_elf/whitelist/whitelist_ime.h",
+]
+specific_include_rules = {
+  ".*_unittest\.cc": [
+    "+base",
+  ]
+}
