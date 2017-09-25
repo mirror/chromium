@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d530a7a6_54fb71a7",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Remove comment.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c55a7fc_ddc067b8",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "This class warrants a comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d99d4d_413c6a69",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Needs comment",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 13
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7344ee1b_abfd86ce",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Once you\u0027ve called Close(), are you allowed to Register() it again? If so, why? If not, please comment as such.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80474ec_0baf738e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Worth having a comment.",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5036f9_8499f998",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "DCHECK_GE(kSimpleEntryFileCount, file_index);",
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a772f2b_4a793a6c",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Here and elsewhere, do we need to check if file.IsOK() each time we acquire a file?",
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a52b94_502de5bf",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Do we need to check if the file IsOK before using it?",
+      "range": {
+        "startLine": 848,
+        "startChar": 25,
+        "endLine": 848,
+        "endChar": 32
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8ca853_9f8cebee",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T18:45:51Z",
+      "side": 1,
+      "message": "Check IsOK?",
+      "range": {
+        "startLine": 1188,
+        "startChar": 25,
+        "endLine": 1188,
+        "endChar": 32
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
