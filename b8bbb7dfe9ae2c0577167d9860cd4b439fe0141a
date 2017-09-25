@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0601dfc1_4f88f616",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-25T22:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436c1a26_5fbda53a",
+      "revId": "b8bbb7dfe9ae2c0577167d9860cd4b439fe0141a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdad88a4_07c7d49e",
         "filename": "components/download/internal/logger_impl.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "b8bbb7dfe9ae2c0577167d9860cd4b439fe0141a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b705739e_f842fc9f",
+        "filename": "components/download/internal/logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-25T22:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdad88a4_07c7d49e",
+      "revId": "b8bbb7dfe9ae2c0577167d9860cd4b439fe0141a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
