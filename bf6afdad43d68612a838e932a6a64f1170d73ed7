@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0e4c56_8bc6736f",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3849,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T22:06:02Z",
+      "side": 1,
+      "message": "That\u0027s not quite right. QUIC connections are always secure, including the connection to a QUIC proxy. However, currently only insecure URLS (http://) can be fetched from a QUIC proxy, which Is suspect is what you\u0027re getting at?",
+      "range": {
+        "startLine": 3849,
+        "startChar": 68,
+        "endLine": 3849,
+        "endChar": 0
+      },
+      "revId": "bf6afdad43d68612a838e932a6a64f1170d73ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2246c296_04d47724",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3872,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T22:06:02Z",
+      "side": 1,
+      "message": "Should this go over a new connection, or just a new stream? (I would expect the latter)\n\nPerhaps we should remove the ERR_IO_PENDING/EOF reads on 3867 and 3868?",
+      "range": {
+        "startLine": 3872,
+        "startChar": 60,
+        "endLine": 3872,
+        "endChar": 0
+      },
+      "revId": "bf6afdad43d68612a838e932a6a64f1170d73ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b026b68a_9eb311b7",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3895,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T22:06:02Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing that the URL and the proxy share the same server name. Can we use a different name?",
+      "range": {
+        "startLine": 3895,
+        "startChar": 50,
+        "endLine": 3895,
+        "endChar": 0
+      },
+      "revId": "bf6afdad43d68612a838e932a6a64f1170d73ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
