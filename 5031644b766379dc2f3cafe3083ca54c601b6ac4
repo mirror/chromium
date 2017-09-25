@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3885b009_aceb2a1a",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T23:29:44Z",
+      "side": 1,
+      "message": "BTW, ${STAGEDIR}${INSTALLDIR} works because one of them has a / at the right place. Our usage is inconsistent, but you want to make them all into ${STAGEDIR}/${INSTALLDIR} later, that\u0027s fine by me.",
+      "range": {
+        "startLine": 291,
+        "startChar": 32,
+        "endLine": 291,
+        "endChar": 33
+      },
+      "revId": "5031644b766379dc2f3cafe3083ca54c601b6ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
