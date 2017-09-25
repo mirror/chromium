@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_PRESENTATION_PRESENTATION_STRUCT_TRAITS_H_
-#define CONTENT_COMMON_PRESENTATION_PRESENTATION_STRUCT_TRAITS_H_
+#ifndef CONTENT_PUBLIC_COMMON_PRESENTATION_STRUCT_TRAITS_H_
+#define CONTENT_PUBLIC_COMMON_PRESENTATION_STRUCT_TRAITS_H_
 
 #include <string>
 #include <vector>
@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
+#include "content/common/content_export.h"
 #include "content/public/common/presentation_connection_message.h"
 #include "content/public/common/presentation_info.h"
 #include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
@@ -142,8 +143,8 @@ struct EnumTraits<blink::mojom::PresentationConnectionCloseReason,
 };
 
 template <>
-struct StructTraits<blink::mojom::PresentationInfoDataView,
-                    content::PresentationInfo> {
+struct CONTENT_EXPORT StructTraits<blink::mojom::PresentationInfoDataView,
+                                   content::PresentationInfo> {
   static const GURL& url(const content::PresentationInfo& presentation_info) {
     return presentation_info.presentation_url;
   }
@@ -158,8 +159,8 @@ struct StructTraits<blink::mojom::PresentationInfoDataView,
 };
 
 template <>
-struct StructTraits<blink::mojom::PresentationErrorDataView,
-                    content::PresentationError> {
+struct CONTENT_EXPORT StructTraits<blink::mojom::PresentationErrorDataView,
+                                   content::PresentationError> {
   static content::PresentationErrorType error_type(
       const content::PresentationError& error) {
     return error.error_type;
@@ -174,8 +175,9 @@ struct StructTraits<blink::mojom::PresentationErrorDataView,
 };
 
 template <>
-struct UnionTraits<blink::mojom::PresentationConnectionMessageDataView,
-                   content::PresentationConnectionMessage> {
+struct CONTENT_EXPORT
+    UnionTraits<blink::mojom::PresentationConnectionMessageDataView,
+                content::PresentationConnectionMessage> {
   static blink::mojom::PresentationConnectionMessageDataView::Tag GetTag(
       const content::PresentationConnectionMessage& message) {
     return message.is_binary()
@@ -202,4 +204,4 @@ struct UnionTraits<blink::mojom::PresentationConnectionMessageDataView,
 
 }  // namespace mojo
 
-#endif  // CONTENT_COMMON_PRESENTATION_PRESENTATION_STRUCT_TRAITS_H_
+#endif  // CONTENT_PUBLIC_COMMON_PRESENTATION_STRUCT_TRAITS_H_

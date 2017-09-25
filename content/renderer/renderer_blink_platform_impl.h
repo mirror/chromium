@@ -24,7 +24,6 @@
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 #include "content/renderer/top_level_blame_context.h"
-#include "content/renderer/webpublicsuffixlist_impl.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 
@@ -128,7 +127,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   void GetPluginList(bool refresh,
                      const blink::WebSecurityOrigin& mainFrameOrigin,
                      blink::WebPluginListBuilder* builder) override;
-  blink::WebPublicSuffixList* PublicSuffixList() override;
   blink::WebScrollbarBehavior* ScrollbarBehavior() override;
   blink::WebIDBFactory* IdbFactory() override;
   std::unique_ptr<blink::WebServiceWorkerCacheStorage> CreateCacheStorage(
@@ -299,8 +297,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   std::unique_ptr<blink::WebIDBFactory> web_idb_factory_;
 
   std::unique_ptr<blink::WebBlobRegistry> blob_registry_;
-
-  WebPublicSuffixListImpl public_suffix_list_;
 
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
