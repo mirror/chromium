@@ -9,12 +9,14 @@
 #include "base/android/jni_string.h"
 #include "content/browser/android/text_suggestion_host_mojo_impl_android.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/common/content_switches_internal.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/SuggestionInfo_jni.h"
 #include "jni/TextSuggestionHost_jni.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/android/view_configuration.h"
 
 using base::android::AttachCurrentThread;
@@ -133,6 +135,22 @@ void TextSuggestionHostAndroid::OnSuggestionMenuClosed(
   text_suggestion_backend->OnSuggestionMenuClosed();
 }
 
+double TextSuggestionHostAndroid::GetDeviceScaleDown(double value) {
+  static double device_scale = 0;
+  if (device_scale)
+    return value / device_scale;
+
+  if (display::Screen::GetScreen()) {
+    const display::Display& display =
+        display::Screen::GetScreen()->GetPrimaryDisplay();
+    if (display.id() != display::kInvalidDisplayId) {
+      device_scale = display.device_scale_factor();
+      return value / device_scale;
+    }
+  }
+  return value;
+}
+
 void TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu(
     double caret_x,
     double caret_y,
@@ -147,6 +165,11 @@ void TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu(
   ScopedJavaLocalRef<jobject> obj = java_text_suggestion_host_.get(env);
   if (obj.is_null())
     return;
+
+  if (IsUseZoomForDSFEnabled()) {
+    caret_x = GetDeviceScaleDown(caret_x);
+    caret_y = GetDeviceScaleDown(caret_y);
+  }
 
   Java_TextSuggestionHost_showSpellCheckSuggestionMenu(
       env, obj, caret_x, caret_y, ConvertUTF8ToJavaString(env, marked_text),
@@ -176,6 +199,11 @@ void TextSuggestionHostAndroid::ShowTextSuggestionMenu(
         ConvertUTF8ToJavaString(env, suggestion_ptr->prefix),
         ConvertUTF8ToJavaString(env, suggestion_ptr->suggestion),
         ConvertUTF8ToJavaString(env, suggestion_ptr->suffix));
+  }
+
+  if (IsUseZoomForDSFEnabled()) {
+    caret_x = GetDeviceScaleDown(caret_x);
+    caret_y = GetDeviceScaleDown(caret_y);
   }
 
   Java_TextSuggestionHost_showTextSuggestionMenu(
