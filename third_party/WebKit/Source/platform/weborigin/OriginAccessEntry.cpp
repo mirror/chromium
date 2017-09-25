@@ -30,10 +30,10 @@
 
 #include "platform/weborigin/OriginAccessEntry.h"
 
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebPublicSuffixList.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_canon.h"
 
@@ -90,11 +90,13 @@ OriginAccessEntry::OriginAccessEntry(const String& protocol,
 
   // Look for top-level domains, either with or without an additional dot.
   if (!host_is_ip_address_) {
-    WebPublicSuffixList* suffix_list = Platform::Current()->PublicSuffixList();
-    if (!suffix_list)
-      return;
-
-    size_t public_suffix_length = suffix_list->GetPublicSuffixLength(host_);
+    // Blink passes some things that aren't technically hosts like "*.foo", so
+    // use the permissive variant.
+    size_t public_suffix_length =
+        net::registry_controlled_domains::PermissiveGetHostRegistryLength(
+            host_.Utf8().data(),
+            net::registry_controlled_domains::INCLUDE_UNKNOWN_REGISTRIES,
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
     if (host_.length() <= public_suffix_length + 1) {
       host_is_public_suffix_ = true;
     } else if (subdomain_setting == kAllowRegisterableDomains &&

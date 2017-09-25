@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/presentation/presentation_struct_traits.h"
+#include "content/public/common/presentation_struct_traits.h"
 
 #include "url/mojo/url_gurl_struct_traits.h"
 
@@ -57,4 +57,4 @@ bool UnionTraits<blink::mojom::PresentationConnectionMessageDataView,
   }
   return true;
 }
-}
+}  // namespace mojo

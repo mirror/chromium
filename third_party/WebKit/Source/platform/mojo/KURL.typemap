@@ -7,9 +7,9 @@ public_headers = [ "//third_party/WebKit/Source/platform/weborigin/KURL.h" ]
 traits_headers =
     [ "//third_party/WebKit/Source/platform/mojo/KURLStructTraits.h" ]
 
-# Note: consumers of this typemap must themselves depend on platform.
 deps = [
   "//mojo/public/cpp/bindings",
+  "//third_party/WebKit/Source/platform:platform_base",
   "//url",
 ]
 type_mappings = [ "url.mojom.Url=::blink::KURL" ]

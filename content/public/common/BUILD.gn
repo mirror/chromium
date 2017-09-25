@@ -192,6 +192,8 @@ source_set("common_sources") {
     "presentation_connection_message.h",
     "presentation_info.cc",
     "presentation_info.h",
+    "presentation_struct_traits.cc",
+    "presentation_struct_traits.h",
     "previews_state.h",
     "process_type.h",
     "push_event_payload.h",
