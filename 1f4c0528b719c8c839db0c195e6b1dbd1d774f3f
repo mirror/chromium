@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "5a8f54b3_08e5caf2",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-25T18:22:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "250315e0_840d2b39",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38465d5_cbf7f71b",
         "filename": "sql/connection.cc",
         "patchSetId": 1
