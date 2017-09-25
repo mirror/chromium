@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4a31f28_ab1ef21f",
+        "filename": "components/signin/core/browser/profile_oauth2_token_service.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "These are iOS specific - may I ask you to add an if defined(OS_IOS) around these?",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ed9843_9b01de82",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "I suppose this is pretty-much copy paste, so I did not review it in detail. Let me know if I need to review it in detail.",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d685d4d3_955d9e2c",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "Looking at this code makes it clear that we could have done a better job when creating this client (this function does not belong in the client). I\u0027ll do a pass after you CL is submitted to see if there are things we can remove from the client.",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330829e5_7b14be10",
+        "filename": "ios/chrome/browser/signin/oauth2_token_service_factory.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "For completeness, please add a function |RegisterBrowserStatePrefs| in the ProfileOAuth2TokenService and call the service (here https://cs.chromium.org/chromium/src/chrome/browser/signin/profile_oauth2_token_service_factory.cc ). This factory is used on other platforms than iOS.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a62a732_2d89f705",
+        "filename": "ios/web_view/internal/signin/web_view_account_consistency_service_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "Note that the AccountConsistency service is only used for Mirror. You do not need it if you do not need Mirror.",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d74582_b30bd302",
+        "filename": "ios/web_view/internal/signin/web_view_account_reconcilor_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "AcccountReconcilor is only needed for Mirror. You do not need it if you do not want Mirror.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5941b1a_8642f5ea",
+        "filename": "ios/web_view/internal/signin/web_view_gaia_cookie_manager_service_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T11:29:34Z",
+      "side": 1,
+      "message": "GaiaCookieManager is only needed for Mirror. You do not need it if you do not want Mirror.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
