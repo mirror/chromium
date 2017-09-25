@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42082f9b_18801154",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-25T10:16:40Z",
+      "side": 1,
+      "message": "(o_O) looks like we need Promise here.",
+      "revId": "89e7f8775695a12b09c08241fef41ef0083fd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a260c6_0e207211",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-25T10:16:40Z",
+      "side": 1,
+      "message": "Oh I see... I assume this actually happens in the previous code path, right? (I slowly realized that we have the equivalent code path in ServiceWorker case)",
+      "revId": "89e7f8775695a12b09c08241fef41ef0083fd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
