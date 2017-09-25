@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c7e7934_ed781974",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "We are clearing the old hyperlink here by assigning a new object.",
+      "parentUuid": "42724b4e_14ef0959",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edbe3bf0_40165b6f",
         "filename": "ui/accessibility/ax_role_properties.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-24T01:47:13Z",
       "side": 1,
       "message": "Is there a document role too?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ac8e1b_4a9498d3",
+        "filename": "ui/accessibility/ax_role_properties.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Maybe:  https://cs.chromium.org/chromium/src/out/Debug/gen/ui/accessibility/ax_enums.h?type\u003dcs\u0026q\u003dAX_ROLE_WEB_AREA\u0026sq\u003dpackage:chromium\u0026l\u003d131\n\nBut this is a direct port and I do not want to change behavior during a refactor:\n\nhttps://cs.chromium.org/chromium/src/content/browser/accessibility/browser_accessibility.cc?q\u003d::IsDocument\u0026sq\u003dpackage:chromium\u0026l\u003d107\n\nI can follow up.",
+      "parentUuid": "edbe3bf0_40165b6f",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b6da235d_0199e7f9",
+        "filename": "ui/accessibility/ax_role_properties.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Every method in this file is exported so that it can be used from outside ui.  These are role helper methods used in browser accessibility.",
+      "parentUuid": "4b3eee78_bdd47167",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61aebcd9_a882bfc0",
         "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "470c02d1_8365e249",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61aebcd9_a882bfc0",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d5ea939_180137ad",
         "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-24T11:48:35Z",
       "side": 1,
       "message": "I think now we have the EDITABLE_ROOT attribute. Could you check if it covers the cases that this \"if\" covers and switch to it if so?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe66077_76d31b7b",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "I do not think EDITABLE_ROOT is handed in this case at all.  Maybe a follow up?",
+      "parentUuid": "4d5ea939_180137ad",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c403490b_6650eb3d",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28240c38_7fed68f3",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea1f1080_fe1d05f1",
         "filename": "ui/accessibility/platform/ax_platform_node_base.h",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-24T01:47:13Z",
       "side": 1,
       "message": "Sometimes Get sometimes Compute?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b28d4be_6cb47352",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Not much more than GetText() defined above.  Worse case for both is building inner text.",
+      "parentUuid": "ea1f1080_fe1d05f1",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7531282f_0fd49694",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88147137_bc56a4e5",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b73695df_5247a6aa",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-24T11:48:35Z",
       "side": 1,
       "message": "Default?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db50a3b8_cddf7bed",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "In simple classes, this is possible.  However, this class will created a chromium warning:\n   Complex constructor has an inlined body\n\nSee https://www.chromium.org/developers/coding-style/chromium-style-checker-errors.",
+      "parentUuid": "b73695df_5247a6aa",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "f838dcf1_3595f9a6",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3388,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Yup. As I mentioned, I will do this in a follow up.",
+      "parentUuid": "f0c48b69_f74f2cd3",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "948c0fa8_d7ca1cd7",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 1
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "9e89cfcc_fbdca831",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3394,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948c0fa8_d7ca1cd7",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "106e1675_e1af4c88",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2017-09-24T11:48:35Z",
       "side": 1,
       "message": "I don\u0027t think that all links have the linked state set. Could you look in the dump tree test files? I vaguely remember adding a test or modifying one where a link didn\u0027t have the linked state but it had a link role.",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2ceef1_4af99fe8",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3400,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Good suggestion.  I\u0027ll follow up.  This is the way we\u0027ve been handling computation of value for a while and making a change like that might cause some regression.",
+      "parentUuid": "106e1675_e1af4c88",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "ffd3cdfe_f58bf8df",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51393fd1_d05533be",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f7c841_e2e0b420",
         "filename": "ui/accessibility/platform/ax_platform_node_win.h",
         "patchSetId": 1
@@ -234,6 +468,24 @@
       "writtenOn": "2017-09-24T11:48:35Z",
       "side": 1,
       "message": "Should this be exported?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d131f4e_afb591fb",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "yes, since it is used currently out side of ui (specifically inside of BrowserAccessibilityComWin",
+      "parentUuid": "17f7c841_e2e0b420",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "325c875b_533626bc",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebeb9f3e_e71e623e",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185eeaf7_2c1e8425",
         "filename": "ui/accessibility/platform/ax_platform_node_win.h",
         "patchSetId": 1
@@ -271,6 +541,24 @@
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e781f40_00a76966",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "185eeaf7_2c1e8425",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "8d7fef00_4f9215fa",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4936234_75286178",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160819e8_86a5ef1a",
         "filename": "ui/accessibility/platform/ax_platform_node_win.h",
         "patchSetId": 1
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "5223a0e4_cb11ab4d",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "160819e8_86a5ef1a",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c253ead8_c06007d6",
         "filename": "ui/accessibility/platform/ax_platform_node_win.h",
         "patchSetId": 1
@@ -319,6 +643,24 @@
       "writtenOn": "2017-09-24T11:48:35Z",
       "side": 1,
       "message": "Possibly override base GetValue?",
+      "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cdbb06_3054dd94",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 1,
+      "message": "Yes, maybe.  In a follow up, I am going to change GetValue to return the value of ComputeValue.  I am not sure at this point if |ComputeValue| will because a GetValue override or not.",
+      "parentUuid": "c253ead8_c06007d6",
       "revId": "4d0db3a3cf756f5979b73ae87ce245823ea6944e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

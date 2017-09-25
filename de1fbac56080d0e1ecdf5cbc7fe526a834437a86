@@ -16,6 +16,24 @@
       "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73dbfdd_bf586f23",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-25T13:10:49Z",
+      "side": 0,
+      "message": "Yup. It\u0027s empty until an accessibility event is fired on the browser side.",
+      "parentUuid": "7941614d_e4146267",
+      "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
