@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc0118b_4a529bd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-25T22:22:48Z",
+      "side": 1,
+      "message": "I\u0027m confused by this last sentence -- the previous paragraph just stated \"to\nensure that it is not possible to get stuck out of sync\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "72e511dc358fe2080f91b4ae90ea9ddad56f5eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68144aca_74cdf3e5",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-25T22:22:48Z",
+      "side": 1,
+      "message": "Is this call needed? It seems to be indirectly called within EnsureDiscoverySessionActive().",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "72e511dc358fe2080f91b4ae90ea9ddad56f5eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4511d0_72d543e7",
+        "filename": "chromeos/components/tether/ble_scanner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-25T22:22:48Z",
+      "side": 1,
+      "message": "for*",
+      "range": {
+        "startLine": 99,
+        "startChar": 51,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "72e511dc358fe2080f91b4ae90ea9ddad56f5eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
