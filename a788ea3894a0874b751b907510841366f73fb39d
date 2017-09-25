@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae15f67_c89756b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-25T16:58:55Z",
+      "side": 1,
+      "message": "Please add [ChromeDriver] (including the square brackets) to the beginning of this line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "a788ea3894a0874b751b907510841366f73fb39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa5aa9b_0b557fbf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-25T16:58:55Z",
+      "side": 1,
+      "message": "Please change this line to:\n\nBug: chromedriver:2013",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "a788ea3894a0874b751b907510841366f73fb39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
