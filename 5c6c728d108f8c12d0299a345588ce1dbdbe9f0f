@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "a31195e1_33a1cad3",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-25T18:45:31Z",
+      "side": 1,
+      "message": "\u003e \u003e nit: move out of loop.\n\u003e It\u0027s not \"in\" the loop, it\u0027s the value being iterated over.  It\u0027ll only be evaluated once I think.\nOh yeah, the range expression in a range-based for loop is only evaluated once- http://en.cppreference.com/w/cpp/language/range-for. Thanks.\n\n\u003e \u003e Also, isn\u0027t there a proto equivalent of vector for a repeated field, which we can directly return and use?\n\u003e There is, but it\u0027s pretty awkward to use.\nAcknowledged.",
+      "parentUuid": "9814d395_c3ed0ceb",
+      "range": {
+        "startLine": 453,
+        "startChar": 7,
+        "endLine": 453,
+        "endChar": 24
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5975830f_6fe6f410",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -193,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "15cc00b4_f77652d2",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-25T18:45:31Z",
+      "side": 1,
+      "message": "\u003e \u003e These are only protected static to facilitate testing I believe? A comment along these lines would be helpful. \n\u003e \n\u003e See line 48.\n\nThanks, I missed it.\n\n\u003e \u003e Can\u0027t we just expose these as free functions? If not, can we expose ForTesting free functions, which call into the actual functions in an anon namespace.\n\u003e \n\u003e Do we have an \"expose for testing\" annotation in C++?\n\nThere are PRESUBMIT checks for functions with \"ForTest\" in their name - https://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003dForTest+file:PRESUBMIT\u0026sq\u003dpackage:chromium\u0026l\u003d533",
+      "parentUuid": "35a58880_9799d194",
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8afe4491_0585bcdb",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -240,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "436e67db_e72b0eac",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-25T18:45:31Z",
+      "side": 1,
+      "message": "SG.",
+      "parentUuid": "c47aba8d_3401c9d3",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48353e82_ba01f4d4",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -275,6 +341,30 @@
       "side": 1,
       "message": "\u003e nit: Rename to INVALID_LOCATION like in Manifest::Location?\n\nA typical logging best practice for enum histograms is to have an \"unknown\" entry first.  If you want an \"invalid\" entry, it should be in addition to an \"unknown\" entry.  If you\u0027re using \"invalid\" to mean \"unknown\", I think the logs should call it unknown.",
       "parentUuid": "48353e82_ba01f4d4",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3436398e_b2eea141",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-25T18:45:31Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "eb622af8_404959c6",
       "range": {
         "startLine": 32,
         "startChar": 4,
