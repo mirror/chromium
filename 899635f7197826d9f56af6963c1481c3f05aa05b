@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9ef0131_9623490c",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9ab1ab_f1097b9c",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817decb1_bbf8edd9",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 28
@@ -33,6 +51,24 @@
       "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3957b63f_ffa41899",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Oops, this was an inadvertent change.",
+      "parentUuid": "817decb1_bbf8edd9",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7997fec8_c16e7d9d",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve gone with your second suggestion, keeping the |nodes_| name, but using the node IDs.",
+      "parentUuid": "b3e1497e_16ca9903",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9fa2d9_0997af70",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
         "patchSetId": 28
@@ -67,6 +121,24 @@
       "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293f144c_855554e5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de9fa2d9_0997af70",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5784a055_41e3d7e7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Okay, I wasn\u0027t quite sure. Fixed.",
+      "parentUuid": "b4bb6fe3_1fb53967",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5752b944_f4e48549",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
         "patchSetId": 28
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f780d756_990f6324",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 28
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "Ah, that makes sense. Currently, I\u0027ve made args optional, so I\u0027ll need to handle the args undefined case, but I\u0027ll make it required if that seems cleaner.",
+      "parentUuid": "5752b944_f4e48549",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52a689da_23c1d99b",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
         "patchSetId": 28
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-22T16:55:36Z",
       "side": 1,
       "message": "just inherit?",
+      "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11faf529_73bd7194",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
+        "patchSetId": 28
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-25T13:33:37Z",
+      "side": 1,
+      "message": "This was modified to fix the https://imgur.com/a/VXFQM \"error colour propagation\" issue, where node text content would be coloured red too, as that seemed preferable.",
+      "parentUuid": "52a689da_23c1d99b",
       "revId": "899635f7197826d9f56af6963c1481c3f05aa05b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
