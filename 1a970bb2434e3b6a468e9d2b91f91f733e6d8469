@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ee9bd205_817a1a8c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T22:13:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e4a4e42_15f76f30",
+      "range": {
+        "startLine": 1183,
+        "startChar": 32,
+        "endLine": 1183,
+        "endChar": 39
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1327e702_5c19ea72",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Awkwardly, it is removed in BubbleIconView in response to ::OnWidgetDestroying(): https://cs.chromium.org/chromium/src/chrome/browser/ui/views/location_bar/bubble_icon_view.cc?sq\u003dpackage:chromium\u0026l\u003d183",
       "parentUuid": "1327e702_5c19ea72",
+      "range": {
+        "startLine": 1192,
+        "startChar": 4,
+        "endLine": 1192,
+        "endChar": 47
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b1909f_c200310e",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T22:13:53Z",
+      "side": 1,
+      "message": "Can the AddObserver be in BubbleIconView then? Having the remove in a completely separate place than the add is error prone.",
+      "parentUuid": "87df05e8_d76feedf",
       "range": {
         "startLine": 1192,
         "startChar": 4,
