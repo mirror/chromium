@@ -23,7 +23,6 @@ import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.IntentHandler;
-import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.util.IntentUtils;
 
 import java.lang.ref.WeakReference;
@@ -264,31 +263,5 @@ public class MultiWindowUtils implements ActivityStateListener {
     public boolean isLegacyMultiWindow(Activity activity) {
         // This logic is overridden in a subclass.
         return false;
-    }
-
-    /**
-     * @param activity The {@link Activity} to check.
-     * @return Whether or not {@code activity} should run in pre-N Samsung multi-instance mode.
-     */
-    public boolean shouldRunInLegacyMultiInstanceMode(ChromeLauncherActivity activity) {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP
-                && TextUtils.equals(activity.getIntent().getAction(), Intent.ACTION_MAIN)
-                && isLegacyMultiWindow(activity)
-                && activity.isChromeBrowserActivityRunning();
-    }
-
-    /**
-     * Makes |intent| able to support multi-instance in pre-N Samsung multi-window mode.
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void makeLegacyMultiInstanceIntent(ChromeLauncherActivity activity, Intent intent) {
-        if (isLegacyMultiWindow(activity)) {
-            if (TextUtils.equals(ChromeTabbedActivity.class.getName(),
-                    intent.getComponent().getClassName())) {
-                intent.setClassName(activity, MultiInstanceChromeTabbedActivity.class.getName());
-            }
-            intent.setFlags(intent.getFlags()
-                    & ~(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT));
-        }
     }
 }
