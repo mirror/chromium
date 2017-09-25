@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "6a03ca33_347d15cd",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:48:26Z",
+      "side": 1,
+      "message": "Is this condition intended to capture the situation where it\u0027s called very early, before the variations service has loaded the data?",
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82b7d3f9_77150363",
         "filename": "components/metrics/expired_histograms_checker.cc",
         "patchSetId": 2
@@ -111,6 +128,23 @@
         "endLine": 29,
         "endChar": 16
       },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c5cd73_f6cf27a3",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:48:26Z",
+      "side": 1,
+      "message": "Add comment, mention it\u0027s safe to call multiple times.",
       "revId": "a265737a6086734c3bba897f89e799388ea70987",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
