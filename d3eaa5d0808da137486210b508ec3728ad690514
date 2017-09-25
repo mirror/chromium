@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3a8c3e_5f770042",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T19:57:24Z",
+      "side": 1,
+      "message": "The link should be a localizable string e.g. see aboutObsoleteSystemURL.",
+      "revId": "d3eaa5d0808da137486210b508ec3728ad690514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bac7cc_1deea4e5",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T19:57:24Z",
+      "side": 1,
+      "message": "Dialogs shouldn\u0027t be embedded with an element, they should be included last, e.g. see settings-update-warning-dialog below.",
+      "revId": "d3eaa5d0808da137486210b508ec3728ad690514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
