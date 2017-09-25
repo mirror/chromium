@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb0ca90d_7676b154",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/UploadDataProvidersTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-25T18:55:33Z",
+      "side": 1,
+      "message": "Should we look for \"ByteBuffer limit changed\" substring?",
+      "revId": "8fc3bb2d2119ab962eca815f69b99d38bb7562ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
