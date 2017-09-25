@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e753c1c5_ff32bbb4",
+        "filename": "services/preferences/tracked/pref_hash_calculator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T21:36:28Z",
+      "side": 1,
+      "message": "To be correct, this test needs to be introduced while it\u0027s allowed (and land). And then the expectations in it can be flipped with this CL. Otherwise there\u0027s no trail that proves it\u0027s only the new logic that makes this be rejected.",
+      "revId": "89679e4247254cf672d724e16155caf0a2d32028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

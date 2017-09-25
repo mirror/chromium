@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af01669_5dc70c72",
+        "filename": "chrome/browser/prefs/chrome_pref_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T21:36:28Z",
+      "side": 0,
+      "message": "This is for the Windows legacy id, your CL mentions MAC only, either fully clean this up or don\u0027t touch the Windows part.\n\nI\u0027d vote for removing the RLZ dependency altogether.",
+      "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
