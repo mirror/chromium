@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "703f2c6b_796fbeb9",
+        "filename": "base/android/java/src/org/chromium/base/PackageUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-25T22:25:19Z",
+      "side": 1,
+      "message": "Removed this change by mocking PackageManager.\n\nDone",
+      "parentUuid": "58c7d6d5_f6e00085",
+      "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d4eeaa_da0ce5f0",
         "filename": "content/browser/android/selection_popup_controller.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfa9659_fa16c3b1",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-25T22:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d4eeaa_da0ce5f0",
+      "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be13577a_356de07e",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionPopupControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-25T22:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032634a3_c99489a9",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 54
+      },
+      "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
