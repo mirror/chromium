@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f51862_d78f9069",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/compositing/layer-creation/fixed-position-nonscrollable-body-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T15:56:51Z",
+      "side": 1,
+      "message": "This line is different from the common baseline which has \"[800, 4021]\". It changes to [800, 600] with this CL because \u003chtml\u003e has overflow:hidden and the viewport is not user scrollable and we apply the viewport clip on the contents layer.",
+      "revId": "d4fee7f5bb314f2cd338af3d357df533d93ed26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d764b21_34875cc4",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/compositing/layer-creation/fixed-position-nonscrollable-body-overlap-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T15:56:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d4fee7f5bb314f2cd338af3d357df533d93ed26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed8d4b8_675c5e09",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T15:56:51Z",
+      "side": 1,
+      "message": "This allows more accurate opaqueness tracking when we clip the layer bounds. With known_to_be_opaque, when we merged layers, we might set known_to_be_opaque to false, and when we clip the layer bounds, we left it to false even if the contents in the clipped bounds were opaque.",
+      "revId": "d4fee7f5bb314f2cd338af3d357df533d93ed26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
