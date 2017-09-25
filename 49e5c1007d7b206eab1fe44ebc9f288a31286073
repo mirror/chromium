@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140e28bf_f0efde9c",
+        "filename": "content/public/test/controllable_http_response.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "I suggest not using a lambda here, to make this easier to follow.",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb59290_05cf7098",
+        "filename": "content/public/test/controllable_http_response.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "Is this common?  I don\u0027t think I\u0027ve ever seen a \"const std::unique_ptr\u003cbool\u003e\u0026\" used in a bound callback before, and I\u0027m not at all sure it works as it\u0027s supposed to.  Maybe take a bool pointer, and pass it as base::Owned(new bool(true))?",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 47
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991b26fe_eaa89211",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "nit:  blank line after string.",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d960492_f3477896",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "Think this one can be moved into the cc file (Other three look basically necessary, though)",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523692bf_86239edb",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "Mention order?  (In the case of multiple ControllableHttpResponses for the same path, they\u0027re used in the order they were created).",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa27987c_53a6f980",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "nit:  callbacks are generally based using const references (Except for OnceCallbacks, which these are not)",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c4a771_d5d25386",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "I recommend \"enum class\" instead, as it enforces type safety, at the cost of being more verbose.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 6
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eaa3a87_d9b950a9",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "Maybe replace INITIAL with WAITING_FOR_REQUEST?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422847e1_52900d50",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "nit:  enums generally go before methods, but after forward declarations.",
+      "range": {
+        "startLine": 50,
+        "startChar": 51,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4728bf3_2c749717",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "include run_loop.h",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566b140c_0af7b17b",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:56:47Z",
+      "side": 1,
+      "message": "include the SingleThreadTaskRunner header?",
+      "range": {
+        "startLine": 53,
+        "startChar": 46,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "49e5c1007d7b206eab1fe44ebc9f288a31286073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
