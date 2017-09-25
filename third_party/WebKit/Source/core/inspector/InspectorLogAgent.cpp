@@ -9,6 +9,8 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/IdentifiersFactory.h"
+#include "core/inspector/InspectorDOMAgent.h"
+#include "third_party/WebKit/Source/platform/ScriptForbiddenScope.h"
 
 namespace blink {
 
@@ -48,6 +50,8 @@ String MessageSourceValue(MessageSource source) {
       return protocol::Log::LogEntry::SourceEnum::Violation;
     case kInterventionMessageSource:
       return protocol::Log::LogEntry::SourceEnum::Intervention;
+    case kRecommendationMessageSource:
+      return protocol::Log::LogEntry::SourceEnum::Recommendation;
     default:
       return protocol::Log::LogEntry::SourceEnum::Other;
   }
@@ -72,16 +76,19 @@ String MessageLevelValue(MessageLevel level) {
 using protocol::Log::ViolationSetting;
 
 InspectorLogAgent::InspectorLogAgent(ConsoleMessageStorage* storage,
-                                     PerformanceMonitor* performance_monitor)
+                                     PerformanceMonitor* performance_monitor,
+                                     InspectorDOMAgent* dom_agent)
     : enabled_(false),
       storage_(storage),
-      performance_monitor_(performance_monitor) {}
+      performance_monitor_(performance_monitor),
+      dom_agent_(dom_agent) {}
 
 InspectorLogAgent::~InspectorLogAgent() {}
 
 DEFINE_TRACE(InspectorLogAgent) {
   visitor->Trace(storage_);
   visitor->Trace(performance_monitor_);
+  visitor->Trace(dom_agent_);
   InspectorBaseAgent::Trace(visitor);
   PerformanceMonitor::Client::Trace(visitor);
 }
@@ -123,6 +130,21 @@ void InspectorLogAgent::ConsoleMessageAdded(ConsoleMessage* message) {
       message->RequestIdentifier())
     entry->setNetworkRequestId(
         IdentifiersFactory::RequestId(message->RequestIdentifier()));
+
+  if (dom_agent_ && !message->Nodes().IsEmpty()) {
+    ScriptForbiddenScope::AllowUserAgentScript allow_script;
+    std::unique_ptr<
+        protocol::Array<v8_inspector::protocol::Runtime::API::RemoteObject>>
+        remote_objects = protocol::Array<
+            v8_inspector::protocol::Runtime::API::RemoteObject>::create();
+    for (DOMNodeId node_id : message->Nodes()) {
+      auto remote_object =
+          dom_agent_->ResolveNode(DOMNodeIds::NodeForId(node_id), "console");
+      if (remote_object)
+        remote_objects->addItem(std::move(remote_object));
+    }
+    entry->setArgs(std::move(remote_objects));
+  }
 
   GetFrontend()->entryAdded(std::move(entry));
   GetFrontend()->flush();
