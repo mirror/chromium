@@ -200,6 +200,7 @@ enum {
 
 @implementation NewTabPageController
 
+@synthesize view = _view;
 @synthesize ntpView = _ntpView;
 @synthesize swipeRecognizerProvider = _swipeRecognizerProvider;
 @synthesize parentViewController = _parentViewController;
@@ -220,7 +221,9 @@ enum {
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
                              OmniboxFocuser,
-                             UrlLoader>)dispatcher {
+                             UrlLoader>)dispatcher
+                   frame:(CGRect)frame
+                safeArea:(UIEdgeInsets)safeArea {
   self = [super initWithNibName:nil url:url];
   if (self) {
     DCHECK(browserState);
@@ -236,13 +239,13 @@ enum {
     self.title = l10n_util::GetNSString(IDS_NEW_TAB_TITLE);
     _scrollInitialized = NO;
 
-    UIScrollView* scrollView =
-        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 412)];
-    [scrollView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
-                                     UIViewAutoresizingFlexibleHeight)];
-    NewTabPageBar* tabBar =
-        [[NewTabPageBar alloc] initWithFrame:CGRectMake(0, 412, 320, 48)];
-    _ntpView = [[NewTabPageView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:frame];
+    CGFloat toolbarHeight = 48 + safeArea.bottom;
+    CGFloat toolbarY = frame.size.height - toolbarHeight;
+
+    NewTabPageBar* tabBar = [[NewTabPageBar alloc]
+        initWithFrame:CGRectMake(0, toolbarY, frame.size.width, toolbarHeight)];
+    _ntpView = [[NewTabPageView alloc] initWithFrame:frame
                                        andScrollView:scrollView
                                            andTabBar:tabBar];
     // TODO(crbug.com/607113): Merge view and ntpView.
@@ -320,6 +323,10 @@ enum {
     [self updateOverlayScrollPosition];
   }
   return self;
+}
+
+- (UIView*)view {
+  return _view;
 }
 
 - (void)dealloc {
@@ -479,7 +486,7 @@ enum {
 
 // Update selectedIndex and scroll position as the scroll view moves.
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
-  if (!_scrollInitialized)
+  if (!_scrollInitialized || PresentNTPPanelModally())
     return;
 
   // Position is used to track the exact X position of the scroll view, whereas

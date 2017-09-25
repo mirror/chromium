@@ -24,9 +24,10 @@
 @interface NewTabPageBar : UIView<UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) NSArray* items;
+// Which button is currently selected.
 @property(nonatomic, assign) NSUInteger selectedIndex;
+// Percentage overlay sits over tab bar buttons.
 @property(nonatomic, assign) CGFloat overlayPercentage;
-@property(nonatomic, readonly, strong) NSArray* buttons;
 @property(nonatomic, weak) id<NewTabPageBarDelegate> delegate;
 
 // Changes the colors of the buttons and overlay depending on the content offset

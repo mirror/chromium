@@ -10,6 +10,7 @@
 #import "ios/chrome/browser/ui/ntp/new_tab_page_bar_item.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -25,8 +26,20 @@
                     andTabBar:(NewTabPageBar*)tabBar {
   self = [super initWithFrame:frame];
   if (self) {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    tabBar.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:scrollView];
     [self addSubview:tabBar];
+    [NSLayoutConstraint activateConstraints:@[
+      [tabBar.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+      [tabBar.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [tabBar.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [scrollView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [scrollView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [scrollView.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [scrollView.bottomAnchor constraintEqualToAnchor:tabBar.topAnchor],
+    ]];
     scrollView_ = scrollView;
     tabBar_ = tabBar;
   }
@@ -54,6 +67,8 @@
   self.scrollView.delegate = nil;
   [super setFrame:frame];
   self.scrollView.delegate = delegate;
+
+  [self.tabBar layoutSubviews];
 
   // Set the scrollView content size.
   [self updateScrollViewContentSize];
@@ -93,10 +108,6 @@
   if (self.tabBar.hidden) {
     self.scrollView.frame = self.bounds;
   } else {
-    CGSize barSize = [self.tabBar sizeThatFits:self.bounds.size];
-    self.tabBar.frame = CGRectMake(CGRectGetMinX(self.bounds),
-                                   CGRectGetMaxY(self.bounds) - barSize.height,
-                                   barSize.width, barSize.height);
     self.scrollView.frame = CGRectMake(
         CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds),
         CGRectGetWidth(self.bounds), CGRectGetMinY(self.tabBar.frame));
@@ -119,6 +130,11 @@
     contentSize.width *= self.tabBar.items.count;
   }
   self.scrollView.contentSize = contentSize;
+}
+
+- (void)didMoveToSuperview {
+  [super didMoveToSuperview];
+  AddSameConstraints(self, self.superview);
 }
 
 - (CGRect)panelFrameForItemAtIndex:(NSUInteger)index {
