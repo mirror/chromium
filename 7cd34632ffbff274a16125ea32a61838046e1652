@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d3bca8c_d01043f5",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T17:49:26Z",
+      "side": 1,
+      "message": "Good point. endianness definately matters, so I changed to code to let the compiler do the right thing converting to a char16, and then just getting the values out of that.",
+      "parentUuid": "1d8199f1_596ea74b",
+      "range": {
+        "startLine": 292,
+        "startChar": 31,
+        "endLine": 292,
+        "endChar": 32
+      },
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca6fcce_81d491d1",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7616217_a65e324f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T17:49:26Z",
+      "side": 1,
+      "message": "Yeah, probably should have put this in content/common. The reason I didn\u0027t was that the LocalStorageCachedArea and the renderer side code is expected to change quite a bit as it is moved into blink (the whole reason to have picked this encoding format rather than a straight-forward UTF8 always was to more closely match the internal format of WTF::String). But yeah, that has now bitten me quite badly.\n\nIt is an exact copy of the code in LocalStorageCachedArea now at least, and I added a TODO comment to somehow deduplicate the code.\n\nNot sure about using the full String16ToUint8Vector/Uint8VectorToString16 methods for the fix though, as that would mean having to copy every byte of every key several times every time we open a storage area, while with the current code bytes are only copied if we actually detect incorrectly encoded keys (of course the conversion from bad encoding to good encoding could use copies of those methods, but I\u0027d still want the separate logic for deciding if something is badly encoded. And the conversion would then still end up with an unneeded string16 representation of the key, rather than converting straight from one format to another).",
+      "parentUuid": "6ca6fcce_81d491d1",
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "26a10668_0808a4d7",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T17:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4599298_5cb28457",
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be0429e_2fc49360",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955061b0_17e7b9f6",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T17:49:26Z",
+      "side": 1,
+      "message": "the reason for the weird formatting is that you can\u0027t have \"\\x02e\" or \"\\x02f\" in a string literal and have it be interpreted correctly, instead you need to write \"\\x02\"\"e\", which then gets split into multiple lines by clang-format... but I changed this code a bit to make it more obviously correct (and deal with endianness), so most of these string literals are gone now anyway.",
+      "parentUuid": "6be0429e_2fc49360",
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b0025e_8cdbaa86",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T17:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18053021_5f6625f8",
+      "range": {
+        "startLine": 775,
+        "startChar": 22,
+        "endLine": 775,
+        "endChar": 28
+      },
+      "revId": "7cd34632ffbff274a16125ea32a61838046e1652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
