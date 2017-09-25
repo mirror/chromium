@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f31ef8e_b45128c6",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-25T17:04:58Z",
+      "side": 1,
+      "message": "Nit: not critical for this change, but when this is a\nreal classifier it will be better to call resize() on the\nvector and then set the features directly, rather than\nusing push_back (which by default will dynamically resize\nthe array to larger than needed).",
+      "revId": "ccec28976c8166dc45444adfc4532e27675c11ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
