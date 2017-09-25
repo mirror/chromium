@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8660c8bb_4befe91f",
+        "filename": "net/data/ocsp_unittest/ocsp_sign_indirect_missing.pem",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-25T19:45:12Z",
+      "side": 1,
+      "message": "All of the test certificates have a serial number of 3.\nI\u0027ll follow-up with some more variety.",
+      "revId": "af1d813d10e012d06b3c502bad0b94a70aea5660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
