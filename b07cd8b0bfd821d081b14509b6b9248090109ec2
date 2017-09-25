@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036c451f_97ed0e1a",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-25T16:49:48Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f7ef3c_ad243101",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-25T16:49:48Z",
+      "side": 1,
+      "message": "Do we need to forward key released event?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 36,
+        "endLine": 1048,
+        "endChar": 71
+      },
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
