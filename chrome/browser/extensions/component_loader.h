@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/values.h"
 #include "build/build_config.h"
 
@@ -99,6 +100,14 @@ class ComponentLoader {
       const base::FilePath& root_directory,
       const char* extension_id,
       const base::Closure& done_cb);
+
+  // Add a component extension from a specific directory. Assumes that the
+  // extension's manifest file lives in |root_directory| and its name is
+  // 'manifest.json'.
+  void AddWithNameAndDescriptionFromDir(const base::FilePath& root_directory,
+                                        const char* extension_id,
+                                        const std::string& name_string,
+                                        const std::string& description_string);
 
   void AddChromeOsSpeechSynthesisExtension();
 #endif
@@ -187,6 +196,8 @@ class ComponentLoader {
   void FinishAddComponentFromDir(
       const base::FilePath& root_directory,
       const char* extension_id,
+      const base::Optional<std::string>& name_string,
+      const base::Optional<std::string>& description_string,
       const base::Closure& done_cb,
       std::unique_ptr<base::DictionaryValue> manifest);
 #endif
