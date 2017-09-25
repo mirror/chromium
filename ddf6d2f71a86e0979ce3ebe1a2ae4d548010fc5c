@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f186667b_05e7e63a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:10:07Z",
+      "side": 1,
+      "message": "This move makes reviewing this CL rather painful. \n\nIdeally you could have patch X with just the move, and patch X+1 with your new code so the diff is more obvious.\n\nWhat is the new code that you have added?",
+      "revId": "ddf6d2f71a86e0979ce3ebe1a2ae4d548010fc5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
