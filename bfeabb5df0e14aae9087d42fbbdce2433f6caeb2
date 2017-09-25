@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6213baf9_e76a556f",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-25T12:14:55Z",
+      "side": 1,
+      "message": "Same salt for all devices? Is it OK to store the device_id_salt_? Was there not a bug about keeping the salt cross process?",
+      "revId": "bfeabb5df0e14aae9087d42fbbdce2433f6caeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddd3d12_7c9669fa",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-25T12:14:55Z",
+      "side": 1,
+      "message": "The device ID is unique, right? Even if you plug in two cameras that are the same.",
+      "revId": "bfeabb5df0e14aae9087d42fbbdce2433f6caeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
