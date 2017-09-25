@@ -22,6 +22,30 @@
       "revId": "61cf86e82d8bb0ce87072583c9509f8aedc54f2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2390ff0a_193b8255",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/UrlBarTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-25T21:38:23Z",
+      "side": 1,
+      "message": "\u003e you can just inline this in the commitText call.  Also you can use fancy new lambdas to cut down on some of this boilerplate.\n\u003e \n\u003e ThreadUtils.runOnUiThreadBlocking(() -\u003e { urlBar.getInputConnection().commitText(\"a\", 1); });\n\u003e \n\u003e Granted, who knows what git cl format will do with that.\n\nNeat idea.  Did here and below.\n\ngit cl format didn\u0027t behave well here.  See crbug.com/768551\n\nInstead, I formatted it manually.",
+      "parentUuid": "a07fb868_917d50cf",
+      "range": {
+        "startLine": 434,
+        "startChar": 21,
+        "endLine": 434,
+        "endChar": 26
+      },
+      "revId": "61cf86e82d8bb0ce87072583c9509f8aedc54f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
