@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "727ceccd_f76c708e",
+        "filename": "chrome/browser/chromeos/device/input_service_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T15:36:15Z",
+      "side": 1,
+      "message": "I mean both the input_service_proxy and the input_service_test_helper will be useless and removed.",
+      "parentUuid": "1f3de483_6a0e4dae",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d2e75c1_9b6e11e1",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 6
