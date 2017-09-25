@@ -16,6 +16,24 @@
       "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c554561_0c438441",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-25T13:37:19Z",
+      "side": 1,
+      "message": "Are you saying that using thread_restrictions.h to scope visibility of the WaitableEvent/ConditionVariable APIs is weird?\n\nWaitableEvent/ConditionVariable should rarely be used because they are a common source of hangs, deadlocks and data races. Friend lists in thread_restrictions.h guarantees that //base OWNERS will review all use cases, which is desirable.",
+      "parentUuid": "7ac76254_05bf9f99",
+      "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
