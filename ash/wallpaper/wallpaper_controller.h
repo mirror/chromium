@@ -132,6 +132,7 @@ class ASH_EXPORT WallpaperController
   void SetWallpaperPicker(mojom::WallpaperPickerPtr picker) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
+  void SetAnimationDurationOverride(base::TimeDelta duration) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
 
   // WallpaperResizerObserver:

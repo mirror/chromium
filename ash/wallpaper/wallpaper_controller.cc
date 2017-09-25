@@ -394,6 +394,11 @@ void WallpaperController::SetWallpaper(const SkBitmap& wallpaper,
   SetWallpaperImage(gfx::ImageSkia::CreateFrom1xBitmap(wallpaper), info);
 }
 
+void WallpaperController::SetAnimationDurationOverride(
+    base::TimeDelta duration) {
+  Shell::Get()->wallpaper_delegate()->SetAnimationDurationOverride(duration);
+}
+
 void WallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   std::move(callback).Run(prominent_colors_);

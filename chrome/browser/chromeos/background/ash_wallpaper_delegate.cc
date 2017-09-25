@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
@@ -41,9 +42,7 @@ bool IsNormalWallpaperChange() {
 
 class WallpaperDelegate : public ash::WallpaperDelegate {
  public:
-  WallpaperDelegate()
-      : boot_animation_finished_(false),
-        animation_duration_override_in_ms_(0) {}
+  WallpaperDelegate() : boot_animation_finished_(false) {}
 
   ~WallpaperDelegate() override {}
 
@@ -54,11 +53,11 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
   }
 
   int GetAnimationDurationOverride() override {
-    return animation_duration_override_in_ms_;
+    return animation_duration_override_.InMilliseconds();
   }
 
-  void SetAnimationDurationOverride(int animation_duration_in_ms) override {
-    animation_duration_override_in_ms_ = animation_duration_in_ms;
+  void SetAnimationDurationOverride(const base::TimeDelta& duration) override {
+    animation_duration_override_ = duration;
   }
 
   bool ShouldShowInitialAnimation() override {
@@ -127,7 +126,7 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
   bool boot_animation_finished_;
 
   // The animation duration to show a new wallpaper if an animation is required.
-  int animation_duration_override_in_ms_;
+  base::TimeDelta animation_duration_override_;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperDelegate);
 };

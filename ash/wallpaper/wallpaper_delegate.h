@@ -7,6 +7,10 @@
 
 #include "ash/ash_export.h"
 
+namespace base {
+class TimeDelta;
+}
+
 namespace ash {
 
 class ASH_EXPORT WallpaperDelegate {
@@ -21,8 +25,10 @@ class ASH_EXPORT WallpaperDelegate {
   // that the default should be used.
   virtual int GetAnimationDurationOverride() = 0;
 
-  // Sets wallpaper animation duration in ms. Pass 0 to use the default.
-  virtual void SetAnimationDurationOverride(int animation_duration_in_ms) = 0;
+  // Sets wallpaper animation duration. Pass an empty TimeDelta to use the
+  // default.
+  virtual void SetAnimationDurationOverride(
+      const base::TimeDelta& duration) = 0;
 
   // Should the slower initial animation be shown (as opposed to the faster
   // animation that's used e.g. when switching from one user's wallpaper to

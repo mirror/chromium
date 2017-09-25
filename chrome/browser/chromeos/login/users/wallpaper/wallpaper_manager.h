@@ -62,6 +62,9 @@ class WallpaperManager
   // from gfx::ImageSkia by using WallpaperResizer::GetImageId().
   bool IsPendingWallpaper(uint32_t image_id);
 
+  // Pass through to WallpaperController function of the same name.
+  void SetAnimationDurationOverride(const base::TimeDelta& duration);
+
   // wallpaper::WallpaperManagerBase:
   WallpaperResolution GetAppropriateResolution() override;
   void AddObservers() override;
@@ -219,6 +222,7 @@ class WallpaperManager
   void RecordWallpaperAppType() override;
   bool CanGetWallpaperFilesId() const override;
 
+  ash::mojom::WallpaperControllerPtr wallpaper_controller_;
   mojo::Binding<ash::mojom::WallpaperPicker> binding_;
 
   std::unique_ptr<CrosSettings::ObserverSubscription>

@@ -20,7 +20,7 @@ int WallpaperDelegateMus::GetAnimationDurationOverride() {
 }
 
 void WallpaperDelegateMus::SetAnimationDurationOverride(
-    int animation_duration_in_ms) {
+    const base::TimeDelta& duration) {
   NOTIMPLEMENTED();
 }
 

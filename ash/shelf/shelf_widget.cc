@@ -18,6 +18,7 @@
 #include "ash/shell.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/wallpaper/wallpaper_delegate.h"
 #include "base/memory/ptr_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -202,7 +203,7 @@ int ShelfWidget::GetBackgroundAlphaValue(
   return background_animator_.GetBackgroundAlphaValue(background_type);
 }
 
-void ShelfWidget::HideShelfBehindBlackBar(bool hide, int animation_time_ms) {
+void ShelfWidget::HideShelfBehindBlackBar(bool hide) {
   if (IsShelfHiddenBehindBlackBar() == hide)
     return;
 
@@ -212,7 +213,8 @@ void ShelfWidget::HideShelfBehindBlackBar(bool hide, int animation_time_ms) {
   opaque_foreground_animation.reset(
       new ui::ScopedLayerAnimationSettings(opaque_foreground->GetAnimator()));
   opaque_foreground_animation->SetTransitionDuration(
-      base::TimeDelta::FromMilliseconds(animation_time_ms));
+      base::TimeDelta::FromMilliseconds(
+          Shell::Get()->wallpaper_delegate()->GetAnimationDurationOverride()));
   opaque_foreground_animation->SetPreemptionStrategy(
       ui::LayerAnimator::REPLACE_QUEUED_ANIMATIONS);
 

@@ -49,6 +49,9 @@ interface WallpaperController {
   // large bitmaps over Mojo; use shared memory like BitmapUploader, etc.
   SetWallpaper(skia.mojom.Bitmap? wallpaper, WallpaperInfo info);
 
+  // FIXME
+  SetAnimationDurationOverride(mojo.common.mojom.TimeDelta duration);
+
   // Runs to get wallpaper prominent colors.
   GetWallpaperColors() => (array<uint32> prominent_colors);
 };

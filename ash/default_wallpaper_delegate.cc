@@ -19,7 +19,7 @@ int DefaultWallpaperDelegate::GetAnimationDurationOverride() {
 }
 
 void DefaultWallpaperDelegate::SetAnimationDurationOverride(
-    int animation_duration_in_ms) {}
+    const base::TimeDelta& duration) {}
 
 bool DefaultWallpaperDelegate::ShouldShowInitialAnimation() {
   return false;
