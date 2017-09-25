@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0731c431_c5afb2e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T16:38:26Z",
+      "side": 1,
+      "message": "write a better description please",
+      "revId": "1b59ff765dbfcd5400a5b190faee4cc9b670e194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce1d24b_5891aca8",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T16:38:26Z",
+      "side": 1,
+      "message": "name makes no sense\nScaleByDeviceDensityIfNeeded?",
+      "range": {
+        "startLine": 138,
+        "startChar": 34,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "1b59ff765dbfcd5400a5b190faee4cc9b670e194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c81d744_44fedd50",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T16:38:26Z",
+      "side": 1,
+      "message": "do not cache this, this can change",
+      "revId": "1b59ff765dbfcd5400a5b190faee4cc9b670e194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da25267c_00a7bb8f",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T16:38:26Z",
+      "side": 1,
+      "message": "Use display from this webcontents instead. different displays can have different densities",
+      "revId": "1b59ff765dbfcd5400a5b190faee4cc9b670e194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9fcd0e_1c36c048",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T16:38:26Z",
+      "side": 1,
+      "message": "you can put this check into GetDeviceScaleDown",
+      "revId": "1b59ff765dbfcd5400a5b190faee4cc9b670e194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
