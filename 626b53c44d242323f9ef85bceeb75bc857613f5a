@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72a2a8e_6c1d3520",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-25T13:16:18Z",
+      "side": 1,
+      "message": "I added an overload of setThumbnailForId to remove some of that boilerplate in https://chromium-review.googlesource.com/c/chromium/src/+/677288 WDYT?",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "626b53c44d242323f9ef85bceeb75bc857613f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
