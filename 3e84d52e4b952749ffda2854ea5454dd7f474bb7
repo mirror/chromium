@@ -16,6 +16,24 @@
       "revId": "3e84d52e4b952749ffda2854ea5454dd7f474bb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58b45c1_0e06ea64",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc6d428_e06ac39c",
+      "revId": "3e84d52e4b952749ffda2854ea5454dd7f474bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
