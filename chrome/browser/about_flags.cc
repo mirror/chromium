@@ -1442,6 +1442,11 @@ const FeatureEntry kFeatureEntries[] = {
     {"secondary-ui-md", flag_descriptions::kSecondaryUiMd,
      flag_descriptions::kSecondaryUiMdDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kExtendMdToSecondaryUi)},
+#if !defined(OS_ANDROID)
+    {"tab-close-domain", flag_descriptions::kTabCloseDomain,
+     flag_descriptions::kTabCloseDomainDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kTabCloseDomain)},
+#endif  // !defined(OS_ANDROID)
     {"touch-events", flag_descriptions::kTouchEventsName,
      flag_descriptions::kTouchEventsDescription, kOsDesktop,
      MULTI_VALUE_TYPE(kTouchEventFeatureDetectionChoices)},

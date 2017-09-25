@@ -389,6 +389,7 @@ class TabStripModel {
     CommandDuplicate,
     CommandCloseTab,
     CommandCloseOtherTabs,
+    CommandCloseTabsFromSameDomain,
     CommandCloseTabsToRight,
     CommandRestoreTab,
     CommandTogglePinned,

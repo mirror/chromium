@@ -207,6 +207,10 @@ extern const base::Feature kSimplifiedFullscreenUI;
 
 extern const base::Feature kSiteDetails;
 
+#if !defined(OS_ANDROID)
+extern const base::Feature kTabCloseDomain;
+#endif  // !defined(OS_ANDROID)
+
 #if defined(OS_ANDROID)
 extern const base::Feature kSiteNotificationChannels;
 #endif

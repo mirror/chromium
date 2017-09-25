@@ -700,6 +700,9 @@ extern const char kScrollPredictionDescription[];
 extern const char kSecondaryUiMd[];
 extern const char kSecondaryUiMdDescription[];
 
+extern const char kTabCloseDomain[];
+extern const char kTabCloseDomainDescription[];
+
 extern const char kServiceWorkerNavigationPreloadName[];
 extern const char kServiceWorkerNavigationPreloadDescription[];
 

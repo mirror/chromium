@@ -871,6 +871,7 @@ bool TabStripModel::IsContextMenuCommandEnabled(
       return false;
     }
 
+    case CommandCloseTabsFromSameDomain:
     case CommandCloseOtherTabs:
     case CommandCloseTabsToRight:
       return !GetIndicesClosedByCommand(context_index, command_id).empty();
@@ -976,6 +977,14 @@ void TabStripModel::ExecuteContextMenuCommand(
       break;
     }
 
+    case CommandCloseTabsFromSameDomain: {
+      base::RecordAction(
+          UserMetricsAction("TabContextMenu_CloseTabsFromSameDomain"));
+      InternalCloseTabs(GetIndicesClosedByCommand(context_index, command_id),
+                        CLOSE_CREATE_HISTORICAL_TAB);
+      break;
+    }
+
     case CommandCloseTabsToRight: {
       base::RecordAction(UserMetricsAction("TabContextMenu_CloseTabsToRight"));
       InternalCloseTabs(GetIndicesClosedByCommand(context_index, command_id),
@@ -1058,6 +1067,21 @@ std::vector<int> TabStripModel::GetIndicesClosedByCommand(
     int index,
     ContextMenuCommand id) const {
   DCHECK(ContainsIndex(index));
+  std::vector<int> indices;
+  if (id == CommandCloseTabsFromSameDomain) {
+    base::StringPiece domain = GetWebContentsAt(index)->GetURL().host_piece();
+    if (domain.empty())
+      return indices;
+    // NOTE: callers expect the vector to be sorted in descending order.
+    for (int i = count() - 1; i >= 0; --i) {
+      if (!IsTabPinned(i) &&
+          GetWebContentsAt(i)->GetURL().host_piece() == domain) {
+        indices.push_back(i);
+      }
+    }
+
+    return indices;
+  }
   DCHECK(id == CommandCloseTabsToRight || id == CommandCloseOtherTabs);
   bool is_selected = IsTabSelected(index);
   int last_unclosed_tab = -1;
@@ -1067,7 +1091,6 @@ std::vector<int> TabStripModel::GetIndicesClosedByCommand(
   }
 
   // NOTE: callers expect the vector to be sorted in descending order.
-  std::vector<int> indices;
   for (int i = count() - 1; i > last_unclosed_tab; --i) {
     if (i != index && !IsTabPinned(i) && (!is_selected || !IsTabSelected(i)))
       indices.push_back(i);

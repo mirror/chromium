@@ -1136,6 +1136,11 @@ const char kSecondaryUiMdDescription[] =
     "etc.). On Mac, this enables MacViews, which uses toolkit-views for native "
     "browser dialogs.";
 
+const char kTabCloseDomain[] = "Close tabs by domain";
+const char kTabCloseDomainDescription[] =
+    "Adds the ability to close tabs belonging to the same domain to the tab "
+    "menu.";
+
 const char kServiceWorkerNavigationPreloadName[] =
     "Service worker navigation preload.";
 const char kServiceWorkerNavigationPreloadDescription[] =
