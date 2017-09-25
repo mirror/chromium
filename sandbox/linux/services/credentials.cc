@@ -111,17 +111,6 @@ bool ChrootToSafeEmptyDir() {
   return WIFEXITED(status) && WEXITSTATUS(status) == kExitSuccess;
 }
 
-// CHECK() that an attempt to move to a new user namespace raised an expected
-// errno.
-void CheckCloneNewUserErrno(int error) {
-  // EPERM can happen if already in a chroot. EUSERS if too many nested
-  // namespaces are used. EINVAL for kernels that don't support the feature.
-  // Valgrind will ENOSYS unshare().  ENOSPC can occur when the system has
-  // reached its maximum configured number of user namespaces.
-  PCHECK(error == EPERM || error == EUSERS || error == EINVAL ||
-         error == ENOSYS || error == ENOSPC);
-}
-
 // Converts a Capability to the corresponding Linux CAP_XXX value.
 int CapabilityToKernelValue(Credentials::Capability cap) {
   switch (cap) {
@@ -279,7 +268,6 @@ bool Credentials::CanCreateProcessInNewUserNS() {
       base::ForkWithFlags(CLONE_NEWUSER | SIGCHLD, nullptr, nullptr);
 
   if (pid == -1) {
-    CheckCloneNewUserErrno(errno);
     return false;
   }
 
@@ -323,10 +311,8 @@ bool Credentials::MoveToNewUserNS() {
   }
   int ret = sys_unshare(CLONE_NEWUSER);
   if (ret) {
-    const int unshare_errno = errno;
     VLOG(1) << "Looks like unprivileged CLONE_NEWUSER may not be available "
             << "on this kernel.";
-    CheckCloneNewUserErrno(unshare_errno);
     return false;
   }
 
