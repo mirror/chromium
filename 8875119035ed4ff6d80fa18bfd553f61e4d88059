@@ -16,6 +16,24 @@
       "revId": "8875119035ed4ff6d80fa18bfd553f61e4d88059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b35cca_82f47f19",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-25T22:44:53Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right. If user signs out, chrome clears all warnings.",
+      "parentUuid": "8b677d17_2b4a45c6",
+      "revId": "8875119035ed4ff6d80fa18bfd553f61e4d88059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
