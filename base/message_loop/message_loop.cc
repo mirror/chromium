@@ -184,15 +184,6 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>(new MessagePumpForUI())
 #endif
 
-#if defined(OS_MACOSX)
-  // Use an OS native runloop on Mac to support timer coalescing.
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop())
-#else
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpDefault())
-#endif
-
   if (type == MessageLoop::TYPE_UI) {
     if (message_pump_for_ui_factory_)
       return message_pump_for_ui_factory_();
@@ -207,7 +198,7 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #endif
 
   DCHECK_EQ(MessageLoop::TYPE_DEFAULT, type);
-  return MESSAGE_PUMP_DEFAULT;
+  return std::make_unique<MessagePumpDefault>();
 }
 
 void MessageLoop::AddDestructionObserver(
