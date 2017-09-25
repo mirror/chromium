@@ -294,8 +294,13 @@ void Surface::RemoveSubSurface(Surface* sub_surface) {
   DCHECK(ListContainsEntry(pending_sub_surfaces_, sub_surface));
   pending_sub_surfaces_.erase(
       FindListEntry(pending_sub_surfaces_, sub_surface));
+
   DCHECK(ListContainsEntry(sub_surfaces_, sub_surface));
-  sub_surfaces_.erase(FindListEntry(sub_surfaces_, sub_surface));
+  auto it = FindListEntry(sub_surfaces_, sub_surface);
+  pending_damage_.op(
+      gfx::RectToSkIRect({it->second, sub_surface->content_size()}),
+      SkRegion::kUnion_Op);
+  sub_surfaces_.erase(it);
   // Force recreating resources when the surface is added to a tree again.
   sub_surface->SurfaceHierarchyResourcesLost();
 }
