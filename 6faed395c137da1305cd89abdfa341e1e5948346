@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63c71949_b4218e0a",
+        "filename": "chrome/browser/media/webrtc/desktop_capture_access_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-25T22:37:13Z",
+      "side": 1,
+      "message": "|capture_type| is a content::DesktopMediaID::Source rather than content::DesktopMediaID::Capture. The confusing is only because of the name of the input parameter.",
+      "parentUuid": "6927cabf_6f9f4c58",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83f2ca55_50db06cb",
         "filename": "content/public/browser/desktop_media_id.cc",
         "patchSetId": 6
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-25T22:29:47Z",
       "side": 1,
       "message": "Do we need these? Maybe just use the right constructor that takes capture_type?\n\nnot for this CL: it would be great to make DesktopMediaID an immutable value class instead of a struct. Then it will be possible to enforce that it only takes sensible values (e.g. source_type \u003d SOURCE_NONE, capture_type \u003d CAPTURE_VIDEO makes no sense).",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa905404_f4b6be4f",
+        "filename": "content/public/browser/desktop_media_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-25T22:37:13Z",
+      "side": 1,
+      "message": "immutable +1.\n\nAlso, this structure has too many constructors, maybe using static Create* functions can make it clearer. I.e. CreateWebContentsId() and CreateVideoOnlyId().",
+      "parentUuid": "78e10664_5470cf93",
       "range": {
         "startLine": 67,
         "startChar": 2,
