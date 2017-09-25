@@ -79,8 +79,8 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
         if (mIsDestroyed) return;
 
         for (Tile tile : tiles) {
-            mMostVisitedSites.recordTileImpression(
-                    tile.getIndex(), tile.getType(), tile.getSource(), tile.getUrl());
+            mMostVisitedSites.recordTileImpression(tile.getIndex(), tile.getType(),
+                    tile.getIconType(), tile.getSource(), tile.getUrl());
         }
 
         mMostVisitedSites.recordPageImpression(tiles.size());

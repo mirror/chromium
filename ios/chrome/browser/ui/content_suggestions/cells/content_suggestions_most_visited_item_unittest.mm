@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 
+#include "components/favicon_base/favicon_types.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_cell.h"
 #import "ios/chrome/browser/ui/favicon/favicon_attributes.h"
 #import "ios/chrome/browser/ui/favicon/favicon_view.h"
@@ -40,7 +41,8 @@ TEST(ContentSuggestionsMostVisitedItemTest, Configure) {
       [FaviconAttributes attributesWithMonogram:@"C"
                                       textColor:[UIColor whiteColor]
                                 backgroundColor:[UIColor blackColor]
-                         defaultBackgroundColor:NO];
+                         defaultBackgroundColor:NO
+                                       iconType:favicon_base::INVALID_ICON];
   ContentSuggestionsMostVisitedCell* cell = [[[item cellClass] alloc] init];
   id faviconViewMock = OCMPartialMock(cell.faviconView);
   OCMExpect([faviconViewMock configureWithAttributes:item.attributes]);
