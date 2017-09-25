@@ -52,6 +52,24 @@
       "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3786558a_cbb33143",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-09-25T16:04:58Z",
+      "side": 1,
+      "message": "a) and c) are correct. b) is not decided yet since the final data structure for representing this is still in work. I think I may find another sleeker way to solve this. Let\u0027s hold this for now. thanks.",
+      "parentUuid": "3ad84376_5c44d963",
+      "revId": "84ef9e121f212f56d55218ec9cad9f8f154899bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
