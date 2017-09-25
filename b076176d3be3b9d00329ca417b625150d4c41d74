@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b98ab43_ff4737df",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-25T19:47:38Z",
+      "side": 1,
+      "message": "ResourcePool::ReuseResource erases unused_resources_ while iterating, which seems unsafe based on comments in circular_deque.h",
+      "revId": "b076176d3be3b9d00329ca417b625150d4c41d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39624b73_163984ad",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-25T19:47:38Z",
+      "side": 1,
+      "message": "Probably should be a vector tbh",
+      "revId": "b076176d3be3b9d00329ca417b625150d4c41d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
