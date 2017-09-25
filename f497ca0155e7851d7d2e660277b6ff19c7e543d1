@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f896bca6_913e77db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T22:11:55Z",
+      "side": 1,
+      "message": "Maybe just https://crrev.com/502847 ?",
+      "revId": "f497ca0155e7851d7d2e660277b6ff19c7e543d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a298e662_3ee1a571",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T22:11:55Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1314,
+        "startChar": 21,
+        "endLine": 1314,
+        "endChar": 26
+      },
+      "revId": "f497ca0155e7851d7d2e660277b6ff19c7e543d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
