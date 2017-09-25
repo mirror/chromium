@@ -331,7 +331,8 @@ bool ConvertProtoToVideoDecoderConfig(
                 video_message.natural_size().height()),
       std::vector<uint8_t>(video_message.extra_data().begin(),
                            video_message.extra_data().end()),
-      ConvertProtoToEncryptionScheme(video_message.encryption_scheme()));
+      ConvertProtoToEncryptionScheme(video_message.encryption_scheme()),
+      VIDEO_ROTATION_0);
   return video_config->IsValidConfig();
 }
 

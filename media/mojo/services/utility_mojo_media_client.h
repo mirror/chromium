@@ -42,6 +42,8 @@ class UtilityMojoMediaClient : public MojoMediaClient {
       const std::string& decoder_name) final;
   std::unique_ptr<RendererFactory> CreateRendererFactory(
       MediaLog* media_log) final;
+  std::unique_ptr<DemuxerFactory> CreateDemuxerFactory(
+      MediaLog* media_log) final;
 
  private:
   scoped_refptr<base::SingleThreadTaskRunner> utility_task_runner_;

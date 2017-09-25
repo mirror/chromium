@@ -5,6 +5,7 @@
 #ifndef MEDIA_BASE_IPC_MEDIA_PARAM_TRAITS_MACROS_H_
 #define MEDIA_BASE_IPC_MEDIA_PARAM_TRAITS_MACROS_H_
 
+#include "base/memory/memory_pressure_listener.h"
 #include "ipc/ipc_message_macros.h"
 #include "media/base/audio_codecs.h"
 #include "media/base/audio_parameters.h"
@@ -16,6 +17,7 @@
 #include "media/base/content_decryption_module.h"
 #include "media/base/decode_status.h"
 #include "media/base/decryptor.h"
+#include "media/base/demuxer.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/eme_constants.h"
 #include "media/base/encryption_scheme.h"
@@ -24,6 +26,8 @@
 #include "media/base/overlay_info.h"
 #include "media/base/pipeline_status.h"
 #include "media/base/sample_format.h"
+#include "media/base/source_buffer.h"
+#include "media/base/source_buffer_parse_warnings.h"
 #include "media/base/subsample_entry.h"
 #include "media/base/video_codecs.h"
 #include "media/base/video_color_space.h"
@@ -32,6 +36,11 @@
 #include "ui/gfx/ipc/color/gfx_param_traits_macros.h"
 
 // Enum traits.
+
+IPC_ENUM_TRAITS_VALIDATE(
+    base::MemoryPressureListener::MemoryPressureLevel,
+    (value == base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE ||
+     value == base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL))
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::AudioCodec, media::AudioCodec::kAudioCodecMax)
 
@@ -69,6 +78,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(media::Decryptor::Status,
 IPC_ENUM_TRAITS_MAX_VALUE(media::Decryptor::StreamType,
                           media::Decryptor::StreamType::kStreamTypeMax)
 
+IPC_ENUM_TRAITS_MAX_VALUE(media::Demuxer::LoadType, media::Demuxer::LoadTypeMax)
+
 IPC_ENUM_TRAITS_MAX_VALUE(media::DemuxerStream::Status,
                           media::DemuxerStream::kStatusMax)
 
@@ -94,6 +105,13 @@ IPC_ENUM_TRAITS_MAX_VALUE(media::PipelineStatus,
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::SampleFormat, media::kSampleFormatMax)
 
+IPC_ENUM_TRAITS_MAX_VALUE(media::SourceBuffer::Status,
+                          media::SourceBuffer::kStatusMax)
+
+IPC_ENUM_TRAITS_MAX_VALUE(
+    media::SourceBufferParseWarning,
+    media::SourceBufferParseWarning::kSourceBufferParseWarningMax)
+
 IPC_ENUM_TRAITS_MAX_VALUE(media::VideoCodec, media::kVideoCodecMax)
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::WatchTimeKey,
@@ -104,6 +122,8 @@ IPC_ENUM_TRAITS_MIN_MAX_VALUE(media::VideoCodecProfile,
                               media::VIDEO_CODEC_PROFILE_MAX)
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::VideoPixelFormat, media::PIXEL_FORMAT_MAX)
+
+IPC_ENUM_TRAITS_MAX_VALUE(media::VideoRotation, media::VIDEO_ROTATION_MAX)
 
 IPC_ENUM_TRAITS_VALIDATE(
     media::VideoColorSpace::PrimaryID,
