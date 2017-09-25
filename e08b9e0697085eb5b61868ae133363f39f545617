@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c326200e_f2a004c9",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-25T18:35:27Z",
+      "side": 1,
+      "message": "When I added the CL, my reviewer preferred \"const char*\" to avoid an extra allocation. Does that not work for this CL?",
+      "revId": "e08b9e0697085eb5b61868ae133363f39f545617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
