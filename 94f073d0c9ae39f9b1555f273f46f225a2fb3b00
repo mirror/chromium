@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd79730_ec284537",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-25T14:54:55Z",
+      "side": 1,
+      "message": "`accounts[0].name` is never going to be null, right? In that case, I think you could change the  condition of the if-statement to `accounts.length \u003e 0` and move |defaultAccountName| into the body.",
+      "range": {
+        "startLine": 213,
+        "startChar": 66,
+        "endLine": 213,
+        "endChar": 82
+      },
+      "revId": "94f073d0c9ae39f9b1555f273f46f225a2fb3b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
