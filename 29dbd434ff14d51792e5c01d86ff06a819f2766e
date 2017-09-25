@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7489ba8a_83298dc6",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "I would think that it\u0027s when we failed to get an access token from it, but I\u0027m not 100% sure, maybe Mihai can confirm.\n\nSide note:\nIt is definitely possible that a token is invalid on the server but Chrome does not know yet because it did not try to use it.\nThis happens a lot on Chrome startup because the fact that a token is in error state is not persisted to disk in Chrome. So on restart, Chrome thinks that all the tokens are valid (we could discuss if this is a good thing though, but that\u0027s a separate conversation).",
+      "parentUuid": "9a8aa555_a1e953cd",
+      "range": {
+        "startLine": 344,
+        "startChar": 35,
+        "endLine": 344,
+        "endChar": 46
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d96843f8_673ce257",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T18:31:09Z",
       "side": 1,
       "message": "To double check, false means reconcile right after session change without chrome restart?",
+      "range": {
+        "startLine": 347,
+        "startChar": 40,
+        "endLine": 347,
+        "endChar": 77
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf96dc5_cfa51ed8",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "Correct.\n\nChrome always does a reconcile on startup, and this one has a specific behavior (forces the Sync account to be the first account in the Gaia cookie).\n\nThen Chrome reconciles every time the APISID cookie or the tokens change.",
+      "parentUuid": "d96843f8_673ce257",
       "range": {
         "startLine": 347,
         "startChar": 40,
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "01509afd_706da9bb",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "Yes.\n*AB means that we have a valid token for A and B, and that sync is enabled for A.",
+      "parentUuid": "b2af6d88_29e30f8d",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 11
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a1d0fe0_75bc44f3",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -151,6 +223,30 @@
       "writtenOn": "2017-09-22T18:31:09Z",
       "side": 1,
       "message": "Is it caused by this scenario?\n\na. sign in B\nb. sign in A and enable sync for A\nc. restart chrome",
+      "range": {
+        "startLine": 356,
+        "startChar": 6,
+        "endLine": 356,
+        "endChar": 20
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3288e7c3_a802b45c",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "8a1d0fe0_75bc44f3",
       "range": {
         "startLine": 356,
         "startChar": 6,
@@ -186,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "a0a9bdd4_66e9e7a3",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "Yes, that is probably a valid scenario leading to this case.\n\nNote that the table is exhaustive, but in practice we don\u0027t expect to frequently hit all these combinations. This particular combination seems indeed hard to hit in practice.",
+      "parentUuid": "a20e9ff5_b0e74a38",
+      "range": {
+        "startLine": 358,
+        "startChar": 7,
+        "endLine": 358,
+        "endChar": 20
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97dba34b_d15ac674",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -202,6 +322,53 @@
         "startChar": 42,
         "endLine": 361,
         "endChar": 43
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73aecad2_5e5fbc1d",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "I think we decided to logout to be consistent with the non-restart case (i.e. line 409 below).\n\nYour suggestion definitely makes sense though, and I think that\u0027s what I had planned before we decided to change it to logout.",
+      "parentUuid": "97dba34b_d15ac674",
+      "range": {
+        "startLine": 361,
+        "startChar": 42,
+        "endLine": 361,
+        "endChar": 43
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2af3ef6_8e441d65",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-25T08:45:25Z",
+      "side": 1,
+      "message": "Mihai: IIRC, you said that on Chrome restart, Chrome always thinks that all tokens are valid. Should we actually enforce this in the code? I.e. remove all the corresponding lines from the table and add assertions in the code?",
+      "range": {
+        "startLine": 361,
+        "startChar": 8,
+        "endLine": 361,
+        "endChar": 10
       },
       "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
