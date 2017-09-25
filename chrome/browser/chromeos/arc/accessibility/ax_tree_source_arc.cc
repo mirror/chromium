@@ -60,22 +60,6 @@ ui::AXEvent ToAXEvent(arc::mojom::AccessibilityEventType arc_event_type) {
   return ui::AX_EVENT_CHILDREN_CHANGED;
 }
 
-const gfx::Rect GetBounds(arc::mojom::AccessibilityNodeInfoData* node) {
-  exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
-  if (!wm_helper)
-    return gfx::Rect();
-
-  aura::Window* focused_window = wm_helper->GetFocusedWindow();
-  gfx::Rect bounds_in_screen = node->bounds_in_screen;
-  if (focused_window) {
-    aura::Window* toplevel_window = focused_window->GetToplevelWindow();
-    return gfx::ScaleToEnclosingRect(
-        bounds_in_screen,
-        1.0f / toplevel_window->layer()->device_scale_factor());
-  }
-  return bounds_in_screen;
-}
-
 bool GetBooleanProperty(arc::mojom::AccessibilityNodeInfoData* node,
                         arc::mojom::AccessibilityBooleanProperty prop) {
   if (!node->boolean_properties)
@@ -540,6 +524,44 @@ void AXTreeSourceArc::SerializeNode(mojom::AccessibilityNodeInfoData* node,
     out_data->AddStringListAttribute(ui::AX_ATTR_CUSTOM_ACTION_DESCRIPTIONS,
                                      custom_action_descriptions);
   }
+}
+
+const gfx::Rect AXTreeSourceArc::GetBounds(
+    mojom::AccessibilityNodeInfoData* node) const {
+  exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
+  if (!wm_helper)
+    return gfx::Rect();
+
+  // Root node must exist to get bounds of a node which can be passed to
+  // AXNodeData.location.
+  if (root_id_ == -1)
+    return gfx::Rect();
+
+  gfx::Rect node_bounds = node->bounds_in_screen;
+
+  if (node->id == root_id_) {
+    // Bounds of root node is relative to its container, i.e. focused window.
+    aura::Window* focused_window = wm_helper->GetFocusedWindow();
+
+    if (!focused_window)
+      return node_bounds;
+
+    // Top level window returns its bounds in dip.
+    aura::Window* toplevel_window = focused_window->GetToplevelWindow();
+    float scale = toplevel_window->layer()->device_scale_factor();
+    node_bounds.Offset(
+        static_cast<int>(-1.0f * scale *
+                         static_cast<float>(toplevel_window->bounds().x())),
+        static_cast<int>(-1.0f * scale *
+                         static_cast<float>(toplevel_window->bounds().y())));
+
+    return node_bounds;
+  }
+
+  // Bounds of non-root node is relative to its tree's root.
+  gfx::Rect root_bounds = GetFromId(root_id_)->bounds_in_screen;
+  node_bounds.Offset(-1 * root_bounds.x(), -1 * root_bounds.y());
+  return node_bounds;
 }
 
 void AXTreeSourceArc::PerformAction(const ui::AXActionData& data) {

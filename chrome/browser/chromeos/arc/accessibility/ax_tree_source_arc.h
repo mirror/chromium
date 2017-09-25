@@ -73,6 +73,13 @@ class AXTreeSourceArc
   void SerializeNode(mojom::AccessibilityNodeInfoData* node,
                      ui::AXNodeData* out_data) const override;
 
+  // Returns bounds of a node which can be passed to AXNodeData.location. Bounds
+  // are returned in the following coordinates depending on whether its root or
+  // not.
+  // - Root node is relative to its container, i.e. focused window.
+  // - Non-root node is relative to the root node of this tree.
+  const gfx::Rect GetBounds(mojom::AccessibilityNodeInfoData* node) const;
+
   // AXHostDelegate overrides.
   void PerformAction(const ui::AXActionData& data) override;
 
