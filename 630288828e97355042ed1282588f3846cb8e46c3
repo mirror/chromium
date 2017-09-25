@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74e8cae2_25bc32d4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-25T07:34:01Z",
+      "side": 1,
+      "message": "Good idea. I think that the |Select| method is present on DOMSelection so this is fine, but I should add the remaining methods too on a followup patch.",
+      "parentUuid": "e28ad65d_2b65236d",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9a1600_52b4fe90",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T17:50:00Z",
       "side": 1,
       "message": "This looks like maybe it belongs as a constructor.",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf5a1172_5907211c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-25T07:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9a1600_52b4fe90",
       "revId": "630288828e97355042ed1282588f3846cb8e46c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d3fcebc7_fa89b2fb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-25T07:34:01Z",
+      "side": 1,
+      "message": "I split the functionality into two classes AXPosition and AXRange. I\u0027ll get rid of the AXRange struct once the new AXRange class is completed and tested. Is it really necessary to use a temporary name? Since nobody is using the new class, it won\u0027t conflict with anything and I won\u0027t need to have to rename it later.",
+      "parentUuid": "68ba9bc0_497d541e",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e848dc8_b628a067",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
         "patchSetId": 1
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "512e2db5_fa42db57",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-25T07:34:01Z",
+      "side": 1,
+      "message": "@David\nToday, I carefully thought about using only a struct for an AXPosition and also making this struct reflect (be the same) as a DOM position.\nI am leaning towards not doing that.\n1. Object oriented programming is the model we are using. Passing around structs reminds me of the old days of C. We always prefer to put the data with the methods that will work on that data together in a class for better discoverability and encapsulation. I don\u0027t like having static functions in AXObject that move to next position and others that move to next AXObject in the tree. I prefer the methods that work on AXObjects to be in AXObject and the ones for AXPosition to be in an AXPosition class.\n2. I want a class because I want to add more methods to AXPosition and AXRange that will convert from DOM positions to AXPositions and back, as well as methods that will select an AXRange. Structs are not allowed to have extra functionality.\n3. AXPosition cannot be equivalent (I think that\u0027s what you mean by the word \"reflect\") to a DOM position because these are the issues we are having with selection. Not all AXPositions are in the DOM tree, e.g. AXTableColumn and list markers, and not all can be selected. We need to make AXRange smart about expanding itself to encompass a valid DOM range when the |Select| method is called. This will require more methods on AXPosition such as |Next/PreviousValidDOMPosition|, etc. which I haven\u0027t written yet.\n4. The advantages of using a struct is that it\u0027s going to be simple to manage its lifetime. Since all the members are public, I won\u0027t need to add extra functionality in my struct to manage the pointers to AXObjects. However, I don\u0027t want to do the lazy thing and pass the burden of lifetime management onto the user of the struct. Also, in Blink since AXObjects are garbage collected, I won\u0027t need to worry about lifetime management anyway.",
+      "parentUuid": "5e848dc8_b628a067",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c060d374_799a679a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
         "patchSetId": 1
@@ -99,6 +171,24 @@
       "writtenOn": "2017-09-22T20:55:25Z",
       "side": 1,
       "message": "Technically don\u0027t you need affinity for both the anchor and\nfocus?",
+      "revId": "630288828e97355042ed1282588f3846cb8e46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f574513_079adcf5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-09-25T07:34:01Z",
+      "side": 1,
+      "message": "I switched to using the Optional type instead. This is much more clear.\nAlso, affinity will now be on both positions. At first glance not needed because affinity only refers to the position of the caret i.e. the focus of the range, but what if we have a SwapREndpoints function?",
+      "parentUuid": "c060d374_799a679a",
       "revId": "630288828e97355042ed1282588f3846cb8e46c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
