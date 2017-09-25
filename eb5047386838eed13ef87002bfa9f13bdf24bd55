@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8535794a_434846c2",
+        "filename": "services/catalog/catalog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T23:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f92eb30_01961cad",
+      "revId": "eb5047386838eed13ef87002bfa9f13bdf24bd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45e9e14_921bd908",
         "filename": "services/catalog/catalog.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1734ed2f_b6e9e152",
+        "filename": "services/catalog/catalog.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T23:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45e9e14_921bd908",
+      "revId": "eb5047386838eed13ef87002bfa9f13bdf24bd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc9fd78_e93859a5",
         "filename": "services/catalog/catalog.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-25T20:35:22Z",
       "side": 1,
       "message": "nit: DirectorySequenceState/directory_sequence_state_?",
+      "revId": "eb5047386838eed13ef87002bfa9f13bdf24bd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b71f5a_20b3b136",
+        "filename": "services/catalog/catalog.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T23:16:26Z",
+      "side": 1,
+      "message": "I left Thread in the name as I didn\u0027t think it was particularly clear what \u0027sequence\u0027 means here. I think thread state better clarifies this is for code run on a separate thread.",
+      "parentUuid": "1dc9fd78_e93859a5",
       "revId": "eb5047386838eed13ef87002bfa9f13bdf24bd55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
