@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fe8968ee_b116f085",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:21:20Z",
+      "side": 1,
+      "message": "Whoops, I meant to say that I now *don\u0027t* think these should disappear! I.e., the BrowserUiInterface will continue to have these and wrap up the model. UiSceneManager will eventually not implement the BrowserUiInterface. Please lemme know if you disagree.",
+      "parentUuid": "40bbf6f3_66a09c67",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b9fbf1a_77f6b7a5",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
