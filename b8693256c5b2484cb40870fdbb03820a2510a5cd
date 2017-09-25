@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b1b60c86_ceeaadef",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T14:38:37Z",
+      "side": 1,
+      "message": "Alright, removed the assert again.",
+      "parentUuid": "1ab48fe7_421ae3da",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4643c84_45280b80",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
