@@ -156,6 +156,7 @@ Polymer({
     this.$.clearBrowsingDataDialog.classList.add('fully-rendered');
   },
 
+  /** @private */
   browsingCheckboxLabel_: function(
       isSignedIn, isSyncingHistory, historySummary, historySummarySigned,
       historySummarySynced) {
@@ -165,6 +166,12 @@ Polymer({
       return historySummarySigned;
     }
     return historySummary;
+  },
+
+  /** @private */
+  siteSettingsLabel_: function(siteSettings, contentSettings) {
+    return loadTimeData.getBoolean('enableSiteSettings') ? siteSettings :
+                                                           contentSettings;
   },
 
   /**
