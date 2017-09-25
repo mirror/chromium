@@ -404,6 +404,15 @@ const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
 const base::Feature kSiteDetails{"SiteDetails",
                                  base::FEATURE_ENABLED_BY_DEFAULT};
 
+#if !defined(OS_ANDROID)
+// Enables closing all tabs from one domain from the tab menu.
+// TODO(pbos): Remove by November 2017 if this comment is still present. This
+// feature should be easy to revert (single CL), and if this is deemed more
+// useful but needing further experimentation this comment should be removed.
+const base::Feature kTabCloseDomain{"TabCloseDomain",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // !defined(OS_ANDROID)
+
 // Enables or disables the ability to use the sound content setting to mute a
 // website.
 const base::Feature kSoundContentSetting{"SoundContentSetting",
