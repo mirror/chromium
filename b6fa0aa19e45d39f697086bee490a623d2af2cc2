@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70f4d8e_560f1fe3",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-25T16:47:20Z",
+      "side": 1,
+      "message": "space before \"",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 15
+      },
+      "revId": "b6fa0aa19e45d39f697086bee490a623d2af2cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
