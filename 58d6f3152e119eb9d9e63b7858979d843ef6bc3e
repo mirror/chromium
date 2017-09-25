@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d90c3817_89b6e1a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-25T03:12:19Z",
+      "side": 1,
+      "message": "I went with File#getPath() because it is used more than File#getCanonicalPath() in the Clank codebase",
+      "parentUuid": "2988925b_5a0bf623",
+      "range": {
+        "startLine": 527,
+        "startChar": 25,
+        "endLine": 527,
+        "endChar": 35
+      },
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "943d4b56_8b0e791b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
         "patchSetId": 18
@@ -53,6 +77,24 @@
       "writtenOn": "2017-09-18T23:27:39Z",
       "side": 1,
       "message": "Optional: If the delete fails, do we want to log it?",
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41d662d_21213ffc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-25T03:12:19Z",
+      "side": 1,
+      "message": "I am adding logging in a follow up CL: https://chromium-review.googlesource.com/c/chromium/src/+/671149",
+      "parentUuid": "af5f4206_d0eed209",
       "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
