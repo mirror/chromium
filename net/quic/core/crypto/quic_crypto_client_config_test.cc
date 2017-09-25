@@ -306,14 +306,15 @@ TEST_F(QuicCryptoClientConfigTest, ProcessServerDowngradeAttack) {
     // No downgrade attack is possible if the client only supports one version.
     return;
   }
-  QuicTagVector supported_version_tags;
+
+  QuicVersionVector supported_version_vector;
   for (size_t i = supported_versions.size(); i > 0; --i) {
-    supported_version_tags.push_back(
-        QuicVersionToQuicTag(supported_versions[i - 1]));
+    supported_version_vector.push_back(supported_versions[i - 1]);
   }
+
   CryptoHandshakeMessage msg;
   msg.set_tag(kSHLO);
-  msg.SetVector(kVER, supported_version_tags);
+  msg.SetVersionVector(kVER, supported_version_vector);
 
   QuicCryptoClientConfig::CachedState cached;
   QuicReferenceCountedPointer<QuicCryptoNegotiatedParameters> out_params(
@@ -571,9 +572,7 @@ TEST_F(QuicCryptoClientConfigTest, ServerNonceinSHLO) {
   QuicVersionVector supported_versions;
   QuicVersion version = AllSupportedVersions().front();
   supported_versions.push_back(version);
-  QuicTagVector versions;
-  versions.push_back(QuicVersionToQuicTag(version));
-  msg.SetVector(kVER, versions);
+  msg.SetVersionVector(kVER, supported_versions);
 
   QuicCryptoClientConfig config(crypto_test_utils::ProofVerifierForTesting());
   QuicCryptoClientConfig::CachedState cached;
