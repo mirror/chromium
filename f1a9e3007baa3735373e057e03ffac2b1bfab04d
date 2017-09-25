@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "015401a1_27bc8680",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-25T19:57:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "786aa50a_fc4bb5fd",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ee06c86_6b16121e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
         "patchSetId": 1
@@ -104,6 +122,24 @@
       "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace3e0d6_e34a856d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-25T19:57:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3095a296_201144fa",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +222,24 @@
       "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685db68f_36638f65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-25T19:57:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89fd164c_43255b1c",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
