@@ -22,6 +22,30 @@
       "revId": "14799a62a8a188859f51eecd075f4984c21d4a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfff5b69_950bb572",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-25T20:38:02Z",
+      "side": 1,
+      "message": "Done. I\u0027ve made this method parameter-free.",
+      "parentUuid": "e95c75c0_3ae78fdd",
+      "range": {
+        "startLine": 844,
+        "startChar": 70,
+        "endLine": 844,
+        "endChar": 75
+      },
+      "revId": "14799a62a8a188859f51eecd075f4984c21d4a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "ba7c210328c00a6693ddc5da6504f8520bb3bdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7824806_1c1b5d08",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-25T20:38:02Z",
+      "side": 0,
+      "message": "Sure. Thanks Scott.",
+      "parentUuid": "58fd5e7e_849645b5",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 44
+      },
+      "revId": "ba7c210328c00a6693ddc5da6504f8520bb3bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
