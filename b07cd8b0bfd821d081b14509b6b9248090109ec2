@@ -105,6 +105,30 @@
       "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af49cd4_f1ec4972",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-25T18:56:29Z",
+      "side": 1,
+      "message": "Yes, that makes sense. Done. Thanks.",
+      "parentUuid": "1e490422_1ce64df6",
+      "range": {
+        "startLine": 1048,
+        "startChar": 36,
+        "endLine": 1048,
+        "endChar": 71
+      },
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
