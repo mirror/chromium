@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb67289e_671d5881",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-25T23:12:33Z",
+      "side": 1,
+      "message": "while you\u0027re working on it, could you put \u003c/button\u003e on a separate line?",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5f793c_f70c4627",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-25T23:12:33Z",
+      "side": 1,
+      "message": "It sounds weird \"when not set \"if not chromeos\"\". How about: \"when not in chrome os\"?",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f97046e5_a016981e",
         "filename": "chrome/browser/resources/settings/page_visibility.js",
         "patchSetId": 3
