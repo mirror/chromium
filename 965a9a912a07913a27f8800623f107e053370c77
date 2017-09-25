@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e1fe5f3c_7b045d11",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T17:33:13Z",
+      "side": 1,
+      "message": "Just check DDI0406C, section A3.2.1 \u0027Unaligned data access\u0027.\n\nBasically unaligned access is ok if you are using VLD(1, 2, 3, 4), VST(1, 2, 3, 4).\n\nAFAICT, this block should not affect performance in ARMv8 (could you validate it similarly to the experiment in Intel for unaligned loads?).\n\nIt *may* have an effect for ARMv7 though (not completely sure).",
+      "parentUuid": "9fc2da8e_fb8dc9da",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1830dbd_aa1fc7f8",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 41
