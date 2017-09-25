@@ -1519,6 +1519,8 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   Client()->DispatchDidStartProvisionalLoad(provisional_document_loader_,
                                             resource_request);
   DCHECK(provisional_document_loader_);
+  if (frame_->IsMainFrame())
+    UserGestureIndicator::ConsumeUserGesture();
 
   if (navigation_policy == kNavigationPolicyCurrentTab) {
     provisional_document_loader_->StartLoading();
