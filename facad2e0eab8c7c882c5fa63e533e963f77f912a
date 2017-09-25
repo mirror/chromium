@@ -221,6 +221,24 @@
       "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ec32f5_e16e3270",
+        "filename": "chrome/browser/ui/search/search_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-25T16:41:33Z",
+      "side": 1,
+      "message": "It just seems strange to take a ref from a pointer; just use what\u0027s given or change the accessor?",
+      "parentUuid": "4378742b_9f73dc8e",
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
