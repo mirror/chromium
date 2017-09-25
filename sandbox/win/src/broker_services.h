@@ -59,7 +59,6 @@ class BrokerServicesBase final : public BrokerServices,
   // Returns:
   //   true if there is an active target process for this ID, otherwise false.
   bool IsActiveTarget(DWORD process_id);
-
  private:
   // The routine that the worker thread executes. It is in charge of
   // notifications and cleanup-related tasks.
