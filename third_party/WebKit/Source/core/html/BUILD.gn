@@ -234,6 +234,8 @@ blink_core_sources("html") {
     "LinkStyle.h",
     "ListedElement.cpp",
     "ListedElement.h",
+    "ListItemOrdinal.cpp",
+    "ListItemOrdinal.h",
     "PluginDocument.cpp",
     "PluginDocument.h",
     "PublicURLManager.cpp",
