@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d629b0f6_c61d0071",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c34c8fb1_2164c3b6",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c78cc88_61e2e933",
         "filename": "ash/display/display_manager_unittest.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2c3f32_bc0bd80d",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c78cc88_61e2e933",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ba22251_f026f2d3",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5fa3f7e_0f4f943f",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6e7c1bb_c4a19334",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9feaa034_aa0f424d",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e7c1bb_c4a19334",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a131d8b_6c083680",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 14
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-25T22:01:23Z",
       "side": 1,
       "message": "Still not a fan of this, I think it is clearer at the call-site to be explicit that we are ignoring the callback.\n\nAlso, document what |callback| is used for.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c337bf2c_1fd67f89",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Documenting callback. \n\nIgnoring the callback would require using pointers and nullptr again. I would suggest leaving this to OWNER\u0027s preference.",
+      "parentUuid": "0a131d8b_6c083680",
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a7403c79_deb04b48",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ba239d_9bcaf8f4",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a99e49_ddf09a75",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc67ef48_f46e2688",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a99e49_ddf09a75",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1f8290f1_21fba87b",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5219c1_9222db01",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bbe5d65_4ab2b355",
         "filename": "ash/display/touch_calibrator_controller_unittest.cc",
         "patchSetId": 14
@@ -152,6 +296,24 @@
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cb815d_b2906526",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bbe5d65_4ab2b355",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d6d9c1cc_391f1a1a",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9772aa71_1d3525d3",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a81a9d43_dbf36586",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 14
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ef56281b_fbeb245b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81a9d43_dbf36586",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffaaa851_3ae6ef0e",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 14
@@ -200,6 +398,24 @@
       "writtenOn": "2017-09-25T22:01:23Z",
       "side": 1,
       "message": "It is pretty unusual for me to see default parameters in Chrome code, and this CL adds two of them. I\u0027d suggest not using them :)\n\nIt is also not clear what a value of \"0\" means here. The reason I strongly prefer base::Optional\u003c\u003e is that it makes it very explicit that there is a semantic/special value being used, instead of a magic value 0.\n\nDo we have a guarantee that a device will never have a touch identifier of 0? This seems like it a potential future bug, especially if code gets refactored years down the line.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e434e254_7fcd9dfd",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "This default parameter is unwanted. It has to be kept here to support the legacy function call which does not have this argument. base::Optional\u003cT\u003e as discussed before is not recommended for this use. The other option is to create a duplicate function that would be a copy of this except for a single line difference, creating a large amount of redundancy.\n\ntouch_device_identifiers are generated using a hash of the string \u003d \n    device string name, product id, vendor id, all concatenated by \u0027-\u0027\nThe only way for this to be \u00270\u0027 is if the string is empty which would never happen.",
+      "parentUuid": "ffaaa851_3ae6ef0e",
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "6a2144be_3d6935ea",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "This is more of a developer\u0027s note to not use this function for any new code in the future.\n\nTo make this transparent, this function would somehow need to be combined with the new model. This would require creating optional parameters in the function arguments with either default parameters or nullptrs.\n\nThis keeps the code clean and error safe. It can be later erased without any conflicts after a few milestones.",
+      "parentUuid": "be899dc8_b2ce78ab",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095eb339_a0882698",
         "filename": "ui/display/manager/managed_display_info.h",
         "patchSetId": 14
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "e3d7cdcc_6fa1af2a",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "prefixing legacy to the variable name. But keeping the comment as I dont want anyone else to be using this variable.",
+      "parentUuid": "095eb339_a0882698",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ddac7d3_f8a06282",
         "filename": "ui/display/manager/managed_display_info.h",
         "patchSetId": 14
@@ -254,6 +506,24 @@
       "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52c6b84_df410412",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ddac7d3_f8a06282",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
