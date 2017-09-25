@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41c4fbb7_8d39a993",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-25T18:22:59Z",
+      "side": 1,
+      "message": "When surface synchronization is off, is it correct that it will activate right away, and so has_frame_ is true here? If so please add a DCHECK. If not, then I think we have to rework some things, e.g. the FrameEvictor code on l.505, but also possibly other things (e.g. frame capture code).\n\nSpeaking of FrameEvictor, should we also do something about it for the surface_synchronization\u003dtrue case? I think we won\u0027t necessarily call SwappedFrame here, and we won\u0027t later either, so it won\u0027t be a candidate for eviction. I think we could \"claim\" the frame as soon as we set the primary surface (if we\u0027re visible, we expect one to come, so we could start evicting other ones, and if we\u0027re invisible we could evict the frame even before it gets here).",
+      "revId": "84a11590c66febd1ab2c24b3b359d654cb5747b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ba7a31_0bb7023a",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-25T18:22:59Z",
+      "side": 1,
+      "message": "SetFallbackSurface assumes the current layer is a SurfaceLayer. Is it possible that OnFirstSurfaceActivation is called after EvictDelegatedFrame was? Certainly in the Viz world it could, right? Should we skip all this if the frame was evicted/cleared?",
+      "revId": "84a11590c66febd1ab2c24b3b359d654cb5747b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
