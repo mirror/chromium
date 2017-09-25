@@ -91,6 +91,10 @@ const base::Feature kSearchProviderContextAllowHttpsUrls{
     "OmniboixSearchProviderContextAllowHttpsUrls",
     base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Feature used for the Zero Suggest Chrome Home experiment.
+const base::Feature kZeroSuggestChromeHomePersonalized{
+    "ZeroSuggestChromeHomePersonalized", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature used for the Zero Suggest Redirect to Chrome Field Trial.
 const base::Feature kZeroSuggestRedirectToChrome{
     "ZeroSuggestRedirectToChrome", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -297,6 +301,9 @@ bool OmniboxFieldTrial::InZeroSuggestMostVisitedWithoutSerpFieldTrial() {
   if (variant == "MostVisitedWithoutSERP")
     return true;
 #if defined(OS_ANDROID)
+  if (base::FeatureList::IsEnabled(omnibox::kZeroSuggestChromeHomePersonalized))
+    return false;
+
   // Android defaults to MostVisitedWithoutSERP
   return variant.empty();
 #else
@@ -305,9 +312,18 @@ bool OmniboxFieldTrial::InZeroSuggestMostVisitedWithoutSerpFieldTrial() {
 }
 
 bool OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial() {
-  return variations::GetVariationParamValue(
-      kBundledExperimentFieldTrialName,
-      kZeroSuggestVariantRule) == "Personalized";
+  std::string variant(variations::GetVariationParamValue(
+      kBundledExperimentFieldTrialName, kZeroSuggestVariantRule));
+  if (variant == "Personalized")
+    return true;
+#if defined(OS_ANDROID)
+  if (base::FeatureList::IsEnabled(omnibox::kZeroSuggestChromeHomePersonalized))
+    return variant.empty();
+
+  return false;
+#else
+  return false;
+#endif
 }
 
 // static
