@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c6fd4f88_c4d936e4",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T23:06:26Z",
+      "side": 1,
+      "message": "Let\u0027s check for that. As is, all the binaries are in /opt and a few symlinks are added to point into /opt.\n\nIf the situation changes, we can get a failure notification and consciously make a decision to change the check.",
+      "parentUuid": "9fa45a77_34259601",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c715804_41c28db0",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
