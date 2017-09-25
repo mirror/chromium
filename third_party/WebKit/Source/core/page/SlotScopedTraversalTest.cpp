@@ -62,9 +62,8 @@ void SlotScopedTraversalTest::SetupSampleHTML(const char* main_html,
 void SlotScopedTraversalTest::AttachOpenShadowRoot(
     Element& shadow_host,
     const char* shadow_inner_html) {
-  ShadowRoot* shadow_root = shadow_host.CreateShadowRootInternal(
-      ShadowRootType::kOpen, ASSERT_NO_EXCEPTION);
-  shadow_root->SetInnerHTMLFromString(String::FromUTF8(shadow_inner_html));
+  ShadowRoot& shadow_root = shadow_host.CreateShadowRootInternal();
+  shadow_root.SetInnerHTMLFromString(String::FromUTF8(shadow_inner_html));
   GetDocument().body()->UpdateDistribution();
 }
 
