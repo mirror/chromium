@@ -14,6 +14,8 @@
 #include "base/nix/xdg_util.h"
 #include "chrome/browser/ui/libgtkui/gtk_util.h"
 
+#include "base/debug/stack_trace.h"
+
 // Unity data typedefs.
 typedef struct _UnityInspector UnityInspector;
 typedef UnityInspector* (*unity_inspector_get_default_func)(void);
