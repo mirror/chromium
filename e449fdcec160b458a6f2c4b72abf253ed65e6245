@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555522dc_2489c8e6",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-25T21:55:47Z",
+      "side": 1,
+      "message": "nit: Capitalize Init, since it\u0027s a method name.",
+      "range": {
+        "startLine": 177,
+        "startChar": 76,
+        "endLine": 177,
+        "endChar": 80
+      },
+      "revId": "e449fdcec160b458a6f2c4b72abf253ed65e6245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
