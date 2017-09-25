@@ -16,6 +16,29 @@
       "revId": "3b1a4b8b5bb8752df6ca5d492246ab8c5524e7b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6585b673_f220794e",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-25T17:31:14Z",
+      "side": 1,
+      "message": "nit: From Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "3b1a4b8b5bb8752df6ca5d492246ab8c5524e7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
