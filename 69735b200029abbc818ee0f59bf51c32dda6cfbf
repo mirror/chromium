@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa76f9b8_8e326c38",
+        "filename": "components/viz/common/quads/copy_output_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-25T22:42:01Z",
+      "side": 1,
+      "message": "tl;dr: My team wrestled with the issue of how to represent the scale ratios throughout this project. For now, I\u0027d like to keep it this way, knowing that we can always later revisit the decision after getting everything in-place end-to-end. I can see how this code here, in isolation, isn\u0027t really showing much of the \"pros\" of the decision, either. :-)\n\nSummarizing the discussion with my team:\n\nTechnical requirements: End-to-end, we need to be sure we are making perfectly accurate pixel-position computations; and throughout the pipeline, it\u0027s important to know the exact set of whole pixels affected. Also, there are cases where there will be several partial forward and/or reverse scaling transformation \"steps\" (e.g., GLHelperScaling code).\n\nFloating-point math would be fine, but we are always computing integer inputs into integer results. This introduces some extra effort to make sure certain things are floor()\u0027ed while others are ceil()\u0027ed to arrive at final answers. In addition, we would have to be very careful about how code is written to ensure numeric stability. So, there are a lot of special considerations current and future developers would have to be aware of to keep the code robust.\n\nInteger math would solve the numerical stability issues, but results in having to write a bit more code in some cases: Basically, this is all about having to code more of the math explicitly (because of the rational number representation). On the other hand, while it\u0027s extra code, the code itself is more straightforward and expressive of the desired behaviors.\n\nThere were also many other pros/cons considered (e.g., performance, doubles instead of floats, etc.), but after all was said and done, nothing seemed to be pointing us towards a clear decision (float vs int). In the end, we chose to go with integer math (rational numbers) for two main reasons:\n\n1. Picking what we thought would improve the robustness and readability of the code. Though, we\u0027re fully aware that as more of the code is written it may become obvious the other choice was better. However, we can always go back and change things as a post-clean-up step. In this CL, the benefits from our decision are somewhat diminished: Yeah, it *does* look like I am rewriting gfx::ToEnclosingRect() here, but it\u0027s easy to see that this variant is better-tuned for our specific use case as we have no need for the interim floating-point RectF.\n\n2. My personal piece of mind. Given my past experience with \"super bugs\" related to floating-point math, especially 32-bit floats, library bugs, etc.; I can rest easy knowing there isn\u0027t some mysterious special combination of values that will occur in-the-wild where the user experience is corrupted (e.g., an off-by-one due to some unintentional float error-rounding). Also, note that this code here doesn\u0027t need any of the \"base safe numerics\" since the full range of possible inputs and outputs is implicitly safe via the data types.",
+      "parentUuid": "e03010d2_ebcf8342",
+      "revId": "69735b200029abbc818ee0f59bf51c32dda6cfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9733c6f0_a8128c64",
         "filename": "components/viz/service/display/software_renderer_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "69735b200029abbc818ee0f59bf51c32dda6cfbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264aeb6f_c36fbd22",
+        "filename": "components/viz/service/display/software_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-25T22:42:01Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "9733c6f0_a8128c64",
+      "revId": "69735b200029abbc818ee0f59bf51c32dda6cfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
