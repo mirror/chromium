@@ -180,7 +180,7 @@ ChromeCleanerRunner::LaunchAndWaitForExitOnBackgroundThread() {
   UMA_HISTOGRAM_SPARSE_SLOWLY(
       "SoftwareReporter.Cleaner.ExitCodeFromConnectedProcess", exit_code);
 
-  return ProcessStatus(LaunchStatus::kSuccess, exit_code);
+  return ProcessStatus(LaunchStatus::kSuccess, exit_code == 0 ? -1 : exit_code);
 }
 
 ChromeCleanerRunner::~ChromeCleanerRunner() = default;
