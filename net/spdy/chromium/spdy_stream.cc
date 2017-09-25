@@ -686,6 +686,14 @@ base::WeakPtr<SpdyStream> SpdyStream::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
+void SpdyStream::EnqueueRequestHeaders(int rv) {
+  if (rv == OK) {
+    session_->EnqueueStreamWrite(
+        GetWeakPtr(), SpdyFrameType::HEADERS,
+        std::make_unique<HeadersBufferProducer>(GetWeakPtr()));
+  }
+}
+
 int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
                                    SpdySendStatus send_status) {
   CHECK_NE(type_, SPDY_PUSH_STREAM);
@@ -697,9 +705,11 @@ int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
   request_headers_valid_ = true;
   url_from_header_block_ = GetUrlFromHeaderBlock(request_headers_);
   pending_send_status_ = send_status;
-  session_->EnqueueStreamWrite(
-      GetWeakPtr(), SpdyFrameType::HEADERS,
-      std::make_unique<HeadersBufferProducer>(GetWeakPtr()));
+  int ret = session_->FinishHandshake(
+      base::Bind(&SpdyStream::EnqueueRequestHeaders, GetWeakPtr()));
+  if (ret != ERR_IO_PENDING) {
+    EnqueueRequestHeaders(ret);
+  }
   return ERR_IO_PENDING;
 }
 

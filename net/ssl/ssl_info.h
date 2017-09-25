@@ -113,6 +113,9 @@ class NET_EXPORT SSLInfo {
   // extension.
   TokenBindingParam token_binding_key_param;
 
+  // True if data was received over early data.
+  bool early_data_received;
+
   HandshakeType handshake_type;
 
   // The hashes, in several algorithms, of the SubjectPublicKeyInfos from
