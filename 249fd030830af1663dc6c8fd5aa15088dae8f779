@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee94d960_0b90ee19",
+        "filename": "remoting/ios/app/resources/Info.plist",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T09:26:32Z",
+      "side": 0,
+      "message": "You\u0027re removing \"UIPrerenderedIcon: true\" from your Info.plist. I think you may want to keep this. If you do, then you need to add this back:\n\n  \u003ckey\u003eCFBundleIcons\u003ckey\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCFBundlePrimaryIcon\u003c/key\u003e\n    \u003cdict\u003e\n      \u003ckey\u003eUIPrerenderedIcon\u003c/key\u003e\n      \u003ctrue\u003e\n    \u003c/dict\u003e\n  \u003c/dict\u003e\n  \u003ckey\u003eCFBundleIcons~ipad\u003ckey\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCFBundlePrimaryIcon\u003c/key\u003e\n    \u003cdict\u003e\n      \u003ckey\u003eUIPrerenderedIcon\u003c/key\u003e\n      \u003ctrue\u003e\n    \u003c/dict\u003e\n  \u003c/dict\u003e\n\nThis flag correspond to “Icon already includes gloss effects” according to the documentation. If set to true it prevents the system from adding back the gloss effect (so the icon should have a different rendering I guess).",
+      "revId": "249fd030830af1663dc6c8fd5aa15088dae8f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
