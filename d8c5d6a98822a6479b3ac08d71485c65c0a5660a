@@ -16,6 +16,24 @@
       "revId": "d8c5d6a98822a6479b3ac08d71485c65c0a5660a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc11c3a3_f95288e3",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-25T17:41:43Z",
+      "side": 1,
+      "message": "I think this is safe, but at best it\u0027s a minor optimization and the more I look at ExtensionService, the less comfortable I feel making changes like this. My concern is if there\u0027s some way for an unloaded extension to be reloaded when it\u0027s not in the terminated or disabled sets. I don\u0027t think that\u0027s possible but there\u0027s a lot of entry points to these functions from other parts of Chrome so I\u0027m not confident enough.",
+      "parentUuid": "bbd03e75_e45dcce9",
+      "revId": "d8c5d6a98822a6479b3ac08d71485c65c0a5660a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
