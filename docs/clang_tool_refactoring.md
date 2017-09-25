@@ -182,7 +182,7 @@ files the clang tool is run against.
 Dumping the AST for a file:
 
 ```shell
-clang++ -cc1 -ast-dump foo.cc
+clang++ -Xclang -ast-dump -fsyntax-only foo.cc | less -R
 ```
 
 Using `clang-query` to dynamically test matchers (requires checking out
