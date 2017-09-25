@@ -5,11 +5,13 @@
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
 
 #include "base/command_line.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
+#include "ui/base/l10n/l10n_util.h"
 
 TabMenuModel::TabMenuModel(ui::SimpleMenuModel::Delegate* delegate,
                            TabStripModel* tab_strip,
@@ -75,6 +77,14 @@ void TabMenuModel::Build(TabStripModel* tab_strip, int index) {
   }
   AddItemWithStringId(TabStripModel::CommandCloseOtherTabs,
                       IDS_TAB_CXMENU_CLOSEOTHERTABS);
+  if (base::FeatureList::IsEnabled(features::kTabCloseDomain)) {
+    AddItem(
+        TabStripModel::CommandCloseTabsFromSameDomain,
+        l10n_util::GetStringFUTF16(
+            IDS_TAB_CXMENU_CLOSEDOMAINTABS,
+            base::ASCIIToUTF16(
+                tab_strip->GetWebContentsAt(index)->GetURL().host_piece())));
+  }
   AddItemWithStringId(TabStripModel::CommandCloseTabsToRight,
                       IDS_TAB_CXMENU_CLOSETABSTORIGHT);
   AddSeparator(ui::NORMAL_SEPARATOR);
