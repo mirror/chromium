@@ -107,6 +107,20 @@ Status FrameTracker::OnEvent(DevToolsClient* client,
     const base::Value* unused_value;
     if (!params.Get("frame.parentId", &unused_value))
       frame_to_context_map_.clear();
+  } else if (method == "Target.targetCreated") {
+    const base::DictionaryValue* target_info;
+    if (!params.GetDictionary("targetInfo", &target_info))
+      return Status(kUnknownError, "targetInfo");
+    std::string type;
+    if (!target_info->GetString("type", &type))
+      return Status(kUnknownError, "type");
+    if (type == "iframe") {
+      std::string target_id;
+      if (!target_info->GetString("targetId", &target_id))
+        return Status(kUnknownError, "targetId");
+      VLOG(0) << "Got iframe, targetId " << target_id;
+      frame_to_web_view_map_[target_id] = nullptr;
+    }
   }
   return Status(kOk);
 }

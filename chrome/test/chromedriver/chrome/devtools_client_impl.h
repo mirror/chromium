@@ -53,6 +53,8 @@ class SyncWebSocket;
 
 class DevToolsClientImpl : public DevToolsClient {
  public:
+  struct Marker { Marker(); } marker_;
+
   static const char kBrowserwideDevToolsClientId[];
 
   DevToolsClientImpl(const SyncWebSocketFactory& factory,

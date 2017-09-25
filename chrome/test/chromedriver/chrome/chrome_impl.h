@@ -55,7 +55,9 @@ class ChromeImpl : public Chrome {
   virtual Status QuitImpl() = 0;
 
   bool quit_;
+ public:
   std::unique_ptr<DevToolsHttpClient> devtools_http_client_;
+ protected:
   std::unique_ptr<DevToolsClient> devtools_websocket_client_;
 
  private:
@@ -67,6 +69,7 @@ class ChromeImpl : public Chrome {
   WebViewList web_views_;
   std::vector<std::unique_ptr<DevToolsEventListener>> devtools_event_listeners_;
   std::unique_ptr<PortReservation> port_reservation_;
+ public:
   std::string page_load_strategy_;
 };
 

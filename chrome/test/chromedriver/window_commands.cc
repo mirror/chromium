@@ -23,6 +23,8 @@
 #include "chrome/test/chromedriver/chrome/chrome.h"
 #include "chrome/test/chromedriver/chrome/chrome_desktop_impl.h"
 #include "chrome/test/chromedriver/chrome/devtools_client.h"
+#include "chrome/test/chromedriver/chrome/devtools_http_client.h"
+#include "chrome/test/chromedriver/chrome/frame_tracker.h"
 #include "chrome/test/chromedriver/chrome/geoposition.h"
 #include "chrome/test/chromedriver/chrome/javascript_dialog_manager.h"
 #include "chrome/test/chromedriver/chrome/js.h"
@@ -30,6 +32,7 @@
 #include "chrome/test/chromedriver/chrome/status.h"
 #include "chrome/test/chromedriver/chrome/ui_events.h"
 #include "chrome/test/chromedriver/chrome/web_view.h"
+#include "chrome/test/chromedriver/chrome/web_view_impl.h"
 #include "chrome/test/chromedriver/element_util.h"
 #include "chrome/test/chromedriver/net/timeout.h"
 #include "chrome/test/chromedriver/session.h"
@@ -368,6 +371,37 @@ Status ExecuteSwitchToFrame(Session* session,
     session->SwitchToTopFrame();
     return Status(kOk);
   }
+
+  std::map<std::string, std::unique_ptr<WebView>>& mm =
+    static_cast<WebViewImpl*>(web_view)->frame_tracker_->frame_to_web_view_map_;
+  for (std::map<std::string, std::unique_ptr<WebView>>::iterator it = mm.begin(); it != mm.end(); ++it) {
+    if (it->second == nullptr) {
+      ChromeImpl* chrome = static_cast<ChromeImpl*>(session->chrome.get());
+      std::unique_ptr<DevToolsClient> client(
+          chrome->devtools_http_client_->CreateClient(it->first));
+      it->second.reset(new WebViewImpl(it->first, false, 
+                                   chrome->devtools_http_client_->browser_info(),
+                                   std::move(client), chrome->devtools_http_client_->device_metrics(),
+                                   chrome->page_load_strategy_));
+    }
+    Status ss = it->second->ConnectIfNecessary();
+    if (ss.IsError())
+      VLOG(0) << "Connection failed";
+    std::string url;
+    ss = it->second->GetUrl(&url);
+    if (ss.IsError())
+      VLOG(0) << "Unable to get URL for target " << it->first;
+    else
+      VLOG(0) << "Target " << it->first << " has URL " << url;
+  }
+  base::DictionaryValue params1;
+    params1.SetBoolean("discover", true);
+      web_view->SendCommand("Target.setDiscoverTargets", params1);
+
+        base::DictionaryValue params2;
+          params2.SetBoolean("autoAttach", true);
+            params2.SetBoolean("waitForDebuggerOnStart", false);
+              web_view->SendCommand("Target.setAutoAttach", params2);
 
   std::string script;
   base::ListValue args;

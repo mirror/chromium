@@ -11,6 +11,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
+#include "chrome/test/chromedriver/chrome/web_view.h"
 
 namespace base {
 class DictionaryValue;
@@ -32,6 +33,8 @@ class FrameTracker : public DevToolsEventListener {
   Status OnEvent(DevToolsClient* client,
                  const std::string& method,
                  const base::DictionaryValue& params) override;
+
+  std::map<std::string, std::unique_ptr<WebView>> frame_to_web_view_map_;
 
  private:
   std::map<std::string, int> frame_to_context_map_;

@@ -148,7 +148,9 @@ class WebViewImpl : public WebView {
   bool w3c_compliant_;
   const BrowserInfo* browser_info_;
   std::unique_ptr<DomTracker> dom_tracker_;
+ public:
   std::unique_ptr<FrameTracker> frame_tracker_;
+ private:
   std::unique_ptr<JavaScriptDialogManager> dialog_manager_;
   std::unique_ptr<PageLoadStrategy> navigation_tracker_;
   std::unique_ptr<MobileEmulationOverrideManager>

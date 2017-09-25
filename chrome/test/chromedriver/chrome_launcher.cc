@@ -287,6 +287,19 @@ Status CreateBrowserwideDevToolsClientAndConnect(
     if (status.IsError())
       return status;
   }
+  Status status = (*browser_client)->ConnectIfNecessary();
+  if (status.IsError())
+    return status;
+  base::DictionaryValue params;
+  params.SetBoolean("discover", true);
+  (*browser_client)->SendCommand("Target.setDiscoverTargets", params);
+  /*
+  base::DictionaryValue params2;
+  params2.SetBoolean("autoAttach", true);
+  params2.SetBoolean("waitForDebuggerOnStart", false);
+  (*browser_client)->SendCommand("Target.setAutoAttach", params2);
+  */
+
   return Status(kOk);
 }
 

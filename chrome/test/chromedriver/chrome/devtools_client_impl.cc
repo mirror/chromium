@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
@@ -82,6 +83,11 @@ InspectorCommandResponse::~InspectorCommandResponse() {}
 
 }  // namespace internal
 
+DevToolsClientImpl::Marker::Marker() {
+  VLOG(0) << "DevToolsClientImpl ctor";
+  VLOG(0) << base::debug::StackTrace().ToString();
+}
+
 const char DevToolsClientImpl::kBrowserwideDevToolsClientId[] = "browser";
 
 DevToolsClientImpl::DevToolsClientImpl(const SyncWebSocketFactory& factory,
@@ -150,6 +156,8 @@ Status DevToolsClientImpl::ConnectIfNecessary() {
   if (socket_->IsConnected())
     return Status(kOk);
 
+  VLOG(0) << "DevToolsClientImpl::ConnectIfNecessary";
+  VLOG(0) << base::debug::StackTrace().ToString();
   if (!socket_->Connect(url_)) {
     // Try to close devtools frontend and then reconnect.
     Status status = frontend_closer_func_.Run();

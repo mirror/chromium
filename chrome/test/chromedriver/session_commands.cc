@@ -180,6 +180,19 @@ Status CheckSessionCreated(Session* session) {
                   "unexpected response from browser");
   }
 
+  base::DictionaryValue params;
+  params.SetBoolean("discover", true);
+  web_view->SendCommand("Target.setDiscoverTargets", params);
+
+  base::DictionaryValue params2;
+  params2.SetBoolean("autoAttach", true);
+  params2.SetBoolean("waitForDebuggerOnStart", false);
+  web_view->SendCommand("Target.setAutoAttach", params2);
+
+  base::DictionaryValue params3;
+  params3.SetBoolean("value", true);
+  web_view->SendCommand("Target.setAttachToFrames", params3);
+
   return Status(kOk);
 }
 
