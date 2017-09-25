@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62648d2_b2dea3c7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-25T13:39:07Z",
+      "side": 1,
+      "message": "I don\u0027t think that will work, because enable-features is already occupied by the CHROME_HOME flag. You would have to unregister it and reregister the with the feature enabled. At least the screenshots being uploaded look like it\u0027s not working\n\nThe issue is that because of the parameterised test, combining features will get hairy. We\u0027re working on making it possible but it\u0027s not going to be soon. Maybe move the test to HomeSheetUiCaptureTest[1] ? We have there an example with ANDROID_SIGNIN_PROMOS where we enable or disable various features. Automatically testing modern or not will not work though.\n\n[1]: https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetUiCaptureTest.java?l\u003d43",
+      "range": {
+        "startLine": 269,
+        "startChar": 22,
+        "endLine": 269,
+        "endChar": 25
+      },
+      "revId": "e4051c12c35284a80470751a2fbd3ba96830dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
