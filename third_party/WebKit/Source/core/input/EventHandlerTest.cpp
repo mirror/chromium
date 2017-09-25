@@ -417,18 +417,35 @@ TEST_F(EventHandlerTest, ShadowChildCanOverrideUserSelectText) {
 }
 
 TEST_F(EventHandlerTest, InputFieldsCanStartSelection) {
-  SetHtmlInnerHTML("<input value='blabla'>");
+  SetHtmlInnerHTML("<input value='SomeText'>");
   Element* const field = ToElement(GetDocument().body()->firstChild());
   ShadowRoot* const shadow_root = field->UserAgentShadowRoot();
 
-  Element* const text = shadow_root->getElementById("inner-editor");
-  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  Element* const input = shadow_root->getElementById("inner-editor");
+
+  // hit on text show IBeam
+  LayoutPoint location_text =
+      input->GetLayoutObject()->VisualRect().MinXMinYCorner();
+  location_text.Move(10, 10);
   HitTestResult hit =
       GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
-          location);
+          location_text);
+  Node* const text = hit.InnerPossiblyPseudoNode();
   EXPECT_TRUE(text->CanStartSelection());
   EXPECT_TRUE(
       GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+
+  // hit on empty area do not show IBeam
+  LayoutPoint location_empty =
+      input->GetLayoutObject()->VisualRect().MaxXMaxYCorner();
+  location_empty.Move(-10, -10);
+  hit = GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+      location_empty);
+  Node* empty = hit.InnerPossiblyPseudoNode();
+  EXPECT_TRUE(empty->CanStartSelection());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(empty,
                                                                          hit));
 }
 
