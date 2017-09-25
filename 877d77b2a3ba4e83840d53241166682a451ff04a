@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302a7795_46cfba00",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-25T22:54:40Z",
+      "side": 1,
+      "message": "My point before about adding a readable name was meant to add a readable name along with a DOM id. I don\u0027t think IDs with spaces are valid, so the best option would be to add a mojo struct to carry all the info you need based on key (and still use key as DOM id), or just pass key, whole text line pairs.\n\nhttps://www.w3.org/TR/REC-html40/types.html#type-name",
+      "revId": "877d77b2a3ba4e83840d53241166682a451ff04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
