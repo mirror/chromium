@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c78d35_8dbf57e6",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "\"const\" if you use k...?",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a925e6af_a1010e4f",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "Comment here and below.",
+      "range": {
+        "startLine": 67,
+        "startChar": 38,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20e7795_68eec441",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "Nit: I would expect the ivar declaration in the class extension more than the implementation.",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bd8348_a12c0a03",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "You can remove this constraint as @\"V:|-12-[avatarView(\u003d\u003d24)]-12-|\" gives you the height of the contentView. Having both might lead to a situation where they are conflicting, leading to a inconsistent behavior.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 80
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2aec980_78c0256c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "Do you need to store this as a property? You can use one local variable to set the placeholder, then directly set weakSelf.avatarView.image \u003d [image.ToUIImage() copy]; here.",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c257bd3_8429bddd",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "If you use weakSelf more than once, use the strongSelf pattern:\nNotifyUserAutoSigninViewController* strongSelf \u003d weakSelf;\nif(!strongSelf)\n  return;\n...",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3496812a_21f7cfb5",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "Don\u0027t use CopyUIImage, it probably should not exist as it is not working great with ARC.\nUse [image.ToUIImage() copy];",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae714439_35b8b754",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T14:54:26Z",
+      "side": 1,
+      "message": "I am not sure to understand why you are using the ivar here.",
+      "range": {
+        "startLine": 152,
+        "startChar": 42,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
