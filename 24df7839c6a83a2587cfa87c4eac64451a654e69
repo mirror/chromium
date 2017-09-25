@@ -22,6 +22,30 @@
       "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6e0048_aa2f92ad",
+        "filename": "ui/gfx/ipc/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2d2ad967_8cdbd0b1",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

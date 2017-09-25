@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22a6e6a2_61be2a16",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd8b221_e76b427e",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e191967_94f669b3",
         "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1756fe79_b75b2adc",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e191967_94f669b3",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0889b18f_2494ee88",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "I\u0027m unsure if future usecases will require both RGB* and BGR*, but I can trim this down to just what I need (RGB) now.  In particular for my cases, ANGLE allows some types of binding/copying between some formats and not others, so layout somewhat matters.",
+      "parentUuid": "cea6bdd3_7d112ef6",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdcec6b7_3e22fbfc",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
         "patchSetId": 6
@@ -85,6 +151,30 @@
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c41d59_550afbf7",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdcec6b7_3e22fbfc",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e56d3988_644eb5d5",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec7fcf9a_27774f29",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c260aa_3b295800",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
         "patchSetId": 6
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "ac088aaa_e9f95436",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c260aa_3b295800",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374b2982_afb27bf1",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
         "patchSetId": 6
@@ -145,6 +283,24 @@
       "writtenOn": "2017-09-22T13:42:52Z",
       "side": 1,
       "message": "why do you need this map? Relying on a map here is bad as it falls apart when the GPU process crashes. this should be fixed in the IOSurface case and NativePixmap cases and it would be nice to not introduce the same mistake here.\n\nIdeally we\u0027d remove this completely but it need to be kept around then please store base::SharedMEmory instances instead of handles. Handles should only be used for IPC.",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890e09ab_b5f2fe31",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "This is where I am unsure of the lifetime for a GpuMemoryBufferHandle - it looks like for the other implementations a map is kept, and we clean up handles/resources in response to DestroyGpuMemoryBuffer.\n\nIf this isn\u0027t needed, I can remove it - I was just adding it to hopefully prevent leaking handles.",
+      "parentUuid": "374b2982_afb27bf1",
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "cdb82dca_5637af97",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Adding support for alpha back in.  I had stripped it out when debugging, and missed adding it back.",
+      "parentUuid": "72205cf2_55ce6fda",
+      "range": {
+        "startLine": 246,
+        "startChar": 6,
+        "endLine": 246,
+        "endChar": 25
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a16a801c_e0d3bb34",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 6
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "236a5398_ba7c2f41",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a16a801c_e0d3bb34",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 36
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a378e06_e56f18e0",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 6
@@ -208,6 +412,24 @@
       "writtenOn": "2017-09-22T13:42:52Z",
       "side": 1,
       "message": "why do these need to be public? please move to anonymous namespace in cc file if possible",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f52a4f_3404be68",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "I can move them into a namespace, unless there is a better place to put them - perhaps GpuMemoryBuffer.h?.\n\nWhen Direct3D rendering code interfaces with the shared DXGI handle, it will have to acquire/release the keyed mutex with these values, but they could be duplicated in the other code with a comment to ensure they are in sync with these.",
+      "parentUuid": "1a378e06_e56f18e0",
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "57f3ef79_53932783",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "ScopedHandle is more correct here - the handle we are passing around is a Windows NT handle to a dxgi object rather than a shared memory segment.  jbauman\u0027s original change (and mine here) used the SharedMemoryHandle somewhat as a convenience because it is a nice wrapper over NT handles that support IPC already.\n\nIf its preferable, I can factor out the IPC support from SharedMemoryHandle and use that instead in GpuMemoryBuffer.  I looked at using ipc::HandleWin, but that required adding dependencies on ipc for GpuMemoryBuffer.cc.",
+      "parentUuid": "fe9e8bac_35695bb0",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc344318_7365690c",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 6
@@ -251,6 +497,24 @@
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bd001a_72071c73",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-25T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc344318_7365690c",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
