@@ -16,6 +16,24 @@
       "revId": "df62cb43d2223c84794a75e23861c0f8dea46214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dea2b27_1288e57f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-25T16:14:25Z",
+      "side": 1,
+      "message": "\u003e can the code function well without this assumption? If so, prefer to be lenient in what we accept.\n\nno objections.",
+      "parentUuid": "b2f88ba5_67e381e4",
+      "revId": "df62cb43d2223c84794a75e23861c0f8dea46214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
