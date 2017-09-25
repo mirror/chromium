@@ -120,7 +120,10 @@ class CORE_EXPORT ObjectPaintProperties {
   //       |   Clip created by a rounded border with overflow clip. This clip is
   //       |   not inset by scrollbars.
   //       +-[ overflow clip ]
-  //             Clip created by overflow clip and is inset by the scrollbar.
+  //         |   Clip created by overflow clip and is inset by the scrollbar.
+  //         +-[ scrolling contents clip ]
+  //               Clip created by overflow clip to hide visual overflows out of
+  //               the scrollable range. For SPv2 only.
   //   [ css clip fixed position ]
   //       Clip created by CSS clip. Only exists if the current clip includes
   //       some clip that doesn't apply to our fixed position descendants.
@@ -138,14 +141,9 @@ class CORE_EXPORT ObjectPaintProperties {
   const ClipPaintPropertyNode* OverflowClip() const {
     return overflow_clip_.Get();
   }
-
-  // This is the complete set of property nodes that can be used to paint the
-  // contents of this object. It is similar to the local border box properties
-  // but also includes properties (e.g., overflow clip, scroll translation) that
-  // apply to an object's contents.
-  static std::unique_ptr<PropertyTreeState> ContentsProperties(
-      PropertyTreeState* local_border_box_properties,
-      ObjectPaintProperties*);
+  const ClipPaintPropertyNode* ScrollingContentsClip() const {
+    return scrolling_contents_clip_.Get();
+  }
 
   // The following clear* functions return true if the property tree structure
   // changes (an existing node was deleted), and false otherwise. See the
@@ -164,6 +162,7 @@ class CORE_EXPORT ObjectPaintProperties {
   bool ClearCssClipFixedPosition() { return Clear(css_clip_fixed_position_); }
   bool ClearInnerBorderRadiusClip() { return Clear(inner_border_radius_clip_); }
   bool ClearOverflowClip() { return Clear(overflow_clip_); }
+  bool ClearScrollingContentsClip() { return Clear(scrolling_contents_clip_); }
   bool ClearPerspective() { return Clear(perspective_); }
   bool ClearSvgLocalToBorderBoxTransform() {
     return Clear(svg_local_to_border_box_transform_);
@@ -255,6 +254,10 @@ class CORE_EXPORT ObjectPaintProperties {
   UpdateResult UpdateOverflowClip(Args&&... args) {
     return Update(overflow_clip_, std::forward<Args>(args)...);
   }
+  template <typename... Args>
+  UpdateResult UpdateScrollingContentsClip(Args&&... args) {
+    return Update(scrolling_contents_clip_, std::forward<Args>(args)...);
+  }
 
 #if DCHECK_IS_ON()
   // Used by FindPropertiesNeedingUpdate.h for recording the current properties.
@@ -282,6 +285,8 @@ class CORE_EXPORT ObjectPaintProperties {
       cloned->inner_border_radius_clip_ = inner_border_radius_clip_->Clone();
     if (overflow_clip_)
       cloned->overflow_clip_ = overflow_clip_->Clone();
+    if (scrolling_contents_clip_)
+      cloned->scrolling_contents_clip_ = scrolling_contents_clip_->Clone();
     if (perspective_)
       cloned->perspective_ = perspective_->Clone();
     if (svg_local_to_border_box_transform_) {
@@ -340,6 +345,7 @@ class CORE_EXPORT ObjectPaintProperties {
   RefPtr<ClipPaintPropertyNode> css_clip_fixed_position_;
   RefPtr<ClipPaintPropertyNode> inner_border_radius_clip_;
   RefPtr<ClipPaintPropertyNode> overflow_clip_;
+  RefPtr<ClipPaintPropertyNode> scrolling_contents_clip_;
   RefPtr<TransformPaintPropertyNode> perspective_;
   // TODO(pdr): Only LayoutSVGRoot needs this and it should be moved there.
   RefPtr<TransformPaintPropertyNode> svg_local_to_border_box_transform_;

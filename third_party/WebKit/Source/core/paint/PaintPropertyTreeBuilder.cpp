@@ -59,21 +59,21 @@ static bool UpdatePreTranslation(
 }
 
 // True if a new property was created, false if an existing one was updated.
-static bool UpdateContentClip(
+static bool UpdateViewportClip(
     LocalFrameView& frame_view,
     RefPtr<const ClipPaintPropertyNode> parent,
     RefPtr<const TransformPaintPropertyNode> local_transform_space,
     const FloatRoundedRect& clip_rect,
     bool& clip_changed) {
   DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
-  if (auto* existing_content_clip = frame_view.ContentClip()) {
-    if (existing_content_clip->ClipRect() != clip_rect)
+  if (auto* existing_viewport_clip = frame_view.ViewportClip()) {
+    if (existing_viewport_clip->ClipRect() != clip_rect)
       clip_changed = true;
-    existing_content_clip->Update(std::move(parent),
-                                  std::move(local_transform_space), clip_rect);
+    existing_viewport_clip->Update(std::move(parent),
+                                   std::move(local_transform_space), clip_rect);
     return false;
   }
-  frame_view.SetContentClip(ClipPaintPropertyNode::Create(
+  frame_view.SetViewportClip(ClipPaintPropertyNode::Create(
       std::move(parent), std::move(local_transform_space), clip_rect));
   clip_changed = true;
   return true;
@@ -101,6 +101,28 @@ static bool UpdateScroll(
   frame_view.SetScrollNode(ScrollPaintPropertyNode::Create(
       std::move(parent), IntPoint(), clip, bounds, user_scrollable_horizontal,
       user_scrollable_vertical, main_thread_scrolling_reasons, element_id));
+  return true;
+}
+
+// True if a new property was created, false if an existing one was updated.
+static bool UpdateFrameScrollingContentsClip(
+    LocalFrameView& frame_view,
+    RefPtr<const ClipPaintPropertyNode> parent,
+    RefPtr<const TransformPaintPropertyNode> local_transform_space,
+    bool& clip_changed) {
+  FloatRoundedRect clip_rect(FloatRect(FloatPoint(-frame_view.ScrollOrigin()),
+                                       FloatSize(frame_view.ContentsSize())));
+  DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  if (auto* existing_clip = frame_view.ScrollingContentsClip()) {
+    if (existing_clip->ClipRect() != clip_rect)
+      clip_changed = true;
+    existing_clip->Update(std::move(parent), std::move(local_transform_space),
+                          clip_rect);
+    return false;
+  }
+  frame_view.SetScrollingContentsClip(ClipPaintPropertyNode::Create(
+      std::move(parent), std::move(local_transform_space), clip_rect));
+  clip_changed = true;
   return true;
 }
 
@@ -172,11 +194,11 @@ void PaintPropertyTreeBuilder::UpdateProperties(
     full_context.force_subtree_update |= UpdatePreTranslation(
         frame_view, context.current.transform, frame_translate, FloatPoint3D());
 
-    FloatRoundedRect content_clip(
+    FloatRoundedRect viewport_clip(
         IntRect(IntPoint(), frame_view.VisibleContentSize()));
-    full_context.force_subtree_update |= UpdateContentClip(
+    full_context.force_subtree_update |= UpdateViewportClip(
         frame_view, context.current.clip, frame_view.PreTranslation(),
-        content_clip, full_context.clip_changed);
+        viewport_clip, full_context.clip_changed);
 
     if (frame_view.IsScrollable()) {
       IntSize scroll_clip = frame_view.VisibleContentSize();
@@ -216,6 +238,21 @@ void PaintPropertyTreeBuilder::UpdateProperties(
       // Rebuild all descendant properties because a property was removed.
       full_context.force_subtree_update = true;
     }
+
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      if (frame_view.ScrollNode()) {
+        DCHECK(frame_view.ScrollTranslation());
+        full_context.force_subtree_update |= UpdateFrameScrollingContentsClip(
+            frame_view, frame_view.ViewportClip(),
+            frame_view.ScrollTranslation(), full_context.clip_changed);
+      } else if (frame_view.ScrollingContentsClip()) {
+        // Ensure pre-existing properties are cleared if there is no scrolling.
+        frame_view.SetScrollingContentsClip(nullptr);
+        // Rebuild all descendant properties because a property was removed.
+        full_context.force_subtree_update = true;
+        full_context.clip_changed = true;
+      }
+    }
   }
 
   // Initialize the context for current, absolute and fixed position cases.
@@ -227,8 +264,10 @@ void PaintPropertyTreeBuilder::UpdateProperties(
   auto* fixed_scroll_node = context.current.scroll;
   DCHECK(frame_view.PreTranslation());
   context.current.transform = frame_view.PreTranslation();
-  DCHECK(frame_view.ContentClip());
-  context.current.clip = frame_view.ContentClip();
+  DCHECK(frame_view.ViewportClip());
+  context.current.clip = frame_view.ViewportClip();
+  if (const auto* scrolling_contents_clip = frame_view.ScrollingContentsClip())
+    context.current.clip = scrolling_contents_clip;
   if (const auto* scroll_node = frame_view.ScrollNode())
     context.current.scroll = scroll_node;
   if (const auto* scroll_translation = frame_view.ScrollTranslation())
@@ -1090,7 +1129,7 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
     if (NeedsScrollNode(object)) {
       const LayoutBox& box = ToLayoutBox(object);
-      auto* scrollable_area = box.GetScrollableArea();
+      const auto* scrollable_area = box.GetScrollableArea();
 
       // The container bounds are snapped to integers to match the equivalent
       // bounds on cc::ScrollNode. The offset is snapped to match the current
@@ -1156,6 +1195,51 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
     context.current.transform = properties.ScrollTranslation();
     context.current.should_flatten_inherited_transform = false;
   }
+}
+
+void PaintPropertyTreeBuilder::UpdateScrollingContentsClip(
+    const LayoutObject& object,
+    ObjectPaintProperties& properties,
+    PaintPropertyTreeBuilderFragmentContext& context,
+    bool& force_subtree_update,
+    bool& clip_changed) {
+  if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
+    if (properties.Scroll() && !object.StyleRef().IsOverflowPaged()) {
+      const LayoutBox& box = ToLayoutBox(object);
+      const auto* scrollable_area = box.GetScrollableArea();
+      FloatRect clip_rect(-FloatPoint(scrollable_area->ScrollOrigin()),
+                          FloatSize(scrollable_area->ContentsSize()));
+      // Offset by paint offset, top/left borders and left scrollbar.
+      clip_rect.MoveBy(FloatPoint(context.current.paint_offset));
+      clip_rect.Move(box.ClientLeft(), box.ClientTop());
+
+      // In flipped blocks writing mode, if there is scrollbar on the right,
+      // we move the contents to the left with extra amount of ScrollTranslation
+      // (-VerticalScrollbarWidth, 0). As ScrollingContentsClip is under
+      // ScrollTranslation, we need to compensate the extra ScrollTranslation
+      // to get correct clip origin.
+      if (box.HasFlippedBlocksWritingMode())
+        clip_rect.Move(box.VerticalScrollbarWidth(), 0);
+
+      if (!properties.ScrollingContentsClip() ||
+          clip_rect != properties.ScrollingContentsClip()->ClipRect().Rect())
+        clip_changed = true;
+
+      auto result = properties.UpdateScrollingContentsClip(
+          context.current.clip, context.current.transform,
+          FloatRoundedRect(clip_rect));
+      force_subtree_update |= result.NewNodeCreated();
+    } else {
+      // Ensure pre-existing properties are cleared.
+      if (properties.ClearScrollingContentsClip()) {
+        force_subtree_update = true;
+        clip_changed = true;
+      }
+    }
+  }
+
+  if (properties.ScrollingContentsClip())
+    context.current.clip = properties.ScrollingContentsClip();
 }
 
 void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
@@ -1658,6 +1742,11 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
                                          context.force_subtree_update);
       UpdateScrollAndScrollTranslation(object, *properties, fragment_context,
                                        context.force_subtree_update);
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+        UpdateScrollingContentsClip(object, *properties, fragment_context,
+                                    context.force_subtree_update,
+                                    context.clip_changed);
+      }
     }
 
     UpdateOutOfFlowContext(

@@ -25,7 +25,7 @@ std::unique_ptr<JSONObject> ScrollPaintPropertyNode::ToJSON() const {
   if (!container_bounds_.IsEmpty())
     json->SetString("containerBounds", container_bounds_.ToString());
   if (!bounds_.IsEmpty())
-    json->SetString("containerBounds", bounds_.ToString());
+    json->SetString("bounds", bounds_.ToString());
   if (user_scrollable_horizontal_ || user_scrollable_vertical_) {
     json->SetString("userScrollable",
                     user_scrollable_horizontal_

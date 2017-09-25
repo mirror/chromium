@@ -114,7 +114,7 @@ void FramePainter::Paint(GraphicsContext& context,
         properties.property_tree_state.SetTransform(
             frame_view_->PreTranslation());
         properties.property_tree_state.SetClip(
-            frame_view_->ContentClip()->Parent());
+            frame_view_->ViewportClip()->Parent());
         properties.property_tree_state.SetEffect(contents_state->Effect());
         scoped_paint_chunk_properties.emplace(context.GetPaintController(),
                                               *GetFrameView().GetLayoutView(),

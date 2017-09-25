@@ -147,8 +147,12 @@ TEST_P(BlockPainterTest, FrameScrollHitTestProperties) {
   auto* contents_scroll = contents_transform->ScrollNode();
   EXPECT_EQ(IntSize(800, 2000), contents_scroll->Bounds());
   EXPECT_EQ(IntSize(800, 600), contents_scroll->ContainerBounds());
-  auto* contents_clip = contents_chunk.properties.property_tree_state.Clip();
-  EXPECT_EQ(FloatRect(0, 0, 800, 600), contents_clip->ClipRect().Rect());
+  auto* scrolling_contents_clip =
+      contents_chunk.properties.property_tree_state.Clip();
+  EXPECT_EQ(FloatRect(0, 0, 800, 2000),
+            scrolling_contents_clip->ClipRect().Rect());
+  auto* overflow_clip = scrolling_contents_clip->Parent();
+  EXPECT_EQ(FloatRect(0, 0, 800, 600), overflow_clip->ClipRect().Rect());
 
   // The scroll hit test display item maintains a reference to a scroll offset
   // translation node and the contents should be scrolled by this node.

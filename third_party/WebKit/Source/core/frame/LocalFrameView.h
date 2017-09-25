@@ -737,10 +737,17 @@ class CORE_EXPORT LocalFrameView final
   TransformPaintPropertyNode* ScrollTranslation() const {
     return scroll_translation_.Get();
   }
-  void SetContentClip(RefPtr<ClipPaintPropertyNode> content_clip) {
-    content_clip_ = std::move(content_clip);
+  void SetViewportClip(RefPtr<ClipPaintPropertyNode> viewport_clip) {
+    viewport_clip_ = std::move(viewport_clip);
   }
-  ClipPaintPropertyNode* ContentClip() const { return content_clip_.Get(); }
+  ClipPaintPropertyNode* ViewportClip() const { return viewport_clip_.Get(); }
+  void SetScrollingContentsClip(
+      RefPtr<ClipPaintPropertyNode> scrolling_contents_clip) {
+    scrolling_contents_clip_ = std::move(scrolling_contents_clip);
+  }
+  ClipPaintPropertyNode* ScrollingContentsClip() const {
+    return scrolling_contents_clip_.Get();
+  }
 
   // The property tree state that should be used for painting contents. These
   // properties are either created by this LocalFrameView or are inherited from
@@ -1194,15 +1201,17 @@ class CORE_EXPORT LocalFrameView final
   // [ preTranslation ]               The offset from LocalFrameView::FrameRect.
   //     |                            Establishes viewport.
   //     +---[ scrollTranslation ]    Frame scrolling.
-  // TODO(trchen): These will not be needed once settings->rootLayerScrolls() is
-  // enabled.
+  // TODO(trchen): These will not be needed once RootLayerScrolling is enabled.
   RefPtr<TransformPaintPropertyNode> pre_translation_;
   RefPtr<TransformPaintPropertyNode> scroll_translation_;
   RefPtr<ScrollPaintPropertyNode> scroll_node_;
-  // The content clip clips the document (= LayoutView) but not the scrollbars.
-  // TODO(trchen): This will not be needed once settings->rootLayerScrolls() is
-  // enabled.
-  RefPtr<ClipPaintPropertyNode> content_clip_;
+  // The viewport clip clips the document (= LayoutView) but not the scrollbars.
+  // TODO(trchen): This will not be needed once RootLayerScrolling is enabled.
+  RefPtr<ClipPaintPropertyNode> viewport_clip_;
+  // The scrolling contents clip hides visual overflows out of the scrollable
+  // range. For SPv2 only.
+  // TODO(trchen): This will not be needed once RootLayerScrolling is enabled.
+  RefPtr<ClipPaintPropertyNode> scrolling_contents_clip_;
   // The property tree state that should be used for painting contents. These
   // properties are either created by this LocalFrameView or are inherited from
   // an ancestor.
