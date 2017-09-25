@@ -10,6 +10,7 @@
 
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -168,6 +169,47 @@ GURL GetWarmupURL() {
   variations::GetVariationParams(GetQuicFieldTrialName(), &params);
   return GURL(GetStringValueForVariationParamWithDefaultValue(
       params, "warmup_url", kDefaultWarmupUrl));
+}
+
+bool IsMissingViaHeaderShortDurationEnabled() {
+  return base::FeatureList::IsEnabled(
+      data_reduction_proxy::features::kMissingViaHeaderShortDuration);
+}
+
+bool ShouldBypassMissingViaHeader(bool connection_is_cellular) {
+  std::map<std::string, std::string> params;
+  DCHECK(GetFieldTrialParamsByFeature(
+      data_reduction_proxy::features::kMissingViaHeaderShortDuration, &params));
+  return params[connection_is_cellular ? "should_bypass_missing_via_cellular"
+                                       : "should_bypass_missing_via_wifi"] ==
+         "true";
+}
+
+std::pair<base::TimeDelta, base::TimeDelta>
+GetMissingViaHeaderBypassDurationRange(bool connection_is_cellular) {
+  std::pair<base::TimeDelta, base::TimeDelta> bypass_range = {
+      base::TimeDelta::FromSeconds(60), base::TimeDelta::FromSeconds(300)};
+  std::map<std::string, std::string> params;
+  DCHECK(GetFieldTrialParamsByFeature(
+      data_reduction_proxy::features::kMissingViaHeaderShortDuration, &params));
+  int bypass_max_as_int;
+  if (!base::StringToInt(
+          params[connection_is_cellular
+                     ? "missing_via_max_bypass_cellular_in_seconds"
+                     : "missing_via_max_bypass_wifi_in_seconds"],
+          &bypass_max_as_int)) {
+    return bypass_range;
+  }
+  int bypass_min_as_int;
+  if (!base::StringToInt(
+          params[connection_is_cellular
+                     ? "missing_via_min_bypass_cellular_in_seconds"
+                     : "missing_via_min_bypass_wifi_in_seconds"],
+          &bypass_min_as_int)) {
+    return bypass_range;
+  }
+  return {base::TimeDelta::FromSeconds(bypass_min_as_int),
+          base::TimeDelta::FromSeconds(bypass_max_as_int)};
 }
 
 bool IsLoFiOnViaFlags() {

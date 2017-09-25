@@ -27,5 +27,8 @@ const base::Feature kDataReductionProxyLowMemoryDevicePromo{
     "DataReductionProxyLowMemoryDevicePromo",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kMissingViaHeaderShortDuration{
+    "MissingViaHeaderShortDuration", base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace data_reduction_proxy
