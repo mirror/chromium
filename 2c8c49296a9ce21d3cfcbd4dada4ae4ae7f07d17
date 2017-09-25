@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "8ec98565_f7fa827e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-25T15:31:26Z",
+      "side": 1,
+      "message": "By \"boot complete\" you mean https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/wait_for_container_ready_screen_handler.cc?type\u003dcs\u0026l\u003d72, which is not necessarily the fact that your particular service has been connected. Therefore we *should* worry about the connection here, unless you change the definition of \"boot complete\" to include the connection to your service.",
+      "parentUuid": "1bc21707_b4dfc889",
+      "range": {
+        "startLine": 403,
+        "startChar": 59,
+        "endLine": 403,
+        "endChar": 67
+      },
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f60ae59e_912a1705",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 7
@@ -201,6 +225,30 @@
       "side": 1,
       "message": "It\u0027s not needed.. we use the callback to synchronize timing so that setup wizard activity is launched right after the flags are set in ARC. And it\u0027s an operation that does not fail.",
       "parentUuid": "605de5f4_3a1330a2",
+      "range": {
+        "startLine": 99,
+        "startChar": 57,
+        "endLine": 99,
+        "endChar": 80
+      },
+      "revId": "2c8c49296a9ce21d3cfcbd4dada4ae4ae7f07d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3224a9_1a755c5e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-25T15:31:26Z",
+      "side": 1,
+      "message": "Right now you are signalling a bit of information through the fact of the callback being called/not called. I think it\u0027s better to make that explicit by moving this bit of information to a bool parameter in the callback.\n\nWith \"success\" I meant whatever criteria you have in place such that you invoke the callback. So if you are currently dropping the callback, you can safely replace it with Run(false), and if you run it, you can replace it with Run(true).",
+      "parentUuid": "6f5b5206_3869d642",
       "range": {
         "startLine": 99,
         "startChar": 57,
