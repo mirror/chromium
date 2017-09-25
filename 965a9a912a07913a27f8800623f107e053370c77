@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9ca1f1d_197ee3f4",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "Wanted to indicate where they come from here. Changed it to\n/* Definitions from adler32.c: largest prime ...",
+      "parentUuid": "b782e817_c38374ab",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192d15f8_9487a939",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 41
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T15:28:47Z",
       "side": 1,
       "message": "This is interesting.\n\nDoes it make any performance difference on ARMv8?\n\nLoads using NEON follow a different rule than normal loads.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc2da8e_fb8dc9da",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "Yes interesting: was reading ...\n\nhttps://medium.com/@iLevex/the-curious-case-of-unaligned-access-on-arm-5dd0ebe24965\n\n\u003e Loads using NEON follow a different rule than normal loads.\n\nWhat are these rules?  Unaligned loads schedule two memory fetches, whereas aligned reads schedule one?\n\nCould you ask your ARM colleagues and provide some advice here please?",
+      "parentUuid": "192d15f8_9487a939",
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cac6eb_4de5a012",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "SSE provides _mm_set_epi32(a,b,c,d) for this, is there something like that for NEON intrinsics?\n\nCompilers are smart enough to generate the correct code (I use -Wall to help with that).  The code generated is very good, it shaves an instruction off the while loop.",
+      "parentUuid": "b1830dbd_aa1fc7f8",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "b44808b7_10efd9a2",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "So this entire repetitive code block is easier to read.",
+      "parentUuid": "31aac904_70d5dd2e",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a57f18f_6b8e6605",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 41
@@ -101,6 +173,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94f0f8b_04537c39",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "7a57f18f_6b8e6605",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "dde7ea51_81d9df2f",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "File begins with a reference to that wiki entry and, hopefully, folks will read it and see all the relations.  I certainly want them to read that wiki.",
+      "parentUuid": "b7615d28_f8b3f34d",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f1364a_479d3425",
         "filename": "third_party/zlib/adler32_simd.h",
         "patchSetId": 41
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "bdf60376_72186f94",
+        "filename": "third_party/zlib/adler32_simd.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "True, but also need zutil.h for ZLIB_INTERNAL :)",
+      "parentUuid": "b8f1364a_479d3425",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4201507_70cf3eb7",
         "filename": "third_party/zlib/inflate.c",
         "patchSetId": 41
@@ -149,6 +275,24 @@
       "writtenOn": "2017-09-25T15:28:47Z",
       "side": 1,
       "message": "Said it earlier, better guard this behind a check for Intel.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9a2c2b_6f983482",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-25T16:38:10Z",
+      "side": 1,
+      "message": "Replied earlier: no guard is needed (the android bots would explode if that wasn\u0027t the case).  It\u0027s used in deflate.c unguarded, see\n\nhttps://cs.chromium.org/chromium/src/third_party/zlib/deflate.c?type\u003dcs\u0026q\u003dx86_check_features\u0026sq\u003dpackage:chromium\u0026l\u003d286\n\nThis came via the simd.patch, so just following that.",
+      "parentUuid": "b4201507_70cf3eb7",
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
