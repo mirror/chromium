@@ -4,7 +4,22 @@
 
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
+#include <unordered_map>
+
 #include "components/previews/core/previews_experiments.h"
+
+namespace {
+
+// Redirecting navigations to an AMP version of the page.
+const char kAmpRedirectionPreviews[] = "AMP Previews";
+
+// Showing a stored offline page.
+const char kClientLoFiPreviews[] = "Client LoFi Previews";
+
+// Replacing HTTPS images with small placeholders.
+const char kOfflinePreviews[] = "Offline Previews";
+
+}  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     mojom::InterventionsInternalsPageHandlerRequest request)
@@ -14,9 +29,12 @@ InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {
-  // TODO(thanhdle): change enable to a dictionary with all previews mode
-  // status.
-  bool enabled = previews::params::IsOfflinePreviewsEnabled();
+  std::unordered_map<std::string, bool> statuses;
 
-  std::move(callback).Run(enabled);
+  statuses[kAmpRedirectionPreviews] =
+      previews::params::IsAMPRedirectionPreviewEnabled();
+  statuses[kClientLoFiPreviews] = previews::params::IsClientLoFiEnabled();
+  statuses[kOfflinePreviews] = previews::params::IsOfflinePreviewsEnabled();
+
+  std::move(callback).Run(statuses);
 }
