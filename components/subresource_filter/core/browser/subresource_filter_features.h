@@ -97,6 +97,11 @@ struct Configuration {
     // Whether to disable rules from the ruleset. In practice this might be used
     // if e.g. only popup blocking behavior is desired.
     bool should_disable_ruleset_rules = false;
+
+    // Whether to log warning messages to the console about potential resource
+    // blocking. Note that this is compatible with DRYRUN mode, where warning
+    // messages will be shown but no resource filtering will occur.
+    bool enable_warnings = false;
   };
 
   // General settings that apply outside of the scope of a navigation.
@@ -229,6 +234,7 @@ extern const char kWhitelistSiteOnReloadParameterName[];
 extern const char kStrengthenPopupBlockerParameterName[];
 
 extern const char kDisableRulesetRules[];
+extern const char EnableWarnings[];
 
 extern const char kRulesetFlavorParameterName[];
 

@@ -186,6 +186,9 @@ Configuration ParseExperimentalConfiguration(
   configuration.activation_options.should_disable_ruleset_rules =
       ParseBool(TakeVariationParamOrReturnEmpty(params, kDisableRulesetRules));
 
+  configuration.activation_options.enable_warnings =
+      ParseBool(TakeVariationParamOrReturnEmpty(params, EnableWarnings));
+
   // GeneralSettings:
   configuration.general_settings.ruleset_flavor =
       TakeVariationParamOrReturnEmpty(params, kRulesetFlavorParameterName);
@@ -278,6 +281,7 @@ const char kSuppressNotificationsParameterName[] = "suppress_notifications";
 const char kWhitelistSiteOnReloadParameterName[] = "whitelist_site_on_reload";
 const char kStrengthenPopupBlockerParameterName[] = "strengthen_popup_blocker";
 const char kDisableRulesetRules[] = "disable_ruleset_rules";
+const char EnableWarnings[] = "enable_warnings";
 
 const char kRulesetFlavorParameterName[] = "ruleset_flavor";
 
@@ -342,6 +346,7 @@ bool Configuration::operator==(const Configuration& rhs) const {
                     config.activation_options.should_suppress_notifications,
                     config.activation_options.should_strengthen_popup_blocker,
                     config.activation_options.should_disable_ruleset_rules,
+                    config.activation_options.enable_warnings,
                     config.general_settings.ruleset_flavor);
   };
   return tie(*this) == tie(rhs);
@@ -378,6 +383,7 @@ std::unique_ptr<base::trace_event::TracedValue> Configuration::ToTracedValue()
                     activation_options.should_strengthen_popup_blocker);
   value->SetBoolean("should_disable_ruleset_rules",
                     activation_options.should_disable_ruleset_rules);
+  value->SetBoolean("enable_warnings", activation_options.enable_warnings);
   value->SetString("ruleset_flavor",
                    StreamToString(general_settings.ruleset_flavor));
   return value;
