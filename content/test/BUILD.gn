@@ -257,6 +257,7 @@ static_library("test_support") {
     "//ipc",
     "//media/mojo/clients",
     "//media/mojo/interfaces",
+    "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
   ]
