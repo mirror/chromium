@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49885c91_3c605ecf",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T15:47:19Z",
+      "side": 1,
+      "message": "This is resurrecting an old path - we used to store a separate pref store here just for SDCH (Now removed from chrome).  So most people already have a JSON prefs file in this path left over from before, which we\u0027re just reusing for a similar purpose.",
+      "range": {
+        "startLine": 156,
+        "startChar": 36,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2b289f_a4563d95",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T15:47:19Z",
+      "side": 1,
+      "message": "This two formerly static methods were largely just moved.\n\nThe only differences (other than network_service -\u003e network_service_) are the NetLog line just below this (builder-\u003enet_log() is set in production by chrome/browser/net code currently, so need to use that one to avoid breaking logging), and the network_context_params-\u003ehttp_server_properties_path block.",
+      "range": {
+        "startLine": 228,
+        "startChar": 11,
+        "endLine": 228,
+        "endChar": 31
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b42bd5_b7005482",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T15:47:19Z",
+      "side": 1,
+      "message": "This code is here rather than in HttpServerPropertiesPrefDelegate because I anticipate we\u0027ll need this for other things (NetworkQualityEstimator, in particular, also needs a key/value store), at which point, we can rename the path and maybe add bools for the other things we store.  Or just make it an all-or-nothing thing.",
+      "range": {
+        "startLine": 261,
+        "startChar": 20,
+        "endLine": 261,
+        "endChar": 40
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5440b9d_0a8b21fa",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T15:47:19Z",
+      "side": 1,
+      "message": "This is extremely silly.  I\u0027m thinking I\u0027ll work on HttpServerProperties to make this a little more sane in a followup CL.",
+      "range": {
+        "startLine": 421,
+        "startChar": 20,
+        "endLine": 421,
+        "endChar": 43
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
