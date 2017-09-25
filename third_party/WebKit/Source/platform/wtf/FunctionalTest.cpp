@@ -338,12 +338,12 @@ int MultiplyNumberByTwo(Number* number) {
 
 TEST(FunctionalTest, RefCountedStorage) {
   RefPtr<Number> five = Number::Create(5);
-  EXPECT_EQ(1, five->RefCount());
+  EXPECT_TRUE(five->HasOneRef());
   Function<int()> multiply_five_by_two_function =
       Bind(MultiplyNumberByTwo, five);
-  EXPECT_EQ(2, five->RefCount());
+  EXPECT_EQ(2, five->GetRefCountForTesting());
   EXPECT_EQ(10, multiply_five_by_two_function());
-  EXPECT_EQ(2, five->RefCount());
+  EXPECT_EQ(2, five->GetRefCountForTesting());
 
   Function<int()> multiply_four_by_two_function =
       Bind(MultiplyNumberByTwo, Number::Create(4));
@@ -358,12 +358,12 @@ TEST(FunctionalTest, RefCountedStorage) {
 
 TEST(FunctionalTest, UnretainedWithRefCounted) {
   RefPtr<Number> five = Number::Create(5);
-  EXPECT_EQ(1, five->RefCount());
+  EXPECT_EQ(1, five->GetRefCountForTesting());
   Function<int()> multiply_five_by_two_function =
       Bind(MultiplyNumberByTwo, WTF::Unretained(five.Get()));
-  EXPECT_EQ(1, five->RefCount());
+  EXPECT_EQ(1, five->GetRefCountForTesting());
   EXPECT_EQ(10, multiply_five_by_two_function());
-  EXPECT_EQ(1, five->RefCount());
+  EXPECT_EQ(1, five->GetRefCountForTesting());
 }
 
 int ProcessUnwrappedClass(const UnwrappedClass& u, int v) {
