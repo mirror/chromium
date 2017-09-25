@@ -19,8 +19,8 @@ class FakeVoiceInteractionFrameworkInstance
 
   // mojom::VoiceInteractionFrameworkInstance overrides:
   void Init(mojom::VoiceInteractionFrameworkHostPtr host_ptr) override;
-  void StartVoiceInteractionSession() override;
-  void ToggleVoiceInteractionSession() override;
+  void StartVoiceInteractionSession(bool homescreen) override;
+  void ToggleVoiceInteractionSession(bool homescreen) override;
   void StartVoiceInteractionSessionForRegion(const gfx::Rect& region) override;
   void SetMetalayerVisibility(bool visible) override;
   void SetVoiceInteractionEnabled(bool enable) override;

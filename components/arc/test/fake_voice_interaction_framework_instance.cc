@@ -15,11 +15,13 @@ FakeVoiceInteractionFrameworkInstance::
 void FakeVoiceInteractionFrameworkInstance::Init(
     mojom::VoiceInteractionFrameworkHostPtr host_ptr) {}
 
-void FakeVoiceInteractionFrameworkInstance::StartVoiceInteractionSession() {
+void FakeVoiceInteractionFrameworkInstance::StartVoiceInteractionSession(
+    bool homescreen) {
   start_session_count_++;
 }
 
-void FakeVoiceInteractionFrameworkInstance::ToggleVoiceInteractionSession() {
+void FakeVoiceInteractionFrameworkInstance::ToggleVoiceInteractionSession(
+    bool homescreen) {
   toggle_session_count_++;
 }
 
