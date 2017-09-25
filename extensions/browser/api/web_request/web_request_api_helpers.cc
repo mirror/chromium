@@ -101,6 +101,15 @@ bool NullableEquals(const std::string* a, const std::string* b) {
   return (!a) || (*a == *b);
 }
 
+std::unique_ptr<base::Value> CertToDER(
+    net::X509Certificate::OSCertHandle cert_handle) {
+  std::string der_holder;
+  if (!net::X509Certificate::GetDEREncoded(cert_handle, &der_holder))
+    return nullptr;
+  return std::make_unique<base::Value>(base::Value::BlobStorage(
+      der_holder.data(), der_holder.data() + der_holder.size()));
+}
+
 }  // namespace
 
 bool ExtraInfoSpec::InitFromValue(const base::ListValue& value,
@@ -121,6 +130,8 @@ bool ExtraInfoSpec::InitFromValue(const base::ListValue& value,
       *extra_info_spec |= ASYNC_BLOCKING;
     else if (str == "requestBody")
       *extra_info_spec |= REQUEST_BODY;
+    else if (str == "tlsInfo")
+      *extra_info_spec |= TLS_INFO;
     else
       return false;
   }
@@ -1220,6 +1231,24 @@ std::unique_ptr<base::DictionaryValue> CreateHeaderDictionary(
                 StringToCharList(value));
   }
   return header;
+}
+
+std::unique_ptr<base::Value> ExtractCertificateChain(
+    const net::X509Certificate& cert) {
+  auto chain = std::make_unique<base::ListValue>();
+  std::unique_ptr<base::Value> der = CertToDER(cert.os_cert_handle());
+  if (der)
+    chain->Append(std::move(der));
+
+  const net::X509Certificate::OSCertHandles& cert_handles =
+      cert.GetIntermediateCertificates();
+  for (const net::X509Certificate::OSCertHandle& handle : cert_handles) {
+    std::unique_ptr<base::Value> inter_der = CertToDER(handle);
+    if (inter_der)
+      chain->Append(std::move(inter_der));
+  }
+
+  return std::move(chain);
 }
 
 }  // namespace extension_web_request_api_helpers
