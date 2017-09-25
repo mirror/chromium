@@ -443,7 +443,16 @@ _BANNED_CPP_FUNCTIONS = (
       ),
       True,
       (),
-    )
+    ),
+    (
+      (r'/base::ThreadRestrictions::(ScopedAllowIO|AssertIOAllowed|'
+       r'DisallowWaiting|AssertWaitAllowed|SetWaitAllowed|ScopedAllowWait)'),
+      (
+        'Use the new API in base/threading/thread_restrictions.h.',
+      ),
+      True,
+      (),
+    ),
 )
 
 
