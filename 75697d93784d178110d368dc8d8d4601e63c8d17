@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc8a70d_61ba2dc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T02:10:44Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e27e5f0_99714453",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T02:10:44Z",
+      "side": 1,
+      "message": "nit: s/|0|/0/ since L9 uses as \"0\".",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4193480_e432a8d1",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T02:10:44Z",
+      "side": 1,
+      "message": "nit: %s/\\n/std::endl/\ne.g.\nstream \u003c\u003c std::endl \u003c\u003c \"layout_objects:\" \u003c\u003c std::endl;",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f3932c_4fb96866",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T02:10:44Z",
+      "side": 1,
+      "message": "nit: Please add |explicit|.",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba41f679_bb8183f4",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T02:10:44Z",
+      "side": 1,
+      "message": "s/(void*)layout_object/static_cast\u003cvoid*\u003e(layout_object)/",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
