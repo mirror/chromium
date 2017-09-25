@@ -37,6 +37,7 @@ import ConfigParser
 import json
 import os
 import subprocess
+import threading
 
 BUILD_DIRECTORY = 'out/Coverage-iphonesimulator'
 DEFAULT_GOMA_JOBS = 50
@@ -575,31 +576,6 @@ def _FormatBuildTargetPaths(build_targets):
   return formatted_build_targets
 
 
-def _AssertBuildTargetsExist(build_targets):
-  """Asserts that the build targets specified in |build_targets| exist.
-
-  Args:
-    build_targets: A list of build targets.
-  """
-  # The returned json objec has the following format:
-  # Root: dict => A dictionary of sources of build targets.
-  # -- target: dict => A dictionary that describes the target.
-  # ---- sources: list => A list of source files.
-  #
-  # For example:
-  # {u'//url:url': {u'sources': [u'//url/gurl.cc', u'//url/url_canon_icu.cc']}}
-  #
-  target_source_descriptions = _GetSourcesDescriptionOfBuildTargets(
-      build_targets)
-  for build_target in build_targets:
-    assert build_target in target_source_descriptions, (('{} is not a valid '
-                                                         'build target. Please '
-                                                         'run \'gn desc {} '
-                                                         'sources\' to debug.')
-                                                        .format(build_target,
-                                                                build_target))
-
-
 def _AssertPathsExist(paths):
   """Asserts that the paths specified in |paths| exist.
 
@@ -617,47 +593,64 @@ def _AssertPathsExist(paths):
 
 
 def _GetSourcesOfBuildTargets(build_targets):
-  """Returns a list of paths corresponding to the sources of the build targets.
+  """Returns a dictionary of the sources of the build targets.
 
   Args:
     build_targets: A list of build targets.
 
   Returns:
-    A list of os paths relative to the root of checkout, and en empty list if
-    |build_targets| is empty.
+    A dictionary containing the sources of each build target as following:
+
+    dict => A dictionary of sources of build targets.
+    -- target: list => A list of os paths relative to the root of checkout.
   """
-  if not build_targets:
-    return []
-
-  target_sources_description = _GetSourcesDescriptionOfBuildTargets(
-      build_targets)
-  sources = []
+  # It takes more than 5 seconds to run 'gn desc', and it only supports querying
+  # one target at a time, so running them in parallel.
+  build_targets_sources = {}
+  threads = []
   for build_target in build_targets:
-    sources.extend(_ConvertBuildFilePathsToOsPaths(
-        target_sources_description[build_target]['sources']))
+    thread = threading.Thread(target=_GetSourcesOfBuildTarget,
+                              args=(build_target, build_targets_sources))
+    thread.start()
+    threads.append(thread)
 
-  return sources
+  for thread in threads:
+    thread.join()
+
+  return build_targets_sources
 
 
-def _GetSourcesDescriptionOfBuildTargets(build_targets):
-  """Returns the description of sources of the build targets using 'gn desc'.
+def _GetSourcesOfBuildTarget(build_target, results):
+  """Returns the sources of the build target as a list.
 
   Args:
-    build_targets: A list of build targets.
-
-  Returns:
-    A json object with the following format:
-
-    Root: dict => A dictionary of sources of build targets.
-    -- target: dict => A dictionary that describes the target.
-    ---- sources: list => A list of source files.
+    build_target: Path to the build target.
+    results: A dictionary stores the sources of each build target:
+             dict => A dictionary of sources of build targets.
+             -- target: list => A list of os paths relative to the root of
+                        checkout.
   """
-  cmd = ['gn', 'desc', BUILD_DIRECTORY]
-  for build_target in build_targets:
-    cmd.append(build_target)
-  cmd.extend(['sources', '--format=json'])
+  cmd = ['gn', 'desc', BUILD_DIRECTORY, build_target, 'sources',
+         '--format=json']
 
-  return json.loads(subprocess.check_output(cmd))
+  # The returned json objec has the following format:
+  # dict => A dictionary of sources of build targets.
+  # -- target: dict => A dictionary that describes the target.
+  # ---- sources: list => A list of source files.
+  #
+  # For example:
+  # {u'//url:url': {u'sources': [u'//url/gurl.cc']}}
+  #
+  # If the build target doesn't exist, the dictionary will be empty.
+  target_sources_description = json.loads(subprocess.check_output(cmd))
+  assert build_target in target_sources_description, (('{} is not a valid '
+                                                       'build target. Please '
+                                                       'run \'gn desc {} '
+                                                       'sources\' to debug.')
+                                                      .format(build_target,
+                                                              build_target))
+  sources = target_sources_description[build_target]['sources']
+  results[build_target] = sources
 
 
 def _ConvertBuildFilePathsToOsPaths(build_file_paths):
@@ -759,15 +752,15 @@ def Main():
     _AssertPathsExist(include_paths)
   if exclude_paths:
     _AssertPathsExist(exclude_paths)
-  if include_targets:
-    _AssertBuildTargetsExist(include_targets)
-  if exclude_targets:
-    _AssertBuildTargetsExist(exclude_targets)
 
-  if not include_paths:
-    include_paths.append(args.top_level_dir)
-  include_sources = include_paths + _GetSourcesOfBuildTargets(include_targets)
-  exclude_sources = exclude_paths + _GetSourcesOfBuildTargets(exclude_targets)
+  build_targets_sources = _GetSourcesOfBuildTargets(include_targets +
+                                                    exclude_targets)
+  include_sources = include_paths
+  for include_target in include_targets:
+    include_sources += build_targets_sources[include_target]
+  exclude_sources = exclude_paths
+  for exclude_target in exclude_targets:
+    exclude_sources += build_targets_sources[exclude_target]
 
   profdata_path = args.reuse_profdata
   if profdata_path:
