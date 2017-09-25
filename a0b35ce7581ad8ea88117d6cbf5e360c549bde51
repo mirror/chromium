@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "852d1a96_2c7b1640",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-25T23:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7badc5d_80561d85",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee842fbc_bca51311",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T22:51:17Z",
       "side": 1,
       "message": "Another option is\n  if (NeedsSectionRecalc())\n    return;\nbut I\u0027m not sure if it is better.",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c131e812_b0165aa7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-25T23:45:07Z",
+      "side": 1,
+      "message": "Good point -- other bits of geometry (height, width) are reused from the previous layout pass and don\u0027t have DCHECK(!NeedsSectionRecalc()). Maybe that\u0027s what collapsed outer borders should do by default and we shouldn\u0027t give scroll anchoring special treatment?\n\nThough it\u0027d be nice to know if other code paths rely on that in the future; I added a comment saying that we should switch to your suggestion if more appear.",
+      "parentUuid": "ee842fbc_bca51311",
       "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4e4f6e_cde69876",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-25T23:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859b18e0_17b7245e",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
