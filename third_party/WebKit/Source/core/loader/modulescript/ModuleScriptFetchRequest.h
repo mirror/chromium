@@ -13,20 +13,11 @@
 
 namespace blink {
 
-// A ModuleScriptFetchRequest is a "parameter object" for
-// Modulator::fetch{,New}SingleModule to avoid the methods having too many
-// arguments.
-// In terms of spec, a ModuleScriptFetchRequest carries the arguments
-// for "fetch a single module script" algorithm:
-// https://html.spec.whatwg.org/#fetch-a-single-module-script
-// and "internal module script graph fetching procedure":
-// https://html.spec.whatwg.org/#internal-module-script-graph-fetching-procedure
-// EXCEPT for:
-// - an ancestor list ("internal module script graph fetching procedure" only)
-// - a top-level module fetch flag
-// - a module map settings object
-// - a fetch client settings object
-// - a destination
+// A ModuleScriptFetchRequest corresponds to the spec concept
+// "#script-fetch-options" + target url.
+// https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-nonce
+// A ModuleScriptFetchRequest essentially serves as a "parameter object" for
+// Modulator::Fetch{Tree,Single,NewSingle}.
 class ModuleScriptFetchRequest final {
   STACK_ALLOCATED();
 
@@ -70,9 +61,16 @@ class ModuleScriptFetchRequest final {
         referrer_position_(referrer_position) {}
 
   const KURL url_;
+
+  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-nonce
   const String nonce_;
+
+  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-parser
   const ParserDisposition parser_state_;
+
+  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-credentials
   const WebURLRequest::FetchCredentialsMode credentials_mode_;
+
   const AtomicString referrer_;
   const TextPosition referrer_position_;
 };
