@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414b3025_dd8adaf4",
+        "filename": "components/onc/docs/onc_spec.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-25T22:31:33Z",
+      "side": 1,
+      "message": "optional/nit:\nMaybe make this an unordered list:\n*   Allowed values:\n    *   *L2TP-IPSec*\n    *   *OpenVPN*....",
+      "revId": "ba0f900502300d49be0e340c62d7e8a8e3d6e935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
