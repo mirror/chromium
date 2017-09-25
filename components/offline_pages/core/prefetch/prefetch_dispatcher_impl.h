@@ -37,7 +37,7 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   void RemoveAllUnprocessedPrefetchURLs(const std::string& name_space) override;
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
   void BeginBackgroundTask(
-      std::unique_ptr<ScopedBackgroundTask> background_task) override;
+      std::unique_ptr<PrefetchBackgroundTask> background_task) override;
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
@@ -85,7 +85,8 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   PrefetchService* service_;
   TaskQueue task_queue_;
   bool needs_pipeline_processing_ = false;
-  std::unique_ptr<ScopedBackgroundTask> background_task_;
+  bool suspended_ = false;
+  std::unique_ptr<PrefetchBackgroundTask> background_task_;
 
   base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
 
