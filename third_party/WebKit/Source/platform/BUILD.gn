@@ -1256,6 +1256,8 @@ jumbo_component("platform") {
     "mojo/CommonCustomTypesStructTraits.cpp",
     "mojo/CommonCustomTypesStructTraits.h",
     "mojo/FetchAPIRequestStructTraits.cpp",
+    "mojo/KURLStructTraits.cpp",
+    "mojo/KURLStructTraits.h",
     "mojo/MojoHelper.h",
     "network/ContentSecurityPolicyParsers.cpp",
     "network/ContentSecurityPolicyParsers.h",
