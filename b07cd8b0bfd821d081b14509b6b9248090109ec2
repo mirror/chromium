@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebfb01a0_9121f53c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-25T18:25:16Z",
+      "side": 1,
+      "message": "Removed it.",
+      "parentUuid": "036c451f_97ed0e1a",
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5f7ef3c_ad243101",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-25T16:49:48Z",
       "side": 1,
       "message": "Do we need to forward key released event?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 36,
+        "endLine": 1048,
+        "endChar": 71
+      },
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b3f78f_2c9395fa",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-25T18:25:16Z",
+      "side": 1,
+      "message": "I think both character key and edit command (like ctrl+a) triggered on pressed [1], so we don\u0027t need release.\n\n[1] https://cs.chromium.org/chromium/src/ui/views/controls/textfield/textfield.cc?gsn\u003dTextEditCommand\u0026l\u003d102",
+      "parentUuid": "d5f7ef3c_ad243101",
       "range": {
         "startLine": 1048,
         "startChar": 36,
