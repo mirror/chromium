@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a92bffa_f0e02240",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c78d35_8dbf57e6",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a925e6af_a1010e4f",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffebdc7_f37a3e69",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a925e6af_a1010e4f",
+      "range": {
+        "startLine": 67,
+        "startChar": 38,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b2a3a71b_71a72978",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20e7795_68eec441",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66bd8348_a12c0a03",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33afb2c1_bdb476ce",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66bd8348_a12c0a03",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 80
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,102 @@
     },
     {
       "key": {
+        "uuid": "35eca06d_6ddd5c7c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done\nNow I use it only once:\n\n\u003e weakSelf.avatarView.image \u003d [image.ToUIImage() copy];",
+      "parentUuid": "7c257bd3_8429bddd",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca28f37_e57223b6",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2aec980_78c0256c",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "781cf619_55742b23",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3496812a_21f7cfb5",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96d2040b_63ad9fbc",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "\u003e Can one of you file a bug?\n\nDone",
+      "parentUuid": "7e3ea80c_f28de08b",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae714439_35b8b754",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 13
@@ -207,6 +399,30 @@
       "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb9115e_c001de57",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T16:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae714439_35b8b754",
+      "range": {
+        "startLine": 152,
+        "startChar": 42,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
