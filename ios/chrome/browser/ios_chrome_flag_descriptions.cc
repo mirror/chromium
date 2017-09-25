@@ -36,6 +36,12 @@ const char kInProductHelpDemoModeDescription[] =
     "an individual promotion causes that promotion but no other promotions to "
     "occur.";
 
+const char kMailtoPromptForUserChoiceName[] =
+    "Mailto Handler Prompt for User Choice";
+const char kMailtoPromptForUserChoiceDescription[] =
+    "Enable prompt for user to choose a mail client app when user taps on a "
+    "mailto:// URL link.";
+
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
 const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
@@ -45,12 +51,6 @@ const char kMarkHttpAsNonSecureWhileIncognito[] =
     "Warn on HTTP while in Incognito mode";
 const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[] =
     "Warn on HTTP while in Incognito mode or after editing forms";
-
-const char kMailtoPromptForUserChoiceName[] =
-    "Mailto Handler Prompt for User Choice";
-const char kMailtoPromptForUserChoiceDescription[] =
-    "Enable prompt for user to choose a mail client app when user taps on a "
-    "mailto:// URL link.";
 
 const char kOmniboxUIElideSuggestionUrlAfterHostName[] =
     "Hide the path, query, and ref of omnibox suggestions";
@@ -73,6 +73,11 @@ const char kPhysicalWeb[] = "Physical Web";
 const char kPhysicalWebDescription[] =
     "When enabled, the omnibox will include suggestions for web pages "
     "broadcast by devices near you.";
+
+const char kTabSwitcherPresentsBVCName[] = "TabSwitcher Presents BVC";
+const char kTabSwitcherPresentsBVCDescription[] =
+    "When enabled, the tab switcher will be at the root of the VC hierarchy "
+    "and will present the BVC.";
 
 const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =

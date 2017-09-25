@@ -29,6 +29,11 @@ extern const char kContextualSearchDescription[];
 extern const char kInProductHelpDemoModeName[];
 extern const char kInProductHelpDemoModeDescription[];
 
+// Title and descript for the flag to enable a prompt asking user to choose
+// which mail client app to use to handle mailto:// URLs.
+extern const char kMailtoPromptForUserChoiceName[];
+extern const char kMailtoPromptForUserChoiceDescription[];
+
 // Title, description, and options for the MarkHttpAs setting that controls
 // display of omnibox warnings about non-secure pages.
 extern const char kMarkHttpAsName[];
@@ -37,11 +42,6 @@ extern const char kMarkHttpAsDangerous[];
 extern const char kMarkHttpAsNonSecureAfterEditing[];
 extern const char kMarkHttpAsNonSecureWhileIncognito[];
 extern const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[];
-
-// Title and descript for the flag to enable a prompt asking user to choose
-// which mail client app to use to handle mailto:// URLs.
-extern const char kMailtoPromptForUserChoiceName[];
-extern const char kMailtoPromptForUserChoiceDescription[];
 
 // Title and description for the flag to enable elision of the URL path, query,
 // and ref in omnibox URL suggestions.
@@ -61,6 +61,11 @@ extern const char kOmniboxUIHideSuggestionUrlTrivialSubdomainsDescription[];
 // Title and description for the flag to enable Physical Web in the omnibox.
 extern const char kPhysicalWeb[];
 extern const char kPhysicalWebDescription[];
+
+// Title and description for the flag to enable the TabSwitcher to present the
+// BVC..
+extern const char kTabSwitcherPresentsBVCName[];
+extern const char kTabSwitcherPresentsBVCDescription[];
 
 // Title and description for the flag to enable the ddljson Doodle API.
 extern const char kUseDdljsonApiName[];
