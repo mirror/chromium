@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7537c28_3417aaaf",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-25T17:54:42Z",
+      "side": 1,
+      "message": "Why are these required? extensions.init should only use the extensions that are reported by the context.",
+      "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
