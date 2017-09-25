@@ -30,6 +30,10 @@ class TabIconView : public views::MenuButton {
   // Set the throbber to the light style (for use on dark backgrounds).
   void set_is_light(bool is_light) { is_light_ = is_light; }
 
+  void set_show_default_favicon(bool show_default_favicon) {
+    show_default_favicon_ = show_default_favicon;
+  }
+
  private:
   // views::MenuButton:
   gfx::Size CalculatePreferredSize() const override;
@@ -44,6 +48,9 @@ class TabIconView : public views::MenuButton {
 
   // Whether we should display our light or dark style.
   bool is_light_;
+
+  // Whether the default favicon should be painted if a null image is given.
+  bool show_default_favicon_;
 
   // Time we painted the first frame of the current throbber animation, or
   // 0 if not painting the throbber.
