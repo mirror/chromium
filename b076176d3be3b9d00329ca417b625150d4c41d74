@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63c4d138_cef1b634",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-25T20:14:16Z",
+      "side": 1,
+      "message": "I checked this and it looks like we\u0027re OK. There are a few cases where unused_resources is erased() from a loop, but it\u0027s always right before an early return. circular_deque should catch unstable iterator uses and assert, so I think somebody changing this in the future will find out their code is wrong pretty fast.\n\nThere is one place where busy_resources_ is erased(), but it\u0027s done by index so that\u0027s also safe.",
+      "parentUuid": "5b98ab43_ff4737df",
+      "revId": "b076176d3be3b9d00329ca417b625150d4c41d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39624b73_163984ad",
         "filename": "cc/resources/resource_provider_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "b076176d3be3b9d00329ca417b625150d4c41d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb3ff2a_e9d6d516",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-25T20:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39624b73_163984ad",
+      "revId": "b076176d3be3b9d00329ca417b625150d4c41d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
