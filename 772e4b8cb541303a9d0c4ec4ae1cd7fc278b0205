@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a14f6f42_fade2f9c",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42b3e2e5_05f0e9bf",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6aae7a_296c9924",
         "filename": "chrome/app/md_extensions_strings.grdp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a61a4b_eb53d304",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6aae7a_296c9924",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "261e49e5_1bc6a68f",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca51709b_b34d22f1",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ca5ed1_4c964413",
         "filename": "chrome/browser/resources/md_extensions/kiosk_browser_proxy.js",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c543251b_44ae8155",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ca5ed1_4c964413",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8b688f_ee833e19",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-22T22:50:36Z",
       "side": 1,
       "message": "Are you sure this works as expected. See https://jsfiddle.net/xt0g4xmw/2/. I think it works a bit accidentally (because every list-item happens to have the same type?)",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a00e2c_f8f4bf12",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "I intended to use :last-of-type. Last child wouldn\u0027t work because the \u003ctemplate\u003e element is actually the last child. I think using :last-of-type here is fine - the .list-items are guaranteed to be the same type because they\u0027re printed by the same dom-repeat.",
+      "parentUuid": "ad8b688f_ee833e19",
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7fd0c46a_aacc9bd1",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a186cb_da54b0c0",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e24282_f5910c93",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6d527b_1bcfd108",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "paper-icon-button-light depends on a predefined list of class names to get the correct icons. see: https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_icons_css.html?q\u003dcr_icons\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "parentUuid": "72e24282_f5910c93",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d41e028f_22bddd0e",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e218dd3_b4c09193",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ef1275_ca025c69",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe99178_d5ffce1f",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00ef1275_ca025c69",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "f72e4272_33be3da3",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "The doc has examples of pathing like this: https://www.polymer-project.org/1.0/docs/devguide/model-data#linkpaths",
+      "parentUuid": "69e04219_e17b7ec9",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4705f76e_b31cfbb8",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
         "patchSetId": 6
@@ -186,6 +366,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd837aa_66068188",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4705f76e_b31cfbb8",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +419,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab21d90b_d1f13dd7",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e382a1_3ec50dd7",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
