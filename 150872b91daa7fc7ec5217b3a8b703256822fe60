@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e708a8_9dc5f4c0",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-25T18:57:17Z",
+      "side": 1,
+      "message": "In lieu of leaving three separate nit comments, here\u0027s my suggested paragraph:\n\n    // A dropdown with suggestions was shown, but they were not used to fill the\n    // form. Depending on the user submitting a card known by the browser,\n    // submitting a card that the browser does not know about, or Autofill\n    // failing to detect the card, one of the following will be triggered. Only\n    // one of the following three metrics will be triggered per page load.",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 59
+      },
+      "revId": "150872b91daa7fc7ec5217b3a8b703256822fe60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

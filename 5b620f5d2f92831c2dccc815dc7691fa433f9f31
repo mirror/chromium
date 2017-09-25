@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "23304988_e62189f2",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-25T18:57:17Z",
+      "side": 1,
+      "message": "Is there any value in logging these for address forms?",
+      "parentUuid": "6258752b_dd3372e8",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79f1b588_fd9a0ca4",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 7
@@ -201,6 +219,24 @@
       "side": 1,
       "message": "Mostly done. Probably no need to specifically log non-cc-forms? \n\nFor credit card form histogram: NO_CARD, UNKNOWN_CARD, KNOWN_CARD will all be counted.\nFor address form histogram: only NO_CARD will be counted.\n\nThoughts?",
       "parentUuid": "fff77993_41633d21",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565f7f17_c55f0026",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-25T18:57:17Z",
+      "side": 1,
+      "message": "Why log NO_CARD on address histograms?\n1) If I understand correctly, NO_CARD means it was definitely a CC form but we didn\u0027t see a CC number.\n2) I assume we won\u0027t be able to split NO_CARD in cc forms vs. NO_CARD in address forms if we do this",
+      "parentUuid": "8180cea5_114f76d9",
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
