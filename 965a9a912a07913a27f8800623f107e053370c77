@@ -332,6 +332,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8c19da_f0216f8c",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T17:47:01Z",
+      "side": 1,
+      "message": "The issue I see following what came from simd.patch is that it did a poor job of insulating platform specific code.\n\nPlus it brings an extra maintenance burden for us on ARM.",
+      "parentUuid": "5d9a2c2b_6f983482",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
