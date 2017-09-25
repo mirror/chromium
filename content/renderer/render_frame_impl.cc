@@ -6036,7 +6036,7 @@ void RenderFrameImpl::OpenURL(const NavigationPolicyInfo& info,
   if (GetContentClient()->renderer()->AllowPopup())
     params.user_gesture = true;
 
-  if (policy == blink::kWebNavigationPolicyNewBackgroundTab ||
+  if (IsMainFrame() || policy == blink::kWebNavigationPolicyNewBackgroundTab ||
       policy == blink::kWebNavigationPolicyNewForegroundTab ||
       policy == blink::kWebNavigationPolicyNewWindow ||
       policy == blink::kWebNavigationPolicyNewPopup) {
