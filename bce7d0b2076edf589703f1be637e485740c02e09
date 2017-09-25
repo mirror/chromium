@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edae844f_0b39266c",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-25T23:56:55Z",
+      "side": 1,
+      "message": "Optional nit: early return so that you can remove the else block below.",
+      "range": {
+        "startLine": 80,
+        "startChar": 75,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "bce7d0b2076edf589703f1be637e485740c02e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bf2191_eeb8eded",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-25T23:56:55Z",
+      "side": 1,
+      "message": "Optional nit: Same here to be consistent.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "bce7d0b2076edf589703f1be637e485740c02e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
