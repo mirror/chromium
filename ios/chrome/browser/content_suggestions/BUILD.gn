@@ -31,6 +31,7 @@ source_set("content_suggestions") {
   deps = [
     "//base",
     "//components/favicon/core",
+    "//components/favicon_base",
     "//components/ntp_snippets",
     "//components/ntp_tiles",
     "//components/rappor",

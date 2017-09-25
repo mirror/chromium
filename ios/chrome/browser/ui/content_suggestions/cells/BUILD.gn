@@ -75,6 +75,7 @@ source_set("unit_tests") {
     ":cells",
     ":cells_ui",
     "//base",
+    "//components/favicon_base",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/collection_view",
