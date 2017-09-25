@@ -22,6 +22,30 @@
       "revId": "28e6b121575a1c4570f1dfbb8a77735a9906810f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ac43cc_f0352a40",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 87160,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-09-25T04:17:03Z",
+      "side": 1,
+      "message": "Done. The Cell and Pointer spaces have been removed years ago though.",
+      "parentUuid": "14d1182b_0befe78f",
+      "range": {
+        "startLine": 87160,
+        "startChar": 15,
+        "endLine": 87160,
+        "endChar": 0
+      },
+      "revId": "28e6b121575a1c4570f1dfbb8a77735a9906810f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
