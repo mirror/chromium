@@ -2247,6 +2247,7 @@ void Document::UpdateStyle() {
     GetLayoutViewItem().SetStyle(StyleResolver::StyleForViewport(*this));
   }
 
+  View()->UpdateCountersAfterStyleChange();
   View()->RecalcOverflowAfterStyleChange();
 
   ClearChildNeedsStyleRecalc();
