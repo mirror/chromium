@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64979da6_f92023c6",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-25T15:51:23Z",
+      "side": 1,
+      "message": "Since we create the array above and only create data properties, I don\u0027t think this step can actually fail or run author script (but don\u0027t quote me on that). :)",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcdbd98_9bbea960",
+        "filename": "extensions/renderer/bindings/api_event_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-25T15:51:23Z",
+      "side": 1,
+      "message": "Missing definition of this function? (Remove this declaration?)",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08e319d_ba9c0e32",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-25T15:51:23Z",
+      "side": 1,
+      "message": "nit: tirggers -\u003e triggers",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
