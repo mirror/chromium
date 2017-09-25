@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d213c47_948a43d2",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "~MediaCodecAndSurface passes nullptr for task_runner, which will fail this check.",
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233456a7_d4fc3a57",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "s/StopThread/StartThread/",
+      "range": {
+        "startLine": 121,
+        "startChar": 59,
+        "endLine": 121,
+        "endChar": 69
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1535aa57_2bbbdbfa",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "Nit: We must only access member variables on task_runner_ to avoid data races.",
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7761f18_b330efc4",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "combine this block with the one above?",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 3
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f0e6f7_86827c16",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "This needs to bounce to task_runner_ as well doesn\u0027t it?",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 53
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa65106f_2935c85b",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "Can we add a DCHECK for the sequence this is called on please",
+      "range": {
+        "startLine": 419,
+        "startChar": 25,
+        "endLine": 419,
+        "endChar": 46
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d85cae4_ce326cd1",
+        "filename": "media/gpu/android/avda_codec_allocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-25T08:42:10Z",
+      "side": 1,
+      "message": "s/form/from/",
+      "range": {
+        "startLine": 176,
+        "startChar": 36,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
