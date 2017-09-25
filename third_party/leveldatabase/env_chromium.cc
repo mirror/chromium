@@ -227,7 +227,7 @@ class Retrier {
   DISALLOW_COPY_AND_ASSIGN(Retrier);
 };
 
-class ChromiumSequentialFile : public leveldb::SequentialFile {
+class LEVELDB_EXPORT ChromiumSequentialFile : public leveldb::SequentialFile {
  public:
   ChromiumSequentialFile(const std::string& fname,
                          base::File f,

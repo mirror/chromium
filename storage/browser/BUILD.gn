@@ -347,6 +347,6 @@ static_library("test_support") {
     "//mojo/common",
     "//net:test_support",
     "//testing/gtest",
-    "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 }
