@@ -149,4 +149,8 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
              @"Notification did not disappear");
 }
 
+// Tests that notification for the tab appears only when it becomes active.
+- (void)testNotificationAppearsWhenTabIsActive {
+}
+
 @end
