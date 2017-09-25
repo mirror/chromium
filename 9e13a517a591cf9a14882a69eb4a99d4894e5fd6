@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45c32c5_60c9d48e",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-25T04:26:13Z",
+      "side": 1,
+      "message": "Do you need these member variables, or can you just call the appropriate Get... method whenever you need one of these values?",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 64
+      },
+      "revId": "9e13a517a591cf9a14882a69eb4a99d4894e5fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be26f7e_8f7a5cd2",
+        "filename": "chrome/browser/installable/installable_task_queue_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-25T04:26:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the prevailing convention is here, but I would have expected an operator\u003d\u003d definition for InstallableTask, used in conjunction with EXPECT_EQ rather than EXPECT_TRUE.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "9e13a517a591cf9a14882a69eb4a99d4894e5fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
