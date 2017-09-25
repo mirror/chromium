@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68ed2e2e_11c0d543",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-25T04:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c1f3fae_cf62fa86",
+      "revId": "138d001fffd6555d6dce746f6478b3ca1223d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a9cc9c_3cca28b4",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T03:46:44Z",
       "side": 1,
       "message": "why this change?",
+      "revId": "138d001fffd6555d6dce746f6478b3ca1223d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb31aea8_fd4b1997",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-25T04:03:53Z",
+      "side": 1,
+      "message": "Was paranoid about inlining, but I don\u0027t think it matters. Which one do u prefer?",
+      "parentUuid": "34a9cc9c_3cca28b4",
       "revId": "138d001fffd6555d6dce746f6478b3ca1223d775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
