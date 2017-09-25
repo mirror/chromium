@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ee60161_14d0b052",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aadf96df_699c6a04",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 3
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "964a0d2f_45195686",
         "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-21T01:06:28Z",
       "side": 1,
       "message": "Since you removed what used to be a clear indication of ownership, can you please add a comment to clarify the lifetime of TaskGroup?",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad4ed47_3c38ba56",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "Per your other suggestions, I\u0027ve restored unique_ptr here.",
+      "parentUuid": "964a0d2f_45195686",
       "range": {
         "startLine": 148,
         "startChar": 37,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f7554d99_1109f9d3",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "I forgot one other aspect here of my motivation for this approach: the vector was already effectively sorted by TaskId, if you create it via push_back, given how Tasks are created in order. The out-of-order registrations occur in unit tests, or potentially in real life if a TaskProvider de-registers a task, or delays addition of a Task (the FallbackTaskProvider does do that), or similar.\n\nSince the sorted vector of task_ids_ comes basically for free, and the interface requires us to keep something like task_ids_ around, I figured why not use it as the index for the TaskId -\u003e TaskGroup mapping too -- searching a sorted vector ought to be faster than a map lookup, and the code complexity is not much; we already had to update the task_groups_by_task_id_ map in lockstep with task_ids_.\n\nI\u0027m reluctant to use flat_set here unless we also make task_groups_ into a map or flat_map -- it\u0027s just not clear to me if deriving an offset flat_set::iterator is something that will be future-proof. If you\u0027d prefer we drop the use of |task_ids_| as an index to |task_groups_| let me know and I\u0027ll convert task_groups_ back to a map, and make task_ids_ unsorted.",
+      "parentUuid": "90a431b3_c0ff5d86",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4190925f_a27e0ce0",
         "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
         "patchSetId": 14
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1af9be6e_8b429f31",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "I think your suggestion of putting the SortKey in the Task is, on balance, a winner. Done.\n\nI\u0027ve left the coupling between task_groups_ \u0026 task_ids_ intact, for reasons laid out in the previous comment, but I\u0027m flexible on that.",
+      "parentUuid": "2f72ceb7_3de4f518",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1321b549_f6a868a0",
         "filename": "chrome/browser/task_manager/task_manager_interface.h",
         "patchSetId": 14
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "63559ea6_6fcfb8b3",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "I\u0027ve reworked these comments, though maybe not totally to your liking. In truth, I\u0027m having a tough time explaining this ordering in English -- if you have ideas for how to make it clearer, please take a stab \u0026 I can iterate on what you come up with.\n\nThe thing that\u0027s tricky is that a task\u0027s ProcessSortKey may, ultimately, be determined by a completely unrelated task: it could be determined by a Task sharing a process with a Task that is the parent of a Task sharing a process with |task|. And the sort key may actually outlive the Tasks corresponding to the TaskId\u0027s embedded in the keys.\n\nThe first three fields are inherited parent -\u003e child.\nAll six fields are inherited by Tasks that are added to an already-existing TaskGroup.",
+      "parentUuid": "1321b549_f6a868a0",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159b593a_f7978720",
         "filename": "chrome/browser/task_manager/task_manager_interface.h",
         "patchSetId": 14
@@ -176,6 +296,30 @@
       "writtenOn": "2017-09-21T01:06:28Z",
       "side": 1,
       "message": "equal or successive? Because the task IDs will be different, or did I misunderstand?",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56990376_ff597131",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "In the patch set you reviewed, they were equal -- ProcessSortKey was a property of the TaskGroup. The final ID in the key was the ID of the Task that initially created the TaskGroup, not the ID of the Task itself.\n\nI had been handling sorting within a process via a secondary ordering in TaskManagerTableModel. With the keys being store on Task now, I\u0027ve been able to move that secondary ordering back into the key.",
+      "parentUuid": "159b593a_f7978720",
       "range": {
         "startLine": 176,
         "startChar": 34,
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "6b1514fb_ee072f83",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0f0606d_c30d3bdd",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 15
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8244861a_165d0ce4",
         "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
         "patchSetId": 14
@@ -222,6 +390,30 @@
       "writtenOn": "2017-09-21T01:06:28Z",
       "side": 1,
       "message": "Optional: this condition would be unnecessary if the previous one evaluates to true.\n\nMaybe something like:?\n\n  if (new_index \u003c old_index) {\n    MoveTasksToLowerIndex(old_index, 1, new_index);\n  } else if (new_index-- \u003e old_index) {\n    // Still greater?\n    if (new_index \u003e old_index)\n      MoveTasksToLowerIndex(old_index + 1, new_index - old_index, old_index);\n  }",
+      "range": {
+        "startLine": 692,
+        "startChar": 6,
+        "endLine": 692,
+        "endChar": 27
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864e8135_137dc3f8",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "What you\u0027ve suggested corrupts new_index in the case that |new_index| \u003d\u003d |old_index|. That matters because it\u0027ll pass the wrong value to OnItemsChanged below.",
+      "parentUuid": "8244861a_165d0ce4",
       "range": {
         "startLine": 692,
         "startChar": 6,
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "30d53f81_25f8160d",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dbd0d12_86d32306",
+      "range": {
+        "startLine": 700,
+        "startChar": 29,
+        "endLine": 700,
+        "endChar": 30
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4855daf5_ac07baf5",
         "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
         "patchSetId": 14
@@ -268,6 +484,30 @@
       "writtenOn": "2017-09-21T01:06:28Z",
       "side": 1,
       "message": "Did you mean to flip the return value?\n\nIf the task on the previous row belongs to the same process, then how come this task is first in the group?",
+      "range": {
+        "startLine": 957,
+        "startChar": 11,
+        "endLine": 957,
+        "endChar": 15
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f1153c_2f376733",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-25T19:28:22Z",
+      "side": 1,
+      "message": "I\u0027m glad you caught this. It was indeed a bug, and was causing test failures.\n\nI\u0027ve reverted to comparing PIDs and explicitly comparing the kNullProcessId. I\u0027m not totally happy with how the \"PID zero gets its own process\" logic is leaking out to TaskManagerObservers here, but it seems hard to avoid, unless we hide the Tasks themselves. (the PID info race is so terrible; I hope at some point in the future it becomes a non-issue)",
+      "parentUuid": "4855daf5_ac07baf5",
       "range": {
         "startLine": 957,
         "startChar": 11,
