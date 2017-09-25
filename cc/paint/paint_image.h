@@ -28,6 +28,7 @@ using PaintRecord = PaintOpBuffer;
 class CC_PAINT_EXPORT PaintImage {
  public:
   using Id = int;
+  using AnimationSequenceId = uint32_t;
 
   // A ContentId is used to identify the content for which images which can be
   // lazily generated (generator/record backed images). As opposed to Id, which
@@ -132,6 +133,9 @@ class CC_PAINT_EXPORT PaintImage {
   int height() const { return GetSkImage()->height(); }
   SkColorSpace* color_space() const { return GetSkImage()->colorSpace(); }
   size_t frame_index() const { return frame_index_; }
+  AnimationSequenceId reset_animation_sequence_id() const {
+    return reset_animation_sequence_id_;
+  }
 
   // Returns a unique id for the pixel data for the frame at |frame_index|. Used
   // only for lazy-generated images.
@@ -185,6 +189,10 @@ class CC_PAINT_EXPORT PaintImage {
 
   // Whether the data fetched for this image is a part of a multpart response.
   bool is_multipart_ = false;
+
+  // An incrementing sequence number maintained by the painter to indicate if
+  // this animation should be reset in the compositor.
+  AnimationSequenceId reset_animation_sequence_id_ = 0u;
 
   // |sk_image_id_| is the id used when constructing an SkImage representation
   // for a generator backed image.
