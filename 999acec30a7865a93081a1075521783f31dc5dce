@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f5067e4_eb7cc7e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-25T15:29:59Z",
+      "side": 1,
+      "message": "Do you expect they\u0027ll be needed in the future? If not, then these can have empty implementations (possibly throwing an exception) and return false to indicate they\u0027re not being used.",
+      "parentUuid": "12aed0a2_fe3025c5",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 9
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e0fffd_f474f84a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 5
@@ -448,6 +472,30 @@
       "side": 1,
       "message": "The selected item to open a new tab makes the TabPersistentStore to save tab state to the disk.",
       "parentUuid": "04882b67_72468b3c",
+      "range": {
+        "startLine": 379,
+        "startChar": 51,
+        "endLine": 379,
+        "endChar": 84
+      },
+      "revId": "999acec30a7865a93081a1075521783f31dc5dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f835b1eb_83f181ee",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-25T15:29:59Z",
+      "side": 1,
+      "message": "Saving the tab state to disk in TabPeristentStore#saveState() already temporarily allows disk writes. If it\u0027s going through that method, then I think seeing the strict mode exception here shouldn\u0027t be needed.",
+      "parentUuid": "0665bdc4_4e09ff88",
       "range": {
         "startLine": 379,
         "startChar": 51,
