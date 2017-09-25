@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9843b212_e0926bf7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T17:13:27Z",
+      "side": 1,
+      "message": "nit: remove this. Document on the line above or use an enum for clarity.",
+      "range": {
+        "startLine": 736,
+        "startChar": 5,
+        "endLine": 736,
+        "endChar": 19
+      },
+      "revId": "b283cac6b469d59886ef6080e018334bf8cbdc93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e72ffd_d9db8ad5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T17:13:27Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think I\u0027ve ever seen somebody use this commenting style. Add a line above instead that describes what is returned?\n\nAlternatively, add an enum with descriptive values like:\nenum ResizeResult {\nVALID,\nINVALID\n}",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 21
+      },
+      "revId": "b283cac6b469d59886ef6080e018334bf8cbdc93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
