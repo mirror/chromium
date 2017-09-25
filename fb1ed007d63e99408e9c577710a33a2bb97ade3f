@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f3de483_6a0e4dae",
+        "filename": "chrome/browser/chromeos/device/input_service_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T15:26:23Z",
+      "side": 1,
+      "message": "The input_service_test_helper is used for testing input_service_proxy which will be removed.\nI guess maybe we can just leave it alone?",
+      "parentUuid": "444e0b11_91edbf51",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d2e75c1_9b6e11e1",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T15:07:22Z",
       "side": 1,
       "message": "nit: while you\u0027re here, switch this to a range-based for loop? you can just eliminate the condition on line 448 since it\u0027s effectively repeated in the two ifs below anyway.",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecfb44c_8e42a405",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T15:26:23Z",
+      "side": 1,
+      "message": "Now the hid_detection_screen is client of input_service_proxy, I found something needs to be changed before convert it to hold and use the InterfacePtr.\nI\u0027m working on the CL(https://chromium-review.googlesource.com/c/chromium/src/+/680500), in which it is switched to the range-based loop.",
+      "parentUuid": "4d2e75c1_9b6e11e1",
       "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
       "writtenOn": "2017-09-25T15:07:22Z",
       "side": 1,
       "message": "Could you add some comments on this file? Thanks!",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b2c917_b02c6999",
+        "filename": "device/hid/public/interfaces/input_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T15:26:23Z",
+      "side": 1,
+      "message": "Yes!\n:)",
+      "parentUuid": "9dfd3c00_b808485c",
       "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
