@@ -116,7 +116,7 @@ public class SupervisedUserContentProviderTest {
 
     @Test
     @SmallTest
-    public void testWithSupervisedUser() throws RemoteException, ExecutionException {
+    public void testWithSupervisedUser() throws Exception {
         final Account account = SigninTestUtil.addAndSignInTestAccount();
         Assert.assertNotNull(account);
         Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {

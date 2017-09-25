@@ -285,7 +285,7 @@ public class SigninTest {
     @Test
     @MediumTest
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
-    public void testConsumerSignin() {
+    public void testConsumerSignin() throws Exception {
         SigninTestUtil.addTestAccount();
         signInToSingleAccount();
 
