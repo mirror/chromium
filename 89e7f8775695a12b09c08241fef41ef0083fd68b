@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fd2f1ff_053b2262",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-25T15:41:15Z",
+      "side": 1,
+      "message": "Yeah! Or my next patch which moves the service to the UI thread ;-)",
+      "parentUuid": "42082f9b_18801154",
+      "revId": "89e7f8775695a12b09c08241fef41ef0083fd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27a260c6_0e207211",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T10:16:40Z",
       "side": 1,
       "message": "Oh I see... I assume this actually happens in the previous code path, right? (I slowly realized that we have the equivalent code path in ServiceWorker case)",
+      "revId": "89e7f8775695a12b09c08241fef41ef0083fd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c934e6c_825d691c",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-25T15:41:15Z",
+      "side": 1,
+      "message": "Right, because shadow_page_ is asynchronously initialized, there is a moment in time when this function can be called and both main_script_loader_ and worker_thread_ will be null. Another solution would have been to check asked_to_terminate_ inside OnShadowPageInitialized and call WorkerScriptLoadFailed there. I went with the approach here to try to keep similar logic in one place.\n\nI think the lifecycle here could be cleaned up and simplified.",
+      "parentUuid": "27a260c6_0e207211",
       "revId": "89e7f8775695a12b09c08241fef41ef0083fd68b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
