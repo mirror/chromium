@@ -22,6 +22,30 @@
       "revId": "096682112f5e7b3ca439b9187a074a6b857774d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6280d496_4e342224",
+        "filename": "remoting/ios/app/refresh_control_provider_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T20:09:37Z",
+      "side": 1,
+      "message": "Is it really the case? It looks like the only class that somewhat uses this pattern is our AppViewController...\n\nI\u0027m not very sure whether the AppViewController pattern is better. We still needed to introduce an extra interface to allow us to add/delete methods without breaking the internal build bot, and for newly added methods we will need to check respondsToSelector: before calling them...",
+      "parentUuid": "794e81d7_ec8d48c6",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "096682112f5e7b3ca439b9187a074a6b857774d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
