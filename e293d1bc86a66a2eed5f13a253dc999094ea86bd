@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a27bff_771d522a",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "This part of the comment is no longer relevant.",
+      "range": {
+        "startLine": 14,
+        "startChar": 54,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6822788_51bccc4b",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "Use ProceduralBlock from base/ios/block_types.h.",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed86cdfa_5b1b9d1d",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "It would be easier to test this if you injected a flag for this experiment.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4edb13_80596205",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "Can you explain the use of super here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbba269_9dbf5f8b",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "Is there a reference cycle here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e883e764_e42fff76",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "Is the conditional wrap necessary? I would think the completion block call would no-op if it is nil.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae6ec9f_6752359d",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-25T23:04:01Z",
+      "side": 1,
+      "message": "Can we add some tests for presentation too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
