@@ -19,11 +19,11 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
  public:
   // Creates a range with |new_buffers|. |new_buffers| cannot be empty and the
   // front of |new_buffers| must be a keyframe.
-  // |range_start_decode_time| refers to the starting timestamp for the coded
+  // |range_start_pts| refers to the starting timestamp for the coded
   // frame group to which these buffers belong.
   SourceBufferRangeByPts(GapPolicy gap_policy,
                          const BufferQueue& new_buffers,
-                         DecodeTimestamp range_start_decode_time,
+                         base::TimeDelta range_start_pts,
                          const InterbufferDistanceCB& interbuffer_distance_cb);
 
   ~SourceBufferRangeByPts() override;
@@ -43,33 +43,44 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
 
   // Appends |buffers| to the end of the range and updates |keyframe_map_| as
   // it encounters new keyframes.
-  // If |new_buffers_group_start_timestamp| is kNoDecodeTimestamp(), then the
+  // If |new_buffers_group_start_pts| is kNoTimestamp(), then the
   // first buffer in |buffers| must come directly after the last buffer in this
-  // range (within the fudge room).
-  // If |new_buffers_group_start_timestamp| is set otherwise, then that time
-  // must come directly after the last buffer in this range (within the fudge
-  // room). The latter scenario is required when a muxed coded frame group has
-  // such a large jagged start across tracks that its first buffer is not within
-  // the fudge room, yet its group start was.
+  // range (within the fudge room) - specifically, if the first buffer in
+  // |buffers| is not a keyframe, then it must be next in DTS order w.r.t. last
+  // buffer in |buffers|. Otherwise, it's a keyframe that must be next in PTS
+  // order w.r.t. |highest_frame_|.
+  // If |new_buffers_group_start_pts| is set otherwise, then that time must come
+  // directly after |highest_frame_| (within the fudge room), and the first
+  // buffer in |buffers| must be a keyframe.
+  // The latter scenario is required when a muxed coded frame group has such a
+  // large jagged start across tracks that its first buffer is not within the
+  // fudge room, yet its group start was.
   // During append, |highest_frame_| is updated, if necessary.
   void AppendBuffersToEnd(const BufferQueue& buffers,
-                          DecodeTimestamp new_buffers_group_start_timestamp);
+                          base::TimeDelta new_buffers_group_start_timestamp);
   bool CanAppendBuffersToEnd(
       const BufferQueue& buffers,
-      DecodeTimestamp new_buffers_group_start_timestamp) const;
+      DecodeTimestamp new_buffers_group_start_pts) const;
 
-  // Updates |next_buffer_index_| to point to the Buffer containing |timestamp|.
-  // Assumes |timestamp| is valid and in this range.
-  void Seek(DecodeTimestamp timestamp);
+  // Updates |next_buffer_index_| to point to the keyframe with presentation
+  // timestamp at or before |timestamp|. Assumes |timestamp| is valid and in
+  // this range.
+  void Seek(base::TimeDelta timestamp);
+
+  // Returns true if the range has enough data to seek to the specified
+  // |timestamp|, false otherwise.
+  bool CanSeekTo(base::TimeDelta timestamp) const;
 
   // Return the config ID for the buffer at |timestamp|. Precondition: callers
   // must first verify CanSeekTo(timestamp) == true.
-  int GetConfigIdAtTime(DecodeTimestamp timestamp);
+  int GetConfigIdAtTime(base::TimeDelta timestamp);
 
   // Return true if all buffers in range of [start, end] have the same config
   // ID. Precondition: callers must first verify that
   // CanSeekTo(start) ==  CanSeekTo(end) == true.
-  bool SameConfigThruRange(DecodeTimestamp start, DecodeTimestamp end);
+  bool SameConfigThruRange(base::TimeDelta start, base::TimeDelta end);
+
+  // BIG TODO continue conversion here
 
   // Finds the next keyframe from |buffers_| starting at or after |timestamp|
   // and creates and returns a new SourceBufferRangeByPts with the buffers from
@@ -154,10 +165,6 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
   // this range, then kNoTimestamp is returned.
   DecodeTimestamp KeyframeBeforeTimestamp(DecodeTimestamp timestamp);
 
-  // Returns true if the range has enough data to seek to the specified
-  // |timestamp|, false otherwise.
-  bool CanSeekTo(DecodeTimestamp timestamp) const;
-
   // Adds all buffers which overlap [start, end) to the end of |buffers|.  If
   // no buffers exist in the range returns false, true otherwise.
   bool GetBuffersInRange(DecodeTimestamp start,
@@ -165,7 +172,7 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
                          BufferQueue* buffers);
 
  private:
-  typedef std::map<DecodeTimestamp, int> KeyframeMap;
+  typedef std::map<base::TimeDelta, int> KeyframeMap;
 
   // Implementation of protected SourceBufferRange interface.
   bool TruncateAt(const BufferQueue::iterator& starting_point,
@@ -198,23 +205,24 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
   void UpdateEndTimeUsingLastGOP();
 
   // If the first buffer in this range is the beginning of a coded frame group,
-  // |range_start_decode_time_| is the time when the coded frame group begins.
+  // |range_start_pts_| is the presentation time when the coded frame group begins.
   // This is especially important in muxed media where the first coded frames
   // for each track do not necessarily begin at the same time.
-  // |range_start_decode_time_| may be <= the timestamp of the first buffer in
-  // |buffers_|. |range_start_decode_time_| is kNoDecodeTimestamp() if this
+  // |range_start_pts_| may be <= the timestamp of the first buffer in
+  // |buffers_|. |range_start_pts_| is kNoTimestamp() if this
   // range does not start at the beginning of a coded frame group, which can
   // happen by range removal or split when we don't have a way of knowing,
   // across potentially multiple muxed streams, the coded frame group start
   // timestamp for the new range.
-  DecodeTimestamp range_start_decode_time_;
+  DecodeTimestamp range_start_pts_;
 
   // Index base of all positions in |keyframe_map_|. In other words, the
   // real position of entry |k| of |keyframe_map_| in the range is:
   //   keyframe_map_[k] - keyframe_map_index_base_
   int keyframe_map_index_base_;
 
-  // Maps keyframe decode timestamps to its index position in |buffers_|.
+  // Maps keyframe presentation timestamps to GOP start index of |buffers_|
+  // (with index adjusted by |keyframe_map_index_base_|);
   KeyframeMap keyframe_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SourceBufferRangeByPts);
