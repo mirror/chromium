@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "010b50f4_4c4cee9a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Because line 571 container_.PassInterface() will release |container_| which will be used in SendSetControllerServiceWorker(here line 891).",
+      "parentUuid": "00ab4d1f_648898cc",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e83fcd16_0a4e3b68",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cfd546_22f754b4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack. Thanks.",
+      "parentUuid": "e83fcd16_0a4e3b68",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1dce0280_3520cac7",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "WebServiceWorkerProviderImpl implements Blink::WebServiceWorkerProvider.\nBut in the annotation of Blink::WebServiceWorkerProvider, there is \"ServiceWorkerContainer is called the \"client\" of the WebServiceWorkerProvider, and it implements WebServiceWorkerProviderClient.\"\nI am think if calling this |service_worker_container_| will be confusing?",
+      "parentUuid": "72162c25_0a1b6305",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc3ec11_9a075fb6",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -123,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "7be13024_2891c8d8",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebc3ec11_9a075fb6",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb21995_f4b6c02e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -134,6 +212,24 @@
       "writtenOn": "2017-09-25T06:30:33Z",
       "side": 1,
       "message": "but we are the provider context",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135a9fd2_8e7f66cc",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "ooh, sorry. I will delete \"if it exists\".",
+      "parentUuid": "abb21995_f4b6c02e",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "53a3a1b4_ab70b9e1",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fd6eec9_a5372b6f",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18790263_195c92d9",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -171,6 +285,24 @@
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5635b8_7dd6ddc1",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18790263_195c92d9",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "ef630bec_f369d72d",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack, thanks, it\u0027s much better.",
+      "parentUuid": "cb96b0bc_26bf7682",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc113c36_a2be697e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -202,6 +352,24 @@
       "writtenOn": "2017-09-25T06:30:33Z",
       "side": 1,
       "message": "prefer braces around the multi-line if\n\nprefer using state-\u003econtroller instead of params-\u003econtroller for consistency with state-\u003eused_features",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfba6be_af23c824",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack and thanks.",
+      "parentUuid": "dc113c36_a2be697e",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -222,6 +390,24 @@
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366fdbc4_d5be6ba3",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccf61176_3d4e5377",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +515,24 @@
     },
     {
       "key": {
+        "uuid": "0ee725d4_91130c72",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1888c57_b00e04dd",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d8cb40a_8fca2da7",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 6
@@ -346,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "5dd1eecb_6182e738",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d8cb40a_8fca2da7",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f19060_aa627284",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 6
@@ -357,6 +579,24 @@
       "writtenOn": "2017-09-25T06:30:33Z",
       "side": 1,
       "message": "I\u0027m worried |provider_client_| isn\u0027t valid here. Do you know the lifetime guarantee?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00c21f8_98139ec1",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Please see the below reply .",
+      "parentUuid": "31f19060_aa627284",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -380,6 +620,24 @@
     },
     {
       "key": {
+        "uuid": "bdf708fe_42e3db9d",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Yeah, my bad, it seems there is no lifetime guarantee. And we should get ProviderClient from SWDispatcher instead of using provider_client_ here.",
+      "parentUuid": "49cd67ad_fe7f2532",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c08f152e_6708925a",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
         "patchSetId": 6
@@ -391,6 +649,24 @@
       "writtenOn": "2017-09-25T06:30:33Z",
       "side": 1,
       "message": "This makes me worried because I don\u0027t know if there is a guarantee of lifetime between WebServiceWorkerProviderImpl and WebServiceWorkerProviderClient.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d13da8_0b7b0175",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-25T08:09:41Z",
+      "side": 1,
+      "message": "Let\u0027s get ProviderClient directly from SWDispatcher",
+      "parentUuid": "c08f152e_6708925a",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
