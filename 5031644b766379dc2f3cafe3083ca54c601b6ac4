@@ -22,6 +22,30 @@
       "revId": "5031644b766379dc2f3cafe3083ca54c601b6ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fd6e95_aac5b964",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:51:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3885b009_aceb2a1a",
+      "range": {
+        "startLine": 291,
+        "startChar": 32,
+        "endLine": 291,
+        "endChar": 33
+      },
+      "revId": "5031644b766379dc2f3cafe3083ca54c601b6ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
