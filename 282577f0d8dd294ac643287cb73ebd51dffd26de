@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8a0cace_97a1552b",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:06:03Z",
+      "side": 1,
+      "message": "I think it is not necessary in the parser, because parser analyze codes syntactically but not semantically.",
+      "parentUuid": "86284ad3_98e15f8a",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f046b26a_0a6d0a64",
         "filename": "tools/idl_parser/test_parser/namespace_web.idl",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85beb31_8691975e",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f046b26a_0a6d0a64",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2e958c59_a27e5fa7",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdc33e2_b7ae1c1d",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e3450a5_d7970d67",
         "filename": "tools/idl_parser/test_parser/namespace_web.idl",
         "patchSetId": 5
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4da5d6b5_3c644c84",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3450a5_d7970d67",
+      "range": {
+        "startLine": 122,
+        "startChar": 18,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce9af663_46db00eb",
         "filename": "tools/idl_parser/webidl0824.idl",
         "patchSetId": 5
@@ -93,6 +177,24 @@
       "writtenOn": "2017-09-25T02:16:14Z",
       "side": 1,
       "message": "why do you need need this?",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dd6fa4_54fa289a",
+        "filename": "tools/idl_parser/webidl0824.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:06:03Z",
+      "side": 1,
+      "message": "This file isn\u0027t necessary and I deleted it. Thank you.",
+      "parentUuid": "ce9af663_46db00eb",
       "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
