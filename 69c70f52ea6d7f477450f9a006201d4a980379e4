@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558cdde0_9a31a6bc",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T20:15:50Z",
+      "side": 1,
+      "message": "this looks a little gross :/",
+      "revId": "69c70f52ea6d7f477450f9a006201d4a980379e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
