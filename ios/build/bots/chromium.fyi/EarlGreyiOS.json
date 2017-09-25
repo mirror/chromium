@@ -22,6 +22,13 @@
       "xctest": true
     },
     {
+      "app": "ios_chrome_passwords_egtests",
+      "device type": "iPhone 6s",
+      "os": "11.0",
+      "xcode version": "9.0",
+      "xctest": true
+    },
+    {
       "app": "ios_chrome_payments_egtests",
       "test args": [
         "--enable-features=WebPayments"
@@ -85,6 +92,13 @@
     },
     {
       "app": "ios_chrome_integration_egtests",
+      "device type": "iPad Air 2",
+      "os": "11.0",
+      "xcode version": "9.0",
+      "xctest": true
+    },
+    {
+      "app": "ios_chrome_passwords_egtests",
       "device type": "iPad Air 2",
       "os": "11.0",
       "xcode version": "9.0",

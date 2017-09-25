@@ -96,6 +96,7 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   # iOS tests are listed in //ios/build/bots.
   'cronet_test',
   'ios_chrome_integration_egtests',
+  'ios_chrome_passwords_egtests',
   'ios_chrome_payments_egtests',
   'ios_chrome_reading_list_egtests',
   'ios_chrome_settings_egtests',
