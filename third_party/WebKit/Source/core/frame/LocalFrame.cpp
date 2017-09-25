@@ -270,6 +270,8 @@ void LocalFrame::Detach(FrameDetachType type) {
 
   if (IsLocalRoot())
     performance_monitor_->Shutdown();
+  else
+    performance_monitor_->FrameDetached(this);
 
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
   loader_.StopAllLoaders();
@@ -770,6 +772,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
     UpdateInertIfPossible();
     probe_sink_ = LocalFrameRoot().probe_sink_;
     performance_monitor_ = LocalFrameRoot().performance_monitor_;
+    performance_monitor_->FrameCreated(this);
   }
 }
 

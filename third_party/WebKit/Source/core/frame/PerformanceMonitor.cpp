@@ -79,6 +79,7 @@ PerformanceMonitor::PerformanceMonitor(LocalFrame* local_root)
   std::fill(std::begin(thresholds_), std::end(thresholds_), 0);
   Platform::Current()->CurrentThread()->AddTaskTimeObserver(this);
   local_root_->GetProbeSink()->addPerformanceMonitor(this);
+  FrameCreated(local_root);
 }
 
 PerformanceMonitor::~PerformanceMonitor() {
@@ -280,18 +281,17 @@ void PerformanceMonitor::WillSendRequest(ExecutionContext*,
     return;
   int request_count = loader->Fetcher()->ActiveRequestCount();
   // If we are above the allowed number of active requests, reset timers.
-  if (network_2_quiet_ >= 0 && request_count > 2)
-    network_2_quiet_ = 0;
-  if (network_0_quiet_ >= 0 && request_count > 0)
-    network_0_quiet_ = 0;
+  auto it = frame_data_.find(loader->GetFrame());
+  if (it->value.network_2_quiet_ >= 0 && request_count > 2)
+    it->value.network_2_quiet_ = 0;
+  if (it->value.network_0_quiet_ >= 0 && request_count > 0)
+    it->value.network_0_quiet_ = 0;
 }
 
 void PerformanceMonitor::DidFailLoading(unsigned long identifier,
                                         DocumentLoader* loader,
                                         const ResourceError&) {
-  if (loader->GetFrame() != local_root_)
-    return;
-  DidLoadResource();
+  DidLoadResource(loader->GetFrame());
 }
 
 void PerformanceMonitor::DidFinishLoading(unsigned long,
@@ -299,14 +299,13 @@ void PerformanceMonitor::DidFinishLoading(unsigned long,
                                           double,
                                           int64_t,
                                           int64_t) {
-  if (loader->GetFrame() != local_root_)
-    return;
-  DidLoadResource();
+  DidLoadResource(loader->GetFrame());
 }
 
-void PerformanceMonitor::DidLoadResource() {
+void PerformanceMonitor::DidLoadResource(LocalFrame* frame) {
   // If we already reported quiet time, bail out.
-  if (network_0_quiet_ < 0 && network_2_quiet_ < 0)
+  auto it = frame_data_.find(frame);
+  if (it->value.network_0_quiet_ < 0 && it->value.network_2_quiet_ < 0)
     return;
 
   int request_count =
@@ -319,12 +318,12 @@ void PerformanceMonitor::DidLoadResource() {
   // Arriving at =2 updates the quiet_2 base timestamp.
   // Arriving at <2 sets the quiet_2 base timestamp only if
   // it was not already set.
-  if (request_count == 2 && network_2_quiet_ >= 0)
-    network_2_quiet_ = timestamp;
-  else if (request_count < 2 && network_2_quiet_ == 0)
-    network_2_quiet_ = timestamp;
-  if (request_count == 0 && network_0_quiet_ >= 0)
-    network_0_quiet_ = timestamp;
+  if (request_count == 2 && it->value.network_2_quiet_ >= 0)
+    it->value.network_2_quiet_ = timestamp;
+  else if (request_count < 2 && it->value.network_2_quiet_ == 0)
+    it->value.network_2_quiet_ = timestamp;
+  if (request_count == 0 && it->value.network_0_quiet_ >= 0)
+    it->value.network_0_quiet_ = timestamp;
 
   if (!network_quiet_timer_.IsActive()) {
     network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds,
@@ -337,9 +336,10 @@ void PerformanceMonitor::DomContentLoadedEventFired(LocalFrame* frame) {
     return;
   // Reset idle timers upon DOMContentLoaded, look at current active
   // connections.
-  network_2_quiet_ = 0;
-  network_0_quiet_ = 0;
-  DidLoadResource();
+  auto it = frame_data_.find(frame);
+  it->value.network_2_quiet_ = 0;
+  it->value.network_0_quiet_ = 0;
+  DidLoadResource(frame);
 }
 
 void PerformanceMonitor::DocumentWriteFetchScript(Document* document) {
@@ -349,21 +349,30 @@ void PerformanceMonitor::DocumentWriteFetchScript(Document* document) {
   InnerReportGenericViolation(document, kBlockedParser, text, 0, nullptr);
 }
 
+void PerformanceMonitor::FrameCreated(LocalFrame* frame) {
+  frame_data_.Set(frame, PerFrameData());
+}
+
+void PerformanceMonitor::FrameDetached(LocalFrame* frame) {
+  frame_data_.erase(frame);
+}
+
 void PerformanceMonitor::WillProcessTask(double start_time) {
   // If we have idle time and we are kNetworkQuietWindowSeconds seconds past it,
   // emit idle signals.
-  if (network_2_quiet_ > 0 &&
-      start_time - network_2_quiet_ > kNetworkQuietWindowSeconds) {
-    probe::lifecycleEvent(local_root_->GetDocument(), "networkAlmostIdle",
-                          network_2_quiet_);
-    network_2_quiet_ = -1;
-  }
+  for (auto& it : frame_data_) {
+    if (it.value.network_2_quiet_ > 0 &&
+        start_time - it.value.network_2_quiet_ > kNetworkQuietWindowSeconds) {
+      probe::lifecycleEvent(it.key, "networkAlmostIdle",
+                            it.value.network_2_quiet_);
+      it.value.network_2_quiet_ = -1;
+    }
 
-  if (network_0_quiet_ > 0 &&
-      start_time - network_0_quiet_ > kNetworkQuietWindowSeconds) {
-    probe::lifecycleEvent(local_root_->GetDocument(), "networkIdle",
-                          network_0_quiet_);
-    network_0_quiet_ = -1;
+    if (it.value.network_0_quiet_ > 0 &&
+        start_time - it.value.network_0_quiet_ > kNetworkQuietWindowSeconds) {
+      probe::lifecycleEvent(it.key, "networkIdle", it.value.network_0_quiet_);
+      it.value.network_0_quiet_ = -1;
+    }
   }
 
   // Reset m_taskExecutionContext. We don't clear this in didProcessTask
@@ -385,10 +394,12 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
 
 void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
   // Shift idle timestamps with the duration of the task, we were not idle.
-  if (network_2_quiet_ > 0)
-    network_2_quiet_ += end_time - start_time;
-  if (network_0_quiet_ > 0)
-    network_0_quiet_ += end_time - start_time;
+  for (auto& it : frame_data_) {
+    if (it.value.network_2_quiet_ > 0)
+      it.value.network_2_quiet_ += end_time - start_time;
+    if (it.value.network_0_quiet_ > 0)
+      it.value.network_0_quiet_ += end_time - start_time;
+  }
 
   if (!enabled_)
     return;
@@ -434,9 +445,11 @@ void PerformanceMonitor::InnerReportGenericViolation(
 }
 
 void PerformanceMonitor::NetworkQuietTimerFired(TimerBase*) {
-  if (network_0_quiet_ > 0 || network_2_quiet_ > 0) {
-    network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds,
-                                      BLINK_FROM_HERE);
+  for (const auto& it : frame_data_) {
+    if (it.value.network_0_quiet_ > 0 || it.value.network_2_quiet_ > 0) {
+      network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds,
+                                        BLINK_FROM_HERE);
+    }
   }
 }
 
@@ -444,6 +457,7 @@ DEFINE_TRACE(PerformanceMonitor) {
   visitor->Trace(local_root_);
   visitor->Trace(task_execution_context_);
   visitor->Trace(subscriptions_);
+  visitor->Trace(frame_data_);
 }
 
 }  // namespace blink

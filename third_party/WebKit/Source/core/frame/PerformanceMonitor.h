@@ -112,6 +112,9 @@ class CORE_EXPORT PerformanceMonitor final
 
   void DocumentWriteFetchScript(Document*);
 
+  void FrameCreated(LocalFrame*);
+  void FrameDetached(LocalFrame*);
+
   // Direct API for core.
   void Subscribe(Violation, double threshold, Client*);
   void UnsubscribeAll(Client*);
@@ -143,7 +146,7 @@ class CORE_EXPORT PerformanceMonitor final
 
   void WillExecuteScript(ExecutionContext*);
   void DidExecuteScript();
-  void DidLoadResource();
+  void DidLoadResource(LocalFrame*);
 
   std::pair<String, DOMWindow*> SanitizedAttribution(
       const HeapHashSet<Member<Frame>>& frame_contexts,
@@ -172,8 +175,13 @@ class CORE_EXPORT PerformanceMonitor final
               typename DefaultHash<size_t>::Hash,
               WTF::UnsignedWithZeroKeyHashTraits<size_t>>
       subscriptions_;
-  double network_0_quiet_ = 0;
-  double network_2_quiet_ = 0;
+
+  struct PerFrameData {
+    double network_0_quiet_ = 0;
+    double network_2_quiet_ = 0;
+  };
+  HeapHashMap<Member<LocalFrame>, PerFrameData> frame_data_;
+
   TaskRunnerTimer<PerformanceMonitor> network_quiet_timer_;
 };
 
