@@ -299,8 +299,10 @@ void UDPSocketWin::Close() {
   if (socket_ == INVALID_SOCKET)
     return;
 
-  if (qos_handle_)
+  if (qos_handle_) {
     QwaveAPI::Get().CloseHandle(qos_handle_);
+    dscp_manager_.Reset();
+  }
 
   // Zero out any pending read/write callback state.
   read_callback_.Reset();
@@ -415,6 +417,14 @@ int UDPSocketWin::SendTo(IOBuffer* buf,
                          int buf_len,
                          const IPEndPoint& address,
                          const CompletionCallback& callback) {
+  if (dscp_manager_.IsActive()) {
+    // A set was deferred from SetDiffServCodePoint because the
+    // remote address wasn't known.
+    auto res = dscp_manager_.PrepareForSend(address);
+    if (res != OK) {
+      LOG(WARNING) << "Deferred DSCP set failed with " << ErrorToString(res);
+    }
+  }
   return SendToOrWrite(buf, buf_len, &address, callback);
 }
 
@@ -1175,6 +1185,12 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
       NOTREACHED();
       break;
   }
+  if (!remote_address_) {
+    // We don't know where we are sending to yet - defer the set.
+    dscp_manager_.Set(dscp, traffic_type, socket_, qos_handle_);
+    return OK;
+  }
+
   if (qos_flow_id_ != 0) {
     qos.RemoveSocketFromFlow(qos_handle_, NULL, qos_flow_id_, 0);
     qos_flow_id_ = 0;
@@ -1214,6 +1230,95 @@ void UDPSocketWin::DetachFromThread() {
 void UDPSocketWin::UseNonBlockingIO() {
   DCHECK(!core_);
   use_non_blocking_io_ = true;
+}
+
+DscpManager::~DscpManager() {
+  if (flow_id_ != 0) {
+    QwaveAPI& qos(QwaveAPI::Get());
+    qos.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+  }
+}
+
+void DscpManager::Set(DiffServCodePoint dscp,
+                      QOS_TRAFFIC_TYPE traffic_type,
+                      SOCKET socket,
+                      HANDLE qos_handle) {
+  if (dscp == DSCP_NO_CHANGE || dscp == dscp_value_) {
+    return;
+  }
+
+  dscp_value_ = dscp;
+  traffic_type_ = traffic_type;
+  socket_ = socket;
+  qos_handle_ = qos_handle;
+  // TODO(zstein): We could reuse the flow when the value changes
+  // by calling QOSSetFlow with the new traffic type and dscp value.
+  if (flow_id_ != 0) {
+    QwaveAPI& qos(QwaveAPI::Get());
+    qos.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+    configured_.clear();
+    flow_id_ = 0;
+  }
+}
+
+int DscpManager::PrepareForSend(const IPEndPoint& remote_address) {
+  if (dscp_value_ == DSCP_NO_CHANGE) {
+    // No DSCP value has been set.
+    return OK;
+  }
+
+  if (configured_.find(remote_address) != configured_.end()) {
+    return OK;
+  }
+
+  SockaddrStorage storage;
+  if (!remote_address.ToSockAddr(storage.addr, &storage.addr_len)) {
+    LOG(WARNING) << "invalid remote_address " << remote_address.ToString();
+    return ERR_ADDRESS_INVALID;
+  }
+
+  // We won't try again if we get an error.
+  configured_.emplace(remote_address);
+
+  // We don't need to call SetFlow if we already have a qos flow.
+  bool new_flow = flow_id_ == 0;
+
+  QwaveAPI& qos(QwaveAPI::Get());
+  if (!qos.AddSocketToFlow(qos_handle_, socket_, storage.addr, traffic_type_,
+                           QOS_NON_ADAPTIVE_FLOW, &flow_id_)) {
+    DWORD err = GetLastError();
+    if (err == ERROR_DEVICE_REINITIALIZATION_NEEDED) {
+      qos.CloseHandle(qos_handle_);
+      flow_id_ = 0;
+      qos_handle_ = 0;
+      dscp_value_ = DSCP_NO_CHANGE;
+    }
+    return MapSystemError(err);
+  }
+
+  if (new_flow) {
+    DWORD buf = dscp_value_;
+    // This requires admin rights, and may fail, if so we ignore it
+    // as AddSocketToFlow should still do *approximately* the right thing.
+    qos.SetFlow(qos_handle_, flow_id_, QOSSetOutgoingDSCPValue, sizeof(buf),
+                &buf, 0, NULL);
+  }
+
+  return OK;
+}
+
+bool DscpManager::IsActive() const {
+  return dscp_value_ != DSCP_NO_CHANGE;
+}
+
+void DscpManager::Reset() {
+  dscp_value_ = DSCP_NO_CHANGE;
+  configured_.clear();
+  if (flow_id_ != 0) {
+    QwaveAPI& qos(QwaveAPI::Get());
+    qos.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+  }
+  flow_id_ = 0;
 }
 
 }  // namespace net

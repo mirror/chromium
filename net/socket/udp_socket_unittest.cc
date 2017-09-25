@@ -47,6 +47,16 @@ namespace net {
 
 namespace {
 
+// Creates an address from ip address and port and writes it to |*address|.
+void CreateUDPAddress(const std::string& ip_str,
+                      uint16_t port,
+                      IPEndPoint* address) {
+  IPAddress ip_address;
+  if (!ip_address.AssignFromIPLiteral(ip_str))
+    return;
+  *address = IPEndPoint(ip_address, port);
+}
+
 class UDPSocketTest : public PlatformTest {
  public:
   UDPSocketTest() : buffer_(new IOBufferWithSize(kMaxRead)) {}
@@ -103,16 +113,6 @@ class UDPSocketTest : public PlatformTest {
   void WriteSocketIgnoreResult(UDPClientSocket* socket,
                                const std::string& msg) {
     WriteSocket(socket, msg);
-  }
-
-  // Creates an address from ip address and port and writes it to |*address|.
-  void CreateUDPAddress(const std::string& ip_str,
-                        uint16_t port,
-                        IPEndPoint* address) {
-    IPAddress ip_address;
-    if (!ip_address.AssignFromIPLiteral(ip_str))
-      return;
-    *address = IPEndPoint(ip_address, port);
   }
 
   // Run unit test for a connection test.
@@ -894,6 +894,101 @@ TEST_F(UDPSocketTest, SetDSCPFake) {
   g_expected_traffic_type = QOSTrafficTypeBestEffort;
   EXPECT_THAT(client.SetDiffServCodePoint(DSCP_DEFAULT), IsOk());
   client.Close();
+}
+
+namespace {
+
+struct QOSMockState {
+  int add_call_count_ = 0;
+  int remove_call_count_ = 0;
+  int set_call_count_ = 0;
+};
+QOSMockState g_qos_mock;
+
+BOOL WINAPI AddSocketToFlow(HANDLE handle,
+                            SOCKET socket,
+                            PSOCKADDR addr,
+                            QOS_TRAFFIC_TYPE traffic_type,
+                            DWORD flags,
+                            PQOS_FLOWID flow_id) {
+  *flow_id = 1;
+  g_qos_mock.add_call_count_ += 1;
+  return true;
+}
+
+BOOL WINAPI RemoveSocketFromFlow(HANDLE handle,
+                                 SOCKET socket,
+                                 QOS_FLOWID flowid,
+                                 DWORD reserved) {
+  g_qos_mock.remove_call_count_ += 1;
+  return true;
+}
+
+BOOL WINAPI SetFlow(HANDLE handle,
+                    QOS_FLOWID flow_id,
+                    QOS_SET_FLOW op,
+                    ULONG size,
+                    PVOID data,
+                    DWORD reserved,
+                    LPOVERLAPPED overlapped) {
+  g_qos_mock.set_call_count_ += 1;
+  return true;
+}
+
+}  // namespace
+
+TEST(DscpManagerTest, SetDSCP) {
+  DscpManager dscp_manager;
+  IPEndPoint address1;
+  CreateUDPAddress("1.2.3.4", 9001, &address1);
+  IPEndPoint address2;
+  CreateUDPAddress("6.7.8.9", 9002, &address2);
+
+  QwaveAPI& qos(QwaveAPI::Get());
+  qos.add_socket_to_flow_func_ = AddSocketToFlow;
+  qos.remove_socket_from_flow_func_ = RemoveSocketFromFlow;
+  qos.set_flow_func_ = SetFlow;
+
+  // Chceck that the DscpManager is not active if no value has been set.
+  EXPECT_FALSE(dscp_manager.IsActive());
+
+  // Check that AddSocketToFlow is not called if no value has been set.
+  dscp_manager.PrepareForSend(address1);
+  EXPECT_EQ(0, g_qos_mock.add_call_count_);
+
+  // Check that the DscpManager is active after a value has been set.
+  dscp_manager.Set(DSCP_CS2, QOSTrafficTypeExcellentEffort, INVALID_SOCKET,
+                   (HANDLE)0);
+  EXPECT_TRUE(dscp_manager.IsActive());
+  // Check that RemoveSocketFromFlow is not called since no
+  // previous flow exists.
+  EXPECT_EQ(0, g_qos_mock.remove_call_count_);
+
+  // Check that AddSocketToFlow is called for each address and that SetFlow
+  // is only called when the flow is first created.
+  dscp_manager.PrepareForSend(address1);
+  EXPECT_EQ(1, g_qos_mock.add_call_count_);
+  EXPECT_EQ(1, g_qos_mock.set_call_count_);
+  dscp_manager.PrepareForSend(address2);
+  EXPECT_EQ(2, g_qos_mock.add_call_count_);
+  EXPECT_EQ(1, g_qos_mock.set_call_count_);
+
+  // Check that AddSocketToFlow is not called for addresses that have already
+  // been prepared.
+  dscp_manager.PrepareForSend(address2);
+  EXPECT_EQ(2, g_qos_mock.add_call_count_);
+  dscp_manager.PrepareForSend(address1);
+  EXPECT_EQ(2, g_qos_mock.add_call_count_);
+
+  // Check that RemoveSocketFromFlow is called from a second Set to destroy the
+  // previous flow.
+  dscp_manager.Set(DSCP_CS5, QOSTrafficTypeAudioVideo, INVALID_SOCKET,
+                   (HANDLE)0);
+  EXPECT_EQ(1, g_qos_mock.remove_call_count_);
+  // Check that AddSocketToFlow and SetFlow are called to set up the new flow.
+  dscp_manager.PrepareForSend(address1);
+  EXPECT_EQ(3, g_qos_mock.add_call_count_);
+  EXPECT_EQ(2, g_qos_mock.set_call_count_);
 }
 #endif
 

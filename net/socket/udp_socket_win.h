@@ -35,6 +35,46 @@ class IPAddress;
 class NetLog;
 struct NetLogSource;
 
+// Hides the fact that DSCP values are set per-remote endpoint instead of just
+// per-socket on Windows. The implementation uses a single qos flow
+class NET_EXPORT DscpManager {
+ public:
+  DscpManager() = default;
+  ~DscpManager();
+
+  // Remembers the latest |dscp| and |traffic_type| so PrepareToSend can
+  // add remote addresses to the qos flow. Destroys the old flow if it exists
+  // and |dscp| changes.
+  void Set(DiffServCodePoint dscp,
+           QOS_TRAFFIC_TYPE traffic_type,
+           SOCKET socket,
+           HANDLE qos_handle);
+
+  // Constructs a qos flow for the latest set DSCP value if we don't already
+  // have one. Adds |remote_address| to the qos flow if it hasn't been added
+  // already. Does nothing if no DSCP value has been Set.
+  int PrepareForSend(const IPEndPoint& remote_address);
+
+  // The DscpManager is Active if a deferred DSCP value has been set.
+  bool IsActive() const;
+
+  void Reset();
+
+ private:
+  // DSCP_NO_CHANGE means no value has been set.
+  DiffServCodePoint dscp_value_ = DSCP_NO_CHANGE;
+  QOS_TRAFFIC_TYPE traffic_type_;
+  // The remote addresses currently in the flow.
+  std::set<IPEndPoint> configured_;
+  // 0 means no flow has been constructed.
+  QOS_FLOWID flow_id_ = 0;
+
+  SOCKET socket_;
+  HANDLE qos_handle_;
+};
+
+//-----------------------------------------------------------------------------
+
 class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
  public:
   UDPSocketWin(DatagramSocket::BindType bind_type,
@@ -322,7 +362,10 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
 
   // QWAVE data. Used to set DSCP bits on outgoing packets.
   HANDLE qos_handle_;
+  // Used for connected sockets.
   QOS_FLOWID qos_flow_id_;
+  // Used for unconnected sockets.
+  DscpManager dscp_manager_;
 
   THREAD_CHECKER(thread_checker_);
 
@@ -379,6 +422,7 @@ class NET_EXPORT QwaveAPI {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(UDPSocketTest, SetDSCPFake);
+  FRIEND_TEST_ALL_PREFIXES(DscpManagerTest, SetDSCP);
 
   bool qwave_supported_;
   CreateHandleFn create_handle_func_;
@@ -389,7 +433,6 @@ class NET_EXPORT QwaveAPI {
 
   DISALLOW_COPY_AND_ASSIGN(QwaveAPI);
 };
-
 
 }  // namespace net
 
