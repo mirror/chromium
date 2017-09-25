@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "faa146f8_92039ed4",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "I think switching to \"AMP previews\", \"Offline previews\", and \"Cline LoFi previews\" should give enough information for developers who wants to know which features are enabled. Displaying the full description can be counter effective.",
+      "parentUuid": "6890e965_13ae7745",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0948754_6a53a75d",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T19:40:52Z",
       "side": 1,
       "message": "Can you do something to check if the node is already created, because this should only be called once?\n\nassert(!$(key), \"The same preview status was updated more than once.\") from assert.js, which would get picked up by the browser tests hopefully.\n\nThis would check 2 things:\nThe js harness does not call this twice, and there are no duplicates in the passed in dictionary.\n\nIdeally, this would get checked on a real navigation to this page to make sure no duplicates come in (using the mojo interface in the browser code), but I think verifying that the dictionary returned in the browser code unittest does not have duplicates should be sufficient.",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37703534_1bcee059",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "I think having an assert(!$(key)) could be beneficiary. But shouldn\u0027t the map\u0027s keys be unique, and therefore there shouldn\u0027t be any duplicated keys that would result in having components that already existed.",
+      "parentUuid": "a0948754_6a53a75d",
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de93946_b3ba95e3",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ada496e_b01e89d2",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "70d38e24_d6b2e391",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b6af90_0ac46bf3",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b04a2b_a957f361",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 10
@@ -90,6 +168,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa885a24_081274fa",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b04a2b_a957f361",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "1da773fe_3f0a1546",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f40c50_0c8e34b0",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fbb192e_4605e3cd",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 10
@@ -124,6 +238,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d09770_d03fc3f6",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fbb192e_4605e3cd",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "1e2fdf08_bccaa83f",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "I think the [] operation will return a null/0/false if the key isn\u0027t in the map also.\n\nBy using find(key)-\u003esecond, the test crashes if the key is not in the map. I\u0027m not sure if that behavior is desirable.",
+      "parentUuid": "72af6686_f17fa287",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5898b7cf_f29a6fe4",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 10
@@ -158,6 +308,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324b78b2_72d77aac",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T21:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5898b7cf_f29a6fe4",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
