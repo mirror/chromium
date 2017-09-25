@@ -17,10 +17,12 @@ namespace {
 const char kResourceLoadSchedulerTrial[] = "ResourceLoadScheduler";
 
 // Field trial parameter names.
-const char kOutstandingLimitForBackgroundFrameName[] = "bg_limit";
+const char kOutstandingLimitForBackgroundTopFrameName[] = "bg_limit";
+const char kOutstandingLimitForBackgroundSubFrameName[] = "bg_sub_limit";
 
 // Field trial default parameters.
-constexpr size_t kOutstandingLimitForBackgroundFrameDefault = 16u;
+constexpr size_t kOutstandingLimitForBackgroundTopFrameDefault = 16u;
+constexpr size_t kOutstandingLimitForBackgroundSubFrameDefault = 16u;
 
 uint32_t GetFieldTrialUint32Param(const char* name, uint32_t default_param) {
   std::map<std::string, std::string> trial_params;
@@ -46,9 +48,12 @@ constexpr ResourceLoadScheduler::ClientId
     ResourceLoadScheduler::kInvalidClientId;
 
 ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
-    : outstanding_throttled_limit_(
-          GetFieldTrialUint32Param(kOutstandingLimitForBackgroundFrameName,
-                                   kOutstandingLimitForBackgroundFrameDefault)),
+    : outstanding_throttled_limit_(GetFieldTrialUint32Param(
+          context->IsMainFrame() ? kOutstandingLimitForBackgroundTopFrameName
+                                 : kOutstandingLimitForBackgroundSubFrameName,
+          context->IsMainFrame()
+              ? kOutstandingLimitForBackgroundTopFrameDefault
+              : kOutstandingLimitForBackgroundSubFrameDefault)),
       context_(context) {
   DCHECK(context);
 
