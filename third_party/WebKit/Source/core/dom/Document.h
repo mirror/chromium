@@ -64,6 +64,7 @@
 #include "core/page/PageVisibilityState.h"
 #include "platform/Length.h"
 #include "platform/Timer.h"
+#include "platform/WeakMemberSet.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
@@ -1629,8 +1630,7 @@ class CORE_EXPORT Document : public ContainerNode,
   bool design_mode_;
   bool is_running_exec_command_;
 
-  HeapHashSet<WeakMember<const LiveNodeListBase>>
-      lists_invalidated_at_document_;
+  Member<WeakMemberSet<const LiveNodeListBase>> lists_invalidated_at_document_;
   LiveNodeListRegistry node_lists_;
 
   Member<SVGDocumentExtensions> svg_extensions_;
