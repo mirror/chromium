@@ -154,6 +154,9 @@ class ExtensionBrowsingDataTest : public InProcessBrowserTest {
                                  int expected_origin_type_mask,
                                  int expected_removal_mask) {
     PrefService* prefs = browser()->profile()->GetPrefs();
+    prefs->SetInteger(
+        browsing_data::prefs::kLastClearBrowsingDataTab,
+        static_cast<int>(browsing_data::ClearBrowsingDataTab::ADVANCED));
     prefs->SetBoolean(
         browsing_data::prefs::kDeleteCache,
         !!(data_type_flags & content::BrowsingDataRemover::DATA_TYPE_CACHE));
@@ -397,6 +400,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowsingDataTest,
 IN_PROC_BROWSER_TEST_F(ExtensionBrowsingDataTest,
                        BrowsingDataRemovalInputFromSettings) {
   PrefService* prefs = browser()->profile()->GetPrefs();
+  prefs->SetInteger(
+      browsing_data::prefs::kLastClearBrowsingDataTab,
+      static_cast<int>(browsing_data::ClearBrowsingDataTab::ADVANCED));
   prefs->SetBoolean(browsing_data::prefs::kDeleteCache, true);
   prefs->SetBoolean(browsing_data::prefs::kDeleteBrowsingHistory, true);
   prefs->SetBoolean(browsing_data::prefs::kDeleteDownloadHistory, true);
