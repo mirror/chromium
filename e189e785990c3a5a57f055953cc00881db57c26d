@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "37bed7a3_5f506ec8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T19:29:45Z",
+      "side": 1,
+      "message": "Without this line, filter geometry effect may be applied twice (the first in line 544, the second in GeometryMapper). svg/custom/cross-referenced-resources.html will fail with corrupted rendering.\n\nWithout context.root_layer \u003d\u003d \u0026layer_, PaintLayerClipperTest.Filter will fail because it expects the filter effect to be applied when a layer with filter is getting clip rects in its own space (i.e. the test expects the \"optimization\"). GeometryMapper won\u0027t apply an effect that is the same in the source state and the target state.",
+      "parentUuid": "c9407bf0_0a68c096",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b06cd83_575b9c3d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
         "patchSetId": 4
