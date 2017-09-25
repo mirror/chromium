@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8da2ae_0eeb1778",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T06:20:21Z",
+      "side": 1,
+      "message": "render_frame should never be null here.",
+      "revId": "664df5cca4fbb0e614462842504d8a1479e73bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdf41be_53d981de",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T06:20:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure that we should be using the per-frame task runner here: the frame might be going away anyway, and then we end up with other problems (I\u0027m assuming this is related to the current problem of running tasks for a discarded frame\u0027s task queue).",
+      "revId": "664df5cca4fbb0e614462842504d8a1479e73bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
