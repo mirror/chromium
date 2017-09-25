@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd5b5da_be163da4",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-25T10:26:25Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think aggregate member initialization is allowed by style guide (https://chromium-cpp.appspot.com) and this is abusing the fact that chromium code style doesn\u0027t require explicit keyword on multi-parameter constructors. please use SkIRect::MakeXYWH instead.",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 67
+      },
+      "revId": "ede995e04f41ea2e76cbe01b5db97a2fb7aa1cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45621b3_25bd4579",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-25T10:26:25Z",
+      "side": 1,
+      "message": "nit: gfx::Point(20, 10)",
+      "range": {
+        "startLine": 731,
+        "startChar": 27,
+        "endLine": 731,
+        "endChar": 35
+      },
+      "revId": "ede995e04f41ea2e76cbe01b5db97a2fb7aa1cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431f093a_4af2346a",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-25T10:26:25Z",
+      "side": 1,
+      "message": "nit: gfx::Rect(20, 10, 64, 128)",
+      "range": {
+        "startLine": 739,
+        "startChar": 50,
+        "endLine": 739,
+        "endChar": 67
+      },
+      "revId": "ede995e04f41ea2e76cbe01b5db97a2fb7aa1cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
