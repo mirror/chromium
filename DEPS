@@ -28,9 +28,20 @@
 
 
 vars = {
+  # The `build_checkout_configuration` variable controls which things are checked
+  # out or downloaded by default; it is used to provide default values for
+  # other conditional dependencies and hooks. The two legal values are
+  # 'minimal' and 'full'; A 'minimal' configuration contains just enough
+  # things to build chrome and the most common test binaries. A 'full'
+  # configuration is what is used to run on the main (non-FYI) bots, and
+  # will allow you to build and run most of the tests.
+  'build_checkout_configuration': 'minimal',
+
   # By default, do not check out src-internal. This can be overridden e.g. with
   # custom_vars.
   'checkout_src_internal': 'False',
+
+  'download_traffic_annotation_tools': 'build_checkout_configuration == "full"',
 
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
@@ -964,6 +975,21 @@ hooks = [
                 '--bucket', 'chromium-android-tools/checkstyle',
                 '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
     ],
+  },
+
+  {
+    'name': 'tools_traffic_annotation_linux',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/third_party/depot_tools/download_from_google_storage.py',
+                '--no_resume',
+                '--platform=linux*',
+                '--no_auth',
+                '--num_threads=4',
+                '--bucket', 'chromium-tools-traffic_annotation',
+                '-d', 'src/tools/traffic_annotation/bin/linux64',
+    ],
+    'condition': 'download_traffic_annotation_tools == True and host_os=="linux"',
   },
 ]
 
