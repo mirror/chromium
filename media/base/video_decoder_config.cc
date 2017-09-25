@@ -67,9 +67,10 @@ VideoDecoderConfig::VideoDecoderConfig(
     const gfx::Rect& visible_rect,
     const gfx::Size& natural_size,
     const std::vector<uint8_t>& extra_data,
-    const EncryptionScheme& encryption_scheme) {
+    const EncryptionScheme& encryption_scheme,
+    VideoRotation video_rotation) {
   Initialize(codec, profile, format, color_space, coded_size, visible_rect,
-             natural_size, extra_data, encryption_scheme);
+             natural_size, extra_data, encryption_scheme, video_rotation);
 }
 
 VideoDecoderConfig::VideoDecoderConfig(const VideoDecoderConfig& other) =
@@ -102,7 +103,8 @@ void VideoDecoderConfig::Initialize(VideoCodec codec,
                                     const gfx::Rect& visible_rect,
                                     const gfx::Size& natural_size,
                                     const std::vector<uint8_t>& extra_data,
-                                    const EncryptionScheme& encryption_scheme) {
+                                    const EncryptionScheme& encryption_scheme,
+                                    VideoRotation video_rotation) {
   codec_ = codec;
   profile_ = profile;
   format_ = format;
@@ -112,6 +114,7 @@ void VideoDecoderConfig::Initialize(VideoCodec codec,
   natural_size_ = natural_size;
   extra_data_ = extra_data;
   encryption_scheme_ = encryption_scheme;
+  video_rotation_ = video_rotation;
 
   switch (color_space) {
     case ColorSpace::COLOR_SPACE_JPEG:
@@ -139,14 +142,15 @@ bool VideoDecoderConfig::IsValidConfig() const {
 
 bool VideoDecoderConfig::Matches(const VideoDecoderConfig& config) const {
   return ((codec() == config.codec()) && (format() == config.format()) &&
-          (profile() == config.profile()) &&
-          (coded_size() == config.coded_size()) &&
-          (visible_rect() == config.visible_rect()) &&
-          (natural_size() == config.natural_size()) &&
-          (extra_data() == config.extra_data()) &&
-          (encryption_scheme().Matches(config.encryption_scheme())) &&
-          (color_space_info() == config.color_space_info()) &&
-          (hdr_metadata() == config.hdr_metadata()));
+              (profile() == config.profile()) &&
+              (coded_size() == config.coded_size()) &&
+              (visible_rect() == config.visible_rect()) &&
+              (natural_size() == config.natural_size()) &&
+              (extra_data() == config.extra_data()) &&
+              (encryption_scheme().Matches(config.encryption_scheme())) &&
+              (color_space_info() == config.color_space_info()) &&
+              (hdr_metadata() == config.hdr_metadata()),
+          (video_rotation() == config.video_rotation()));
 }
 
 std::string VideoDecoderConfig::AsHumanReadableString() const {
@@ -159,7 +163,8 @@ std::string VideoDecoderConfig::AsHumanReadableString() const {
     << " natural size: [" << natural_size().width() << ","
     << natural_size().height() << "]"
     << " has extra data? " << (extra_data().empty() ? "false" : "true")
-    << " encrypted? " << (is_encrypted() ? "true" : "false");
+    << " encrypted? " << (is_encrypted() ? "true" : "false") << " rotation "
+    << VideoRotationToString(video_rotation());
   return s.str();
 }
 

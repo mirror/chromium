@@ -13,9 +13,9 @@
 #include "base/time/time.h"
 #include "media/base/media_export.h"
 #include "media/base/media_log.h"
+#include "media/base/source_buffer_parse_warnings.h"
 #include "media/base/stream_parser.h"
 #include "media/filters/chunk_demuxer.h"
-#include "media/filters/source_buffer_parse_warnings.h"
 
 namespace media {
 

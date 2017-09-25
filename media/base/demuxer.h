@@ -61,6 +61,13 @@ class MEDIA_EXPORT DemuxerHost {
 
 class MEDIA_EXPORT Demuxer : public MediaResource {
  public:
+  enum LoadType {
+    LoadTypeURL = 0,
+    LoadTypeMediaSource = 1,
+    LoadTypeMediaStream = 2,
+    LoadTypeMax = LoadTypeMediaStream,
+  };
+
   // A new potentially encrypted stream has been parsed.
   // First parameter - The type of initialization data.
   // Second parameter - The initialization data associated with the stream.

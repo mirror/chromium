@@ -13,6 +13,7 @@ buildflag_header("features") {
   enable_mojo_cdm = false
   enable_mojo_audio_decoder = false
   enable_mojo_video_decoder = false
+  enable_mojo_demuxer = false
   enable_mojo_media_in_browser_process = false
   enable_mojo_media_in_gpu_process = false
   enable_mojo_media_in_utility_process = false
@@ -32,6 +33,8 @@ buildflag_header("features") {
         enable_mojo_audio_decoder = true
       } else if (service == "video_decoder") {
         enable_mojo_video_decoder = true
+      } else if (service == "demuxer") {
+        enable_mojo_demuxer = true
       } else {
         assert(false, "Invalid mojo media service: $service")
       }
@@ -63,6 +66,7 @@ buildflag_header("features") {
     "ENABLE_MOJO_CDM=$enable_mojo_cdm",
     "ENABLE_MOJO_AUDIO_DECODER=$enable_mojo_audio_decoder",
     "ENABLE_MOJO_VIDEO_DECODER=$enable_mojo_video_decoder",
+    "ENABLE_MOJO_DEMUXER=$enable_mojo_demuxer",
     "ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS=$enable_mojo_media_in_browser_process",
     "ENABLE_MOJO_MEDIA_IN_GPU_PROCESS=$enable_mojo_media_in_gpu_process",
     "ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS=$enable_mojo_media_in_utility_process",

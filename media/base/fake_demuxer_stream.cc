@@ -163,7 +163,8 @@ void FakeDemuxerStream::UpdateVideoDecoderConfig() {
       kCodecVP8, VIDEO_CODEC_PROFILE_UNKNOWN, PIXEL_FORMAT_YV12,
       COLOR_SPACE_UNSPECIFIED, next_coded_size_, kVisibleRect, next_coded_size_,
       EmptyExtraData(),
-      is_encrypted_ ? AesCtrEncryptionScheme() : Unencrypted());
+      is_encrypted_ ? AesCtrEncryptionScheme() : Unencrypted(),
+      VIDEO_ROTATION_0);
   next_coded_size_.Enlarge(kWidthDelta, kHeightDelta);
 }
 
