@@ -59,8 +59,6 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
       base::MakeUnique<offline_pages::OfflinePrefetchDownloadClient>(context)));
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
-  auto* download_manager = content::BrowserContext::GetDownloadManager(context);
-
   base::FilePath storage_dir;
   if (!context->IsOffTheRecord() && !context->GetPath().empty()) {
     storage_dir =
@@ -79,7 +77,7 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
   task_scheduler = base::MakeUnique<DownloadTaskSchedulerImpl>(context);
 #endif
 
-  return download::CreateDownloadService(std::move(clients), download_manager,
+  return download::CreateDownloadService(std::move(clients), context,
                                          storage_dir, background_task_runner,
                                          std::move(task_scheduler));
 }

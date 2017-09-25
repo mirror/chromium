@@ -10,6 +10,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/power_monitor_test_base.h"
+#include "components/download/internal/test/test_device_status_listener.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -50,24 +51,15 @@ class MockObserver : public DeviceStatusListener::Observer {
   MOCK_METHOD1(OnDeviceStatusChanged, void(const DeviceStatus&));
 };
 
-// Test target that only loads default implementation of NetworkStatusListener.
-class TestDeviceStatusListener : public DeviceStatusListener {
- public:
-  explicit TestDeviceStatusListener(const base::TimeDelta& delay)
-      : DeviceStatusListener(delay) {}
-
-  void BuildNetworkStatusListener() override {
-    network_listener_ = base::MakeUnique<NetworkStatusListenerImpl>();
-  }
-};
-
 class DeviceStatusListenerTest : public testing::Test {
  public:
   void SetUp() override {
-    power_monitor_ = base::MakeUnique<base::PowerMonitor>(
-        base::MakeUnique<base::PowerMonitorTestSource>());
+    auto power_source = base::MakeUnique<base::PowerMonitorTestSource>();
+    power_source_ = power_source.get();
+    power_monitor_ =
+        base::MakeUnique<base::PowerMonitor>(std::move(power_source));
 
-    listener_ = base::MakeUnique<TestDeviceStatusListener>(
+    listener_ = base::MakeUnique<download::test::TestDeviceStatusListener>(
         base::TimeDelta::FromSeconds(0));
   }
 
@@ -80,8 +72,7 @@ class DeviceStatusListenerTest : public testing::Test {
 
   // Simulates a battery change call.
   void SimulateBatteryChange(bool on_battery_power) {
-    static_cast<base::PowerObserver*>(listener_.get())
-        ->OnPowerStateChange(on_battery_power);
+    power_source_->GeneratePowerStateEvent(on_battery_power);
   }
 
  protected:
@@ -92,6 +83,7 @@ class DeviceStatusListenerTest : public testing::Test {
   base::MessageLoop message_loop_;
   TestNetworkChangeNotifier test_network_notifier_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
+  base::PowerMonitorTestSource* power_source_;
 };
 
 // Ensures the observer is notified when network condition changes.
