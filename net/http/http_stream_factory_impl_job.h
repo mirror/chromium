@@ -463,7 +463,8 @@ class HttpStreamFactoryImpl::Job {
   // True if this job might succeed with a different proxy config.
   bool should_reconsider_proxy_;
 
-  QuicStreamRequest quic_request_;
+  // Non-null if QUIC is used.
+  std::unique_ptr<QuicStreamRequest> quic_request_;
 
   // True if this job used an existing QUIC session.
   bool using_existing_quic_session_;

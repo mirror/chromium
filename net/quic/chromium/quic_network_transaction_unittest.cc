@@ -3845,6 +3845,88 @@ TEST_P(QuicNetworkTransactionTest, ZeroRTTWithProxy) {
   SendRequestAndExpectHttpResponse("hello world");
 }
 
+TEST_P(QuicNetworkTransactionTest, ProxyAuthRestart) {
+  proxy_service_ = ProxyService::CreateFixedFromPacResult("PROXY myproxy:70");
+
+  MockWrite http_writes1[] = {
+      MockWrite("CONNECT mail.example.org:443 HTTP/1.1\r\n"
+                "Host: mail.example.org:443\r\n"
+                "Proxy-Connection: keep-alive\r\n\r\n"),
+  };
+  // The proxy responds to the connect with a 407, using a non-persistent
+  // connection.
+  MockRead http_reads1[] = {
+      // No credentials.
+      MockRead("HTTP/1.1 407 Proxy Authentication Required\r\n"),
+      MockRead("Proxy-Authenticate: Basic realm=\"MyRealm1\"\r\n"),
+      MockRead("Proxy-Connection: close\r\n\r\n"),
+  };
+  MockWrite http_writes2[] = {
+      // After calling trans->RestartWithAuth(), this is the request we should
+      // be issuing -- the final header line contains the credentials.
+      MockWrite("CONNECT mail.example.org:443 HTTP/1.1\r\n"
+                "Host: mail.example.org:443\r\n"
+                "Proxy-Connection: keep-alive\r\n"
+                "Proxy-Authorization: Basic Zm9vOmJhcg==\r\n\r\n"),
+
+      MockWrite("GET / HTTP/1.1\r\n"
+                "Host: mail.example.org\r\n"
+                "Connection: keep-alive\r\n\r\n"),
+  };
+  MockRead http_reads2[] = {
+      MockRead("HTTP/1.1 200 Connection Established\r\n\r\n"),
+
+      MockRead("HTTP/1.1 200 OK\r\n"),
+      MockRead("Content-Type: text/html; charset=iso-8859-1\r\n"),
+      MockRead("Content-Length: 5\r\n\r\n"),
+      MockRead(SYNCHRONOUS, "hello"),
+  };
+
+  StaticSocketDataProvider http_data(http_reads1, arraysize(http_reads1),
+                                     http_writes1, arraysize(http_writes1));
+  socket_factory_.AddSocketDataProvider(&http_data);
+
+  StaticSocketDataProvider data2(http_reads2, arraysize(http_reads2),
+                                 http_writes2, arraysize(http_writes2));
+  socket_factory_.AddSocketDataProvider(&data2);
+  SSLSocketDataProvider ssl(ASYNC, OK);
+  socket_factory_.AddSSLSocketDataProvider(&ssl);
+
+  // In order for a new QUIC session to be established via alternate-protocol
+  // without racing an HTTP connection, we need the host resolution to happen
+  // synchronously.
+  host_resolver_.set_synchronous_mode(true);
+  host_resolver_.rules()->AddIPLiteralRule("mail.example.org", "192.168.0.1",
+                                           "");
+  HostResolver::RequestInfo info(HostPortPair("mail.example.org", 443));
+  AddressList address;
+  std::unique_ptr<HostResolver::Request> request;
+  host_resolver_.Resolve(info, DEFAULT_PRIORITY, &address, CompletionCallback(),
+                         &request, net_log_.bound());
+
+  request_.url = GURL("https://mail.example.org/");
+  CreateSession();
+  AddQuicAlternateProtocolMapping(MockCryptoClientStream::ZERO_RTT);
+  TestCompletionCallback callback1;
+  auto trans = std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY,
+                                                        session_.get());
+  int rv = trans->Start(&request_, callback1.callback(), NetLogWithSource());
+  EXPECT_THAT(callback1.GetResult(rv), IsOk());
+
+  const HttpResponseInfo* response = trans->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ(407, response->headers->response_code());
+  EXPECT_TRUE(HttpVersion(1, 1) == response->headers->GetHttpVersion());
+
+  TestCompletionCallback callback2;
+  const base::string16 kBar(base::ASCIIToUTF16("bar"));
+  const base::string16 kFoo(base::ASCIIToUTF16("foo"));
+  rv =
+      trans->RestartWithAuth(AuthCredentials(kFoo, kBar), callback2.callback());
+  EXPECT_THAT(callback2.GetResult(rv), IsOk());
+}
+
 TEST_P(QuicNetworkTransactionTest, ZeroRTTWithConfirmationRequired) {
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;

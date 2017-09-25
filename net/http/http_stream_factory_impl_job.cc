@@ -192,7 +192,6 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
       expect_spdy_(alternative_protocol == kProtoHTTP2 && !using_quic_),
       using_spdy_(false),
       should_reconsider_proxy_(false),
-      quic_request_(session_->quic_stream_factory()),
       using_existing_quic_session_(false),
       establishing_tunnel_(false),
       was_alpn_negotiated_(false),
@@ -906,7 +905,11 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
       destination = destination_;
       ssl_config = &server_ssl_config_;
     }
-    int rv = quic_request_.Request(
+
+    DCHECK(!quic_request_);
+    quic_request_ =
+        std::make_unique<QuicStreamRequest>(session_->quic_stream_factory());
+    int rv = quic_request_->Request(
         destination, quic_version_, request_info_.privacy_mode,
         ssl_config->GetCertVerifyFlags(), url, request_info_.method, net_log_,
         &net_error_details_, io_callback_);
@@ -917,7 +920,7 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
       // delay the main job.
       if (rv == ERR_IO_PENDING) {
         delegate_->MaybeSetWaitTimeForMainJob(
-            quic_request_.GetTimeDelayForWaitingJob());
+            quic_request_->GetTimeDelayForWaitingJob());
       }
     }
     return rv;
@@ -1083,13 +1086,13 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionComplete(int result) {
 
     if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
       bidirectional_stream_impl_ =
-          quic_request_.CreateBidirectionalStreamImpl();
+          quic_request_->CreateBidirectionalStreamImpl();
       if (!bidirectional_stream_impl_) {
         // Quic session is closed before stream can be created.
         return ERR_CONNECTION_CLOSED;
       }
     } else {
-      stream_ = quic_request_.CreateStream();
+      stream_ = quic_request_->CreateStream();
       if (!stream_) {
         // Quic session is closed before stream can be created.
         return ERR_CONNECTION_CLOSED;
