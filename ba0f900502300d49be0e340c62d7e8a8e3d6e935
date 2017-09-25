@@ -16,6 +16,24 @@
       "revId": "ba0f900502300d49be0e340c62d7e8a8e3d6e935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c55804_3597f16d",
+        "filename": "components/onc/docs/onc_spec.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T23:26:09Z",
+      "side": 1,
+      "message": "The formatting for all \"allowed values\" are pretty ugly, I\u0027ll make a quick pass on this doc and fix them all at once.",
+      "parentUuid": "414b3025_dd8adaf4",
+      "revId": "ba0f900502300d49be0e340c62d7e8a8e3d6e935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
