@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cf2a4440_9777d494",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T20:58:46Z",
+      "side": 1,
+      "message": "does that mean you can omit this change?",
+      "parentUuid": "77dcd08a_04d0ce22",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 163,
+        "endChar": 11
+      },
+      "revId": "6c44e0f8bb1d27eb298278b7f237f6a7d4fd5149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be951131_66bb18cf",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
