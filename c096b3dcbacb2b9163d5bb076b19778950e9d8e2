@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2d7378_73728d19",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "nit:\n- // PaletteTrayTest:\n- leave overrides in public: section",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd46ed5_ea54f7f0",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf37d55_a12ee5a7",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "From the comment this sounds fine, but to make sure, if |interval| is 5s the test will finish in dramatically less than 5s, right? If that\u0027s not the case we should install fake timers.",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48052a61_33063232",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "nit: document booleans in all of these WaitDrag* calls.",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3682a46_a21a1d7f",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "nit: document booleans",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c306130_c7fd96c6",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T23:35:45Z",
+      "side": 1,
+      "message": "nit: gap is a little confusing. What about something similar to this:\n\n  // If the last stroke happened within this threshold/amount of time, \n  // assume writing/sketching usage.",
+      "revId": "c096b3dcbacb2b9163d5bb076b19778950e9d8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
