@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34c8fb1_2164c3b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "Remove this line",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c78cc88_61e2e933",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "Since you\u0027re here can you update the method call to include parameter names as inline comments?",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fa3f7e_0f4f943f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "nit: document boolean parameter",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e7c1bb_c4a19334",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "nit: document boolean",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a131d8b_6c083680",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "Still not a fan of this, I think it is clearer at the call-site to be explicit that we are ignoring the callback.\n\nAlso, document what |callback| is used for.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ba239d_9bcaf8f4",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "nit: kInactive",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a99e49_ddf09a75",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "callbacks have a null state, don\u0027t use base::Optional. Consider renaming to opt_callback_.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5219c1_9222db01",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "nit: document boolean",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbe5d65_4ab2b355",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "EXPECT_EQ(..., 0)?",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9772aa71_1d3525d3",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "nit: since you\u0027re here document these parameters.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81a9d43_dbf36586",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "document",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaaa851_3ae6ef0e",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "It is pretty unusual for me to see default parameters in Chrome code, and this CL adds two of them. I\u0027d suggest not using them :)\n\nIt is also not clear what a value of \"0\" means here. The reason I strongly prefer base::Optional\u003c\u003e is that it makes it very explicit that there is a semantic/special value being used, instead of a magic value 0.\n\nDo we have a guarantee that a device will never have a touch identifier of 0? This seems like it a potential future bug, especially if code gets refactored years down the line.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be899dc8_b2ce78ab",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "Why can\u0027t these be transparent to the caller? Keep the data migration complexity local to this class so the rest of the code doesn\u0027t need to deal with it.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095eb339_a0882698",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "bool has_legacy_touch_calibration_data_? And remove the comment about \"DEPRECATED\", since this member is not actually deprecated.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddac7d3_f8a06282",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:01:23Z",
+      "side": 1,
+      "message": "Instead of a comment just change the variable name, legacy_touch_calibration_data_.\n\nOtherwise it is very confusing when reading, since without looking the variables up there\u0027s no clear difference between touch_calibration_data_ and touch_calibration_data_map_.",
+      "revId": "13d140962395ef977eaf78c3e101f121e1d1f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
