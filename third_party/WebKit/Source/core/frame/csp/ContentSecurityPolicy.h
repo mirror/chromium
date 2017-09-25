@@ -430,6 +430,8 @@ class CORE_EXPORT ContentSecurityPolicy
 
   static bool IsValidCSPAttr(const String& attr);
 
+  static bool DisallowBypassingContentSecurityPolicy(const KURL&);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ContentSecurityPolicyTest, NonceInline);
   FRIEND_TEST_ALL_PREFIXES(ContentSecurityPolicyTest, NonceSinglePolicy);

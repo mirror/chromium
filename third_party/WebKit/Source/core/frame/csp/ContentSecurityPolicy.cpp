@@ -1747,6 +1747,9 @@ bool ContentSecurityPolicy::Subsumes(const ContentSecurityPolicy& other) const {
 bool ContentSecurityPolicy::ShouldBypassContentSecurityPolicy(
     const KURL& url,
     SchemeRegistry::PolicyAreas area) {
+  if (DisallowBypassingContentSecurityPolicy(url))
+    return false;
+
   if (SecurityOrigin::ShouldUseInnerURL(url)) {
     return SchemeRegistry::SchemeShouldBypassContentSecurityPolicy(
         SecurityOrigin::ExtractInnerURL(url).Protocol(), area);
@@ -1754,6 +1757,19 @@ bool ContentSecurityPolicy::ShouldBypassContentSecurityPolicy(
     return SchemeRegistry::SchemeShouldBypassContentSecurityPolicy(
         url.Protocol(), area);
   }
+}
+
+// static
+bool ContentSecurityPolicy::DisallowBypassingContentSecurityPolicy(
+    const KURL& url) {
+  // crbug.com/756962 we need to make an exception for blob:chrome-extension
+  if (SecurityOrigin::ShouldUseInnerURL(url) &&
+      (url.ProtocolIs("blob") || url.ProtocolIs("filesystem")) &&
+      SecurityOrigin::ExtractInnerURL(url).ProtocolIs("chrome-extension")) {
+    return true;
+  }
+
+  return false;
 }
 
 // static
