@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a204c3fe_d8e21662",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:35:33Z",
+      "side": 1,
+      "message": "Correct.  We can rename the argument if/when we use it to store more stuff.  Changing the API is easier than changing the implementation, so I made the implementation anticipate broader use of the file, but the API provides only what is currently needed.",
+      "parentUuid": "dea5f67d_fa64a422",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49885c91_3c605ecf",
         "filename": "chrome/common/chrome_constants.cc",
         "patchSetId": 8
@@ -164,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "4052a354_c909cf2d",
+        "filename": "net/http/http_server_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:35:33Z",
+      "side": 1,
+      "message": "Per offline discussion, the UI thread is the pref service thread, and it does file i/o on yet another thread.",
+      "parentUuid": "43266d63_02762127",
+      "range": {
+        "startLine": 66,
+        "startChar": 61,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61767ac_4a6efb7e",
         "filename": "net/http/http_server_properties_manager.h",
         "patchSetId": 8
@@ -184,6 +232,30 @@
       "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d77bce_823df985",
+        "filename": "net/http/http_server_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:35:33Z",
+      "side": 1,
+      "message": "Done.  I was considering this part of the \"nicer single-threaded behavior\" TODO - the class should flush on destruction.  This doesn\u0027t work currently because the pref service is destroyed first, on another thread.  However, when they\u0027re on the same thread, we can flush on destruction, and the problem is solved.",
+      "parentUuid": "c61767ac_4a6efb7e",
+      "range": {
+        "startLine": 136,
+        "startChar": 31,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
