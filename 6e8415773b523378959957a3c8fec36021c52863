@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e9f5cee_78b23c06",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T15:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c18f0ea_00301c7c",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce8f8e12_17abdfcc",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 39
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "18dc4cee_d5c42cc1",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T15:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce8f8e12_17abdfcc",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b998056_572a2f31",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 39
@@ -68,6 +116,30 @@
       "revId": "6e8415773b523378959957a3c8fec36021c52863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9903ab0e_0c3664e6",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-25T15:26:39Z",
+      "side": 1,
+      "message": "\u003e  If yes, why aren\u0027t you doing the same for textView,\n\nDone",
+      "parentUuid": "5b998056_572a2f31",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
