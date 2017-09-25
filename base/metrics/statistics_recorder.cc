@@ -26,6 +26,9 @@ namespace {
 base::LazyInstance<base::StatisticsRecorder>::Leaky g_statistics_recorder_ =
     LAZY_INSTANCE_INITIALIZER;
 
+// Shows if the record checker is enabled.
+bool g_record_checker_enabled = true;
+
 bool HistogramNameLesser(const base::HistogramBase* a,
                          const base::HistogramBase* b) {
   return a->histogram_name() < b->histogram_name();
@@ -439,12 +442,19 @@ void StatisticsRecorder::UninitializeForTesting() {
 // static
 void StatisticsRecorder::SetRecordChecker(
     std::unique_ptr<RecordHistogramChecker> record_checker) {
-  record_checker_ = record_checker.release();
+  if (!record_checker_)
+    record_checker_ = record_checker.release();
 }
 
 // static
 bool StatisticsRecorder::ShouldRecordHistogram(uint64_t histogram_hash) {
-  return !record_checker_ || record_checker_->ShouldRecord(histogram_hash);
+  return !(g_record_checker_enabled && record_checker_ &&
+           !record_checker_->ShouldRecord(histogram_hash));
+}
+
+// static
+void StatisticsRecorder::SetRecordCheckerEnabled(bool enabled) {
+  g_record_checker_enabled = enabled;
 }
 
 // static
