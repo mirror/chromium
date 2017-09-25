@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b9bc7d5_a80fb27d",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1167909
+      },
+      "writtenOn": "2017-09-25T18:38:00Z",
+      "side": 1,
+      "message": "# For testing",
+      "range": {
+        "startLine": 406,
+        "startChar": 8,
+        "endLine": 406,
+        "endChar": 19
+      },
+      "revId": "8718fc7e35bc7acb7c32c8e393dfa263901f03d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7057ab0_047771e7",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1167909
+      },
+      "writtenOn": "2017-09-25T18:38:00Z",
+      "side": 1,
+      "message": "I plan to rename this flag to test_artifacts_dir or similar, it\u0027s just that our test uses test_output_dir right now.",
+      "range": {
+        "startLine": 434,
+        "startChar": 26,
+        "endLine": 434,
+        "endChar": 41
+      },
+      "revId": "8718fc7e35bc7acb7c32c8e393dfa263901f03d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36e6ff2_1f350c65",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1167909
+      },
+      "writtenOn": "2017-09-25T18:38:00Z",
+      "side": 1,
+      "message": "Maybe something like:\nIf present, test artifacts will be uploaded to this Googse Storage bucket.",
+      "range": {
+        "startLine": 351,
+        "startChar": 12,
+        "endLine": 351,
+        "endChar": 54
+      },
+      "revId": "8718fc7e35bc7acb7c32c8e393dfa263901f03d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
