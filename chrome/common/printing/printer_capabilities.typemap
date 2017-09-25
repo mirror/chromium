@@ -1,0 +1,25 @@
+mojom = "//chrome/common/printing/printer_capabilities.mojom"
+
+public_headers = [
+  "printing/backend/print_backend.h",
+  "printing/print_job_constants.h",
+]
+
+traits_headers =
+    [ "//chrome/common/printing/printer_capabilities_struct_traits.h" ]
+
+sources = [
+  "//chrome/common/printing/printer_capabilities_struct_traits.cc",
+]
+
+public_deps = [
+  "//ui/gfx/geometry",
+]
+
+type_mappings = [
+  "printing.mojom.PrinterCapsAndDefaults=printing::PrinterCapsAndDefaults",
+  "printing.mojom.DuplexMode=printing::DuplexMode",
+  "printing.mojom.ColorModel=printing::ColorModel",
+  "printing.mojom.Paper=printing::PrinterSemanticCapsAndDefaults::Paper",
+  "printing.mojom.PrinterSemanticCapsAndDefaults=printing::PrinterSemanticCapsAndDefaults",
+]

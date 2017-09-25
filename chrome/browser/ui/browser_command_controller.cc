@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include <string>
-
 #include "base/command_line.h"
 #include "base/debug/debugging_flags.h"
 #include "base/debug/profiler.h"
@@ -36,6 +35,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/inspect_ui.h"
 #include "chrome/common/content_restriction.h"
+#include "chrome/common/importer/profile_import.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/profiling.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
@@ -295,7 +295,16 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       window()->HideNewBackShortcutBubble();
       GoForward(browser_, disposition);
       break;
-    case IDC_RELOAD:
+    case IDC_RELOAD: {
+      chrome::mojom::ProfileImportPtr profile_import;
+      content::ServiceManagerConnection::GetForProcess()
+          ->GetConnector()
+          ->BindInterface(chrome::mojom::kProfileImportServiceName,
+                          &profile_import);
+      profile_import->CancelImport();
+
+      LOG(ERROR) << "** JAY ** BindInterface CALLED";
+    }
       Reload(browser_, disposition);
       break;
     case IDC_RELOAD_CLEARING_CACHE:

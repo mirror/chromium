@@ -1,0 +1,14 @@
+{
+  "name": "printer_capabilities_retriever",
+  "display_name": "Printer Capabilities Retriever",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "printer_capabilities": [ "printing::mojom::PrinterCapabilitiesRetriever" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}

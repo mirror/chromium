@@ -1,0 +1,86 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module printing.mojom;
+
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+const string kPrinterCapabilitiesServiceName = "printer_capabilities_retriever";
+
+enum DuplexMode {
+  UNKNOWN_DUPLEX_MODE = -1,
+  SIMPLEX,
+  LONG_EDGE,
+  SHORT_EDGE,
+};
+
+enum ColorModel {
+  UNKNOWN_COLOR_MODEL,
+  GRAY,
+  COLOR,
+  CMYK,
+  CMY,
+  KCMY,
+  CMY_K,  // CMY_K represents CMY+K.
+  BLACK,
+  GRAYSCALE,
+  RGB,
+  RGB16,
+  RGBA,
+  COLORMODE_COLOR,              // Used in Samsung printer PPDs.
+  COLORMODE_MONOCHROME,         // Used in Samsung printer PPDs.
+  HP_COLOR_COLOR,               // Used in HP color printer PPDs.
+  HP_COLOR_BLACK,               // Used in HP color printer PPDs.
+  PRINTOUTMODE_NORMAL,          // Used in Foomatic PPDs.
+  PRINTOUTMODE_NORMAL_GRAY,     // Used in Foomatic PPDs.
+  PROCESSCOLORMODEL_CMYK,       // Used in Canon printer PPDs.
+  PROCESSCOLORMODEL_GREYSCALE,  // Used in Canon printer PPDs.
+  PROCESSCOLORMODEL_RGB,        // Used in Canon printer PPDs
+  BROTHER_CUPS_COLOR,           // Used in Brother color laser printer PPDs.
+  BROTHER_CUPS_MONO,            // Used in Brother color laser printer PPDs.
+  BROTHER_BRSCRIPT3_COLOR,      // Used in Brother BRScript3 color printer PPDs.
+  BROTHER_BRSCRIPT3_BLACK,      // Used in Brother BRScript3 color printer PPDs.	
+};
+
+struct PrinterCapsAndDefaults {
+ 	string printer_capabilities;
+ 	string caps_mime_type;
+  	string printer_defaults;
+  	string defaults_mime_type;
+};
+
+struct Paper {
+    string display_name;
+    string vendor_id;
+    gfx.mojom.Size size_um;
+};
+
+struct PrinterSemanticCapsAndDefaults {
+	bool collate_capable;
+  	bool collate_default;
+
+  	bool copies_capable;
+
+  	bool duplex_capable;
+  	DuplexMode duplex_default;
+
+  	bool color_changeable;
+  	bool color_default;
+  	ColorModel color_model;
+  	ColorModel bw_model;
+
+	array<Paper> papers;
+  	Paper default_paper;
+
+	array<gfx.mojom.Size> dpis;
+  	gfx.mojom.Size default_dpi;
+};
+
+interface PrinterCapabilitiesRetriever {
+	GetPrinterCapsAndDefaults(string printer_name) => (bool success,
+		string printer_name, PrinterCapsAndDefaults printer_info);
+
+	GetPrinterSemanticCapsAndDefaults(string printer_name) => (bool success,
+		string printer_name, PrinterSemanticCapsAndDefaults printer_info);
+};

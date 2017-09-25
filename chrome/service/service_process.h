@@ -18,9 +18,10 @@
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
+class ServiceManagerContext;
 class ServiceProcessPrefs;
-class ServiceURLRequestContextGetter;
 class ServiceProcessState;
+class ServiceURLRequestContextGetter;
 
 namespace base {
 class CommandLine;
@@ -116,6 +117,7 @@ class ServiceProcess : public ServiceIPCServer::Client,
   std::unique_ptr<ServiceProcessPrefs> service_prefs_;
   std::unique_ptr<ServiceIPCServer> ipc_server_;
   std::unique_ptr<ServiceProcessState> service_process_state_;
+  std::unique_ptr<ServiceManagerContext> service_manager_context_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> mojo_ipc_support_;
   std::unique_ptr<mojo::edk::PeerConnection> peer_connection_;
 

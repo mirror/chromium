@@ -31,6 +31,7 @@ namespace printing {
 
 namespace {
 
+#if defined(OS_WIN)
 bool Send(IPC::Message* message) {
   return content::UtilityThread::Get()->Send(message);
 }
@@ -39,7 +40,6 @@ void ReleaseProcess() {
   content::UtilityThread::Get()->ReleaseProcess();
 }
 
-#if defined(OS_WIN)
 void PreCacheFontCharacters(const LOGFONT* logfont,
                             const wchar_t* text,
                             size_t text_length) {
@@ -69,12 +69,6 @@ bool PrintingHandler::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ChromeUtilityMsg_RenderPDFPagesToMetafiles_Stop,
                         OnRenderPDFPagesToMetafileStop)
 #endif  // OS_WIN
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-    IPC_MESSAGE_HANDLER(ChromeUtilityMsg_GetPrinterCapsAndDefaults,
-                        OnGetPrinterCapsAndDefaults)
-    IPC_MESSAGE_HANDLER(ChromeUtilityMsg_GetPrinterSemanticCapsAndDefaults,
-                        OnGetPrinterSemanticCapsAndDefaults)
-#endif  // ENABLE_PRINT_PREVIEW
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -198,46 +192,5 @@ bool PrintingHandler::RenderPdfPageToMetafile(int page_number,
   return metafile.SaveTo(&output_file);
 }
 #endif  // defined(OS_WIN)
-
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-void PrintingHandler::OnGetPrinterCapsAndDefaults(
-    const std::string& printer_name) {
-  scoped_refptr<PrintBackend> print_backend =
-      PrintBackend::CreateInstance(nullptr);
-  PrinterCapsAndDefaults printer_info;
-
-  crash_keys::ScopedPrinterInfo crash_key(
-      print_backend->GetPrinterDriverInfo(printer_name));
-
-  if (print_backend->GetPrinterCapsAndDefaults(printer_name, &printer_info)) {
-    Send(new ChromeUtilityHostMsg_GetPrinterCapsAndDefaults_Succeeded(
-        printer_name, printer_info));
-  } else  {
-    Send(new ChromeUtilityHostMsg_GetPrinterCapsAndDefaults_Failed(
-        printer_name));
-  }
-  ReleaseProcess();
-}
-
-void PrintingHandler::OnGetPrinterSemanticCapsAndDefaults(
-    const std::string& printer_name) {
-  scoped_refptr<PrintBackend> print_backend =
-      PrintBackend::CreateInstance(nullptr);
-  PrinterSemanticCapsAndDefaults printer_info;
-
-  crash_keys::ScopedPrinterInfo crash_key(
-      print_backend->GetPrinterDriverInfo(printer_name));
-
-  if (print_backend->GetPrinterSemanticCapsAndDefaults(printer_name,
-                                                       &printer_info)) {
-    Send(new ChromeUtilityHostMsg_GetPrinterSemanticCapsAndDefaults_Succeeded(
-        printer_name, printer_info));
-  } else {
-    Send(new ChromeUtilityHostMsg_GetPrinterSemanticCapsAndDefaults_Failed(
-        printer_name));
-  }
-  ReleaseProcess();
-}
-#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 }  // namespace printing

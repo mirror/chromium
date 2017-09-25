@@ -1,0 +1,21 @@
+{
+  "name": "chrome_service_packaged_services",
+  "display_name": "Chrome Service Packaged Services",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+         "service_manager:service_factory": [
+         "service_manager::mojom::ServiceFactory"
+        ]
+      },
+      "requires": {
+        "*": [ "app" ],
+        "service_manager": [
+          "service_manager:all_users",
+          "service_manager:client_process",
+          "service_manager:user_id"
+        ]
+      }
+    }
+  }
+}

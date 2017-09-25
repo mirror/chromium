@@ -36,15 +36,18 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/printing/printer_capabilities.mojom.h"
 #include "chrome/common/service_process_util.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/service/cloud_print/cloud_print_message_handler.h"
 #include "chrome/service/cloud_print/cloud_print_proxy.h"
+#include "chrome/service/mojo/service_manager_context.h"
 #include "chrome/service/net/service_url_request_context_getter.h"
 #include "chrome/service/service_process_prefs.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/prefs/json_pref_store.h"
+#include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
@@ -53,6 +56,7 @@
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -130,6 +134,31 @@ void PrepareRestartOnCrashEnviroment(
   env->SetVar(env_vars::kRestartInfo, base::UTF16ToUTF8(dlg_strings));
 }
 
+void Exit() {
+  LOG(ERROR) << "** JAY ** EXIT";
+  exit(1);
+}
+
+void OnCapsRetrieved(bool success,
+                     const std::string& printer_name,
+                     const printing::PrinterCapsAndDefaults& caps) {
+  LOG(ERROR) << "** JAY ** OnCapsRetrieved " << success
+             << " name=" << printer_name;
+  exit(1);
+}
+
+void TestConnector() {
+  mojo::InterfacePtr<printing::mojom::PrinterCapabilitiesRetriever>
+      print_caps_ptr;
+
+  ServiceManagerContext::GetConnectorForIOThread()->BindInterface(
+      printing::mojom::kPrinterCapabilitiesServiceName, &print_caps_ptr);
+  LOG(ERROR) << "** JAY ** TestConnector BindInterface CALLED";
+  print_caps_ptr->GetPrinterCapsAndDefaults("Bijour",
+                                            base::BindOnce(&OnCapsRetrieved));
+  LOG(ERROR) << "** JAY ** TestConnector GetPrinterCapsAndDefaults CALLED";
+}
+
 }  // namespace
 
 ServiceProcess::ServiceProcess()
@@ -186,9 +215,9 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
 
   // Initialize Mojo early so things can use it.
   mojo::edk::Init();
-  mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
+  mojo_ipc_support_ = std::make_unique<mojo::edk::ScopedIPCSupport>(
       io_thread_->task_runner(),
-      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
+      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
 
   request_context_getter_ = new ServiceURLRequestContextGetter();
 
@@ -224,6 +253,13 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
   ui::MaterialDesignController::Initialize();
   ui::ResourceBundle::InitSharedInstanceWithLocale(
       locale, NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+  base::FilePath resources_pack_path;
+  PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
+  ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+      resources_pack_path, ui::SCALE_FACTOR_NONE);
+
+  service_manager_context_.reset(
+      new ServiceManagerContext(io_thread_->task_runner()));
 
   PrepareRestartOnCrashEnviroment(command_line);
 
@@ -252,6 +288,12 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
 
   // See if we need to stay running.
   ScheduleShutdownCheck();
+
+  io_thread_->message_loop()->task_runner()->PostTask(
+      FROM_HERE, base::Bind(&TestConnector));
+
+  io_thread_->message_loop()->task_runner()->PostDelayedTask(
+      FROM_HERE, base::Bind(&Exit), base::TimeDelta::FromSeconds(2));
 
   return true;
 }

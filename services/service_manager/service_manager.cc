@@ -185,6 +185,8 @@ class ServiceManager::Instance
         control_binding_(this),
         state_(State::IDLE),
         weak_factory_(this) {
+    LOG(ERROR) << "** JAY ** Instance " << identity_.name() << " "
+               << identity_.user_id() << " " << identity_.instance();
     if (identity_.name() == service_manager::mojom::kServiceName ||
         identity_.name() == catalog::mojom::kServiceName) {
       pid_ = GetCurrentPid();
@@ -212,10 +214,14 @@ class ServiceManager::Instance
   }
 
   ~Instance() override {
+    LOG(ERROR) << "** JAY ** Instance DELETE " << identity_.name() << " "
+               << identity_.user_id() << " " << identity_.instance();
+
     Stop();
   }
 
   bool CallOnBindInterface(std::unique_ptr<ConnectParams>* in_params) {
+    LOG(ERROR) << "** JAY ** CallOnBindInterface";
     if (!service_.is_bound()) {
       (*in_params)
           ->set_response_data(mojom::ConnectResult::ACCESS_DENIED, identity_);
@@ -316,6 +322,7 @@ class ServiceManager::Instance
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
+    LOG(ERROR) << "** JAY ** OnBindInterface " << interface_name;
     Instance* source =
         service_manager_->GetExistingInstance(source_info.identity);
     DCHECK(source);
@@ -325,6 +332,8 @@ class ServiceManager::Instance
       mojom::ServiceManagerRequest request =
           mojom::ServiceManagerRequest(std::move(interface_pipe));
       service_manager_bindings_.AddBinding(this, std::move(request));
+    } else {
+      LOG(ERROR) << "** JAY ** OnBindInterface " << interface_name << " NOPE";
     }
   }
 
@@ -415,11 +424,13 @@ class ServiceManager::Instance
                      const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe,
                      BindInterfaceCallback callback) override {
+    LOG(ERROR) << "** JAY ** ServiceManager BindInterface";
     Identity target = in_target;
     mojom::ConnectResult result =
         ValidateConnectParams(&target, nullptr, nullptr);
     if (!Succeeded(result)) {
       std::move(callback).Run(result, Identity());
+      LOG(ERROR) << "** JAY ** ServiceManager BindInterface FAILED";
       return;
     }
 
@@ -430,6 +441,7 @@ class ServiceManager::Instance
                                        std::move(interface_pipe));
     params->set_start_service_callback(std::move(callback));
     service_manager_->Connect(std::move(params));
+    LOG(ERROR) << "** JAY ** ServiceManager BindInterface DONE";
   }
 
   void QueryService(const Identity& target,
@@ -443,6 +455,7 @@ class ServiceManager::Instance
 
   void StartService(const Identity& in_target,
                     StartServiceCallback callback) override {
+    LOG(ERROR) << "** JAY ** ServiceManager StartService";
     Identity target = in_target;
     mojom::ConnectResult result =
         ValidateConnectParams(&target, nullptr, nullptr);
@@ -463,6 +476,7 @@ class ServiceManager::Instance
       mojo::ScopedMessagePipeHandle service_handle,
       mojom::PIDReceiverRequest pid_receiver_request,
       StartServiceWithProcessCallback callback) override {
+    LOG(ERROR) << "** JAY ** ServiceManager StartServiceWithProcess";
     Identity target = in_target;
     mojom::ServicePtr service;
     service.Bind(mojom::ServicePtrInfo(std::move(service_handle), 0));
@@ -559,9 +573,9 @@ class ServiceManager::Instance
         return mojom::ConnectResult::INVALID_ARGUMENT;
       }
       if (service_manager_->GetExistingInstance(target)) {
-        LOG(ERROR) << "Cannot client process matching existing identity:"
-                   << "Name: " << target.name() << " User: "
-                   << target.user_id() << " Instance: " << target.instance();
+        LOG(ERROR) << "Cannot start client process matching existing identity:"
+                   << "Name: " << target.name() << " User: " << target.user_id()
+                   << " Instance: " << target.instance();
         return mojom::ConnectResult::INVALID_ARGUMENT;
       }
     }
@@ -935,6 +949,7 @@ void ServiceManager::RegisterService(
     const Identity& identity,
     mojom::ServicePtr service,
     mojom::PIDReceiverRequest pid_receiver_request) {
+  LOG(ERROR) << "** JAY ** ServiceManager::RegisterService";
   auto params = base::MakeUnique<ConnectParams>();
 
   if (!pid_receiver_request.is_pending()) {
@@ -1087,6 +1102,8 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
 
   auto result =
       identity_to_instance_.insert(std::make_pair(target, raw_instance));
+  LOG(ERROR) << "** JAY ** CreateInstance " << target.name() << " "
+             << target.user_id() << " " << target.instance();
   DCHECK(result.second);
 
   mojom::RunningServiceInfoPtr info = raw_instance->CreateRunningServiceInfo();

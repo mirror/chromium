@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//mojo/public/tools/bindings/mojom.gni")
+import("//printing/features/features.gni")
 
 mojom("interfaces") {
   sources = [
@@ -12,4 +13,8 @@ mojom("interfaces") {
   deps = [
     "//ui/gfx/geometry/mojo",
   ]
+
+  if (is_win || enable_print_preview) {
+    sources += [ "printer_capabilities.mojom" ]
+  }
 }

@@ -27,6 +27,7 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/chrome_utility_printing_messages.h"
+#include "chrome/common/printing/printer_capabilities.mojom.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
@@ -206,18 +207,29 @@ bool ServiceUtilityProcessHost::StartGetPrinterCapsAndDefaults(
     return false;
   DCHECK(!waiting_for_reply_);
   waiting_for_reply_ = true;
-  return Send(new ChromeUtilityMsg_GetPrinterCapsAndDefaults(printer_name));
+
+  printing::mojom::PrinterCapabilitiesRetrieverPtr
+      printer_capabilities_retriever_ptr;
+  auto request = MakeRequest(&printer_capabilities_retriever_ptr);
+  printer_capabilities_retriever_ptr.set_connection_error_handler(base::Bind(
+      &ServiceUtilityProcessHost::OnChildDisconnected, base::Unretained(this)));
+  printer_capabilities_retriever_ptr->GetPrinterCapsAndDefaults(
+      printer_name,
+      base::Bind(&ServiceUtilityProcessHost::OnGetPrinterCapsAndDefaults,
+                 base::Unretained(this)));
+  return true;
 }
 
 bool ServiceUtilityProcessHost::StartGetPrinterSemanticCapsAndDefaults(
     const std::string& printer_name) {
-  ReportUmaEvent(SERVICE_UTILITY_SEMANTIC_CAPS_REQUEST);
-  if (!StartProcess(true))
-    return false;
-  DCHECK(!waiting_for_reply_);
-  waiting_for_reply_ = true;
-  return Send(
-      new ChromeUtilityMsg_GetPrinterSemanticCapsAndDefaults(printer_name));
+  // ReportUmaEvent(SERVICE_UTILITY_SEMANTIC_CAPS_REQUEST);
+  // if (!StartProcess(true))
+  //   return false;
+  // DCHECK(!waiting_for_reply_);
+  // waiting_for_reply_ = true;
+  // return Send(
+  //     new ChromeUtilityMsg_GetPrinterSemanticCapsAndDefaults(printer_name));
+  return false;
 }
 
 bool ServiceUtilityProcessHost::StartProcess(bool no_sandbox) {
@@ -320,17 +332,6 @@ bool ServiceUtilityProcessHost::OnMessageReceived(const IPC::Message& message) {
         OnRenderPDFPagesToMetafilesPageCount)
     IPC_MESSAGE_HANDLER(ChromeUtilityHostMsg_RenderPDFPagesToMetafiles_PageDone,
                         OnRenderPDFPagesToMetafilesPageDone)
-    IPC_MESSAGE_HANDLER(
-        ChromeUtilityHostMsg_GetPrinterCapsAndDefaults_Succeeded,
-        OnGetPrinterCapsAndDefaultsSucceeded)
-    IPC_MESSAGE_HANDLER(ChromeUtilityHostMsg_GetPrinterCapsAndDefaults_Failed,
-                        OnGetPrinterCapsAndDefaultsFailed)
-    IPC_MESSAGE_HANDLER(
-        ChromeUtilityHostMsg_GetPrinterSemanticCapsAndDefaults_Succeeded,
-        OnGetPrinterSemanticCapsAndDefaultsSucceeded)
-    IPC_MESSAGE_HANDLER(
-        ChromeUtilityHostMsg_GetPrinterSemanticCapsAndDefaults_Failed,
-        OnGetPrinterSemanticCapsAndDefaultsFailed)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -399,50 +400,30 @@ void ServiceUtilityProcessHost::OnPDFToEmfFinished(bool success) {
   pdf_to_emf_state_.reset();
 }
 
-void ServiceUtilityProcessHost::OnGetPrinterCapsAndDefaultsSucceeded(
+void ServiceUtilityProcessHost::OnGetPrinterCapsAndDefaults(
+    bool success,
     const std::string& printer_name,
     const printing::PrinterCapsAndDefaults& caps_and_defaults) {
   DCHECK(waiting_for_reply_);
-  ReportUmaEvent(SERVICE_UTILITY_CAPS_SUCCEEDED);
+  ReportUmaEvent(success ? SERVICE_UTILITY_CAPS_SUCCEEDED
+                         : SERVICE_UTILITY_CAPS_FAILED);
   waiting_for_reply_ = false;
   client_task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::OnGetPrinterCapsAndDefaults, client_.get(),
-                            true, printer_name, caps_and_defaults));
+                            success, printer_name, caps_and_defaults));
 }
 
-void ServiceUtilityProcessHost::OnGetPrinterSemanticCapsAndDefaultsSucceeded(
-    const std::string& printer_name,
-    const printing::PrinterSemanticCapsAndDefaults& caps_and_defaults) {
-  DCHECK(waiting_for_reply_);
-  ReportUmaEvent(SERVICE_UTILITY_SEMANTIC_CAPS_SUCCEEDED);
-  waiting_for_reply_ = false;
-  client_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&Client::OnGetPrinterSemanticCapsAndDefaults, client_.get(),
-                 true, printer_name, caps_and_defaults));
-}
-
-void ServiceUtilityProcessHost::OnGetPrinterCapsAndDefaultsFailed(
-    const std::string& printer_name) {
-  DCHECK(waiting_for_reply_);
-  ReportUmaEvent(SERVICE_UTILITY_CAPS_FAILED);
-  waiting_for_reply_ = false;
-  client_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&Client::OnGetPrinterCapsAndDefaults, client_.get(), false,
-                 printer_name, printing::PrinterCapsAndDefaults()));
-}
-
-void ServiceUtilityProcessHost::OnGetPrinterSemanticCapsAndDefaultsFailed(
-    const std::string& printer_name) {
-  DCHECK(waiting_for_reply_);
-  ReportUmaEvent(SERVICE_UTILITY_SEMANTIC_CAPS_FAILED);
-  waiting_for_reply_ = false;
-  client_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&Client::OnGetPrinterSemanticCapsAndDefaults,
-                            client_.get(), false, printer_name,
-                            printing::PrinterSemanticCapsAndDefaults()));
-}
+// void ServiceUtilityProcessHost::OnGetPrinterSemanticCapsAndDefaults(
+//     const std::string& printer_name,
+//     const printing::PrinterSemanticCapsAndDefaults& caps_and_defaults) {
+//   DCHECK(waiting_for_reply_);
+//   ReportUmaEvent(success ? SERVICE_UTILITY_SEMANTIC_CAPS_SUCCEEDED :
+//   SERVICE_UTILITY_SEMANTIC_CAPS_FAILED); waiting_for_reply_ = false;
+//   client_task_runner_->PostTask(
+//       FROM_HERE,
+//       base::Bind(&Client::OnGetPrinterSemanticCapsAndDefaults, client_.get(),
+//                  success, printer_name, caps_and_defaults));
+// }
 
 bool ServiceUtilityProcessHost::Client::MetafileAvailable(float scale_factor,
                                                           base::File file) {
