@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cb800f5_ec68c0f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1b7d01_912b3a37",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb0d18d_cff36894",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T21:32:37Z",
       "side": 1,
       "message": "Use an else instead of an early return.\n\nIn general, non-precondition early returns make it a harder to follow the flow of a function, since it is something extra to think about/consider. In this case it is pretty obvious since the function is short, though.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f79881_a8fb58c2",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done. Thanks for the explanation.",
+      "parentUuid": "bdb0d18d_cff36894",
       "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ba73a05_14995cc7",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83cdde0d_4c7f0472",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c45855b_8d950189",
         "filename": "ash/login/ui/login_test_base.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f390c6aa_5c9da5b4",
+        "filename": "ash/login/ui/login_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c45855b_8d950189",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dd2d52dc_26e1223c",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc3ae8a_53de0d7a",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae7187c_1dab88d5",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70fa16e_d9af56ef",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae7187c_1dab88d5",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b27c9ac1_0981e443",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5b3cea_bb62622e",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e03a3c_474b599b",
         "filename": "ash/system/tray/tray_background_view.cc",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-22T21:32:37Z",
       "side": 1,
       "message": "Can you lookup the shelf widget via this-\u003ewidget()? This code should not assume it is on the primary display / in the login/lock screen scenario.",
+      "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42905ed_7872c39e",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-25T18:43:26Z",
+      "side": 1,
+      "message": "We can easily access the shelf widget from within this class (shelf()-\u003eshelf_widget()), but in WebUILoginView I didn\u0027t find a way to access the shelf widget. Also I\u0027m not sure how to access the system tray widget without having a GetPrimaryInstance() helper function..",
+      "parentUuid": "e1e03a3c_474b599b",
       "revId": "fb5991915ff26e55ca4fc8c6264cb6b6f910748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
