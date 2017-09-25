@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a87ac44_d3953fd0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "Add:\n  console.assert(ddl.usable);  // cached logos are always usable\n?",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4643c84_45280b80",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "On success, …. On failure, …",
+      "range": {
+        "startLine": 681,
+        "startChar": 22,
+        "endLine": 682,
+        "endChar": 43
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71efd81f_4cebbb09",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "function(?{v, image, metadata})\n\nIt\u0027s now nullable.\n\nOh, actually, there\u0027s a \"usable\" property too, isn\u0027t there.",
+      "range": {
+        "startLine": 686,
+        "startChar": 11,
+        "endLine": 686,
+        "endChar": 41
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd009b3_a62e617e",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "showLogoOrDoodle() and updateDoodle() are very similar, so I think their names should be more similar. For example, {cut,fade}ToLogoOrDoodle() (but maybe this usage of \"cut\" is a little obscure).",
+      "range": {
+        "startLine": 759,
+        "startChar": 4,
+        "endLine": 759,
+        "endChar": 16
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c9621a_cc590476",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "This check is wrong if the doodle is animated (src could be the animatedUrl) and maybe also if image is null.\n\nBetter to use isDoodleCurrentlyVisible().",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42484286_4f9a2b23",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "Since you now have four pairs of nearly-identical lines, factor out startFadeOut()?",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5510cbf0_321e13d9",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T08:54:48Z",
+      "side": 1,
+      "message": "This block here is the same as showLogoOrDoodle().",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
