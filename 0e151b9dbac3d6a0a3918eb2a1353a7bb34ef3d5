@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa510e4_f5f0f870",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T06:21:59Z",
+      "side": 1,
+      "message": "Is this new function needed? Can it be in another patch?",
+      "revId": "0e151b9dbac3d6a0a3918eb2a1353a7bb34ef3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faa7456_f20fc439",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T06:21:59Z",
+      "side": 1,
+      "message": "Is this changed needed?",
+      "revId": "0e151b9dbac3d6a0a3918eb2a1353a7bb34ef3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

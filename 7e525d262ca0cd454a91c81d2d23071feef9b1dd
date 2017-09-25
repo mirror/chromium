@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d0e52e_e598c92f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T06:21:59Z",
+      "side": 0,
+      "message": "Could you split the adoption of SelectionPaintRange off to another patch, to reduce noise?",
+      "revId": "7e525d262ca0cd454a91c81d2d23071feef9b1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a118d133_325f5c7e",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T06:21:59Z",
+      "side": 0,
+      "message": "Why is this comment removed?\n\nDoes it mean that it works correctly for text-transform now?",
+      "range": {
+        "startLine": 39,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 64
+      },
+      "revId": "7e525d262ca0cd454a91c81d2d23071feef9b1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
