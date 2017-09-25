@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6275532_c0b357d3",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T11:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9140946d_9242bbdc",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24fe0371_f98e7fcf",
         "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da3818f_334c5d64",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T11:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24fe0371_f98e7fcf",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f2f5072f_2cbed135",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T11:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e2c45f_ca90130f",
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96b45756_02e8b487",
         "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
         "patchSetId": 2
@@ -91,6 +145,30 @@
       "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c36ca7_172b876d",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T11:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b45756_02e8b487",
+      "range": {
+        "startLine": 35,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "4050e26acbe9305b431cc41e00f27d4e6a573ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
