@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4dc482e3_8b25fcc4",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-25T15:43:29Z",
+      "side": 1,
+      "message": "What exactly does this do? Number of arguments for the constructor? This is not a very forwards-compatible thing to check.",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61455f3a_255c7bbe",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
         "patchSetId": 4
@@ -163,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "13a0aab4_4e11ea78",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-color.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-25T15:43:29Z",
+      "side": 1,
+      "message": "Better not to check the message. Makes the test non-portable, and will require undue maintenance.",
+      "parentUuid": "af5e7af6_fd10172f",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d73e1bbe_70c3cce8",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-offset.html",
         "patchSetId": 4
@@ -220,6 +267,30 @@
       "writtenOn": "2017-09-25T14:13:48Z",
       "side": 1,
       "message": "A helper function to check the exception for TypeError?",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a09658_62966f56",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-clip.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-25T15:43:29Z",
+      "side": 1,
+      "message": "Actually, what you want to do is just this: assert_throws(new TypeError(), function() { ... })",
+      "parentUuid": "be61d2bd_e18b356f",
       "range": {
         "startLine": 63,
         "startChar": 6,
