@@ -46,6 +46,30 @@
       "revId": "9cc777702736782a05a8a13a308accefa26ff28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6db041_4a4b5f69",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T12:34:40Z",
+      "side": 1,
+      "message": "You followed a case of dictionary, promise or something else.\n\nThis is a case of callback interface.  Then, it\u0027s more consistent to follow a case of other callback interfaces or callback functions.  In case of callback functions, we\u0027re showing \"The callback provided as parameter %(index)d is not a function.\"  Why not follow this way?",
+      "parentUuid": "2eb2a92d_b198bf68",
+      "range": {
+        "startLine": 154,
+        "startChar": 44,
+        "endLine": 154,
+        "endChar": 94
+      },
+      "revId": "9cc777702736782a05a8a13a308accefa26ff28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
