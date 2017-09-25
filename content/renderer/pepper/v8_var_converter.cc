@@ -9,11 +9,11 @@
 
 #include <map>
 #include <memory>
-#include <stack>
 #include <string>
 
 #include "base/bind.h"
 #include "base/containers/hash_tables.h"
+#include "base/containers/stack.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
@@ -319,7 +319,7 @@ bool V8VarConverter::ToV8Value(const PP_Var& var,
   VarHandleMap visited_ids;
   ParentVarSet parent_ids;
 
-  std::stack<StackEntry<PP_Var> > stack;
+  base::stack<StackEntry<PP_Var>> stack;
   stack.push(StackEntry<PP_Var>(var));
   v8::Local<v8::Value> root;
   bool is_root = true;
@@ -471,7 +471,7 @@ bool V8VarConverter::FromV8ValueInternal(
   HandleVarMap visited_handles;
   ParentHandleSet parent_handles;
 
-  std::stack<StackEntry<v8::Local<v8::Value> > > stack;
+  base::stack<StackEntry<v8::Local<v8::Value>>> stack;
   stack.push(StackEntry<v8::Local<v8::Value> >(val));
   ScopedPPVar root;
   *result_var = PP_MakeUndefined();
