@@ -115,7 +115,6 @@ class WebMediaStreamTrack;
 class WebNotificationManager;
 class WebPluginListBuilder;
 class WebPrescientNetworking;
-class WebPublicSuffixList;
 class WebPushProvider;
 class WebRTCCertificateGenerator;
 class WebRTCPeerConnectionHandler;
@@ -383,11 +382,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual void GetPluginList(bool refresh,
                              const WebSecurityOrigin& main_frame_origin,
                              WebPluginListBuilder*) {}
-
-  // Public Suffix List --------------------------------------------------
-
-  // May return null on some platforms.
-  virtual WebPublicSuffixList* PublicSuffixList() { return nullptr; }
 
   // Resources -----------------------------------------------------------
 

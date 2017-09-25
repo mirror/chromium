@@ -289,7 +289,6 @@ source_set("blink_headers") {
     "platform/WebPrerenderingSupport.h",
     "platform/WebPrescientNetworking.h",
     "platform/WebPrivatePtr.h",
-    "platform/WebPublicSuffixList.h",
     "platform/WebRTCAnswerOptions.h",
     "platform/WebRTCCertificate.h",
     "platform/WebRTCCertificateGenerator.h",
