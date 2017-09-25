@@ -77,6 +77,7 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_AMP_AS_SEPARATE_TAB = "disable_amp_as_separate_tab";
     // Disable logging for Machine Learning
     private static final String DISABLE_RANKER_LOGGING = "disable_ranker_logging";
+    private static final String DISABLE_SMART_SELECT_ONLY = "disable_smart_select_only";
 
     // ----------------------
     // Privacy-related flags.
@@ -110,6 +111,7 @@ public class ContextualSearchFieldTrial {
     private static Boolean sIsPageContentNotificationDisabled;
     private static Boolean sContextualSearchUrlActionsEnabled;
     private static Boolean sIsRankerLoggingDisabled;
+    private static Boolean sIsSmartSelectOnlyDisabled;
     private static Integer sWaitAfterTapDelayMs;
     private static Integer sTapDurationThresholdMs;
     private static Integer sRecentScrollDurationMs;
@@ -374,6 +376,19 @@ public class ContextualSearchFieldTrial {
         }
 
         return sIsRankerLoggingDisabled;
+    }
+
+    /**
+     * @return Whether the feature that Smart Select is the only handler of long-press on Android O,
+     *         is disabled (which will allow the Contextual Search Bar to show in response to a
+     *         long-press gesture on Android O).
+     */
+    static boolean isSmartSelectOnlyDisabled() {
+        if (sIsSmartSelectOnlyDisabled == null) {
+            sIsSmartSelectOnlyDisabled = getBooleanParam(DISABLE_SMART_SELECT_ONLY);
+        }
+
+        return sIsSmartSelectOnlyDisabled;
     }
 
     /**

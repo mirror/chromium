@@ -2134,6 +2134,10 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSelectionPopupController.setSelectionClient(selectionClient);
     }
 
+    public SelectionClient getSelectionClient() {
+        return mSelectionPopupController.getSelectionClient();
+    }
+
     /**
      * Sets TextClassifier for Smart Text selection.
      */
