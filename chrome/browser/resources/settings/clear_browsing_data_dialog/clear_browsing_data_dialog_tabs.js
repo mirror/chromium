@@ -12,7 +12,7 @@
 Polymer({
   is: 'settings-clear-browsing-data-dialog-tabs',
 
-  behaviors: [WebUIListenerBehavior],
+  behaviors: [WebUIListenerBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /**
@@ -112,6 +112,15 @@ Polymer({
       type: Boolean,
       value: false,
     },
+
+    /**
+     * Time in ms, when the dialog was opened.
+     * @private
+     */
+    dialogOpened_: {
+      type: Number,
+      value: 0,
+    }
   },
 
   /** @private {settings.ClearBrowsingDataBrowserProxy} */
@@ -123,6 +132,8 @@ Polymer({
         'update-sync-state', this.updateSyncState_.bind(this));
     this.addWebUIListener(
         'update-counter-text', this.updateCounterText_.bind(this));
+    this.$.tabBar.addEventListener(
+        'selected-changed', this.tabChanged_.bind(this));
   },
 
   /** @override */
@@ -137,6 +148,20 @@ Polymer({
       this.browserProxy_.getImportantSites().then(sites => {
         this.importantSites_ = sites;
       });
+    }
+  },
+
+  /**
+   * Record visits to the CBD ui.
+   *
+   * settings.RouteObserverBehavior
+   * @param {!settings.Route} currentRoute
+   * @protected
+   */
+  currentRouteChanged: function(currentRoute) {
+    if (currentRoute == settings.routes.CLEAR_BROWSER_DATA) {
+      chrome.metricsPrivate.recordUserAction('ClearBrowsingData_DialogCreated');
+      this.dialogOpened_ = Date.now();
     }
   },
 
@@ -212,9 +237,7 @@ Polymer({
           tab.querySelector('.cache-checkbox').checked;
       this.$.clearBrowsingDataDialog.close();
       // Show important sites dialog after dom-if is applied.
-      this.async(function() {
-        this.$$('#importantSitesDialog').showModal();
-      });
+      this.async(() => this.$$('#importantSitesDialog').showModal());
     } else {
       this.clearBrowsingData_();
     }
@@ -247,6 +270,15 @@ Polymer({
     });
 
     var timePeriod = tab.querySelector('.time-range-select').pref.value;
+
+    if (tab.id == 'basic-tab') {
+      chrome.metricsPrivate.recordUserAction('ClearBrowsingData_BasicTab');
+    } else {
+      chrome.metricsPrivate.recordUserAction('ClearBrowsingData_AdvancedTab');
+    }
+    chrome.metricsPrivate.recordMediumTime(
+        'History.ClearBrowsingData.TimeSpentInDialog',
+        Date.now() - this.dialogOpened_);
 
     this.browserProxy_
         .clearBrowsingData(dataTypes, timePeriod, this.importantSites_)
@@ -295,4 +327,20 @@ Polymer({
     this.showHistoryDeletionDialog_ = false;
     this.closeDialogs_();
   },
+
+  /**
+   * Handles the closing of the notice about other forms of browsing history.
+   * @param {Event!} event
+   * @private
+   */
+  tabChanged_: function(event) {
+    if (event.detail.value == 0) {
+      chrome.metricsPrivate.recordUserAction(
+          'ClearBrowsingData_SwitchTo_BasicTab');
+    } else {
+      chrome.metricsPrivate.recordUserAction(
+          'ClearBrowsingData_SwitchTo_AdvancedTab');
+    }
+  },
+
 });
