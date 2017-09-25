@@ -81,6 +81,30 @@
       "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e490422_1ce64df6",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-25T18:46:05Z",
+      "side": 1,
+      "message": "Textfield forwards key events to its controller. For app list search box, this would be SearchBoxView::HandleKeyEvent and it seems expecting key released events. Even if that we might remove that code later, it still feel strange that we only forward half of the events and might cause strange bugs later.\n\nHow about moving this check down and just do it for InsertChar call?\n\n[1]: https://cs.chromium.org/chromium/src/ui/app_list/views/search_box_view.cc?rcl\u003dcde8e4c393b5518ec2acd2b2c15dd5dfa8f3b94a\u0026l\u003d880",
+      "parentUuid": "20b3f78f_2c9395fa",
+      "range": {
+        "startLine": 1048,
+        "startChar": 36,
+        "endLine": 1048,
+        "endChar": 71
+      },
+      "revId": "b07cd8b0bfd821d081b14509b6b9248090109ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
