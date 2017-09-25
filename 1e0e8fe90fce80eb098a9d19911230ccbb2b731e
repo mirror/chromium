@@ -16,6 +16,24 @@
       "revId": "1e0e8fe90fce80eb098a9d19911230ccbb2b731e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf278b20_c4395393",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-25T14:03:06Z",
+      "side": 1,
+      "message": "Yep, totally missed that pattern. I\u0027ve added those now too.",
+      "parentUuid": "38ac5564_72ad08b1",
+      "revId": "1e0e8fe90fce80eb098a9d19911230ccbb2b731e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
