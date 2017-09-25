@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f979f3e7_032d4cec",
+        "filename": "chrome/browser/ui/browser_instant_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T12:01:40Z",
+      "side": 1,
+      "message": "These days, only NTPs are ever rendered in an Instant process, so the \"origin\" check that was here isn\u0027t needed anymore.",
+      "range": {
+        "startLine": 135,
+        "startChar": 41,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "f0cf21e3ccd4729080d4bfc6242eeb7eac1127d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
