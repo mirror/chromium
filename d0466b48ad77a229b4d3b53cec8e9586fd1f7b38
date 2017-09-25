@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fa45a77_34259601",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T22:49:27Z",
+      "side": 1,
+      "message": "Right now there aren\u0027t, but I don\u0027t see any technical reason why there couldn\u0027t be binaries in /usr/bin one day.  If we want to enforce that there are no ELF binaries in places other than /opt, I think there should be a check for that.",
+      "parentUuid": "81bc9be9_c0f74b45",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c715804_41c28db0",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "443eff5d_79cbee9b",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T22:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c715804_41c28db0",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ca4f01_60c8f46b",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846a5971_ff5e7836",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T22:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ca4f01_60c8f46b",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
