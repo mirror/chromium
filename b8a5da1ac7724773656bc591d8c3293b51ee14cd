@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "badac6d4_c158d819",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3241,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-25T06:23:27Z",
+      "side": 1,
+      "message": "The logic is really complicated.\n\nCan we do something like we did in l.1537, using WaitableEvent to make sure the picture is cleared?\n\nif (!cleared) {\n base::WaitableEvent cleared;\n child_task_runner_-\u003ePostTask(ClearPicture, this, cleared);\n cleared.Wait(); \n}\n\nAnd then just post it to the decode_task_runner_ for all pictures.",
+      "range": {
+        "startLine": 3241,
+        "startChar": 29,
+        "endLine": 3241,
+        "endChar": 51
+      },
+      "revId": "b8a5da1ac7724773656bc591d8c3293b51ee14cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
