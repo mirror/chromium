@@ -22,6 +22,30 @@
       "revId": "4514252f165160ac7f0e91e488ec5750d962c945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83d87385_9cc12a86",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39884,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-25T17:57:55Z",
+      "side": 1,
+      "message": "Android has two native VPN types: L2TP/IPsec and PPTP.  Chrome OS has native support for L2TP/IPsec and OpenVPN, but not PPTP.  So the newly-landed ARC VPN code can be leveraged to enable PPTP VPNs through Android (crbug.com/207904).\n\nPPTP is an older protocol that is common in the Microsoft world.  It has a lot of security issues, but it is still popular because the client is built into Windows, and easy to use.",
+      "parentUuid": "f4eeca6c_8c6f50af",
+      "range": {
+        "startLine": 39884,
+        "startChar": 19,
+        "endLine": 39884,
+        "endChar": 29
+      },
+      "revId": "4514252f165160ac7f0e91e488ec5750d962c945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
