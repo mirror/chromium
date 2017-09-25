@@ -145,6 +145,11 @@ void SecurityStateTabHelper::DidFinishNavigation(
         "warning has been added to the URL bar. For more information, see "
         "https://goo.gl/y8SRRv.");
   }
+  if (net::IsCertStatusError(security_info.cert_status) &&
+      !net::IsCertStatusMinorError(security_info.cert_status)) {
+    UMA_HISTOGRAM_BOOLEAN("interstitial.ssl.visited_site_after_warning",
+                          VisitedSiteAfterWarning::VISITED_SITE_AFTER_WARNING);
+  }
 }
 
 void SecurityStateTabHelper::WebContentsDestroyed() {
