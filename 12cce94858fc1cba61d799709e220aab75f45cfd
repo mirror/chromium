@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f8ee14_e7ba7a1f",
+        "filename": "sql/connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-25T17:24:59Z",
+      "side": 1,
+      "message": "Does this have advantages over DCHECK(poisoned_) \u003c\u003c ... ?\n\n(honest question, haven\u0027t seen this pattern before)\n\nSame for all \"DLOG_IF(DCHECK, \" below.",
+      "revId": "12cce94858fc1cba61d799709e220aab75f45cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

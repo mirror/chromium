@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "250315e0_840d2b39",
+        "filename": "sql/connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-25T17:24:59Z",
+      "side": 1,
+      "message": "I wish there was a bug here that\u0027d say why this wasn\u0027t done. I don\u0027t have the background for why this code is the way it is... at some point, I suppose I\u0027ll try to turn it into a LOG(FATAL) and see crashes come out.\n\nUntil then, the diff below seems the right way to achieve this CL\u0027s goal.",
+      "parentUuid": "bab42ae4_6a53ba16",
+      "revId": "1f4c0528b719c8c839db0c195e6b1dbd1d774f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38465d5_cbf7f71b",
         "filename": "sql/connection.cc",
         "patchSetId": 1
