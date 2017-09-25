@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "b787edea_a27fc79a",
+        "filename": "chrome/browser/vr/elements/hit_target.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-25T14:36:40Z",
+      "side": 1,
+      "message": "Do you see HitTarget having subclasses? If not, final?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bf08771_cf52d406",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 3
