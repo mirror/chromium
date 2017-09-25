@@ -786,6 +786,7 @@ class AutofillMetrics {
   // autofill is triggered. Addresses matching something the user has types are
   // always offered, regardless of how recently they have been used.
   static void LogNumberOfAddressesSuppressedForDisuse(size_t num_profiles);
+  static void LogNumberOfAddressesDeletedForDisuse(size_t num_profiles);
 
   // Log the number of Autofill address suggestions presented to the user when
   // filling a form.
