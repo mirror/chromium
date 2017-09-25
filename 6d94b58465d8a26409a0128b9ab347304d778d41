@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cafa391b_ec44e4e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed since this is used in non-test code.",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075e27c6_562c3deb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Instead of exposing this and the native method, can you add a Java method changeSitePermissionForTesting(int type, int setting) which calls nativeOnSitePermissionChanged()?",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08780e84_5bc85f35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Instead of exposing members directly, can you add getter methods that are visible for testing for this and the permission list?\n\n@VisibleForTesting\nvoid LinearLayout getContainerForTesting();",
+      "range": {
+        "startLine": 272,
+        "startChar": 5,
+        "endLine": 272,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71c2e9b_1c030500",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "You only need @VisibleForTesting if the method is never called outside of test code. This one and the one on the constructor shouldn\u0027t be needed. :)",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c669f78_563f3d06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Nit: remove extra space",
+      "range": {
+        "startLine": 587,
+        "startChar": 23,
+        "endLine": 587,
+        "endChar": 24
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee2bfb1_23cd39dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "@links usually don\u0027t have the #bit, just the name of the member it\u0027s linked to.",
+      "range": {
+        "startLine": 587,
+        "startChar": 32,
+        "endLine": 587,
+        "endChar": 53
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70804b2_48033c8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Can this be called createOrClearDisplayedPermissionsList() ?",
+      "range": {
+        "startLine": 591,
+        "startChar": 17,
+        "endLine": 591,
+        "endChar": 46
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dfc3a1_429a3a3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Remove the # bit",
+      "range": {
+        "startLine": 601,
+        "startChar": 8,
+        "endLine": 601,
+        "endChar": 29
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a679ced2_d81b03bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "I think this should return String",
+      "range": {
+        "startLine": 626,
+        "startChar": 12,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403105d3_0199cf75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "I think this can be:\n\nSpannableStringBuilder builder \u003d new SpannableStringBuilder();\nbuilder.append(permission.name);\nbuilder.append(\" – \"); // en-dash.\nbuilder.append(mContext.getString(statusStringResource));\n\n// Set the permission name to be bolded.\nbuilder.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),\n    0, permission.name.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);",
+      "range": {
+        "startLine": 628,
+        "startChar": 7,
+        "endLine": 634,
+        "endChar": 65
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811b2bea_25830f16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "builder.toString();",
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174857e3_2a8dbb90",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/page_info/PageInfoPopupTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Can you use an EmbeddedServerTestRule?",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0412f890_2c2e0602",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/page_info/PageInfoPopupTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T06:58:23Z",
+      "side": 1,
+      "message": "Perhaps assert that the permission switch is checked at this point?",
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
