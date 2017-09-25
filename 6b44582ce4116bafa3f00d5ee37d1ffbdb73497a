@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a6178d1d_53f5dd5e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T01:47:09Z",
+      "side": 1,
+      "message": "I think HitTest should be one instead of selection or others. Setting\nselection is done by default action of mouse/touch events, press, move/drag,\nand release.",
+      "parentUuid": "18dc43bd_ea0bb0b3",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34570912_cb630c09",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
@@ -85,6 +103,24 @@
       "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d836568_b89199a6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-25T01:47:09Z",
+      "side": 1,
+      "message": "Got it. Thanks for explanation.",
+      "parentUuid": "c6c9f021_41636e39",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
