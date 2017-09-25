@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "4716679f_95bcf433",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-25T14:53:04Z",
+      "side": 1,
+      "message": "Page, Pixels before zoom, Pixels after zoom, viewport, device. Yep, 5 spaces.",
+      "parentUuid": "9938ce45_08819c94",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9825b2ef_beb32762",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 6
@@ -307,6 +325,24 @@
       "side": 1,
       "message": "I mean:\n\nFPDF_BOOL success \u003d FPDFDest_GetLocationInPage(...);\n\nIf |success| is false, you can\u0027t count on has_* to be valid.",
       "parentUuid": "f1c643f4_75c2bc5e",
+      "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ca6901e_ec9eee6a",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-09-25T14:53:04Z",
+      "side": 1,
+      "message": "Ah, right. Done.",
+      "parentUuid": "c61df6e2_f92df4cf",
       "revId": "abf17485808df6e12d2ef5f91215b92ae5647730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
