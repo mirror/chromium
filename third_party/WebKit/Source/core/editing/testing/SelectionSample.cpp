@@ -63,6 +63,7 @@ class Parser final {
       HTMLElement* element,
       const std::string& selection_text) {
     element->SetInnerHTMLFromString(String::FromUTF8(selection_text.c_str()));
+    ConvertTemplatesToShadowRoots(*element);
     Traverse(element);
     if (anchor_node_ && focus_node_) {
       return typename SelectionTemplate<Strategy>::Builder()
@@ -120,12 +121,19 @@ class Parser final {
   }
 
   void HandleElementNode(Element* element) {
+    if (ShadowRoot* shadow_root = element->ShadowRootIfV1()) {
+      Node* shadow_runner = shadow_root->firstChild();
+      HandleContainerNode(shadow_runner);
+    }
     Node* runner = element->firstChild();
-    while (runner) {
-      Node* const next_sibling = runner->nextSibling();
-      // |Traverse()| may remove |runner|.
-      Traverse(runner);
-      runner = next_sibling;
+    HandleContainerNode(runner);
+  }
+
+  void HandleContainerNode(Node* current_node) {
+    while (current_node) {
+      Node* const next_sibling = current_node->nextSibling();
+      Traverse(current_node);
+      current_node = next_sibling;
     }
   }
 
