@@ -140,13 +140,14 @@ void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
           "OTS parsing error: " + font_->OtsParsingMessage()));
   }
 
+  bool was_cancelled = font_->GetResourceError().IsCancellation();
   font_->RemoveClient(this);
   font_ = nullptr;
 
   PruneTable();
   if (face_) {
     font_selector_->FontFaceInvalidated();
-    face_->FontLoaded(this);
+    face_->FontLoaded(this, was_cancelled);
   }
 }
 
