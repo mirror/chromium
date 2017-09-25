@@ -4,6 +4,7 @@
 
 #include "ui/accessibility/ax_event_generator.h"
 
+#include "base/stl_util.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_role_properties.h"
 
@@ -50,22 +51,38 @@ AXEventGenerator::TargetedEvent AXEventGenerator::Iterator::operator*() const {
   return AXEventGenerator::TargetedEvent(map_iter_->first, *set_iter_);
 }
 
+AXEventGenerator::AXEventGenerator() : tree_(nullptr) {}
+
 AXEventGenerator::AXEventGenerator(AXTree* tree) : tree_(tree) {
-  DCHECK(tree_);
-  tree_->SetDelegate(this);
+  if (tree_)
+    tree_->SetDelegate(this);
 }
 
 AXEventGenerator::~AXEventGenerator() {
-  DCHECK(tree_);
-  tree_->SetDelegate(nullptr);
+  if (tree_)
+    tree_->SetDelegate(nullptr);
 }
 
-void AXEventGenerator::Clear() {
+void AXEventGenerator::SetTree(AXTree* new_tree) {
+  if (tree_)
+    tree_->SetDelegate(nullptr);
+  tree_ = new_tree;
+  if (tree_)
+    tree_->SetDelegate(this);
+}
+
+void AXEventGenerator::ClearEvents() {
   tree_events_.clear();
 }
 
 void AXEventGenerator::AddEvent(ui::AXNode* node,
                                 AXEventGenerator::Event event) {
+  if (event == Event::LIVE_REGION_CHANGED &&
+      (base::ContainsKey(tree_events_[node], Event::ALERT) ||
+       base::ContainsKey(tree_events_[node], Event::LIVE_REGION_CREATED))) {
+    return;
+  }
+
   tree_events_[node].insert(event);
 }
 
@@ -162,6 +179,7 @@ void AXEventGenerator::OnIntAttributeChanged(AXTree* tree,
   switch (attr) {
     case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
       AddEvent(node, Event::ACTIVE_DESCENDANT_CHANGED);
+      active_descendant_changed_.push_back(node);
       break;
     case ui::AX_ATTR_CHECKED_STATE:
       AddEvent(node, Event::CHECKED_STATE_CHANGED);
@@ -302,6 +320,24 @@ void AXEventGenerator::OnAtomicUpdateFinished(
         AddEvent(live_root, Event::LIVE_REGION_CHANGED);
     }
   }
+
+  for (AXNode* node : active_descendant_changed_) {
+    AXNode* descendant = tree->GetFromId(
+        node->data().GetIntAttribute(ui::AX_ATTR_ACTIVEDESCENDANT_ID));
+    if (!descendant)
+      continue;
+    switch (descendant->data().role) {
+      case ui::AX_ROLE_MENU_ITEM:
+      case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
+      case ui::AX_ROLE_MENU_ITEM_RADIO:
+      case ui::AX_ROLE_MENU_LIST_OPTION:
+        AddEvent(descendant, Event::MENU_ITEM_SELECTED);
+        break;
+      default:
+        break;
+    }
+  }
+  active_descendant_changed_.clear();
 }
 
 }  // namespace ui
