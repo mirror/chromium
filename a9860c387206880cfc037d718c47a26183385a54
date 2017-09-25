@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72265158_7cae466d",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T12:38:24Z",
+      "side": 1,
+      "message": "nit: Unnecessary \"const\"?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "a9860c387206880cfc037d718c47a26183385a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
