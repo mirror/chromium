@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b782e817_c38374ab",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "Nit: looks a bit weird to start the comment with \u0027#defines\u0027.\n\nMaybe just remove it and leave the description about the prime number?",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192d15f8_9487a939",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "This is interesting.\n\nDoes it make any performance difference on ARMv8?\n\nLoads using NEON follow a different rule than normal loads.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1830dbd_aa1fc7f8",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "This probably will trigger a warning if compiling with -pedantic.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2206c169_ac3cd620",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "This looks a bit weird, even though newer compilers can be smart enough to generate the correct code.\n\nI suggest to instead do a vdupq_n_u32(0);",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31aac904_70d5dd2e",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "Why the spacing past the function name?",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a57f18f_6b8e6605",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7615d28_f8b3f34d",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "Would be nice to add the comment:\n /* D \u003d A+ B * 65536, see: https://en.wikipedia.org/wiki/Adler-32. */",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f1364a_479d3425",
+        "filename": "third_party/zlib/adler32_simd.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "For z_size_t you should need only zconf.h.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4201507_70cf3eb7",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T15:28:47Z",
+      "side": 1,
+      "message": "Said it earlier, better guard this behind a check for Intel.",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
