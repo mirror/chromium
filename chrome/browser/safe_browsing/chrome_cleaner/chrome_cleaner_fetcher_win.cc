@@ -217,7 +217,9 @@ void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
 
   const int response_code = source->GetResponseCode();
   UMA_HISTOGRAM_SPARSE_SLOWLY(
-      "SoftwareReporter.Cleaner.DownloadHttpResponseCode", response_code);
+      "SoftwareReporter.Cleaner.DownloadStatusErrorCode",
+      source->GetStatus().is_success() ? response_code
+                                       : source->GetStatus().error());
 
   if (response_code == net::HTTP_NOT_FOUND) {
     RecordDownloadStatusAndPostCallback(
