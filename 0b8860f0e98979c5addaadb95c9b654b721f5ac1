@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b4bd108_327a622b",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-25T16:50:19Z",
+      "side": 1,
+      "message": "Yes, Google keep has been one of the default apps for a long while, but it was never added to this list.\n\nhttps://cs.corp.google.com/chromeos_internal/src/private-overlays/chromeos-overlay/chromeos-base/chromeos-default-apps/files/external_extensions.json?q\u003df:external_extensions.json\u0026l\u003d59",
+      "parentUuid": "f72f4000_810bd63e",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40dbd4a1_a7d18291",
         "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92988be7_eed4a5bc",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-25T16:50:19Z",
+      "side": 1,
+      "message": "Yes, correct. The two chrome and android versions of the apps should never co-exist by default (unless the user explicitly installs the chrome version of the app). The apps in this list determine the default order only for new users (those with no sync). We\u0027re just saying that; for example; Play Movies (whether chrome or android) should go in this spot in this order.",
+      "parentUuid": "40dbd4a1_a7d18291",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e51557ea_ff3292a5",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-25T16:50:19Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "d3b0a63a_1c5b7fea",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c53e3a_29451a64",
         "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "002b1ed6_e444e3d9",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-25T16:50:19Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "23c53e3a_29451a64",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "285a810e_cc3411a3",
         "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26b0f47_674e6b09",
+        "filename": "chrome/browser/chromeos/extensions/default_app_order.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-25T16:50:19Z",
+      "side": 1,
+      "message": "Yes, the app Text was added to the default apps, but not to this list.\n\nhttps://cs.corp.google.com/chromeos_internal/src/private-overlays/chromeos-overlay/chromeos-base/chromeos-default-apps/files/external_extensions.json?q\u003df:external_extensions.json\u0026l\u003d72",
+      "parentUuid": "285a810e_cc3411a3",
+      "revId": "0b8860f0e98979c5addaadb95c9b654b721f5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
