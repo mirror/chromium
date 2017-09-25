@@ -39,7 +39,8 @@ enum QuicVersion {
   // http://sites/quic/adding-and-removing-versions
 };
 
-// On-the-wire representation of a QUIC version.
+// Representation of the on-the-wire QUIC version number. Will be written/read
+// to the wire in network-byte-order.
 using QuicVersionLabel = uint32_t;
 using QuicVersionLabelVector = std::vector<QuicVersionLabel>;
 

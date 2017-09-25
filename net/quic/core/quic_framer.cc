@@ -519,8 +519,19 @@ std::unique_ptr<QuicEncryptedPacket> QuicFramer::BuildVersionNegotiationPacket(
   }
 
   for (QuicVersion version : versions) {
-    if (!writer.WriteTag(QuicVersionToQuicVersionLabel(version))) {
-      return nullptr;
+    if (FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+      QUIC_FLAG_COUNT_N(
+          quic_reloadable_flag_quic_use_net_byte_order_version_label, 3, 10);
+      // TODO(rch): Use WriteUInt32() once QUIC_VERSION_38 and earlier
+      // are removed.
+      if (!writer.WriteTag(QuicEndian::HostToNet32(
+              QuicVersionToQuicVersionLabel(version)))) {
+        return nullptr;
+      }
+    } else {
+      if (!writer.WriteTag(QuicVersionToQuicVersionLabel(version))) {
+        return nullptr;
+      }
     }
   }
 
@@ -585,12 +596,20 @@ bool QuicFramer::ProcessVersionNegotiationPacket(
   DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
   // Try reading at least once to raise error if the packet is invalid.
   do {
-    QuicVersionLabel version;
-    if (!reader->ReadTag(&version)) {
+    QuicVersionLabel version_label;
+    if (!reader->ReadTag(&version_label)) {
       set_detailed_error("Unable to read supported version in negotiation.");
       return RaiseError(QUIC_INVALID_VERSION_NEGOTIATION_PACKET);
     }
-    public_header->versions.push_back(QuicVersionLabelToQuicVersion(version));
+    if (FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+      QUIC_FLAG_COUNT_N(
+          quic_reloadable_flag_quic_use_net_byte_order_version_label, 4, 10);
+      // TODO(rch): Use ReadUInt32() once QUIC_VERSION_38 and earlier
+      // are removed.
+      version_label = QuicEndian::NetToHost32(version_label);
+    }
+    public_header->versions.push_back(
+        QuicVersionLabelToQuicVersion(version_label));
   } while (!reader->IsDoneReading());
 
   visitor_->OnVersionNegotiationPacket(*public_header);
@@ -726,12 +745,24 @@ bool QuicFramer::AppendPacketHeader(const QuicPacketHeader& header,
 
   if (header.public_header.version_flag) {
     DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
-    QuicVersionLabel label = QuicVersionToQuicVersionLabel(quic_version_);
-    if (!writer->WriteTag(label)) {
-      return false;
+    QuicVersionLabel version_label =
+        QuicVersionToQuicVersionLabel(quic_version_);
+    if (FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+      QUIC_FLAG_COUNT_N(
+          quic_reloadable_flag_quic_use_net_byte_order_version_label, 5, 10);
+      // TODO(rch): Use WriteUInt32() once QUIC_VERSION_38 and earlier
+      // are removed.
+      if (!writer->WriteTag(QuicEndian::NetToHost32(version_label))) {
+        return false;
+      }
+    } else {
+      if (!writer->WriteTag(version_label)) {
+        return false;
+      }
     }
+
     QUIC_DVLOG(1) << ENDPOINT << "version = " << quic_version_ << ", label = '"
-                  << QuicVersionLabelToString(label) << "'";
+                  << QuicVersionLabelToString(version_label) << "'";
   }
 
   if (header.public_header.nonce != nullptr &&
@@ -848,6 +879,13 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
     if (!reader->ReadTag(&version_label)) {
       set_detailed_error("Unable to read protocol version.");
       return false;
+    }
+    if (FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+      QUIC_FLAG_COUNT_N(
+          quic_reloadable_flag_quic_use_net_byte_order_version_label, 6, 10);
+      // TODO(rch): Use ReadUInt32() once QUIC_VERSION_38 and earlier
+      // are removed.
+      version_label = QuicEndian::NetToHost32(version_label);
     }
 
     // If the version from the new packet is the same as the version of this

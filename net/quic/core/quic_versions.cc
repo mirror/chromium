@@ -7,12 +7,28 @@
 #include "net/quic/core/quic_error_codes.h"
 #include "net/quic/core/quic_tag.h"
 #include "net/quic/core/quic_types.h"
+#include "net/quic/platform/api/quic_endian.h"
+#include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
 
 using std::string;
 
 namespace net {
+namespace {
+
+// Constructs a version label from the 4 bytes such that the on-the-wire
+// order will be: d, c, b, a.
+QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    return MakeQuicTag(a, b, c, d);
+  }
+  QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_net_byte_order_version_label,
+                    1, 10);
+  return MakeQuicTag(d, c, b, a);
+}
+
+}  // namespace
 
 QuicVersionVector AllSupportedVersions() {
   QuicVersionVector supported_versions;
@@ -73,17 +89,17 @@ QuicVersionVector VersionOfIndex(const QuicVersionVector& versions, int index) {
 QuicVersionLabel QuicVersionToQuicVersionLabel(const QuicVersion version) {
   switch (version) {
     case QUIC_VERSION_35:
-      return MakeQuicTag('Q', '0', '3', '5');
+      return MakeVersionLabel('Q', '0', '3', '5');
     case QUIC_VERSION_37:
-      return MakeQuicTag('Q', '0', '3', '7');
+      return MakeVersionLabel('Q', '0', '3', '7');
     case QUIC_VERSION_38:
-      return MakeQuicTag('Q', '0', '3', '8');
+      return MakeVersionLabel('Q', '0', '3', '8');
     case QUIC_VERSION_39:
-      return MakeQuicTag('Q', '0', '3', '9');
+      return MakeVersionLabel('Q', '0', '3', '9');
     case QUIC_VERSION_41:
-      return MakeQuicTag('Q', '0', '4', '1');
+      return MakeVersionLabel('Q', '0', '4', '1');
     case QUIC_VERSION_42:
-      return MakeQuicTag('Q', '0', '4', '2');
+      return MakeVersionLabel('Q', '0', '4', '2');
     default:
       // This shold be an ERROR because we should never attempt to convert an
       // invalid QuicVersion to be written to the wire.
@@ -93,7 +109,12 @@ QuicVersionLabel QuicVersionToQuicVersionLabel(const QuicVersion version) {
 }
 
 string QuicVersionLabelToString(QuicVersionLabel version_label) {
-  return QuicTagToString(version_label);
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    return QuicTagToString(version_label);
+  }
+  QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_net_byte_order_version_label,
+                    2, 10);
+  return QuicTagToString(QuicEndian::HostToNet32(version_label));
 }
 
 QuicVersion QuicVersionLabelToQuicVersion(QuicVersionLabel version_label) {

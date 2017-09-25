@@ -27,8 +27,13 @@ TEST_F(QuicVersionsTest, QuicVersionToQuicVersionLabel) {
 #endif
 
   // Explicitly test a specific version.
-  EXPECT_EQ(MakeQuicTag('Q', '0', '3', '5'),
-            QuicVersionToQuicVersionLabel(QUIC_VERSION_35));
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    EXPECT_EQ(MakeQuicTag('Q', '0', '3', '5'),
+              QuicVersionToQuicVersionLabel(QUIC_VERSION_35));
+  } else {
+    EXPECT_EQ(MakeQuicTag('5', '3', '0', 'Q'),
+              QuicVersionToQuicVersionLabel(QUIC_VERSION_35));
+  }
 
   // Loop over all supported versions and make sure that we never hit the
   // default case (i.e. all supported versions should be successfully converted
@@ -67,18 +72,24 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToQuicVersion) {
 #endif
 
   // Explicitly test specific versions.
-  EXPECT_EQ(QUIC_VERSION_35,
-            QuicVersionLabelToQuicVersion(MakeQuicTag('Q', '0', '3', '5')));
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    EXPECT_EQ(QUIC_VERSION_35,
+              QuicVersionLabelToQuicVersion(MakeQuicTag('Q', '0', '3', '5')));
+  } else {
+    EXPECT_EQ(QUIC_VERSION_35,
+              QuicVersionLabelToQuicVersion(MakeQuicTag('5', '3', '0', 'Q')));
+  }
 
   for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
     QuicVersion version = kSupportedQuicVersions[i];
 
     // Get the label from the version (we can loop over QuicVersions easily).
-    QuicVersionLabel label = QuicVersionToQuicVersionLabel(version);
-    EXPECT_LT(0u, label);
+    QuicVersionLabel version_label = QuicVersionToQuicVersionLabel(version);
+    EXPECT_LT(0u, version_label);
 
     // Now try converting back.
-    QuicVersion label_to_quic_version = QuicVersionLabelToQuicVersion(label);
+    QuicVersion label_to_quic_version =
+        QuicVersionLabelToQuicVersion(version_label);
     EXPECT_EQ(version, label_to_quic_version);
     EXPECT_NE(QUIC_VERSION_UNSUPPORTED, label_to_quic_version);
   }
@@ -89,9 +100,15 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToQuicVersionUnsupported) {
 #if 0
   ScopedMockLog log(kDoNotCaptureLogsYet);
 #ifndef NDEBUG
-  EXPECT_CALL(log, Log(base_logging::INFO, _,
-                       "Unsupported QuicVersionLabel version: FAKE"))
-      .Times(1);
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    EXPECT_CALL(log, Log(base_logging::INFO, _,
+                         "Unsupported QuicVersionLabel version: FAKE"))
+        .Times(1);
+  } else {
+    EXPECT_CALL(log, Log(base_logging::INFO, _,
+                         "Unsupported QuicVersionLabel version: EKAF"))
+        .Times(1);
+  }
 #endif
   log.StartCapturingLogs();
 #endif
