@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efa4a54c_4d377b95",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03bd5581_42157d17",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 13
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "039ff0eb_6bd1a930",
         "filename": "components/metrics/file_metrics_provider.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T23:20:49Z",
       "side": 1,
       "message": "Does the filter callback actually need all of these params?  Having a big params object makes it tempting to pass that around everywhere, but that also makes it harder to see what data various pieces of code actually need.",
+      "range": {
+        "startLine": 486,
+        "startChar": 18,
+        "endLine": 486,
+        "endChar": 24
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd25d40_358aa842",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "It\u0027s all the information about the \"source\" that was originally used to configure the service so it seems a reasonable bit of information to provide back.  I won\u0027t need it for my first filter (which will need only the filename).\n\nI toyed with keeping the original Params object around, possibly as the base class of SourceInfo but it really wasn\u0027t clean.",
+      "parentUuid": "039ff0eb_6bd1a930",
       "range": {
         "startLine": 486,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "11c90d7f_0e37100e",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Important but not critical.  In the worst case, a file will get skipped because its stamp is equal to another file.  Because it\u0027s possible that a directory and its files are not writable by this process, only files with a stamp later than the last one uploaded will get processed.\n\nBut all of these uploads are \"best effort\" to begin with so a failure in the rare condition where two processes write and close files within the same second in the same directory (currently a single process only writes one file at a time to a directory), one of those files will get skipped.\n\nI have some thoughts about how to improve this.  While the original design allowed for externally-managed directories (e.g. setup would remove old files), that turned out not to be necessary since though the files created by setup are not owned by the Chrome process and cannot be written, they can be deleted.\n\nWith the assumption that \"delete\" always be possible, I can completely remove the timestamp checks, or perhaps use it only if delete fails.\n\nIt just hasn\u0027t been worth the effort to code that.",
+      "parentUuid": "069356e4_0f29c9b9",
+      "range": {
+        "startLine": 493,
+        "startChar": 38,
+        "endLine": 493,
+        "endChar": 0
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70d84ad3_26c8abbf",
         "filename": "components/metrics/file_metrics_provider.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-22T23:20:49Z",
       "side": 1,
       "message": "This seems equivalent to using default argument values, which seems to be allowed by the style guide [1].  Could you please do that instead of adding all of this boilerplate?\n\n[1] https://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cdc2fb_62182cdf",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Done.  Weren\u0027t default arguments banned at one point?  \u003cconfused look\u003e",
+      "parentUuid": "70d84ad3_26c8abbf",
       "range": {
         "startLine": 126,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "02882b14_c51b0613",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Done.  I was trying to avoid copying paths from temporary variables that were about to be destroyed.",
+      "parentUuid": "6dc8c33b_a6fe89f6",
+      "range": {
+        "startLine": 130,
+        "startChar": 33,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f21b27e_2cb85f9d",
         "filename": "components/metrics/file_metrics_provider.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2f94cb_08a3194b",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f21b27e_2cb85f9d",
+      "range": {
+        "startLine": 217,
+        "startChar": 15,
+        "endLine": 217,
+        "endChar": 23
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4e67a2ac_64ddc3ce",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Assert/expect won\u0027t give you a back-trace so I\u0027ve generally used DCHECK inside called (helper) methods in order to know what line in the actual test is failing.\n\nAlso, ASSERT returns something specific so can\u0027t be used in most helper methods.",
+      "parentUuid": "e3ce557a_d4bcdcd5",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b27127_d4e51b97",
         "filename": "components/metrics/file_metrics_provider_unittest.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-22T23:20:49Z",
       "side": 1,
       "message": "Same comment.  Also, could you please swap the order of the args, so that the code reads as \"assert foo \u003e 0\" rather than \"assert 0 \u003c foo\"?",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 12
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22825178_485dae48",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-25T14:05:58Z",
+      "side": 1,
+      "message": "Same reasons.\n\nIt\u0027s also standard practice to always put the checked-against value first and the checked value second.  The failure message text expects this (though I agree that it\u0027s harder to read here).",
+      "parentUuid": "08b27127_d4e51b97",
       "range": {
         "startLine": 223,
         "startChar": 4,
