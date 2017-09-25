@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b846ec81_1a5c59e1",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T21:55:12Z",
+      "side": 1,
+      "message": "This should be in the outer comment. Make the change server-side.",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "e418d4b57b31787bbf53522c799f1723b79781d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968d288a_0039acac",
+        "filename": "components/metrics/proto/translate_event.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T21:55:12Z",
+      "side": 1,
+      "message": "Should use \"Next tag:\" for consistency with outer proto and others. Make the change server-side.",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "e418d4b57b31787bbf53522c799f1723b79781d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
