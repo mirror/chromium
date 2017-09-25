@@ -16,6 +16,24 @@
       "revId": "cd2310879836936b4235cbbb3ed8c5cf313aa924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213e4e0b_7bd85766",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T19:55:00Z",
+      "side": 1,
+      "message": "Done, I left a TODO for schenney@.",
+      "parentUuid": "c2b3ec8c_ad9e5904",
+      "revId": "cd2310879836936b4235cbbb3ed8c5cf313aa924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
