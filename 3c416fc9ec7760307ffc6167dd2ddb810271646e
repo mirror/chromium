@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "58c7d6d5_f6e00085",
+        "filename": "base/android/java/src/org/chromium/base/PackageUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T19:38:37Z",
+      "side": 1,
+      "message": "who\u0027s reviewing this?\n\nI\u0027m not base owner, but if I were, I\u0027d say this needs to fail more loudly",
+      "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d4eeaa_da0ce5f0",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-25T19:38:37Z",
+      "side": 1,
+      "message": "this condition is nigh impossible to parse, can you break this up individual if statements, each with a comment\n\nif (!from_touch \u0026\u0026 !from_selecton_adjustment)\n  return false\nif (!params.is_editable \u0026\u0026 params.selection_text.empty())\n  return false",
+      "revId": "3c416fc9ec7760307ffc6167dd2ddb810271646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "032634a3_c99489a9",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionPopupControllerTest.java",
         "patchSetId": 8
