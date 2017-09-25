@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3154d73d_7904cfc7",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-25T06:42:29Z",
+      "side": 1,
+      "message": "jigsaw is OK. simple_with_icon is just 4 colours, so looks a bit like a UI glitch :)",
+      "parentUuid": "9f5dcc58_2be862a0",
+      "revId": "6b49ecc44f8b4f1d6f7f5563f1cb276ef38d30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f6ac210_5702182a",
         "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
         "patchSetId": 8
