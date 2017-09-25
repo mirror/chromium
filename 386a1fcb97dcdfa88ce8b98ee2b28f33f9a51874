@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d913d586_dc6d4433",
+        "filename": "chrome/browser/chromeos/login/signin/auth_sync_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "Why not reference?",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64265106_76bd61f0",
+        "filename": "chrome/browser/chromeos/login/signin/auth_sync_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "Why not reference?",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb10890_c6ccd28e",
+        "filename": "chrome/browser/chromeos/login/signin/auth_sync_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "SyncService for consistency?",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e313b77a_6a6b4169",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "This is just DelayedFakeGaia, right?",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde3d199_ad1bb4fc",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "Do you know why this is a scoped_refptr?",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560a9745_a429b172",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-25T22:27:22Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "386a1fcb97dcdfa88ce8b98ee2b28f33f9a51874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
