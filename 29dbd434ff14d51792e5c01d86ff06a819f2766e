@@ -472,6 +472,29 @@
     },
     {
       "key": {
+        "uuid": "33d5eed8_642681be",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1244955
+      },
+      "writtenOn": "2017-09-25T21:14:27Z",
+      "side": 1,
+      "message": "I didn\u0027t think this was a valid scenario, i.e.: the syncing account is not the default one in the browser.",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 20
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8043e4d3_839eb56a",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
