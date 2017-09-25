@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d515bf4b_8a8f940e",
+        "filename": "components/error_page_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-09-25T14:22:46Z",
+      "side": 1,
+      "message": "This should still say \"DNS lookup\", not \"ip look up\" -- we\u0027re using DNS to look up the IP, but there are other ways (/etc/hosts, for example) that we could look up an IP instead.",
+      "range": {
+        "startLine": 153,
+        "startChar": 98,
+        "endLine": 153,
+        "endChar": 100
+      },
+      "revId": "d2cf55808f7754af43387490107b041a5c9a0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261d54b9_9da2459d",
+        "filename": "components/error_page_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-09-25T14:22:46Z",
+      "side": 1,
+      "message": "\"could not be found\" is kind of vague, but that\u0027s not your problem. I\u0027m happy with the \"server IP address\", which is what you changed.",
+      "range": {
+        "startLine": 154,
+        "startChar": 126,
+        "endLine": 154,
+        "endChar": 144
+      },
+      "revId": "d2cf55808f7754af43387490107b041a5c9a0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
