@@ -135,15 +135,14 @@ class ServiceUtilityProcessHost : public content::ChildProcessHostDelegate {
   // Messages handlers:
   void OnRenderPDFPagesToMetafilesPageCount(int page_count);
   void OnRenderPDFPagesToMetafilesPageDone(bool success, float scale_factor);
-  void OnGetPrinterCapsAndDefaultsSucceeded(
+  void OnGetPrinterCapsAndDefaults(
+      bool success,
       const std::string& printer_name,
       const printing::PrinterCapsAndDefaults& caps_and_defaults);
-  void OnGetPrinterCapsAndDefaultsFailed(const std::string& printer_name);
-  void OnGetPrinterSemanticCapsAndDefaultsSucceeded(
-      const std::string& printer_name,
-      const printing::PrinterSemanticCapsAndDefaults& caps_and_defaults);
-  void OnGetPrinterSemanticCapsAndDefaultsFailed(
-      const std::string& printer_name);
+  // void OnGetPrinterSemanticCapsAndDefaults(
+  //     bool success,
+  //     const std::string& printer_name,
+  //     const printing::PrinterSemanticCapsAndDefaults& caps_and_defaults);
 
   std::unique_ptr<content::ChildProcessHost> child_process_host_;
   base::Process process_;

@@ -284,6 +284,8 @@ class ServiceManagerConnectionImpl::IOThreadContext
 
   void CreateService(service_manager::mojom::ServiceRequest request,
                      const std::string& name) override {
+    LOG(ERROR) << "** JAY ** ServiceManagerConnectionImpl CreateService "
+               << name;
     DCHECK(io_thread_checker_.CalledOnValidThread());
     auto it = request_handlers_.find(name);
     if (it == request_handlers_.end()) {

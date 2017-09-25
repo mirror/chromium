@@ -3,7 +3,9 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//printing/features/features.gni")
+import("//services/service_manager/public/service_manifest.gni")
 
 static_library("service") {
   sources = [
@@ -38,6 +40,8 @@ static_library("service") {
     "cloud_print/printer_job_handler.h",
     "cloud_print/printer_job_queue_handler.cc",
     "cloud_print/printer_job_queue_handler.h",
+    "mojo/service_manager_context.cc",
+    "mojo/service_manager_context.h",
     "net/service_url_request_context_getter.cc",
     "net/service_url_request_context_getter.h",
     "service_ipc_server.cc",
@@ -64,8 +68,13 @@ static_library("service") {
     "//mojo/edk/system",
     "//net",
     "//printing",
+    "//services/service_manager",
     "//skia",
     "//third_party/webrtc_overrides",
+  ]
+
+  public_deps = [
+    ":service_names",
   ]
 
   if (use_cups && !is_chromeos) {
@@ -79,4 +88,17 @@ static_library("service") {
   } else {
     sources += [ "cloud_print/print_system_dummy.cc" ]
   }
+}
+
+service_manifest("packaged_services_manifest") {
+  name = "chrome_service_packaged_services"
+  source = "mojo/chrome_service_packaged_services_manifest.json"
+  packaged_services =
+      [ "//chrome/utility:printer_capabilities_retriever_manifest" ]
+}
+
+mojom("service_names") {
+  sources = [
+    "mojo/service_names.mojom",
+  ]
 }

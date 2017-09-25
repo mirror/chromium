@@ -81,9 +81,10 @@ void Connector::BindInterface(const Identity& target,
     }
   }
 
+  auto callback = base::Bind(&Connector::RunStartServiceCallback,
+                             weak_factory_.GetWeakPtr());
   connector_->BindInterface(target, interface_name, std::move(interface_pipe),
-                            base::Bind(&Connector::RunStartServiceCallback,
-                                       weak_factory_.GetWeakPtr()));
+                            callback);
 }
 
 std::unique_ptr<Connector> Connector::Clone() {
@@ -182,6 +183,7 @@ bool Connector::BindConnectorIfNecessary() {
 
 void Connector::RunStartServiceCallback(mojom::ConnectResult result,
                                         const Identity& user_id) {
+  LOG(ERROR) << "** JAY ** Connector::RunStartServiceCallback";
   if (!start_service_callback_.is_null())
     start_service_callback_.Run(result, user_id);
 }

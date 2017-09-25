@@ -438,6 +438,8 @@ void ChildThreadImpl::Init(const Options& options) {
   IPC::Logging::GetInstance();
 #endif
 
+  LOG(ERROR) << "** JAY ** ChildThreadImpl::Init";
+
   channel_ =
       IPC::SyncChannel::Create(this, ChildProcess::current()->io_task_runner(),
                                ChildProcess::current()->GetShutDownEvent());
@@ -456,6 +458,9 @@ void ChildThreadImpl::Init(const Options& options) {
     std::string service_request_token =
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kServiceRequestChannelToken);
+    LOG(ERROR) << "** JAY ** ChildThreadImpl::Init service token="
+               << service_request_token;
+
     if (!service_request_token.empty() && invitation) {
       service_request_pipe =
           invitation->ExtractMessagePipe(service_request_token);

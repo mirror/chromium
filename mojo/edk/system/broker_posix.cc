@@ -38,6 +38,7 @@ Channel::MessagePtr WaitForBrokerMessage(
   bool error = false;
   if (read_result < 0) {
     PLOG(ERROR) << "Recvmsg error";
+    DCHECK(false);
     error = true;
   } else if (static_cast<size_t>(read_result) != message->data_num_bytes()) {
     LOG(ERROR) << "Invalid node channel message";
