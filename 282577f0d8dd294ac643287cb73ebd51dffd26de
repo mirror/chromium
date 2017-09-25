@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f046b26a_0a6d0a64",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T11:49:52Z",
+      "side": 1,
+      "message": "nit: Follow either of the following styles (either of // or /* */).\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/Report.idl\n\nor\n\nhttps://cs.chromium.org/chromium/src/ppapi/api/dev/ppb_audio_output_dev.idl",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdc33e2_b7ae1c1d",
         "filename": "tools/idl_parser/test_parser/namespace_web.idl",
         "patchSetId": 5
