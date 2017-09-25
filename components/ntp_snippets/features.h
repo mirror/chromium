@@ -27,6 +27,8 @@ namespace ntp_snippets {
 extern const base::Feature* const kAllFeatures[];
 
 // Features to turn individual providers/categories on/off.
+// DO NOT DEPEND on these features directly. They are enabled conditionally. Use
+// helpers in chrome/browser/ntp_snippets/dependent_features.h instead.
 // TODO(jkrcal): Rename to kRemoteSuggestionsFeature.
 extern const base::Feature kArticleSuggestionsFeature;
 extern const base::Feature kBookmarkSuggestionsFeature;
