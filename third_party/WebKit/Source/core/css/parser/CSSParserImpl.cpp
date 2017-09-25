@@ -914,11 +914,23 @@ StyleRule* CSSParserImpl::ConsumeStyleRule(CSSParserTokenRange prelude,
   if (!selector_list.IsValid())
     return nullptr;  // Parse error, invalid selector list
 
+  for (const auto* s = selector_list.First(); s;
+       s = CSSSelectorList::Next(*s)) {
+    for (const CSSSelector* current = s; current;
+         current = current->TagHistory()) {
+      const CSSSelector::PseudoType type(current->GetPseudoType());
+      if (type == CSSSelector::kPseudoBefore ||
+          type == CSSSelector::kPseudoAfter) {
+        if (lazy_state_)
+          lazy_state_->SetHasBeforeOrAfter();
+      }
+    }
+  }
+
   // TODO(csharrison): How should we lazily parse css that needs the observer?
   if (observer_wrapper_) {
     ObserveSelectors(*observer_wrapper_, prelude);
-  } else if (lazy_state_ &&
-             lazy_state_->ShouldLazilyParseProperties(selector_list, block)) {
+  } else if (lazy_state_ && !lazy_state_->IsEmptyBlock(block)) {
     DCHECK(style_sheet_);
     return StyleRule::CreateLazy(std::move(selector_list),
                                  lazy_state_->CreateLazyParser(block));
