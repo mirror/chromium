@@ -16,6 +16,24 @@
       "revId": "ac1986b32351290a8a90d688f5604bca8d3a464b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6cadb2_7d89c9fc",
+        "filename": "third_party/WebKit/LayoutTests/svg/custom/cross-referenced-resources.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T21:56:49Z",
+      "side": 0,
+      "message": "Sorry, I mistakenly uploaded a version just for local testing. Reverted.",
+      "parentUuid": "2695de67_423da997",
+      "revId": "ac1986b32351290a8a90d688f5604bca8d3a464b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
