@@ -62,6 +62,7 @@ ObjectProxy::ObjectProxy(Bus* bus,
       object_path_(object_path),
       ignore_service_unknown_errors_(
           options & IGNORE_SERVICE_UNKNOWN_ERRORS) {
+  CHECK(object_path_.IsValid());
 }
 
 ObjectProxy::~ObjectProxy() {
