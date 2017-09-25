@@ -29,6 +29,7 @@
  */
 
 #include "modules/serviceworkers/ServiceWorker.h"
+#include "public/platform/modules/serviceworker/service_worker_state.mojom-blink.h"
 
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
@@ -42,7 +43,6 @@
 #include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerState.h"
 
 namespace blink {
 
@@ -68,7 +68,8 @@ void ServiceWorker::postMessage(ScriptState* script_state,
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
-  if (handle_->ServiceWorker()->GetState() == kWebServiceWorkerStateRedundant) {
+  if (handle_->ServiceWorker()->GetState() ==
+      mojom::blink::ServiceWorkerState::kRedundant) {
     exception_state.ThrowDOMException(kInvalidStateError,
                                       "ServiceWorker is in redundant state.");
     return;
@@ -97,24 +98,23 @@ String ServiceWorker::scriptURL() const {
 
 String ServiceWorker::state() const {
   switch (handle_->ServiceWorker()->GetState()) {
-    case kWebServiceWorkerStateUnknown:
+    case mojom::blink::ServiceWorkerState::kUnknown:
       // The web platform should never see this internal state
       NOTREACHED();
       return "unknown";
-    case kWebServiceWorkerStateInstalling:
+    case mojom::blink::ServiceWorkerState::kInstalling:
       return "installing";
-    case kWebServiceWorkerStateInstalled:
+    case mojom::blink::ServiceWorkerState::kInstalled:
       return "installed";
-    case kWebServiceWorkerStateActivating:
+    case mojom::blink::ServiceWorkerState::kActivating:
       return "activating";
-    case kWebServiceWorkerStateActivated:
+    case mojom::blink::ServiceWorkerState::kActivated:
       return "activated";
-    case kWebServiceWorkerStateRedundant:
+    case mojom::blink::ServiceWorkerState::kRedundant:
       return "redundant";
-    default:
-      NOTREACHED();
-      return g_null_atom;
   }
+  NOTREACHED();
+  return g_null_atom;
 }
 
 ServiceWorker* ServiceWorker::From(
@@ -127,7 +127,7 @@ bool ServiceWorker::HasPendingActivity() const {
   if (was_stopped_)
     return false;
   return handle_->ServiceWorker()->GetState() !=
-         kWebServiceWorkerStateRedundant;
+         mojom::blink::ServiceWorkerState::kRedundant;
 }
 
 void ServiceWorker::ContextDestroyed(ExecutionContext*) {
