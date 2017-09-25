@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/hash.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -85,6 +86,16 @@ TouchCalibrationData::TouchCalibrationData(
     const TouchCalibrationData& calibration_data)
     : point_pairs(calibration_data.point_pairs),
       bounds(calibration_data.bounds) {}
+
+// static
+uint32_t TouchCalibrationData::GenerateTouchDeviceIdentifier(
+    const std::string& device_name,
+    uint16_t vendor_id,
+    uint16_t product_id) {
+  std::string hash_str = device_name + "-" + base::UintToString(vendor_id) +
+                         "-" + base::UintToString(product_id);
+  return base::Hash(hash_str);
+}
 
 bool TouchCalibrationData::operator==(TouchCalibrationData other) const {
   if (bounds != other.bounds)
@@ -374,9 +385,13 @@ void ManagedDisplayInfo::Copy(const ManagedDisplayInfo& native_info) {
     else if (!native_info.overscan_insets_in_dip_.IsEmpty())
       overscan_insets_in_dip_ = native_info.overscan_insets_in_dip_;
 
+    // This is legacy calibration data. This will eventually be stored in
+    // |touch_calibration_data_map_|.
     has_touch_calibration_data_ = native_info.has_touch_calibration_data_;
     if (has_touch_calibration_data_)
       touch_calibration_data_ = native_info.touch_calibration_data_;
+
+    touch_calibration_data_map_ = native_info.touch_calibration_data_map_;
 
     rotations_ = native_info.rotations_;
     configured_ui_scale_ = native_info.configured_ui_scale_;
@@ -515,6 +530,48 @@ void ManagedDisplayInfo::SetTouchCalibrationData(
     const TouchCalibrationData& touch_calibration_data) {
   has_touch_calibration_data_ = true;
   touch_calibration_data_ = touch_calibration_data;
+}
+
+void ManagedDisplayInfo::SetTouchCalibrationData(
+    uint32_t touch_device_identifier,
+    const TouchCalibrationData& touch_calibration_data) {
+  touch_calibration_data_map_[touch_device_identifier] = touch_calibration_data;
+}
+
+const TouchCalibrationData& ManagedDisplayInfo::GetTouchCalibrationData(
+    uint32_t touch_device_identifier) const {
+  DCHECK(HasTouchCalibrationData(touch_device_identifier));
+
+  // If the system only has legacy calibration data, return that.
+  if (!touch_calibration_data_map_.count(touch_device_identifier) &&
+      has_touch_calibration_data()) {
+    return touch_calibration_data_;
+  }
+
+  return touch_calibration_data_map_.at(touch_device_identifier);
+}
+
+void ManagedDisplayInfo::SetTouchCalibrationDataMap(
+    const std::map<uint32_t, TouchCalibrationData>& data_map) {
+  touch_calibration_data_map_ = data_map;
+}
+
+bool ManagedDisplayInfo::HasTouchCalibrationData(
+    uint32_t touch_device_identifier) const {
+  return touch_calibration_data_map_.count(touch_device_identifier) ||
+         has_touch_calibration_data();
+}
+
+void ManagedDisplayInfo::ClearTouchCalibrationData(
+    uint32_t touch_device_identifier) {
+  touch_calibration_data_map_.erase(touch_device_identifier);
+}
+
+void ManagedDisplayInfo::ClearAllTouchCalibrationData() {
+  // Clear any legacy touch caliration data.
+  clear_touch_calibration_data();
+
+  touch_calibration_data_map_.clear();
 }
 
 }  // namespace display
