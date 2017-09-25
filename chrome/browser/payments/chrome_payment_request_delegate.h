@@ -31,6 +31,7 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   void ShowErrorMessage() override;
   autofill::PersonalDataManager* GetPersonalDataManager() override;
   const std::string& GetApplicationLocale() const override;
+  bool IsBrowserWindowActive() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;
   const GURL& GetLastCommittedURL() const override;
