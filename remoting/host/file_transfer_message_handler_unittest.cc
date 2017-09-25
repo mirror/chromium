@@ -5,12 +5,12 @@
 #include "remoting/host/file_transfer_message_handler.h"
 
 #include <memory>
-#include <queue>
 #include <string>
 #include <utility>
 #include <vector>
 
 #include "base/bind.h"
+#include "base/containers/queue.h"
 #include "base/memory/ptr_util.h"
 #include "net/base/io_buffer.h"
 #include "remoting/base/compound_buffer.h"
@@ -55,13 +55,13 @@ class FakeFileProxyWrapper : public FileProxyWrapper {
   void RunStatusCallback(
       base::Optional<protocol::FileTransferResponse_ErrorCode> error);
   const std::string& filename();
-  std::queue<std::vector<char>> chunks();
+  base::queue<std::vector<char>> chunks();
 
  private:
   State state_ = kUninitialized;
   StatusCallback status_callback_;
   std::string filename_;
-  std::queue<std::vector<char>> chunks_;
+  base::queue<std::vector<char>> chunks_;
 };
 
 class FileTransferMessageHandlerTest : public testing::Test {
@@ -146,7 +146,7 @@ const std::string& FakeFileProxyWrapper::filename() {
   return filename_;
 }
 
-std::queue<std::vector<char>> FakeFileProxyWrapper::chunks() {
+base::queue<std::vector<char>> FakeFileProxyWrapper::chunks() {
   return chunks_;
 }
 
@@ -185,20 +185,20 @@ TEST_F(FileTransferMessageHandlerTest, WriteTwoChunks) {
   file_proxy_wrapper_ptr->RunStatusCallback(
       base::Optional<protocol::FileTransferResponse_ErrorCode>());
 
-  std::queue<std::vector<char>> actual_chunks =
+  base::queue<std::vector<char>> actual_chunks =
       file_proxy_wrapper_ptr->chunks();
 
   fake_pipe_->ClosePipe();
   file_proxy_wrapper_ptr = nullptr;
 
-  std::queue<std::vector<char>> expected_chunks;
+  base::queue<std::vector<char>> expected_chunks;
   expected_chunks.push(
       std::vector<char>(kTestDataOne.begin(), kTestDataOne.end()));
   expected_chunks.push(
       std::vector<char>(kTestDataTwo.begin(), kTestDataTwo.end()));
   ASSERT_EQ(expected_chunks, actual_chunks);
 
-  const std::queue<std::string>& actual_sent_messages =
+  const base::queue<std::string>& actual_sent_messages =
       fake_pipe_->sent_messages();
   protocol::FileTransferResponse expected_response;
   expected_response.set_state(
@@ -206,7 +206,7 @@ TEST_F(FileTransferMessageHandlerTest, WriteTwoChunks) {
   expected_response.set_total_bytes_written(fake_request_.filesize());
   std::string expected_response_string;
   expected_response.SerializeToString(&expected_response_string);
-  std::queue<std::string> expected_sent_messages;
+  base::queue<std::string> expected_sent_messages;
   expected_sent_messages.push(expected_response_string);
   ASSERT_EQ(expected_sent_messages, actual_sent_messages);
 }
@@ -237,13 +237,13 @@ TEST_F(FileTransferMessageHandlerTest, FileProxyError) {
   fake_pipe_->ClosePipe();
   file_proxy_wrapper_ptr = nullptr;
 
-  const std::queue<std::string>& actual_sent_messages =
+  const base::queue<std::string>& actual_sent_messages =
       fake_pipe_->sent_messages();
   protocol::FileTransferResponse expected_response;
   expected_response.set_error(fake_error);
   std::string expected_response_string;
   expected_response.SerializeToString(&expected_response_string);
-  std::queue<std::string> expected_sent_messages;
+  base::queue<std::string> expected_sent_messages;
   expected_sent_messages.push(expected_response_string);
   ASSERT_EQ(expected_sent_messages, actual_sent_messages);
 }
