@@ -23,6 +23,10 @@ ExtensionService* MockExtensionSystem::extension_service() {
   return nullptr;
 }
 
+ExtensionRegistrar* MockExtensionSystem::extension_registrar() {
+  return nullptr;
+}
+
 RuntimeData* MockExtensionSystem::runtime_data() {
   return nullptr;
 }
