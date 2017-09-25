@@ -46,6 +46,30 @@
       "revId": "259574bcc010ae23029142eb364f541692a81078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682f44f9_7c8be9a8",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-25T21:13:50Z",
+      "side": 1,
+      "message": "ah, I saw the other CL -- EVP_marshal_digest_algorithm",
+      "parentUuid": "6f3c729f_328a813e",
+      "range": {
+        "startLine": 902,
+        "startChar": 32,
+        "endLine": 902,
+        "endChar": 50
+      },
+      "revId": "259574bcc010ae23029142eb364f541692a81078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
