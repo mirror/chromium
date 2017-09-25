@@ -106,8 +106,8 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
 
   // These methods add or remove listener for a specific message routing ID.
   // Used for refcounting, each holder of this object must AddRoute and
-  // RemoveRoute. This object should be allocated on the heap; when no
-  // listeners own it any more, it will delete itself.
+  // RemoveRoute. This object should be allocated on the heap; when no listeners
+  // own it any more, it will delete itself.
   virtual void AddRoute(int32_t routing_id, IPC::Listener* listener) = 0;
   virtual void RemoveRoute(int32_t routing_id) = 0;
 
@@ -174,9 +174,9 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // tests or single-process mode, this will actually represent the current
   // process.
   //
-  // NOTE: this is not necessarily valid immediately after calling Init, as
-  // Init starts the process asynchronously.  It's guaranteed to be valid after
-  // the first IPC arrives or RenderProcessReady was called on a
+  // NOTE: this is not necessarily valid immediately after calling Init, as init
+  // starts the process asynchronously.  It's guaranteed to be valid after the
+  // first IPC arrives or RenderProcessReady was called on a
   // RenderProcessHostObserver for this. At that point, IsReady() returns true.
   virtual base::ProcessHandle GetHandle() const = 0;
 
@@ -223,9 +223,9 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Schedules the host for deletion and removes it from the all_hosts list.
   virtual void Cleanup() = 0;
 
-  // Track the count of pending views that are being swapped back in.  Called
-  // by listeners to register and unregister pending views to prevent the
-  // process from exiting.
+  // Track the count of pending views that are being swapped back in. Called by
+  // listeners to register and unregister pending views to prevent the process
+  // from exiting.
   virtual void AddPendingView() = 0;
   virtual void RemovePendingView() = 0;
 
@@ -247,8 +247,8 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Returns true if the process can be abnormally terminated.
   virtual bool SuddenTerminationAllowed() const = 0;
 
-  // Returns how long the child has been idle. The definition of idle
-  // depends on when a derived class calls mark_child_process_activity_time().
+  // Returns how long the child has been idle. The definition of idle depends on
+  // when a derived class calls mark_child_process_activity_time().
   // This is a rough indicator and its resolution should not be better than
   // 10 milliseconds.
   virtual base::TimeDelta GetChildProcessIdleTime() const = 0;
@@ -410,13 +410,13 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // crbug.com/738634.
   virtual bool HostHasNotBeenUsed() = 0;
 
-  // Returns the current number of active views in this process.  Excludes
-  // any RenderViewHosts that are swapped out.
+  // Returns the current number of active views in this process. Excludes any
+  // RenderViewHosts that are swapped out.
   size_t GetActiveViewCount();
 
   // Posts |task|, if this RenderProcessHost is ready or when it becomes ready
-  // (see RenderProcessHost::IsReady method).  The |task| might not run at all
-  // (e.g. if |render_process_host| is destroyed before becoming ready).  This
+  // (see RenderProcessHost::IsReady method). The |task| might not run at all
+  // (e.g. if |render_process_host| is destroyed before becoming ready). This
   // function can only be called on the browser's UI thread (and the |task| will
   // be posted back on the UI thread).
   void PostTaskWhenProcessIsReady(base::OnceClosure task);
@@ -446,13 +446,12 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   static void WarmupSpareRenderProcessHost(
       content::BrowserContext* browser_context);
 
-  // Flag to run the renderer in process.  This is primarily
-  // for debugging purposes.  When running "in process", the
-  // browser maintains a single RenderProcessHost which communicates
-  // to a RenderProcess which is instantiated in the same process
-  // with the Browser.  All IPC between the Browser and the
-  // Renderer is the same, it's just not crossing a process boundary.
-
+  // Flag to run the renderer in process.
+  // This is primarily for debugging purposes. When running "in process", the
+  // browser maintains a single RenderProcessHost which communicates to a
+  // RenderProcess which is instantiated in the same process with the Browser.
+  // All IPC between the Browser and the Renderer is the same, it's just not
+  // crossing a process boundary.
   static bool run_renderer_in_process();
 
   // This also calls out to ContentBrowserClient::GetApplicationLocale and
@@ -463,8 +462,8 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // that each host may not be active, and therefore may have nullptr channels.
   static iterator AllHostsIterator();
 
-  // Returns the RenderProcessHost given its ID.  Returns nullptr if the ID does
-  // not correspond to a live RenderProcessHost.
+  // Returns the RenderProcessHost given its ID.
+  // Returns nullptr if the ID does not correspond to a live RenderProcessHost.
   static RenderProcessHost* FromID(int render_process_id);
 
   // Returns whether the process-per-site model is in use (globally or just for
@@ -488,8 +487,8 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
       content::BrowserContext* browser_context, const GURL& site_url);
 
   // Overrides the default heuristic for limiting the max renderer process
-  // count.  This is useful for unit testing process limit behaviors.  It is
-  // also used to allow a command line parameter to configure the max number of
+  // count. This is useful for unit testing process limit behaviors. It is also
+  // used to allow a command line parameter to configure the max number of
   // renderer processes and should only be called once during startup.
   // A value of zero means to use the default heuristic.
   static void SetMaxRendererProcessCount(size_t count);
