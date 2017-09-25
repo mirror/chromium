@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "938781e4_09a33435",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "Good point, well made sir.\nDone.",
+      "parentUuid": "d79cafc4_b3c16473",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f001e28e_36dba0a0",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T11:51:44Z",
       "side": 1,
       "message": "this could race against another thread on the system that\u0027s modifying the registry, no? if so, it\u0027s possible that |size_needed| is no longer sufficient for this second call. how about doing this in a loop up to some sane number of times (5?) to protect against such races?",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08f8995_ec7aaf8b",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "Done.\n- It doesn\u0027t hurt to add a few tries in there.  It\u0027ll be super rare for a concurrent modify to happen that only results in a bigger buffer required.  base::win::reg doesn\u0027t do this - but I\u0027m happy to let NtReg be as stable as possible.\n- I\u0027ve added a do/while to the three APIs that could run into this: QueryRegEnumerationInfo, QueryRegSubkey, and QueryRegKeyValue.",
+      "parentUuid": "f001e28e_36dba0a0",
       "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "15448f7f_42ff331b",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7958e7_76f3c404",
+      "range": {
+        "startLine": 1172,
+        "startChar": 53,
+        "endLine": 1172,
+        "endChar": 64
+      },
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e067f4_2d9da32d",
         "filename": "chrome_elf/nt_registry/nt_registry.h",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0093006a_4d88f3c4",
+        "filename": "chrome_elf/nt_registry/nt_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74e067f4_2d9da32d",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17850e01_c4612ebc",
         "filename": "chrome_elf/nt_registry/nt_registry.h",
         "patchSetId": 3
@@ -87,6 +165,30 @@
       "writtenOn": "2017-09-20T11:51:44Z",
       "side": 1,
       "message": "nit: out_subkey_count -\u003e subkey_count\n(here and in .cc)",
+      "range": {
+        "startLine": 235,
+        "startChar": 48,
+        "endLine": 235,
+        "endChar": 64
+      },
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c853f1c_bb58786e",
+        "filename": "chrome_elf/nt_registry/nt_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "So, I was attempting to be consistent with the rest of the naming convention in this file.  All the other APIs that return values are named with \"out_\".\n\nIs this a bad thing?  Against our convention?\nIt wouldn\u0027t be too bad to rename all of them if you think it\u0027s worth doing.",
+      "parentUuid": "17850e01_c4612ebc",
       "range": {
         "startLine": 235,
         "startChar": 48,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "8a815d1a_a398c7a7",
+        "filename": "chrome_elf/nt_registry/nt_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "4b13bf4d_52b3bb64",
+      "range": {
+        "startLine": 242,
+        "startChar": 34,
+        "endLine": 242,
+        "endChar": 49
+      },
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4148d1ec_b21e581a",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 3
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "88846723_c1446498",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "Done.  Removed the cleanup in any tests using NtRegistryTest harness, and adjusted everything to asserts.",
+      "parentUuid": "4148d1ec_b21e581a",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1104e647_43e50d47",
         "filename": "sandbox/win/src/nt_internals.h",
         "patchSetId": 3
@@ -150,6 +294,24 @@
       "writtenOn": "2017-09-20T11:51:44Z",
       "side": 1,
       "message": "nit: add a trailing comma so that this line doesn\u0027t need to be touched if another item is added down the road.",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed9523f_5ef9fc5f",
+        "filename": "sandbox/win/src/nt_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-25T23:09:58Z",
+      "side": 1,
+      "message": "The enum defines from ntdll don\u0027t use the trailing commas.  All the defines in nt_internals.h are copied straight from windows .h files, so don\u0027t have them.\n\nFor consistency (and Windows defines) I\u0027m inclined to leave this file as is!",
+      "parentUuid": "1104e647_43e50d47",
       "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
