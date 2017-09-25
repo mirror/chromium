@@ -15,9 +15,11 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_connection_handler.h"
+#include "chromeos/network/network_device_handler.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
@@ -33,6 +35,11 @@ namespace {
 
 constexpr int kGetNetworksListLimit = 100;
 
+// List of packet types that the Wifi device monitors to wake the device once
+// container asks to enable WakeOnNotifiation.
+const std::vector<chromeos::ShillDeviceClient::WakeOnPacketType>
+    kWakeupPacketTypes = {chromeos::ShillDeviceClient::WakeOnPacketType::TCP};
+
 chromeos::NetworkStateHandler* GetStateHandler() {
   return chromeos::NetworkHandler::Get()->network_state_handler();
 }
@@ -44,6 +51,10 @@ chromeos::ManagedNetworkConfigurationHandler* GetManagedConfigurationHandler() {
 
 chromeos::NetworkConnectionHandler* GetNetworkConnectionHandler() {
   return chromeos::NetworkHandler::Get()->network_connection_handler();
+}
+
+chromeos::NetworkDeviceHandler* GetNetworkDeviceHandler() {
+  return chromeos::NetworkHandler::Get()->network_device_handler();
 }
 
 bool IsDeviceOwner() {
@@ -407,6 +418,12 @@ void ArcNetHostImpl::OnInstanceClosed() {
   GetStateHandler()->RemoveObserver(this, FROM_HERE);
   GetNetworkConnectionHandler()->RemoveObserver(this);
   observing_network_state_ = false;
+  if (wake_on_packet_enabled_) {
+    GetNetworkDeviceHandler()->RemoveWifiWakeOnPacketsOfType(
+        kWakeupPacketTypes, base::Bind(&base::DoNothing),
+        chromeos::network_handler::ErrorCallback());
+  }
+  wake_on_packet_enabled_ = false;
 }
 
 void ArcNetHostImpl::GetNetworksDeprecated(
@@ -909,6 +926,20 @@ void ArcNetHostImpl::AndroidVpnStateChanged(mojom::ConnectionStateType state) {
       base::Bind(&ArcVpnErrorCallback));
 }
 
+void ArcNetHostImpl::SetWakeOnPacketState(bool is_enabled) {
+  if (is_enabled) {
+    GetNetworkDeviceHandler()->AddWifiWakeOnPacketsOfType(
+        kWakeupPacketTypes, base::Bind(&base::DoNothing),
+        chromeos::network_handler::ErrorCallback());
+    wake_on_packet_enabled_ = true;
+  } else {
+    GetNetworkDeviceHandler()->RemoveWifiWakeOnPacketsOfType(
+        kWakeupPacketTypes, base::Bind(&base::DoNothing),
+        chromeos::network_handler::ErrorCallback());
+    wake_on_packet_enabled_ = false;
+  }
+}
+
 void ArcNetHostImpl::DisconnectArcVpn() {
   arc_vpn_service_path_.clear();
 
@@ -958,6 +989,12 @@ void ArcNetHostImpl::OnShuttingDown() {
   GetStateHandler()->RemoveObserver(this, FROM_HERE);
   GetNetworkConnectionHandler()->RemoveObserver(this);
   observing_network_state_ = false;
+  if (wake_on_packet_enabled_) {
+    GetNetworkDeviceHandler()->RemoveWifiWakeOnPacketsOfType(
+        kWakeupPacketTypes, base::Bind(&base::DoNothing),
+        chromeos::network_handler::ErrorCallback());
+  }
+  wake_on_packet_enabled_ = false;
 }
 
 }  // namespace arc

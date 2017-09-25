@@ -80,6 +80,8 @@ class ArcNetHostImpl : public KeyedService,
 
   void AndroidVpnStateChanged(mojom::ConnectionStateType state) override;
 
+  void SetWakeOnPacketState(bool is_enabled) override;
+
   std::unique_ptr<base::DictionaryValue> TranslateVpnConfigurationToOnc(
       const mojom::AndroidVpnConfiguration& cfg);
 
@@ -150,6 +152,8 @@ class ArcNetHostImpl : public KeyedService,
   // state changes.
   bool observing_network_state_ = false;
 
+  // True if Android has requested to enable wake on packet.
+  bool wake_on_packet_enabled_ = false;
   std::string cached_service_path_;
   std::string cached_guid_;
 
