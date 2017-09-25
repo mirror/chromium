@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "ui/display/manager/display_manager.h"
-
 #include "ash/accelerators/accelerator_commands.h"
 #include "ash/ash_switches.h"
 #include "ash/display/display_configuration_controller.h"
@@ -37,8 +36,10 @@
 #include "ui/display/display_layout_builder.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/display_switches.h"
+#include "ui/display/manager/chromeos/display_change_observer.h"
 #include "ui/display/manager/display_layout_store.h"
 #include "ui/display/manager/display_manager_utilities.h"
+#include "ui/display/manager/fake_display_snapshot.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
@@ -2947,6 +2948,67 @@ TEST_F(DisplayManagerTest, AccelerometerSupport) {
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_AVAILABLE,
             screen->GetPrimaryDisplay().accelerometer_support());
+}
+
+namespace {
+
+std::unique_ptr<display::DisplayMode> MakeDisplayMode(int width, int height) {
+  return base::MakeUnique<display::DisplayMode>(gfx::Size(width, height), false,
+                                                60);
+}
+
+}  // namespace
+
+TEST_F(DisplayManagerTest, DisconnectedInternalUpdateDisplayInfo) {
+  int64_t internal_id = display::test::DisplayManagerTestApi(display_manager())
+                            .SetFirstDisplayAsInternalDisplay();
+  display::Screen* screen = display::Screen::GetScreen();
+  DCHECK(screen);
+  Shell* shell = Shell::Get();
+  display::DisplayManager* display_manager = shell->display_manager();
+  display::DisplayChangeObserver observer(shell->display_configurator(),
+                                          display_manager);
+  display::DisplayConfigurator::DisplayStateList outputs;
+  std::unique_ptr<display::DisplaySnapshot> internal_snapshot =
+      display::FakeDisplaySnapshot::Builder()
+          .SetId(internal_id)
+          .SetType(display::DISPLAY_CONNECTION_TYPE_INTERNAL)
+          .SetDPI(210)  // 1.6f
+          .SetNativeMode(MakeDisplayMode(1366, 768))
+          .Build();
+  EXPECT_FALSE(internal_snapshot->current_mode());
+
+  outputs.push_back(internal_snapshot.get());
+  std::unique_ptr<display::DisplaySnapshot> external_snapshot =
+      display::FakeDisplaySnapshot::Builder()
+          .SetId(123)
+          .SetNativeMode(MakeDisplayMode(1366, 768))
+          .AddMode(MakeDisplayMode(1366, 768))
+          .Build();
+  external_snapshot->set_current_mode(external_snapshot->native_mode());
+
+  outputs.push_back(external_snapshot.get());
+  observer.GetStateForDisplayIds(outputs);
+  observer.OnDisplayModeChanged(outputs);
+
+  EXPECT_EQ(1u, display_manager->GetNumDisplays());
+  EXPECT_TRUE(display_manager->IsActiveDisplayId(123));
+  EXPECT_FALSE(display_manager->IsActiveDisplayId(internal_id));
+
+  const display::ManagedDisplayInfo& display_info =
+      display_manager->GetDisplayInfo(display::Display::InternalDisplayId());
+  bool has_default = false;
+  for (auto& mode : display_info.display_modes()) {
+    if (mode->is_default()) {
+      has_default = true;
+      EXPECT_EQ(1.6f, mode->device_scale_factor());
+    }
+  }
+
+  EXPECT_TRUE(has_default);
+  const display::ManagedDisplayInfo& info =
+      display_manager->GetDisplayInfo(internal_id);
+  EXPECT_EQ(1.6f, info.device_scale_factor());
 }
 
 namespace {

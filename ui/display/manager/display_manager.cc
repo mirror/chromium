@@ -207,6 +207,12 @@ void DisplayManager::InitDefaultDisplay() {
   OnNativeDisplaysChanged(info_list);
 }
 
+void DisplayManager::UpdateInternalDisplay(
+    const ManagedDisplayInfo& display_info) {
+  DCHECK(Display::HasInternalDisplay());
+  InsertAndUpdateDisplayInfo(display_info);
+}
+
 void DisplayManager::RefreshFontParams() {
 #if defined(OS_CHROMEOS)
   // Use the largest device scale factor among currently active displays. Non
@@ -632,6 +638,7 @@ void DisplayManager::OnNativeDisplaysChanged(
           Display::InternalDisplayId(),
           l10n_util::GetStringUTF8(IDS_DISPLAY_NAME_INTERNAL),
           false /*Internal display must not have overscan */);
+
       internal_display_info.SetBounds(gfx::Rect(0, 0, 800, 600));
       display_info_[Display::InternalDisplayId()] = internal_display_info;
     } else {
