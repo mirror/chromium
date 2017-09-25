@@ -16,6 +16,24 @@
       "revId": "b0f795bb20a91585f24639bfa048eb7c507d7d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a224f3_70d34e1e",
+        "filename": "breakpad/src",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-25T13:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948cc57c_eb5fca7d",
+      "revId": "b0f795bb20a91585f24639bfa048eb7c507d7d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
