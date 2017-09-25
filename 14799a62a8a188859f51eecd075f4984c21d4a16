@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e95c75c0_3ae78fdd",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-25T16:34:52Z",
+      "side": 1,
+      "message": "As delta is now always the same, there is no need to take a parameter.",
+      "range": {
+        "startLine": 844,
+        "startChar": 70,
+        "endLine": 844,
+        "endChar": 75
+      },
+      "revId": "14799a62a8a188859f51eecd075f4984c21d4a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
