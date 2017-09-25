@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f659f77_4b81938b",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-25T21:33:04Z",
+      "side": 1,
+      "message": "Typo: contains",
+      "revId": "7ce441c3321eb20f66e26d13c0cba90adcd2b797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe6c403_7992fb3e",
+        "filename": "chrome/browser/profiles/profile_impl_io_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-25T21:33:04Z",
+      "side": 1,
+      "message": "Typo: Wraps",
+      "revId": "7ce441c3321eb20f66e26d13c0cba90adcd2b797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc037991_094e935c",
+        "filename": "content/network/http_server_properties_pref_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-25T21:33:04Z",
+      "side": 1,
+      "message": "Typo: created",
+      "revId": "7ce441c3321eb20f66e26d13c0cba90adcd2b797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2f4b2d_d026c25a",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-25T21:33:04Z",
+      "side": 1,
+      "message": "Talking to tsepez, it sounds like this code will be sandboxed in the future in such a way that it can open files, but only when inside the profile directory. So this code is OK because it does not violate that expectation, which we will be enforcing in the future.",
+      "revId": "7ce441c3321eb20f66e26d13c0cba90adcd2b797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe17b274_f1a8c2e8",
+        "filename": "content/network/network_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-25T21:33:04Z",
+      "side": 1,
+      "message": "Typo: needs",
+      "revId": "7ce441c3321eb20f66e26d13c0cba90adcd2b797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
