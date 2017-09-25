@@ -16,6 +16,24 @@
       "revId": "e811ff84025ec6fb3a6ed54ea56cf73e4eca5b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c9b22a_4000dc5f",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-25T20:47:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether you\u0027re asking for further removal, or just not making it implied by. Since it\u0027s listed in stable features, and it\u0027s hard to check the web for references, I\u0027ll presume just removing the implied_by.\nOtherwise, as with other things, let\u0027s make the indirect assertion through a different (subsequent) change.",
+      "parentUuid": "26226170_8da0845a",
+      "revId": "e811ff84025ec6fb3a6ed54ea56cf73e4eca5b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
