@@ -15,6 +15,10 @@ AnswerCardContents::~AnswerCardContents() {
     result.OnContentsDestroying();
 }
 
+void AnswerCardContents::UnsetDelegate() {
+  delegate_ = nullptr;
+}
+
 void AnswerCardContents::SetDelegate(Delegate* delegate) {
   DCHECK(delegate);
   DCHECK(!delegate_);

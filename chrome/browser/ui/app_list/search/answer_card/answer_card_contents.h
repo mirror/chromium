@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_UI_APP_LIST_SEARCH_ANSWER_CARD_ANSWER_CARD_CONTENTS_H_
 #define CHROME_BROWSER_UI_APP_LIST_SEARCH_ANSWER_CARD_ANSWER_CARD_CONTENTS_H_
 
+#include <string>
 #include "base/observer_list.h"
 
 class GURL;
@@ -51,6 +52,8 @@ class AnswerCardContents {
   // Returns the view associated with the contents.
   virtual views::View* GetView() = 0;
 
+  // Unsets the delegate when finished.
+  void UnsetDelegate();
   // Sets the delegate to process contents-related events.
   void SetDelegate(Delegate* delegate);
   // Registers a result that will be notified of input events for the view.
