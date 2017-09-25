@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f05ef9d_4a8ad216",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-25T02:36:10Z",
+      "side": 1,
+      "message": "This will make a new static map every time a block is constructed, which isn\u0027t what we want.\n\nTry a helper method like this:\n\n  typedef HashMap\u003cLayoutBlockFlow*, int\u003e LayoutPassCountMap;\n\n  static LayoutPassCountMap\u0026 GetLayoutPassCountMap() {\n    DEFINE_STATIC_LOCAL(LayoutPassCountMap, map, ());\n    return map;\n  }",
+      "range": {
+        "startLine": 259,
+        "startChar": 32,
+        "endLine": 259,
+        "endChar": 39
+      },
+      "revId": "780e474882a6f761b881d0a5d6afb82a9d3cbade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a8d3cd_2293b45c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-25T02:36:10Z",
+      "side": 1,
+      "message": "Extract this into a private helper method like IncrementLayoutPassCount.\n\nAlso I think it should be called before SimplifiedLayout() in the UpdateBlockLayout method, so that simplified layouts are counted like normal layouts.",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 417,
+        "endChar": 25
+      },
+      "revId": "780e474882a6f761b881d0a5d6afb82a9d3cbade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750c9daf_0251dc8f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCountTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-25T02:36:10Z",
+      "side": 1,
+      "message": "Use ToLayoutBlockFlow(...) instead of C-style cast.",
+      "range": {
+        "startLine": 20,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "780e474882a6f761b881d0a5d6afb82a9d3cbade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f90afd5_993833c1",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-25T02:36:10Z",
+      "side": 1,
+      "message": "Add a descriptive comment here like \"When enabled, tracks the number of times each LayoutBlock goes through layout.  For testing purposes only.\"",
+      "revId": "780e474882a6f761b881d0a5d6afb82a9d3cbade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
