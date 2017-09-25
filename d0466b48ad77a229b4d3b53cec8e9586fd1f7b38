@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bc9be9_c0f74b45",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T22:09:17Z",
+      "side": 1,
+      "message": "Should there even be any ELF files outside of $INSTALLDIR, AKA /opt/google/chrome(-$CHANNEL) ?",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c715804_41c28db0",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T22:09:17Z",
+      "side": 1,
+      "message": "Use double quotes on the left side consistently for single equal comparisons?",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ca4f01_60c8f46b",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T22:09:17Z",
+      "side": 1,
+      "message": "Trying to think about how to organize all this so it is easier to understand. Maybe put this first in the if-else block, so we know the rest are all files? e.g.\n\nif (is_dir) { ... }\nelse if (is_symlink) { ... }\nelse if (is chrome-sandbox) { ... }\n...\nelse { // check_is_file }",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
