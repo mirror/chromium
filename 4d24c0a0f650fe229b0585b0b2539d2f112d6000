@@ -22,6 +22,30 @@
       "revId": "4d24c0a0f650fe229b0585b0b2539d2f112d6000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ae743b_baab8def",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-09-25T12:48:28Z",
+      "side": 1,
+      "message": "\"need\",no, \"want\", I think so. We certainly need \u003cpre\u003e otherwise it throws away the line breaks. The @code seems to slightly change the layout in the generated Javadoc, and I think makes it look marginally better.",
+      "parentUuid": "174866ca_decc1d0e",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "4d24c0a0f650fe229b0585b0b2539d2f112d6000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
