@@ -1343,4 +1343,103 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event
+    name="TabManager.BackgroundTabOpening.ForegroundTab.ExpectedTaskQueueingDuration">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The expected queueing duration of tasks in a foreground tab when the browser
+    is in background tab opening session, which is the duration from the time
+    when the browser starts to open background tabs until the time when browser
+    has finished loading those tabs or paused loading due to memory pressure. A
+    new session starts when the browser resumes loading background tabs when
+    memory pressure returns to normal. The metric reflects the responsiveness of
+    a tab. A lower value means the tab will respond to inputs faster. This
+    metric is equal to RendererScheduler.ExpectedTaskQueueingDuration. It is
+    emitted once for all tasks in each 1000-ms window. The metric is not
+    recorded when the session overlaps with session restore.
+  </summary>
+  <metric name="BackgroundTabLoadingCount">
+    <summary>
+      Number of background tabs that are loading.
+    </summary>
+  </metric>
+  <metric name="BackgroundTabPendingCount">
+    <summary>
+      Number of background tabs that are pending.
+    </summary>
+  </metric>
+  <metric name="ExpectedTaskQueueingDuration">
+    <summary>
+      Duration in MS for expected task queueing duration.
+    </summary>
+  </metric>
+  <metric name="SequenceId">
+    <summary>
+      The ID of this event's sequence in current background tab opening session.
+    </summary>
+  </metric>
+  <metric name="SessionId">
+    <summary>
+      The ID of this background tab opening session.
+    </summary>
+  </metric>
+  <metric name="SystemTabCount">
+    <summary>
+      Number of all tabs of the system, which includes all browser windows.
+    </summary>
+  </metric>
+</event>
+
+<event name="TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadTime"
+    singular="True">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The tab load time of a tab that is switched to when the browser is in
+    background tab opening session, which is the duration from the time when the
+    browser starts to open background tabs until the time when browser has
+    finished loading those tabs or paused loading due to memory pressure. A new
+    session starts when the browser resumes loading background tabs when memory
+    pressure returns to normal. Tab load time is defined as the time between
+    when the user switches to a backround tab, and the time when that tab
+    finishes loading in the foreground. If the user switches away before the tab
+    finishes loading, a metric will not be recorded unless the user switches
+    back, in which case the tab load time is measured from that point in time.
+    The metric is only recorded when a tab is switched to from another tab
+    within the same tabstrip. As a result, the initial forground tab is not
+    included in this metric since it was not switched to from another tab. The
+    metric is not recorded when the session overlaps with session restore.
+  </summary>
+  <metric name="BackgroundTabLoadingCount">
+    <summary>
+      Number of background tabs that are loading.
+    </summary>
+  </metric>
+  <metric name="BackgroundTabPendingCount">
+    <summary>
+      Number of background tabs that are pending.
+    </summary>
+  </metric>
+  <metric name="SequenceId">
+    <summary>
+      The ID of this event's sequence in current background tab opening session.
+    </summary>
+  </metric>
+  <metric name="SessionId">
+    <summary>
+      The ID of this background tab opening session.
+    </summary>
+  </metric>
+  <metric name="SystemTabCount">
+    <summary>
+      Number of all tabs of the system, which includes all browser windows.
+    </summary>
+  </metric>
+  <metric name="UntilTabIsLoaded">
+    <summary>
+      The tab switch load time in MS. A tab is loaded after receiving
+      WebContentsObserver::DidStopLoading signal.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>
