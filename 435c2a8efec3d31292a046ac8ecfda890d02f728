@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "88ac0841_4ae55bac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-25T21:40:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da7829a7_d5159b8a",
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35882aa2_b9fa1a5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 6
@@ -184,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "c38a3445_2f93d043",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-25T21:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd372ae9_905e691b",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d53c6762_2c0cc783",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 6
@@ -219,6 +261,30 @@
       "side": 1,
       "message": "But we don\u0027t know how widespread this is, right? I.e. how many MAIN intents get dispatched by ChromeLauncherActivity?",
       "parentUuid": "d53c6762_2c0cc783",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "435c2a8efec3d31292a046ac8ecfda890d02f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66452795_7e4f8947",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-25T21:40:00Z",
+      "side": 1,
+      "message": "Done. Only FirstRun happens for MAIN intents. DocumentMode migration and TabbedMode happen for all intents, and AsyncInitializationActivity doesn\u0027t do DocumentMode migration anymore.\n\nBut AsyncInitializationActivity still does its own FirstRun check, because it relies on requiresFirstRunToBeCompleted() and shouldPreferLightweightFre() methods, which are overridden in (different) subclasses. Not sure what to do here - in theory we could do instanceof checks in the dispatcher, but it looks hairy.",
+      "parentUuid": "1c461024_54924b17",
       "range": {
         "startLine": 106,
         "startChar": 26,
