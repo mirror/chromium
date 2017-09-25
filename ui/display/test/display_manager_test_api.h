@@ -24,6 +24,7 @@ class Size;
 namespace display {
 class DisplayManager;
 class ManagedDisplayInfo;
+struct TouchCalibrationData;
 
 namespace test {
 
@@ -54,6 +55,11 @@ class DISPLAY_EXPORT DisplayManagerTestApi {
 
   // Sets the touch support for |display_id|.
   void SetTouchSupport(int64_t display_id, Display::TouchSupport touch_support);
+
+  // Sets the legacy touch calibration data for display with |display_id|.
+  void SetLegacyTouchCalibrationData(
+      int64_t display_id,
+      const TouchCalibrationData& calibration_data);
 
  private:
   friend class ScopedSetInternalDisplayId;
