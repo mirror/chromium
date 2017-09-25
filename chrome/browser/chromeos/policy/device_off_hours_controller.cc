@@ -119,25 +119,6 @@ base::Optional<std::string> GetTimezone(
   return base::make_optional(container.timezone());
 }
 
-// Convert input WeeklyTime structure to GMT timezone considering daylight time.
-// |gmt_offset| is time in milliseconds which is added to GMT to get input time.
-off_hours::WeeklyTime ConvertWeeklyTimeToGmt(
-    const off_hours::WeeklyTime& weekly_time,
-    int gmt_offset) {
-  // Convert time in milliseconds to GMT time considering day offset.
-  int gmt_time = weekly_time.milliseconds() - gmt_offset;
-  // Make |time_in_gmt| positive number (add number of milliseconds per week)
-  // for easier evaluation.
-  gmt_time += kWeek.InMilliseconds();
-  // Get milliseconds from the start of the day.
-  int gmt_milliseconds = gmt_time % kDay.InMilliseconds();
-  int day_offset = gmt_time / kDay.InMilliseconds();
-  // Convert day of week to GMT timezone considering week is cyclic. +/- 1 is
-  // because day of week is from 1 to 7.
-  int gmt_day_of_week = (weekly_time.day_of_week() + day_offset - 1) % 7 + 1;
-  return off_hours::WeeklyTime(gmt_day_of_week, gmt_milliseconds);
-}
-
 // Convert time intervals from |timezone| to GMT timezone.
 std::vector<off_hours::OffHoursInterval> ConvertIntervalsToGmt(
     const std::vector<off_hours::OffHoursInterval>& intervals,
@@ -148,8 +129,8 @@ std::vector<off_hours::OffHoursInterval> ConvertIntervalsToGmt(
     return {};
   std::vector<off_hours::OffHoursInterval> gmt_intervals;
   for (const auto& interval : intervals) {
-    auto gmt_start = ConvertWeeklyTimeToGmt(interval.start(), gmt_offset);
-    auto gmt_end = ConvertWeeklyTimeToGmt(interval.end(), gmt_offset);
+    auto gmt_start = interval.start().ConvertToGmt(gmt_offset);
+    auto gmt_end = interval.end().ConvertToGmt(gmt_offset);
     gmt_intervals.push_back(off_hours::OffHoursInterval(gmt_start, gmt_end));
   }
   return gmt_intervals;
