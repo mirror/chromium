@@ -1080,6 +1080,7 @@ static_library("browser_tests_runner") {
     deps += [
       "//chrome/app/mash:embedded_services",
       "//mash/session/public/interfaces:constants",
+      "//mojo/edk/embedder:headers",
       "//services/service_manager/background:lib",
     ]
 
