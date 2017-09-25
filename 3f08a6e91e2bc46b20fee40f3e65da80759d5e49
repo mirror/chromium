@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "2e611444_a777540e",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-25T20:51:20Z",
+      "side": 1,
+      "message": "I think we would like to run the tests on bots too. That would allow us to detect any negative trends assuming we have appropriate tools to compare numbers between the runs.",
+      "parentUuid": "2e04d50f_c8468647",
+      "revId": "3f08a6e91e2bc46b20fee40f3e65da80759d5e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9757217e_c722a46a",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 3
@@ -347,6 +365,30 @@
       "side": 1,
       "message": "Is there a preferred one to use?",
       "parentUuid": "4153de65_8efddcaa",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 11
+      },
+      "revId": "3f08a6e91e2bc46b20fee40f3e65da80759d5e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd11634_7302adf6",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-25T20:51:20Z",
+      "side": 1,
+      "message": "The preferred one is LOG(...)",
+      "parentUuid": "b974d15f_85b3a007",
       "range": {
         "startLine": 190,
         "startChar": 2,
