@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81dcb4d_4dd4ae10",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:27:44Z",
+      "side": 1,
+      "message": "This should be an \u0026\u0026 right?",
+      "range": {
+        "startLine": 941,
+        "startChar": 34,
+        "endLine": 941,
+        "endChar": 36
+      },
+      "revId": "165171f16ede1ddbb2975c6239f3fc03b0ca3317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c5281a_e027a24c",
+        "filename": "cc/animation/element_animations_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3334,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:27:44Z",
+      "side": 1,
+      "message": "In a real world environment we would presumably remove the animation if it was no longer composited, perhaps we should do the same here before pushing and assert that it is removed?",
+      "revId": "165171f16ede1ddbb2975c6239f3fc03b0ca3317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019ce900_20936c98",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1901,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:27:44Z",
+      "side": 1,
+      "message": "Maybe we can set the has active elements bit on animations to false when a layer goes away based on the element id?",
+      "revId": "165171f16ede1ddbb2975c6239f3fc03b0ca3317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
