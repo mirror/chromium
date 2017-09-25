@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d730df6b_d72502e8",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T22:49:12Z",
+      "side": 1,
+      "message": "Done. Key is changed in interventions_internals_page_handler.cc.",
+      "parentUuid": "b5bf3393_63a18de4",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0948754_6a53a75d",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -105,6 +123,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e4fc1d_d4d1c1c9",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T22:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b65f21_93e4e286",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -345,6 +381,24 @@
       "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2826a84_c8908151",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-25T22:49:12Z",
+      "side": 1,
+      "message": "Done. Thanks for the tip.",
+      "parentUuid": "3c2aa7ba_95d9091d",
+      "revId": "30f353351a2e23da2bfa16e562235f74a05ab1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
