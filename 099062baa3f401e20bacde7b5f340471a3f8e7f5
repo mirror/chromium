@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ebc92795_ef399e7d",
+        "filename": "sandbox/win/src/ipc_leak_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-25T23:37:30Z",
+      "side": 1,
+      "message": "on bots running at High integrity, this call succeeded, and the test failed.",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 73
+      },
+      "revId": "099062baa3f401e20bacde7b5f340471a3f8e7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bda13d37_434ef1b5",
         "filename": "sandbox/win/src/process_thread_policy.cc",
         "patchSetId": 4
