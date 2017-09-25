@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d73912_5c66011d",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-25T21:38:13Z",
+      "side": 1,
+      "message": "These #include lines are wanted by lint.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "cc6a41d166dc0bc8d6c38a4870a3f06b9eb3c0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
