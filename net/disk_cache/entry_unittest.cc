@@ -571,13 +571,13 @@ void DiskCacheEntryTest::ExternalAsyncIO() {
   if (net::ERR_IO_PENDING == ret)
     expected++;
 
-  EXPECT_EQ(0,
-            entry->ReadData(
-                1,
-                35000,
-                buffer2.get(),
-                kSize2,
-                base::Bind(&CallbackTest::Run, base::Unretained(&callback7))));
+  ret = entry->ReadData(
+      1, 35000, buffer2.get(), kSize2,
+      base::Bind(&CallbackTest::Run, base::Unretained(&callback7)));
+  EXPECT_TRUE(0 == ret || net::ERR_IO_PENDING == ret);
+  if (net::ERR_IO_PENDING == ret)
+    expected++;
+
   ret = entry->ReadData(
       1,
       0,
