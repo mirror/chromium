@@ -244,8 +244,8 @@ class CORE_EXPORT PaintLayerClipper {
       ClipRect& foreground_rect,
       const LayoutPoint* offset_from_root = 0) const;
 
-  // Returns the visual rect of m_layer in local space. This includes
-  // filter effects.
+  // Returns the visual rect of |layer_| in local space. This includes filter
+  // effects only if not using GeometryMapper.
   ALWAYS_INLINE LayoutRect LocalVisualRect() const;
 
   const PaintLayer& layer_;
