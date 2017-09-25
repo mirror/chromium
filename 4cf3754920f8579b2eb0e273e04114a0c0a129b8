@@ -16,6 +16,24 @@
       "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9d1dd6_d61359cd",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-25T18:03:07Z",
+      "side": 1,
+      "message": "well, even though they are reported as supported, the proc funcs later returns NULL.\nfor e.g. GL_KHR_blend_equation_advanced is reported as supported, but glBlendBarrierKHRFn returns NULL, because ext.b_GL_KHR_blend_equation_advanced is false in ui/gl bindings https://cs.chromium.org/chromium/src/ui/gl/gl_bindings_autogen_gl.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d794\n\nSame for the other exts here too.",
+      "parentUuid": "c7537c28_3417aaaf",
+      "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
