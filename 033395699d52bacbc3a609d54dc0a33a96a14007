@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e33fabf_cd791164",
+        "filename": "tools/metrics/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-25T20:49:28Z",
+      "side": 1,
+      "message": "These need to have two slashes at the front, not one.",
+      "revId": "033395699d52bacbc3a609d54dc0a33a96a14007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
