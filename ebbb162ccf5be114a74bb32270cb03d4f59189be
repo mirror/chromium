@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0516fcee_05814ca0",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T19:18:29Z",
+      "side": 1,
+      "message": "I think the code would actually get significantly simpler by calling mojo methods directly rather than using the current MessagePortChannel abstraction, but I haven\u0027t actually implemented that, so we\u0027d have to see what it actually ends up looking like (and it might make more sense to go the opposite way, and move to two pipes with a proper mojom interface as dcheng suggested, rather than the current one pipe with our own custom serialization).",
+      "parentUuid": "8eaa4a59_22524428",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70dcfd88_78a3b807",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 13
@@ -524,6 +542,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417130de_0a399334",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerRepositoryClient.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-25T19:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe720afd_0b4e6ff6",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
