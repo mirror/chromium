@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f74abc1_c2a138e6",
+        "filename": "third_party/WebKit/Source/bindings/modules/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2467f629_f63e8213",
+      "range": {
+        "startLine": 106,
+        "startChar": 58,
+        "endLine": 106,
+        "endChar": 72
+      },
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7db18772_4d8ff6a0",
         "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-22T11:56:58Z",
       "side": 1,
       "message": "Would you help me understand why these maps need to use TraceWrapperMembers?",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c053ce43_457e140e",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "|GeoNotifier| traces TraceWrapperMember\u003cV8PositionCallback\u003e |success_callback_| like HeapHashSet\u003cTraceWrapperMember\u003cGeoNotifier\u003e\u003e |GeoNotifierSet| in Geolocation.h, so these are necessary.",
+      "parentUuid": "7db18772_4d8ff6a0",
       "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "db956a24_e3a4224f",
+        "filename": "third_party/WebKit/Source/modules/geolocation/PositionCallback.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ec3aa6_5a066e9d",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6daa9d75_79a7d34a",
         "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "15114da9_1f606136",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6daa9d75_79a7d34a",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c82922e_1e071149",
         "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3fc5b6_bb7f410f",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c82922e_1e071149",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +220,24 @@
       "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e555b5f8_cc15f43a",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-25T07:24:59Z",
+      "side": 1,
+      "message": "Done\nI added PositionCallback to Geolocation.idl, so removed this description.",
+      "parentUuid": "523ce132_39d3518b",
+      "revId": "4f3ffe06c2eaf75e63514cc7a00e163c4b49cb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
