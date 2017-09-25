@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6dfab31_2d993239",
+        "filename": "third_party/WebKit/Source/core/layout/line/LineVerticalPositionType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-25T05:50:43Z",
+      "side": 1,
+      "message": "nit: s/2014/2017/",
+      "revId": "36583625f1bfdf2d7c1712540d41a97ea416748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
