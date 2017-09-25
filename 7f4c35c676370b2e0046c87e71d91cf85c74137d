@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb49670e_099a9745",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:59:35Z",
+      "side": 1,
+      "message": "I think this one is also missing a break;\n\nBet you we don\u0027t report ERROR_INTERSTITIAL_PAGe anywhere.",
+      "revId": "7f4c35c676370b2e0046c87e71d91cf85c74137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab2e8f3_30dd8bf2",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:59:35Z",
+      "side": 1,
+      "message": "break;\n\nHere is what I need you to do:\n* rewrite this as a simple conversion function. No break;s just returns:\n\nswitch(archive_result) {\ncase ArchiverResult::SUCCESSFULLY_CREATED:\n  return SavePageResult::SUCCESS;\ncase ArchiverResult::ERROR_DEVICE_FULL:\n  return SavePageResult::DEVICE_FULL;\n...\n\nTakes 2/3 of code and is very hard to mess up.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "7f4c35c676370b2e0046c87e71d91cf85c74137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db3c4e2_dd46d638",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 27754,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:59:35Z",
+      "side": 1,
+      "message": "caused ... *to exceed* the limit",
+      "range": {
+        "startLine": 27754,
+        "startChar": 60,
+        "endLine": 27754,
+        "endChar": 68
+      },
+      "revId": "7f4c35c676370b2e0046c87e71d91cf85c74137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
