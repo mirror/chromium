@@ -89,7 +89,7 @@ void SkiaRenderer::BeginDrawingFrame() {
   TRACE_EVENT0("cc", "SkiaRenderer::BeginDrawingFrame");
   // Copied from GLRenderer.
   bool use_sync_query_ = false;
-  scoped_refptr<cc::ResourceProvider::Fence> read_lock_fence;
+  scoped_refptr<cc::ResourceProvider::SynchronousFence> read_lock_fence;
   // TODO(weiliangc): Implement use_sync_query_. (crbug.com/644851)
   if (use_sync_query_) {
     NOTIMPLEMENTED();
@@ -305,10 +305,10 @@ void SkiaRenderer::PrepareSurfaceForPass(
 
 bool SkiaRenderer::IsSoftwareResource(ResourceId resource_id) const {
   switch (resource_provider_->GetResourceType(resource_id)) {
-    case cc::ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case cc::ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
+    case RemotableResourceType::kGpuMemoryBuffer:
+    case RemotableResourceType::kTexture:
       return true;
-    case cc::ResourceProvider::RESOURCE_TYPE_BITMAP:
+    case RemotableResourceType::kBitmap:
       return false;
   }
 
