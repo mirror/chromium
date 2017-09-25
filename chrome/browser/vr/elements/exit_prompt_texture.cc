@@ -6,6 +6,7 @@
 
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -45,7 +46,7 @@ void ExitPromptTexture::Draw(SkCanvas* sk_canvas,
   gfx::Canvas* canvas = &gfx_canvas;
 
   // Prompt text area.
-  auto text = l10n_util::GetStringUTF16(content_message_id_);
+  auto text = GetStringResource(content_message_id_);
   gfx::FontList fonts;
   GetFontList(ToPixels(kFontSizePromptText), text, &fonts);
   gfx::Rect prompt_text_size(size_.width(), 0);
@@ -61,7 +62,7 @@ void ExitPromptTexture::Draw(SkCanvas* sk_canvas,
   GetFontList(ToPixels(kFontSizePromptButtonText), text, &fonts);
 
   // Secondary button area.
-  text = l10n_util::GetStringUTF16(IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON);
+  text = GetStringResource(IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON);
   lines = PrepareDrawStringRect(
       text, fonts, color_scheme().prompt_secondary_button_foreground,
       &button_text_size, kTextAlignmentCenter, kWrappingBehaviorWrap);
@@ -83,7 +84,7 @@ void ExitPromptTexture::Draw(SkCanvas* sk_canvas,
   canvas->Restore();
 
   // Primary button area.
-  text = l10n_util::GetStringUTF16(IDS_OK);
+  text = GetStringResource(IDS_OK);
   button_text_size.set_size(gfx::Size(ToPixels(kButtonWidth), 0));
   lines = PrepareDrawStringRect(
       text, fonts, color_scheme().prompt_primary_button_forground,

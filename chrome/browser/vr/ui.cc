@@ -31,6 +31,10 @@ UiInterface* Ui::ui() {
   return scene_manager_.get();
 }
 
+BrowserUiInterface* Ui::browser_ui() {
+  return scene_manager_.get();
+}
+
 base::WeakPtr<vr::BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
   return scene_manager_->GetWeakPtr();
 }

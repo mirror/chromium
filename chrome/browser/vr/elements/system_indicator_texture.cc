@@ -7,6 +7,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
@@ -51,7 +52,7 @@ void SystemIndicatorTexture::Draw(SkCanvas* sk_canvas,
   std::unique_ptr<gfx::RenderText> rendered_text;
 
   if (has_text_) {
-    base::string16 text = l10n_util::GetStringUTF16(message_id_);
+    base::string16 text = GetStringResource(message_id_);
 
     gfx::FontList fonts;
     GetFontList(size_.height() * kFontSizeFactor, text, &fonts);

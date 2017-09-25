@@ -22,6 +22,9 @@
 #include "ui/gfx/text_elider.h"
 #include "ui/gl/gl_bindings.h"
 
+#include "base/strings/utf_string_conversions.h"
+
+
 namespace vr {
 
 namespace {
@@ -79,6 +82,8 @@ std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
 
   std::vector<std::unique_ptr<gfx::RenderText>> lines;
   gfx::Rect rect(*bounds);
+  //auto text = base::UTF8ToUTF16("string\nstring string\nstring");
+  LOG(INFO) << "Text: " << text;
 
   if (wrapping_behavior == kWrappingBehaviorWrap) {
     std::vector<base::string16> strings;
