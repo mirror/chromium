@@ -30,6 +30,7 @@ import android.widget.PopupWindow.OnDismissListener;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.ObserverList;
+import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
@@ -971,6 +972,29 @@ public class BottomSheet
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
+        View newToolbar = content != null && content.getToolbarView() != null
+                ? content.getToolbarView()
+                : mDefaultToolbarView;
+        View oldToolbar = mSheetContent != null && mSheetContent.getToolbarView() != null
+                ? mSheetContent.getToolbarView()
+                : mDefaultToolbarView;
+        View contentView = content == null ? null : content.getContentView();
+        View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
+
+        if (content != null && content.applyDefaultTopPadding()) {
+            contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
+                    contentView.getPaddingRight(), contentView.getPaddingBottom());
+        }
+
+        if (SysUtils.isLowEndDevice()) {
+            post(() -> {
+                setContainerBackgroundColor(content);
+                swapViewsWithoutAnimation(newToolbar, oldToolbar, contentView, oldContent);
+                onContentSwapAnimationEnd(content);
+            });
+            return;
+        }
+
         List<Animator> animators = new ArrayList<>();
         mContentSwapAnimatorSet = new AnimatorSet();
         mContentSwapAnimatorSet.addListener(new AnimatorListenerAdapter() {
@@ -981,12 +1005,6 @@ public class BottomSheet
         });
 
         // Add an animator for the toolbar transition if needed.
-        View newToolbar = content != null && content.getToolbarView() != null
-                ? content.getToolbarView()
-                : mDefaultToolbarView;
-        View oldToolbar = mSheetContent != null && mSheetContent.getToolbarView() != null
-                ? mSheetContent.getToolbarView()
-                : mDefaultToolbarView;
         if (newToolbar != oldToolbar) {
             // For the toolbar transition, make sure we don't detach the default toolbar view.
             animators.add(getViewTransitionAnimator(
@@ -994,40 +1012,20 @@ public class BottomSheet
         }
 
         // Add an animator for the content transition if needed.
-        View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
         if (content == null) {
             if (oldContent != null) mBottomSheetContentContainer.removeView(oldContent);
         } else {
-            View contentView = content.getContentView();
-            if (content.applyDefaultTopPadding()) {
-                contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
-                        contentView.getPaddingRight(), contentView.getPaddingBottom());
-            }
             animators.add(getViewTransitionAnimator(
                     contentView, oldContent, mBottomSheetContentContainer, true));
         }
+
+        setContainerBackgroundColor(content);
 
         // Return early if there are no animators to run.
         if (animators.isEmpty()) {
             onContentSwapAnimationEnd(content);
             return;
         }
-
-        // Temporarily make the background of the toolbar holder a solid color so the transition
-        // doesn't appear to show a hole in the toolbar.
-        int colorId = content == null || !content.isIncognitoThemedContent()
-                ? R.color.modern_primary_color
-                : R.color.incognito_primary_color;
-        if (!mIsSheetOpen || content.isIncognitoThemedContent()
-                || (mSheetContent != null && mSheetContent.isIncognitoThemedContent())) {
-            // If the sheet is closed, the bottom sheet content container is invisible, so
-            // background color is needed on the toolbar holder to prevent a blank rectangle from
-            // appearing during the content transition.
-            mToolbarHolder.setBackgroundColor(
-                    ApiCompatibilityUtils.getColor(getResources(), colorId));
-        }
-        mBottomSheetContentContainer.setBackgroundColor(
-                ApiCompatibilityUtils.getColor(getResources(), colorId));
 
         mContentSwapAnimatorSet.playTogether(animators);
         mContentSwapAnimatorSet.start();
@@ -1098,6 +1096,54 @@ public class BottomSheet
         animatorSet.playSequentially(animators);
 
         return animatorSet;
+    }
+
+    /**
+     * Swaps the toolbar and content views without animating.
+     */
+    private void swapViewsWithoutAnimation(
+            View newToolbar, View oldToolbar, View newContent, View oldContent) {
+        if (oldToolbar != null && oldToolbar != mDefaultToolbarView
+                && oldToolbar.getParent() != null) {
+            mToolbarHolder.removeView(oldToolbar);
+        } else if (oldToolbar == mDefaultToolbarView) {
+            oldToolbar.setVisibility(View.INVISIBLE);
+        }
+        if (newToolbar.getParent() != mToolbarHolder) mToolbarHolder.addView(newToolbar);
+        newToolbar.setVisibility(View.VISIBLE);
+
+        if (oldContent != null && oldContent.getParent() != null) {
+            mBottomSheetContentContainer.removeView(oldContent);
+        }
+        if (newContent != null && newContent.getParent() != mBottomSheetContentContainer) {
+            mBottomSheetContentContainer.addView(newContent);
+        }
+    }
+
+    /**
+     * Set the content container and toolbar holder background color based.
+     * @param content The {@link BottomSheetContent} being shown in the sheet.
+     */
+    private void setContainerBackgroundColor(BottomSheetContent content) {
+        int colorId = content == null || !content.isIncognitoThemedContent()
+                ? R.color.modern_primary_color
+                : R.color.incognito_primary_color;
+        if (!mIsSheetOpen || (content != null && content.isIncognitoThemedContent())
+                || (mSheetContent != null && mSheetContent.isIncognitoThemedContent())) {
+            // If the sheet is closed, the bottom sheet content container is invisible, so
+            // background color is needed on the toolbar holder to prevent a blank rectangle from
+            // appearing during the content transition.
+            mToolbarHolder.setBackgroundColor(
+                    ApiCompatibilityUtils.getColor(getResources(), colorId));
+        }
+        mBottomSheetContentContainer.setBackgroundColor(
+                ApiCompatibilityUtils.getColor(getResources(), colorId));
+
+        // Set color on the content view to compensate for a JellyBean bug (crbug.com/766237).
+        if (content != null) {
+            content.getContentView().setBackgroundColor(
+                    ApiCompatibilityUtils.getColor(getResources(), colorId));
+        }
     }
 
     /**
