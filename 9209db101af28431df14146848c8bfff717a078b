@@ -16,6 +16,24 @@
       "revId": "9209db101af28431df14146848c8bfff717a078b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fb3bd8_daa8e0ec",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilitiesTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T12:44:21Z",
+      "side": 1,
+      "message": "I prefer changing every line to |*node|. It\u0027s just a find-all and replace.",
+      "parentUuid": "c88a50b7_a6862293",
+      "revId": "9209db101af28431df14146848c8bfff717a078b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
