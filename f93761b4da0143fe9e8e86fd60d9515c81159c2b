@@ -16,6 +16,24 @@
       "revId": "f93761b4da0143fe9e8e86fd60d9515c81159c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19221e05_8fb78d36",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-25T08:00:33Z",
+      "side": 1,
+      "message": "I have maintained a flag for this. Let me know how this look?",
+      "parentUuid": "7790684b_6f9cda96",
+      "revId": "f93761b4da0143fe9e8e86fd60d9515c81159c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
