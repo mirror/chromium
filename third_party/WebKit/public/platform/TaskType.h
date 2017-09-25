@@ -117,6 +117,9 @@ enum class TaskType : unsigned {
   // Tasks that must not be throttled should be posted here, but the usage
   // should be very limited.
   kUnthrottled,
+
+  // Internal tasks that are used for initialization.
+  kInternalInitialization,
 };
 
 }  // namespace blink
