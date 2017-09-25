@@ -170,11 +170,8 @@ class MEDIA_EXPORT SourceBufferRange {
   int next_buffer_index_;
 
   // Caches the buffer, if any, with the highest PTS currently in |buffers_|.
-  // This is nullptr if this range is empty.
-  // This is useful in determining range membership and adjacency.
-  // TODO(wolenetz): Switch to using this in CanAppendBuffersToEnd(), etc., when
-  // switching to managing ranges by their presentation interval between GOPs,
-  // and by their decode sequence within GOPs. See https://crbug.com/718641.
+  // This is nullptr if this range is empty.  This is useful in determining
+  // range membership and adjacency in SourceBufferRangeByPts.
   scoped_refptr<StreamParserBuffer> highest_frame_;
 
   // Called to get the largest interbuffer distance seen so far in the stream.
