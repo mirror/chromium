@@ -22,6 +22,30 @@
       "revId": "e16c334243ef6c82d5302a7779c91064ed852a21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2609f0_21fae2ce",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-25T02:09:04Z",
+      "side": 1,
+      "message": "I think a better name is waiting_for_service_worker, so I used that.",
+      "parentUuid": "15fb3074_63b16bc6",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "e16c334243ef6c82d5302a7779c91064ed852a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
