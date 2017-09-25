@@ -7,9 +7,11 @@
 #include <algorithm>
 
 #include "ash/ash_constants.h"
+#include "ash/focus_cycler.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_widget_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -267,8 +269,21 @@ void TrayBackgroundView::OnGestureEvent(ui::GestureEvent* event) {
 void TrayBackgroundView::AboutToRequestFocusFromTabTraversal(bool reverse) {
   StatusAreaWidgetDelegate* delegate =
       StatusAreaWidgetDelegate::GetPrimaryInstance();
-  if (delegate && delegate->ShouldFocusOut(reverse))
-    Shell::Get()->system_tray_notifier()->NotifyFocusOut(reverse);
+  if (!delegate || !delegate->ShouldFocusOut(reverse))
+    return;
+  // Focus shelf widget when shift+tab is used and views-based shelf is shown.
+  if (reverse && ShelfWidget::IsUsingMdLoginShelf()) {
+    ShelfWidget::GetPrimaryShelfWidget()->set_default_last_focusable_child(
+        reverse);
+    Shell::Get()->focus_cycler()->FocusWidget(
+        ShelfWidget::GetPrimaryShelfWidget());
+    return;
+  }
+  // Focus login/lock screen if:
+  // 1) Tab is used.
+  // 2) Shift+tab is used and views-based shelf is disabled. Login/lock screen
+  //    will handle shelf focus in this case.
+  Shell::Get()->system_tray_notifier()->NotifyFocusOut(reverse);
 }
 
 void TrayBackgroundView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
