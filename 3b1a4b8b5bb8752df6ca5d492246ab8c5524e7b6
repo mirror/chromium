@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7f0526_5498267e",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1930,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T13:55:59Z",
+      "side": 1,
+      "message": "MainController -setWebUsageEnabled: does much more than just calling all Tab\u0027s -setWebUsageEnabled:. It does call all BVCs -setActive: which does:\n\n- start/stop the overlay coordinator\n- informs the active state manager\n- start/stop the dialog presenter\n- cancel all dialogs/reload the tab\n- informs the payment request manager\n- update the status bar apparence\n\nI think this change has the potential to break any of this (BTW, MainController -setWebUsageEnabled: is incorrectly named and should be called -setActive: IMO to make it clear that it does not just call -setWebUsageEnabled:).",
+      "revId": "3b1a4b8b5bb8752df6ca5d492246ab8c5524e7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
