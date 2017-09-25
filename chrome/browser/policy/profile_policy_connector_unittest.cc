@@ -9,6 +9,10 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
+#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
+#endif  // defined(OS_CHROMEOS)
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/autofill/core/common/autofill_pref_names.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
@@ -23,6 +27,8 @@
 #include "components/policy/core/common/schema_registry.h"
 #include "components/policy/policy_constants.h"
 #include "components/policy/proto/device_management_backend.pb.h"
+#include "components/signin/core/account_id/account_id.h"
+#include "components/user_manager/user.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -56,6 +62,12 @@ class ProfilePolicyConnectorTest : public testing::Test {
     cloud_policy_manager_->Shutdown();
   }
 
+  std::unique_ptr<user_manager::User> CreateRegularUser(
+      const AccountId& account_id) const {
+    return base::WrapUnique<user_manager::User>(
+        user_manager::User::CreateRegularUser(account_id));
+  }
+
   // Needs to be the first member.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   SchemaRegistry schema_registry_;
@@ -81,6 +93,33 @@ TEST_F(ProfilePolicyConnectorTest, IsManagedForManagedUsers) {
   // Cleanup.
   connector.Shutdown();
 }
+
+#if defined(OS_CHROMEOS)
+TEST_F(ProfilePolicyConnectorTest, ManagedRealmForActiveDirectoryUsers) {
+  chromeos::ScopedUserManagerEnabler scoped_user_manager_enabler(
+      new chromeos::FakeChromeUserManager);
+  ProfilePolicyConnector connector;
+  const AccountId account_id =
+      AccountId::AdFromUserEmailObjGuid("user@realm.example", "obj-guid");
+  std::unique_ptr<user_manager::User> user = CreateRegularUser(account_id);
+  connector.Init(user.get(), &schema_registry_, cloud_policy_manager_.get(),
+                 &cloud_policy_store_, false);
+  cloud_policy_store_.policy_.reset(new enterprise_management::PolicyData());
+  cloud_policy_store_.policy_->set_state(
+      enterprise_management::PolicyData::ACTIVE);
+  EXPECT_TRUE(connector.IsManaged());
+  EXPECT_EQ(connector.GetManagementDomain(), "realm.example");
+
+  // Policy username does not override management realm for Active Directory
+  // user.
+  cloud_policy_store_.policy_->set_username("test@testdomain.com");
+  EXPECT_TRUE(connector.IsManaged());
+  EXPECT_EQ(connector.GetManagementDomain(), "realm.example");
+
+  // Cleanup.
+  connector.Shutdown();
+}
+#endif  // defined(OS_CHROMEOS)
 
 TEST_F(ProfilePolicyConnectorTest, IsProfilePolicy) {
   ProfilePolicyConnector connector;
