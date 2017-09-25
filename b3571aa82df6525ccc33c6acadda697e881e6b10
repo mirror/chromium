@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5676f07b_77717285",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-25T09:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54b3fd9_b1588dab",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7d6fdb7_c3b29f81",
         "filename": "chrome/browser/predictors/loading_predictor.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "73b3db12_a690603e",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-25T09:35:14Z",
+      "side": 1,
+      "message": "I often put *Preconnect* instead of *PreconnectAndPreresolve* for brevity. In this case it looks confusing.\nDone",
+      "parentUuid": "b7d6fdb7_c3b29f81",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c77f699_fd2ed4c0",
         "filename": "chrome/browser/predictors/loading_predictor.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb54b590_a1e4aa1b",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-25T09:35:14Z",
+      "side": 1,
+      "message": "I wanted to add tests to LoadingPredictor and forgot about it. Now it\u0027s done.",
+      "parentUuid": "8c77f699_fd2ed4c0",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
