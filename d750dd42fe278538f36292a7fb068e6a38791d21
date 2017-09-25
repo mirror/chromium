@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "88b6fd6c_8a0ac549",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-25T03:09:11Z",
+      "side": 1,
+      "message": "Ah interesting, this makes sense then. Thanks for explaining.",
+      "parentUuid": "37e3e425_f4f74533",
+      "revId": "d750dd42fe278538f36292a7fb068e6a38791d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec53fe1c_5014ac0c",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 4
