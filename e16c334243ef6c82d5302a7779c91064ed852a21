@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15fb3074_63b16bc6",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-25T01:55:18Z",
+      "side": 1,
+      "message": "I don\u0027t think that this class should know anything about paused vs non-paused tasks.  I think that this parameter should be called something like \"treat_as_non_pwa\" (I don\u0027t think simply \"non_pwa\" would work, as some readers might assume that !non_pwa means \"it is a pwa\", when it really means (pwa || unknown).]\n\nThe comment on line 80, below, can then be moved to InstallableManager, where Flush is called, and where it is reasonable for the code to understand the implication of having paused tasks.",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "e16c334243ef6c82d5302a7779c91064ed852a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
