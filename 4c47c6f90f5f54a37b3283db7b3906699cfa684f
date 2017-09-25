@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81ae6937_c7c988ac",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T10:47:27Z",
+      "side": 1,
+      "message": "I think it\u0027s better to make it works well even test clients tries to connect with an non-existed device_guid.",
+      "parentUuid": "9d07f107_e7392860",
+      "revId": "4c47c6f90f5f54a37b3283db7b3906699cfa684f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43a645fa_1b2ebb04",
         "filename": "extensions/browser/api/hid/hid_apitest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T09:08:03Z",
       "side": 1,
       "message": "Where did this code come from? Is it in the constructor of HidDeviceInfo?",
+      "revId": "4c47c6f90f5f54a37b3283db7b3906699cfa684f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9253b4_f229b317",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T10:47:27Z",
+      "side": 1,
+      "message": "Yes it is from constructor of device::HidDeviceInfo.",
+      "parentUuid": "43a645fa_1b2ebb04",
       "revId": "4c47c6f90f5f54a37b3283db7b3906699cfa684f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
