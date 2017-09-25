@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f953ddf6_1d173c83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-25T18:35:38Z",
+      "side": 1,
+      "message": "nit: align with the start of previous line\ni.e.\n  * Place ...\n    in the container ...",
+      "revId": "2618bdfbcfd2d5d4eb08734e6d5df1942ce76ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
