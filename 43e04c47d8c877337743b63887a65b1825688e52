@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4413e33_57ee106e",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "No suggestions? :(",
+      "parentUuid": "d530a7a6_54fb71a7",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c55a7fc_ddc067b8",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "43e04c47d8c877337743b63887a65b1825688e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f46958_dffd129a",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c55a7fc_ddc067b8",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,53 @@
     },
     {
       "key": {
+        "uuid": "7c4f9791_01611dd3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Doneish. Thought: should I make this DCHECK-fail if someone calls get() or -\u003e() without calling IsOK()?",
+      "parentUuid": "b7d99d4d_413c6a69",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 13
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b75268_1e1efb92",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Hmm, so what\u0027s missing here is a clear notion that, at the moment, you\u0027re only permitted to call this once until you\u0027re done, though I am strongly wondering whether I should make it robust against multiple calls.",
+      "range": {
+        "startLine": 88,
+        "startChar": 63,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7344ee1b_abfd86ce",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
@@ -82,6 +177,30 @@
       "writtenOn": "2017-09-25T18:45:51Z",
       "side": 1,
       "message": "Once you\u0027ve called Close(), are you allowed to Register() it again? If so, why? If not, please comment as such.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839afa60_80697855",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Done. Also rephrased other things here (it still mentioned Release).",
+      "parentUuid": "7344ee1b_abfd86ce",
       "range": {
         "startLine": 95,
         "startChar": 7,
@@ -117,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b8f328fd_5020f242",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e80474ec_0baf738e",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5036f9_8499f998",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 22
@@ -134,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "80c41a24_f480def2",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf5036f9_8499f998",
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a772f2b_4a793a6c",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 22
@@ -145,6 +306,24 @@
       "writtenOn": "2017-09-25T18:45:51Z",
       "side": 1,
       "message": "Here and elsewhere, do we need to check if file.IsOK() each time we acquire a file?",
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4564768_7cf36c21",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Yes. Nice catch.\n(It\u0027s currently moot, but it will matter when files can be closed and reopened)",
+      "parentUuid": "0a772f2b_4a793a6c",
       "revId": "43e04c47d8c877337743b63887a65b1825688e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "78852c90_e806feec",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28a52b94_502de5bf",
+      "range": {
+        "startLine": 848,
+        "startChar": 25,
+        "endLine": 848,
+        "endChar": 32
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a8ca853_9f8cebee",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 22
@@ -194,6 +397,30 @@
       "revId": "43e04c47d8c877337743b63887a65b1825688e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11f99f8_a5dd4653",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T19:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a8ca853_9f8cebee",
+      "range": {
+        "startLine": 1188,
+        "startChar": 25,
+        "endLine": 1188,
+        "endChar": 32
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
