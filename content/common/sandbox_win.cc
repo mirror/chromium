@@ -727,9 +727,9 @@ sandbox::ResultCode StartSandboxedProcess(
   DCHECK(delegate);
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
-  std::string type_str = cmd_line->GetSwitchValueASCII(switches::kProcessType);
 
-  TRACE_EVENT1("startup", "StartProcessWithAccess", "type", type_str);
+  TRACE_EVENT1("startup", "StartProcessWithAccess", "type",
+               cmd_line->GetSwitchValueASCII(switches::kProcessType));
 
   // Propagate the --allow-no-job flag if present.
   if (browser_command_line.HasSwitch(switches::kAllowNoSandboxJob) &&
@@ -774,7 +774,8 @@ sandbox::ResultCode StartSandboxedProcess(
     return result;
 
 #if !defined(NACL_WIN64)
-  if (type_str == switches::kRendererProcess && IsWin32kLockdownEnabled()) {
+  if (delegate->GetSandboxType() == SANDBOX_TYPE_RENDERER &&
+      IsWin32kLockdownEnabled()) {
     result = AddWin32kLockdownPolicy(policy.get(), false);
     if (result != sandbox::SBOX_ALL_OK)
       return result;
@@ -802,14 +803,14 @@ sandbox::ResultCode StartSandboxedProcess(
   }
 
 #if !defined(NACL_WIN64)
-  if (type_str == switches::kRendererProcess ||
-      type_str == switches::kPpapiPluginProcess) {
+  if (delegate->GetSandboxType() == SANDBOX_TYPE_RENDERER ||
+      delegate->GetSandboxType() == SANDBOX_TYPE_PPAPI) {
     AddDirectory(base::DIR_WINDOWS_FONTS, NULL, true,
                  sandbox::TargetPolicy::FILES_ALLOW_READONLY, policy.get());
   }
 #endif
 
-  if (type_str != switches::kRendererProcess) {
+  if (delegate->GetSandboxType() != SANDBOX_TYPE_RENDERER) {
     // Hack for Google Desktop crash. Trick GD into not injecting its DLL into
     // this subprocess. See
     // http://code.google.com/p/chromium/issues/detail?id=25580
@@ -824,8 +825,8 @@ sandbox::ResultCode StartSandboxedProcess(
   }
 
   // Allow the renderer and gpu processes to access the log file.
-  if (type_str == switches::kRendererProcess ||
-      type_str == switches::kGpuProcess) {
+  if (delegate->GetSandboxType() == SANDBOX_TYPE_RENDERER ||
+      delegate->GetSandboxType() == SANDBOX_TYPE_GPU) {
     if (logging::IsLoggingToFileEnabled()) {
       DCHECK(base::FilePath(logging::GetLogFileFullPath()).IsAbsolute());
       result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
