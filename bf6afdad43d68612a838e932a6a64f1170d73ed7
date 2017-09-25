@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "098e671e_446c4812",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3859,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-25T22:27:04Z",
+      "side": 1,
+      "message": "GETs via proxies spell out the full URL since the proxy needs to perform another hop. So it\u0027ll look like (\"GET\", \"http\", \"http://mail.example.com\").",
+      "revId": "bf6afdad43d68612a838e932a6a64f1170d73ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb770b71_a14ede7c",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3864,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-25T22:27:04Z",
+      "side": 1,
+      "message": "hmm. not sure what this would mean in the context of QUIC.",
+      "revId": "bf6afdad43d68612a838e932a6a64f1170d73ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2246c296_04d47724",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 1
