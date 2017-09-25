@@ -6,10 +6,10 @@
 
 #include <stdint.h>
 
-#include <stack>
 #include <utility>
 
 #include "base/bits.h"
+#include "base/containers/stack.h"
 #include "base/json/string_escape.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/common/trace_event_common.h"
@@ -471,7 +471,7 @@ void TracedValue::AppendAsTraceFormat(std::string* out) const {
     }
   };
 
-  std::stack<State> state_stack;
+  base::stack<State> state_stack;
 
   out->append("{");
   state_stack.push({State::kTypeDict});
