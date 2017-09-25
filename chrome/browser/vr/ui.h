@@ -44,6 +44,7 @@ class Ui {
   void OnGlInitialized(unsigned int content_texture_id);
 
   UiInterface* ui();
+  BrowserUiInterface* browser_ui();
 
   // TODO(crbug.com/767957): Refactor to hide these behind the UI interface.
   UiScene* scene() { return scene_.get(); }

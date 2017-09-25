@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/elements/exclusive_screen_toast_texture.h"
 
 #include "cc/paint/skia_paint_canvas.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
@@ -40,7 +41,7 @@ void ExclusiveScreenToastTexture::Draw(SkCanvas* sk_canvas,
   float meter_to_pixel_ratio = texture_size.height() / kHeight;
 
   paint.setColor(color_scheme().exclusive_screen_toast_background);
-  auto text = l10n_util::GetStringUTF16(IDS_PRESS_APP_TO_EXIT);
+  auto text = GetStringResource(IDS_PRESS_APP_TO_EXIT);
   gfx::FontList fonts;
   int pixel_font_size = meter_to_pixel_ratio * kFontHeight;
   GetFontList(pixel_font_size, text, &fonts);

@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
+#include "chrome/browser/vr/string_resource.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
@@ -73,18 +74,19 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   gfx::Canvas* canvas = &gfx_canvas;
 
   gfx::FontList fonts;
-  auto text = l10n_util::GetStringUTF16(resource_id_);
+  auto text = GetStringResource(resource_id_);
   float pixels_per_meter = texture_size.width() / text_width_;
   int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
   GetFontList(pixel_font_height, text, &fonts);
   gfx::Rect text_bounds(texture_size.width(), 0);
 
-  std::vector<std::unique_ptr<gfx::RenderText>> lines =
-      // TODO(vollick): if this subsumes all text, then we should probably move
-      // this function into this class.
-      PrepareDrawStringRect(text, fonts, color_callback_.Run(color_scheme()),
-                            &text_bounds, kTextAlignmentCenter,
-                            kWrappingBehaviorWrap);
+  std::vector<std::unique_ptr<gfx::RenderText>> lines;
+  //std::vector<std::unique_ptr<gfx::RenderText>> lines =
+      //// TODO(vollick): if this subsumes all text, then we should probably move
+      //// this function into this class.
+      //PrepareDrawStringRect(text, fonts, color_callback_.Run(color_scheme()),
+                            //&text_bounds, kTextAlignmentCenter,
+                            //kWrappingBehaviorWrap);
   // Draw the text.
   for (auto& render_text : lines)
     render_text->Draw(canvas);
