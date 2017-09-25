@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce3ab00d_58e6a3d0",
+        "filename": "sql/connection.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-25T18:40:38Z",
+      "side": 1,
+      "message": "nit: Lines 1165-1168 can be squashed into \"return rc \u003d\u003d SQLITE_DONE;\"",
+      "revId": "4f16049c05de338b45ff01fb874dbbfa2df37aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
