@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ba7d849_61c53341",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-25T21:50:02Z",
+      "side": 1,
+      "message": "It looks like this basic idea has been implemented a few times:\ntable_view.cc:637 \"grouping indicator\"\nextension_install_dialog_view.h:128 \"BulletedView\"\nsad_tab_view.cc:118 (using a literal \\u2022)\n\nCan you refactor this to share code with those? The BulletedView seems close to what you have here.",
+      "revId": "0a910a58a3a3fb5277af776a41a55373d57980b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
