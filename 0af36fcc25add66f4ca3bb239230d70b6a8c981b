@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dede9b46_74fdb157",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:35:55Z",
+      "side": 1,
+      "message": "remove this default and put lines 116-117 after the switch statement",
+      "revId": "0af36fcc25add66f4ca3bb239230d70b6a8c981b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dae154_8a102a1c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_state.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:35:55Z",
+      "side": 1,
+      "message": "// Represents ServiceWorkerState from the Service Workers spec:\n// https://w3c.github.io/ServiceWorker/#enumdef-serviceworkerstate",
+      "revId": "0af36fcc25add66f4ca3bb239230d70b6a8c981b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
