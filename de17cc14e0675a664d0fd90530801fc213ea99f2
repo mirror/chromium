@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a41d2a94_6f97b84e",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "This should be in private: section. Same for the class below.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660fefe1_eb0fae2a",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Move this to after line 63 so that the two classes are together with their methods.",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c2a0ec_86b28931",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Nit: add empty line after",
+      "range": {
+        "startLine": 128,
+        "startChar": 63,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98729ae4_e211d4fa",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t capitalize singleton.",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9dd273_5691e559",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Nit: This wording is awkward. Also, use ||\u0027s instead of \u003c\u003e\u0027s to refer to variables.\n\nSo how about something like this:\n\n// Normally, |histogram| should have type HISTOGRAM. However, if it\u0027s expired, it\n// will actually be a DUMMY_HISTOGRAM. Skip the checks in that case.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 12
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e935d59_5188bf04",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 96,
+        "startChar": 56,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a6771c_0349e025",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Same comment as on line 94.",
+      "range": {
+        "startLine": 927,
+        "startChar": 21,
+        "endLine": 927,
+        "endChar": 30
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b9c6e5_3643becd",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "I don\u0027t think \"Shows\" is the right verb to use here. How about \"Specifies whether\" or \"Controls\".",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 8
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db136e6_e53cd667",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-25T22:21:23Z",
+      "side": 1,
+      "message": "Nit: Change !(a \u0026\u0026 b \u0026\u0026 c) to !a || !b || !c",
+      "range": {
+        "startLine": 452,
+        "startChar": 12,
+        "endLine": 452,
+        "endChar": 27
+      },
+      "revId": "de17cc14e0675a664d0fd90530801fc213ea99f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
