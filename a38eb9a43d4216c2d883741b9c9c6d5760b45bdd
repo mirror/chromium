@@ -22,6 +22,30 @@
       "revId": "a38eb9a43d4216c2d883741b9c9c6d5760b45bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c038347_ce5cc920",
+        "filename": "ui/views/controls/focusable_border.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-25T22:10:05Z",
+      "side": 1,
+      "message": "Done. Too much javascript",
+      "parentUuid": "2d12b5d4_e8fef082",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 2
+      },
+      "revId": "a38eb9a43d4216c2d883741b9c9c6d5760b45bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
