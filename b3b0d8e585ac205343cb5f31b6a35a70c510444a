@@ -71,6 +71,78 @@
     },
     {
       "key": {
+        "uuid": "301616c5_4c33eccb",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d93fc59_17cc006e",
+      "range": {
+        "startLine": 213,
+        "startChar": 29,
+        "endLine": 213,
+        "endChar": 34
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7605a6b4_24516313",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e21875_83015bba",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67a0247d_78a119e6",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d811a3_c2d19912",
+      "range": {
+        "startLine": 213,
+        "startChar": 3,
+        "endLine": 213,
+        "endChar": 5
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7cc851_3538d48b",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17927d9_09e9026b",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done. I meant to use DCHECK.",
+      "parentUuid": "ec7cc851_3538d48b",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 8
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e0a749c7_d7a033f0",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Reverted this change.",
+      "parentUuid": "1de90e61_75525e94",
+      "range": {
+        "startLine": 224,
+        "startChar": 38,
+        "endLine": 224,
+        "endChar": 39
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa577c7_e4e6d290",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9cf2b062_21c11859",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa577c7_e4e6d290",
+      "range": {
+        "startLine": 91,
+        "startChar": 36,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "540aed43_57d403d6",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b569ec63_ae3e0591",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-25T19:59:52Z",
+      "side": 1,
+      "message": "Done. The other function (CalculateOCLFromOFCL) is used in only one codepath where earlier, XOCL was logged to UMA. Now, that codepath will use OFCL, but do not revert to using received_response_content_length(), if OFCL is missing. Doing so would alter the UMA.\n\nThe goal of CalculateOCLFromOFCL() is to replace XOCL with OFCL without affecting the meaning of the UMA.",
+      "parentUuid": "540aed43_57d403d6",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "b3b0d8e585ac205343cb5f31b6a35a70c510444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
