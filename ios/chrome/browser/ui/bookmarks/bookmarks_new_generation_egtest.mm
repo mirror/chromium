@@ -153,7 +153,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 #pragma mark - Tests
 
 // Test that swiping left to right navigate back.
-- (void)testNavigateBackWithGesture {
+// TODO(crbug.com/768339): Re-enable test once it passes on device.
+- (void)DISABLED_testNavigateBackWithGesture {
   // Disabled on iPad as there is not "navigate back" gesture.
   if (IsIPadIdiom()) {
     EARL_GREY_TEST_SKIPPED(@"Test not applicable for iPad");
