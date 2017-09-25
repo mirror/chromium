@@ -22,6 +22,30 @@
       "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1b75e6_007328da",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T16:50:38Z",
+      "side": 0,
+      "message": "Could it have allowed chrome://newtab/ to be an NTP even if a 3P NTP was in use? I\u0027m not sure if that actually makes sense.",
+      "parentUuid": "343738be_8c21ddbb",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

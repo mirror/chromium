@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e296ae2b_65257028",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T16:50:38Z",
+      "side": 1,
+      "message": "Running a callback in a constructor makes me uncomfortable. There\u0027s no way to determine if this constructor will do significant work, and it\u0027s not something I\u0027d expect an observer to do.\n\nCan you move this to where the observer is created?",
+      "revId": "ef1b163a333c0455109e442b8a6887077a232426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
