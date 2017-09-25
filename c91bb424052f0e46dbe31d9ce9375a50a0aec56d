@@ -16,6 +16,42 @@
       "revId": "c91bb424052f0e46dbe31d9ce9375a50a0aec56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fe11f9_943050dc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-25T21:47:48Z",
+      "side": 0,
+      "message": "It seems to convert to RGBA and then back to HSVA, losing the original value. So on line 336 where it goes to compare, in some cases it has a different (and in the cases for values on the Y axis, completely different) hue value, causing the line to be re-drawn (and in the case of values on the Y axis, re-drawn wrongly for non-0 hue values).",
+      "parentUuid": "b0ee9737_520ed8df",
+      "revId": "c91bb424052f0e46dbe31d9ce9375a50a0aec56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac0308e_083a2cfe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-25T21:47:48Z",
+      "side": 0,
+      "message": "It seems to convert and then convert back, not preserving the original values for hsva. So on line",
+      "parentUuid": "b0ee9737_520ed8df",
+      "revId": "c91bb424052f0e46dbe31d9ce9375a50a0aec56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

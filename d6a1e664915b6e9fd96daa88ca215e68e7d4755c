@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "693f5332_2729eb40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/Images/src/smallIcons.svg",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-25T21:47:48Z",
+      "side": 1,
+      "message": "This is the least intrusive way to do it - the numbering scheme in Icon.js starts from the bottom left, so if I added rows to the bottom I\u0027d have to re-number everything.",
+      "parentUuid": "103afcd2_0e11c39f",
+      "revId": "d6a1e664915b6e9fd96daa88ca215e68e7d4755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5822af2_5cc5f9e8",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T17:35:59Z",
       "side": 1,
       "message": "Can we instead install the overlay when needed only?",
+      "revId": "d6a1e664915b6e9fd96daa88ca215e68e7d4755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0812eb5_1737a933",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-25T21:47:48Z",
+      "side": 1,
+      "message": "Sure - I\u0027ll create it lazily, but then keep it around.",
+      "parentUuid": "b5822af2_5cc5f9e8",
       "revId": "d6a1e664915b6e9fd96daa88ca215e68e7d4755c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
