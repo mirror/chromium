@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61455f3a_255c7bbe",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Trailing spaces, here and below and in other tests.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce41f39_06b1bc1f",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Can\u0027t we use assert_throws with INDEX_SIZE_ERR param?\nAlso we have repeated checks for IndexSizeError and TypeError. It might be better to write a small function with a param to run the input func and check the exception.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3b2f08_ea50b0f8",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-arc-negative-radius.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Can\u0027t we use assert_throws with INDEX_SIZE_ERR param? \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/resources/testharness.js?sq\u003dpackage:chromium\u0026q\u003dassert_throws+file:%5Esrc/third_party/WebKit/LayoutTests/resources/+package:%5Echromium$\u0026l\u003d1208",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d9e9b9_b1af092e",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ellipse-negative-radius.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Can\u0027t we use assert_throws with INDEX_SIZE_ERR param?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e563be_ffee4615",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Can\u0027t we use assert_throws with INVALID_STATE_ERR param?",
+      "range": {
+        "startLine": 238,
+        "startChar": 6,
+        "endLine": 238,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a213d68_dcac07d3",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Trailing spaces.",
+      "range": {
+        "startLine": 242,
+        "startChar": 3,
+        "endLine": 242,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5e7af6_fd10172f",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-color.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "May be breaking to multiple lines to respect 80 character line length limit?\nHere and in other tests.",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73e1bbe_70c3cce8",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-offset.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "May be a helper function to check the exception?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e45921e_e6900eb5",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-currentTransform.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Spaces.",
+      "range": {
+        "startLine": 187,
+        "startChar": 3,
+        "endLine": 187,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be61d2bd_e18b356f",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-clip.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "A helper function to check the exception for TypeError?",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a847674_2b588eb7",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-fill.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "Here too, a helper function?",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cbda57_94f1e021",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-stroke.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "helper function?",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3f4f7f_bac9cf3c",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-pattern-behaviour.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-25T14:13:48Z",
+      "side": 1,
+      "message": "assert_throws with SYNTAX_ERR? helper function?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
