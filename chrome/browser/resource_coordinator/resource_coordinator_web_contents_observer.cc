@@ -32,7 +32,7 @@ bool ResourceCoordinatorWebContentsObserver::ukm_recorder_initialized = false;
 
 ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
     content::WebContents* web_contents)
-    : WebContentsObserver(web_contents) {
+    : WebContentsObserver(web_contents), ukm_source_id_(0) {
   service_manager::Connector* connector =
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
 

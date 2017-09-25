@@ -179,6 +179,9 @@ class TabManagerStatsCollector final : public SessionRestoreObserver {
   // not report swap metrics.
   void CreateAndInitSwapMetricsDriverIfNeeded(SessionType type);
 
+  // Update session and sequence information for UKM recording.
+  void UpdateSessionAndSequence();
+
   static const char
       kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration[];
   static const char
@@ -193,6 +196,9 @@ class TabManagerStatsCollector final : public SessionRestoreObserver {
   static const char kHistogramBackgroundTabOpeningTabLoadUserInitiatedCount[];
   static const char kHistogramSessionOverlapSessionRestore[];
   static const char kHistogramSessionOverlapBackgroundTabOpening[];
+
+  int session_id_;
+  std::unique_ptr<base::AtomicSequenceNumber> sequence_;
 
   bool is_session_restore_loading_tabs_;
   bool is_in_background_tab_opening_session_;
