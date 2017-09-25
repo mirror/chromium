@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e71b57_7da8dab2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T16:14:01Z",
+      "side": 1,
+      "message": "This is unused? Remove it and just return is_valid?",
+      "range": {
+        "startLine": 742,
+        "startChar": 31,
+        "endLine": 742,
+        "endChar": 48
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe32b411_a3ebdf41",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T16:14:01Z",
+      "side": 1,
+      "message": "I think this text needs re-wrapping.",
+      "range": {
+        "startLine": 752,
+        "startChar": 4,
+        "endLine": 754,
+        "endChar": 16
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b25c357_8e574737",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T16:14:01Z",
+      "side": 1,
+      "message": "re-wrap this too",
+      "range": {
+        "startLine": 757,
+        "startChar": 4,
+        "endLine": 760,
+        "endChar": 57
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
