@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66b70b8f_cab038a7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T20:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2f6708_80b17a95",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03b21ac_141d185c",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-22T23:03:32Z",
       "side": 1,
       "message": "how about:\n\nvar pem \u003d eap \u0026\u0026 eap.ServerCAPEMs \u0026\u0026 eap.ServerCAPEMs[0];\nthis.selectedServerCa_ \u003d this.serverCaCerts_.find(function(cert) {\n  return !pem || cert.pem \u003d\u003d pem;\n});",
+      "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a6a934_37d0ee3a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T20:37:13Z",
+      "side": 1,
+      "message": "That doesn\u0027t correctly cover the edge case where eap.ServerCAPEMs[0] is valid but doesn\u0027t match a certificate in the (non empty) list (in which case we want to select the first certificate). I did simplify this as you suggested (I forget that foo[0] is \"valid\" JS in that it returns undefined if foo is empty).",
+      "parentUuid": "b03b21ac_141d185c",
       "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "45a6957c_c2de423e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T20:37:13Z",
+      "side": 1,
+      "message": "Oops, thanks, removed.",
+      "parentUuid": "a3cdc6d2_c29cec3a",
+      "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50db8489_e2dc3de0",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-22T23:03:32Z",
       "side": 1,
       "message": "I think it might be simpler to read if useSystemCAs and ServerCAPEMs handling were separated in tow blocks:\n\neap.UseSystemCAs \u003d this.selectedServerCa_ \u0026\u0026 this.selectedServerCa_.hash \u003d\u003d \u0027do-not-check\u0027;\n\nvar serverCa \u003d null;\nif (this.selectedServerCa_ \u0026\u0026\n    this.selectedServerCa_.hash !\u003d \u0027default\u0027 \u0026\u0026\n    this.selectedServerCa_.hash !\u003d \u0027do-not-check\u0027) {\n  serverCa \u003d this.serverCaCerts_.find(cert \u003d\u003e cert.hash \u003d\u003d this.selectedServerCa_.hash);\n}\neap.ServerCAPEMs \u003d serverCa ? [serverCa.pem] : [];",
+      "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8607302_d421c80e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T20:37:13Z",
+      "side": 1,
+      "message": "Ha, I one-upped you on Javscripty-ness and got rid of the if too :) Done.",
+      "parentUuid": "50db8489_e2dc3de0",
       "revId": "8c1d63df37a02ed0601147a64392610562766ef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
