@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "61338b62_30a45da1",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-25T17:27:42Z",
+      "side": 1,
+      "message": "kinuko: Updated to default to FetchContext::GetLoadingTaskRunner() post-Detach().\n\nharaken: Good point, done.",
+      "parentUuid": "1354a3e0_79f4fa8f",
+      "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1abcbfef_cc65fffc",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
         "patchSetId": 7
@@ -65,6 +83,24 @@
       "writtenOn": "2017-09-22T07:23:38Z",
       "side": 1,
       "message": "I think one of the reason we removed this from Context is that we sometime want to use different task runner depending on request, i.e. if we\u0027re creating loader for keepalive requests we want to use platforms task runner.  If we\u0027re re-introducing this method it might be good to have some comment about that?",
+      "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c7bd2_f7868734",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-25T17:27:42Z",
+      "side": 1,
+      "message": "Swapped back to RefPtr, I don\u0027t remember why I changed it.\n\nExpanded comment in FetchContext to note the keepalive case as a specific example of when you\u0027d want to use a different WebTaskRunner.",
+      "parentUuid": "f9861b39_02b898c2",
       "revId": "e82b3529ad31464257e8e3b4ee2422939baea12e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

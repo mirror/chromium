@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66cfd5d8_47ebc2fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-25T17:27:42Z",
+      "side": 1,
+      "message": "IIUC, by using a Persistent here, the queued task will keep the ResourceFetcher alive until the timer fires or get cancelled, thus removing the need for the manual self_keep_alive_. Is that right?",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
