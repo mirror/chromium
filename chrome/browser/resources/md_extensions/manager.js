@@ -101,6 +101,19 @@ cr.define('extensions', function() {
         type: Boolean,
         value: false,
       },
+
+      // <if expr="chromeos">
+      /** @private */
+      kioskEnabled_: {
+        type: Boolean,
+        value: false,
+      },
+
+      showKioskDialog_: {
+        type: Boolean,
+        value: false,
+      },
+      // </if>
     },
 
     /**
@@ -121,6 +134,14 @@ cr.define('extensions', function() {
       extensions.navigation.onRouteChanged(newPage => {
         this.changePage_(newPage);
       });
+
+      // <if expr="chromeos">
+      extensions.KioskBrowserProxyImpl.getInstance()
+          .initializeKioskAppSettings()
+          .then(params => {
+            this.kioskEnabled_ = params.kioskEnabled;
+          });
+      // </if>
     },
 
     get keyboardShortcuts() {
@@ -335,6 +356,17 @@ cr.define('extensions', function() {
     onPackTap_: function() {
       this.$['pack-dialog'].show();
     },
+
+    // <if expr="chromeos">
+    /** @private */
+    onKioskTap_: function() {
+      this.showKioskDialog_ = true;
+    },
+
+    onKioskDialogClose_: function() {
+      this.showKioskDialog_ = false;
+    },
+    // </if>
 
     /**
      * @param {!extensions.ShowingType} listType

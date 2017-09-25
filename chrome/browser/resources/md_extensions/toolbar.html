@@ -89,6 +89,12 @@
         <paper-button id="update-now" on-tap="onUpdateNowTap_">
           $i18n{toolbarUpdateNow}
         </paper-button>
+<if expr="chromeos">
+        <paper-button id="kiosk-extensions" on-tap="onKioskTap_"
+            hidden$="[[!kioskEnabled]]">
+          $i18n{ManageKioskApp}
+        </paper-button>
+</if>
       </div>
     </div>
   </template>
