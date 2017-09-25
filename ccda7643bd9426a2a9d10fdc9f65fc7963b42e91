@@ -16,6 +16,24 @@
       "revId": "ccda7643bd9426a2a9d10fdc9f65fc7963b42e91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9c994b_cef77e42",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-25T18:20:53Z",
+      "side": 1,
+      "message": "I added a comment above the variable declaration. That seems to be the pattern now in this class. :)",
+      "parentUuid": "eb8e87e3_5a1856c0",
+      "revId": "ccda7643bd9426a2a9d10fdc9f65fc7963b42e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
