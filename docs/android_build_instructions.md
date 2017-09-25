@@ -151,6 +151,31 @@ out/Default` from the command line. To compile one, pass the GN label to Ninja
 with no preceding "//" (so, for `//chrome/test:unit_tests` use `ninja -C
 out/Default chrome/test:unit_tests`).
 
+### Multiple Chrome APK Targets
+
+The Google Play Store allows apps to send customized `.apk` files depending on
+the version of Android running on a device. Chrome uses this feature, to target
+3 different `minSdkVersions`:
+
+1. `chrome_public_apk` (`ChromePublic.apk`)
+ * Min SDK version = 16 (Jelly Bean).
+ * Stores libchrome.so compressed within the APK.
+ * Uses [Crazy Linker](https://cs.chromium.org/chromium/src/base/android/linker/BUILD.gn?rcl=6bb29391a86f2be58c626170156cbfaa2cbc5c91&l=9).
+2. `chrome_modern_public_apk` (`ChromeModernPublic.apk`)
+ * Min SDK version = 21 (Lollipop).
+ * Uses [Crazy Linker](https://cs.chromium.org/chromium/src/base/android/linker/BUILD.gn?rcl=6bb29391a86f2be58c626170156cbfaa2cbc5c91&l=9).
+ * Stores libchrome.so uncompressed within the APK.
+   * This means the APK is bigger, but the installation size is smaller since
+     there is no need to extract the .so file.
+3. `monochrome_public_apk` (`MonochromePublic.apk`)
+ * Min SDK version = 24 (Nougat).
+ * Contains both WebView and Chrome within the same APK.
+ * Stores libchrome.so uncompressed within the APK.
+ * Does not use Crazy Linker (WebView requires system linker).
+
+These instructions use `chrome_public_apk`, but either of the other two targets
+can be substituted.
+
 ## Installing and Running Chromium on a device
 
 Prepare the environment:
