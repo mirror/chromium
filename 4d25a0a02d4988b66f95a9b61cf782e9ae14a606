@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2e31410e_e670f47d",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-25T08:57:51Z",
+      "side": 1,
+      "message": "Confirmed that you\u0027ve signed CLA. Thanks",
+      "revId": "4d25a0a02d4988b66f95a9b61cf782e9ae14a606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3cc08c5_08ec7ea9",
         "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-09-19T00:01:17Z",
       "side": 1,
       "message": "I\u0027m not sure if this is the correct place for this check.\ntyoshino: Should we do this at DocumentThreadableLoader?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 30,
+        "endLine": 1090,
+        "endChar": 31
+      },
+      "revId": "4d25a0a02d4988b66f95a9b61cf782e9ae14a606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cdca8b_3e3dbaf4",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-25T08:57:51Z",
+      "side": 1,
+      "message": "Yes, I\u0027d like you to change the CORS layer, DocumentThreadableLoader as Kouhei said, than here specific to XHR.\n\nPlease take a look at\nDocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS()\nand look for an if-clause with kPreventPreflight.",
+      "parentUuid": "f3cc08c5_08ec7ea9",
       "range": {
         "startLine": 1090,
         "startChar": 30,
