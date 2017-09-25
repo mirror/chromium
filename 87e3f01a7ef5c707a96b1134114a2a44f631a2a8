@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d387e4d_1798391a",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T15:52:58Z",
+      "side": 1,
+      "message": "I know this is done for tag 5 also, but wouldn\u0027t it be better to use \"[deprecated \u003d true]\" to prevent reuse?",
+      "range": {
+        "startLine": 741,
+        "startChar": 4,
+        "endLine": 741,
+        "endChar": 54
+      },
+      "revId": "87e3f01a7ef5c707a96b1134114a2a44f631a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
