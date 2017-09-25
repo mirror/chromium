@@ -153,6 +153,7 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.ContentBitmapCallback;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.SmartSelectionToggle;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.readback_types.ReadbackResponse;
 import org.chromium.policy.CombinedPolicyProvider;
@@ -764,6 +765,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         setTabContentManager(new TabContentManager(this, getContentOffsetProvider(),
                 DeviceClassManager.enableSnapshots()));
         mCompositorViewHolder.onNativeLibraryReady(getWindowAndroid(), getTabContentManager());
+
+        SmartSelectionToggle.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
 
         if (isContextualSearchAllowed() && ContextualSearchFieldTrial.isEnabled()) {
             mContextualSearchManager = new ContextualSearchManager(this, this);

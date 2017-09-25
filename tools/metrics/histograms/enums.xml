@@ -6437,6 +6437,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Would force a translation (if not disabled)"/>
 </enum>
 
+<enum name="ContextualSearchSmartSelectActivations">
+  <int value="0" label="Smart Select handled this activation"/>
+  <int value="1" label="Contextual Search handled this activation"/>
+</enum>
+
 <enum name="ContextualSearchSuppressionResultsSeen">
   <int value="0" label="Seen, heuristic satisfied"/>
   <int value="1" label="Not seen, heuristic satisfied"/>

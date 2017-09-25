@@ -211,6 +211,11 @@ public class ContextualSearchUma {
     private static final int QUICK_ACTION_RESOLVE_MULTIPLE = 2;
     private static final int QUICK_ACTION_RESOLVE_BOUNDARY = 3;
 
+    // Constants used to log Long-press UX displays that may have been handled by Smart Select.
+    private static final int SMART_SELECT_HANDLED = 0;
+    private static final int CONTEXTUAL_SEARCH_HANDLED = 1;
+    private static final int HANDLED_BOUNDARY = 2;
+
     /**
      * Key used in maps from {state, reason} to state entry (exit) logging code.
      */
@@ -1290,6 +1295,18 @@ public class ContextualSearchUma {
                 "Search.ContextualSearchQuickActions.Clicked."
                         + getLabelForQuickActionCategory(quickActionCategory),
                  wasClicked);
+    }
+
+    /**
+     * Logs that conditions are right to activate our UX in response to a long-press gesture, and
+     * whether we allowed Smart Select to show it's UX in preference to the Contextual Search UX.
+     * @param wasSmartSelect Whether the CS UX was suppressed in order to allow Smart Select to
+     *        be the sole handler of the long-press gesture response.
+     */
+    public static void logLongpressUxActivated(boolean wasSmartSelect) {
+        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchSmartSelect",
+                wasSmartSelect ? SMART_SELECT_HANDLED : CONTEXTUAL_SEARCH_HANDLED,
+                HANDLED_BOUNDARY);
     }
 
     /**
