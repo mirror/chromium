@@ -488,6 +488,30 @@
     },
     {
       "key": {
+        "uuid": "3813bc88_78241f6d",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T14:55:41Z",
+      "side": 1,
+      "message": "Aha! Understood. That definitely is an improvement safety-wise, and FileHandle being in SSE did feel a bit crowded. I think I\u0027ll just make FileHandle movable, though.\n\nAnd the doom thing is less issue than I thought anyway, since FileHandle has the SimpleSynchronousEntry* pointer, and having that have a const getter for the key... doesn\u0027t seem like a problem at all.\n\n(Done)",
+      "parentUuid": "aba27cb7_6e873d21",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14

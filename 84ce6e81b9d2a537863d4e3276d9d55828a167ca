@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb84d873_91149e93",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-25T14:55:41Z",
+      "side": 1,
+      "message": "This became moot, since now Acquire calls this, not the other way around.",
+      "parentUuid": "af85641f_5eabb56b",
+      "range": {
+        "startLine": 1793,
+        "startChar": 2,
+        "endLine": 1794,
+        "endChar": 79
+      },
+      "revId": "84ce6e81b9d2a537863d4e3276d9d55828a167ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9e231d_95e01be4",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
         "patchSetId": 19
