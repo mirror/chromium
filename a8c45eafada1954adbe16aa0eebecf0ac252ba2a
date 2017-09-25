@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb4a9136_346c9db7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3632df63_97e50bb6",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b3ba9bf_70378cba",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 35
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "87d5eb14_e102ea3d",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3ba9bf_70378cba",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18bd4bd0_f42601c7",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
         "patchSetId": 35
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-22T09:30:24Z",
       "side": 1,
       "message": "It seems that if we\u0027re calling Show while the popup is already visible, this is likely a bug. If this is just a simple guard that shouldn\u0027t happen, use a DCHECK to express this.\n\nSame for Hide().",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c63ec0c_da150b88",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Looks like when holding the ESC key, the keydown event will be triggered multiple times until keyup is fired, so eventually somebody needs to handle that case. We could make FullscreenControlHost check for IsVisible before calling Show. I\u0027m not sure whether that\u0027s a good idea though..",
+      "parentUuid": "18bd4bd0_f42601c7",
       "range": {
         "startLine": 53,
         "startChar": 2,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8bf8de43_e6f0b951",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to remove this now...",
+      "parentUuid": "70c42dc7_d85b8fea",
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a66e5a_fcf1479f",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
         "patchSetId": 35
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b633b4d2_b0a97da8",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92a66e5a_fcf1479f",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51a983c_47bb822d",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
         "patchSetId": 35
@@ -125,6 +239,24 @@
       "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5402486_621a72fc",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Added some comments on the variable and the getter.\n\nLooks like popup_-\u003eIsVisible() constantly returns false during unittest on Mac. Maybe something doesn\u0027t work well with the test framework...\n\nThe DropdownBoardHost also uses a separate variable to store the state, but it\u0027s trying to solve a different problem:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/dropdown_bar_host.h?l\u003d178\u0026rcl\u003d3375b109479c0e2b2d100a5f50b8d52f0358bf03",
+      "parentUuid": "e51a983c_47bb822d",
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +280,30 @@
       "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae262880_ec936310",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-25T21:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57792673_2c853eae",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "a8c45eafada1954adbe16aa0eebecf0ac252ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
