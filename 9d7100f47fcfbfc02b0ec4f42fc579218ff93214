@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09cb92d8_e1f1d088",
+        "filename": "third_party/WebKit/Source/bindings/core/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "nit: \"container\" means a case without content.  \"content\" is more important than a \"case\" or \"container\" here.  I\u0027d suggest \"archive\" or \"collection\" or something else.",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52a47c4_8699d079",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "tkent@ fixed this issue, right?",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2e269c_36cd2286",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "nit: idl-files-list sounds like \"a list of IDL files\", it reminds me that we have to list all files on a command line.  \"idl-list-file\" may be better, I guess?",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9f1c61_e4fae12c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "Just a question.  Is it okay to follow PEP-8?\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md\nThe style guide seems saying that we should use CamelCase.  As long as it\u0027s consistent, I **personally** don\u0027t strongly stick to this rule, but we may need some consensus/agreement.\n\nAlso the guide says: two-space indentation",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3272fca_778450e4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md\nThe guide says that we should follow PEP-8, and PEP-8 says \"Limit all lines to a maximum of 79 characters.\" in section \"Maximum Line Length\".",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d5a394_404da925",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:22:36Z",
+      "side": 1,
+      "message": "This is just FYI, we can use a kind of builder pattern if we want.\n\nFor example,\n  Argument class represents an argument.\n  ArgumentBuilder.Build creates a new instance of Argument.\n  ArgumentsBuilder.Build creates a list of new instances of Argument.\nOr,\n  Builder.BuildArgument and Builder.BuildArguments create the same things respectively.\n\nTo me, both of Argument.create and arguments_node_to_arguments look like builders, but their names are not symmetric.  expand_extended_attributes is another case, whose name is not \"extended_attributes_node_to_extended_attributes\", although it looks the same pattern as \"arguments_node_to_arguments\".",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
