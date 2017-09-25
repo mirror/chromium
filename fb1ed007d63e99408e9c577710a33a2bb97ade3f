@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9212af_74d284e2",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-25T05:57:35Z",
+      "side": 1,
+      "message": "I found actually it runs in https://cs.chromium.org/chromium/src/chrome/browser/chromeos/device/input_service_proxy.cc?rcl\u003dc2e01ee17ebf6127fa78d8740000cbcab8509313\u0026l\u003d28\n\nSo we can create a new input_service_task_runner in the same way in DeviceService.",
+      "range": {
+        "startLine": 23,
+        "startChar": 46,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
