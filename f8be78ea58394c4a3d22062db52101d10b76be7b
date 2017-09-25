@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ce8215_b9858e84",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T21:45:50Z",
+      "side": 1,
+      "message": "Question: Should this return std::string so we don\u0027t have to allocate the std::string on the heap, but only the stack? Or would that maybe be fiddly with the PostTaskAndReply, etc., for the WebApkInstaller::BuildProto part?",
+      "revId": "f8be78ea58394c4a3d22062db52101d10b76be7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a056e17d_814468ee",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T21:45:50Z",
+      "side": 1,
+      "message": "Optional: DCHECK(serialized_size \u003d\u003d serialized_proto.size()) since we\u0027re assuming they\u0027ll be the same when we write it to disk, but we don\u0027t have access to the proto there?",
+      "revId": "f8be78ea58394c4a3d22062db52101d10b76be7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
