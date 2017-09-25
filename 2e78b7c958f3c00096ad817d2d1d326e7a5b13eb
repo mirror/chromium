@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70cccfda_ce031e98",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "nit: put this in same order as the declarations... unless this file is so messed up already that it\u0027s impossible to do so",
+      "range": {
+        "startLine": 1122,
+        "startChar": 21,
+        "endLine": 1122,
+        "endChar": 41
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1ea72d_e8382360",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "Maybe we should move the HARD_OVERRIDE_DISABLED calculation from SSLBlockingPage into here? Seems weird for that one option to be set elsewhere.",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c44672_9a674fa7",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "If this is exposed only for testing, then I\u0027d suggest either making it private and using FRIEND_TEST_ALL_PREFIXES, or make it private and add a wrapper CalculateOptionsMaskForTesting method.",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b241896d_01181aa9",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "Can you just call SSLErrorHandler::CalculateOptionsMask directly and not use TestSSLErrorHandler?",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 45
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578f1604_2913e0c8",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "Can you check that there is also an integration test for these flags somewhere in ssl_browser_tests.cc, or add one if there isn\u0027t?",
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d633fe68_1e2065ab",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1428,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "I don\u0027t *think* you need this; I think you can just do:\n\nTEST(SSLErrorHandlerTest, CalculateOptionsMask) {\n...\n}",
+      "range": {
+        "startLine": 1425,
+        "startChar": 0,
+        "endLine": 1428,
+        "endChar": 32
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37eadd19_8112394d",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "Can we rewrite this big switch as:\n\nDCHECK(net::IsCertificateError(handler-\u003ecert_error());\nif (handler-\u003ecert_error() \u003d\u003d ERR_CERT_NO_REVOCATION_MECHANISM || handler-\u003ecert_error() \u003d\u003d ERR_CERT_UNABLE_TO_CHECK_REVOCATION) {\n  handler-\u003eContinueRequest();\n  return;\n}\nOnCertErrorInternal(...);",
+      "range": {
+        "startLine": 347,
+        "startChar": 19,
+        "endLine": 347,
+        "endChar": 29
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6c904b_dab43773",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-25T21:30:40Z",
+      "side": 1,
+      "message": "I think this is unreachable, as it\u0027s not surfaced as a cert error per https://cs.chromium.org/chromium/src/net/base/net_errors.cc?type\u003dcs\u0026l\u003d34",
+      "range": {
+        "startLine": 359,
+        "startChar": 14,
+        "endLine": 359,
+        "endChar": 50
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
