@@ -32,7 +32,7 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
       client_(std::move(client)),
       compositor_frame_sink_binding_(this, std::move(request)),
       display_private_binding_(this, std::move(display_private_request)),
-      hit_test_aggregator_(this) {
+      hit_test_aggregator_(frame_sink_manager->hit_test_manager(), this) {
   DCHECK(display_begin_frame_source_);
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&RootCompositorFrameSinkImpl::OnClientConnectionLost,

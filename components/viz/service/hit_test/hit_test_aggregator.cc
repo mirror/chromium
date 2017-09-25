@@ -14,48 +14,19 @@ namespace {
 // telemetry / UMA.
 constexpr uint32_t kInitialSize = 1024;
 constexpr uint32_t kIncrementalSize = 1024;
-constexpr uint32_t kMaxRegionsPerSurface = 1024;
 constexpr uint32_t kMaxSize = 100 * 1024;
-
-bool ValidateHitTestRegion(const mojom::HitTestRegionPtr& hit_test_region) {
-  if (hit_test_region->flags & mojom::kHitTestChildSurface) {
-    if (!hit_test_region->local_surface_id.has_value() ||
-        !hit_test_region->local_surface_id->is_valid())
-      return false;
-  }
-
-  return true;
-}
-
-bool ValidateHitTestRegionList(
-    const mojom::HitTestRegionListPtr& hit_test_region_list) {
-  if (hit_test_region_list->regions.size() > kMaxRegionsPerSurface)
-    return false;
-  for (auto& region : hit_test_region_list->regions) {
-    if (!ValidateHitTestRegion(region))
-      return false;
-  }
-  return true;
-}
 
 }  // namespace
 
-HitTestAggregator::HitTestAggregator(HitTestAggregatorDelegate* delegate)
-    : delegate_(delegate), weak_ptr_factory_(this) {
+HitTestAggregator::HitTestAggregator(HitTestManager* hit_test_manager,
+                                     HitTestAggregatorDelegate* delegate)
+    : hit_test_manager_(hit_test_manager),
+      delegate_(delegate),
+      weak_ptr_factory_(this) {
   AllocateHitTestRegionArray();
 }
 
 HitTestAggregator::~HitTestAggregator() = default;
-
-void HitTestAggregator::SubmitHitTestRegionList(
-    const SurfaceId& frame_sink_id,
-    mojom::HitTestRegionListPtr hit_test_region_list) {
-  DCHECK(ValidateHitTestRegionList(hit_test_region_list));
-  // TODO(gklassen): Runtime validation that hit_test_region_list is valid.
-  // TODO(gklassen): Inform FrameSink that the hit_test_region_list is invalid.
-  // TODO(gklassen): FrameSink needs to inform the host of a difficult renderer.
-  pending_[frame_sink_id] = std::move(hit_test_region_list);
-}
 
 void HitTestAggregator::PostTaskAggregate(const SurfaceId& display_surface_id) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -65,18 +36,14 @@ void HitTestAggregator::PostTaskAggregate(const SurfaceId& display_surface_id) {
 }
 
 void HitTestAggregator::Aggregate(const SurfaceId& display_surface_id) {
-  // Check to ensure that enough memory has been allocated.
-  uint32_t size = write_size_;
-  uint32_t max_size = active_region_count_ + active_.size() + 1;
-  if (max_size > kMaxSize)
-    max_size = kMaxSize;
-
-  if (max_size > size) {
-    size = (1 + max_size / kIncrementalSize) * kIncrementalSize;
-    AllocateHitTestRegionArray(size);
-  }
-
   AppendRoot(display_surface_id);
+
+  // TODO(gklassen): Invoke Swap at BeginFrame and remove this call.
+  Swap();
+}
+
+void HitTestAggregator::GrowRegionList() {
+  AllocateHitTestRegionArray(write_size_ + kIncrementalSize);
 }
 
 void HitTestAggregator::Swap() {
@@ -95,46 +62,6 @@ void HitTestAggregator::Swap() {
   handle_replaced_ = false;
 }
 
-bool HitTestAggregator::OnSurfaceDamaged(const SurfaceId& surface_id,
-                                         const BeginFrameAck& ack) {
-  return false;
-}
-
-void HitTestAggregator::OnSurfaceDiscarded(const SurfaceId& surface_id) {
-  // Update the region count.
-  auto active_search = active_.find(surface_id);
-  if (active_search != active_.end()) {
-    mojom::HitTestRegionList* old_hit_test_data = active_search->second.get();
-    active_region_count_ -= old_hit_test_data->regions.size();
-  }
-  DCHECK_GE(active_region_count_, 0u);
-
-  pending_.erase(surface_id);
-  active_.erase(surface_id);
-}
-
-void HitTestAggregator::OnSurfaceWillDraw(const SurfaceId& surface_id) {
-  auto pending_search = pending_.find(surface_id);
-  if (pending_search == pending_.end()) {
-    // Have already activated pending hit_test_region_list objects for this
-    // surface.
-    return;
-  }
-  mojom::HitTestRegionList* hit_test_region_list = pending_search->second.get();
-
-  // Update the region count.
-  auto active_search = active_.find(surface_id);
-  if (active_search != active_.end()) {
-    mojom::HitTestRegionList* old_hit_test_data = active_search->second.get();
-    active_region_count_ -= old_hit_test_data->regions.size();
-  }
-  active_region_count_ += hit_test_region_list->regions.size();
-  DCHECK_GE(active_region_count_, 0u);
-
-  active_[surface_id] = std::move(pending_[surface_id]);
-  pending_.erase(surface_id);
-}
-
 void HitTestAggregator::AllocateHitTestRegionArray() {
   AllocateHitTestRegionArray(kInitialSize);
   SwapHandles();
@@ -144,13 +71,17 @@ void HitTestAggregator::AllocateHitTestRegionArray() {
 void HitTestAggregator::AllocateHitTestRegionArray(uint32_t size) {
   size_t num_bytes = size * sizeof(AggregatedHitTestRegion);
   write_handle_ = mojo::SharedBufferHandle::Create(num_bytes);
-  write_size_ = size;
-  write_buffer_ = write_handle_->Map(num_bytes);
+  auto new_buffer_ = write_handle_->Map(num_bytes);
   handle_replaced_ = true;
 
-  AggregatedHitTestRegion* region =
-      (AggregatedHitTestRegion*)write_buffer_.get();
-  region[0].child_count = kEndOfList;
+  AggregatedHitTestRegion* region = (AggregatedHitTestRegion*)new_buffer_.get();
+  if (write_size_)
+    memcpy(region, write_buffer_.get(), write_size_);
+  else
+    region[0].child_count = kEndOfList;
+
+  write_size_ = size;
+  write_buffer_ = std::move(new_buffer_);
 }
 
 void HitTestAggregator::SwapHandles() {
@@ -163,11 +94,11 @@ void HitTestAggregator::SwapHandles() {
 }
 
 void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
-  auto search = active_.find(surface_id);
-  if (search == active_.end())
-    return;
+  const mojom::HitTestRegionList* hit_test_region_list =
+      hit_test_manager_->GetHitTestRegionList(surface_id);
 
-  mojom::HitTestRegionList* hit_test_region_list = search->second.get();
+  if (!hit_test_region_list)
+    return;
 
   AggregatedHitTestRegion* regions =
       static_cast<AggregatedHitTestRegion*>(write_buffer_.get());
@@ -181,7 +112,7 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
   for (const auto& region : hit_test_region_list->regions) {
     if (region_index >= write_size_ - 1)
       break;
-    region_index = AppendRegion(regions, region_index, region);
+    region_index = AppendRegion(region_index, region);
   }
 
   DCHECK_GE(region_index, 1u);
@@ -189,9 +120,11 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
   regions[region_index].child_count = kEndOfList;
 }
 
-size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
-                                       size_t region_index,
+size_t HitTestAggregator::AppendRegion(size_t region_index,
                                        const mojom::HitTestRegionPtr& region) {
+  AggregatedHitTestRegion* regions =
+      static_cast<AggregatedHitTestRegion*>(write_buffer_.get());
+
   AggregatedHitTestRegion* element = &regions[region_index];
 
   element->frame_sink_id = region->frame_sink_id;
@@ -201,15 +134,21 @@ size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
 
   size_t parent_index = region_index++;
   if (region_index >= write_size_ - 1) {
-    element->child_count = 0;
-    return region_index;
+    if (write_size_ > kMaxSize) {
+      element->child_count = 0;
+      return region_index;
+    } else {
+      GrowRegionList();
+      regions = static_cast<AggregatedHitTestRegion*>(write_buffer_.get());
+    }
   }
 
   if (region->flags & mojom::kHitTestChildSurface) {
     auto surface_id =
         SurfaceId(region->frame_sink_id, region->local_surface_id.value());
-    auto search = active_.find(surface_id);
-    if (search == active_.end()) {
+    const mojom::HitTestRegionList* hit_test_region_list =
+        hit_test_manager_->GetHitTestRegionList(surface_id);
+    if (!hit_test_region_list) {
       // Surface HitTestRegionList not found - it may be late.
       // Don't include this region so that it doesn't receive events.
       return parent_index;
@@ -218,14 +157,13 @@ size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
     // Rather than add a node in the tree for this hit_test_region_list element
     // we can simplify the tree by merging the flags and transform into
     // the kHitTestChildSurface element.
-    mojom::HitTestRegionList* hit_test_region_list = search->second.get();
     if (!hit_test_region_list->transform.IsIdentity())
       element->transform.PreconcatTransform(hit_test_region_list->transform);
 
     element->flags |= hit_test_region_list->flags;
 
     for (const auto& child_region : hit_test_region_list->regions) {
-      region_index = AppendRegion(regions, region_index, child_region);
+      region_index = AppendRegion(region_index, child_region);
       if (region_index >= write_size_ - 1)
         break;
     }
