@@ -9,9 +9,9 @@
 namespace content {
 
 AccessibilityEventRecorder::AccessibilityEventRecorder(
-    BrowserAccessibilityManager* manager)
-    : manager_(manager) {
-}
+    BrowserAccessibilityManager* manager,
+    int pid)
+    : manager_(manager) {}
 
 AccessibilityEventRecorder::~AccessibilityEventRecorder() {
 }
@@ -19,8 +19,9 @@ AccessibilityEventRecorder::~AccessibilityEventRecorder() {
 #if !defined(OS_WIN) && !defined(OS_MACOSX)
 // static
 AccessibilityEventRecorder* AccessibilityEventRecorder::Create(
-    BrowserAccessibilityManager* manager) {
-  return new AccessibilityEventRecorder(manager);
+    BrowserAccessibilityManager* manager,
+    int pid) {
+  return new AccessibilityEventRecorder(manager, pid);
 }
 #endif
 
