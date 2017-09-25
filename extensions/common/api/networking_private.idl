@@ -65,6 +65,10 @@ namespace networkingPrivate {
     Direct, Manual, PAC, WPAD
   };
 
+  enum VPNType {
+    L2TP_IPsec, OpenVPN, ThirdPartyVPN, ARCVPN
+  };
+
   // Managed property types. These types all share a common structure:
   // Active: For properties that are translated from the configuration
   //     manager (e.g. Shill), the 'active' value currently in use by the
@@ -600,7 +604,7 @@ namespace networkingPrivate {
     L2TPProperties? L2TP;
     OpenVPNProperties? OpenVPN;
     ThirdPartyVPNProperties? ThirdPartyVPN;
-    DOMString? Type;
+    VPNType Type;
   };
 
   dictionary ManagedVPNProperties {
