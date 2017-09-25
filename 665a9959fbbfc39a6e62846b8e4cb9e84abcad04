@@ -22,6 +22,30 @@
       "revId": "665a9959fbbfc39a6e62846b8e4cb9e84abcad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83293015_c049e101",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T21:02:40Z",
+      "side": 1,
+      "message": "Switched to exit fullscreen after exit vr. This is no longer needed.",
+      "parentUuid": "c787f0dc_e3c8a7e3",
+      "range": {
+        "startLine": 2154,
+        "startChar": 8,
+        "endLine": 2154,
+        "endChar": 54
+      },
+      "revId": "665a9959fbbfc39a6e62846b8e4cb9e84abcad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
