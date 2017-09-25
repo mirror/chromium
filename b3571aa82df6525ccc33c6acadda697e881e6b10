@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f54b3fd9_b1588dab",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-09-25T04:40:08Z",
+      "side": 1,
+      "message": "nit: static is not required.",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d6fdb7_c3b29f81",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-09-25T04:40:08Z",
+      "side": 1,
+      "message": "nit: HandleOmniboxHint()?\n\nMaybePreconnect* with |preconnectable| looks weird.",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c77f699_fd2ed4c0",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-09-25T04:40:08Z",
+      "side": 1,
+      "message": "Is it used?",
+      "revId": "b3571aa82df6525ccc33c6acadda697e881e6b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
