@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fafb4a2_7dc362d4",
+        "filename": "third_party/WebKit/Source/core/loader/HttpEquiv.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-25T20:01:40Z",
+      "side": 1,
+      "message": "Nit: May make sense to rip these lines out? :)",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 10
+      },
+      "revId": "adfc3b8fb6a24b2385a783276c6085f07b108495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
