@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f235fd90_17a63fcf",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-25T21:28:59Z",
+      "side": 0,
+      "message": "PErhaps keep a DCHECK(sk_image-\u003ecolorSpace())",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 15
+      },
+      "revId": "70ef3af59a32514794804b10863876d6eccdfa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
