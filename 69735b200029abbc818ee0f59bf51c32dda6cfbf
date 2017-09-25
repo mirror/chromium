@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e03010d2_ebcf8342",
+        "filename": "components/viz/common/quads/copy_output_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-25T20:07:52Z",
+      "side": 1,
+      "message": "Can you help me understand how all this utility code is different than gfx::ScaleToEnclosingRectSafe(area, x_scale, y_scale)?\n\nDo you really need the precision of multiplying by \"to\" before dividing by \"from\" or can you just plumb the relative \"to/from\" ratio for x and y all the way through?",
+      "revId": "69735b200029abbc818ee0f59bf51c32dda6cfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9733c6f0_a8128c64",
+        "filename": "components/viz/service/display/software_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-25T20:07:52Z",
+      "side": 1,
+      "message": ":P",
+      "revId": "69735b200029abbc818ee0f59bf51c32dda6cfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
