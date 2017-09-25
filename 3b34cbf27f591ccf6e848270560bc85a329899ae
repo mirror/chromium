@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbc63276_e11e1411",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-25T05:45:27Z",
+      "side": 1,
+      "message": "Oops, Done",
+      "parentUuid": "eba390e3_2e5b1c81",
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2300edb0_10ef37c6",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-22T14:57:56Z",
       "side": 1,
       "message": "Can |render_frame| be nullptr?",
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae318ab_469fb802",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-09-25T05:45:27Z",
+      "side": 1,
+      "message": "Hmm, I realized that |render_frame| is not null this time, but a task runner belonging the render frame might not be available when the task runner is used.\n\nAlexander, I feel like we should go back the previous way to get the render frame on demand. Wdyt?",
+      "parentUuid": "2300edb0_10ef37c6",
       "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
