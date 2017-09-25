@@ -978,7 +978,7 @@ bool QuicFramer::ProcessAndCalculatePacketNumber(
     QuicPacketNumberLength packet_number_length,
     QuicPacketNumber base_packet_number,
     QuicPacketNumber* packet_number) {
-  QuicPacketNumber wire_packet_number = 0u;
+  QuicPacketNumber wire_packet_number;
   if (!reader->ReadBytesToUInt64(packet_number_length, &wire_packet_number)) {
     return false;
   }
@@ -1243,14 +1243,13 @@ bool QuicFramer::ProcessStreamFrame(QuicDataReader* reader,
     frame->fin = ExtractBit(stream_flags, kQuicStreamFinShift);
   }
 
-  uint64_t stream_id = 0;
+  uint64_t stream_id;
   if (!reader->ReadBytesToUInt64(stream_id_length, &stream_id)) {
     set_detailed_error("Unable to read stream_id.");
     return false;
   }
   frame->stream_id = static_cast<QuicStreamId>(stream_id);
 
-  frame->offset = 0;
   if (!reader->ReadBytesToUInt64(offset_length, &frame->offset)) {
     set_detailed_error("Unable to read offset.");
     return false;
@@ -1331,7 +1330,7 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
     }
   }
 
-  uint64_t first_block_length = 0;
+  uint64_t first_block_length;
   if (!reader->ReadBytesToUInt64(ack_block_length, &first_block_length)) {
     set_detailed_error("Unable to read first ack block length.");
     return false;
@@ -1358,7 +1357,7 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
         set_detailed_error("Unable to read gap to next ack block.");
         return false;
       }
-      uint64_t current_block_length = 0;
+      uint64_t current_block_length;
       if (!reader->ReadBytesToUInt64(ack_block_length, &current_block_length)) {
         set_detailed_error("Unable to ack block length.");
         return false;
@@ -1448,7 +1447,7 @@ bool QuicFramer::ProcessTimestampsInAckFrame(uint8_t num_received_packets,
 bool QuicFramer::ProcessStopWaitingFrame(QuicDataReader* reader,
                                          const QuicPacketHeader& header,
                                          QuicStopWaitingFrame* stop_waiting) {
-  QuicPacketNumber least_unacked_delta = 0;
+  QuicPacketNumber least_unacked_delta;
   if (!reader->ReadBytesToUInt64(header.public_header.packet_number_length,
                                  &least_unacked_delta)) {
     set_detailed_error("Unable to read least unacked delta.");
