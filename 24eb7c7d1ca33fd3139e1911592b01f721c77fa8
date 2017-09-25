@@ -464,6 +464,30 @@
     },
     {
       "key": {
+        "uuid": "aba27cb7_6e873d21",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T13:00:52Z",
+      "side": 1,
+      "message": "Acquire is effectively passing ownership of something (Release must be called). Let\u0027s make that ownership explicit and leverage RAII to help us out. Release can then become a private method that only FileHandle can access. I have no issue with the raw File*s going to the helper functions, as ownership is not conveyed there.\n\nIn terms of eventual doom, I can\u0027t really comment on that as I haven\u0027t seen it and am not sure what you have in mind. I\u0027m not quite sure what the generation counter is yet either.",
+      "parentUuid": "7f61c822_881970f8",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
