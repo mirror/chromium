@@ -1,0 +1,283 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a40ba496_2fa8c7bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Still haven\u0027t read your doc but assuming it\u0027s related? Link to it here?",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54b7390_9600dd4f",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we only reload on empty?",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94d9952_7fb2433b",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9099103_0d7bc62b",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Describe the \"previous behavior\" further, it\u0027s non-obvious after this CL lands.",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee4730a_b855ca61",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "\"had_tasks\" or flip the bool and call it \"was_empty\"",
+      "range": {
+        "startLine": 234,
+        "startChar": 7,
+        "endLine": 234,
+        "endChar": 16
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9dcfd0_29c437b7",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Feels some of these could share impls (or their definition in header should make a clear distinction as to why they don\u0027t)",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaba060_c56adc02",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "do we still need this inter-dependency?",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 27
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c64bcc1_1a757b91",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "read-only or remove-only?",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53dfc46_96ea8d57",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Document these",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a15028b_4d6c0087",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "It\u0027s not \"initial\" if it can be reloaded, right? How about MainQueue? Or \"work queue\" as it used to be called?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13097548_0546c46b",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Comment that this is a no-op if the queue is non-empty (in my initial read I originally commented it should only be called if empty then realized it checked by itself).\n\nAnd rename to ReloadFromIncomingQueueIfEmpty()",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdb28c7_7b248a24",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Add a meta comment on each of these classes to mention how they differ from one another in logic (can go into a bitof impl details if necessary as they\u0027re private -- so same rule as member comments)",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9716c13_9f6dfba8",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "Why aren\u0027t we using the return value from DeletePendingTask() above?\n\nAlso |did_work| seems like a weird variable name for the return of HasTasks()",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d983b3f7_70d20c33",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "This is the same condition as the while\u0027s at the end. Sounds like we can s/do-while/while/ and get rid of for-loop as well",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3ce3ae_86ede3ae",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T22:43:48Z",
+      "side": 1,
+      "message": "wait... when does this occur? didn\u0027t think DoWork() would ever stumble on delayed work? at least not non-expired delayed work?",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
