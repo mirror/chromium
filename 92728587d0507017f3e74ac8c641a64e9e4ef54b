@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "990da5fb_ff7e1bce",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-25T15:02:56Z",
+      "side": 1,
+      "message": "This is also not working correctly...\nYou\u0027d need this between L116 and L117, or, you can keep this in the original line (L118).\n\nIn this code, when StartWizard is called twice, between L112 and L116, older wizard_controller_ has dangling pointer.\nSo, this needs to be destroyed after wizard_controller_ is reset() (and before its usage at L119).",
+      "revId": "92728587d0507017f3e74ac8c641a64e9e4ef54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
