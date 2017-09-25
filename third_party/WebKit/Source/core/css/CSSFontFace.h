@@ -68,7 +68,7 @@ class CORE_EXPORT CSSFontFace final
   void AddSource(CSSFontFaceSource*);
 
   void DidBeginLoad();
-  void FontLoaded(RemoteFontFaceSource*);
+  void FontLoaded(RemoteFontFaceSource*, bool was_cancelled);
   void DidBecomeVisibleFallback(RemoteFontFaceSource*);
 
   RefPtr<SimpleFontData> GetFontData(const FontDescription&);

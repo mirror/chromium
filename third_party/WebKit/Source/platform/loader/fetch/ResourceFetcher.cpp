@@ -1218,7 +1218,7 @@ void ResourceFetcher::ClearContext() {
   // to this, but it's possible for additional requests to start during
   // StopFetching() (e.g., fallback fonts that only trigger when the
   // first choice font failed to load).
-  StopFetching();
+  // StopFetching();
 
   if (!loaders_.IsEmpty() || !non_blocking_loaders_.IsEmpty()) {
     // There are some keepalive requests.
