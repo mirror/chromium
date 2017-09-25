@@ -163,6 +163,30 @@
     },
     {
       "key": {
+        "uuid": "7e3ea80c_f28de08b",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T15:51:14Z",
+      "side": 1,
+      "message": "I think we should either remove CopyUIImage() or put the correct annotation (__attribute__((ns_returns_retained))). Can one of you file a bug?",
+      "parentUuid": "3496812a_21f7cfb5",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ed97c3eb4496f79d9bff6cd7d5d772f860a1b809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae714439_35b8b754",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 13
