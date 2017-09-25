@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f905109_3299c564",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-25T01:52:32Z",
+      "side": 1,
+      "message": "these files don\u0027t belong in the mac_views_browser build - see http://crbug.com/587239\n\nr414971 was able to make the certificate _viewer_ work for mac_views_browser without these files. We need to use the same plumbing so that the certificate _selector_ can also be used.",
+      "revId": "2bf597cc77573d7a719cd478b563742d4622b922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
