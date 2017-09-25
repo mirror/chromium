@@ -68,6 +68,9 @@ config("base_implementation") {
 if (is_win) {
   # This is in a separate config so the flags can be applied to dependents.
   # ldflags in GN aren't automatically inherited.
+  # The api-ms-win family of DLLs is delay loaded as they are exclusive to
+  # Windows 8 and up and are only used there (would otherwise cause startup to
+  # fail on Windows 7, for example).
   config("base_win_linker_flags") {
     ldflags = [
       "/DELAYLOAD:cfgmgr32.dll",
@@ -1025,6 +1028,8 @@ component("base") {
     "win/com_init_check_hook.h",
     "win/com_init_util.cc",
     "win/com_init_util.h",
+    "win/core_winrt_util.cc",
+    "win/core_winrt_util.h",
     "win/current_module.h",
     "win/enum_variant.cc",
     "win/enum_variant.h",
@@ -1061,6 +1066,8 @@ component("base") {
     "win/scoped_handle.h",
     "win/scoped_hdc.h",
     "win/scoped_hglobal.h",
+    "win/scoped_hstring.cc",
+    "win/scoped_hstring.h",
     "win/scoped_process_information.cc",
     "win/scoped_process_information.h",
     "win/scoped_propvariant.h",
@@ -2240,6 +2247,7 @@ test("base_unittests") {
     "vlog_unittest.cc",
     "win/com_init_check_hook_unittest.cc",
     "win/com_init_util_unittest.cc",
+    "win/core_winrt_util_unittest.cc",
     "win/dllmain.cc",
     "win/enum_variant_unittest.cc",
     "win/event_trace_consumer_unittest.cc",
@@ -2253,6 +2261,7 @@ test("base_unittests") {
     "win/registry_unittest.cc",
     "win/scoped_bstr_unittest.cc",
     "win/scoped_handle_unittest.cc",
+    "win/scoped_hstring_unittest.cc",
     "win/scoped_process_information_unittest.cc",
     "win/scoped_variant_unittest.cc",
     "win/shortcut_unittest.cc",
