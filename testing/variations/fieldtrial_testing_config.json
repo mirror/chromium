@@ -2745,7 +2745,8 @@
                 {
                     "name": "Enabled_bg_limit_16",
                     "params": {
-                        "bg_limit": "16"
+                        "bg_limit": "16",
+                        "bg_sub_limit": "16"
                     },
                     "enable_features": [
                         "ReportRendererPeakMemoryStats",
@@ -2762,7 +2763,8 @@
                 {
                     "name": "Enabled_bg_limit_16",
                     "params": {
-                        "bg_limit": "16"
+                        "bg_limit": "16",
+                        "bg_sub_limit": "16"
                     },
                     "enable_features": [
                         "ResourceLoadScheduler"
