@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29868607_8d75f9ca",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03ff9fd_1fd9e4bc",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88413845_79028914",
         "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23694024_25d551fe",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88413845_79028914",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e585aa17_92c2152d",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d90566_32d93191",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a46c363_a60b6f61",
         "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-14T21:06:21Z",
       "side": 1,
       "message": "How about (assuming that we set line height to 20px with the 154% elsewhere) line-height: 110%;",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2680b70a_8e679974",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Unfortunately to line up with paper-input it has to be 22px, since paper-input also has this hardcoded.",
+      "parentUuid": "7a46c363_a60b6f61",
       "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8536e636_a873383d",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0fa76d_4f563543",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efbcfd43_e74b5473",
         "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-14T21:06:21Z",
       "side": 1,
       "message": "optional: it would be nice to define a --cr-title-text to set this color, font-size (as a %), and font-weight.",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e014b20_ce4d5014",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "I didn\u0027t find another element that\u0027s using the same set of css rules as the title-text, so maybe we can do as you suggested when the need to share these arises?",
+      "parentUuid": "efbcfd43_e74b5473",
       "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "62372de7_7dbb78a3",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ae734a_0e399ede",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36529b23_90b0a1ca",
         "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0657e100_00033b3a",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T21:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36529b23_90b0a1ca",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
