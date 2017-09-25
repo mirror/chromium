@@ -22,7 +22,9 @@ class PLATFORM_EXPORT VideoFrameSubmitter
     : public WebVideoFrameSubmitter,
       public viz::mojom::blink::CompositorFrameSinkClient {
  public:
-  explicit VideoFrameSubmitter(cc::VideoFrameProvider*);
+  VideoFrameSubmitter(
+      cc::VideoFrameProvider*,
+      const base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>&);
 
   ~VideoFrameSubmitter() override;
 
@@ -64,7 +66,9 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
   viz::LocalSurfaceId current_local_surface_id_;
-  VideoFrameResourceProvider resource_provider_;
+  const base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>&
+      context_provider_callback_;
+  std::unique_ptr<VideoFrameResourceProvider> resource_provider_;
 
   bool is_rendering_;
 
