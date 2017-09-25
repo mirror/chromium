@@ -40,6 +40,9 @@ class PaymentRequestBaseDelegate {
 
   virtual const std::string& GetApplicationLocale() const = 0;
 
+  // Returns whether the browser window is active.
+  virtual bool IsBrowserWindowActive() const = 0;
+
   // Returns whether the user is in Incognito mode.
   virtual bool IsIncognito() const = 0;
 
