@@ -16,6 +16,24 @@
       "revId": "10d3823d5eb8b2b3d311e0ce66a6326ff5e875c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e830eb82_aa306e10",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-25T18:41:10Z",
+      "side": 0,
+      "message": "Yes, you are right. Removed.",
+      "parentUuid": "644c5bc7_ea0d7140",
+      "revId": "10d3823d5eb8b2b3d311e0ce66a6326ff5e875c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
