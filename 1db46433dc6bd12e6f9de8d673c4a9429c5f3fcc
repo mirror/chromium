@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f75b2b5_656636f7",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af6e74e_3d209103",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4434aa5c_276a2fd6",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T21:35:33Z",
       "side": 1,
       "message": "Would this class be better as a struct with public data?  Do the getters and setters actually add value at this point?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067f5db1_bfd12643",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "struct is much better!",
+      "parentUuid": "4434aa5c_276a2fd6",
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "65b0432a_982688a8",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Yeah, I wanted to have just one \"root\" model. That said in future, I think the Model will own a few other sub-models. Eg, a vector of TabModels.",
+      "parentUuid": "5e5b8172_3e5f703b",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03a0bf0a_3d0fd409",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-25T21:35:33Z",
       "side": 1,
       "message": "Do you want to put in a comment that describes all the Set..() methods as a block of functions that should disappear?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bbf6f3_66a09c67",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "I\u0027ve been convinced that all of these Set.. functions should disappear. I\u0027ve added comments to the stuff on UiSceneManager that I think will change.",
+      "parentUuid": "03a0bf0a_3d0fd409",
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "491306f7_c3d2662e",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "4b9fbf1a_77f6b7a5",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10575295_9b21b7d7",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc8b4c6_30232b63",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10575295_9b21b7d7",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7d483f3b_ec64981c",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8c3788_2659449e",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0649ae_58383286",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-25T21:35:33Z",
       "side": 1,
       "message": "Out of curiosity - what does the bar look like with a tiny amount of progress?  Ie, rounded corner shader on a bar that\u0027s really thin..  does it look okay?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f7dc83_47fba01f",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Great question. It looks bad! Imagine you cut a circle in two and overlap the two halves. I\u0027ve updated the code in this CL to bail in this case and added a TODO to handle rendering this degenerate case.",
+      "parentUuid": "6a0649ae_58383286",
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f6b875b4_44e9f6d3",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "My hope is that the ctor will turn into a \"create screen\" fn and that the mgr will not own state. Just to be safe, I wanted to avoid storing model_ and having someone accidentally use it after the ctor finishes.",
+      "parentUuid": "03c74fd3_90fd2341",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6131d635_c7b7955a",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b28fc358_4302a386",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "Yeah, just wanted to check that the binding did fire. But I can certainly check translation, too. Done.",
+      "parentUuid": "6131d635_c7b7955a",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a04a22a8_7c69d361",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-25T21:35:33Z",
       "side": 1,
       "message": "I wish I could comment on the bots.  They are RED Ian!  ;)",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e33cf06_bb9a0ac0",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T23:13:38Z",
+      "side": 1,
+      "message": "SOOO RED!",
+      "parentUuid": "a04a22a8_7c69d361",
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
