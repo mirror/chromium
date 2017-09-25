@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c2779d3_25f71312",
+        "filename": "media/gpu/v4l2_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-25T08:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d8a0693_de67d147",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "bfa708d4cdf7cb6c0321bfa8d90552fb253e20ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab165b6_9ac4c881",
         "filename": "media/gpu/v4l2_video_encode_accelerator.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bfa708d4cdf7cb6c0321bfa8d90552fb253e20ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d89c62_ffb8013c",
+        "filename": "media/gpu/v4l2_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-25T08:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab165b6_9ac4c881",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 51
+      },
+      "revId": "bfa708d4cdf7cb6c0321bfa8d90552fb253e20ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
