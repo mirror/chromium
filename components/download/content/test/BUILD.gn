@@ -4,14 +4,13 @@
 
 assert(!is_ios)
 
-source_set("factory") {
-  sources = [
-    "download_service_factory.cc",
-    "download_service_factory.h",
-  ]
+# Target mainly used for browser test.
+source_set("test_support") {
+  testonly = true
 
-  public_deps = [
-    "//components/download/public",
+  sources = [
+    "test_utils.cc",
+    "test_utils.h",
   ]
 
   deps = [
@@ -19,10 +18,8 @@ source_set("factory") {
     "//components/download/content/internal",
     "//components/download/internal",
     "//components/download/internal/proto",
+    "//components/download/internal/test:test_support",
     "//components/keyed_service/core",
     "//components/leveldb_proto",
-    "//content/public/browser",
-    "//net",
-    "//url",
   ]
 }
