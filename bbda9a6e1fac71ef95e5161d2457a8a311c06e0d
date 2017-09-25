@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa8c695_50e25021",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T12:41:30Z",
+      "side": 1,
+      "message": "nit: Perhaps the word \"state\" would fit better here?",
+      "range": {
+        "startLine": 219,
+        "startChar": 48,
+        "endLine": 219,
+        "endChar": 56
+      },
+      "revId": "bbda9a6e1fac71ef95e5161d2457a8a311c06e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
