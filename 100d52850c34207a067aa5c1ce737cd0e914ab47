@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01b0dc70_3ab2ab8f",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-25T20:00:02Z",
+      "side": 1,
+      "message": "Sure. I was thinking of tests where the page would end up different if the js errored early, but this test doesn\u0027t have that issue.",
+      "parentUuid": "e5920bd0_edc93997",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0648115a_6cf1aca5",
         "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-24T16:44:26Z",
       "side": 1,
       "message": "Would this test still pass if the handler were never called? If so, can you somehow assert that it gets called (and only once)?",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2c0dd3_d6c1a229",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-25T20:00:02Z",
+      "side": 1,
+      "message": "It will still pass. I can convert to an async test that verifies that the callback is called.",
+      "parentUuid": "0648115a_6cf1aca5",
       "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b766ca2_97f052ee",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-25T20:00:02Z",
+      "side": 1,
+      "message": "This code is only relevant to LayoutBlockFlow, because it is the only thing that knows about AnonymousBlockContinuations.",
+      "parentUuid": "dbcb40e2_8d64dc30",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ae317e4_748bd9d7",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-24T16:44:26Z",
       "side": 1,
       "message": "Should LayoutInline::UpdateHitTestResult also use NodeForHitTest()?",
+      "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e3eef4_4affddda",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-25T20:00:02Z",
+      "side": 1,
+      "message": "Yes, and I also believe that code in LayoutInline::UpdateHitTestResult that deals with continuations should be lifted out and moved into NodeForHitTest so that we retain consistency between node and list-based results. Maybe we can test it by looking at the hit event target for touch and pointer.",
+      "parentUuid": "1ae317e4_748bd9d7",
       "revId": "100d52850c34207a067aa5c1ce737cd0e914ab47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
