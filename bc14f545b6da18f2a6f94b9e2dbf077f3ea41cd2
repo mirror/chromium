@@ -245,6 +245,30 @@
       "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423e7eb4_2f7e969d",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-25T14:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b98f7c_c2eff911",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
