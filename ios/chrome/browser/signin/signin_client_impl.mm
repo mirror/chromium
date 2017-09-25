@@ -92,8 +92,8 @@ void SigninClientImpl::OnSignedOut() {
   size_t index = cache->GetIndexOfBrowserStateWithPath(
       browser_state_->GetOriginalChromeBrowserState()->GetStatePath());
 
-  // If sign out occurs because Sync setup was in progress and the browser state
-  // got deleted, then it is no longer in the cache.
+  // If sign out occurs because Sync setup was in progress and the browser
+  // statefIsFirstRun got deleted, then it is no longer in the cache.
   if (index == std::string::npos)
     return;
 
