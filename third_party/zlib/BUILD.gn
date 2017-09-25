@@ -2,8 +2,59 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+if (current_cpu == "arm" || current_cpu == "arm64") {
+  import("//build/config/arm.gni")
+}
+
 config("zlib_config") {
   include_dirs = [ "." ]
+}
+
+config("zlib_adler32_simd_config") {
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    defines = [ "ADLER32_SIMD_SSSE3" ]
+  }
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_use_neon) {
+      defines = [ "ADLER32_SIMD_NEON" ]
+    }
+  }
+}
+
+source_set("zlib_adler32_simd") {
+  visibility = [ ":*" ]
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    sources = [
+      "adler32_simd.c",
+      "adler32_simd.h",
+    ]
+
+    if (!is_win || is_clang) {
+      cflags = [ "-mssse3" ]
+    }
+  }
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_use_neon) {
+      sources = [
+        "adler32_simd.c",
+        "adler32_simd.h",
+      ]
+
+      if (!is_debug && is_clang) {
+        # Use optimize_speed (-O3) here to output _smallest_ code.
+        configs -= [ "//build/config/compiler:default_optimization" ]
+        configs += [ "//build/config/compiler:optimize_speed" ]
+      }
+    }
+  }
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  public_configs = [ ":zlib_adler32_simd_config" ]
 }
 
 static_library("zlib_x86_simd") {
@@ -71,8 +122,19 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  defines = []
+  deps = []
+
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
+
+    deps += [ ":zlib_adler32_simd" ]
+  }
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_use_neon) {
+      deps += [ ":zlib_adler32_simd" ]
+    }
   }
 
   configs -= [ "//build/config/compiler:chromium_code" ]
@@ -84,8 +146,9 @@ static_library("zlib") {
   ]
 
   public_configs = [ ":zlib_config" ]
-  deps = [
-    ":zlib_x86_simd",
+
+  deps += [
+    ":zlib_x86_simd"
   ]
 }
 
@@ -132,5 +195,6 @@ static_library("minizip") {
     # Must be after no_chromium_code for warning flags to be ordered correctly.
     ":minizip_warnings",
   ]
+
   public_configs = [ ":zlib_config" ]
 }
