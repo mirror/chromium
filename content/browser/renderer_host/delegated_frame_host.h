@@ -14,6 +14,7 @@
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/host/hit_test/hit_test_query.h"
 #include "components/viz/host/host_frame_sink_client.h"
 #include "components/viz/service/frame_sinks/frame_evictor.h"
 #include "content/browser/compositor/image_transport_factory.h"
@@ -24,6 +25,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/render_process_host.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/compositor_vsync_manager.h"
@@ -123,8 +125,10 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   void DidCreateNewRendererCompositorFrameSink(
       viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink);
-  void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
-                             viz::CompositorFrame frame);
+  void SubmitCompositorFrame(
+      const viz::LocalSurfaceId& local_surface_id,
+      viz::CompositorFrame frame,
+      viz::mojom::HitTestRegionListPtr hit_test_region_list = nullptr);
   void ClearDelegatedFrame();
   void WasHidden();
   void WasShown(const ui::LatencyInfo& latency_info);
@@ -155,6 +159,10 @@ class CONTENT_EXPORT DelegatedFrameHost
   viz::SurfaceId SurfaceIdAtPoint(viz::SurfaceHittestDelegate* delegate,
                                   const gfx::Point& point,
                                   gfx::Point* transformed_point);
+
+  // Similar to SurfaceIdAtPoint, but it has electrolytes.
+  viz::Target HitTestTargetAtPoint(viz::EventSource event_source,
+                                   const gfx::Point& point);
 
   // Given the SurfaceID of a Surface that is contained within this class'
   // Surface, find the relative transform between the Surfaces and apply it
