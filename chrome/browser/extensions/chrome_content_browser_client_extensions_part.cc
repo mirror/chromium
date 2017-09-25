@@ -373,11 +373,9 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
     content::RenderProcessHost* process_host, const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // We need to let most extension URLs commit in any process, since this can
-  // be allowed due to web_accessible_resources.  Most hosted app URLs may also
-  // load in any process (e.g., in an iframe).  However, the Chrome Web Store
-  // cannot be loaded in iframes and should never be requested outside its
-  // process.
+  // Hosted app URLs may load in any process (e.g., in an iframe).  However, the
+  // Chrome Web Store, and other extensions should never be requested outside
+  // their process.
   ExtensionRegistry* registry =
       ExtensionRegistry::Get(process_host->GetBrowserContext());
   if (!registry)
@@ -385,13 +383,16 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
 
   const Extension* new_extension =
       registry->enabled_extensions().GetExtensionOrAppByURL(url);
-  if (new_extension && new_extension->is_hosted_app() &&
-      new_extension->id() == kWebStoreAppId &&
-      !ProcessMap::Get(process_host->GetBrowserContext())
-           ->Contains(new_extension->id(), process_host->GetID())) {
-    return false;
-  }
-  return true;
+  if (!new_extension)
+    return true;
+
+  if (new_extension->id() == kWebStoreAppId)
+    DCHECK(new_extension->is_hosted_app());
+  if (new_extension->is_hosted_app() && new_extension->id() != kWebStoreAppId)
+    return true;
+
+  return ProcessMap::Get(process_host->GetBrowserContext())
+      ->Contains(new_extension->id(), process_host->GetID());
 }
 
 // static
