@@ -230,6 +230,10 @@ class PersonalDataManager : public KeyedService,
       bool field_is_autofilled,
       const std::vector<ServerFieldType>& other_field_types);
 
+  // Tries to delete disused addresses once per major version if the
+  // feature is enabled.
+  bool DeleteDisusedAddresses();
+
   // Returns the credit cards to suggest to the user. Those have been deduped
   // and ordered by frecency with the expired cards put at the end of the
   // vector.
@@ -529,6 +533,11 @@ class PersonalDataManager : public KeyedService,
       const base::string16& field_contents,
       const std::vector<CreditCard*>& cards_to_suggest) const;
 
+  // Returns true if the given credit card can be deleted in a major version
+  // upgrade. The card will need to be local and not used for a long(13 months)
+  // time, to be deletable.
+  bool IsCreditCardDeletable(CreditCard* card);
+
   // Runs the Autofill use date fix routine if it's never been done. Returns
   // whether the routine was run.
   void ApplyProfileUseDatesFix();
@@ -593,6 +602,17 @@ class PersonalDataManager : public KeyedService,
   std::string MergeServerAddressesIntoProfiles(
       const AutofillProfile& server_address,
       std::vector<AutofillProfile>* existing_profiles);
+
+  // Remove profile from web database according to |guid| without refreshing,
+  // this allows multiple removal with one refreshing in the end.
+  void RemoveAutofillProfileByGUID(const std::string& guid);
+
+  // Returns true if an address can be deleted in a major version upgrade.
+  // An address is deletable if it is unverified, and not used by a valid
+  // credit card as billing address, and not used for a long time(13 months).
+  bool IsAddressDeletable(AutofillProfile* profile,
+                          std::unordered_set<std::string> const&
+                              addresses_guid_of_undeletable_cards);
 
   // If the AutofillCreateDataForTest feature is enabled, this helper creates
   // autofill address data that would otherwise be difficult to create
