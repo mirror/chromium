@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a103efa2_d2dc9eb7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/callback_function.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-25T00:39:41Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this property? This seems a kind of metadata and I\u0027d prefer to hold metadata elsewhere. For example, we may add a holder class which has a toplevel definition.\n\nclass Holder:\n  def __init__(self, definition, filename, other_metadata, ...):\n    self.definition \u003d definition\n    self.filename \u003d filename",
+      "revId": "798703a79496e241515d23485a070c4465386a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6571bcb7_989b5441",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/container.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-25T00:39:41Z",
+      "side": 1,
+      "message": "Partials, typedefs and implements are also definitions. It would be better to separate interfaces, dictionaries and callback functions.",
+      "revId": "798703a79496e241515d23485a070c4465386a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5911cc5_9251bb3d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/container.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-25T00:39:41Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this method?",
+      "revId": "798703a79496e241515d23485a070c4465386a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccc669a_43d9cc84",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-25T00:39:41Z",
+      "side": 1,
+      "message": "TypeReference?",
+      "revId": "798703a79496e241515d23485a070c4465386a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
