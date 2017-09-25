@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666f5f13_0a5fd6f1",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T23:49:56Z",
+      "side": 1,
+      "message": "On non-debug builds, are we OK letting this become negative?",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3946ff9_1f55a94d",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T23:49:56Z",
+      "side": 1,
+      "message": "I don\u0027t see a comment for |slow_check| -- can you please add one?",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8d0107_97a0c8f1",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T23:49:56Z",
+      "side": 1,
+      "message": "Can you add a comment for this also?\nWhy is the value \"\u003d\u003d 1\" special? (there\u0027s a check for \u003d\u003d1 in one of the files)",
+      "range": {
+        "startLine": 72,
+        "startChar": 9,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535d72a8_3df96670",
+        "filename": "components/safe_browsing/renderer/renderer_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T23:49:56Z",
+      "side": 1,
+      "message": "/* slow_check */",
+      "range": {
+        "startLine": 99,
+        "startChar": 26,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fec90ec_f688760d",
+        "filename": "components/safe_browsing/renderer/renderer_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-25T23:49:56Z",
+      "side": 1,
+      "message": "here too",
+      "range": {
+        "startLine": 113,
+        "startChar": 28,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
