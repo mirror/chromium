@@ -512,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "22ce44ea_e0412f0f",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-25T15:07:57Z",
+      "side": 1,
+      "message": "Why movable? IMHO it\u0027s clear to the consumer that it has to be moved when it\u0027s in a unique_ptr. Otherwise it seems like a normal copyable object.",
+      "parentUuid": "3813bc88_78241f6d",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "24eb7c7d1ca33fd3139e1911592b01f721c77fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162d6148_bacaf69b",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 14
