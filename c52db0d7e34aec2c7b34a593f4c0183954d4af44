@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af962d8_aac749c8",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "did you meant to point to archives dirname here?",
+      "range": {
+        "startLine": 59,
+        "startChar": 46,
+        "endLine": 59,
+        "endChar": 73
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7f00d6_a611ed24",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "same as previous file",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53af5eea_6be8c9b6",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "This presumption will not be correct in few releases.",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 67
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2556a9e6_35843f45",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "Use temp here, because that is the one you will be freeing (that is where non-persistent items sit)\n\nAlso I am not sure we are ever going to *automatically* clean the store for the persistent archives. The user is in charge of these files.",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0ce994_598e3c6a",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "Don\u0027t DCHECK for that. I don\u0027t think it serves any good purpose other than validate and incorrect presumption.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bda0ab9_5a869e88",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "How is that going to be used other than UMA?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bcc280_930afcd3",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "document that on the field, so that noone changes it on a whim",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291e854f_1d5572af",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "nit: {}\nBecause what follows spans multiple lines.",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255a838f_237b447a",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand your comment.\nWould you also rename the class?",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe72749_ceddc26f",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "You have to walk me through the naming of methods here.",
+      "range": {
+        "startLine": 216,
+        "startChar": 27,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e27802_6e68a673",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 50584,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "how will you use this?",
+      "range": {
+        "startLine": 50584,
+        "startChar": 17,
+        "endLine": 50584,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c43ff1_3c7ac122",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 99313,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "I think we were doing a little bit more work on C++ code when applying suffixes to namespaces, than simply using a longer string. Are you sure your code works properly?",
+      "range": {
+        "startLine": 99313,
+        "startChar": 1,
+        "endLine": 99313,
+        "endChar": 19
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94104cfc_87c4991b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 99317,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:33:45Z",
+      "side": 1,
+      "message": "If this is existing histogram I am not sure this is right. Can you create a new one and name it ArchiveDrisCreationresult2?",
+      "range": {
+        "startLine": 99317,
+        "startChar": 40,
+        "endLine": 99317,
+        "endChar": 65
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
