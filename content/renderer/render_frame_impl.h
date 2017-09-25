@@ -193,7 +193,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const ScreenInfo& screen_info,
       CompositorDependencies* compositor_deps,
       blink::WebFrame* opener,
-      const FrameReplicationState& replicated_state);
+      const FrameReplicationState& replicated_state,
+      bool was_created_with_opener);
 
   // Creates a new RenderFrame with |routing_id|.  If |proxy_routing_id| is
   // MSG_ROUTING_NONE, it creates the Blink WebLocalFrame and inserts it into

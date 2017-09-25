@@ -79,6 +79,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   bool InShadowTree() const override;
   Frame* Opener() const override;
   void SetOpener(Frame*) override;
+  bool WasCreatedWithOpener() override;
+  void SetWasCreatedWithOpener(bool was_created_with_opener) override;
   Frame* Parent() const override;
   Frame* Top() const override;
   Frame* NextSibling() const override;
