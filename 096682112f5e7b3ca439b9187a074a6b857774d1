@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794e81d7_ec8d48c6",
+        "filename": "remoting/ios/app/refresh_control_provider_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-25T19:50:07Z",
+      "side": 1,
+      "message": "The pattern I have seen where there is a chromium and private version of something is that the implementation implements RefreshControlProvider directly not creating a RefreshControlProviderChromium vs RefreshControlProviderPrivate impl. Then the build takes care of removing the *_chromium.mm file for private builds.\n\nI think Chromium should not be used in the Class name, just the file name.",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "096682112f5e7b3ca439b9187a074a6b857774d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
