@@ -34,6 +34,24 @@
       "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e2e077e_15608d33",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-25T20:12:50Z",
+      "side": 1,
+      "message": "Agreed that this paradigm is being used as intended. FWIW it\u0027s a re-use of the existing paradigm for ThreadRestrictions\u0027 API (see friends in private section of ThreadRestrictions).\n\nThe abstraction violation is weird I agree but it\u0027s the price to pay to ensure these APIs aren\u0027t used willy-nilly in our codebase (outside of testing).",
+      "parentUuid": "5c554561_0c438441",
+      "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
