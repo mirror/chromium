@@ -366,10 +366,9 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
                 mProfileDataCache.update(Collections.singletonList(defaultAccountName));
                 profileData = mProfileDataCache.getProfileDataOrDefault(defaultAccountName);
             }
-            mSigninPromoController.setProfileData(profileData);
 
             PersonalizedSigninPromoView view = (PersonalizedSigninPromoView) itemView;
-            mSigninPromoController.setupPromoView(view.getContext(), view, null);
+            mSigninPromoController.setupPromoView(view.getContext(), view, profileData, null);
         }
 
         /**
@@ -380,9 +379,8 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         @VisibleForTesting
         public void bindAndConfigureViewForTests(@Nullable DisplayableProfileData profileData) {
             super.onBindViewHolder();
-            mSigninPromoController.setProfileData(profileData);
             PersonalizedSigninPromoView view = (PersonalizedSigninPromoView) itemView;
-            mSigninPromoController.setupPromoView(view.getContext(), view, null);
+            mSigninPromoController.setupPromoView(view.getContext(), view, profileData, null);
         }
     }
 
