@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d6ec62_0571058c",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-shadow-in-fallback.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-25T08:53:56Z",
+      "side": 1,
+      "message": "nit: you can remove this line. (but I\u0027d prefer keep it)",
+      "revId": "6094c1506f7983a80d5fb51be9d0e6364d95a8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
