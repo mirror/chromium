@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>Web Locks API: Shared Mode</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  const granted = [];
+  let n = 0;
+  function grant(n) { return () => { granted.push(n); }; }
+
+  await Promise.all([
+    requestLock('a', 'shared').then(grant(++n)),
+    requestLock('b', 'shared').then(grant(++n)),
+    requestLock('c', 'shared').then(grant(++n)),
+    requestLock('a', 'shared').then(grant(++n)),
+    requestLock('b', 'shared').then(grant(++n)),
+    requestLock('c', 'shared').then(grant(++n)),
+  ]);
+
+  assert_array_equals(granted, [1, 2, 3, 4, 5, 6]);
+}, 'Lock requests are granted in order');
+
+</script>

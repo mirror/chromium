@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<title>Web Locks API: Lock.waitUntil()</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+// For uncaught rejections.
+setup({allow_uncaught_exception: true});
+
+function snooze(t, ms) { return new Promise(r => t.step_timeout(r, ms)); }
+
+promise_test(async t => {
+  const lock = await requestLock('a', 'shared');
+  assert_throws(new TypeError(), () => {
+    lock.waitUntil();
+  }, 'waitUntil() requires an argument');
+}, 'waitUntil required argument');
+
+promise_test(async t => {
+  const lock = await requestLock('a', 'exclusive');
+  lock.waitUntil(123);
+  return requestLock('a', 'exclusive');
+}, 'waitUntil promisifies its argument');
+
+promise_test(async t => {
+  let resolve;
+  const promise = new Promise(r => { resolve = r; });
+
+  const order = [];
+
+  const lock = await requestLock('a', 'exclusive');
+  lock.waitUntil(promise);
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('resolve');
+      resolve();
+    }),
+    requestLock('a', 'exclusive').then(() => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['resolve', 'granted']);
+}, 'waitUntil holds lock until passed promise resolves');
+
+promise_test(async t => {
+  let resolve1;
+  const promise1 = new Promise(r => { resolve1 = r; });
+  let resolve2;
+  const promise2 = new Promise(r => { resolve2 = r; });
+
+  const order = [];
+
+  const lock = await requestLock('a', 'exclusive');
+  lock.waitUntil(promise1);
+  lock.waitUntil(promise2);
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('resolve1');
+      resolve1();
+    }),
+    snooze(t, 60).then(() => {
+      order.push('resolve2');
+      resolve2();
+    }),
+    requestLock('a', 'exclusive').then(() => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['resolve1', 'resolve2', 'granted']);
+}, 'waitUntil holds lock until all passed promises resolve');
+
+promise_test(async t => {
+  let reject;
+  const promise = new Promise((_, r) => { reject = r; });
+
+  const order = [];
+
+  const lock = await requestLock('a', 'exclusive');
+  lock.waitUntil(promise);
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('reject');
+      reject(new Error('intentional'));
+    }),
+    requestLock('a', 'exclusive').then(() => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['reject', 'granted']);
+}, 'waitUntil with rejected promise still releases');
+
+promise_test(async t => {
+  let reject1;
+  const promise1 = new Promise((_, r) => { reject1 = r; });
+  const promise2 = new Promise(() => {});
+
+  const order = [];
+
+  const lock = await requestLock('a', 'exclusive')
+  lock.waitUntil(promise1);
+  lock.waitUntil(promise2);
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('reject1');
+      reject1();
+    }),
+    requestLock('a', 'exclusive').then(() => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['reject1', 'granted']);
+}, 'waitUntil holds lock until first passed promise rejects');
+
+</script>
