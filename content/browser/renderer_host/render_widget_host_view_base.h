@@ -27,6 +27,7 @@
 #include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
@@ -232,7 +233,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   virtual void SubmitCompositorFrame(
       const viz::LocalSurfaceId& local_surface_id,
-      viz::CompositorFrame frame) = 0;
+      viz::CompositorFrame frame,
+      viz::mojom::HitTestRegionListPtr hit_test_region_list) = 0;
 
   virtual void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) {}
   virtual void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) {}
