@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892f286d_45d6e296",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T14:26:40Z",
+      "side": 1,
+      "message": "The name HandleContainerNode is confusing because |current_node| is not necessarily a ContainerNode.\n\nIt seems simpler to:\n\nvoid HandleElementNode(Element* element) {\n  if (ShadowRoot* shadow_root \u003d element-\u003eShadowRootIfV1())\n    HandleChildren(shadow_root);\n  HandleChildren(element);\n}\n\nvoid HandleChildren(ContainerNode* node) {\n  Node* runner \u003d node-\u003efirstChild();\n  while (runner) {\n    Node* const next_sibling \u003d runner-\u003enextSibling();\n    // |Traverse()| may remove |runner|.\n    Traverse(runner);\n    runner \u003d next_sibling;\n  }\n}",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 3
+      },
+      "revId": "5061c634d75b3d38741fd9fe6c7a3e3aeb1c26bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79905f3a_96f794e7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T14:26:40Z",
+      "side": 1,
+      "message": "nit: There is too much indentation. Could you use a string const to hold the input HTML?",
+      "range": {
+        "startLine": 277,
+        "startChar": 40,
+        "endLine": 282,
+        "endChar": 48
+      },
+      "revId": "5061c634d75b3d38741fd9fe6c7a3e3aeb1c26bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5c03e0_5085367c",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-25T14:26:40Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 50
+      },
+      "revId": "5061c634d75b3d38741fd9fe6c7a3e3aeb1c26bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
