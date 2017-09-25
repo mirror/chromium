@@ -60,10 +60,6 @@ class InstantService : public KeyedService,
   }
 #endif
 
-  // Invoked whenever an NTP is opened. Causes an async refresh of Most Visited
-  // items.
-  void OnNewTabPageOpened();
-
   // Most visited item APIs.
   //
   // Invoked when the Instant page wants to delete a Most Visited item.
