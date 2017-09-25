@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fbed0ea_2582f937",
+        "filename": "chrome/browser/vr/elements/invisible_hit_target.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T16:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d48a79f_ac8f0a61",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6639c8d9_b0f3e590",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T16:20:08Z",
       "side": 1,
       "message": "nit: ASSERT_NE?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ba2973_c9f51b71",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T16:33:39Z",
+      "side": 1,
+      "message": "Cannot be an ASSERT because this function returns a value.",
+      "parentUuid": "6639c8d9_b0f3e590",
       "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f3c8a56b_81f0604f",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T16:33:39Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I think that it\u0027s saying that we never expect to return false due to element being NULL.",
+      "parentUuid": "e023958d_7e070af9",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19dfb6bc_3d25c12c",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b3c6330d_d9381496",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T16:33:39Z",
+      "side": 1,
+      "message": "ibid.",
+      "parentUuid": "19dfb6bc_3d25c12c",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb7f7f32_8c5bda0f",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-25T16:20:08Z",
       "side": 1,
       "message": "OOC, is this fix a different issue?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0f96f1_e81c431e",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-25T16:33:39Z",
+      "side": 1,
+      "message": "This was fallout from addressing cjgrant\u0027s comment about not using pointers if they\u0027re null.\n\nWe\u0027d like the test to abort immediately if that\u0027s the case, except that we cannot use ASSERT_NE(nullptr, thing) in GetBackgroundColor if it returns a value. So I converted the function to take an out parameter and followed that to its logical conclusion.",
+      "parentUuid": "cb7f7f32_8c5bda0f",
       "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
