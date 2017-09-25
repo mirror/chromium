@@ -16,6 +16,24 @@
       "revId": "7db4f9538b8f29fc1215caebbbe34229a61e9273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1557585a_1a700708",
+        "filename": "net/dns/dns_config_service_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-25T16:01:48Z",
+      "side": 1,
+      "message": "I prefer to keep this here to avoid notifying the TaskScheduler that this thread is blocked/unblocked twice.",
+      "parentUuid": "272eb2ba_345ef5d2",
+      "revId": "7db4f9538b8f29fc1215caebbbe34229a61e9273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
