@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e917c2_d96f774f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-25T23:12:55Z",
+      "side": 1,
+      "message": "add comment",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "bfeabf47578268131a1192406ca6bf687088fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ee1452_a75a2d0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-25T23:12:55Z",
+      "side": 1,
+      "message": "Can we somehow make this a no-op for when GVR fixes this at their end, we do nothing here? Otherwise users will have to updated version of Chrome to not do this.",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 13
+      },
+      "revId": "bfeabf47578268131a1192406ca6bf687088fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
