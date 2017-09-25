@@ -60,14 +60,17 @@ CoordinationUnitImpl::GetCoordinationUnitsOfType(CoordinationUnitType type) {
   return results;
 }
 
+// static
 void CoordinationUnitImpl::AssertNoActiveCoordinationUnits() {
   CHECK(g_cu_map().empty());
 }
 
+// static
 void CoordinationUnitImpl::ClearAllCoordinationUnits() {
   g_cu_map().clear();
 }
 
+// static
 CoordinationUnitImpl* CoordinationUnitImpl::CreateCoordinationUnit(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref) {
@@ -94,6 +97,16 @@ CoordinationUnitImpl* CoordinationUnitImpl::CreateCoordinationUnit(
   auto it = g_cu_map().insert(std::make_pair(new_cu->id(), std::move(new_cu)));
   DCHECK(it.second);  // Inserted successfully
   return it.first->second.get();
+}
+
+// static
+CoordinationUnitImpl* CoordinationUnitImpl::GetCoordinationUnit(
+    const CoordinationUnitID& id) {
+  auto child_iter = g_cu_map().find(id);
+  if (child_iter != g_cu_map().end())
+    return child_iter->second.get();
+
+  return nullptr;
 }
 
 void CoordinationUnitImpl::Destruct() {

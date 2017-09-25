@@ -191,6 +191,7 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
+#include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -1265,7 +1266,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       route_provider_binding_(this),
       visible_widgets_(0),
       priority_({
-            kLaunchingProcessIsBackgrounded,
+        kLaunchingProcessIsBackgrounded,
             kLaunchingProcessIsBoostedForPendingView,
 #if defined(OS_ANDROID)
             ChildProcessImportance::NORMAL,
@@ -1302,6 +1303,8 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       frame_sink_provider_(id_),
       shared_bitmap_allocation_notifier_impl_(
           viz::ServerSharedBitmapManager::current()),
+      resource_coordinator_binding_(this),
+      resource_coordinator_enforced_background_priority_(false),
       weak_factory_(this) {
   widget_helper_ = new RenderWidgetHelper();
 
@@ -2129,6 +2132,21 @@ RenderProcessHostImpl::GetProcessResourceCoordinator() {
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             connection ? connection->GetConnector() : nullptr,
             resource_coordinator::CoordinationUnitType::kProcess);
+
+    if (connection) {
+      resource_coordinator::mojom::ProcessHostSignalsObserverPtr
+          process_host_signals_observer_ptr;
+      connection->GetConnector()->BindInterface(
+          resource_coordinator::mojom::kServiceName,
+          mojo::MakeRequest(&process_host_signals_observer_ptr));
+      resource_coordinator::mojom::ProcessHostSignalsPtr
+          process_host_signals_ptr;
+      resource_coordinator_binding_.Bind(
+          mojo::MakeRequest(&process_host_signals_ptr));
+      process_host_signals_observer_ptr->AddProcessHostSignalObserver(
+          std::move(process_host_signals_ptr),
+          process_resource_coordinator_->id());
+    }
   }
   return process_resource_coordinator_.get();
 }
@@ -3778,6 +3796,14 @@ void RenderProcessHostImpl::SuddenTerminationChanged(bool enabled) {
   SetSuddenTerminationAllowed(enabled);
 }
 
+void RenderProcessHostImpl::ShouldHaveBackgroundPriority(
+    bool background_priority) {
+  LOG(ERROR) << "RenderProcessHostImpl::ShouldHaveBackgroundPriority:: "
+             << background_priority;
+  resource_coordinator_enforced_background_priority_ = background_priority;
+  UpdateProcessPriority();
+}
+
 void RenderProcessHostImpl::UpdateProcessPriority() {
   if (!child_process_launcher_.get() || child_process_launcher_->IsStarting()) {
     priority_.background = kLaunchingProcessIsBackgrounded;
@@ -3790,7 +3816,8 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
     // We background a process as soon as it hosts no active audio/video streams
     // and no visible widgets -- the callers must call this function whenever we
     // transition in/out of those states.
-    visible_widgets_ == 0 && media_stream_count_ == 0 &&
+    (resource_coordinator_enforced_background_priority_ ||
+     (visible_widgets_ == 0 && media_stream_count_ == 0)) &&
         !base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kDisableRendererBackgrounding),
     // boost_for_pending_views

@@ -13,6 +13,7 @@ mojom("interfaces_internal") {
     "coordination_unit_provider.mojom",
     "memory_instrumentation/constants.mojom",
     "memory_instrumentation/memory_instrumentation.mojom",
+    "process_host_signals.mojom",
     "service_callbacks.mojom",
     "service_constants.mojom",
     "signals.mojom",

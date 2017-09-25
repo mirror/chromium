@@ -47,6 +47,7 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
+#include "services/resource_coordinator/public/interfaces/process_host_signals.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
@@ -117,7 +118,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
       public ui::GpuSwitchingObserver,
       public mojom::RouteProvider,
       public mojom::AssociatedInterfaceProvider,
-      public mojom::RendererHost {
+      public mojom::RendererHost,
+      public resource_coordinator::mojom::ProcessHostSignals {
  public:
   // Use the spare RenderProcessHost if it exists, or create a new one. This
   // should be the usual way to get a new RenderProcessHost.
@@ -443,6 +445,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void GetAssociatedInterface(
       const std::string& name,
       mojom::AssociatedInterfaceAssociatedRequest request) override;
+
+  // resource_coordinator::mojom::ProcessHostSignals
+  void ShouldHaveBackgroundPriority(bool background_priority) override;
 
   // mojom::RendererHost
   void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
@@ -773,6 +778,10 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   viz::SharedBitmapAllocationNotifierImpl
       shared_bitmap_allocation_notifier_impl_;
+
+  mojo::Binding<resource_coordinator::mojom::ProcessHostSignals>
+      resource_coordinator_binding_;
+  bool resource_coordinator_enforced_background_priority_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 
