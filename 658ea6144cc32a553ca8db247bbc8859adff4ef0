@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcbe0a03_f240e0dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-25T21:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06c2842_79f04290",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 61
+      },
+      "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8794cff_37030569",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-25T15:29:59Z",
       "side": 1,
       "message": "Instead of relying on the runnable here, we could put the code currently in the if (mTabCreationRunnable \u003d\u003d null) block dirtecly in-line here.\n\ne.g.\n\nif (mPendingUrls.size() \u003e 0) {\n    // create new tabs\n}\n\nThen in #openNewTab, we could check mPendingUrls.size() to know whether an async task to load tab state needs to be kicked off.",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e58cdb_cfde6467",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-25T21:37:28Z",
+      "side": 1,
+      "message": "Per offline discussion, since we need to maintain the Callback\u003cTab\u003e, it is better to still use the Runnable.",
+      "parentUuid": "e8794cff_37030569",
       "range": {
         "startLine": 119,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f6469f98_c5f7ffc9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-25T21:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf3d3e9_efe0c0d8",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 5
+      },
+      "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a661bfff_3e0637f3",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "57bf5c2a_d19f0481",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-25T21:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a661bfff_3e0637f3",
+      "range": {
+        "startLine": 345,
+        "startChar": 7,
+        "endLine": 345,
+        "endChar": 56
+      },
+      "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cec0f98b_07ea63c7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ae0b62_0cc83860",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-25T21:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec0f98b_07ea63c7",
+      "range": {
+        "startLine": 398,
+        "startChar": 17,
+        "endLine": 398,
+        "endChar": 47
+      },
+      "revId": "658ea6144cc32a553ca8db247bbc8859adff4ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
