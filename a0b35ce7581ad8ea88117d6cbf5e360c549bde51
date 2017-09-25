@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7badc5d_80561d85",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T22:51:17Z",
+      "side": 1,
+      "message": "Name it g_disable_updating_collapsed_borders?\nDisableUpdateCollapsedBorders itself doesn\u0027t limit the usage just for finding scroll anchor.",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee842fbc_bca51311",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T22:51:17Z",
+      "side": 1,
+      "message": "Another option is\n  if (NeedsSectionRecalc())\n    return;\nbut I\u0027m not sure if it is better.",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859b18e0_17b7245e",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-25T22:51:17Z",
+      "side": 1,
+      "message": "Add a comment explaining the reason.",
+      "revId": "a0b35ce7581ad8ea88117d6cbf5e360c549bde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
