@@ -111,28 +111,19 @@ void InstantService::RemoveObserver(InstantServiceObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void InstantService::OnNewTabPageOpened() {
-  if (most_visited_sites_) {
-    most_visited_sites_->Refresh();
-  }
-}
-
 void InstantService::DeleteMostVisitedItem(const GURL& url) {
-  if (most_visited_sites_) {
+  if (most_visited_sites_)
     most_visited_sites_->AddOrRemoveBlacklistedUrl(url, true);
-  }
 }
 
 void InstantService::UndoMostVisitedDeletion(const GURL& url) {
-  if (most_visited_sites_) {
+  if (most_visited_sites_)
     most_visited_sites_->AddOrRemoveBlacklistedUrl(url, false);
-  }
 }
 
 void InstantService::UndoAllMostVisitedDeletions() {
-  if (most_visited_sites_) {
+  if (most_visited_sites_)
     most_visited_sites_->ClearBlacklistedUrls();
-  }
 }
 
 void InstantService::UpdateThemeInfo() {
@@ -168,9 +159,8 @@ void InstantService::Shutdown() {
                        instant_io_context_));
   }
 
-  if (most_visited_sites_) {
+  if (most_visited_sites_)
     most_visited_sites_.reset();
-  }
 
   instant_io_context_ = NULL;
 }
