@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "d9e2296b_ab0eb9d7",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-25T22:51:39Z",
+      "side": 1,
+      "message": "Nevermind, I found the usage in settings. Will upload a patch for this shortly.",
+      "parentUuid": "7e014b20_ce4d5014",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ae734a_0e399ede",
         "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
         "patchSetId": 6
