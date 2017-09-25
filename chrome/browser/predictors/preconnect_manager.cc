@@ -91,10 +91,16 @@ void PreconnectManager::Start(const GURL& url,
   TryToLaunchPreresolveJobs();
 }
 
-// It is called from an IPC message originating in the renderer. Thus these
-// requests have a higher priority than requests originated in the predictor.
+void PreconnectManager::StartPreresolveHost(const GURL& url) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  queued_jobs_.emplace_front(url, false /* need_preconnect */,
+                             kAllowCredentialsOnPreconnectByDefault, nullptr);
+
+  TryToLaunchPreresolveJobs();
+}
+
 void PreconnectManager::StartPreresolveHosts(
-    const std::vector<std::string> hostnames) {
+    const std::vector<std::string>& hostnames) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   // Push jobs in front of the queue due to higher priority.
   for (auto it = hostnames.rbegin(); it != hostnames.rend(); ++it) {
@@ -106,8 +112,6 @@ void PreconnectManager::StartPreresolveHosts(
   TryToLaunchPreresolveJobs();
 }
 
-// It is called from an IPC message originating in the renderer. Thus these
-// requests have a higher priority than requests originated in the predictor.
 void PreconnectManager::StartPreconnectUrl(const GURL& url,
                                            bool allow_credentials) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
