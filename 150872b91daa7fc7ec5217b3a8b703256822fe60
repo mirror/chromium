@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8275f708_28b0b580",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-25T23:26:29Z",
+      "side": 1,
+      "message": "1) Do we plan to log if it is *empty*. If it is empty, it means\n\n(i) Noise from submission signal.\n(ii) User used other payment ways (Ex :- Clicking on paypal button).\n\n2) Can we log user typed by not accepting suggestion ?",
+      "range": {
+        "startLine": 432,
+        "startChar": 2,
+        "endLine": 432,
+        "endChar": 3
+      },
+      "revId": "150872b91daa7fc7ec5217b3a8b703256822fe60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e708a8_9dc5f4c0",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 8
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 432,
         "endChar": 59
+      },
+      "revId": "150872b91daa7fc7ec5217b3a8b703256822fe60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91ba251_717992e9",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-25T23:26:29Z",
+      "side": 1,
+      "message": "Unit test for this ?",
+      "range": {
+        "startLine": 1808,
+        "startChar": 0,
+        "endLine": 1808,
+        "endChar": 4
       },
       "revId": "150872b91daa7fc7ec5217b3a8b703256822fe60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
