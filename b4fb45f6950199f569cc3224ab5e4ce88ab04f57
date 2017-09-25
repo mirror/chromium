@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "00ab4d1f_648898cc",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "Q: why did this have to be moved up?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83fcd16_0a4e3b68",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "let\u0027s use strict_cast for more safety",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5db4f91_fad5d62f",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 6
@@ -48,6 +82,166 @@
     },
     {
       "key": {
+        "uuid": "72162c25_0a1b6305",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "Yeah \"provider\" is hard to understand. How about calling this |service_worker_container_| since that\u0027s what WebServiceWorkerProviderImpl represents when used by \"controllees\".",
+      "parentUuid": "f3ac27e9_9e24a608",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc3ec11_9a075fb6",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "just pass WeakPtr to the function instead of getting it here. it makes ownership more clear when looking in the .h file.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb21995_f4b6c02e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "but we are the provider context",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd6eec9_a5372b6f",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "lines 223-226 seem better at the top of this function since they don\u0027t need |dispatcher| or |controller|?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18790263_195c92d9",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "strict_cast",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb96b0bc_26bf7682",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "This is a bit long... suggest just:\n\nSetController() can be called before the ServiceWorkerContainer exists, i.e., the document has not yet been created. In that case, the container will get the controller from |this| once it\u0027s created in ServiceWorkerContainerClient::From().",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc113c36_a2be697e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "prefer braces around the multi-line if\n\nprefer using state-\u003econtroller instead of params-\u003econtroller for consistency with state-\u003eused_features",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf61176_3d4e5377",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "// For service worker clients. Sets a weak pointer back to the WebServiceWorkerProviderImpl (which corresponds to ServiceWorkerContainer in JavaScript) which has a strong reference to |this|. This allows us to notify the WebServiceWorkerProviderImpl when ServiceWorkerContainer#controller should be changed.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982934bf_7293a69e",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "SetServiceWorkerContainer maybe",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e13b695e_86dbcb45",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 6
@@ -59,6 +253,30 @@
       "writtenOn": "2017-09-19T02:44:50Z",
       "side": 1,
       "message": "referecence -- \u003e reference.\nThis provider context is for WINDOW, does it own the passed reference?",
+      "range": {
+        "startLine": 182,
+        "startChar": 22,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30471eb3_3d11fce3",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "I think this is saying when the WebSWProviderClient is not yet created, the SWProviderContext holds the reference to |controller|.\n\n?",
+      "parentUuid": "e13b695e_86dbcb45",
       "range": {
         "startLine": 182,
         "startChar": 22,
@@ -88,6 +306,108 @@
         "endLine": 208,
         "endChar": 23
       },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1888c57_b00e04dd",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "It\u0027s confusing what lines 43-45 are doing with  provider_type, in part because it\u0027s doing negation on it.\n\nLet\u0027s do a switch on provider_type instead and put in the appropriate DCHECKs and logic. We can make UNKNOWN and WORKER do NOTRAECHED() since WORKER is not actually implemented anywhere.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8cb40a_8fca2da7",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "This comment seems not needed now.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f19060_aa627284",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "I\u0027m worried |provider_client_| isn\u0027t valid here. Do you know the lifetime guarantee?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cd67ad_fe7f2532",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "note: It\u0027s surprising that this function doesn\u0027t touch |provider_client_|. I\u0027m not sure we understand the lifetime guarantees. Maybe it makes more sense to get the ProviderClient from SWDispatcher?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08f152e_6708925a",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "This makes me worried because I don\u0027t know if there is a guarantee of lifetime between WebServiceWorkerProviderImpl and WebServiceWorkerProviderClient.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6249ff03_f7d26f1f",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T06:30:33Z",
+      "side": 1,
+      "message": "with only three params, it probably makes sense now to just write the params direectly isntead of a params struct",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
