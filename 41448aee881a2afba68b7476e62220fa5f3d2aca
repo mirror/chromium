@@ -16,6 +16,29 @@
       "revId": "41448aee881a2afba68b7476e62220fa5f3d2aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763577cf_d9ea4fb7",
+        "filename": "third_party/WebKit/Source/core/frame/WebFeatureForward.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T13:42:17Z",
+      "side": 1,
+      "message": "Please add a comment in this file that says this is just a forward declaration without including definitions for WebFeature.h (and like Rune said, mention it\u0027s to improve compile time) and if you need to actually use one of the WebFeatures you should include WebFeature.h",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "41448aee881a2afba68b7476e62220fa5f3d2aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
