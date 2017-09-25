@@ -203,6 +203,24 @@
       "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e382a1_3ec50dd7",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-25T16:41:31Z",
+      "side": 1,
+      "message": "+1\n\nI can confirm that this.$[\u0027confirm-dialog\u0027].cancel()/close() would close both dialogs. We should get it fixed.",
+      "parentUuid": "2b5c9eb9_6cf49fb1",
+      "revId": "772e4b8cb541303a9d0c4ec4ae1cd7fc278b0205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
