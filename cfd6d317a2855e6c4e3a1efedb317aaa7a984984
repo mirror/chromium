@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13be1034_603c43be",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T15:30:57Z",
+      "side": 1,
+      "message": "Can we maybe check the version to only disable on iOS 10 and higher?\n\n  if (@available(iOS 10, *)) {\n    EARL_GREY_TEST_DISABLED(@\"Test disabled on iOS 10.0+ devices.\");\n  }",
+      "revId": "cfd6d317a2855e6c4e3a1efedb317aaa7a984984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
