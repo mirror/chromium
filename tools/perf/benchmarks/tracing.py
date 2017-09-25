@@ -5,7 +5,6 @@
 from core import perf_benchmark
 
 from telemetry import benchmark
-from telemetry import decorators
 from telemetry import story
 from telemetry.timeline import chrome_trace_category_filter
 from telemetry.timeline import chrome_trace_config
@@ -15,7 +14,6 @@ import page_sets
 
 
 @benchmark.Owner(emails=['ssid@chromium.org'])
-@decorators.Disabled('all')  # crbug.com/765140
 class TracingWithBackgroundMemoryInfra(perf_benchmark.PerfBenchmark):
   """Measures the overhead of background memory-infra dumps"""
   page_set = page_sets.Top10PageSet
