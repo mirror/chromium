@@ -21,6 +21,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/browser/thumbnails/thumbnail_list_source.h"
+#include "components/favicon_base/favicon_types.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/ntp_tiles/metrics.h"
 #include "components/ntp_tiles/most_visited_sites.h"
@@ -246,13 +247,16 @@ void MostVisitedSitesBridge::RecordTileImpression(
     const JavaParamRef<jobject>& obj,
     jint jindex,
     jint jtype,
+    jint jicon_type,
     jint jsource,
     const JavaParamRef<jstring>& jurl) {
   GURL url(ConvertJavaStringToUTF8(env, jurl));
   TileSource source = static_cast<TileSource>(jsource);
   TileVisualType type = static_cast<TileVisualType>(jtype);
+  favicon_base::IconType icon_type =
+      static_cast<favicon_base::IconType>(jicon_type);
 
-  ntp_tiles::metrics::RecordTileImpression(jindex, source, type, url,
+  ntp_tiles::metrics::RecordTileImpression(jindex, source, type, icon_type, url,
                                            g_browser_process->rappor_service());
 }
 

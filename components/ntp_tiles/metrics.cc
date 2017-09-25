@@ -95,6 +95,7 @@ void RecordPageImpression(int number_of_tiles) {
 void RecordTileImpression(int index,
                           TileSource source,
                           TileVisualType type,
+                          favicon_base::IconType icon_type,
                           const GURL& url,
                           rappor::RapporService* rappor_service) {
   UMA_HISTOGRAM_ENUMERATION("NewTabPage.SuggestionsImpression", index,
@@ -127,6 +128,13 @@ void RecordTileImpression(int index,
     std::string icon_impression_histogram = base::StringPrintf(
         "NewTabPage.SuggestionsImpression.%s", tile_type_suffix);
     LogHistogramEvent(icon_impression_histogram, index, kMaxNumTiles);
+
+    if (icon_type != favicon_base::INVALID_ICON) {
+      std::string favicon_type_histogram =
+          base::StringPrintf("NewTabPage.TileFaviconType.%s", tile_type_suffix);
+      LogHistogramEvent(favicon_type_histogram, GetUmaFaviconType(icon_type),
+                        favicon_base::GetLastUmaFaviconType() + 1);
+    }
   }
 }
 
