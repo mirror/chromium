@@ -85,6 +85,15 @@ void PageInfoPopupAndroid::RecordPageInfoAction(
       static_cast<PageInfo::PageInfoAction>(action));
 }
 
+void PageInfoPopupAndroid::OnSitePermissionChanged(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jint type,
+    jint setting) {
+  presenter_->OnSitePermissionChanged(static_cast<ContentSettingsType>(type),
+                                      static_cast<ContentSetting>(setting));
+}
+
 void PageInfoPopupAndroid::SetIdentityInfo(const IdentityInfo& identity_info) {
   JNIEnv* env = base::android::AttachCurrentThread();
   std::unique_ptr<PageInfoUI::SecurityDescription> security_description =
@@ -134,12 +143,13 @@ void PageInfoPopupAndroid::SetPermissionInfo(
     }
   }
 
+  Java_PageInfoPopup_startDisplayedPermissionsList(env, popup_jobject_);
   for (const auto& permission : permissions_to_display) {
     if (base::ContainsKey(user_specified_settings_to_display, permission)) {
       base::string16 setting_title =
           PageInfoUI::PermissionTypeToUIString(permission);
 
-      Java_PageInfoPopup_addPermissionSection(
+      Java_PageInfoPopup_addDisplayedPermission(
           env, popup_jobject_, ConvertUTF16ToJavaString(env, setting_title),
           static_cast<jint>(permission),
           static_cast<jint>(user_specified_settings_to_display[permission]));
@@ -150,7 +160,7 @@ void PageInfoPopupAndroid::SetPermissionInfo(
     base::string16 object_title =
         PageInfoUI::ChosenObjectToUIString(*chosen_object);
 
-    Java_PageInfoPopup_addPermissionSection(
+    Java_PageInfoPopup_addDisplayedPermission(
         env, popup_jobject_, ConvertUTF16ToJavaString(env, object_title),
         static_cast<jint>(chosen_object->ui_info.content_settings_type),
         static_cast<jint>(CONTENT_SETTING_ALLOW));

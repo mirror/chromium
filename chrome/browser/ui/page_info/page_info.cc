@@ -404,6 +404,7 @@ void PageInfo::OnSitePermissionChanged(ContentSettingsType type,
   // compare it against other kinds of actions in Page Info.
   RecordPageInfoAction(PAGE_INFO_CHANGED_PERMISSION);
 
+  LOG(ERROR) << "Site url is: " << site_url_;
   PermissionUtil::ScopedRevocationReporter scoped_revocation_reporter(
       profile_, site_url_, site_url_, type, PermissionSourceUI::OIB);
 
