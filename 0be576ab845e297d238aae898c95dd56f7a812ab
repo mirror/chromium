@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "f98a37e9_201116bb",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-25T15:32:10Z",
+      "side": 1,
+      "message": "this would become \"ContextProvider*\" (probably define a custom type for the whole callback).",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 59
+      },
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3c9f36_ba3480b3",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-25T15:32:10Z",
+      "side": 1,
+      "message": "this would become:\n\nbase::Bind(\u0026SomeNewAnonymousNamespaceFn, set_context_provider_callback)\n\nthe anon fn would do pretty much this, maybe with null checks:\n\nvoid SNANF(Callback\u003cvoid(ContextProvider*)\u003e cb, GpuFactories* factories) {\n  cb.Run(factories-\u003eGetContext())\n}",
+      "range": {
+        "startLine": 126,
+        "startChar": 6,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f08b168d_4af755a9",
         "filename": "content/renderer/media/media_factory.h",
         "patchSetId": 5
@@ -145,6 +191,24 @@
       "side": 1,
       "message": "Hey so, I\u0027m a little confused. Do we wan to make an anon namespace function in this class, that takes in a callback\u003cvoid(ContextProvider*)\u003e and a gpu factory and bind it to the context_provider_callback? I am having a hard time doing this in MediaFactory, since we can\u0027t bind Initialize.",
       "parentUuid": "1419a87e_e920e303",
+      "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5859d53a_1673b99a",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-25T15:32:10Z",
+      "side": 1,
+      "message": "i think that the anon namespace fn would be in mediafactory.  here, one would just change Initialize to take a ContextProvider* .  i\u0027ll add a comment to mediafactory about the changes there, since i don\u0027t remember what it looks like right now.",
+      "parentUuid": "8beba17a_ebc3a8ed",
       "revId": "0be576ab845e297d238aae898c95dd56f7a812ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
