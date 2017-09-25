@@ -34,6 +34,24 @@
       "revId": "e8fc9c7a646a79d8715f50c92ab18c0af91db241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c349627a_35d2b636",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T09:44:47Z",
+      "side": 1,
+      "message": "I think those were iOS only target that re-invoked gyp (because iOS target cannot depend on macOS target in Xcode, so when generating Xcode project with gyp we had to add custom build step that build the macOS target via ninja).\n\nThis is not necessary with gn (since the Xcode project does not use xcodebuild but instead use custom build steps that directly invoke ninja and Xcode has no knowledge of the dependencies).\n\nSo yes, this is obsolete.",
+      "parentUuid": "781d61f9_d1c77191",
+      "revId": "e8fc9c7a646a79d8715f50c92ab18c0af91db241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
