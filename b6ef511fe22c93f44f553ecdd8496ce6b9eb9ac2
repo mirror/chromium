@@ -33,6 +33,162 @@
       "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf202c41_00701e09",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "Do we really get much from returning a unique_ptr?",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07897547_e05ae45a",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "Hrm...  The nice thing about a static method is you know where to find it.  Never been a fan of free floating methods from who-knows-where.  I would agree if this were a non-static method.",
+      "parentUuid": "ac0a1fad_21b63cdb",
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26876b10_4e036014",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "Suggest separating out request properties from response properties, and putting the request properties first.  Makes it easier to figure things out.  Maybe also add a comment above each group.  (status_code, headers, token_binding_negotiated, and location are the response properties.  Everything else but copy_fragment are request properties, I believe).",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae09ef4c_88a64c7b",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "original_method?",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1ae412_995727b9",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "This needs a commend describing just what it is.",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1cadf4_93148582",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "Suggest making this last and defaulting it to true - \"true\" the the normal behavior (And adding a comment about \"true\" being standard behavior.  \"false\" is just a magical behavior for embedder-controlled redirects.",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f369553_72b3e825",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T21:30:20Z",
+      "side": 1,
+      "message": "Mention that |headers| can be null, and maybe a brief description about why status code and location header are separate arguments.",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
