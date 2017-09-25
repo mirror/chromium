@@ -46,6 +46,30 @@
       "revId": "3c27e63ecacff78cff830ed242258330978b044a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5e7018_88cde909",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-25T20:34:14Z",
+      "side": 1,
+      "message": "I have sent an eMail to Tom and some others to see if this is a bug - or a wanted feature. I\u0027ll update as soon as I know more.",
+      "parentUuid": "01446fa2_0230d426",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "3c27e63ecacff78cff830ed242258330978b044a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
