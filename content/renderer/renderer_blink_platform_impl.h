@@ -19,6 +19,7 @@
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/child/blink_platform_impl.h"
 #include "content/common/content_export.h"
+#include "content/common/file_utilities.mojom.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/common/web_database.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -331,6 +332,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   content::mojom::WebDatabaseHostPtrInfo web_database_host_info_;
   scoped_refptr<content::mojom::ThreadSafeWebDatabaseHostPtr>
       web_database_host_;
+
+  content::mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererBlinkPlatformImpl);
 };
