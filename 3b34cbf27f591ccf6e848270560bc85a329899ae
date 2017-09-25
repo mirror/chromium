@@ -69,6 +69,47 @@
       "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b99eac_ff8dd03f",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-25T14:35:03Z",
+      "side": 1,
+      "message": "Hm, that\u0027s strange. I believe that we should have a task runner here. Could you clarify this?",
+      "parentUuid": "cae318ab_469fb802",
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4fddac_c60bcda5",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-25T14:35:03Z",
+      "side": 1,
+      "message": "We can use task_runner_ here, right?",
+      "range": {
+        "startLine": 429,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 13
+      },
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -213,6 +213,30 @@
       "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d2224d7_1e7ac599",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-25T14:35:03Z",
+      "side": 1,
+      "message": "Hajime: Codesearch suggests that there are ~15 calls to DeleteSoon in content/renderer. Also blink probably has some more.\n\nKentaro: At the moment InternalInitialization is deferrable while UnspecedTimer is not. I believe that\u0027s the right call here.",
+      "parentUuid": "1ffcf026_5853398f",
+      "range": {
+        "startLine": 397,
+        "startChar": 63,
+        "endLine": 397,
+        "endChar": 77
+      },
+      "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
