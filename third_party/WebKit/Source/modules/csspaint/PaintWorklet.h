@@ -36,7 +36,8 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
   RefPtr<Image> Paint(const String& name,
                       const ImageResourceObserver&,
                       const IntSize&,
-                      const CSSStyleValueVector*);
+                      const CSSStyleValueVector*,
+                      const LayoutSize&);
 
   typedef HeapHashMap<String, TraceWrapperMember<DocumentPaintDefinition>>
       DocumentDefinitionMap;

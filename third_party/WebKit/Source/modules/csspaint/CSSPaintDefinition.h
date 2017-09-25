@@ -13,6 +13,7 @@
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/geometry/LayoutSize.h"
 #include "platform/heap/Handle.h"
 #include "v8/include/v8.h"
 
@@ -47,7 +48,8 @@ class CSSPaintDefinition final
   // throws an error.
   RefPtr<Image> Paint(const ImageResourceObserver&,
                       const IntSize&,
-                      const CSSStyleValueVector*);
+                      const CSSStyleValueVector*,
+                      const LayoutSize&);
   const Vector<CSSPropertyID>& NativeInvalidationProperties() const {
     return native_invalidation_properties_;
   }
