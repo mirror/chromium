@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b668fc_8651f566",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T12:54:21Z",
+      "side": 1,
+      "message": "nit: Please re-wrap the text - the lines seem to be too short.",
+      "revId": "03f061ac97796747562aa56f2a230393bc4f834d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd768caf_65906b59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T12:54:21Z",
+      "side": 1,
+      "message": "nit: \"are\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 6
+      },
+      "revId": "03f061ac97796747562aa56f2a230393bc4f834d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40489df9_7bca6e0a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T12:54:21Z",
+      "side": 1,
+      "message": "nit: The AppendInteger() method is now deprecated in favor of GetList()::emplace_back().",
+      "range": {
+        "startLine": 188,
+        "startChar": 28,
+        "endLine": 188,
+        "endChar": 41
+      },
+      "revId": "03f061ac97796747562aa56f2a230393bc4f834d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
