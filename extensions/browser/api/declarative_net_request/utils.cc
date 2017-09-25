@@ -24,6 +24,7 @@
 #include "extensions/common/file_util.h"
 #include "extensions/common/install_warning.h"
 #include "extensions/common/manifest_constants.h"
+#include "third_party/flatbuffers/src/include/flatbuffers/flatbuffers.h"
 
 namespace extensions {
 namespace declarative_net_request {
@@ -141,6 +142,20 @@ bool IndexAndPersistRules(const base::Value& rules,
   if (error)
     *error = info.GetErrorDescription(GetJSONRulesetFilename(extension));
   return false;
+}
+
+bool HasValidIndexedRuleset(const Extension& extension) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
+  std::string data;
+  if (!base::ReadFileToString(
+          file_util::GetIndexedRulesetPath(extension.path()), &data)) {
+    return false;
+  }
+
+  flatbuffers::Verifier verifier(reinterpret_cast<const uint8_t*>(data.c_str()),
+                                 data.size());
+  return flat::VerifyExtensionIndexedRulesetBuffer(verifier);
 }
 
 }  // namespace declarative_net_request
