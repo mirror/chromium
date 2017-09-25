@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ebbf31_e7155760",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-25T14:57:52Z",
+      "side": 1,
+      "message": "Could you sort in lexicographical order, if possible?",
+      "revId": "c04b940729522c0dbc2781f39d854c7606e9022c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d089664f_1c8dd60e",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-25T14:57:52Z",
+      "side": 1,
+      "message": "Ditto. Move to L537?",
+      "revId": "c04b940729522c0dbc2781f39d854c7606e9022c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16aebf19_9c516bfd",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-25T14:57:52Z",
+      "side": 1,
+      "message": "Let\u0027s avoid one-letter var name for non-common case (like \u0027i\u0027 for index/iter in for stmt.).\nI\u0027d suggest focusedNode, respecting https://developers.chrome.com/extensions/automation#method-getFocus.",
+      "revId": "c04b940729522c0dbc2781f39d854c7606e9022c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
