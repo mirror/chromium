@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89f9f33f_75ed0650",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-25T13:01:40Z",
+      "side": 1,
+      "message": "The salt should be the same for all devices, but it\u0027s a bug to store it since it can be changed by the user by clearing cookies.\nFixing that is tracked by a different bug and will be fixed in a different CL, since it involves several objects caching the salt.",
+      "parentUuid": "6213baf9_e76a556f",
+      "revId": "bfeabb5df0e14aae9087d42fbbdce2433f6caeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ddd3d12_7c9669fa",
         "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "bfeabb5df0e14aae9087d42fbbdce2433f6caeb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64861abd_c3819e94",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-25T13:01:40Z",
+      "side": 1,
+      "message": "Yes, the device ID is unique even in that case.",
+      "parentUuid": "7ddd3d12_7c9669fa",
+      "revId": "bfeabb5df0e14aae9087d42fbbdce2433f6caeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
