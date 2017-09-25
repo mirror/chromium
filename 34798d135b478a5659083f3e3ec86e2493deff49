@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5845bc69_0b21b6f4",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-25T10:22:12Z",
+      "side": 1,
+      "message": "Sorry, so my question was: would the line 211 in the old code path covered by line 209 in the new patch? Would there be cases where fd is not valid and V8_USE_EXTERNAL_STARTUP_DATA \u0026\u0026 OS_POSIX \u0026\u0026 !OS_MACOSX, but CHROME_MULTIPLE_DLL_BROWSER is true?",
+      "parentUuid": "8c44450a_4fd69581",
+      "revId": "34798d135b478a5659083f3e3ec86e2493deff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0715c4b4_c5b1472f",
         "filename": "content/app/content_main_runner.cc",
         "patchSetId": 2
