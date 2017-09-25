@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f073f798_329a2cf7",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-25T13:56:09Z",
+      "side": 1,
+      "message": "Refactored this function to not use HasDependentTransactions as that was only checking the transaction\u0027s mode is not READ. Checking that inline to be more clear and removing HasDependentTransactions. Also rephrased the comment.",
+      "parentUuid": "4489d813_11cc875a",
+      "range": {
+        "startLine": 889,
+        "startChar": 14,
+        "endLine": 889,
+        "endChar": 62
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d52a8122_31f4c342",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 37
