@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "715d89ed_a0c8d32f",
+        "filename": "ios/web_view/internal/signin/web_view_oauth2_token_service_factory.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c171c1_fd306a5c",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933defc7_7bc9e124",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8240a12e_6c39c8e8",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Appreciate it.",
+      "parentUuid": "933defc7_7bc9e124",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d336d5e2_51e2c974",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc84ad23_d9763b4b",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d713553e_6e999691",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
         "patchSetId": 21
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7066a98d_423706da",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Resolving as outdated comment.",
+      "parentUuid": "d713553e_6e999691",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82402d29_38c27d03",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_factory.h",
         "patchSetId": 21
@@ -114,6 +210,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e727a4ab_52ccc362",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82402d29_38c27d03",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "a5b61f56_cdace037",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea95ea7_305326ed",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523de3e5_9d5e2ec4",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -184,6 +328,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6f5f90_d94dff32",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Resolved as outdated comment.",
+      "parentUuid": "523de3e5_9d5e2ec4",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "ca8ec4e1_32d200f8",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b33b9f9_fb027539",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f9c91b6_9d2ae5ed",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -230,6 +422,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dc6c31_963c733e",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f9c91b6_9d2ae5ed",
+      "range": {
+        "startLine": 59,
+        "startChar": 39,
+        "endLine": 59,
+        "endChar": 52
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "bbe7a746_4c689eb3",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done. I also did this for GetURLRequestContext.",
+      "parentUuid": "d1776d2d_8de2075c",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe6e98c_c5979ccc",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -276,6 +516,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c23949_c2fca631",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe6e98c_c5979ccc",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "d61d3dcb_dd590db6",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae0e038_6252924c",
+      "range": {
+        "startLine": 136,
+        "startChar": 30,
+        "endLine": 136,
+        "endChar": 40
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1794b8_40ebd354",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -322,6 +610,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae10b347_1faee014",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "I believe we can just call GetURLRequestContext() here.",
+      "parentUuid": "df1794b8_40ebd354",
+      "range": {
+        "startLine": 161,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "c6d71929_54c31081",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45167138_b06ef779",
+      "range": {
+        "startLine": 192,
+        "startChar": 34,
+        "endLine": 192,
+        "endChar": 43
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32300ae5_1cbfcbd8",
         "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
         "patchSetId": 21
@@ -368,6 +704,30 @@
       "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f19705_d3da0d97",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T09:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32300ae5_1cbfcbd8",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
