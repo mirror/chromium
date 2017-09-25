@@ -26,8 +26,8 @@ using csp_validator::SanitizeContentSecurityPolicy;
 namespace {
 
 const char kDefaultContentSecurityPolicy[] =
-    "script-src 'self' blob: filesystem: chrome-extension-resource:; "
-    "object-src 'self' blob: filesystem:;";
+    "script-src 'self' chrome-extension-resource:; "
+    "object-src 'self';";
 
 #define PLATFORM_APP_LOCAL_CSP_SOURCES \
     "'self' blob: filesystem: data: chrome-extension-resource:"

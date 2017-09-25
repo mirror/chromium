@@ -429,6 +429,7 @@ class CORE_EXPORT ContentSecurityPolicy
   bool HasHeaderDeliveredPolicy() const { return header_delivered_; }
 
   static bool IsValidCSPAttr(const String& attr);
+  static bool DisallowBypassingContentSecurityPolicy(const KURL&);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ContentSecurityPolicyTest, NonceInline);

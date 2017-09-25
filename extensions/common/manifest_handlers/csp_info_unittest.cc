@@ -37,8 +37,8 @@ TEST_F(CSPInfoUnitTest, SandboxedPages) {
       "sandbox allow-scripts allow-forms allow-popups allow-modals; "
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';";
   const char kDefaultCSP[] =
-      "script-src 'self' blob: filesystem: chrome-extension-resource:; "
-      "object-src 'self' blob: filesystem:;";
+      "script-src 'self' chrome-extension-resource:; "
+      "object-src 'self';";
   const char kCustomSandboxedCSP[] =
       "sandbox; script-src 'self'; child-src 'self';";
 
