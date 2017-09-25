@@ -173,7 +173,7 @@ suite('AppearanceHandler', function() {
           .then(function() {
             Polymer.dom.flush();
             assertFalse(appearancePage.$$('#wallpaperPolicyIndicator').hidden);
-            assertTrue(appearancePage.$$('#showWallpaperManager').disabled);
+            assertTrue(appearancePage.$$('#wallpaperButton').disabled);
           });
     });
   } else {
