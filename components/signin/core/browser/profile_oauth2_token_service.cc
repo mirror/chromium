@@ -4,6 +4,9 @@
 
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/signin/core/common/signin_pref_names.h"
+
 ProfileOAuth2TokenService::ProfileOAuth2TokenService(
     std::unique_ptr<OAuth2TokenServiceDelegate> delegate)
     : OAuth2TokenService(std::move(delegate)), all_credentials_loaded_(false) {
@@ -12,6 +15,16 @@ ProfileOAuth2TokenService::ProfileOAuth2TokenService(
 
 ProfileOAuth2TokenService::~ProfileOAuth2TokenService() {
   RemoveObserver(this);
+}
+
+// static
+void ProfileOAuth2TokenService::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+#if defined(OS_IOS)
+  registry->RegisterBooleanPref(prefs::kTokenServiceExcludeAllSecondaryAccounts,
+                                false);
+  registry->RegisterListPref(prefs::kTokenServiceExcludedSecondaryAccounts);
+#endif
 }
 
 void ProfileOAuth2TokenService::Shutdown() {
