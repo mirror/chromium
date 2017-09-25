@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "5e37897c_b4ab51e9",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29b3f24_eec2743d",
+      "range": {
+        "startLine": 303,
+        "startChar": 26,
+        "endLine": 303,
+        "endChar": 35
+      },
+      "revId": "419f6cdf648ed2d1c0966c02dea2fe7b69664b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99480f3f_6c00f11e",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438347e7_f2f23488",
+      "range": {
+        "startLine": 303,
+        "startChar": 9,
+        "endLine": 303,
+        "endChar": 23
+      },
+      "revId": "419f6cdf648ed2d1c0966c02dea2fe7b69664b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f9e118_3ac16267",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 3
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "306a6077_9aab131a",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:21:06Z",
+      "side": 1,
+      "message": "If the symlink is broken, then it\u0027s \"broken symbolic link to ...\".  We actually have a broken symlink to google-chrome in a chromium-branded build, which I\u0027ll fix soon.",
+      "parentUuid": "99f9e118_3ac16267",
+      "range": {
+        "startLine": 305,
+        "startChar": 27,
+        "endLine": 305,
+        "endChar": 28
+      },
+      "revId": "419f6cdf648ed2d1c0966c02dea2fe7b69664b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79117d88_84135421",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-25T23:06:26Z",
       "side": 1,
       "message": "Similarly, do we need this in front?",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 30
+      },
+      "revId": "419f6cdf648ed2d1c0966c02dea2fe7b69664b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e459fc_8c3a491c",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:21:06Z",
+      "side": 1,
+      "message": "nope.  done",
+      "parentUuid": "79117d88_84135421",
       "range": {
         "startLine": 313,
         "startChar": 29,

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "15a4794e_ce46d51a",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-25T23:21:06Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll do that in a followup; in the meantime, I reverted this line",
+      "parentUuid": "c6fd4f88_c4d936e4",
+      "revId": "d0466b48ad77a229b4d3b53cec8e9586fd1f7b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c715804_41c28db0",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
