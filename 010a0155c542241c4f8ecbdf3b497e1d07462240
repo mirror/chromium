@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa6f74d_f960bf18",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-25T19:08:36Z",
+      "side": 1,
+      "message": "\"Incrementing this number will cause the animation to be reset in the next\nframe.\" or similar.",
+      "revId": "010a0155c542241c4f8ecbdf3b497e1d07462240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
