@@ -144,6 +144,7 @@ import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
@@ -804,6 +805,11 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // ensure onDeferredStartup() gets called by calling postDeferredStartupIfNeeded() here.
         if (mDeferredStartupQueued || getActivityTab() == null || !getActivityTab().isLoading()) {
             postDeferredStartupIfNeeded();
+        }
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+            ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
+            chDialog.show();
         }
     }
 
