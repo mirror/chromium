@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e56fd5ac_4cb726bd",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-25T18:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "684d2985_4de4b6b1",
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0796d962_df44b539",
         "filename": "tools/perf/core/story_expectation_validator.py",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2017-09-12T08:51:23Z",
       "side": 1,
       "message": "why not just throw the entire dict in as is? i.e.\n\ndisables[benchmark.Name()] \u003d benchmark().GetExpectations().AsDict()\n\nThat means, however, that you should make AsDict return something json-serializable.",
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152dfb56_880fc59b",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-25T18:39:00Z",
+      "side": 1,
+      "message": "AsDict just returns a dict of all expectations for a benchmark.\nThe reason I dont just copy it over is that we need to iterate over the TestConditions and make them human readable (done in line 67 currently: conditions_str \u003d [str(a) for a in conditions]).",
+      "parentUuid": "0796d962_df44b539",
       "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -74,6 +110,30 @@
       "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e86eff0_91cedf0f",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-25T18:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a6b0f6b_64894518",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 22
+      },
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +169,24 @@
       "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77df839_7c3d451b",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-25T18:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a69583ab_373221e0",
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
