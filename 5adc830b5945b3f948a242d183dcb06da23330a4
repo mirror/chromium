@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "debf8041_c2827fc7",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-25T22:55:47Z",
+      "side": 1,
+      "message": "Nit: no need to call out the bug this is fixing (just remove the \"Fix for crbug.com/768261: \") part.",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4f28fc_bb9a2103",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-25T22:55:47Z",
+      "side": 1,
+      "message": "Can you help me understand why we are double-inflating? Like.. if text is autosized, you can replace a string using DOM apis and it will not be double-inflated. So editing replacement must be different, I just don\u0027t see how.\n\nCould this be the ReplaceFontSizeByKeywordIfPossible line?\n\nDo you know what ReplaceFontSizeByKeywordIfPossible is doing?",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff0bd17_2a75186d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-25T22:55:47Z",
+      "side": 1,
+      "message": "This is pretty synthetic because I don\u0027t think we are really testing how the autosizer comes in behind the editing code and changes the font size. WDYT of creating a page that really autosizes? For example, copying ResizeAndGlyphOverflowChanged in TextAutosizerTest.cpp and just doing a text replace and verify that the text is autosized before and after.",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
