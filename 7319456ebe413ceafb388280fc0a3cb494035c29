@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c8c386_05cc5eea",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:06:34Z",
+      "side": 1,
+      "message": "This was previously broken, but everywhere, we need to either ASSERT or bail if the pointer is null, if any code goes on to use the pointer.",
+      "revId": "7319456ebe413ceafb388280fc0a3cb494035c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2bd220_11acd669",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:06:34Z",
+      "side": 1,
+      "message": "Should this new clause follow the existing one?  I think this reads more clearly if we check the obvious condition first and then follow with other sanity checks.",
+      "revId": "7319456ebe413ceafb388280fc0a3cb494035c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
