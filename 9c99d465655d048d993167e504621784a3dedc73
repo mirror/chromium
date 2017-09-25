@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7cd390_3dd0fc1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/CustomTabToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T16:51:59Z",
+      "side": 1,
+      "message": "The only thing to worry about here is that I am not sure we are well guaranteed in this color value being set on time. That is why I think we should add a test for this and make sure that things are happening synchronously here.\n\nBasically there is a getToolbarManager().updatePrimaryColor call in postInflationStartup in CustomTabActivity, that sets this color value. We should make sure that is always before any security related update. (This should already be the case now, since postInflationStartup is java only and security state will require native, but we should enforce that with a test in CustomTabActivityTest, I think.)",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 53
+      },
+      "revId": "9c99d465655d048d993167e504621784a3dedc73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
