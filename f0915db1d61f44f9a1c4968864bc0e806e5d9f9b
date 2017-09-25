@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a476bc4_5d4b94e1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-25T17:25:38Z",
+      "side": 1,
+      "message": "Sorry, just thought about it. We like it when agents depend on each other in the code the same way they depend on each other in the protocol. Now that Log domain operates RemoteObject, it does not depend on DOM, browser_protocol.json is already correctly saying\n\n\"dependencies\": [\"Runtime\", \"Network\"],\n\nIf you look into how you are using dom_agent_, all it needs is a v8_session to wrap the object. I\u0027d suggest to pass v8 session instead of dom_agent into this class and either extract ResolveNode as utility or copy-paste it here. That way your Log domain only depends on Runtime.\n\nWe would need to check that Runtime domain is enabled before we wrap as well, but we can follow up with that.",
+      "revId": "f0915db1d61f44f9a1c4968864bc0e806e5d9f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2a9f6c_c071f9c8",
+        "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-25T17:25:38Z",
+      "side": 1,
+      "message": "with the v8_session initialization, this would even work for workers if they ever start manipulating nodes :)",
+      "revId": "f0915db1d61f44f9a1c4968864bc0e806e5d9f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
