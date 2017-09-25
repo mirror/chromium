@@ -6,6 +6,8 @@
 
 #include <inttypes.h>
 #include <algorithm>
+#include <memory>
+#include <utility>
 
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
@@ -39,7 +41,7 @@ AnimationPlayer::~AnimationPlayer() {
 }
 
 scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
-  scoped_refptr<AnimationPlayer> player = AnimationPlayer::Create(id());
+  scoped_refptr<AnimationPlayer> player = new AnimationPlayer(id());
   return player;
 }
 
@@ -319,6 +321,7 @@ bool AnimationPlayer::HasTickingAnimation() const {
   return animation_ticker_->HasTickingAnimation();
 }
 
+
 bool AnimationPlayer::has_any_animation() const {
   return animation_ticker_->has_any_animation();
 }
@@ -391,6 +394,10 @@ std::string AnimationPlayer::ToString() const {
       "AnimationPlayer{id=%d, element_id=%s, animations=[%s]}", id_,
       animation_ticker_->element_id().ToString().c_str(),
       animation_ticker_->AnimationsToString().c_str());
+}
+
+bool AnimationPlayer::IsWorkletAnimationPlayer() const {
+  return false;
 }
 
 }  // namespace cc

@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include <memory>
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -44,7 +45,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
     : public base::RefCounted<AnimationPlayer> {
  public:
   static scoped_refptr<AnimationPlayer> Create(int id);
-  scoped_refptr<AnimationPlayer> CreateImplInstance() const;
+  virtual scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
   int id() const { return id_; }
   ElementId element_id() const;
@@ -158,19 +159,16 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   void SetNeedsCommit();
 
+  virtual bool IsWorkletAnimationPlayer() const;
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
-
-  explicit AnimationPlayer(int id);
-  ~AnimationPlayer();
 
   void RegisterPlayer();
   void UnregisterPlayer();
 
   void BindElementAnimations();
   void UnbindElementAnimations();
-
-  void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
 
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
@@ -180,6 +178,18 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool needs_push_properties_;
 
   std::unique_ptr<AnimationTicker> animation_ticker_;
+
+ protected:
+  explicit AnimationPlayer(int id);
+  virtual ~AnimationPlayer();
+
+  virtual void PushPropertiesToImplThread(
+      AnimationPlayer* animation_player_impl);
+
+  // Return time that should be used for ticking the given animation.
+  virtual base::TimeTicks GetTickTimeForAnimation(
+      base::TimeTicks monotonic_time,
+      Animation* animation);
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
