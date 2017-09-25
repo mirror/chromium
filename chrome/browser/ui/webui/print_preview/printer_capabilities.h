@@ -39,6 +39,9 @@ void ConvertPrinterListForCallback(
     const PrinterHandler::AddedPrintersCallback& callback,
     const PrinterHandler::GetPrintersDoneCallback& done_callback,
     const printing::PrinterList& printer_list);
+
+std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
+    const std::unique_ptr<base::DictionaryValue>& cdd);
 }  // namespace printing
 
 #endif  // CHROME_BROWSER_UI_WEBUI_PRINT_PREVIEW_PRINTER_CAPABILITIES_H_
