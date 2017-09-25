@@ -151,10 +151,16 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
 
   // TODO(nhiroki): Check the SSL certificate.
 
-  // TODO(nhiroki): Check the MIME type.
-
-  if (resource_type_ == RESOURCE_TYPE_SERVICE_WORKER)
+  if (resource_type_ == RESOURCE_TYPE_SERVICE_WORKER) {
+    if (!ServiceWorkerWriteToCacheJob::CheckMimeType(response_head.mime_type)) {
+      // TODO(nhiroki): Show an error message equivalent to kNoMIMEError or
+      // kBadMIMEError in service_worker_write_to_cache_job.cc.
+      CommitCompleted(
+          ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+      return;
+    }
     version_->SetMainScriptHttpResponseInfo(*response_info);
+  }
 
   WriteHeaders(
       base::MakeRefCounted<HttpResponseInfoIOBuffer>(response_info.release()));

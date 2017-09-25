@@ -55,6 +55,9 @@ class CONTENT_EXPORT ServiceWorkerWriteToCacheJob
                                int64_t resource_id,
                                int64_t incumbent_resource_id);
 
+  // Returns true if the given MIME type is valid as a service worker script.
+  bool static CheckMimeType(const std::string& mime_type);
+
   // The error code used when update fails because the new
   // script is byte-by-byte identical to the incumbent script.
   const static net::Error kIdenticalScriptError;
