@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22692d94_b90fc2a2",
+        "filename": "chrome/browser/chromeos/device/input_service_proxy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T15:07:22Z",
+      "side": 0,
+      "message": "Why the removal of the rest sof this test?",
+      "revId": "1adf58e0bf122ca8e625ba8cb1168934917be8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "444e0b11_91edbf51",
+        "filename": "chrome/browser/chromeos/device/input_service_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T15:07:22Z",
+      "side": 1,
+      "message": "can we not just define an equality operator on the Mojo struct itself (or does it not even come with one that does the right thing)?",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2e75c1_9b6e11e1",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T15:07:22Z",
+      "side": 1,
+      "message": "nit: while you\u0027re here, switch this to a range-based for loop? you can just eliminate the condition on line 448 since it\u0027s effectively repeated in the two ifs below anyway.",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd9212af_74d284e2",
         "filename": "device/hid/input_service_linux.h",
         "patchSetId": 6
@@ -19,6 +53,23 @@
         "endLine": 23,
         "endChar": 66
       },
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfd3c00_b808485c",
+        "filename": "device/hid/public/interfaces/input_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T15:07:22Z",
+      "side": 1,
+      "message": "Could you add some comments on this file? Thanks!",
       "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
