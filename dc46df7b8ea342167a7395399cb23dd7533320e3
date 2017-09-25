@@ -16,6 +16,24 @@
       "revId": "dc46df7b8ea342167a7395399cb23dd7533320e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866d5cff_de763527",
+        "filename": "dbus/exported_object.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T06:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28f3da3_0cc95879",
+      "revId": "dc46df7b8ea342167a7395399cb23dd7533320e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
