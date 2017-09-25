@@ -350,6 +350,14 @@ void SpellChecker::MarkAndReplaceFor(
     return;
   }
 
+  // Clear the stale markers.
+  DocumentMarker::MarkerTypes markers = DocumentMarker::MisspellingMarkers();
+  GetFrame().GetDocument()->Markers().RemoveMarkersInRange(checking_range,
+                                                           markers);
+
+  if (!results.size())
+    return;
+
   TextCheckingParagraph paragraph(checking_range, checking_range);
 
   // TODO(xiaochengh): The following comment does not match the current behavior
