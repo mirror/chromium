@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.h"
 
+#include <string>
+
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/profiles/profile.h"
@@ -177,7 +179,8 @@ views::View* AnswerCardWebContents::GetView() {
 void AnswerCardWebContents::ResizeDueToAutoResize(
     content::WebContents* web_contents,
     const gfx::Size& new_size) {
-  delegate()->UpdatePreferredSize(this);
+  if (delegate())
+    delegate()->UpdatePreferredSize(this);
   web_view_->SetPreferredSize(new_size);
 }
 
@@ -234,12 +237,15 @@ void AnswerCardWebContents::DidFinishNavigation(
                          &has_answer_card, &result_title, &issued_query);
   }
 
-  delegate()->DidFinishNavigation(this, navigation_handle->GetURL(), has_error,
-                                  has_answer_card, result_title, issued_query);
+  if (delegate())
+    delegate()->DidFinishNavigation(this, navigation_handle->GetURL(),
+                                    has_error, has_answer_card, result_title,
+                                    issued_query);
 }
 
 void AnswerCardWebContents::DidStopLoading() {
-  delegate()->DidStopLoading(this);
+  if (delegate())
+    delegate()->DidStopLoading(this);
 }
 
 void AnswerCardWebContents::DidGetUserInteraction(
