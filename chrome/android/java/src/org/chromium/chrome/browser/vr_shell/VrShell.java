@@ -85,4 +85,6 @@ public interface VrShell {
      *  Triggers VrShell to navigate backward.
      */
     void navigateBack();
+
+    void onDensityChanged(float oldDpi, float newDpi);
 }
