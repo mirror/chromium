@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce8ed33_19cc4b83",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-25T20:55:58Z",
+      "side": 1,
+      "message": "minch@ this is where the policy indicator for CL\nhttps://chromium-review.googlesource.com/c/chromium/src/+/682574\nWould be added in this new code.",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5453d2e8_70500067",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-25T20:55:58Z",
+      "side": 1,
+      "message": "This was added for minch@ adding a policy indicator (which got reverted)\nhttps://chromium-review.googlesource.com/c/chromium/src/+/682574\n\nI decided to keep it for minch@ when that CL is relanded.",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
