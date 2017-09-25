@@ -14,6 +14,7 @@ import android.support.test.rule.ActivityTestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.infobar.InfoBar;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion;
@@ -32,6 +33,9 @@ import java.util.concurrent.TimeoutException;
  *
  * @param <T> The {@link Activity} class under test.
  */
+@CommandLineFlags.Add({
+        ChromeActivityTestRule.DISABLE_EXPIRING_HISTOGRAMS,
+})
 public class ChromeActivityTestRule<T extends ChromeActivity>
         extends ActivityTestRule<T> implements ChromeTestCommonCallback<T> {
     private final ChromeActivityTestCommon<T> mTestCommon;
@@ -39,6 +43,8 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
 
     public static final String DISABLE_NETWORK_PREDICTION_FLAG =
             "--disable-features=NetworkPrediction";
+    public static final String DISABLE_EXPIRING_HISTOGRAMS =
+            "--disable-expiring-histograms";
 
     // ChromeActivityTestRule
     private T mSetActivity;

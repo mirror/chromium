@@ -8,6 +8,7 @@
 
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/statistics_recorder.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
@@ -62,7 +63,9 @@ JourneyLogger::JourneyLogger(bool is_incognito,
     : is_incognito_(is_incognito),
       events_(EVENT_INITIATED),
       url_(url),
-      ukm_recorder_(ukm_recorder) {}
+      ukm_recorder_(ukm_recorder) {
+  base::StatisticsRecorder::SetRecordCheckerEnabled(false);
+}
 
 JourneyLogger::~JourneyLogger() {
   if (WasPaymentRequestTriggered())
