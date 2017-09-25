@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "80514297_ea31ac0f",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-25T17:41:46Z",
+      "side": 1,
+      "message": "So in this case just: /* D \u003d A + B * 65536. */",
+      "parentUuid": "dde7ea51_81d9df2f",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f1364a_479d3425",
         "filename": "third_party/zlib/adler32_simd.h",
         "patchSetId": 41
