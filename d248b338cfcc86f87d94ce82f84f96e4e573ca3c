@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d503964c_dcf312bf",
+        "filename": "components/pdf/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T23:35:03Z",
+      "side": 0,
+      "message": "My local build is component. The Blink deps override shouldn\u0027t be needed anymore, since KURL.typemap expresses the dependency on KURL directly now, rather than omitting that edge of the dependency graph.\n\nIt\u0027s also not needed for the Chromium variant, because code like //chrome/browser/media/router already depends on //content/public/common rather than //third_party/WebKit/public:mojo_bindings (see my other question in //chrome/browser/media/router/BUILD.gn \u003d)\n\nI did try expressing the dependency for the Chrome variant in the typemap, which resulted in:\nERROR Dependency cycle:\n  //content:content -\u003e\n  //content/public/app:both_sources -\u003e\n  //content/public/common:common_sources -\u003e\n  //content/common:common -\u003e\n  //content/common:mojo_bindings -\u003e\n  //third_party/WebKit/public:mojo_bindings -\u003e\n  //content/public/common:common -\u003e\n  //content:content\n\nThis looks similar to the KURL problem: //content/public/common depends on mojo bindings which depend on //content/public/common. In an ideal world, I think it would be //content/public/common -\u003e Blink mojo bindings -\u003e //content/public/common:common_structs or something like that.\n\nThe problem is that these statements seem to have global effects outside the GN file it\u0027s defined in: I certainly wouldn\u0027t expect changing this to make media router code stop linking. Overall, it seems like deps overrides are basically a workaround to prevent dep cycles, and perhaps we should try to figure out how to break these cycles? The build would be simpler if we didn\u0027t need to do this.",
+      "parentUuid": "76150e4a_8a6af762",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "d248b338cfcc86f87d94ce82f84f96e4e573ca3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b08d97f_e369d5e1",
         "filename": "third_party/WebKit/Source/platform/weborigin/OriginAccessEntry.cpp",
         "patchSetId": 3

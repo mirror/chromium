@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "780af858_48cd5052",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T23:35:03Z",
+      "side": 1,
+      "message": "Perhaps. This question is more about setting up best practices though: should these be specified in the typemap file, or should they be explicitly listed in a target? For the traits headers, they can be specified in both places, but for the .cc file, I see some files set sources \u003d [ ...] in the typemap and others put the .cc directly in another target.\n\nIt turns out I can solve the KURL problem [1]  by simply not using sources in the typemap file--but then what is the point of having sources \u003d [...] in the typemap?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/680255/1",
+      "parentUuid": "53647d11_cec15dc4",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bba5377_073c555b",
         "filename": "content/public/common/presentation.typemap",
         "patchSetId": 3
@@ -95,6 +119,24 @@
       "side": 1,
       "message": "It sounds reasonable to have it in //content/public/common IMO. Did it make your work harder?",
       "parentUuid": "4bba5377_073c555b",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e970f91_6119365f",
+        "filename": "content/public/common/presentation.typemap",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T23:35:03Z",
+      "side": 1,
+      "message": "It didn\u0027t make it harder (it\u0027s mostly about setting up best practices). So if the rule is that a component depending on a typemap should have a public dependency path to it, then I agree this is the right thing to do. Does this sound reasonable?\n\n(It seems really hard to enforce this atm given the current complexity of components deps + Mojo variants though)",
+      "parentUuid": "162c59e9_ed45445b",
       "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
