@@ -12,7 +12,10 @@
 #include "chrome/browser/payments/ssl_validity_checker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/region_combobox_model.h"
 #include "components/autofill/core/browser/region_data_loader_impl.h"
@@ -80,6 +83,11 @@ ChromePaymentRequestDelegate::GetPersonalDataManager() {
 
 const std::string& ChromePaymentRequestDelegate::GetApplicationLocale() const {
   return g_browser_process->GetApplicationLocale();
+}
+
+bool ChromePaymentRequestDelegate::IsBrowserWindowActive() const {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  return browser && browser->window() && browser->window()->IsActive();
 }
 
 bool ChromePaymentRequestDelegate::IsIncognito() const {

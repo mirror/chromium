@@ -149,6 +149,10 @@ const std::string& PaymentRequest::GetApplicationLocale() const {
   return GetApplicationContext()->GetApplicationLocale();
 }
 
+bool PaymentRequest::IsBrowserWindowActive() const {
+  return true;
+}
+
 bool PaymentRequest::IsIncognito() const {
   return browser_state_->IsOffTheRecord();
 }
