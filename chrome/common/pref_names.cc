@@ -1613,6 +1613,9 @@ const char kDefaultVideoCaptureDevice[] = "media.default_video_capture_Device";
 // The salt used for creating random MediaSource IDs.
 const char kMediaDeviceIdSalt[] = "media.device_id_salt";
 
+// The salt used for creating Storage IDs.
+const char kMediaStorageIdSalt[] = "media.storage_id_salt";
+
 // The last used printer and its settings.
 const char kPrintPreviewStickySettings[] =
     "printing.print_preview_sticky_settings";
