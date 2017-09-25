@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf0f57e3_525e40e4",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T15:09:23Z",
+      "side": 1,
+      "message": "nit: use this in the VrGlThread constructor too?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "564d94ab23210ad7068f02477a7fafd5dfd7559d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
