@@ -39,14 +39,21 @@ void AnimationWorkletProxyClientImpl::Dispose() {
   global_scope_ = nullptr;
 }
 
-bool AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
+void AnimationWorkletProxyClientImpl::Mutate(
+    double monotonic_time_now,
+    const CompositorMutatorInputState& state) {
   DCHECK(global_scope_->IsContextThread());
 
-  if (global_scope_)
-    global_scope_->Mutate();
+  std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
 
+  // TODO(petermayo): Once we move animation worklet to separate thread this
+  // should not return the output and instead get it as argument to a callback.
+  if (global_scope_)
+    output = global_scope_->Mutate(state);
+
+  mutator_->SetMutationUpdate(std::move(output));
   // Always request another rAF for now.
-  return true;
+  mutator_->SetNeedsMutate();
 }
 
 // static
