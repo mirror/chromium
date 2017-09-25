@@ -72,6 +72,16 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   for (const char* extension : kBlacklistExtensions)
     extensions.remove(extension);
 
+  // Remove extensions not supported by current driver context
+  if (!gl::g_current_gl_driver->ext.b_GL_KHR_blend_equation_advanced)
+    extensions.remove("GL_KHR_blend_equation_advanced");
+  if (!gl::g_current_gl_driver->ext.b_GL_NV_blend_equation_advanced)
+    extensions.remove("GL_NV_blend_equation_advanced");
+  if (!gl::g_current_gl_driver->ext.b_GL_EXT_multisampled_render_to_texture)
+    extensions.remove("GL_EXT_multisampled_render_to_texture");
+  if (!gl::g_current_gl_driver->ext.b_GL_IMG_multisampled_render_to_texture)
+    extensions.remove("GL_IMG_multisampled_render_to_texture");
+
   GrGLInterface* interface = new GrGLInterface();
   GrGLInterface::Functions* functions = &interface->fFunctions;
   functions->fActiveTexture = gl->glActiveTextureFn;
@@ -113,6 +123,7 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fDepthMask = gl->glDepthMaskFn;
   functions->fDisable = gl->glDisableFn;
   functions->fDisableVertexAttribArray = gl->glDisableVertexAttribArrayFn;
+  functions->fDiscardFramebuffer = gl->glDiscardFramebufferEXTFn;
   functions->fDrawArrays = gl->glDrawArraysFn;
   functions->fDrawBuffer = gl->glDrawBufferFn;
   functions->fDrawBuffers = gl->glDrawBuffersARBFn;
@@ -248,6 +259,10 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fFramebufferRenderbuffer = gl->glFramebufferRenderbufferEXTFn;
   functions->fBindRenderbuffer = gl->glBindRenderbufferEXTFn;
   functions->fRenderbufferStorageMultisample =
+      gl->glRenderbufferStorageMultisampleEXTFn;
+  functions->fFramebufferTexture2DMultisample =
+      gl->glFramebufferTexture2DMultisampleEXTFn;
+  functions->fRenderbufferStorageMultisampleES2EXT =
       gl->glRenderbufferStorageMultisampleEXTFn;
   functions->fBlitFramebuffer = gl->glBlitFramebufferFn;
 
