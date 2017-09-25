@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97046e5_a016981e",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T23:12:21Z",
+      "side": 1,
+      "message": "I wonder if we shouldn\u0027t just set this explicitly for all platforms and \u003cif\u003e out the cros specific parts. The \u0027undefined\u0027 \u003d\u003d visible was convenient but also confusing. hcarmona@ WDYT?",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
