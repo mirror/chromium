@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff25bee5_f60ee531",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-25T16:44:22Z",
+      "side": 1,
+      "message": "It seems bad for this file to include something from ios/chrome/browser/ui, but I couldn\u0027t think of a better place to put the feature flag.",
+      "revId": "e6878458ebc13dedbae3b608f99a568a45890150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
