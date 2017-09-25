@@ -84,12 +84,9 @@ std::unique_ptr<Label> CreateLabelRange(
 
 // StyledLabel::RangeStyleInfo ------------------------------------------------
 
-StyledLabel::RangeStyleInfo::RangeStyleInfo()
-    : font_style(gfx::Font::NORMAL),
-      weight(gfx::Font::Weight::NORMAL),
-      color(SK_ColorTRANSPARENT),
-      disable_line_wrapping(false),
-      is_link(false) {}
+StyledLabel::RangeStyleInfo::RangeStyleInfo() = default;
+StyledLabel::RangeStyleInfo::RangeStyleInfo(const RangeStyleInfo& copy) =
+    default;
 
 StyledLabel::RangeStyleInfo::~RangeStyleInfo() {}
 
@@ -98,9 +95,9 @@ StyledLabel::RangeStyleInfo StyledLabel::RangeStyleInfo::CreateForLink() {
   RangeStyleInfo result;
   result.disable_line_wrapping = true;
   result.is_link = true;
+  result.text_style = style::STYLE_LINK;
   return result;
 }
-
 
 // StyledLabel::StyleRange ----------------------------------------------------
 
@@ -117,8 +114,7 @@ const char StyledLabel::kViewClassName[] = "StyledLabel";
 
 StyledLabel::StyledLabel(const base::string16& text,
                          StyledLabelListener* listener)
-    : font_list_(Label().font_list()),
-      specified_line_height_(0),
+    : font_list_(style::GetFont(text_context_, default_text_style_)),
       listener_(listener),
       width_at_last_size_calculation_(0),
       width_at_last_layout_(0),
@@ -137,11 +133,6 @@ void StyledLabel::SetText(const base::string16& text) {
   PreferredSizeChanged();
 }
 
-void StyledLabel::SetBaseFontList(const gfx::FontList& font_list) {
-  font_list_ = font_list;
-  PreferredSizeChanged();
-}
-
 void StyledLabel::AddStyleRange(const gfx::Range& range,
                                 const RangeStyleInfo& style_info) {
   DCHECK(!range.is_reversed());
@@ -156,8 +147,17 @@ void StyledLabel::AddStyleRange(const gfx::Range& range,
   PreferredSizeChanged();
 }
 
-void StyledLabel::SetDefaultStyle(const RangeStyleInfo& style_info) {
-  default_style_info_ = style_info;
+void StyledLabel::SetDefaultColor(SkColor color) {
+  default_color_ = color;
+}
+
+void StyledLabel::SetTextContext(int text_context) {
+  text_context_ = text_context;
+  PreferredSizeChanged();
+}
+
+void StyledLabel::SetDefaultTextStyle(int text_style) {
+  default_text_style_ = text_style;
   PreferredSizeChanged();
 }
 
@@ -233,6 +233,10 @@ void StyledLabel::PreferredSizeChanged() {
   View::PreferredSizeChanged();
 }
 
+void StyledLabel::OnNativeThemeChanged(const ui::NativeTheme* theme) {
+  // TODO: update colors!
+}
+
 void StyledLabel::LinkClicked(Link* source, int event_flags) {
   if (listener_)
     listener_->StyledLabelLinkClicked(this, link_targets_[source], event_flags);
@@ -268,6 +272,9 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
   // The width that was actually used. Guaranteed to be no larger than |width|.
   int used_width = 0;
 
+  const RangeStyleInfo default_style = {
+
+  };
   base::string16 remaining_string = text_;
   StyleRanges::const_iterator current_range = style_ranges_.begin();
 
@@ -358,7 +365,7 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
       // This chunk is normal text.
       if (position + chunk.size() > range.start())
         chunk = chunk.substr(0, range.start() - position);
-      label = CreateLabelRange(chunk, font_list_, default_style_info_, this);
+      label = CreateLabelRange(chunk, font_list_, default_style, this);
     }
 
     if (displayed_on_background_color_set_)
