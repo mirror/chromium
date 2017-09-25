@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925d31df_92b8977a",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "Does this mean async_id.value() or async_id.has_value()? (IIUC the latter is the case)\nProbably it\u0027s better to always use value() or has_value() instead of the implicit bool conversion.",
+      "range": {
+        "startLine": 296,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd85019f_990e71dd",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deec5d33_b7089665",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "which initiate asynchronous operations",
+      "range": {
+        "startLine": 49,
+        "startChar": 30,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d604698f_c045d0bb",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "i.e.",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4804fc84_764eb808",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "This is not needed if you give a name to the callback argument in the using statement.",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89dfc84b_430f21c8",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "\"client\" is ambiguous as this class is CryptohomeClient.\nHow about using other terms like \"user code\"?",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 39
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b751d5ae_ea935f13",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "\"by matching the signal\u0027s ID with it\", or you can totally get rid of this part.",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 59
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849a64eb_b9d96fc4",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "int async_id",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 53,
+        "endChar": 52
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430fb278_455430cc",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-25T04:33:19Z",
+      "side": 1,
+      "message": "Please keep the callback order.",
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
