@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ba4ecdd_9fb2ebcb",
+        "filename": "ash/system/tray/system_tray_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:06:57Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "309e435d4ad1a5181b821a731b1029e971786fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6761de38_a1e3d743",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:06:57Z",
+      "side": 1,
+      "message": "Use an else.",
+      "revId": "309e435d4ad1a5181b821a731b1029e971786fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cc6ed9_c0bca41a",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-25T22:06:57Z",
+      "side": 1,
+      "message": "This comment should not be specific to login/lock, since we\u0027re calling an abstract delegate.",
+      "revId": "309e435d4ad1a5181b821a731b1029e971786fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
