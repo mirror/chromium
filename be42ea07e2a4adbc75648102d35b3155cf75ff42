@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e62257_fc59fbdd",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-25T09:41:19Z",
+      "side": 1,
+      "message": "Next MinVersion: 7",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "be42ea07e2a4adbc75648102d35b3155cf75ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c592517_f03a0920",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-25T09:41:19Z",
+      "side": 1,
+      "message": "MinVersion\u003d6",
+      "range": {
+        "startLine": 295,
+        "startChar": 3,
+        "endLine": 295,
+        "endChar": 15
+      },
+      "revId": "be42ea07e2a4adbc75648102d35b3155cf75ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
