@@ -22,6 +22,30 @@
       "revId": "b8a5da1ac7724773656bc591d8c3293b51ee14cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9499d8f2_e776e819",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3241,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-09-25T06:30:22Z",
+      "side": 1,
+      "message": "Would it cause some overhead on decoder thread for waiting for cleared event?\nAnother reason I chose this modification, is to align with V4L2VDA logic.\nhttps://cs.chromium.org/chromium/src/media/gpu/v4l2_video_decode_accelerator.cc?type\u003dcs\u0026l\u003d2569",
+      "parentUuid": "badac6d4_c158d819",
+      "range": {
+        "startLine": 3241,
+        "startChar": 29,
+        "endLine": 3241,
+        "endChar": 51
+      },
+      "revId": "b8a5da1ac7724773656bc591d8c3293b51ee14cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
