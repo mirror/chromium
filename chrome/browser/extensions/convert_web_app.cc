@@ -168,6 +168,11 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
                                              web_app.generated_icon_color));
   }
 
+  if (web_app.theme_color != SK_ColorTRANSPARENT) {
+    root->SetString(keys::kAppThemeColor,
+                    image_util::GenerateHexColorString(web_app.theme_color));
+  }
+
   if (!web_app.scope.is_empty()) {
     root->SetDictionary(keys::kUrlHandlers, CreateURLHandlersForBookmarkApp(
                                                 web_app.scope, web_app.title));
