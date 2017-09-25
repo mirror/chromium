@@ -140,6 +140,14 @@ void DisplayManagerTestApi::SetTouchSupport(
       ->set_touch_support(touch_support);
 }
 
+void DisplayManagerTestApi::SetLegacyTouchCalibrationData(
+    int64_t display_id,
+    const TouchCalibrationData& calibration_data) {
+  display_manager_->display_info_[display_id].SetTouchCalibrationData(
+      calibration_data);
+  display_manager_->UpdateDisplays();
+}
+
 ScopedSetInternalDisplayId::ScopedSetInternalDisplayId(
     DisplayManager* display_manager,
     int64_t id) {
