@@ -34,6 +34,7 @@ class TestChromePaymentRequestDelegate : public ChromePaymentRequestDelegate {
 
   // ChromePaymentRequestDelegate.
   void ShowDialog(PaymentRequest* request) override;
+  bool IsBrowserWindowActive() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;
   autofill::RegionDataLoader* GetRegionDataLoader() override;

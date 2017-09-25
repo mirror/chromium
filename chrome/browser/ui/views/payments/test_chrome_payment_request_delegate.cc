@@ -26,6 +26,10 @@ void TestChromePaymentRequestDelegate::ShowDialog(PaymentRequest* request) {
   dialog_ = dialog_view;
 }
 
+bool TestChromePaymentRequestDelegate::IsBrowserWindowActive() const {
+  return true;
+}
+
 bool TestChromePaymentRequestDelegate::IsIncognito() const {
   return is_incognito_;
 }
