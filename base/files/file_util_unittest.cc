@@ -1550,6 +1550,58 @@ TEST_F(FileUtilTest, CopyDirectoryWithTrailingSeparators) {
   EXPECT_TRUE(PathExists(file_name_to));
 }
 
+#if !defined(OS_FUCHSIA) && defined(OS_POSIX)
+TEST_F(FileUtilTest, CopyDirectoryWithNonRegularFiles) {
+  // Create a directory.
+  FilePath dir_name_from =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_From_Subdir"));
+  ASSERT_TRUE(CreateDirectory(dir_name_from));
+  ASSERT_TRUE(PathExists(dir_name_from));
+
+  // Create a file under the directory.
+  FilePath file_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  CreateTextFile(file_name_from, L"Gooooooooooooooooooooogle");
+  ASSERT_TRUE(PathExists(file_name_from));
+
+  // Create a symbolic link under the directory pointing to that file.
+  FilePath symlink_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Symlink"));
+  ASSERT_TRUE(CreateSymbolicLink(file_name_from, symlink_name_from));
+  ASSERT_TRUE(PathExists(symlink_name_from));
+
+  // Create a fifo under the directory.
+  FilePath fifo_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Fifo"));
+  ASSERT_EQ(0, mkfifo(fifo_name_from.value().c_str(), 0644));
+  ASSERT_TRUE(PathExists(fifo_name_from));
+
+  // Copy the directory.
+  FilePath dir_name_to =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_To_Subdir"));
+  FilePath file_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  FilePath symlink_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Symlink"));
+  FilePath fifo_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("Fifo"));
+
+  ASSERT_FALSE(PathExists(dir_name_to));
+
+  EXPECT_TRUE(CopyDirectory(dir_name_from, dir_name_to, false));
+
+  // Check that only directories and regular files are copied.
+  EXPECT_TRUE(PathExists(dir_name_from));
+  EXPECT_TRUE(PathExists(file_name_from));
+  EXPECT_TRUE(PathExists(symlink_name_from));
+  EXPECT_TRUE(PathExists(fifo_name_from));
+  EXPECT_TRUE(PathExists(dir_name_to));
+  EXPECT_TRUE(PathExists(file_name_to));
+  EXPECT_FALSE(PathExists(symlink_name_to));
+  EXPECT_FALSE(PathExists(fifo_name_to));
+}
+#endif  // !defined(OS_FUCHSIA) && defined(OS_POSIX)
+
 TEST_F(FileUtilTest, CopyFile) {
   // Create a directory
   FilePath dir_name_from =
