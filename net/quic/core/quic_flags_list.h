@@ -124,9 +124,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque2, false)
 // If true, enable QUIC v42.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_42, false)
 
-// Small optimization for QuicSentPacketManager::HandleAckForSentPackets.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_acks, true)
-
 // When true, respect configured limits on header list size.
 QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_header_list_size, true)
 
