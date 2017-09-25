@@ -87,6 +87,24 @@
       "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456b6c9a_cf07c379",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T18:45:40Z",
+      "side": 1,
+      "message": "Why not CHECK_EQ?",
+      "parentUuid": "8cc64f4a_fb755686",
+      "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

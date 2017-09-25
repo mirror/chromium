@@ -34,6 +34,23 @@
       "revId": "158527262556a5bc51aac6805d1a13a4565b727e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c900c3c6_5d4e078a",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T18:45:40Z",
+      "side": 1,
+      "message": "nit: This should have curlies {}",
+      "revId": "158527262556a5bc51aac6805d1a13a4565b727e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
