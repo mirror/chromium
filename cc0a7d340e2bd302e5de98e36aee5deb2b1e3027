@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5682d45_f58dcff6",
+        "filename": "cc/paint/scoped_image_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-25T23:05:05Z",
+      "side": 1,
+      "message": "Moving |decode| will pass the ref ownership to the new object (https://cs.chromium.org/chromium/src/cc/paint/image_provider.cc?l\u003d26). So the image will remain locked in the scoped object in the vector. I added a test to verify that as well, that the ref count remains up until ScopedImageFlags is in scope.",
+      "parentUuid": "4521340d_ce21bfe7",
+      "revId": "cc0a7d340e2bd302e5de98e36aee5deb2b1e3027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eca0e1a_e9f20afd",
         "filename": "cc/paint/scoped_image_flags.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "84801585_0ebce598",
+        "filename": "cc/paint/scoped_image_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-25T23:05:05Z",
+      "side": 1,
+      "message": "Changed the name to |decode_stashing_image_provider_|. That should make it slightly clearer...",
+      "parentUuid": "8eca0e1a_e9f20afd",
+      "revId": "cc0a7d340e2bd302e5de98e36aee5deb2b1e3027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1436acc1_709393f2",
         "filename": "cc/paint/scoped_image_flags.h",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "cc0a7d340e2bd302e5de98e36aee5deb2b1e3027",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e36c57_a1aaa694",
+        "filename": "cc/paint/scoped_image_flags.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-25T23:05:05Z",
+      "side": 1,
+      "message": "Done. And added this for ScopedImageFlags as well.",
+      "parentUuid": "1436acc1_709393f2",
+      "revId": "cc0a7d340e2bd302e5de98e36aee5deb2b1e3027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
