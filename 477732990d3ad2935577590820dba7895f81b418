@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5351d667_97dde119",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "Are we moving this to 30?",
+      "range": {
+        "startLine": 60,
+        "startChar": 75,
+        "endLine": 60,
+        "endChar": 77
+      },
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbae6a6_58734ba7",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "where is that initialized?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f3f633_52a85462",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "As an entry point on IO we call these *Sync per convention. Please rename.",
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75933878_1adfdbc9",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "definitely use {}\nboth \"condition\" (the for part) and contents of the loop span multiple lines.\nIt will be more readable.",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 79
+      },
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e258d86_5c97d70e",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "Did you consider a name like: cleanup_time_ ?",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 236,
+        "endChar": 29
+      },
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2694f75d_3cee6e78",
+        "filename": "components/offline_pages/core/model/clear_storage_task_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "This magic number is scary.\nPlease at least have a constant in test.",
+      "range": {
+        "startLine": 322,
+        "startChar": 46,
+        "endLine": 322,
+        "endChar": 48
+      },
+      "revId": "477732990d3ad2935577590820dba7895f81b418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

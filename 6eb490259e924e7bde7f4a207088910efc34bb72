@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "256b5461_64916b99",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-25T20:47:00Z",
+      "side": 1,
+      "message": "Moved to the latest patch.",
+      "parentUuid": "f4869dbf_598aae7e",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 77
+      },
+      "revId": "6eb490259e924e7bde7f4a207088910efc34bb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22154df3_d73fac79",
         "filename": "components/offline_pages/core/model/clear_storage_task.cc",
         "patchSetId": 6
