@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc86d513_2fe24b50",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066bd580_e401ec26",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "This seems more like Mock than Fake since it works as usual.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15a768e_6a6b7c67",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "I prefer returning RegistrationObjectHost as I described at another comment.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e542fc_34ad25ea",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "Is it better to restrict the scope by wrapping them by brackets \"{}\"?",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8703884e_3486cbc3",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "Mock?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7aee4c_d57b2e48",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-25T04:34:01Z",
+      "side": 1,
+      "message": "How about returning the RegistrationObjectHost instead of having it as a member?\nAlso, I prefer the name like \"remote_registration_object\" or \"browser_registration_object\" since it might be easier to know which object is keeping the Mojo pipes.\nWDYT?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
