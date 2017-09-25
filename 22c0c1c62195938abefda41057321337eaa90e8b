@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6510b51a_d6b868e8",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-25T20:36:15Z",
+      "side": 1,
+      "message": "Thanks for adding an @private. Wanna add the @return and @param entries?\nI\u0027ll take a shot at it here to help out:\n\n/**\n * Choose a summary checkbox label.\n * @param {boolean} isSignedIn\n * @param {boolean} isSyncingHistory\n * @param {string} historySummary\n * @param {string} historySummarySigned\n * @return {string}\n * @private\n */",
+      "revId": "22c0c1c62195938abefda41057321337eaa90e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62abb0ec_b0d2275a",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-25T20:36:15Z",
+      "side": 1,
+      "message": "/**\n * Choose a content/site settings label.\n * @param {string} siteSettings\n * @param {string} contentSettings\n * @return {string}\n * @private\n */",
+      "revId": "22c0c1c62195938abefda41057321337eaa90e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
