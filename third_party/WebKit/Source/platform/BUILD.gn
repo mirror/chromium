@@ -58,7 +58,7 @@ action("http_names") {
   ]
 }
 
-action("runtime_enabled_features") {
+action("generate_runtime_enabled_features") {
   script = "../build/scripts/make_runtime_features.py"
 
   runtime_enabled_features_json5 = "runtime_enabled_features.json5"
@@ -185,9 +185,9 @@ group("make_platform_generated") {
     ":character_data",
     ":color_data",
     ":font_family_names",
+    ":generate_runtime_enabled_features",
     ":http_names",
     ":instrumentation_probes",
-    ":runtime_enabled_features",
   ]
 }
 
@@ -249,12 +249,7 @@ config("blink_platform_pch") {
 
 jumbo_component("platform") {
   visibility = []  # Allow re-assignment of list.
-  visibility = [
-    "//components/pdf/common:interfaces_blink",
-    "//third_party/WebKit/*",
-    "//url/mojo:url_mojom_origin_blink",
-    "//url/mojo:url_mojom_gurl_blink",
-  ]
+  visibility = [ "//third_party/WebKit/*" ]
   output_name = "blink_platform"
 
   sources = [
@@ -664,7 +659,6 @@ jumbo_component("platform") {
     "exported/WebSpeechSynthesizerClientImpl.cpp",
     "exported/WebSpeechSynthesizerClientImpl.h",
     "exported/WebStorageQuotaCallbacks.cpp",
-    "exported/WebString.cpp",
     "exported/WebSurfaceLayerBridge.cpp",
     "exported/WebTextRun.cpp",
     "exported/WebThreadSafeData.cpp",
@@ -1443,26 +1437,6 @@ jumbo_component("platform") {
     "transforms/TransformationMatrix.h",
     "transforms/TranslateTransformOperation.cpp",
     "transforms/TranslateTransformOperation.h",
-    "weborigin/KURL.cpp",
-    "weborigin/KURL.h",
-    "weborigin/KURLHash.h",
-    "weborigin/KnownPorts.cpp",
-    "weborigin/KnownPorts.h",
-    "weborigin/OriginAccessEntry.cpp",
-    "weborigin/OriginAccessEntry.h",
-    "weborigin/Referrer.h",
-    "weborigin/ReferrerPolicy.h",
-    "weborigin/SchemeRegistry.cpp",
-    "weborigin/SchemeRegistry.h",
-    "weborigin/SecurityOrigin.cpp",
-    "weborigin/SecurityOrigin.h",
-    "weborigin/SecurityOriginHash.h",
-    "weborigin/SecurityPolicy.cpp",
-    "weborigin/SecurityPolicy.h",
-    "weborigin/SecurityViolationReportingPolicy.h",
-    "weborigin/Suborigin.cpp",
-    "weborigin/Suborigin.h",
-    "weborigin/URLSecurityOriginMap.h",
   ]
 
   sources -= blink_platform_neon_files
@@ -1474,19 +1448,13 @@ jumbo_component("platform") {
              get_target_outputs(":color_data") +
              get_target_outputs(":font_family_names") +
              get_target_outputs(":http_names") +
-             get_target_outputs(":instrumentation_probes") +
-             get_target_outputs(":runtime_enabled_features")
+             get_target_outputs(":instrumentation_probes")
 
   if (is_win && is_component_build) {
     # https://crbug.com/764823 - Mixing certain //url/ headers and
     # using url::RawCanonOutputT<char> in one translation unit breaks
     # the Windows component build. These files use RawCanonOutput.
-    jumbo_excluded_sources = [
-      "LinkHash.cpp",
-      "weborigin/KURL.cpp",
-      "weborigin/OriginAccessEntry.cpp",
-      "weborigin/SecurityOrigin.cpp",
-    ]
+    jumbo_excluded_sources = [ "LinkHash.cpp" ]
   }
   configs += [
     ":blink_platform_pch",
@@ -1499,7 +1467,9 @@ jumbo_component("platform") {
 
   public_deps = [
     ":make_platform_generated",
+    ":platform_base",
     ":rcs_count_everything",
+    ":runtime_enabled_features",
     "//base",
     "//cc",
     "//cc/animation",
@@ -1652,6 +1622,87 @@ jumbo_component("platform") {
     include_dirs += [ "//third_party/openmax_dl" ]
     deps += [ "//third_party/openmax_dl/dl" ]
   }
+
+  if (remove_webcore_debug_symbols) {
+    configs -= [ "//build/config/compiler:default_symbols" ]
+    configs += remove_webcore_symbols_config
+  }
+}
+
+# This is a horrible hack to work around the fact that everything in platform is
+# interdependent. This is problematic because Blink platform can depend on Blink
+# variant mojom interfaces which depend on Blink platform... to get around that,
+# platform_base is a component that's not allowed to have any Mojo dependencies.
+component("platform_base") {
+  visibility = []  # Allow re-assignment of list.
+  visibility = [
+    "//components/pdf/common:interfaces_blink",
+    "//third_party/WebKit/*",
+    "//url/mojo:url_mojom_origin_blink",
+    "//url/mojo:url_mojom_gurl_blink",
+  ]
+  sources = [
+    "exported/WebString.cpp",
+    "weborigin/KURL.cpp",
+    "weborigin/KURL.h",
+    "weborigin/KURLHash.h",
+    "weborigin/KnownPorts.cpp",
+    "weborigin/KnownPorts.h",
+    "weborigin/OriginAccessEntry.cpp",
+    "weborigin/OriginAccessEntry.h",
+    "weborigin/Referrer.h",
+    "weborigin/ReferrerPolicy.h",
+    "weborigin/SchemeRegistry.cpp",
+    "weborigin/SchemeRegistry.h",
+    "weborigin/SecurityOrigin.cpp",
+    "weborigin/SecurityOrigin.h",
+    "weborigin/SecurityOriginHash.h",
+    "weborigin/SecurityPolicy.cpp",
+    "weborigin/SecurityPolicy.h",
+    "weborigin/SecurityViolationReportingPolicy.h",
+    "weborigin/Suborigin.cpp",
+    "weborigin/Suborigin.h",
+    "weborigin/URLSecurityOriginMap.h",
+  ]
+
+  deps = [
+    ":runtime_enabled_features",
+    "//net",
+    "//url",
+  ]
+
+  public_deps = [
+    "//third_party/WebKit/Source/platform/wtf",
+  ]
+
+  configs += [
+    ":blink_platform_pch",
+    ":blink_platform_config",
+    ":blink_platform_implementation",
+    "//third_party/WebKit/Source:non_test_config",
+  ]
+
+  if (remove_webcore_debug_symbols) {
+    configs -= [ "//build/config/compiler:default_symbols" ]
+    configs += remove_webcore_symbols_config
+  }
+}
+
+component("runtime_enabled_features") {
+  sources = []
+  sources += get_target_outputs(":generate_runtime_enabled_features")
+
+  public_deps = [
+    ":generate_runtime_enabled_features",
+    "//third_party/WebKit/Source/platform/wtf",
+  ]
+
+  configs += [
+    ":blink_platform_pch",
+    ":blink_platform_config",
+    ":blink_platform_implementation",
+    "//third_party/WebKit/Source:non_test_config",
+  ]
 
   if (remove_webcore_debug_symbols) {
     configs -= [ "//build/config/compiler:default_symbols" ]

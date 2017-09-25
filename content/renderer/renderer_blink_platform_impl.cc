@@ -73,7 +73,6 @@
 #include "content/renderer/renderer_clipboard_delegate.h"
 #include "content/renderer/webclipboard_impl.h"
 #include "content/renderer/webgraphicscontext3d_provider_impl.h"
-#include "content/renderer/webpublicsuffixlist_impl.h"
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/config/gpu_info.h"
@@ -817,12 +816,6 @@ void RendererBlinkPlatformImpl::GetPluginList(
     }
   }
 #endif
-}
-
-//------------------------------------------------------------------------------
-
-blink::WebPublicSuffixList* RendererBlinkPlatformImpl::PublicSuffixList() {
-  return &public_suffix_list_;
 }
 
 //------------------------------------------------------------------------------
