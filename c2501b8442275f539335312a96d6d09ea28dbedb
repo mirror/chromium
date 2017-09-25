@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c01f69d7_c35a058b",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-25T18:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "188df6fa_6f8479e5",
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a00a4e09_b5cea787",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 1
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-25T17:51:52Z",
       "side": 1,
       "message": "can this be deterministic instead? i.e. posttasks to the current thread or flushing it? anything timing related like this would only flakily catch problems if they were introduced in the future.",
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa50fef3_ffe55698",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-25T18:28:11Z",
+      "side": 1,
+      "message": "I am happy to have more deterministic tests. But I am not sure how I can reliably flush:\nBetween the test server and the URL request is a socket connection. I imagine that it is possible that there is no pending tasks while the data is being transmitted by the socket connection (which should be regarded as test failure). Because the URL request side is woken up by socket readability, not pending tasks.\n\nPlease correct me if I am wrong. Thanks!",
+      "parentUuid": "05eb83a7_ef51f71d",
       "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
