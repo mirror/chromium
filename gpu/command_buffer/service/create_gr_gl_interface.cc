@@ -11,6 +11,12 @@ namespace gles2 {
 
 namespace {
 
+template <typename R, typename... Args>
+GrGLFunction<R (*)(Args...)> bind(R (gl::GLApi::*func)(Args...),
+                                  gl::GLApi* api) {
+  return [func, api](Args... args) { return (api->*func)(args...); };
+}
+
 const GLubyte* GetStringHook(const char* version_string, GLenum name) {
   switch (name) {
     case GL_VERSION:
@@ -43,6 +49,11 @@ const char* kBlacklistExtensions[] = {
 sk_sp<const GrGLInterface> CreateGrGLInterface(
     const gl::GLVersionInfo& version_info) {
   gl::ProcsGL* gl = &gl::g_current_gl_driver->fn;
+  gl::GLApi* api = gl::g_current_gl_context;
+  bool version_gles3 = false;
+
+  if (version_info.IsAtLeastGL(3, 3) || version_info.IsAtLeastGLES(3, 1))
+    version_gles3 = true;
 
   GrGLStandard standard =
       version_info.is_es ? kGLES_GrGLStandard : kGL_GrGLStandard;
@@ -53,24 +64,37 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   // by the bindings (GL 3.2 or ES 3.0), and blacklist extensions that skia
   // handles but bindings don't.
   // TODO(piman): add bindings for missing entrypoints.
-  GrGLFunction<GrGLGetStringProc> get_string;
-  if (version_info.IsAtLeastGL(3, 3) || version_info.IsAtLeastGLES(3, 1)) {
+  GrGLFunction<GrGLGetStringProc> get_fake_string;
+  if (version_gles3) {
     const char* fake_version = version_info.is_es ? "OpenGL ES 3.0" : "3.2";
-    get_string = [fake_version](GLenum name) {
+    get_fake_string = [fake_version](GLenum name) {
       return GetStringHook(fake_version, name);
     };
-  } else {
-    get_string = gl->glGetStringFn;
   }
+  auto get_cxt_string = bind(&gl::GLApi::glGetStringFn, api);
+
+  auto get_stringi = bind(&gl::GLApi::glGetStringiFn, api);
+  auto get_integerv = bind(&gl::GLApi::glGetIntegervFn, api);
 
   GrGLExtensions extensions;
-  if (!extensions.init(standard, get_string, gl->glGetStringiFn,
-                       gl->glGetIntegervFn)) {
+  if (!extensions.init(standard,
+                       version_gles3 ? get_fake_string : get_cxt_string,
+                       get_stringi, get_integerv)) {
     LOG(ERROR) << "Failed to initialize extensions";
     return nullptr;
   }
   for (const char* extension : kBlacklistExtensions)
     extensions.remove(extension);
+
+  // Remove extensions not supported by current driver context
+  if (!gl::g_current_gl_driver->ext.b_GL_KHR_blend_equation_advanced)
+    extensions.remove("GL_KHR_blend_equation_advanced");
+  if (!gl::g_current_gl_driver->ext.b_GL_NV_blend_equation_advanced)
+    extensions.remove("GL_NV_blend_equation_advanced");
+  if (!gl::g_current_gl_driver->ext.b_GL_EXT_multisampled_render_to_texture)
+    extensions.remove("GL_EXT_multisampled_render_to_texture");
+  if (!gl::g_current_gl_driver->ext.b_GL_IMG_multisampled_render_to_texture)
+    extensions.remove("GL_IMG_multisampled_render_to_texture");
 
   GrGLInterface* interface = new GrGLInterface();
   GrGLInterface::Functions* functions = &interface->fFunctions;
@@ -113,6 +137,7 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fDepthMask = gl->glDepthMaskFn;
   functions->fDisable = gl->glDisableFn;
   functions->fDisableVertexAttribArray = gl->glDisableVertexAttribArrayFn;
+  functions->fDiscardFramebuffer = gl->glDiscardFramebufferEXTFn;
   functions->fDrawArrays = gl->glDrawArraysFn;
   functions->fDrawBuffer = gl->glDrawBufferFn;
   functions->fDrawBuffers = gl->glDrawBuffersARBFn;
@@ -147,7 +172,7 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fGetProgramiv = gl->glGetProgramivFn;
   functions->fGetShaderInfoLog = gl->glGetShaderInfoLogFn;
   functions->fGetShaderiv = gl->glGetShaderivFn;
-  functions->fGetString = get_string;
+  functions->fGetString = version_gles3 ? get_fake_string : get_cxt_string;
   functions->fGetStringi = gl->glGetStringiFn;
   functions->fGetShaderPrecisionFormat = gl->glGetShaderPrecisionFormatFn;
   functions->fGetTexLevelParameteriv = gl->glGetTexLevelParameterivFn;
@@ -248,6 +273,10 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fFramebufferRenderbuffer = gl->glFramebufferRenderbufferEXTFn;
   functions->fBindRenderbuffer = gl->glBindRenderbufferEXTFn;
   functions->fRenderbufferStorageMultisample =
+      gl->glRenderbufferStorageMultisampleEXTFn;
+  functions->fFramebufferTexture2DMultisample =
+      gl->glFramebufferTexture2DMultisampleEXTFn;
+  functions->fRenderbufferStorageMultisampleES2EXT =
       gl->glRenderbufferStorageMultisampleEXTFn;
   functions->fBlitFramebuffer = gl->glBlitFramebufferFn;
 
