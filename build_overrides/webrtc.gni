@@ -15,3 +15,6 @@ rtc_include_internal_audio_device = false
 
 # Don't include WebRTC tests.
 rtc_include_tests = false
+
+# Don't include webrtc's builtin task queue implementation.
+rtc_link_task_queue_impl = false

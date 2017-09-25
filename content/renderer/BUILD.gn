@@ -750,6 +750,7 @@ target(link_target_type, "renderer") {
       "p2p/socket_client_impl.h",
       "p2p/socket_dispatcher.cc",
       "p2p/socket_dispatcher.h",
+      "//third_party/webrtc_overrides/rtc_base/task_queue.cc",
     ]
 
     if (enable_plugins) {
