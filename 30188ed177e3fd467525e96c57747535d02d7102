@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f024ff8_a4b8a9a3",
+        "filename": "ios/web/navigation/serializable_user_data_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T15:56:28Z",
+      "side": 0,
+      "message": "Why remove those mappings now and not in M68 like the comments says?",
+      "revId": "30188ed177e3fd467525e96c57747535d02d7102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
