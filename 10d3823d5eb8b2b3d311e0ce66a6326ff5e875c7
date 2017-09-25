@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "644c5bc7_ea0d7140",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T16:59:22Z",
+      "side": 0,
+      "message": "It looks like this is the last reference to google_now_launcher.enabled? Unless I missed something we should remove it here:\nhttps://cs.chromium.org/search/?q\u003d+kGoogleNowLauncherEnabled+OR+google_now_launcher.enabled\u0026type\u003dcs",
+      "revId": "10d3823d5eb8b2b3d311e0ce66a6326ff5e875c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
