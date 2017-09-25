@@ -34,43 +34,16 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebPublicSuffixList.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class OriginAccessEntryTestSuffixList : public blink::WebPublicSuffixList {
- public:
-  size_t GetPublicSuffixLength(const blink::WebString&) override {
-    return length_;
-  }
-
-  void SetPublicSuffix(const blink::WebString& suffix) {
-    length_ = suffix.length();
-  }
-
+class OriginAccessEntryTest : public ::testing::Test {
  private:
-  size_t length_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
 };
 
-class OriginAccessEntryTestPlatform : public TestingPlatformSupport {
- public:
-  blink::WebPublicSuffixList* PublicSuffixList() override {
-    return &suffix_list_;
-  }
-
-  void SetPublicSuffix(const blink::WebString& suffix) {
-    suffix_list_.SetPublicSuffix(suffix);
-  }
-
- private:
-  OriginAccessEntryTestSuffixList suffix_list_;
-};
-
-TEST(OriginAccessEntryTest, PublicSuffixListTest) {
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
-
+TEST_F(OriginAccessEntryTest, PublicSuffixListTest) {
   RefPtr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("http://www.google.com");
   OriginAccessEntry entry1("http", "google.com",
@@ -85,7 +58,7 @@ TEST(OriginAccessEntryTest, PublicSuffixListTest) {
             entry3.MatchesOrigin(*origin));
 }
 
-TEST(OriginAccessEntryTest, AllowSubdomainsTest) {
+TEST_F(OriginAccessEntryTest, AllowSubdomainsTest) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -139,9 +112,6 @@ TEST(OriginAccessEntryTest, AllowSubdomainsTest) {
        OriginAccessEntry::kMatchesOrigin},
   };
 
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
-
   for (const auto& test : inputs) {
     SCOPED_TRACE(::testing::Message()
                  << "Host: " << test.host << ", Origin: " << test.origin);
@@ -154,7 +124,7 @@ TEST(OriginAccessEntryTest, AllowSubdomainsTest) {
   }
 }
 
-TEST(OriginAccessEntryTest, AllowRegisterableDomainsTest) {
+TEST_F(OriginAccessEntryTest, AllowRegisterableDomainsTest) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -193,9 +163,6 @@ TEST(OriginAccessEntryTest, AllowRegisterableDomainsTest) {
        OriginAccessEntry::kDoesNotMatchOrigin},
   };
 
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
-
   for (const auto& test : inputs) {
     RefPtr<SecurityOrigin> origin_to_test =
         SecurityOrigin::CreateFromString(test.origin);
@@ -209,7 +176,7 @@ TEST(OriginAccessEntryTest, AllowRegisterableDomainsTest) {
   }
 }
 
-TEST(OriginAccessEntryTest, AllowRegisterableDomainsTestWithDottedSuffix) {
+TEST_F(OriginAccessEntryTest, AllowRegisterableDomainsTestWithDottedSuffix) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -249,9 +216,6 @@ TEST(OriginAccessEntryTest, AllowRegisterableDomainsTestWithDottedSuffix) {
        OriginAccessEntry::kDoesNotMatchOrigin},
   };
 
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("appspot.com");
-
   for (const auto& test : inputs) {
     RefPtr<SecurityOrigin> origin_to_test =
         SecurityOrigin::CreateFromString(test.origin);
@@ -265,7 +229,7 @@ TEST(OriginAccessEntryTest, AllowRegisterableDomainsTestWithDottedSuffix) {
   }
 }
 
-TEST(OriginAccessEntryTest, DisallowSubdomainsTest) {
+TEST_F(OriginAccessEntryTest, DisallowSubdomainsTest) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -300,9 +264,6 @@ TEST(OriginAccessEntryTest, DisallowSubdomainsTest) {
        OriginAccessEntry::kDoesNotMatchOrigin},
   };
 
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
-
   for (const auto& test : inputs) {
     SCOPED_TRACE(::testing::Message()
                  << "Host: " << test.host << ", Origin: " << test.origin);
@@ -314,7 +275,7 @@ TEST(OriginAccessEntryTest, DisallowSubdomainsTest) {
   }
 }
 
-TEST(OriginAccessEntryTest, IPAddressTest) {
+TEST_F(OriginAccessEntryTest, IPAddressTest) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -331,9 +292,6 @@ TEST(OriginAccessEntryTest, IPAddressTest) {
       {"http", "", false},
   };
 
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
-
   for (const auto& test : inputs) {
     SCOPED_TRACE(::testing::Message() << "Host: " << test.host);
     OriginAccessEntry entry(test.protocol, test.host,
@@ -342,7 +300,7 @@ TEST(OriginAccessEntryTest, IPAddressTest) {
   }
 }
 
-TEST(OriginAccessEntryTest, IPAddressMatchingTest) {
+TEST_F(OriginAccessEntryTest, IPAddressMatchingTest) {
   struct TestCase {
     const char* protocol;
     const char* host;
@@ -358,9 +316,6 @@ TEST(OriginAccessEntryTest, IPAddressMatchingTest) {
       {"http", "1.123", "http://192.0.0.123/",
        OriginAccessEntry::kDoesNotMatchOrigin},
   };
-
-  ScopedTestingPlatformSupport<OriginAccessEntryTestPlatform> platform;
-  platform->SetPublicSuffix("com");
 
   for (const auto& test : inputs) {
     SCOPED_TRACE(::testing::Message()

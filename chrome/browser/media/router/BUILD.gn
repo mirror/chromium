@@ -13,13 +13,13 @@ static_library("router") {
     "//components/keyed_service/content",
     "//components/keyed_service/core",
     "//content/public/browser",
-    "//content/public/common",
     "//net",
     "//third_party/icu",
     "//url",
   ]
   public_deps = [
     "//chrome/common/media_router:router",
+    "//content/public/common",
   ]
   sources = [
     "browser_presentation_connection_proxy.cc",
