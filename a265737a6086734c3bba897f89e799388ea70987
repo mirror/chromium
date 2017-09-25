@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04d992c_a8908ba9",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "I think you should use the Feature API instead of field trials directly.",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b7d3f9_77150363",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "I think you should use base::SplitStringPiece for a simpler and not too much less efficient implementation. Hmmm or maybe base::StringTokenizer?",
+      "range": {
+        "startLine": 56,
+        "startChar": 56,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d78d09_195e52c6",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "base::HexStringToUInt64",
+      "range": {
+        "startLine": 57,
+        "startChar": 21,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b528694_23585486",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907344e4_15ce1221",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "Finch -\u003e Variation",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b98643d_c5545e19",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "Const naming is kConstName format.",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c2af6b_3592f97a",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-25T15:36:29Z",
+      "side": 1,
+      "message": "These should probably either be local to the function using them, or in an anonymous namespace in the cc file.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "a265737a6086734c3bba897f89e799388ea70987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
