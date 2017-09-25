@@ -22,6 +22,30 @@
       "revId": "3c27e63ecacff78cff830ed242258330978b044a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01446fa2_0230d426",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-25T03:57:53Z",
+      "side": 1,
+      "message": "As I checked, on ToT (w/o this CL), the width of the tray is always same as kTrayMenuMinimumWidth: a long text is normed with an ellipsis and a tooltip shows the full text. \n\nThen, I removed the word \"minimum\" from the comment.",
+      "parentUuid": "70e536b6_447bd6f6",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "3c27e63ecacff78cff830ed242258330978b044a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
