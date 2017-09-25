@@ -101,6 +101,9 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   net::HttpRawRequestHeaders raw_request_headers_;
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
 
+  bool should_pause_caching_response_body_ = false;
+  bool paused_caching_response_body_ = false;
+
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderImpl);

@@ -8,6 +8,9 @@
 
 namespace content {
 
+void URLLoaderThrottle::Delegate::PauseCachingResponseBody() {}
+void URLLoaderThrottle::Delegate::ResumeCachingResponseBody() {}
+
 URLLoaderThrottle::Delegate::~Delegate() {}
 
 URLLoaderThrottle::~URLLoaderThrottle() {}

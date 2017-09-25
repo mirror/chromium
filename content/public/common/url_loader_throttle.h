@@ -37,6 +37,11 @@ class CONTENT_EXPORT URLLoaderThrottle {
     // not deferred or has already been canceled.
     virtual void Resume() = 0;
 
+    // Pauses/resumes caching of response body if the resource is fetched from
+    // network and caching is supported.
+    virtual void PauseCachingResponseBody();
+    virtual void ResumeCachingResponseBody();
+
    protected:
     virtual ~Delegate();
   };
