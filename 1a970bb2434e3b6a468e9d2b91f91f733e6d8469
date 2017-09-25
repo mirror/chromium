@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92ae6c31_48441663",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-25T20:09:00Z",
+      "side": 1,
+      "message": "It should be - it\u0027ll just end up with the bubble anchored at the top of the screen. It\u0027s the same logic as is currently used: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/toolbar/toolbar_view.cc?sq\u003dpackage:chromium\u0026l\u003d309\n\nI\u0027m a little surprised that it doesn\u0027t check location_bar-\u003evisible() - perhaps that isn\u0027t needed for some reason?",
+      "parentUuid": "336fd57a_fd76d03d",
+      "range": {
+        "startLine": 1181,
+        "startChar": 29,
+        "endLine": 1181,
+        "endChar": 41
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05dd3d12_808bccde",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9e4a4e42_15f76f30",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-25T20:09:00Z",
+      "side": 1,
+      "message": "I am not sure. This code is moved basically verbatim from https://cs.chromium.org/chromium/src/chrome/browser/ui/views/toolbar/toolbar_view.cc?sq\u003dpackage:chromium\u0026l\u003d305 so I\u0027m hoping/assuming it was correct before :)",
+      "parentUuid": "05dd3d12_808bccde",
+      "range": {
+        "startLine": 1183,
+        "startChar": 32,
+        "endLine": 1183,
+        "endChar": 39
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1327e702_5c19ea72",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-20T19:46:19Z",
       "side": 1,
       "message": "Who removes this observer?",
+      "range": {
+        "startLine": 1192,
+        "startChar": 4,
+        "endLine": 1192,
+        "endChar": 47
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87df05e8_d76feedf",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-25T20:09:00Z",
+      "side": 1,
+      "message": "Awkwardly, it is removed in BubbleIconView in response to ::OnWidgetDestroying(): https://cs.chromium.org/chromium/src/chrome/browser/ui/views/location_bar/bubble_icon_view.cc?sq\u003dpackage:chromium\u0026l\u003d183",
+      "parentUuid": "1327e702_5c19ea72",
       "range": {
         "startLine": 1192,
         "startChar": 4,
