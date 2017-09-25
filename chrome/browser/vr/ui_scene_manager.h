@@ -111,6 +111,7 @@ class UiSceneManager {
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnWebVrFrameAvailable();
   void OnWebVrTimedOut();
+  void OnSplashScreenHidden(TransientElementHideReason);
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
 
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
@@ -163,6 +164,7 @@ class UiSceneManager {
   TransientElement* exclusive_screen_toast_transient_parent_ = nullptr;
   TransientElement* exclusive_screen_toast_viewport_aware_transient_parent_ =
       nullptr;
+  ShowUntilSignalTransientElement* splash_screen_transient_parent_ = nullptr;
   ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
