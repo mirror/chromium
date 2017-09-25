@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b3ec8c_ad9e5904",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T16:53:38Z",
+      "side": 1,
+      "message": "It\u0027s a little unclear what you mean here, maybe \"The |logical_tile_size| is the |container_size| without applying subpixel snapping.\"\n\nAlso, you also pass in an empty size in a lot of places. You should at least comment that this can be empty, though it\u0027s not really clear what this means - i.e. it would be nice if we always had a size but perhaps this is something that can wait for schenney\u0027s refactoring to pass through the container size as a float. Maybe leave a TODO about the empty values.",
+      "revId": "cd2310879836936b4235cbbb3ed8c5cf313aa924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
