@@ -178,7 +178,7 @@ class BleScannerTest : public testing::Test {
     last_discovery_error_callback_.Reset();
 
     mock_adapter_ =
-        make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
+        base::MakeRefCounted<NiceMock<device::MockBluetoothAdapter>>();
     ON_CALL(*mock_adapter_, StartDiscoverySession(_, _))
         .WillByDefault(
             Invoke(this, &BleScannerTest::SaveStartDiscoverySessionArgs));
