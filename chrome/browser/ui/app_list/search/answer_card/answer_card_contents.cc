@@ -16,8 +16,6 @@ AnswerCardContents::~AnswerCardContents() {
 }
 
 void AnswerCardContents::SetDelegate(Delegate* delegate) {
-  DCHECK(delegate);
-  DCHECK(!delegate_);
   delegate_ = delegate;
 }
 
