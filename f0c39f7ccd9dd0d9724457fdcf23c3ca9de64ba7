@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6827df09_acf467c0",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-25T22:22:06Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/683154 removes these unused SeekAhead* methods from both SBRByPts and ByDts.",
+      "revId": "f0c39f7ccd9dd0d9724457fdcf23c3ca9de64ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6bd62d_4e935969",
         "filename": "media/filters/source_buffer_range_by_pts.cc",
         "patchSetId": 6
