@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dea5f67d_fa64a422",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T19:22:26Z",
+      "side": 1,
+      "message": "meaning the prefs file in this path will contain more than just HSP? (Given the name of the variable, it seems pretty HSP specific?)",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49885c91_3c605ecf",
         "filename": "chrome/common/chrome_constants.cc",
         "patchSetId": 8
@@ -71,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "66955434_a721106d",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T19:22:26Z",
+      "side": 1,
+      "message": "Ah, I see. That makes sense.",
+      "parentUuid": "88b42bd5_b7005482",
+      "range": {
+        "startLine": 261,
+        "startChar": 20,
+        "endLine": 261,
+        "endChar": 40
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5440b9d_0a8b21fa",
         "filename": "content/network/network_context_unittest.cc",
         "patchSetId": 8
@@ -87,6 +134,52 @@
         "startChar": 20,
         "endLine": 421,
         "endChar": 43
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43266d63_02762127",
+        "filename": "net/http/http_server_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T19:22:26Z",
+      "side": 1,
+      "message": "Interesting! Does the prefs thread do the actual file i/o? I understood that the net thread never did file i/o.",
+      "range": {
+        "startLine": 66,
+        "startChar": 61,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61767ac_4a6efb7e",
+        "filename": "net/http/http_server_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-25T19:22:26Z",
+      "side": 1,
+      "message": "I\u0027m not usually a big fan of \"ForTesting\" methods because that means the test isn\u0027t testing the public API. This sometimes implies that the class being tested has become too large and should be split into smaller more testable pieces. Of course, we\u0027re already doing FRIEND_TEST_ALL_PREFIXES() in this class, so perhaps that ship has sailed? If there\u0027s not obvious way to do without this method, how \u0027bout a TODO?",
+      "range": {
+        "startLine": 136,
+        "startChar": 31,
+        "endLine": 136,
+        "endChar": 0
       },
       "revId": "9848f4f0dec635c6fe8d0db03591332693e4462b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
