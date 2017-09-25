@@ -70,6 +70,24 @@
       "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cfc5cd_4cb612ad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57453,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2017-09-25T21:08:11Z",
+      "side": 1,
+      "message": "Well I wasn\u0027t sure about the 9+ bucket myself because a standard histogram has an overflow bucket anyway.  Also I doubt that we\u0027ll ever get that high, even in a jetstream device.\n\nBut the behavior of log-scale buckets with integer granularity is sufficiently confusing that I didn\u0027t want to think about it.  (For instance, 10 buckets in the range 0-9000 are unlikely to scale linearly to 10 buckets in the range 0-9).",
+      "parentUuid": "5138c334_f6dbe4df",
+      "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
