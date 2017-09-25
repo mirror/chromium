@@ -226,7 +226,7 @@ void LayerTestCommon::LayerImplTest::AppendSurfaceQuadsWithOcclusion(
       Occlusion(gfx::Transform(), SimpleEnclosedRegion(occluded),
                 SimpleEnclosedRegion()));
   surface_impl->AppendQuads(resource_provider()->default_resource_type() ==
-                                    ResourceProvider::RESOURCE_TYPE_BITMAP
+                                    viz::RemotableResourceType::kBitmap
                                 ? DRAW_MODE_SOFTWARE
                                 : DRAW_MODE_HARDWARE,
                             render_pass_.get(), &data);
