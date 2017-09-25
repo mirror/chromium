@@ -28,6 +28,7 @@ using VirtualTimePolicy = blink::WebViewScheduler::VirtualTimePolicy;
 
 namespace blink {
 namespace scheduler {
+namespace web_view_scheduler_impl_unittest {  // Because of test similarities
 
 class WebViewSchedulerImplTest : public ::testing::Test {
  public:
@@ -897,5 +898,6 @@ TEST_F(WebViewSchedulerImplTest, OpenWebSocketExemptsFromBudgetThrottling) {
   base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
 }
 
+}  // namespace web_view_scheduler_impl_unittest
 }  // namespace scheduler
 }  // namespace blink

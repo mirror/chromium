@@ -45,6 +45,7 @@ using blink::scheduler::internal::EnqueueOrder;
 
 namespace blink {
 namespace scheduler {
+namespace task_queue_manager_unittest {  // Because of test similarities
 
 class TaskQueueManagerForTest : public TaskQueueManager {
  public:
@@ -3009,5 +3010,6 @@ TEST_F(TaskQueueManagerTest, ProcessTasksWithTaskTimeObservers) {
   EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4, 5, 6, 7, 8));
 }
 
+}  // namespace task_queue_manager_unittest
 }  // namespace scheduler
 }  // namespace blink
