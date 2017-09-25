@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "436c1a26_5fbda53a",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T01:49:11Z",
+      "side": 1,
+      "message": "Optional: \u003d default?",
+      "revId": "b8bbb7dfe9ae2c0577167d9860cd4b439fe0141a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdad88a4_07c7d49e",
+        "filename": "components/download/internal/logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T01:49:11Z",
+      "side": 1,
+      "message": "Optional: \"// Intentional fallthrough.\"?",
+      "revId": "b8bbb7dfe9ae2c0577167d9860cd4b439fe0141a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
