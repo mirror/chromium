@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "bdecd7d1_c160226d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-25T16:33:17Z",
+      "side": 1,
+      "message": "It\u0027s strange to see ClientLeft/ClientTop and flipped blocks checks in PaintPropertyTreeBuilder because these calculations are typically handled during layout. Is there a function that provides this value already computed? Maybe FlipForWritingMode? Do you know why we use VerticalScrollbarWidth instead of ScrollbarLogicalWidth?",
+      "revId": "d4fee7f5bb314f2cd338af3d357df533d93ed26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ed8d4b8_675c5e09",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
         "patchSetId": 6
