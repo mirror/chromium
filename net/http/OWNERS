@@ -1,2 +1,6 @@
 per-file transport_security_state_static.*=lgarron@chromium.org
 per-file transport_security_state_static.*=palmer@chromium.org
+
+# TODO(crbug.com/767108): Decouple unit tests on CrOS from real data.
+per-file transport_security_state_static_unittest0.json=lgarron@chromium.org
+per-file transport_security_state_static_unittest0.json=palmer@chromium.org
