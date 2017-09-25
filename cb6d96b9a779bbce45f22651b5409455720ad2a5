@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e88bf60_9aea45e1",
+        "filename": "mojo/public/cpp/system/data_pipe_string_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-25T20:21:55Z",
+      "side": 1,
+      "message": "Do we need data_?\nShould this line be factored out into a UpdateDataViewAfterWrite method (that would be called from l127 as well)?",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "cb6d96b9a779bbce45f22651b5409455720ad2a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
