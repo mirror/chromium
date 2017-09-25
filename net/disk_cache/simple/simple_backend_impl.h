@@ -49,6 +49,7 @@ namespace disk_cache {
 
 class BackendCleanupTracker;
 class SimpleEntryImpl;
+class SimpleFileTracker;
 class SimpleIndex;
 
 class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
@@ -219,6 +220,8 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
 
   // We want this destroyed after every other field.
   scoped_refptr<BackendCleanupTracker> cleanup_tracker_;
+
+  SimpleFileTracker* const file_tracker_;
 
   const base::FilePath path_;
   const net::CacheType cache_type_;
