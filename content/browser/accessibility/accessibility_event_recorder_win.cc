@@ -74,7 +74,10 @@ std::string AccessibilityEventToStringUTF8(int32_t event_id) {
 
 class AccessibilityEventRecorderWin : public AccessibilityEventRecorder {
  public:
-  explicit AccessibilityEventRecorderWin(BrowserAccessibilityManager* manager);
+  explicit AccessibilityEventRecorderWin(BrowserAccessibilityManager* manager,
+                                         int pid);
+  explicit AccessibilityEventRecorderWin();  // For standalone event recorder
+
   ~AccessibilityEventRecorderWin() override;
 
   // Callback registered by SetWinEventHook. Just calls OnWinEventHook.
@@ -114,8 +117,9 @@ AccessibilityEventRecorderWin::instance_ = nullptr;
 
 // static
 AccessibilityEventRecorder* AccessibilityEventRecorder::Create(
-    BrowserAccessibilityManager* manager) {
-  return new AccessibilityEventRecorderWin(manager);
+    BrowserAccessibilityManager* manager,
+    int pid) {
+  return new AccessibilityEventRecorderWin(manager, pid);
 }
 
 // static
@@ -134,19 +138,21 @@ void CALLBACK AccessibilityEventRecorderWin::WinEventHookThunk(
 }
 
 AccessibilityEventRecorderWin::AccessibilityEventRecorderWin(
-    BrowserAccessibilityManager* manager)
-    : AccessibilityEventRecorder(manager) {
+    BrowserAccessibilityManager* manager,
+    int pid)
+    : AccessibilityEventRecorder(manager, pid) {
   CHECK(!instance_) << "There can be only one instance of"
                     << " WinAccessibilityEventMonitor at a time.";
   instance_ = this;
-  win_event_hook_handle_ = SetWinEventHook(
-      EVENT_MIN,
-      EVENT_MAX,
-      GetModuleHandle(NULL),
-      &AccessibilityEventRecorderWin::WinEventHookThunk,
-      GetCurrentProcessId(),
-      0,  // Hook all threads
-      WINEVENT_INCONTEXT);
+  // For now, just use out of context events when running as a utility to watch
+  // events (no BrowserAccessibilityManager), because otherwise Chrome events
+  // are not getting reported.
+  int context = manager ? WINEVENT_INCONTEXT : WINEVENT_OUTOFCONTEXT;
+  win_event_hook_handle_ =
+      SetWinEventHook(EVENT_MIN, EVENT_MAX, GetModuleHandle(NULL),
+                      &AccessibilityEventRecorderWin::WinEventHookThunk, pid,
+                      0,  // Hook all threads
+                      context);
   CHECK(win_event_hook_handle_);
 }
 
@@ -268,6 +274,7 @@ void AccessibilityEventRecorderWin::OnWinEventHook(
   log = base::UTF16ToUTF8(
       base::CollapseWhitespace(base::UTF8ToUTF16(log), true));
   event_logs_.push_back(log);
+  OnEvent(log);
 }
 
 HRESULT AccessibilityEventRecorderWin::AccessibleObjectFromWindowWrapper(
@@ -275,6 +282,9 @@ HRESULT AccessibilityEventRecorderWin::AccessibleObjectFromWindowWrapper(
   HRESULT hr = ::AccessibleObjectFromWindow(hwnd, dw_id, riid, ppv_object);
   if (SUCCEEDED(hr))
     return hr;
+
+  if (!manager_)
+    return E_FAIL;
 
   // The above call to ::AccessibleObjectFromWindow fails for unknown
   // reasons every once in a while on the bots.  Work around it by grabbing
