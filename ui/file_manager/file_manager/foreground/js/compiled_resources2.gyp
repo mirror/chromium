@@ -370,6 +370,7 @@
         'directory_model',
         'file_selection',
         'naming_controller',
+        'spinner_controller',
         'task_controller',
         'ui/compiled_resources2.gyp:file_manager_ui',
         'volume_manager_wrapper',

@@ -20,12 +20,13 @@
  * @param {!NamingController} namingController
  * @param {!AppStateController} appStateController
  * @param {!TaskController} taskController
+ * @param {!SpinnerController} spinnerController
  * @constructor
  * @struct
  */
 function MainWindowComponent(
     dialogType, ui, volumeManager, directoryModel, fileFilter, selectionHandler,
-    namingController, appStateController, taskController) {
+    namingController, appStateController, taskController, spinnerController) {
   /**
    * @type {DialogType}
    * @const
@@ -90,6 +91,13 @@ function MainWindowComponent(
   this.taskController_ = taskController;
 
   /**
+   * @type {!SpinnerController}
+   * @const
+   * @private
+   */
+  this.spinnerController_ = spinnerController;
+
+  /**
    * True while a user is pressing <Tab>.
    * This is used for identifying the trigger causing the filelist to
    * be focused.
@@ -137,6 +145,7 @@ function MainWindowComponent(
   this.onDriveConnectionChanged_();
   document.addEventListener('keydown', this.onKeyDown_.bind(this));
   document.addEventListener('keyup', this.onKeyUp_.bind(this));
+  window.addEventListener('focus', this.onWindowFocus_.bind(this));
 
   /**
    * Whether to allow touch-specific interaction.
@@ -478,4 +487,17 @@ MainWindowComponent.prototype.onDriveConnectionChanged_ = function() {
   this.ui_.dialogContainer.setAttribute('connection', connection.type);
   this.ui_.shareDialog.hideWithResult(ShareDialog.Result.NETWORK_ERROR);
   this.ui_.suggestAppsDialog.onDriveConnectionChanged(connection.type);
+};
+
+/**
+ * @private
+ */
+MainWindowComponent.prototype.onWindowFocus_ = function() {
+  // When the window have got a focus while the current directory is Recent
+  // root, reload the contents.
+  if (this.directoryModel_.getCurrentRootType() ===
+      VolumeManagerCommon.RootType.RECENT) {
+    this.directoryModel_.rescan(true /* refresh */);
+    this.spinnerController_.blink();
+  }
 };

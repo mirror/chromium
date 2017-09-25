@@ -622,15 +622,10 @@ FileManager.prototype = /** @struct */ {
     assert(this.appStateController_);
     assert(this.taskController_);
     this.mainWindowComponent_ = new MainWindowComponent(
-        this.dialogType,
-        this.ui_,
-        this.volumeManager_,
-        this.directoryModel_,
-        this.fileFilter_,
-        this.selectionHandler_,
-        this.namingController_,
-        this.appStateController_,
-        this.taskController_);
+        this.dialogType, this.ui_, this.volumeManager_, this.directoryModel_,
+        this.fileFilter_, this.selectionHandler_, this.namingController_,
+        this.appStateController_, this.taskController_,
+        this.spinnerController_);
 
     this.initDataTransferOperations_();
 
