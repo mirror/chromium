@@ -78,6 +78,9 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
 
   void OnConnectionUpdated();
 
+  // Return a number of child web frame schedulers for this WebViewScheduler.
+  size_t FrameCount() const;
+
   void AsValueInto(base::trace_event::TracedValue* state) const;
 
  private:
