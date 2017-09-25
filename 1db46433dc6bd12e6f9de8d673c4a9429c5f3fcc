@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af6e74e_3d209103",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "s/our/the VR UI\u0027s view of/ ?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4434aa5c_276a2fd6",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Would this class be better as a struct with public data?  Do the getters and setters actually add value at this point?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5b8172_3e5f703b",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Will there only ever be one Model?  UiModel?  Or do you want vr::Model to be the \"big one\"?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a0bf0a_3d0fd409",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Do you want to put in a comment that describes all the Set..() methods as a block of functions that should disappear?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9fbf1a_77f6b7a5",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Oh, so sneaky.  model_!",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10575295_9b21b7d7",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Starting with this method, the functions will stick around for a while.  Probably should have blank lines between the methods.",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8c3788_2659449e",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Can drop this comment if you wish, it\u0027s done.",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0649ae_58383286",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Out of curiosity - what does the bar look like with a tiny amount of progress?  Ie, rounded corner shader on a bar that\u0027s really thin..  does it look okay?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c74fd3_90fd2341",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Why not just have scene_manager keep model_ and not pass it here?  And should it be const Model*?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6131d635_c7b7955a",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "Check translation too?  Or is this just a spot check?",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04a22a8_7c69d361",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T21:35:33Z",
+      "side": 1,
+      "message": "I wish I could comment on the bots.  They are RED Ian!  ;)",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
