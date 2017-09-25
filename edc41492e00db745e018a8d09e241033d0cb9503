@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dea24311_344817cd",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-25T09:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b9c3a5_bbd51806",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c98b9c_57453b4b",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aa840b4c_a8dce201",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-25T09:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c98b9c_57453b4b",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d0475d5_a03efcf7",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-25T08:45:55Z",
       "side": 1,
       "message": "If I understand correctly, there are two ways to disable this request:\n- Disabling service workers completely for a site or all sites.\n- Using URLBlacklist to disable the request for a specific URL.\n\nSo maybe the prose could be:\n\n\"Chrome would be unable to use service workers if this feature is disabled, which could result in a degraded experience for websites that register a service worker. Using either URLBlacklist or URLWhitelist policies (or a combination of both) limits the scope of these requests. Blocking the request via URLBlacklist can result in a degraded experience for a website that uses service worker with navigation preload.\"",
+      "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec695bab_41182bd6",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-25T09:05:52Z",
+      "side": 1,
+      "message": "I added a sentence reminding that cookies will also be disabled, is that correct?\nAlso omitted the last sentence as Blacklist or whitelist will totally prevent going to those websites and not just degrading them. Is it OK?",
+      "parentUuid": "1d0475d5_a03efcf7",
       "revId": "edc41492e00db745e018a8d09e241033d0cb9503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
