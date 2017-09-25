@@ -16,6 +16,40 @@
       "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05143b30_0183809b",
+        "filename": "third_party/WebKit/Source/core/css/RuleFeature.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-25T11:43:08Z",
+      "side": 1,
+      "message": "It\u0027s possible to SetHasBeforeOrAfter() on the lazy state piercing through the StyleRule/LazyParser as part of this operation. Then we wouldn\u0027t need the extra pass over the selectors in ConsumeStyleRule.",
+      "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f86a55_f160dc37",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-25T11:43:08Z",
+      "side": 1,
+      "message": "Did this method need to change visibility? I can\u0027t see any new calls.",
+      "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
