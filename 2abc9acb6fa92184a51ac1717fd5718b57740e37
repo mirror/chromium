@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5676d23_13250b08",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T18:54:06Z",
+      "side": 1,
+      "message": "nit: Extra parentheses here and in lines 1274, 1277, 1280, 1287.",
+      "range": {
+        "startLine": 1271,
+        "startChar": 5,
+        "endLine": 1271,
+        "endChar": 6
+      },
+      "revId": "2abc9acb6fa92184a51ac1717fd5718b57740e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

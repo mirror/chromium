@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "7fae0c04_e2a72fa5",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-25T18:54:06Z",
+      "side": 1,
+      "message": "Isn\u0027t it the part of the bracketed expression? The one that starts at \"str !\u003d \u0027google_cloud\u0027\". Then \"for\" should be indented with 4 additional spaces to align with it.\n\nAs for the rule - I believe, we are only provided with some examples here: https://google.github.io/styleguide/pyguide.html?showone\u003dLine_length#Line_length",
+      "parentUuid": "f3c4ab16_10a1fe6e",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 12
+      },
+      "revId": "2b956f7fed166f9aa727e96954ee146c2bea1b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c2cffff_d3d1e4ed",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 4
