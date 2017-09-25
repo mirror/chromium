@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a666804_e7b7c4a0",
+        "filename": "content/common/sandbox_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-25T22:25:40Z",
+      "side": 1,
+      "message": "nacl processes self-report as SANDBOX_TYPE_PPAPI, so this would be a behavior change here.",
+      "range": {
+        "startLine": 807,
+        "startChar": 36,
+        "endLine": 807,
+        "endChar": 54
+      },
+      "revId": "fdd680435e84fffc85ed5faabb60b63e22f2f9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
