@@ -4,7 +4,17 @@
 
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
+#include <unordered_map>
+
 #include "components/previews/core/previews_experiments.h"
+
+namespace {
+
+const char kAmpRedirectionPreviews[] = "ampRedirectionPreview";
+const char kClientLoFi[] = "clientLoFi";
+const char kOfflinePreviews[] = "offlinePreviews";
+
+}  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     mojom::InterventionsInternalsPageHandlerRequest request)
@@ -14,9 +24,12 @@ InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {
-  // TODO(thanhdle): change enable to a dictionary with all previews mode
-  // status.
-  bool enabled = previews::params::IsOfflinePreviewsEnabled();
+  std::unordered_map<std::string, bool> statuses;
 
-  std::move(callback).Run(enabled);
+  statuses[kAmpRedirectionPreviews] =
+      previews::params::IsAMPRedirectionPreviewEnabled();
+  statuses[kClientLoFi] = previews::params::IsClientLoFiEnabled();
+  statuses[kOfflinePreviews] = previews::params::IsOfflinePreviewsEnabled();
+
+  std::move(callback).Run(statuses);
 }
