@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "46b1b73f_9bcbcc87",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "Looking with fresh eyes today, it\u0027s a bit ambiguous what \"request\" is. Let\u0027s revise to \"URL request\".",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee78be9_76cfb3b6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "is it possible to do DCHECK(IsMojoBlobsEnabled()) here? You might need to use ScopedFeatureList in the unittest to turn on NetworkService or MojoBlobs.",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "744c7436_6325cfab",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 7
@@ -13,6 +47,30 @@
       "writtenOn": "2017-09-25T02:52:06Z",
       "side": 1,
       "message": "do you know the types of elements here? We have some constraints. For example, file or filesystem type elements MUST have a size.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 47
+      },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f72b4d_d7e91671",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "I don\u0027t know what is guaranteed about the element types. It\u0027s anything that could be in a generic ResourceRequest handled by the browser.\n\nIf the size isn\u0027t here, will we DCHECK or crash? Or can we detect it later with BlobDataHandle::IsBroken()?",
+      "parentUuid": "744c7436_6325cfab",
       "range": {
         "startLine": 230,
         "startChar": 0,
@@ -48,6 +106,47 @@
     },
     {
       "key": {
+        "uuid": "54c569af_6ad90653",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "I\u0027m OK with doing a CHECK(!IsBroken()) for now with a TODO to handle gracefully (should probably result in a network error).",
+      "parentUuid": "243e44bd_93182a5c",
+      "range": {
+        "startLine": 233,
+        "startChar": 43,
+        "endLine": 233,
+        "endChar": 72
+      },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e0f4b4_f038e3c7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "remove line 235 for brevity",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3589f09f_d6bb5feb",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
         "patchSetId": 7
@@ -65,6 +164,142 @@
         "endLine": 28,
         "endChar": 20
       },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f7ada0_912e78f7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "let\u0027s just make this function void and take an std::string* out_string\n\nthen you can use ASSERT_TRUE(request_body_blob_)",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d77b36_1890a5d6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "// Test that the request body is passed to the fetch event.",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e02660c_07100c49",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "// Create a request with a body.",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b68fda_6b61b672",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "This test doesn\u0027t use the response to the fetch event, so just have the service worker do simple network fallback.",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de354f2a_fd8ba517",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "// Verify that the request body was passed to the fetch event.",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79520130_866e6cb3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "change |received| to |body|",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314776e2_0a7e6af5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "don\u0027t need this line, the next line will safely fail if received is empty",
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b24825_195b7d12",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T03:21:52Z",
+      "side": 1,
+      "message": "could we add DCHECK(IsMojoBlobsEnabled()) here, with a comment that these fields aren\u0027t used in MojoBlobs, and that the caller is responsible for setting |blob| if needed. The DCHECK might require ScopedFeatureList in the unittests that use this file.",
       "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
