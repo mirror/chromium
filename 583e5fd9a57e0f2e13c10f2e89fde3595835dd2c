@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204e5867_04bc6691",
+        "filename": "gpu/command_buffer/service/client_service_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-25T22:25:18Z",
+      "side": 1,
+      "message": "This is very confusing. \"Invalid\" here means that the client ID has already been allocated, meaning that it\u0027s \"valid\" for use (except for Gen* commands), at least by my intuition.\n\nI think this should be named \"IsClientIDAllocated\" or something similar.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "583e5fd9a57e0f2e13c10f2e89fde3595835dd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
