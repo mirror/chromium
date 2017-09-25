@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea1f5ce_bee0cd86",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-25T20:50:55Z",
+      "side": 1,
+      "message": "jochen: Is it safe to assume for Linux builds, this is going to be true in general? i.e. It should be safe to remove line 158/161.",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
