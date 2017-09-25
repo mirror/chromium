@@ -34,6 +34,24 @@
       "revId": "1f115d8f73cba22e4683fbd0b14cbadef5c715ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294f30e8_8795a00d",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-25T17:32:19Z",
+      "side": 1,
+      "message": "Added todo",
+      "parentUuid": "069f6658_0085ce4f",
+      "revId": "1f115d8f73cba22e4683fbd0b14cbadef5c715ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
