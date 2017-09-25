@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d536677_8384b87a",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 0,
+      "message": "Leave this comment please. Maybe change it to \"Invalidated only on TileManager destruction\"",
+      "range": {
+        "startLine": 433,
+        "startChar": 5,
+        "endLine": 433,
+        "endChar": 73
+      },
+      "revId": "bd43becf4d6ee8a674671246693e6984bda7402d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

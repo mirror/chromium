@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6a5d8a_772eb1ef",
+        "filename": "cc/raster/raster_buffer_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "This is a void function...",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc7829c_36b6ddf1",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "nit: required_for_activation_tasks_completed",
+      "range": {
+        "startLine": 455,
+        "startChar": 35,
+        "endLine": 455,
+        "endChar": 45
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1aabacb_feed3a95",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer keeping the function name as is, since the fact that these tiles are coming from a raster queue is an implementation detail. This is really are all required tiles ready (given the type), right?",
+      "range": {
+        "startLine": 1275,
+        "startChar": 19,
+        "endLine": 1275,
+        "endChar": 32
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bd19bc_9d7b3f46",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "What resets this if the resources are already ready (according to the comment the callback isn\u0027t called in that case).",
+      "range": {
+        "startLine": 1562,
+        "startChar": 5,
+        "endLine": 1562,
+        "endChar": 65
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d3c6a5_1d2f37ba",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "Should we schedule a signals check notifier here if we set one of the signals to true?",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c641ab_dd6ddfe2",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "Might as well do this at the callsites and remove the reset function",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8701fd_0755f00d",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "nit: Maybe make these bitfields and initialize the ctor instead? Same in terms of code complexity, but saves some memory.",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495e1874_2aaab225",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "The variable names are getting pretty long, but I\u0027m not sure what a shorter version would be. If you can think of something that would be great.",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
