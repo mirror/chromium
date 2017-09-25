@@ -14,6 +14,15 @@ DEFINE_TRACE(GeolocationWatchers) {
   visitor->Trace(notifier_to_id_map_);
 }
 
+DEFINE_TRACE_WRAPPERS(GeolocationWatchers) {
+  for (const auto& notifier : id_to_notifier_map_.Values())
+    visitor->TraceWrappers(notifier);
+  // |notifier_to_id_map_| is HeapHashMap whose order of pairs of key and value
+  // are reverse of those of |id_to_notifier_map| but its substances are the
+  // same as |id_to_notifier_map_|. So we don't have to use TraceWrapper for
+  // |id_notifier_map_|.
+}
+
 bool GeolocationWatchers::Add(int id, GeoNotifier* notifier) {
   DCHECK_GT(id, 0);
   if (!id_to_notifier_map_.insert(id, notifier).is_new_entry)
