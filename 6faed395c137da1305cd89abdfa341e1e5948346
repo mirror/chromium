@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6927cabf_6f9f4c58",
+        "filename": "chrome/browser/media/webrtc/desktop_capture_access_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-25T22:29:47Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. Should be either capture_type !\u003d 0 or source_type !\u003d SOURCE_NONE.",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f2ca55_50db06cb",
+        "filename": "content/public/browser/desktop_media_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-25T22:29:47Z",
+      "side": 1,
+      "message": "nit: I think this method can be written in one line as\n capture \u003d (capture \u0026 ~CAPTURE_VIDEO) | (capture ? CAPTURE_VIDEO : 0);\nAnd then it can be inlined in the header.\nSame for set_audio_capture()",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 16
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e10664_5470cf93",
+        "filename": "content/public/browser/desktop_media_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-25T22:29:47Z",
+      "side": 1,
+      "message": "Do we need these? Maybe just use the right constructor that takes capture_type?\n\nnot for this CL: it would be great to make DesktopMediaID an immutable value class instead of a struct. Then it will be possible to enforce that it only takes sensible values (e.g. source_type \u003d SOURCE_NONE, capture_type \u003d CAPTURE_VIDEO makes no sense).",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed8d1ef_3db8d9c0",
+        "filename": "content/public/browser/desktop_media_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-25T22:29:47Z",
+      "side": 1,
+      "message": "is this used anywhere? As far as I can tell DesktopCaptureAccessHandler will create video data stream even when this flag isn\u0027t set.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
