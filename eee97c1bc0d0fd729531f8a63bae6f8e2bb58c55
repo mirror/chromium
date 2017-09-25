@@ -328,6 +328,30 @@
       "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7124f850_b9edb093",
+        "filename": "ios/web_view/internal/signin/web_view_gaia_cookie_manager_service_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T19:42:31Z",
+      "side": 1,
+      "message": "Currently we only need this to add the primary account in the GAIA cookies - here https://cs.chromium.org/chromium/src/components/signin/core/browser/signin_manager.cc?rcl\u003d6a3a481d4565118dff40e72584de525394c68a67\u0026l\u003d367\n\nIn your case, IOSSigninClient::ShouldMergeSigninCredentialsIntoCookieJar returns false, so it should be fine to pass nullptr there. However, we may need a unit test in this case to make sure we do not end up with crash if someone decides to use the cookie manager somewhere else in the SigninManager.\n\nI think I\u0027ll let you decide what you want to do here.",
+      "parentUuid": "8f230f23_dd89c91d",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
