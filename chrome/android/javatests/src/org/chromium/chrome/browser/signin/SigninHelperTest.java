@@ -139,7 +139,7 @@ public class SigninHelperTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testLoopedAccountRename() {
+    public void testLoopedAccountRename() throws Exception {
         setSignedInAccountName("A");
         mEventChecker.insertRenameEvent("Z", "Y"); // Unrelated.
         mEventChecker.insertRenameEvent("A", "B");
@@ -149,7 +149,7 @@ public class SigninHelperTest {
         mEventChecker.insertRenameEvent("D", "A"); // Looped.
         Account account = AccountManagerFacade.createAccountFromName("D");
         AccountHolder accountHolder = AccountHolder.builder(account).build();
-        mAccountManager.addAccountHolderExplicitly(accountHolder);
+        mAccountManager.addAccountHolderBlocking(accountHolder);
         SigninHelper.updateAccountRenameData(mContext, mEventChecker);
         Assert.assertEquals("D", getNewSignedInAccountName());
     }

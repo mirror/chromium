@@ -15,6 +15,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
@@ -48,6 +49,7 @@ public class ChromeSigninUtils {
         mAccountManager = AccountManager.get(mTargetContext);
         mFakeAccountManagerDelegate = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
+        AccountManagerFacade.overrideAccountManagerFacadeForTests(mFakeAccountManagerDelegate);
     }
 
     /**
@@ -69,22 +71,22 @@ public class ChromeSigninUtils {
     /**
      * Adds a fake account to the OS.
      */
-    public void addFakeAccountToOs(String username, String password) {
+    public void addFakeAccountToOs(String username, String password) throws Exception {
         if (TextUtils.isEmpty(username)) {
             throw new IllegalArgumentException("ERROR: must specify account");
         }
 
         Account account = new Account(username, GOOGLE_ACCOUNT_TYPE);
         AccountHolder accountHolder = AccountHolder.builder(account).password(password).build();
-        mFakeAccountManagerDelegate.addAccountHolderExplicitly(accountHolder);
+        mFakeAccountManagerDelegate.addAccountHolderBlocking(accountHolder);
     }
 
     /**
      * Removes all fake accounts from the OS.
      */
-    public void removeAllFakeAccountsFromOs() {
+    public void removeAllFakeAccountsFromOs() throws Exception {
         for (Account acct : mFakeAccountManagerDelegate.getAccountsSyncNoThrow()) {
-            mFakeAccountManagerDelegate.removeAccountHolderExplicitly(
+            mFakeAccountManagerDelegate.removeAccountHolderBlocking(
                     AccountHolder.builder(acct).build());
         }
     }

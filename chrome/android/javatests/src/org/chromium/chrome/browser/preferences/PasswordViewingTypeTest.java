@@ -66,14 +66,14 @@ public class PasswordViewingTypeTest {
         mActivityTestRule.loadNativeLibraryAndInitBrowserProcess();
     }
 
-    private void setupTestAccount() {
+    private void setupTestAccount() throws Exception {
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
         mAccount = AccountManagerFacade.createAccountFromName("account@example.com");
         AccountHolder.Builder accountHolder =
                 AccountHolder.builder(mAccount).password("password").alwaysAccept(true);
-        mAccountManager.addAccountHolderExplicitly(accountHolder.build());
+        mAccountManager.addAccountHolderBlocking(accountHolder.build());
     }
 
     /**
