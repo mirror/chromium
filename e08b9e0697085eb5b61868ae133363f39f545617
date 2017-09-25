@@ -34,6 +34,24 @@
       "revId": "e08b9e0697085eb5b61868ae133363f39f545617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5a3cde_3efac4d5",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-25T19:32:32Z",
+      "side": 1,
+      "message": "Ack. I see. That makes sense. Thanks.",
+      "parentUuid": "a991edfd_d5da7863",
+      "revId": "e08b9e0697085eb5b61868ae133363f39f545617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
