@@ -230,6 +230,10 @@ class PersonalDataManager : public KeyedService,
       bool field_is_autofilled,
       const std::vector<ServerFieldType>& other_field_types);
 
+  // Tries to delete disused addresses once per major version if the
+  // feature is enabled.
+  bool DeleteDisusedAddresses();
+
   // Returns the credit cards to suggest to the user. Those have been deduped
   // and ordered by frecency with the expired cards put at the end of the
   // vector.
@@ -368,6 +372,8 @@ class PersonalDataManager : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(
       PersonalDataManagerTest,
       DeleteDisusedCreditCards_OnlyDeleteExpiredDisusedLocalCards);
+  FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
+                           DeleteDisusedAddresses_DoNothingWhenDisabled);
 
   friend class autofill::AutofillInteractiveTest;
   friend class autofill::AutofillTest;
@@ -593,6 +599,10 @@ class PersonalDataManager : public KeyedService,
   std::string MergeServerAddressesIntoProfiles(
       const AutofillProfile& server_address,
       std::vector<AutofillProfile>* existing_profiles);
+
+  void RemoveAutofillProfileByGUID(const std::string& guid);
+
+  bool IsCreditCardDeletable(CreditCard* card);
 
   // If the AutofillCreateDataForTest feature is enabled, this helper creates
   // autofill address data that would otherwise be difficult to create

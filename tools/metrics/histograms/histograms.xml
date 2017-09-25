@@ -4454,6 +4454,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Autofill.AddressesDeletedForDisuse">
+  <owner>wuandy@chromium.org</owner>
+  <summary>
+
+  </summary>
+</histogram>
+
 <histogram name="Autofill.AddressesSuppressedForDisuse">
   <owner>rogerm@chromium.org</owner>
   <summary>
