@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/process/launch.h"
 #include "base/task_scheduler/task_scheduler.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "services/service_manager/public/cpp/standalone_service/standalone_service.h"
 #include "services/service_manager/public/cpp/standalone_service/switches.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
@@ -56,6 +57,7 @@ int main(int argc, char** argv) {
 
   base::TaskScheduler::CreateAndStartWithDefaultParams("StandaloneService");
 
+  mojo::edk::Init();
   service_manager::RunStandaloneService(base::Bind(&RunServiceMain));
 
   base::TaskScheduler::GetInstance()->Shutdown();

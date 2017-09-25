@@ -73,8 +73,6 @@ void RunStandaloneService(const StandaloneServiceCallback& callback) {
     sandbox = InitializeSandbox();
 #endif
 
-  mojo::edk::Init();
-
   base::Thread io_thread("io_thread");
   io_thread.StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
