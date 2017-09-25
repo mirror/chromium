@@ -21,6 +21,7 @@
 #include "content/common/child_process_host_impl.h"
 #include "content/common/in_process_child_thread_params.h"
 #include "content/common/service_manager/child_connection.h"
+#include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/utility_process_host_client.h"
@@ -203,6 +204,10 @@ void UtilityProcessHostImpl::SetName(const base::string16& name) {
   name_ = name;
 }
 
+void UtilityProcessHostImpl::AddFilter(BrowserMessageFilter* filter) {
+  process_->AddFilter(filter);
+}
+
 bool UtilityProcessHostImpl::StartProcess() {
   if (started_)
     return true;
@@ -317,11 +322,8 @@ bool UtilityProcessHostImpl::OnMessageReceived(const IPC::Message& message) {
     return true;
 
   client_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(
-          base::IgnoreResult(&UtilityProcessHostClient::OnMessageReceived),
-          client_.get(), message));
-
+      FROM_HERE, base::BindOnce(&UtilityProcessHostClient::OnMessageReceived,
+                                client_, message));
   return true;
 }
 

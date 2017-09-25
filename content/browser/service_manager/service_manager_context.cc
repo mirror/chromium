@@ -19,6 +19,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
@@ -67,6 +68,10 @@
 #include "jni/ContentNfcDelegate_jni.h"
 #endif
 
+#if defined(OS_WIN)
+#include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
+#endif
+
 namespace content {
 
 namespace {
@@ -84,10 +89,16 @@ void StartServiceInUtilityProcess(
     service_manager::mojom::ConnectResult query_result,
     const std::string& sandbox_string) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  SandboxType sandbox_type = UtilitySandboxTypeFromString(sandbox_string);
+
   UtilityProcessHost* process_host =
       UtilityProcessHost::Create(nullptr, nullptr);
+#if defined(OS_WIN)
+  if (sandbox_type == SANDBOX_TYPE_PPAPI)
+    process_host->AddFilter(new DWriteFontProxyMessageFilter());
+#endif
   process_host->SetName(process_name);
-  process_host->SetSandboxType(UtilitySandboxTypeFromString(sandbox_string));
+  process_host->SetSandboxType(sandbox_type);
   process_host->Start();
 
   service_manager::mojom::ServiceFactoryPtr service_factory;
