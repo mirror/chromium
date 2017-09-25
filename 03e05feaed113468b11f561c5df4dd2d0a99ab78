@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86f43f8_43dc37b5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-25T15:17:06Z",
+      "side": 1,
+      "message": "nit:\n\n  // The homescreen is considered to be active if there are no active windows.",
+      "range": {
+        "startLine": 604,
+        "startChar": 2,
+        "endLine": 604,
+        "endChar": 69
+      },
+      "revId": "03e05feaed113468b11f561c5df4dd2d0a99ab78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bb79a9_13a55539",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-25T15:17:06Z",
+      "side": 1,
+      "message": "nit: IsHomescreenActive",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "03e05feaed113468b11f561c5df4dd2d0a99ab78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63393f48_873cf281",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-25T15:17:06Z",
+      "side": 1,
+      "message": "nit: homescreen_is_active",
+      "range": {
+        "startLine": 62,
+        "startChar": 54,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "03e05feaed113468b11f561c5df4dd2d0a99ab78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
