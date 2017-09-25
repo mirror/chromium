@@ -6,6 +6,8 @@
 # TEST SETUP
 # ==============================================================================
 
+import("//build/config/jumbo.gni")
+
 if (is_android) {
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
@@ -321,6 +323,27 @@ template("test") {
 
 # Test defaults.
 set_defaults("test") {
+  if (is_android) {
+    configs = default_shared_library_configs
+    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+    configs += [ "//build/config/android:hide_all_but_jni" ]
+  } else {
+    configs = default_executable_configs
+  }
+}
+
+# See documentation above by "internal_jumbo_target".
+template("jumbo_test") {
+  internal_jumbo_target(target_name) {
+    target_type = "test"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("jumbo_test") {
+  # This sets the default list of configs when the test target is
+  # used. This code is a clone of set_defaults for the ordinary
+  # "test" template.
   if (is_android) {
     configs = default_shared_library_configs
     configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
