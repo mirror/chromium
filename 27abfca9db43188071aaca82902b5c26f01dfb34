@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d912b5_6ed9d44b",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T22:32:33Z",
+      "side": 1,
+      "message": "Oh my... I wonder how many weird bugs this will uncover :-/",
+      "range": {
+        "startLine": 712,
+        "startChar": 16,
+        "endLine": 712,
+        "endChar": 19
+      },
+      "revId": "27abfca9db43188071aaca82902b5c26f01dfb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deafcf9b_c5f44ac2",
+        "filename": "docs/android_build_instructions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-25T22:32:33Z",
+      "side": 1,
+      "message": "This is great! Thanks!",
+      "revId": "27abfca9db43188071aaca82902b5c26f01dfb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
