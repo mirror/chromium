@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47c676ff_dc4e9a7f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "base::Optional should not be used for passing optional arguments. Pointers (or data types that support something equivalent to nullptr, such as Empty()) are always preferred for such cases. \n\nHowever, since the callback is an optional member of the class during the state of calibration, I am changing the member variable type to base::Optional\u003cCallback\u003e",
+      "parentUuid": "9c60d9bc_e7540ddd",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04775ebe_6640347a",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a9a7d844_0de2a7ca",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "Default parameters should not be used with Virtual methods or method overrides. However, it is not banned from the style guide.",
+      "parentUuid": "04775ebe_6640347a",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de54554d_b9f76490",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T23:01:52Z",
       "side": 1,
       "message": "CancelCalibration?\n\nTo me, stop doesn\u0027t indicate success or failure. Cancel indicates failure.",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2b5f0d_4cef6c66",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "s/CancelCalibration/StopCalibrationAndResetParams() \n\nCancel does not make complete sense since CompleteCalibration() also relies on it. This function  resets everything to the default state.",
+      "parentUuid": "de54554d_b9f76490",
       "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3dc9a7f5_56bfc834",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c55a37_eebed592",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be57f87f_342d3c1b",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed37ab34_1e147ee2",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "Both the terms are used by the API, so I feel its better to keep it consistent. \nChanging to enums.",
+      "parentUuid": "be57f87f_342d3c1b",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6229a2db_950c5a8b",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb6a34a6_fe3776d7",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ca2b52_3e117bf4",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 10
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6a08c733_016ce0f1",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ca2b52_3e117bf4",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f620d2be_f3905a0d",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6357f3c7_15fc7280",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-25T01:03:58Z",
+      "side": 1,
+      "message": "This is not a virtual method. Default parameters can be used, specially since it is unavoidable in this situation.",
+      "parentUuid": "f620d2be_f3905a0d",
+      "revId": "73ef144393d0f85a7279e0e2c2492e1bc4fc13c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
