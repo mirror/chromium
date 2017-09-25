@@ -149,20 +149,20 @@ TEST(CSSCalculationValue, RefCount) {
   RefPtr<CalculationValue> calc =
       CalculationValue::Create(PixelsAndPercent(1, 2), kValueRangeAll);
   Length length_a(calc);
-  EXPECT_EQ(calc->RefCount(), 2);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 2);
 
   Length length_b;
   length_b = length_a;
-  EXPECT_EQ(calc->RefCount(), 3);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 3);
 
   Length length_c(calc);
   length_c = length_a;
-  EXPECT_EQ(calc->RefCount(), 4);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 4);
 
   Length length_d(
       CalculationValue::Create(PixelsAndPercent(1, 2), kValueRangeAll));
   length_d = length_a;
-  EXPECT_EQ(calc->RefCount(), 5);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 5);
 }
 
 TEST(CSSCalculationValue, RefCountLeak) {
@@ -173,20 +173,20 @@ TEST(CSSCalculationValue, RefCountLeak) {
   Length length_b = length_a;
   for (int i = 0; i < 100; ++i)
     length_b = length_a;
-  EXPECT_EQ(calc->RefCount(), 3);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 3);
 
   Length length_c(length_a);
   for (int i = 0; i < 100; ++i)
     length_c = length_a;
-  EXPECT_EQ(calc->RefCount(), 4);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 4);
 
   Length length_d(calc);
   for (int i = 0; i < 100; ++i)
     length_d = length_a;
-  EXPECT_EQ(calc->RefCount(), 5);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 5);
 
   length_d = Length();
-  EXPECT_EQ(calc->RefCount(), 4);
+  EXPECT_EQ(calc->GetRefCountForTesting(), 4);
 }
 
 TEST(CSSCalculationValue, AddToLengthUnitValues) {
