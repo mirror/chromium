@@ -8,7 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/test/values_test_util.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
+#include "chrome/common/printing/printer_capabilities.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "printing/backend/test_print_backend.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -43,7 +43,7 @@ TEST_F(PrinterCapabilitiesTest, NonNullForMissingPrinter) {
   std::string printer_name = "missing_printer";
 
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      GetSettingsOnBlockingPool(printer_name, basic_info, nullptr);
 
   ASSERT_TRUE(settings_dictionary);
 }
@@ -59,7 +59,7 @@ TEST_F(PrinterCapabilitiesTest, ProvidedCapabilitiesUsed) {
   print_backend()->AddValidPrinter(printer_name, std::move(caps));
 
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      GetSettingsOnBlockingPool(printer_name, basic_info, print_backend());
 
   // verify settings were created
   ASSERT_TRUE(settings_dictionary);
@@ -84,7 +84,7 @@ TEST_F(PrinterCapabilitiesTest, NullCapabilitiesExcluded) {
   print_backend()->AddValidPrinter(printer_name, nullptr);
 
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      GetSettingsOnBlockingPool(printer_name, basic_info, print_backend());
 
   // verify settings were created
   ASSERT_TRUE(settings_dictionary);

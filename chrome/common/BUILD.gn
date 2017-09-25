@@ -411,6 +411,8 @@ static_library("common") {
     if (enable_print_preview) {
       # Full printing support.
       sources += [
+        "printing/printer_capabilities.cc",
+        "printing/printer_capabilities.h",
         "service_process_util.cc",
         "service_process_util.h",
         "service_process_util_linux.cc",

@@ -19,7 +19,7 @@
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
+#include "chrome/common/printing/printer_capabilities.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_provider.h"
@@ -65,7 +65,7 @@ void FetchCapabilities(std::unique_ptr<chromeos::Printer> printer,
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&printing::GetSettingsOnBlockingPool, printer->id(),
-                 basic_info),
+                 basic_info, nullptr),
       cb);
 }
 
