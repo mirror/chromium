@@ -646,8 +646,7 @@ public class OfflinePageBridge {
      * @return A string representing the source host of some fresh content, or null if none exists.
      */
     public void checkForNewOfflineContent(long freshnessTimeMillis, Callback<String> callback) {
-        // TODO(dewittj): Implement this check on the native side.
-        callback.onResult("www.example.com");
+        nativeCheckForNewOfflineContent(mNativeOfflinePageBridge, freshnessTimeMillis, callback);
     }
 
     /**
@@ -729,6 +728,7 @@ public class OfflinePageBridge {
     private static native boolean nativeIsPageSharingEnabled();
     private static native boolean nativeCanSavePage(String url);
     private static native OfflinePageBridge nativeGetOfflinePageBridgeForProfile(Profile profile);
+
     @VisibleForTesting
     native void nativeGetAllPages(long nativeOfflinePageBridge, List<OfflinePageItem> offlinePages,
             final Callback<List<OfflinePageItem>> callback);
@@ -782,4 +782,6 @@ public class OfflinePageBridge {
             long nativeOfflinePageBridge, WebContents webContents);
     private native OfflinePageItem nativeGetOfflinePage(
             long nativeOfflinePageBridge, WebContents webContents);
+    private native void nativeCheckForNewOfflineContent(
+            long nativeOfflinePageBridge, long freshnessTimeMillis, Callback<String> callback);
 }
