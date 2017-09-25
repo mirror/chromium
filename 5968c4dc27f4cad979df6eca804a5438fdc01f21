@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9430d042_a50ba43a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T13:37:20Z",
+      "side": 1,
+      "message": "If a test is disabled, a bug should be created to track re-enabling it. Please update the CL description with the bug #.",
+      "revId": "5968c4dc27f4cad979df6eca804a5438fdc01f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a874f60_005fb774",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-25T13:37:20Z",
+      "side": 1,
+      "message": "nit: I think this should use EARL_GREY_TEST_SKIPPED here:\n\n  #if !TARGET_IPHONE_SIMULATOR\n      EARL_GREY_TEST_DISABLED(@\"Failing consistently on devices.\");\n  #endif",
+      "revId": "5968c4dc27f4cad979df6eca804a5438fdc01f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
