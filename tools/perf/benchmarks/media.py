@@ -169,7 +169,10 @@ class MediaAndroidToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass
+        self.DisableStory(
+            'video.html?src=crowd.ogg&type=audio',
+            [story.expectations.ANDROID_ONE],
+            'crbug.com/768533')
     return StoryExpectations()
 
   def SetExtraBrowserOptions(self, options):
