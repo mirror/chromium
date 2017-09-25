@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be2615de_721618c6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Leading underscore and CamelCase in Objective-C :)\n_featureList",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a5cc97_b642104c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a4fcb9_d3af6d38",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Optional nit: it is a property, you can use textView.translatesAutoresizingMaskIntoConstraints \u003d NO;",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 59
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c609f3f0_d775737c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaef0cd3_6de323b4",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Use [contentView.heightAnchor constraintEqualToConstant:48].active \u003d YES; instead of this block with activateConstraints.",
+      "range": {
+        "startLine": 79,
+        "startChar": 22,
+        "endLine": 79,
+        "endChar": 41
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a260e2_4a9699cb",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Use a constant in namespace.",
+      "range": {
+        "startLine": 80,
+        "startChar": 56,
+        "endLine": 80,
+        "endChar": 58
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b104923c_8159ef19",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "Why readonly?\nDon\u0027t forget the memory management attribute (i.e. strong).",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73aea23_02092ce3",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 37
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T07:11:49Z",
+      "side": 1,
+      "message": "If you are using a property, use self.notifyAutoSigninViewController instead of the ivar, here and everywhere.",
+      "range": {
+        "startLine": 755,
+        "startChar": 3,
+        "endLine": 755,
+        "endChar": 34
+      },
+      "revId": "a910d9612369cb952147ac170f02ac658bd8f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
