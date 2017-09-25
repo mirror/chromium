@@ -31,8 +31,7 @@
 #include "net/base/network_interfaces.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
-#include "net/log/net_log.h"
-#include "net/log/net_log_source_type.h"
+#include "net/log/net_log_source.h"
 #include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
@@ -174,16 +173,14 @@ DialServiceImpl::DialSocket::~DialSocket() {
 }
 
 bool DialServiceImpl::DialSocket::CreateAndBindSocket(
-    const IPAddress& bind_ip_address,
-    net::NetLog* net_log,
-    net::NetLogSource net_log_source) {
+    const IPAddress& bind_ip_address) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!socket_);
   DCHECK(bind_ip_address.IsIPv4());
 
   net::RandIntCallback rand_cb = base::Bind(&base::RandInt);
   socket_ = base::MakeUnique<UDPSocket>(net::DatagramSocket::RANDOM_BIND,
-                                        rand_cb, net_log, net_log_source);
+                                        rand_cb, nullptr, net::NetLogSource());
 
   // 0 means bind a random port
   net::IPEndPoint address(bind_ip_address, 0);
@@ -383,9 +380,8 @@ bool DialServiceImpl::DialSocket::ParseResponse(const std::string& response,
   return true;
 }
 
-DialServiceImpl::DialServiceImpl(net::NetLog* net_log)
-    : net_log_(net_log),
-      discovery_active_(false),
+DialServiceImpl::DialServiceImpl()
+    : discovery_active_(false),
       num_requests_sent_(0),
       max_requests_(kDialMaxRequests),
       finish_delay_(TimeDelta::FromMilliseconds((kDialMaxRequests - 1) *
@@ -398,8 +394,6 @@ DialServiceImpl::DialServiceImpl(net::NetLog* net_log)
   DCHECK(success);
   send_address_ = net::IPEndPoint(address, kDialRequestPort);
   send_buffer_ = new StringIOBuffer(BuildRequest());
-  net_log_source_.type = net::NetLogSourceType::UDP_SOCKET;
-  net_log_source_.id = net_log_->NextID();
 }
 
 DialServiceImpl::~DialServiceImpl() {
@@ -524,8 +518,7 @@ void DialServiceImpl::DiscoverOnAddresses(
 
 void DialServiceImpl::BindAndAddSocket(const IPAddress& bind_ip_address) {
   std::unique_ptr<DialServiceImpl::DialSocket> dial_socket(CreateDialSocket());
-  if (dial_socket->CreateAndBindSocket(bind_ip_address, net_log_,
-                                       net_log_source_))
+  if (dial_socket->CreateAndBindSocket(bind_ip_address))
     dial_sockets_.push_back(std::move(dial_socket));
 }
 

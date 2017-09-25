@@ -15,13 +15,11 @@
 #include "base/task/cancelable_task_tracker.h"
 #include "base/timer/timer.h"
 #include "net/base/ip_address.h"
-#include "net/log/net_log_source.h"
 #include "net/socket/udp_socket.h"
 
 namespace net {
 class IPEndPoint;
 class StringIOBuffer;
-class NetLog;
 }
 
 namespace media_router {
@@ -97,7 +95,7 @@ class DialService {
 // DialServiceImpl lives on the IO thread.
 class DialServiceImpl : public DialService {
  public:
-  explicit DialServiceImpl(net::NetLog* net_log);
+  DialServiceImpl();
   ~DialServiceImpl() override;
 
   // DialService implementation
@@ -114,11 +112,8 @@ class DialServiceImpl : public DialService {
     explicit DialSocket(DialServiceImpl* dial_service);
     ~DialSocket();
 
-    // Creates a socket using |net_log| and |net_log_source| and binds it to
-    // |bind_ip_address|.
-    bool CreateAndBindSocket(const net::IPAddress& bind_ip_address,
-                             net::NetLog* net_log,
-                             net::NetLogSource net_log_source);
+    // Creates a socket and binds it to |bind_ip_address|.
+    bool CreateAndBindSocket(const net::IPAddress& bind_ip_address);
 
     // Sends a single discovery request |send_buffer| to |send_address|
     // over the socket.
@@ -227,12 +222,6 @@ class DialServiceImpl : public DialService {
   // DialSockets for each network interface whose ip address was
   // successfully bound.
   std::vector<std::unique_ptr<DialSocket>> dial_sockets_;
-
-  // The NetLog for this service.
-  net::NetLog* const net_log_;
-
-  // The NetLog source for this service.
-  net::NetLogSource net_log_source_;
 
   // The multicast address:port for search requests.
   net::IPEndPoint send_address_;

@@ -13,10 +13,8 @@
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/discovery/dial/dial_device_data.h"
 #include "chrome/browser/media/router/discovery/dial/dial_service.h"
-#include "components/net_log/chrome_net_log.h"
 #include "content/public/browser/browser_thread.h"
 
 using base::Time;
@@ -66,8 +64,7 @@ DialRegistry* DialRegistry::GetInstance() {
 }
 
 std::unique_ptr<DialService> DialRegistry::CreateDialService() {
-  DCHECK(g_browser_process->net_log());
-  return base::MakeUnique<DialServiceImpl>(g_browser_process->net_log());
+  return base::MakeUnique<DialServiceImpl>();
 }
 
 void DialRegistry::ClearDialService() {
