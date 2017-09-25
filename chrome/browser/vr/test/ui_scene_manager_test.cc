@@ -80,6 +80,9 @@ bool UiSceneManagerTest::VerifyVisibility(const std::set<UiElementName>& names,
     SCOPED_TRACE(name);
     auto* element = scene_->GetUiElementByName(name);
     EXPECT_NE(nullptr, element);
+    if (visible && element->draw_phase() == kPhaseNone) {
+      return false;
+    }
     if (element->IsVisible() != visible) {
       return false;
     }
