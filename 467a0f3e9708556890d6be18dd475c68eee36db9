@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "368d6587_dc6a811d",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintImageGenerator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-25T20:31:49Z",
+      "side": 1,
+      "message": "Document the second and fourth parameters here.",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a57d325_905a0f6a",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-25T20:31:49Z",
+      "side": 1,
+      "message": "Document the third and fourth parameters here.",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8e3e1c_4230dbcb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResourceStyleImage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-25T20:31:49Z",
+      "side": 1,
+      "message": "Your use of LayoutSize() here and elsewhere is trying to emulate an optional argument.\nYou could make the fourth argument of GetImage a LayoutSize*.",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e3b2df_1d76f599",
         "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
         "patchSetId": 7
