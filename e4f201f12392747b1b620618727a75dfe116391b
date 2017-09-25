@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b5e067de_ca33544d",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-25T08:10:54Z",
+      "side": 1,
+      "message": "It\u0027s hard to tell whether file revocation actually intersects with file paths passed to GetFileInfo, so it\u0027s probably safer to leave out bad message for now. Maybe when all the file IPCs are converted this can be cleaned up a bit.",
+      "parentUuid": "b40e3702_d93a8ff2",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 3
+      },
+      "revId": "e4f201f12392747b1b620618727a75dfe116391b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e64fd75d_be23d3ba",
         "filename": "content/browser/renderer_host/file_utilities_host_impl.h",
         "patchSetId": 13
