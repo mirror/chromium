@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
@@ -637,6 +638,18 @@ TEST_F(UiSceneManagerTest, RendererUsesCorrectOpacity) {
   TexturedElement::SetInitializedForTesting();
 
   CheckRendererOpacityRecursive(&scene_->root_element());
+}
+
+TEST_F(UiSceneManagerTest, LoadingIndicatorBindings) {
+  MakeManager(kNotInCct, kNotInWebVr);
+  model_->set_loading(true);
+  model_->set_load_progress(0.5f);
+  AnimateBy(MsToDelta(200));
+  EXPECT_TRUE(VerifyVisibility({kLoadingIndicator}, true));
+  UiElement* loading_indicator = scene_->GetUiElementByName(kLoadingIndicator);
+  UiElement* loading_indicator_bg = loading_indicator->children().back().get();
+  EXPECT_FLOAT_EQ(loading_indicator->size().width() * 0.5f,
+                  loading_indicator_bg->size().width());
 }
 
 TEST_F(UiSceneManagerTest, ExitWarning) {

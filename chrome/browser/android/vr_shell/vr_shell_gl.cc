@@ -179,7 +179,6 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
                      bool reprojected_rendering,
                      bool daydream_support)
     : ui_(base::MakeUnique<vr::Ui>(ui_host_interface, this, ui_initial_state)),
-      ui_scene_manager_(ui_->ui()),
       surfaceless_rendering_(reprojected_rendering),
       daydream_support_(daydream_support),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -385,7 +384,7 @@ void VrShellGl::OnWebVRFrameAvailable() {
   TRACE_EVENT1("gpu", "VrShellGl::OnWebVRFrameAvailable", "frame", frame_index);
   pending_frames_.pop();
 
-  ui_scene_manager_->OnWebVrFrameAvailable();
+  ui_->OnWebVrFrameAvailable();
 
   DrawFrame(frame_index);
   if (web_vr_mode_) {
@@ -412,7 +411,7 @@ void VrShellGl::ScheduleWebVrFrameTimeout() {
 }
 
 void VrShellGl::OnWebVrFrameTimedOut() {
-  ui_scene_manager_->OnWebVrTimedOut();
+  ui_->OnWebVrTimedOut();
 }
 
 void VrShellGl::GvrInit(gvr_context* gvr_api) {
@@ -716,15 +715,14 @@ void VrShellGl::HandleControllerAppButtonActivity(
         // Post a task, rather than calling the UI directly, so as not to modify
         // UI state in the midst of frame rendering.
         base::ThreadTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE,
-            base::Bind(&vr::UiInterface::OnAppButtonGesturePerformed,
-                       base::Unretained(ui_scene_manager_), direction));
+            FROM_HERE, base::Bind(&vr::UiInterface::OnAppButtonGesturePerformed,
+                                  base::Unretained(ui_.get()), direction));
       }
     }
     if (direction == vr::UiInterface::NONE)
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(&vr::UiInterface::OnAppButtonClicked,
-                                base::Unretained(ui_scene_manager_)));
+                                base::Unretained(ui_.get())));
   }
 }
 
@@ -841,8 +839,8 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   }
 
   // Update the render position of all UI elements (including desktop).
-  ui_scene_manager_->scene()->OnBeginFrame(
-      current_time, GetForwardVector(render_info_primary_.head_pose));
+  ui_->scene()->OnBeginFrame(current_time,
+                             GetForwardVector(render_info_primary_.head_pose));
 
   // WebVR handles controller input in OnVsync.
   if (!ShouldDrawWebVr())
@@ -851,15 +849,14 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   // Ensure that all elements are ready before drawing. Eg., elements may have
   // been dirtied due to animation on input processing and need to regenerate
   // textures.
-  ui_scene_manager_->scene()->PrepareToDraw();
+  ui_->scene()->PrepareToDraw();
 
   UpdateEyeInfos(render_info_primary_.head_pose, kViewportListPrimaryOffset,
                  render_info_primary_.surface_texture_size,
                  &render_info_primary_);
 
   // Measure projected content size and bubble up if delta exceeds threshold.
-  ui_scene_manager_->OnProjMatrixChanged(
-      render_info_primary_.left_eye_info.proj_matrix);
+  ui_->OnProjMatrixChanged(render_info_primary_.left_eye_info.proj_matrix);
 
   // At this point, we draw non-WebVR content that could, potentially, fill the
   // viewport.  NB: this is not just 2d browsing stuff, we may have a splash
@@ -869,8 +866,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
 
   std::vector<const vr::UiElement*> overlay_elements;
   if (ShouldDrawWebVr()) {
-    overlay_elements =
-        ui_scene_manager_->scene()->GetVisibleWebVrOverlayForegroundElements();
+    overlay_elements = ui_->scene()->GetVisibleWebVrOverlayForegroundElements();
   }
 
   if (!overlay_elements.empty() && ShouldDrawWebVr()) {
@@ -1030,7 +1026,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
 }
 
 bool VrShellGl::ShouldDrawWebVr() {
-  return web_vr_mode_ && ui_scene_manager_->ShouldRenderWebVr();
+  return web_vr_mode_ && ui_->ShouldRenderWebVr();
 }
 
 void VrShellGl::DrawWebVr() {
