@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10a2f462_788f6615",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-25T10:19:59Z",
+      "side": 1,
+      "message": "nit: \u0027if the entry for |url| doesn\u0027t exist\u0027 might read slightly better",
+      "revId": "3c9555bfb6f5582cb8ccd0c95a0c6d5eaf732d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
