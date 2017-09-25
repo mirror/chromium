@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1289457a_0d414da6",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-25T05:02:29Z",
+      "side": 1,
+      "message": "Isn\u0027t this supposed to be ShortcutHelper::GetIdealHomescreenIconSizeInPx() ?",
+      "revId": "9e13a517a591cf9a14882a69eb4a99d4894e5fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1da36b_b4441253",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-25T05:02:29Z",
+      "side": 1,
+      "message": "On Android, this will cause a change in behaviour. I think that we should explicitly call this change out in the CL description",
+      "revId": "9e13a517a591cf9a14882a69eb4a99d4894e5fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b45c32c5_60c9d48e",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
