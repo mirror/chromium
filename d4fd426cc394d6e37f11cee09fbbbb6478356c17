@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0834ef1_5a708abf",
+        "filename": "chrome/browser/vr/elements/exit_prompt_backplane.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:01:14Z",
+      "side": 1,
+      "message": "I\u0027d go farther and call this InvisibleHitTarget.  Despite the docs, one could fairly assume that any visible and/or textured element should be a HitTarget.",
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf08771_cf52d406",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:01:14Z",
+      "side": 1,
+      "message": "Needs to be ASSERT() or break after this line if nullptr.",
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06387f1_163c75c2",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:01:14Z",
+      "side": 1,
+      "message": "I think each of these conditions should be a separate expect - then test output will tell you what actually failed, and the test conditions are easier to visually parse.",
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e40b971_694a171e",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-25T14:01:14Z",
+      "side": 1,
+      "message": "\u0027auto\u0027 here and for main_content",
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
