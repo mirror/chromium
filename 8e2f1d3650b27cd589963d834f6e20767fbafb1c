@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f1d16f7_ff765b09",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "No, the current text is correct. operator\u003c\u003c is defined for PrefetchItem and is directly affected by changing columns (more than operator\u003c which is also defined).",
+      "parentUuid": "00395d66_82e1f7e9",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 27
+      },
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e9cb62c_68f58353",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fc6d35_9257c737",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9cb62c_68f58353",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "4f8d1769_903d6250",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d5b03c_faf397fe",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20227ef0_13d64574",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9566e7e4_fe4b28db",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20227ef0_13d64574",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c07883fa_543b68d6",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45f0595d_165f4b5b",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7140a266_ca95d7d7",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 10
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "c6dc7cd1_31fff20f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7140a266_ca95d7d7",
+      "range": {
+        "startLine": 91,
+        "startChar": 38,
+        "endLine": 91,
+        "endChar": 68
+      },
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d1f422_b0c3a0cc",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 10
@@ -136,6 +262,24 @@
       "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73437848_4a301fd5",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T18:38:24Z",
+      "side": 1,
+      "message": "This default value never changed; it was -1 from the start.\nThe |file_size| default value did change and that one is checked for in TestMigrationFromV0.",
+      "parentUuid": "34d1f422_b0c3a0cc",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
