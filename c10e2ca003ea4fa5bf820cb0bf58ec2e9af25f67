@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "d68bb436_d92edf7b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "\"Unregister\" is better naming to balance out \"Register\"",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e768b6a_2dc69b85",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "ASSERT_ if possible since this is a unittest",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b335b3_bada88a6",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "// If there are still bindings, |this| is still being used.",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dae1524_fb82fe77",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "Not sure if \"roughly corresponds\" is still accurate. How about this?\n\nServiceWorkerRegistrationHandle has a 1:1 correspondence to WebServiceWorkerRegistration in the renderer process. WebServiceWorkerRegistration owns ServiceWorkerRegistrationHandle via an associated interface pointer to blink::mojom::ServiceWorkerRegistrationObjectHost.",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfdb3f2_8de3f3c1",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "Will establish -\u003e Establishes?",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc86d513_2fe24b50",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 6
@@ -71,6 +156,23 @@
     },
     {
       "key": {
+        "uuid": "50f1dc44_ee1497d3",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "does it make sense to make this function const also?",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6e542fc_34ad25ea",
         "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
         "patchSetId": 6
@@ -82,6 +184,57 @@
       "writtenOn": "2017-09-25T04:34:01Z",
       "side": 1,
       "message": "Is it better to restrict the scope by wrapping them by brackets \"{}\"?",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a75bd8_ca469ba2",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "I find it a bit confusing that we end up in a half-way taken state after Take*. If SWProviderContext never uses these fields after startup, could we instead have Take* fully take?",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9068c917_c06d7d96",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this comment since we\u0027re already std::move()ing host_ptr_info",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc20140_14b241ab",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "Not sure I like \"Save\" as the balance for \"Take\". I think Set/Take are fine.\n\n\"SetRegistrationForServiceWorkerGlobalScope\" seems clearer too, otherwise it sounds like a registration is starting up.",
       "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +281,23 @@
         "endLine": 81,
         "endChar": 17
       },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01557ac7_4c538a1f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T04:39:53Z",
+      "side": 1,
+      "message": "The \"etc.\" here is confusing: my comment was meant as a suggestion of the things to write about, not supposed to be used verabtim :)",
       "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
