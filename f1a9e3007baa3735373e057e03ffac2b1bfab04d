@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eb462e7_06c7d89b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9673b5d6_437dae62",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73868791_c02c3f97",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "786aa50a_fc4bb5fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "That\u0027s true. I agree, I\u0027ll remove the extra flag.",
+      "parentUuid": "73868791_c02c3f97",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ee06c86_6b16121e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T23:58:44Z",
       "side": 1,
       "message": "I\u0027m thinking we might do something similar here too, but in that case we\u0027re just duplicating logTranslateOnebox.   Humm, maybe there\u0027s some other logic problem with this CL.  I think maybe the logging is in the wrong place.  What do you think?",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3095a296_201144fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTranslateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "From my understanding, this method is only called when a long-press happens, as opposed to a tap. Therefore we do need to collect any data here, since we are only interested in the proportion of taps that yield to a translation. Therefore, I\u0027ve removed it in the new patch.",
+      "parentUuid": "6ee06c86_6b16121e",
       "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "966159df_a091e553",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e655ef_213d7f4c",
+      "range": {
+        "startLine": 1228,
+        "startChar": 53,
+        "endLine": 1228,
+        "endChar": 65
+      },
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bc1b94e_032a2d95",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-22T23:51:12Z",
       "side": 1,
       "message": "Nit: probably fine to just inline the \"code\" here.",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd164c_43255b1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "I followed the pattern in the previous log for force translation, just to be consistent.",
+      "parentUuid": "0bc1b94e_032a2d95",
       "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "1063a695_0e5093b4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72259,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd03a8d_3064f9c2",
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d16f145_45d406e1",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -130,6 +244,30 @@
       "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85de6786_1cc01f1a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72262,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-09-25T18:20:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d16f145_45d406e1",
+      "range": {
+        "startLine": 72262,
+        "startChar": 0,
+        "endLine": 72262,
+        "endChar": 67
+      },
+      "revId": "f1a9e3007baa3735373e057e03ffac2b1bfab04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
