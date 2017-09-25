@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f4af7f_feeb810a",
+        "filename": "chrome/browser/media/router/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "This isn\u0027t actually needed, I moved it around while cargo culting things. This raises the question though: one of the .h files in this target includes presentation.mojom.h. Should it express a direct dependency on //third_party/WebKit/public:mojo_bindings, or should it rely on the implicit path it gets today?\n\n$ gn path out/Debug //chrome/browser/media/router //third_party/WebKit/public:mojo_bindings\n//chrome/browser/media/router:router --[private]--\u003e\n//content/public/browser:browser --[public]--\u003e\n//content:content --[public]--\u003e\n//content/public/browser:browser_sources --[public]--\u003e\n//third_party/WebKit/public:mojo_bindings\n\nIt feels pretty accidental that this edge exists, but I\u0027m not sure what the right answer is...",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52437364_daa1da7c",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "What is the right thing to do for sources for struct traits?\n\nIt could be listed in the sources of a GN target, but it could also be listed in the traits_header / sources section of the typemap file as well. Should it be listed in both? Should it only be listed in the typemap file?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bba5377_073c555b",
+        "filename": "content/public/common/presentation.typemap",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "So I think I could have left this file in //content/common and simply marked the traits as CONTENT_EXPORT. I\u0027m not sure what the right thing to do is: logically, it seems like if //chrome is using it though, it should live in //content/public?",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2bc831_6247660f",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "It\u0027s pretty awkward that interfaces outside of Blink that are used inside Blink need to be manually added to the visibility list like this.",
+      "range": {
+        "startLine": 1639,
+        "startChar": 0,
+        "endLine": 1642,
+        "endChar": 38
+      },
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b927a9_ed866a29",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "WebString.cpp is here because KURL has to do WebString and WebURL conversions. I guess I should move WebURL.cpp here for consistency, but this was the minimal set that compiled.",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919926cf_ab8ebf43",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-25T15:53:11Z",
+      "side": 1,
+      "message": "I moved this into a separate target, since a few things in weborigin depend on this... I think it would probably make sense to remove this from make_generated_sources and have targets that depend on runtime enabled features directly depend on this target?",
+      "revId": "53fbb8b0c58ace56d428d169201a0d4d3ef8f9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
