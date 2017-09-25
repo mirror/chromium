@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b05dc3d2_a1c9171a",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T07:33:57Z",
+      "side": 1,
+      "message": "Since this is really long can we make it a const in the unnamed namespace like:\nhttps://cs.chromium.org/chromium/src/content/browser/loader/navigation_url_loader_network_service.cc?l\u003d69\u0026rcl\u003d9250c66f40680b3e98437c02d3839d2f9a8cc305",
+      "revId": "6bb18d0071df7af746a687170d2bb087626f6897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3830c6d_d0418bf6",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T07:33:57Z",
+      "side": 1,
+      "message": "maybe service_worker_navigation_preload (see below)",
+      "revId": "6bb18d0071df7af746a687170d2bb087626f6897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e9c984_22e6ef10",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T07:33:57Z",
+      "side": 1,
+      "message": "This is accurate from the POV of the codebase, but from the web platform/feature/user POV it\u0027s probably better to call this Service Worker Navigation Preload\n\nServiceWOrkerFetchDispatcher isn\u0027t really understandable outside of the chromium codebase.",
+      "revId": "6bb18d0071df7af746a687170d2bb087626f6897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03560d6f_e0ee0551",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-25T07:33:57Z",
+      "side": 1,
+      "message": "this can also happen for iframes (i think navigationurlloadernetworkservice also runs for iframes?)",
+      "revId": "6bb18d0071df7af746a687170d2bb087626f6897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
