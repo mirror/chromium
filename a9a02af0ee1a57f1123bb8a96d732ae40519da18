@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7a6ef12_adaa0063",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "It looks like testing the minimal number of arguments for the constructor. I looked at the revision history of this test, and this line was there forever. I just remove this line.",
+      "parentUuid": "4dc482e3_8b25fcc4",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61455f3a_255c7bbe",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7666d1c6_160b6596",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61455f3a_255c7bbe",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4d857b6c_9fbcd8c8",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ImageData-constructor.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce41f39_06b1bc1f",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3b2f08_ea50b0f8",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-arc-negative-radius.html",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07809978_2081c2f5",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-arc-negative-radius.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3b2f08_ea50b0f8",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "436591d3_76d48bbc",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-ellipse-negative-radius.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d9e9b9_b1af092e",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6e563be_ffee4615",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "51a4bc2c_037d813c",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e563be_ffee4615",
+      "range": {
+        "startLine": 238,
+        "startChar": 6,
+        "endLine": 238,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a213d68_dcac07d3",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53477e20_8a56d7cc",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/canvas-with-incorrect-args.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a213d68_dcac07d3",
+      "range": {
+        "startLine": 242,
+        "startChar": 3,
+        "endLine": 242,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "28f5c77c_ba444148",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-color.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a0aab4_4e11ea78",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73e1bbe_70c3cce8",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-offset.html",
         "patchSetId": 4
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "5dde9e39_071bec0d",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/gradient-addColorStop-with-invalid-offset.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Changed to use assert_throws(\"INDEX_SIZE_ERR\", xxx);",
+      "parentUuid": "d73e1bbe_70c3cce8",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e45921e_e6900eb5",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-currentTransform.html",
         "patchSetId": 4
@@ -253,6 +469,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cdd7af_362ec709",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-currentTransform.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e45921e_e6900eb5",
+      "range": {
+        "startLine": 187,
+        "startChar": 3,
+        "endLine": 187,
+        "endChar": 4
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "6ddffe38_796c7b60",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-clip.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a09658_62966f56",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a847674_2b588eb7",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-fill.html",
         "patchSetId": 4
@@ -323,6 +587,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2091a52_63b60431",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-fill.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a847674_2b588eb7",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "18f1e7a1_2bf4a24a",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-path-context-stroke.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6cbda57_94f1e021",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac3f4f7f_bac9cf3c",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-pattern-behaviour.html",
         "patchSetId": 4
@@ -369,6 +681,30 @@
       "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994e2aa8_87ee5dea",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-pattern-behaviour.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-25T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3f4f7f_bac9cf3c",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "a9a02af0ee1a57f1123bb8a96d732ae40519da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
