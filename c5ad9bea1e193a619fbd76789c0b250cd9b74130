@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aca0504_caabd4f2",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-25T22:00:34Z",
+      "side": 1,
+      "message": "use base::MakeUnique",
+      "revId": "c5ad9bea1e193a619fbd76789c0b250cd9b74130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0aea92_93b5ec88",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-25T22:00:34Z",
+      "side": 1,
+      "message": "Why is this needed?\n\nI think it should be fine to change config to allow voice input, even if the device has no input devices at the moment. I see this as config change succeeding here, but the feature not working due to other circumstances (the VK implementation will still be notified of the appropriate value for the voice input feature, but the feature would not be disabled due to config).\n\nIf nothing else, returning error here would be misleading, given that the keyboard config has actually been updated by this point (see line 280)",
+      "revId": "c5ad9bea1e193a619fbd76789c0b250cd9b74130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
