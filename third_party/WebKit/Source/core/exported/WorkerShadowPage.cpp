@@ -20,7 +20,8 @@ WorkerShadowPage::WorkerShadowPage(Client* client)
                                                      nullptr,
                                                      nullptr,
                                                      g_empty_atom,
-                                                     WebSandboxFlags::kNone)),
+                                                     WebSandboxFlags::kNone,
+                                                     false)),
       client_(client) {
   DCHECK(IsMainThread());
   // TODO(http://crbug.com/363843): This needs to find a better way to

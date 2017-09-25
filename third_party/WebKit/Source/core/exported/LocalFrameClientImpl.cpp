@@ -299,6 +299,15 @@ void LocalFrameClientImpl::SetOpener(Frame* opener) {
   web_frame_->SetOpener(opener_frame);
 }
 
+bool LocalFrameClientImpl::WasCreatedWithOpener() {
+  return web_frame_->WasCreatedWithOpener();
+}
+
+void LocalFrameClientImpl::SetWasCreatedWithOpener(
+    bool was_created_with_opener) {
+  web_frame_->SetWasCreatedWithOpener(was_created_with_opener);
+}
+
 Frame* LocalFrameClientImpl::Parent() const {
   return ToCoreFrame(web_frame_->Parent());
 }
