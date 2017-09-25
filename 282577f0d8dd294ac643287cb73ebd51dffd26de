@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86284ad3_98e15f8a",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-25T02:16:14Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdc33e2_b7ae1c1d",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-25T02:16:14Z",
+      "side": 1,
+      "message": "no [Clamp]",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3450a5_d7970d67",
+        "filename": "tools/idl_parser/test_parser/namespace_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-25T02:16:14Z",
+      "side": 1,
+      "message": "Please rename those newly added namespaces to describe\nwhat they are testing.\ne.g. PartialNamespace, NamespaceWithExtAttr, AnnotatedTypeNamespaceMember",
+      "range": {
+        "startLine": 122,
+        "startChar": 18,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9af663_46db00eb",
+        "filename": "tools/idl_parser/webidl0824.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-25T02:16:14Z",
+      "side": 1,
+      "message": "why do you need need this?",
+      "revId": "282577f0d8dd294ac643287cb73ebd51dffd26de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
