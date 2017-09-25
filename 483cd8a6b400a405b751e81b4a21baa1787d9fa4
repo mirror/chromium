@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05f77c92_4410e70e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:34:02Z",
+      "side": 1,
+      "message": "nonnull?",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb64d67d_0b88f460",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:34:02Z",
+      "side": 1,
+      "message": "registerAndStart or something of that sort maybe? It is just that, there seems to be a bit more than animation start that is happening here (which is obvious from javadoc but not from name).",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5041d0da_291c59cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:34:02Z",
+      "side": 1,
+      "message": "This is more for informing myself, but is requestUpdate here then OK to be called multiple times for the same frame? Because we will get this update here and then if we add another animator then we will still get that second requestUpdate. Or is it required to exactly have two calls? I guess I am confused about mWasUpdateRequestedForAnimationStart and this one call to request here.",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e645ba_33cdb7a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:34:02Z",
+      "side": 1,
+      "message": "@Nonnull?",
+      "range": {
+        "startLine": 284,
+        "startChar": 32,
+        "endLine": 284,
+        "endChar": 48
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
