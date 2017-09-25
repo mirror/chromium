@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11240ff_77c921d0",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:58:16Z",
+      "side": 0,
+      "message": "This is because it used to be category compositor-worker and presumably mainly used for compositor-worker right? But it seems that we use element id a lot in property trees code so I think we should keep this.",
+      "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef25722_79148fa1",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:58:16Z",
+      "side": 0,
+      "message": "Do we need mutable properties at all after compositor worker goes away?",
+      "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
