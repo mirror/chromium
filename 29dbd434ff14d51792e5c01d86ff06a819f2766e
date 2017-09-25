@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec1a1d53_d583bc62",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T09:15:57Z",
+      "side": 1,
+      "message": "Auth error means that the LST is a persistent error (the end call is here https://cs.chromium.org/chromium/src/google_apis/gaia/google_service_auth_error.cc?rcl\u003d16d26cd6a0cc3a5994702bf7fc0b23cae9ebae22\u0026l\u003d263 ). A persistent error is an error that requires user input to be fixed (the main cause it that the LST is invalid, aka INVALID_CREDENTIALS in Chrome / invalid_grant on GAIA).\n\nThis includes the case when the LST is revoken (that error maps to INVALID_CREDENTIALS in Chrome).",
+      "parentUuid": "7489ba8a_83298dc6",
+      "range": {
+        "startLine": 344,
+        "startChar": 35,
+        "endLine": 344,
+        "endChar": 46
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d96843f8_673ce257",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -369,6 +393,54 @@
         "startChar": 8,
         "endLine": 361,
         "endChar": 10
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e66095_71cafce7",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T09:15:57Z",
+      "side": 1,
+      "message": "Nope, I prefer the test as this is not guaranteed on stant-up.\n\nOn Chrome start-up, the tokens are loaded. Let\u0027s assume that a token is invalid (was revoked). When the client of the token service attempts to use this token, GAIA will respond with \"400 (invalid_grant)\" error and the token service will mark this account with error \"INVALID_CREDENTIALS\". So depending when AccountReconcilor attempts to use the token, it may see a valid or invalid token.",
+      "parentUuid": "b2af3ef6_8e441d65",
+      "range": {
+        "startLine": 361,
+        "startChar": 8,
+        "endLine": 361,
+        "endChar": 10
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51089b5f_581217b1",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-25T09:15:57Z",
+      "side": 1,
+      "message": "Ok, let\u0027s keep what you have in the test now (err on the safe side and ask the user to reauth in this case).",
+      "parentUuid": "73aecad2_5e5fbc1d",
+      "range": {
+        "startLine": 361,
+        "startChar": 42,
+        "endLine": 361,
+        "endChar": 43
       },
       "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
