@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa58ccd1_cc41bd3f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T17:19:24Z",
+      "side": 1,
+      "message": "nit: s/be only/be the only/",
+      "range": {
+        "startLine": 1119,
+        "startChar": 44,
+        "endLine": 1119,
+        "endChar": 51
+      },
+      "revId": "7782fa380fc8119da8c5a21420589957ea10543b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480c0845_aebfae63",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-25T17:19:24Z",
+      "side": 1,
+      "message": "Are you trying to match https://cs.chromium.org/chromium/src/components/viz/service/display/display_scheduler.cc?rcl\u003dd0aad9f5ae8b7d582875402b23eaaecaa5cb3f86\u0026l\u003d205 ? Should \"cc\" be \"viz\"?",
+      "range": {
+        "startLine": 1129,
+        "startChar": 23,
+        "endLine": 1129,
+        "endChar": 27
+      },
+      "revId": "7782fa380fc8119da8c5a21420589957ea10543b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
