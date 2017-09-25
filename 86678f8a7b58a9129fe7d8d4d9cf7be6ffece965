@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "167e0703_a2092fc2",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-25T18:47:00Z",
+      "side": 1,
+      "message": "Can we make this (and checkout_src_internal and the other boolean flags) be `True` instead of `\u0027True\u0027`, i.e., a native python bool? I\u0027ve probably either totally forgotten or lost the context of how things work inside or outside of strings here :).",
+      "revId": "86678f8a7b58a9129fe7d8d4d9cf7be6ffece965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
