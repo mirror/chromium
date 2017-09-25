@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c18f0ea_00301c7c",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T15:02:36Z",
+      "side": 1,
+      "message": "Include misplaced.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8f8e12_17abdfcc",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T15:02:36Z",
+      "side": 1,
+      "message": "FYI, this is the default.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b998056_572a2f31",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 39
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-25T15:02:36Z",
+      "side": 1,
+      "message": "Do you plan on catching the tap on self.view? If yes, why aren\u0027t you doing the same for textView, if no why doing it here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "6e8415773b523378959957a3c8fec36021c52863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
