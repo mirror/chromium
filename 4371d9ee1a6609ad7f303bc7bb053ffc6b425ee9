@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "25e484fd_ea0e5b60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:02:24Z",
+      "side": 1,
+      "message": "Sorry. Can we pull these two lines out to a private static call that takes the id?",
+      "parentUuid": "cd0a80e1_f93c464a",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d30b16c1_2f3939fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 3
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "Is there any reason for this specific parameter (and not the ones in other methods?). As it is, I\u0027d prefer to use @Nullable and assume the other parameters are @Nonnull by default (although I do need to be more disciplined with this).",
       "parentUuid": "436024e8_02ad9aa7",
+      "range": {
+        "startLine": 166,
+        "startChar": 61,
+        "endLine": 166,
+        "endChar": 64
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1da6482_fd2ca100",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-25T17:02:24Z",
+      "side": 1,
+      "message": "Good point :). Yeah I guess the other reparentTabToOriginalOwner and toggleFullscreenMode could also use it, if we care.\n\nDo we need to care? Not really. I don\u0027t think we have any style guidelines for nonnull/nullable. I personally find it more of a forceful reminder to have nonnull, but let\u0027s leave it as is if you prefer otherwise.",
+      "parentUuid": "a77fe2f2_c84d2e12",
       "range": {
         "startLine": 166,
         "startChar": 61,
