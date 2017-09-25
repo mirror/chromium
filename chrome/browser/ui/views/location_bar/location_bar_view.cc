@@ -805,7 +805,7 @@ base::string16 LocationBarView::GetLocationIconText() const {
   if (GetToolbarModel()->GetURL().SchemeIs(content::kChromeUIScheme))
     return l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME);
 
-  const base::string16 extension_name = GetExtensionName(
+  const base::string16 extension_name = extensions::GetExtensionName(
       GetToolbarModel()->GetURL(), delegate_->GetWebContents());
   if (!extension_name.empty())
     return extension_name;
