@@ -24,6 +24,15 @@ class SecurityStateTabHelper
     : public content::WebContentsObserver,
       public content::WebContentsUserData<SecurityStateTabHelper> {
  public:
+  // Events for UMA recording site visits after clicking through a certificate
+  // warning. Do not reorder or change! Exposed in header so enum is accessible
+  // from test. Currently only logging for visited case.
+  enum VisitedSiteAfterWarning {
+    DID_NOT_VISIT_SITE_AFTER_WARNING = 0,
+    VISITED_SITE_AFTER_WARNING = 1,
+    VISITED_AFTER_WARNING_COUNT
+  };
+
   ~SecurityStateTabHelper() override;
 
   // See security_state::GetSecurityInfo.
