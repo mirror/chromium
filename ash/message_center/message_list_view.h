@@ -9,7 +9,6 @@
 #include <set>
 #include <vector>
 
-#include "ash/ash_export.h"
 #include "base/macros.h"
 #include "ui/compositor/paint_context.h"
 #include "ui/gfx/geometry/rect.h"
@@ -33,8 +32,8 @@ namespace ash {
 // Displays a list of messages for rich notifications. Functions as an array of
 // MessageViews and animates them on transitions. It also supports
 // repositioning.
-class ASH_EXPORT MessageListView : public views::View,
-                                   public views::BoundsAnimatorObserver {
+class MessageListView : public views::View,
+                        public views::BoundsAnimatorObserver {
  public:
   class Observer {
    public:
