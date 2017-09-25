@@ -10,6 +10,7 @@
 
 import("//build/config/compiler/compiler.gni")
 import("//build/config/features.gni")
+import("//build/config/gclient_args.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("//build/config/ui.gni")
 import("//device/vr/features/features.gni")
@@ -39,6 +40,10 @@ if (is_official_build) {
   # An official (maximally optimized!) component (optimized for build times)
   # build doesn't make sense and usually doesn't work.
   assert(!is_component_build)
+}
+
+if (enable_nacl) {
+  assert(checkout_nacl == "True")
 }
 
 # This file defines the following three main targets:
@@ -678,8 +683,10 @@ group("gn_all") {
       if (!is_android) {
         deps += [ "//chrome/test:load_library_perf_tests" ]
       }
+      if (enable_nacl) {
+        deps += [ "//native_client/src/trusted/platform_qualify:vcpuid" ]
+      }
       deps += [
-        "//native_client/src/trusted/platform_qualify:vcpuid",
         "//third_party/libjpeg_turbo:simd_asm",
       ]
     }
