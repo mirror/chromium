@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ee9737_520ed8df",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-25T17:35:59Z",
+      "side": 0,
+      "message": "Why does this no longer work?",
+      "revId": "c91bb424052f0e46dbe31d9ce9375a50a0aec56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
