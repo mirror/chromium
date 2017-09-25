@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6df1fe76_5db15693",
+        "filename": "chrome/browser/media/webrtc/desktop_capture_access_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-25T22:44:52Z",
+      "side": 1,
+      "message": "Thanks, I missed that capture_type is content::DesktopMediaID::Source. Seems like it\u0027s better to rename it to source_type.\n\nIn any case it looks like SOURCE_NONE is used for audio-only case (see the else case below), which doesn\u0027t look right.",
+      "parentUuid": "63c71949_b4218e0a",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83f2ca55_50db06cb",
         "filename": "content/public/browser/desktop_media_id.cc",
         "patchSetId": 6
