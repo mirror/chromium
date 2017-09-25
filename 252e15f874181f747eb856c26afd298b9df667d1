@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a47f2ae_7fe6e2ec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29829,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-25T21:35:22Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 29829,
+        "startChar": 4,
+        "endLine": 29829,
+        "endChar": 10
+      },
+      "revId": "252e15f874181f747eb856c26afd298b9df667d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ca64e2_77814097",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29830,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-25T21:35:22Z",
+      "side": 1,
+      "message": "When is it emitted?  In the first launch of Chrome after ...?  On profile load of every launch of M63+? ...?",
+      "revId": "252e15f874181f747eb856c26afd298b9df667d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
