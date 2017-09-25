@@ -96,7 +96,7 @@
     { "name": "googlesyndication.com", "include_subdomains": true, "pins": "google" },
     { "name": "googleusercontent.com", "include_subdomains": true, "pins": "google" },
     { "name": "gstatic.com", "include_subdomains": true, "pins": "google" },
-    { "name": "youtube.com", "include_subdomains": true, "pins": "google" },
+    { "name": "youtube.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
     { "name": "ytimg.com", "include_subdomains": true, "pins": "google" },
     { "name": "learn.doubleclick.net", "include_subdomains": true },
     { "name": "www.paypal.com", "mode": "force-https" },
