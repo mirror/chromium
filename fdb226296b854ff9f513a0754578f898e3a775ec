@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53551ac3_4e48f9fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-25T22:24:46Z",
+      "side": 1,
+      "message": "Why not just recordBooleanHistogram?",
+      "range": {
+        "startLine": 1230,
+        "startChar": 8,
+        "endLine": 1230,
+        "endChar": 49
+      },
+      "revId": "fdb226296b854ff9f513a0754578f898e3a775ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
