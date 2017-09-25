@@ -507,6 +507,24 @@
     },
     {
       "key": {
+        "uuid": "875b0c91_9a41367d",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-25T21:09:04Z",
+      "side": 1,
+      "message": "Huh, that\u0027s confusing. Looks like part (all?) of my previous comments didn\u0027t go out last time I uploaded the CL. Anyway, this is done now.",
+      "parentUuid": "7a4ab26d_7c4ffc21",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3152f615_e75f89a5",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 15
