@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
+#include "content/network/checked_cookie_manager_impl.h"
 #include "content/network/cookie_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -79,6 +80,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
                               uint32_t process_id) override;
   void HandleViewCacheRequest(const GURL& url,
                               mojom::URLLoaderClientPtr client) override;
+  void GetCheckedCookieManager(
+      mojom::CheckedCookieManagerRequest request) override;
   void GetCookieManager(mojom::CookieManagerRequest request) override;
 
   // Called when the associated NetworkServiceImpl is going away. Guaranteed to
@@ -116,6 +119,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   mojo::Binding<mojom::NetworkContext> binding_;
 
+  std::unique_ptr<CheckedCookieManagerImpl> checked_cookie_manager_;
   std::unique_ptr<CookieManagerImpl> cookie_manager_;
 
   // Temporary class to help diagnose the impact of https://crbug.com/711579.

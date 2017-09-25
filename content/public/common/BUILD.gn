@@ -357,6 +357,7 @@ mojom("interfaces") {
   ]
 
   sources = [
+    "checked_cookie_manager.mojom",
     "cookie_manager.mojom",
     "download_stream.mojom",
     "mutable_network_traffic_annotation_tag.mojom",

@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "checked_cookie_manager.mojom";
 import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "url_loader.mojom";
@@ -57,6 +58,9 @@ interface NetworkContext {
   // display different parts of the cache.
   HandleViewCacheRequest(url.mojom.Url url,
                          URLLoaderClient client);
+
+  // Get the CheckedCookieManager associated with this network context.
+  GetCheckedCookieManager(CheckedCookieManager& cookie_manager);
 
   // Get the CookieManager associated with this network context.
   GetCookieManager(CookieManager& cookie_manager);
