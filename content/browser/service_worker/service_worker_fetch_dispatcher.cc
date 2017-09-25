@@ -741,7 +741,43 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
       resource_request);
 
   // Start the network request for the URL using the network loader.
-  // TODO(falken): What to do about routing_id, request_id, traffic annotation?
+  // TODO(falken): What to do about routing_id, request_id?
+  const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+      net::DefineNetworkTrafficAnnotation("service_worker_fetch_dispatcher", R"(
+    semantics {
+      sender: "Service Worker Fetch Dispatcher"
+      description:
+        "This request is issued by a main frame navigation to fetch the "
+        "content of the page that is being navigated to."
+      trigger:
+        "Navigating Chrome (by clicking on a link, bookmark, history item, "
+        "using session restore, etc)."
+      data:
+        "Arbitrary site-controlled data can be included in the URL, HTTP "
+        "headers, and request body. Requests may include cookies and "
+        "site-specific credentials."
+      destination: WEBSITE
+    }
+    policy {
+      cookies_allowed: YES
+      cookies_store: "user"
+      setting: "This feature cannot be disabled."
+      chrome_policy {
+        URLBlacklist {
+          URLBlacklist: { entries: '*' }
+        }
+      }
+      chrome_policy {
+        URLWhitelist {
+          URLWhitelist { }
+        }
+      }
+    }
+    comments:
+      "Chrome would be unable to navigate to websites without this type of "
+      "request. Using either URLBlacklist or URLWhitelist policies (or a "
+      "combination of both) limits the scope of these requests."
+    )");
   mojom::URLLoaderClientPtr url_loader_client_ptr_to_pass;
   url_loader_client->Bind(&url_loader_client_ptr_to_pass);
   mojom::URLLoaderPtr url_loader_associated_ptr;
@@ -749,7 +785,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
       mojo::MakeRequest(&url_loader_associated_ptr), -1 /* routing_id? */,
       -1 /* request_id? */, mojom::kURLLoadOptionNone, resource_request,
       std::move(url_loader_client_ptr_to_pass),
-      net::MutableNetworkTrafficAnnotationTag() /* empty? */);
+      net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
 
   // Hook the load up to DelegatingURLLoader, which will call our
   // DelegatingURLLoaderClient.
