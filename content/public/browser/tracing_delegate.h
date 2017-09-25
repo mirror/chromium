@@ -46,7 +46,7 @@ class CONTENT_EXPORT TracingDelegate {
       bool requires_anonymized_data);
 
   // Used to add any additional metadata to traces.
-  virtual void GenerateMetadataDict(base::DictionaryValue* metadata_dict) {}
+  virtual std::unique_ptr<base::DictionaryValue> GenerateMetadataDict();
 
   virtual MetadataFilterPredicate GetMetadataFilterPredicate();
 };

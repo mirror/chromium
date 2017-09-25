@@ -23,7 +23,6 @@
 #include "build/build_config.h"
 #include "chrome/browser/metrics/chrome_metrics_service_client.h"
 #include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
-#include "chrome/browser/tracing/background_tracing_field_trial.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -245,6 +244,4 @@ void ChromeBrowserFieldTrials::InstantiateDynamicTrials() {
   // Enable use-after-free information gathering.
   if (base::FeatureList::IsEnabled(kFreedObjectTrackerFeature))
     base::trace_event::FreedObjectTracker::GetInstance()->Enable();
-
-  tracing::SetupBackgroundTracingFieldTrial();
 }
