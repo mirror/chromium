@@ -16,6 +16,24 @@
       "revId": "e08b9e0697085eb5b61868ae133363f39f545617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a991edfd_d5da7863",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T19:09:08Z",
+      "side": 1,
+      "message": "When you\u0027re in the same process, \"foo\" is a reference to some constant string in the binary\u0027s string tables, which are loaded into memory, and you can just keep raw pointers to its location in those tables.  However, it\u0027s now potentially being passed between processes, so that no longer works, and we need an in-process place to store the string.",
+      "parentUuid": "c326200e_f2a004c9",
+      "revId": "e08b9e0697085eb5b61868ae133363f39f545617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
