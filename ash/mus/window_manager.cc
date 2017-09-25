@@ -9,6 +9,7 @@
 #include <limits>
 #include <utility>
 
+#include "ash/arc/exo_parts.h"
 #include "ash/drag_drop/drag_image_view.h"
 #include "ash/mus/accelerators/accelerator_handler.h"
 #include "ash/mus/accelerators/accelerator_ids.h"
@@ -310,6 +311,7 @@ void WindowManager::OnWmConnected() {
   CreateShell();
   if (show_primary_host_on_connect_)
     Shell::GetPrimaryRootWindow()->GetHost()->Show();
+  exo_parts_ = ExoParts::CreateIfNecessary();
 }
 
 void WindowManager::OnWmSetBounds(aura::Window* window,
