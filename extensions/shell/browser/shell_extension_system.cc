@@ -129,6 +129,10 @@ ExtensionService* ShellExtensionSystem::extension_service() {
   return nullptr;
 }
 
+ExtensionRegistrar* ShellExtensionSystem::extension_registrar() {
+  return nullptr;
+}
+
 RuntimeData* ShellExtensionSystem::runtime_data() {
   return runtime_data_.get();
 }
