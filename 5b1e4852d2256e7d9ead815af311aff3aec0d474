@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864a352e_522e6fa7",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Random comment:  We\u0027ll need to set this up after thread creation (Since mojo is only set up after thread creation).",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c75dc33_5f3828ae",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Should either check that this erases exactly 1 element, or make this take an iterator (If you take my set suggestion) and remove that iterator.",
+      "range": {
+        "startLine": 44,
+        "startChar": 23,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bcc011_55fe7875",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Is the get needed?  client-\u003eFoo() is generally the same thing as client.get()-\u003eFoo.",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b27b60_296ce639",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Any reason to prefer vector over std::set?  This should probably be a small set, so in general, vector is more performant, but it does have more potential to go badly wrong.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62142a03_108618e5",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "I suggest TestNetworkChangeManagerClient.  Very wordy, but more searchable.  No idea how many TestClient classes we have, but suspect it\u0027s a lot.",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1b2cc3_64a4e1f7",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Should we track total number of notifications, and make sure we don\u0027t get any duplicates?",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d764606_f660e84e",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Don\u0027t think we need to keep this.",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0d1e22_2af7edf6",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Maybe also a test where clients are torn down (Adding a test-only method to get the client count).  Make two clients, take one down, pass it around (Erm...Spin the message loop), and make sure there\u0027s only one client left, and it still gets notifications?",
+      "range": {
+        "startLine": 89,
+        "startChar": 37,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3ed336_326417ee",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Create a NetworkChangeNotifier, too, if registry is nullptr?  (That happens both in unit tests, which is unfortunate, and in NetworkService::Create(), which is what we use to create the in-process network service)",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b459c1e_82bd495c",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "We should set this up in the other constructors as well.",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1c5a80_2faf0a58",
+        "filename": "content/public/browser/network_change_manager_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Do we need to hang onto the mojom::NetworkChangeManagerPtr?  We don\u0027t own it, so I think we can just send our request and then throw it away?  Should include that in mojo API docs (If that works.  If the consumer must hold onto the Ptr, that should be mentioned instead)",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9549bf_049f7d4f",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "nit:  Remove the synchonous APIs comment?  The one static method doesn\u0027t get the cached network state.",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43bd3b3_73ad1998",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "In a class that\u0027s expected to have multiple consumers, I think it\u0027s best to name it after how consumers interact with it, now how it interacts with what it\u0027s a consumer of itself.  Maybe NetworkConnectionTracker and its observers NetworkConnectionObserver?  Not set on those, by any means, the current name just makes it unclear that things that want to observer network changes should be watching it.",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea8d53f_aced7619",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "I assume you\u0027re planning on adding tests for this class?  How far are you intending to go in this CL - fully hook it up in Chrome?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334fea84_f4dfa232",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Should we have a pointer to NCN\u0027s documentation instead?  I\u0027m a bit concerned about this documentation regressing.  Same goes for the rest of the docs as well.",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e76b804_c5bb6740",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Mention the threadsafety behavior of these methods?",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 41
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8ed1df_e0e1c963",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "Mention an object must unregister before the NetworkChangeManagerClientImpl is destroyed?",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0b3e51_8b0a5845",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "These should be documented.",
+      "range": {
+        "startLine": 64,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d2d6c3_1a27b37a",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-25T20:19:40Z",
+      "side": 1,
+      "message": "nit:  RequestNotifications?",
+      "range": {
+        "startLine": 65,
+        "startChar": 22,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
