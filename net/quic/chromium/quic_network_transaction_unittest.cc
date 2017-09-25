@@ -3845,6 +3845,75 @@ TEST_P(QuicNetworkTransactionTest, ZeroRTTWithProxy) {
   SendRequestAndExpectHttpResponse("hello world");
 }
 
+TEST_P(QuicNetworkTransactionTest, ProxyAuthRestart) {
+  // QUIC can only talk to a QUIC proxy over a no-secure connection.
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC mail.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, true,
+      GetRequestHeaders("GET", "http", "/"), &header_stream_offset));
+  SpdyHeaderBlock headers =
+      GetResponseHeaders("407 Proxy Authentication Required");
+  headers.AppendValueOrAddHeader("proxy-authenticate",
+                                 "Basic realm=\"MyRealm1\"");
+  headers.AppendValueOrAddHeader("proxy-connection", "close");
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, GetNthClientInitiatedStreamId(0), false, true, std::move(headers)));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // No more data to read
+  mock_quic_data.AddRead(ASYNC, 0);               // EOF
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  // Data for restart. This should go over a new connection.
+  SpdyHeaderBlock request_headers = GetRequestHeaders("GET", "http", "/");
+  request_headers.AppendValueOrAddHeader("Proxy-Connection", "keep-alive");
+  request_headers.AppendValueOrAddHeader("Proxy-Authorization",
+                                         "Basic Zm9vOmJhcg==");
+  MockQuicData mock_quic_data2;
+  header_stream_offset = 0;
+  mock_quic_data2.AddWrite(ConstructClientRequestHeadersPacket(
+      3, GetNthClientInitiatedStreamId(1), true, true,
+      std::move(request_headers), &header_stream_offset));
+  mock_quic_data2.AddRead(ConstructServerResponseHeadersPacket(
+      2, GetNthClientInitiatedStreamId(1), false, false,
+      GetResponseHeaders("200 OK")));
+  mock_quic_data2.AddRead(ConstructServerDataPacket(
+      3, GetNthClientInitiatedStreamId(1), false, true, 0, "hello!"));
+  mock_quic_data2.AddWrite(
+      ConstructClientAckAndConnectionClosePacket(4, 3, 2, 1));
+  mock_quic_data2.AddRead(ASYNC, ERR_IO_PENDING);  // No more data to read
+  mock_quic_data2.AddRead(ASYNC, 0);               // EOF
+  mock_quic_data2.AddSocketDataToFactory(&socket_factory_);
+
+  // There is no need to set up an alternate protocol job, because
+  // no attempt will be made to speak to the proxy over TCP.
+  request_.url = GURL("http://mail.example.org/");
+  CreateSession();
+  TestCompletionCallback callback1;
+  auto trans = std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY,
+                                                        session_.get());
+  int rv = trans->Start(&request_, callback1.callback(), NetLogWithSource());
+  EXPECT_THAT(callback1.GetResult(rv), IsOk());
+
+  const HttpResponseInfo* response = trans->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ(407, response->headers->response_code());
+
+  TestCompletionCallback callback2;
+  const base::string16 kBar(base::ASCIIToUTF16("bar"));
+  const base::string16 kFoo(base::ASCIIToUTF16("foo"));
+  rv =
+      trans->RestartWithAuth(AuthCredentials(kFoo, kBar), callback2.callback());
+  EXPECT_THAT(callback2.GetResult(rv), IsOk());
+  EXPECT_TRUE(trans->GetResponseInfo()->proxy_server.is_quic());
+}
+
 TEST_P(QuicNetworkTransactionTest, ZeroRTTWithConfirmationRequired) {
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
