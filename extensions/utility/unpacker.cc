@@ -22,6 +22,7 @@
 #include "base/threading/thread.h"
 #include "base/values.h"
 #include "content/public/child/image_decoder_utils.h"
+#include "extensions/common/api/declarative_net_request/dnr_manifest_data.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -235,7 +236,25 @@ bool Unpacker::Run() {
       return false;  // Error was already reported.
   }
 
-  return DumpImagesToFile() && DumpMessageCatalogsToFile();
+  return ReadJSONRulesetIfNeeded(extension.get()) && DumpImagesToFile() &&
+         DumpMessageCatalogsToFile();
+}
+
+bool Unpacker::ReadJSONRulesetIfNeeded(const Extension* extension) {
+  const ExtensionResource* resource =
+      declarative_net_request::DNRManifestData::GetRulesetResource(extension);
+  // The extension did not provide a ruleset.
+  if (!resource)
+    return true;
+
+  std::string error;
+  JSONFileValueDeserializer deserializer(resource->GetFilePath());
+  parsed_json_ruleset_ = deserializer.Deserialize(nullptr, &error);
+  if (parsed_json_ruleset_)
+    return true;
+
+  SetError(error);
+  return false;
 }
 
 bool Unpacker::DumpImagesToFile() {
