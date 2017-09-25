@@ -39,39 +39,49 @@ TEST(CanvasColorParamsTest, MatchSkColorSpaceWithGfxColorSpace) {
   for (int iter_color_space = 0; iter_color_space < 3; iter_color_space++)
     for (int iter_pixel_format = 0; iter_pixel_format < 4;
          iter_pixel_format++) {
-      CanvasColorParams color_params(canvas_color_spaces[iter_color_space],
-                                     canvas_pixel_formats[iter_pixel_format]);
+      for (int iter_linear_pixel_math = 0; iter_linear_pixel_math < 2;
+           iter_linear_pixel_math++) {
+        bool linear_pixel_math = !!iter_linear_pixel_math;
+        if (canvas_pixel_formats[iter_pixel_format] == kF16CanvasPixelFormat) {
+          if (!linear_pixel_math)
+            continue;
+        }
+        CanvasColorParams color_params(canvas_color_spaces[iter_color_space],
+                                       canvas_pixel_formats[iter_pixel_format],
+                                       linear_pixel_math);
 
-      std::unique_ptr<SkColorSpaceXform> color_space_xform_canvas =
-          SkColorSpaceXform::New(src_rgb_color_space.get(),
-                                 color_params.GetSkColorSpace().get());
-      std::unique_ptr<SkColorSpaceXform> color_space_xform_media =
-          SkColorSpaceXform::New(
-              src_rgb_color_space.get(),
-              color_params.GetStorageGfxColorSpace().ToSkColorSpace().get());
+        std::unique_ptr<SkColorSpaceXform> color_space_xform_canvas =
+            SkColorSpaceXform::New(src_rgb_color_space.get(),
+                                   color_params.GetSkColorSpace().get());
+        std::unique_ptr<SkColorSpaceXform> color_space_xform_media =
+            SkColorSpaceXform::New(
+                src_rgb_color_space.get(),
+                color_params.GetStorageGfxColorSpace().ToSkColorSpace().get());
 
-      std::unique_ptr<uint8_t[]> transformed_pixel_canvas(
-          new uint8_t[color_params.BytesPerPixel()]());
-      std::unique_ptr<uint8_t[]> transformed_pixel_media(
-          new uint8_t[color_params.BytesPerPixel()]());
+        std::unique_ptr<uint8_t[]> transformed_pixel_canvas(
+            new uint8_t[color_params.BytesPerPixel()]());
+        std::unique_ptr<uint8_t[]> transformed_pixel_media(
+            new uint8_t[color_params.BytesPerPixel()]());
 
-      SkColorSpaceXform::ColorFormat transformed_color_format =
-          color_params.BytesPerPixel() == 4
-              ? SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat
-              : SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
+        SkColorSpaceXform::ColorFormat transformed_color_format =
+            color_params.BytesPerPixel() == 4
+                ? SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat
+                : SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
 
-      color_space_xform_canvas->apply(
-          transformed_color_format, transformed_pixel_canvas.get(),
-          SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
-          src_pixel.get(), 1, SkAlphaType::kPremul_SkAlphaType);
-      color_space_xform_media->apply(
-          transformed_color_format, transformed_pixel_media.get(),
-          SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
-          src_pixel.get(), 1, SkAlphaType::kPremul_SkAlphaType);
+        color_space_xform_canvas->apply(
+            transformed_color_format, transformed_pixel_canvas.get(),
+            SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
+            src_pixel.get(), 1, SkAlphaType::kPremul_SkAlphaType);
+        color_space_xform_media->apply(
+            transformed_color_format, transformed_pixel_media.get(),
+            SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
+            src_pixel.get(), 1, SkAlphaType::kPremul_SkAlphaType);
 
-      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-          transformed_pixel_canvas, transformed_pixel_media,
-          color_params.BytesPerPixel(), wide_gamut_color_correction_tolerance);
+        ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+            transformed_pixel_canvas, transformed_pixel_media,
+            color_params.BytesPerPixel(),
+            wide_gamut_color_correction_tolerance);
+      }
     }
 }
 

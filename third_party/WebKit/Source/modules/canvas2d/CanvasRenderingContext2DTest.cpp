@@ -1062,13 +1062,12 @@ TEST_F(CanvasRenderingContext2DTest, DisableAcceleration) {
 }
 
 enum class ColorSpaceConversion : uint8_t {
-  NONE = 0,
-  DEFAULT_COLOR_CORRECTED = 1,
-  SRGB = 2,
-  LINEAR_RGB = 3,
-  P3 = 4,
-  REC2020 = 5,
+  SRGB = 0,
+  LINEAR_RGB = 1,
+  P3 = 2,
+  REC2020 = 3,
 
+  FIRST = SRGB,
   LAST = REC2020
 };
 
@@ -1088,7 +1087,7 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   return options;
 }
 
-constexpr int kSRGBColorCorrectionTolerance = 1;
+constexpr int kSRGBColorCorrectionTolerance = 3;
 constexpr float kWideGamutColorCorrectionTolerance = 0.01;
 
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
@@ -1124,8 +1123,7 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
   SkColorSpaceXform::ColorFormat color_format = color_format32;
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
 
-  for (uint8_t i =
-           static_cast<uint8_t>(ColorSpaceConversion::DEFAULT_COLOR_CORRECTED);
+  for (uint8_t i = static_cast<uint8_t>(ColorSpaceConversion::FIRST);
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
@@ -1136,10 +1134,6 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
         image_bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage();
 
     switch (color_space_conversion) {
-      case ColorSpaceConversion::NONE:
-        NOTREACHED();
-        break;
-      case ColorSpaceConversion::DEFAULT_COLOR_CORRECTED:
       case ColorSpaceConversion::SRGB:
         color_space = SkColorSpace::MakeSRGB();
         color_format = color_format32;
@@ -1242,16 +1236,16 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
   sk_sp<SkColorSpace> src_sk_color_space = nullptr;
   if (u8_array) {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat)
+        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat, true)
             .GetSkColorSpaceForSkSurfaces();
   } else {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kF16CanvasPixelFormat)
+        CanvasColorParams(src_color_space, kF16CanvasPixelFormat, true)
             .GetSkColorSpaceForSkSurfaces();
   }
 
   sk_sp<SkColorSpace> dst_sk_color_space =
-      CanvasColorParams(dst_color_space, dst_pixel_format)
+      CanvasColorParams(dst_color_space, dst_pixel_format, true)
           .GetSkColorSpaceForSkSurfaces();
 
   // When the input dataArray is in Uint16, we normally should convert the

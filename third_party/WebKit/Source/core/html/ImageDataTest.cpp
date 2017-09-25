@@ -204,16 +204,16 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
   sk_sp<SkColorSpace> src_sk_color_space = nullptr;
   if (u8_array) {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat)
+        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat, true)
             .GetSkColorSpaceForSkSurfaces();
   } else {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kF16CanvasPixelFormat)
+        CanvasColorParams(src_color_space, kF16CanvasPixelFormat, true)
             .GetSkColorSpaceForSkSurfaces();
   }
 
   sk_sp<SkColorSpace> dst_sk_color_space =
-      CanvasColorParams(dst_color_space, dst_pixel_format)
+      CanvasColorParams(dst_color_space, dst_pixel_format, true)
           .GetSkColorSpaceForSkSurfaces();
 
   // When the input dataArray is in Uint16, we normally should convert the

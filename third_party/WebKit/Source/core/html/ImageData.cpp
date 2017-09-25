@@ -241,9 +241,6 @@ ImageData* ImageData::Create(const IntSize& size,
                              ImageDataStorageFormat storage_format) {
   ImageDataColorSettings color_settings;
   switch (color_space) {
-    case kLegacyCanvasColorSpace:
-      color_settings.setColorSpace(kLegacyCanvasColorSpaceName);
-      break;
     case kSRGBCanvasColorSpace:
       color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
       break;
@@ -507,8 +504,6 @@ DOMUint8ClampedArray* ImageData::data() {
 
 CanvasColorSpace ImageData::GetCanvasColorSpace(
     const String& color_space_name) {
-  if (color_space_name == kLegacyCanvasColorSpaceName)
-    return kLegacyCanvasColorSpace;
   if (color_space_name == kSRGBCanvasColorSpaceName)
     return kSRGBCanvasColorSpace;
   if (color_space_name == kRec2020CanvasColorSpaceName)
@@ -705,7 +700,7 @@ CanvasColorParams ImageData::GetCanvasColorParams() {
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (color_settings_.storageFormat() != kUint8ClampedArrayStorageFormatName)
     pixel_format = kF16CanvasPixelFormat;
-  return CanvasColorParams(color_space, pixel_format);
+  return CanvasColorParams(color_space, pixel_format, false);
 }
 
 bool ImageData::ImageDataInCanvasColorSettings(
@@ -721,11 +716,7 @@ bool ImageData::ImageDataInCanvasColorSettings(
       ImageData::GetCanvasColorSpace(color_settings_.colorSpace());
   if (canvas_pixel_format == kRGBA8CanvasPixelFormat &&
       color_settings_.storageFormat() == kUint8ClampedArrayStorageFormatName) {
-    if (canvas_color_space == image_data_color_space ||
-        ((canvas_color_space == kLegacyCanvasColorSpace ||
-         canvas_color_space == kSRGBCanvasColorSpace) &&
-            (image_data_color_space == kLegacyCanvasColorSpace ||
-             image_data_color_space == kSRGBCanvasColorSpace))) {
+    if (canvas_color_space == image_data_color_space) {
       memcpy(converted_pixels.get(), data_->Data(), data_->length());
       return true;
     }
@@ -749,10 +740,11 @@ bool ImageData::ImageDataInCanvasColorSettings(
 
   sk_sp<SkColorSpace> src_color_space =
       CanvasColorParams(image_data_color_space,
-                        data_ ? kRGBA8CanvasPixelFormat : kF16CanvasPixelFormat)
+                        data_ ? kRGBA8CanvasPixelFormat : kF16CanvasPixelFormat,
+                        true)
           .GetSkColorSpaceForSkSurfaces();
   sk_sp<SkColorSpace> dst_color_space =
-      CanvasColorParams(canvas_color_space, canvas_pixel_format)
+      CanvasColorParams(canvas_color_space, canvas_pixel_format, true)
           .GetSkColorSpaceForSkSurfaces();
   SkColorSpaceXform::ColorFormat dst_color_format =
       SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;

@@ -33,8 +33,7 @@ float ColorCorrectionTestUtils::Float16ToFloat(const uint16_t& f16) {
 bool ColorCorrectionTestUtils::IsNearlyTheSame(float expected,
                                                float actual,
                                                float tolerance) {
-  EXPECT_LE(actual, expected + tolerance);
-  EXPECT_GE(actual, expected - tolerance);
+  EXPECT_NEAR(actual, expected, tolerance);
   return true;
 }
 

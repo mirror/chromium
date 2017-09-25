@@ -37,7 +37,7 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
+      color_params_(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat, false),
       creation_attributes_(attrs) {
   color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
   if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
@@ -46,16 +46,17 @@ CanvasRenderingContext::CanvasRenderingContext(
     else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
       color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
 
-    // For now, we only support RGBA8 (for SRGB) and F16 (for all). Everything
-    // else falls back to SRGB + RGBA8.
-    if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
-      color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-    } else {
-      color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-      color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
+    if (creation_attributes_.hasLinearPixelMath()) {
+      color_params_.SetLinearPixelMath(creation_attributes_.linearPixelMath());
     }
 
-    // TODO(ccameron): linearPixelMath needs to be propagated here.
+    if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
+      color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+      // Note that 16-bit canvases only support linear color spaces.
+      color_params_.SetLinearPixelMath(true);
+    } else {
+      color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
+    }
   }
   // Make m_creationAttributes reflect the effective colorSpace, pixelFormat and
   // linearPixelMath rather than the requested one.
@@ -66,8 +67,6 @@ CanvasRenderingContext::CanvasRenderingContext(
 
 WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
   switch (color_params_.color_space()) {
-    case kLegacyCanvasColorSpace:
-      return kLegacyCanvasColorSpaceName;
     case kSRGBCanvasColorSpace:
       return kSRGBCanvasColorSpaceName;
     case kRec2020CanvasColorSpace:

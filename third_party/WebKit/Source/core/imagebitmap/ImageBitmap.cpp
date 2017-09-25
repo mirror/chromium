@@ -76,15 +76,18 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
                  kLinearRGBImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else if (options.colorSpaceConversion() ==
                  kP3ImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(kP3CanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else if (options.colorSpaceConversion() ==
                  kRec2020ImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(
             kRec2020CanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else {
         NOTREACHED()
             << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
@@ -330,9 +333,8 @@ RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
 
   // Color correct the image. This code path uses SkImage::makeColorSpace(). If
   // the color space of the source image is nullptr, it will be assumed in SRGB.
-  return image->ConvertToColorSpace(
-      options.color_params.GetSkColorSpaceForSkSurfaces(),
-      SkTransferFunctionBehavior::kRespect);
+  return image->ConvertToColorSpace(options.color_params.GetSkColorSpace(),
+                                    SkTransferFunctionBehavior::kRespect);
 }
 
 RefPtr<StaticBitmapImage> MakeBlankImage(
@@ -617,9 +619,9 @@ ImageBitmap::ImageBitmap(ImageData* data,
       Uint8Array::Create(std::move(array_buffer), 0, byte_length);
   CanvasColorParams color_params = cropped_data->GetCanvasColorParams();
   if (color_params.GetSkColorType() == kRGBA_F16_SkColorType) {
-    std::unique_ptr<SkColorSpaceXform> xform = SkColorSpaceXform::New(
-        color_params.GetSkColorSpaceForSkSurfaces().get(),
-        color_params.GetSkColorSpaceForSkSurfaces().get());
+    std::unique_ptr<SkColorSpaceXform> xform =
+        SkColorSpaceXform::New(color_params.GetSkColorSpace().get(),
+                               color_params.GetSkColorSpace().get());
     xform->apply(SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat,
                  image_pixels->Data(),
                  SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat,

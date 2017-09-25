@@ -16,7 +16,6 @@ class ColorSpace;
 namespace blink {
 
 enum CanvasColorSpace {
-  kLegacyCanvasColorSpace,
   kSRGBCanvasColorSpace,
   kRec2020CanvasColorSpace,
   kP3CanvasColorSpace,
@@ -33,19 +32,20 @@ class PLATFORM_EXPORT CanvasColorParams {
  public:
   // The default constructor will create an output-blended 8-bit surface.
   CanvasColorParams();
-  CanvasColorParams(CanvasColorSpace, CanvasPixelFormat);
+  CanvasColorParams(CanvasColorSpace, CanvasPixelFormat, bool);
   explicit CanvasColorParams(const SkImageInfo&);
   CanvasColorSpace color_space() const { return color_space_; }
   CanvasPixelFormat pixel_format() const { return pixel_format_; }
 
   void SetCanvasColorSpace(CanvasColorSpace);
   void SetCanvasPixelFormat(CanvasPixelFormat);
+  void SetLinearPixelMath(bool);
 
   // Returns true if the canvas does all blending and interpolation in linear
   // color space. If false, then the canvas does blending and interpolation in
   // the canvas' output color space.
   // TODO(ccameron): This currently returns true iff the color space is legacy.
-  bool LinearPixelMath() const;
+  bool LinearPixelMath() const { return linear_pixel_math_; }
 
   // The SkColorSpace to use in the SkImageInfo for allocated SkSurfaces. This
   // is nullptr in legacy rendering mode.
@@ -65,8 +65,9 @@ class PLATFORM_EXPORT CanvasColorParams {
   sk_sp<SkColorSpace> GetSkColorSpace() const;
 
  private:
-  CanvasColorSpace color_space_ = kLegacyCanvasColorSpace;
+  CanvasColorSpace color_space_ = kSRGBCanvasColorSpace;
   CanvasPixelFormat pixel_format_ = kRGBA8CanvasPixelFormat;
+  bool linear_pixel_math_ = false;
 };
 
 }  // namespace blink

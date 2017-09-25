@@ -262,7 +262,7 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
       return file_list;
     }
     case kImageBitmapTag: {
-      SerializedColorSpace canvas_color_space = SerializedColorSpace::kLegacy;
+      SerializedColorSpace canvas_color_space = SerializedColorSpace::kSRGB;
       SerializedPixelFormat canvas_pixel_format = SerializedPixelFormat::kRGBA8;
       uint32_t origin_clean = 0, is_premultiplied = 0, width = 0, height = 0,
                byte_length = 0;
@@ -328,7 +328,7 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
       return transferred_image_bitmaps[index].Get();
     }
     case kImageDataTag: {
-      SerializedColorSpace canvas_color_space = SerializedColorSpace::kLegacy;
+      SerializedColorSpace canvas_color_space = SerializedColorSpace::kSRGB;
       SerializedImageDataStorageFormat image_data_storage_format =
           SerializedImageDataStorageFormat::kUint8Clamped;
       uint32_t width = 0, height = 0, byte_length = 0;
