@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b9bb03ef_9d6a0578",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T17:35:34Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s much extra code to add. Won\u0027t it be necessary to wait for the event from the test in order to ensure that we\u0027ve given the call time to run?",
+      "parentUuid": "fff26fbe_334fd5b5",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f247a5f1_21139025",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 10
