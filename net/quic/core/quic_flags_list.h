@@ -172,3 +172,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, false)
 
 // Allow QUIC to accept initial packet numbers that are random, not 1.
 QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_enable_accept_random_ipn, false)
+
+// Report the more analogous TLS 1.3 cipher suites rather than TLS 1.2 ECDHE_RSA
+// ciphers in QuicDecrypters.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_tls13_cipher_suites, false)
