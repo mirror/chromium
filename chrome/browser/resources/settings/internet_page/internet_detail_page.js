@@ -229,10 +229,11 @@ Polymer({
     if (!this.didSetFocus_) {
       // Focus a button once the initial state is set.
       this.didSetFocus_ = true;
-      var button = this.$$('#titleDiv .primary-button:not([hidden])') ||
-          this.$$('#titleDiv paper-button:not([hidden])');
-      if (button)
-        button.focus();
+      var button = this.$$('#titleDiv .primary-button:not([hidden])');
+      if (!button)
+        button = this.$$('#titleDiv paper-button:not([hidden])');
+      assert(button);  // At least one button will always be visible.
+      button.focus();
     }
 
     if (this.shouldShowConfigureWhenNetworkLoaded_ &&
@@ -492,7 +493,7 @@ Polymer({
             CrOnc.ConnectionState.NOT_CONNECTED) {
       return false;
     }
-    return this.isRemembered_(networkProperties);
+    return type != CrOnc.Type.CELLULAR;
   },
 
   /**
