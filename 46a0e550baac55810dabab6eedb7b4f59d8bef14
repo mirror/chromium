@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc9b8cb_670b895f",
+        "filename": "chromeos/network/client_cert_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T23:07:03Z",
+      "side": 1,
+      "message": "Note: Either Shill defaults the tpm slot correctly or configuring OpenVPN using a certificate from the UI has never worked (which is possible; most openvpn configuration uses an imported ONC file due to the limitations of the openvpn config UI, something we can now more easily improve upon in the Web UI).",
+      "revId": "46a0e550baac55810dabab6eedb7b4f59d8bef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
