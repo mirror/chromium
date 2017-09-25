@@ -648,8 +648,6 @@ void PaintPropertyTreeBuilder::UpdateEffect(
                                                 style.BlendMode())
               : SkBlendMode::kSrcOver;
 
-      DCHECK(!style.HasCurrentOpacityAnimation() ||
-             compositing_reasons != kCompositingReasonNone);
       auto result = properties.UpdateEffect(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, CompositorFilterOperations(), style.Opacity(),
@@ -745,7 +743,8 @@ void PaintPropertyTreeBuilder::UpdateFilter(
           kColorFilterNone, std::move(filter), 1.f, SkBlendMode::kSrcOver,
           compositing_reasons,
           CompositorElementIdFromUniqueObjectId(
-              object.UniqueId(), CompositorElementIdNamespace::kEffectFilter));
+              object.UniqueId(), CompositorElementIdNamespace::kEffectFilter),
+          FloatPoint(context.current.paint_offset));
       force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearFilter();
@@ -1605,13 +1604,10 @@ void PaintPropertyTreeBuilder::UpdateFragmentPropertiesForSelf(
                     full_context.force_subtree_update);
     UpdateCssClip(object, *properties, fragment_context,
                   full_context.force_subtree_update, full_context.clip_changed);
-    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      UpdateEffect(object, *properties, fragment_context,
-                   full_context.force_subtree_update,
-                   full_context.clip_changed);
-      UpdateFilter(object, *properties, fragment_context,
-                   full_context.force_subtree_update);
-    }
+    UpdateEffect(object, *properties, fragment_context,
+                 full_context.force_subtree_update, full_context.clip_changed);
+    UpdateFilter(object, *properties, fragment_context,
+                 full_context.force_subtree_update);
   }
   UpdateLocalBorderBoxContext(object, fragment_context, fragment_data,
                               full_context.force_subtree_update);
