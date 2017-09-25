@@ -156,7 +156,8 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
       .set_frame_index(index)
       .set_repetition_count(GetRepetitionCountWithPolicyOverride(
           repetition_count_, animation_policy_))
-      .set_completion_state(completion_state);
+      .set_completion_state(completion_state)
+      .set_reset_animation_sequence_id(reset_animation_sequence_id_);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -623,6 +624,7 @@ void BitmapImage::ResetAnimation() {
   desired_frame_start_time_ = 0;
   animation_finished_ = false;
   cached_frame_ = PaintImage();
+  reset_animation_sequence_id_++;
 }
 
 bool BitmapImage::MaybeAnimated() {
