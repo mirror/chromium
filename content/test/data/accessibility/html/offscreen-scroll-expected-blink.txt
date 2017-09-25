@@ -1,0 +1,4 @@
+rootWebArea scrollY=100 scrollYMin=0 scrollYMax=108
+++button offscreen name='Onscreen before scroll'
+++button name='Scrolled Button'
+<-- End-of-file -->
