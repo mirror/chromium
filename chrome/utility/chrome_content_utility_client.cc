@@ -50,6 +50,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include "chrome/utility/printing/print_backend_handler_impl.h"
 #include "chrome/utility/shell_handler_impl_win.h"
 #endif
 
@@ -59,7 +60,9 @@
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "chrome/common/printing/pdf_to_pwg_raster_converter.mojom.h"
+#include "chrome/common/printing/print_backend_handler.mojom.h"
 #include "chrome/utility/printing/pdf_to_pwg_raster_converter_service.h"
+#include "chrome/utility/printing/print_backend_handler_service.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) || \
@@ -344,6 +347,11 @@ void ChromeContentUtilityClient::RegisterServices(
       base::Bind(&printing::PDFToPWGRasterConverterService::CreateService);
   services->emplace(printing::mojom::kPdfToPwgRasterConverterServiceName,
                     pdf_to_pwg_converter_info);
+  service_manager::EmbeddedServiceInfo print_backend_handler_info;
+  print_backend_handler_info.factory =
+      base::Bind(&printing::PrintBackendHandlerService::CreateService);
+  services->emplace(printing::mojom::kPrintBackendHandlerServiceName,
+                    print_backend_handler_info);
 #endif
 
   service_manager::EmbeddedServiceInfo profiling_info;

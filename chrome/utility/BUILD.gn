@@ -161,6 +161,10 @@ static_library("utility") {
       "printing/pdf_to_pwg_raster_converter_impl.h",
       "printing/pdf_to_pwg_raster_converter_service.cc",
       "printing/pdf_to_pwg_raster_converter_service.h",
+      "printing/print_backend_handler_impl.cc",
+      "printing/print_backend_handler_impl.h",
+      "printing/print_backend_handler_service.cc",
+      "printing/print_backend_handler_service.h",
     ]
   }
 
@@ -169,7 +173,10 @@ static_library("utility") {
       "printing_handler.cc",
       "printing_handler.h",
     ]
-    deps += [ "//pdf" ]
+    deps += [
+      "//pdf",
+      "//printing",
+    ]
   }
 
   if (enable_basic_printing || enable_print_preview) {
@@ -202,5 +209,9 @@ if (enable_print_preview) {
   service_manifest("pdf_to_pwg_raster_converter_manifest") {
     name = "pdf_to_pwg_raster_converter"
     source = "printing/pdf_to_pwg_raster_converter_manifest.json"
+  }
+  service_manifest("print_backend_handler_manifest") {
+    name = "print_backend_handler"
+    source = "printing/print_backend_handler_manifest.json"
   }
 }

@@ -1,0 +1,30 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Utility process interface exposed to the browser process on OS_WIN, for
+// making printing backend system calls.
+
+module printing.mojom;
+
+import "mojo/common/values.mojom";
+
+const string kPrintBackendHandlerServiceName =
+    "print_backend_handler";
+
+struct PrinterBasicInfo {
+  string printer_name;
+  string printer_description;
+  int32 printer_status;
+  int32 is_default;
+  map<string, string> options;
+};
+
+interface PrintBackendHandler {
+  GetDefaultPrinter() => (string default_printer);
+
+  EnumeratePrinters() => (array<PrinterBasicInfo> printers);
+
+  FetchCapabilities(string printer_name) =>
+      (mojo.common.mojom.DictionaryValue capabilities);
+};
