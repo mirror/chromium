@@ -12,6 +12,11 @@
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#import "base/mac/bind_objc_block.h"
+#include "components/image_fetcher/core/image_fetcher_impl.h"
+#include "components/image_fetcher/ios/ios_image_decoder_impl.h"
+#include "ui/gfx/image/image.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -21,16 +26,67 @@ namespace {
 constexpr int kBackgroundColor = 0x4285F4;
 constexpr int kViewHeight = 48;
 
+net::NetworkTrafficAnnotationTag traffic_annotation =
+    net::DefineNetworkTrafficAnnotation("credenential_avatar",
+                                        R"(
+         semantics {
+         sender: "Chrome Password Manager"
+         description:
+           "Every credential saved in Chromium via the Credential Management "
+           "API can have an avatar URL. The URL is essentially provided by "
+           "the site calling the API. The avatar is used in the account "
+           "chooser UI and auto signin toast which appear when a site calls "
+           "navigator.credentials.get(). The avatar is retrieved before "
+           "showing the UI."
+         trigger:
+           "User visits a site that calls navigator.credentials.get(). "
+           "Assuming there are matching credentials in the Chromium password "
+           "store, the avatars are retrieved."
+         destination: WEBSITE
+         }
+         policy {
+         setting:
+           "One can disable saving new credentials in the settings (see "
+           "'Passwords and forms'). There is no setting to disable the API."
+           chrome_policy {
+             PasswordManagerEnabled {
+               policy_options {mode: MANDATORY}
+             PasswordManagerEnabled: false
+             }
+           }
+         })");
+
 }  // namespace
 
-@implementation NotifyUserAutoSigninViewController
+@interface NotifyUserAutoSigninViewController ()
 
+// Username, corresponding to Credential.id field in JS.
+@property(assign, nonatomic) NSString* username;
+// User's avatar.
+@property(assign, nonatomic) GURL iconURL;
+@property(nonatomic, strong) UIImage* avatar;
+@property(nonatomic, strong) UIImageView* avatarView;
+
+@end
+
+@implementation NotifyUserAutoSigninViewController {
+  std::unique_ptr<image_fetcher::ImageFetcher> _imageFetcher;
+}
+
+@synthesize avatar = _avatar;
+@synthesize avatarView = _avatarView;
+@synthesize iconURL = _iconURL;
 @synthesize username = _username;
 
-- (instancetype)initWithUsername:(NSString*)username {
+- (instancetype)initWithUsername:(NSString*)username
+                         iconURL:(GURL)iconURL
+                   contextGetter:(net::URLRequestContextGetter*)contextGetter {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _username = username;
+    _iconURL = iconURL;
+    _imageFetcher = std::make_unique<image_fetcher::ImageFetcherImpl>(
+        image_fetcher::CreateIOSImageDecoder(), contextGetter);
   }
   return self;
 }
@@ -57,23 +113,47 @@ constexpr int kViewHeight = 48;
   textView.font = font;
   textView.textColor = [UIColor whiteColor];
 
+  // Load the default avatar
+  _avatar = [UIImage imageNamed:@"ic_account_circle"];
+  // View containing user's avatar.
+  _avatarView = [[UIImageView alloc] initWithImage:_avatar];
+  [_avatarView setTranslatesAutoresizingMaskIntoConstraints:NO];
+
   // Add subiews
   [contentView addSubview:textView];
+  [contentView addSubview:_avatarView];
   [self.view addSubview:contentView];
 
   // Text view must leave 48pt on the left for user's avatar. Set the
   // constraints.
   NSDictionary* childrenViewsDictionary = @{
     @"textView" : textView,
+    @"avatarView" : _avatarView,
   };
   NSArray* childrenConstraints = @[
     @"V:|[textView]|",
-    @"H:|-48-[textView]-12-|",
+    @"V:|-12-[avatarView(==24)]-12-|",
+    @"H:|-12-[avatarView(==24)]-12-[textView]-12-|",
   ];
   ApplyVisualConstraints(childrenConstraints, childrenViewsDictionary);
 
   [contentView.heightAnchor constraintEqualToConstant:kViewHeight].active = YES;
   PinToSafeArea(contentView, self.view);
+
+  if (_iconURL.is_valid()) {
+    __weak NotifyUserAutoSigninViewController* weakSelf = self;
+    // Fetch user's avatar and update displayed image.
+    _imageFetcher->StartOrQueueNetworkRequest(
+        _iconURL.spec(), _iconURL,
+        base::BindBlockArc(^(const std::string& id, const gfx::Image& image,
+                             const image_fetcher::RequestMetadata& metadata) {
+          if (!image.IsEmpty()) {
+            weakSelf.avatar = image.CopyUIImage();
+            [weakSelf.avatarView setImage:_avatar];
+          }
+        }),
+        traffic_annotation);
+  }
 }
 
 - (void)didMoveToParentViewController:(UIViewController*)parent {
