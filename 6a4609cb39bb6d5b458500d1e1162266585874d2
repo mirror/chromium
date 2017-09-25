@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f676110_30ece1eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "nit: The motivations for this change are the following:",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75fcff96_47267dc5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -49,6 +66,108 @@
       "side": 1,
       "message": "OK, it makes sense for the removal of AccessTokenStore to be a \"clean removal\", i.e., it could be reverted to bring all the code back as it was. It\u0027s the end of my day now, so I\u0027ll review this CL on Monday (as-is). Apologies for the delay!",
       "parentUuid": "7ed1411f_178c6501",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adb2c6b_72054195",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "nit: I would just call this GetSystemRequestContextOnUIThread().",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1dc5ad0_9100b2a2",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need this DCHECK and the below one, as them failing would just cause basically the same crash right below anyway. i.e., dereferencing something is an implicit CHECK that it\u0027s non-null.",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff9e547_28b056f5",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "Hmm, can you investigate exactly what the lifetime guarantee of ContentBrowserClient is and document it here? It will be good to have this documentation for when we move this into the Device Service, so we can reason about whether this is then problematic or not.",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a47558_6a5b1bb5",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "nit: ok, after all the bikeshedding, I now think this can just be called GetGeolocationRequestContext(). Apologies if that\u0027s what you originally had :P.",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdf5484_ab971be2",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "nit: Can you add a TODO here to replace this usage of GetAccessTokenStore() by checking the return value of |request_context_producer_|?",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0316f16e_871959e6",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-25T08:59:59Z",
+      "side": 1,
+      "message": "hmm, this seems like it might require working in your followup CL to short-circuit out when there\u0027s a null URLRequestContext.",
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
