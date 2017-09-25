@@ -61,7 +61,9 @@
           UIImage* favicon =
               [UIImage imageWithData:[NSData dataWithBytes:data->front()
                                                     length:data->size()]];
-          attributes = [FaviconAttributes attributesWithImage:favicon];
+          attributes =
+              [FaviconAttributes attributesWithImage:favicon
+                                            iconType:result.bitmap.icon_type];
         } else if (result.fallback_icon_style) {
           UIColor* backgroundColor = skia::UIColorFromSkColor(
               result.fallback_icon_style->background_color);
@@ -73,8 +75,9 @@
               attributesWithMonogram:monogram
                            textColor:textColor
                      backgroundColor:backgroundColor
-              defaultBackgroundColor:result.fallback_icon_style->
-                                     is_default_background_color];
+              defaultBackgroundColor:result.fallback_icon_style
+                                         ->is_default_background_color
+                            iconType:result.bitmap.icon_type];
         }
         DCHECK(attributes);
         completion(attributes);

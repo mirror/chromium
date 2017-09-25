@@ -19,6 +19,9 @@ namespace ntp_tiles {
 namespace metrics {
 namespace {
 
+using favicon_base::INVALID_ICON;
+using favicon_base::TOUCH_ICON;
+using favicon_base::WEB_MANIFEST_ICON;
 using testing::ElementsAre;
 using testing::IsEmpty;
 
@@ -32,21 +35,27 @@ TEST(RecordPageImpressionTest, ShouldRecordNumberOfTiles) {
 TEST(RecordTileImpressionTest, ShouldRecordUmaForIcons) {
   base::HistogramTester histogram_tester;
 
-  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL, GURL(),
+  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL, INVALID_ICON,
+                       GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(1, TileSource::TOP_SITES, ICON_REAL, GURL(),
+  RecordTileImpression(1, TileSource::TOP_SITES, ICON_REAL, INVALID_ICON,
+                       GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(2, TileSource::TOP_SITES, ICON_REAL, GURL(),
+  RecordTileImpression(2, TileSource::TOP_SITES, ICON_REAL, WEB_MANIFEST_ICON,
+                       GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(3, TileSource::TOP_SITES, ICON_COLOR, GURL(),
+  RecordTileImpression(3, TileSource::TOP_SITES, ICON_COLOR, INVALID_ICON,
+                       GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(4, TileSource::TOP_SITES, ICON_COLOR, GURL(),
+  RecordTileImpression(4, TileSource::TOP_SITES, ICON_COLOR, TOUCH_ICON, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(5, TileSource::SUGGESTIONS_SERVICE, ICON_REAL, GURL(),
+  RecordTileImpression(5, TileSource::SUGGESTIONS_SERVICE, ICON_REAL,
+                       INVALID_ICON, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(6, TileSource::SUGGESTIONS_SERVICE, ICON_DEFAULT, GURL(),
+  RecordTileImpression(6, TileSource::SUGGESTIONS_SERVICE, ICON_DEFAULT,
+                       INVALID_ICON, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(7, TileSource::POPULAR, ICON_COLOR, GURL(),
+  RecordTileImpression(7, TileSource::POPULAR, ICON_COLOR, INVALID_ICON, GURL(),
                        /*rappor_service=*/nullptr);
 
   EXPECT_THAT(
@@ -101,16 +110,24 @@ TEST(RecordTileImpressionTest, ShouldRecordUmaForIcons) {
   EXPECT_THAT(histogram_tester.GetAllSamples(
                   "NewTabPage.SuggestionsImpression.IconsGray"),
               ElementsAre(base::Bucket(/*min=*/6, /*count=*/1)));
+  EXPECT_THAT(
+      histogram_tester.GetAllSamples("NewTabPage.TileFaviconType.IconsReal"),
+      ElementsAre(base::Bucket(/*min=*/4, /*count=*/1)));
+  EXPECT_THAT(
+      histogram_tester.GetAllSamples("NewTabPage.TileFaviconType.IconsColor"),
+      ElementsAre(base::Bucket(/*min=*/2, /*count=*/1)));
 }
 
 TEST(RecordTileImpressionTest, ShouldRecordUmaForThumbnails) {
   base::HistogramTester histogram_tester;
 
-  RecordTileImpression(0, TileSource::TOP_SITES, THUMBNAIL_FAILED, GURL(),
+  RecordTileImpression(0, TileSource::TOP_SITES, THUMBNAIL_FAILED, INVALID_ICON,
+                       GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(1, TileSource::SUGGESTIONS_SERVICE, THUMBNAIL, GURL(),
+  RecordTileImpression(1, TileSource::SUGGESTIONS_SERVICE, THUMBNAIL,
+                       INVALID_ICON, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(2, TileSource::POPULAR, THUMBNAIL, GURL(),
+  RecordTileImpression(2, TileSource::POPULAR, THUMBNAIL, INVALID_ICON, GURL(),
                        /*rappor_service=*/nullptr);
 
   EXPECT_THAT(
@@ -240,11 +257,11 @@ TEST(RecordTileClickTest, ShouldNotRecordUnknownTileType) {
 TEST(RecordTileImpressionTest, ShouldRecordRappor) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL,
+  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL, INVALID_ICON,
                        GURL("http://www.site1.com/"), &rappor_service);
-  RecordTileImpression(1, TileSource::TOP_SITES, ICON_COLOR,
+  RecordTileImpression(1, TileSource::TOP_SITES, ICON_COLOR, INVALID_ICON,
                        GURL("http://www.site2.com/"), &rappor_service);
-  RecordTileImpression(2, TileSource::TOP_SITES, ICON_DEFAULT,
+  RecordTileImpression(2, TileSource::TOP_SITES, ICON_DEFAULT, INVALID_ICON,
                        GURL("http://www.site3.com/"), &rappor_service);
 
   EXPECT_EQ(3, rappor_service.GetReportsCount());
@@ -280,10 +297,11 @@ TEST(RecordTileImpressionTest, ShouldRecordRappor) {
 TEST(RecordTileImpressionTest, ShouldNotRecordRapporForUnknownTileType) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL,
+  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL, INVALID_ICON,
                        GURL("http://www.s1.com/"), &rappor_service);
   RecordTileImpression(1, TileSource::TOP_SITES, UNKNOWN_TILE_TYPE,
-                       GURL("http://www.s2.com/"), &rappor_service);
+                       INVALID_ICON, GURL("http://www.s2.com/"),
+                       &rappor_service);
 
   // Unknown tile type shouldn't get reported.
   EXPECT_EQ(1, rappor_service.GetReportsCount());
