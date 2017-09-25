@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88dec965_5a979da7",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T18:55:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be virtual as well, as long as we override TickAnimations we can use an anonymous / private method in WorkletAnimationPlayer to calculate the time and then we only have one vtable lookup for the call to TickAnimations rather than one per animation.",
+      "revId": "88517b8b19d5262da47f5941cc53a721e3eae36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
