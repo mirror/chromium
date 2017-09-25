@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "513ed2d4_21d78a0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/interfaces/html.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T14:22:59Z",
+      "side": 1,
+      "message": "How is this file used (I\u0027m unfamiliar with it and not sure why there\u0027s an IDL in WPT) and why do we want to add this here? I\u0027m also a bit uneasy as it\u0027s not conditional on the automation flag.",
+      "range": {
+        "startLine": 1585,
+        "startChar": 1,
+        "endLine": 1588,
+        "endChar": 2
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c4abe3_45ab5e82",
+        "filename": "third_party/WebKit/LayoutTests/navigator_webdriver/navigator_webdriver.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T14:22:59Z",
+      "side": 1,
+      "message": "These asserts should have real descriptions (or if you think they\u0027re trivial just remove the description params).",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9798059f_c4083aae",
+        "filename": "third_party/WebKit/Source/core/frame/Navigator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T14:22:59Z",
+      "side": 1,
+      "message": "The spec says this attribute should always return true. Any reason why we\u0027d want this to be false if there\u0027s no Frame attached?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d884882_ddf88e31",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T14:22:59Z",
+      "side": 1,
+      "message": "You don\u0027t need both a Setting and a RuntimeEnabledFeature. The rest of your code is using the REF so you can just remove this.",
+      "range": {
+        "startLine": 934,
+        "startChar": 4,
+        "endLine": 938,
+        "endChar": 6
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f797f9f_39abd5e9",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-25T14:22:59Z",
+      "side": 1,
+      "message": "Remove the status field. I think that by default we shouldn\u0027t be exposing this anywhere, even tests. Instead, make your layout test explicitly turn it on using `window.internals.runtimeFlags`. You should also test that Navigator.webdriver isn\u0027t on the prototype chain at all when that flag is off.\n\nIf runtimeFlags above doesn\u0027t work because it happens too late (i.e. after the renderer is initialized), you can make your test a unit test (e.g. see WebViewTest.cpp, you can set RuntimeEnabledFeatures::setXYZ() before initializing Blink, see the MiddleClickAutoscrollCursor test for example).",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
