@@ -81,6 +81,40 @@ void SessionMetricsRecorder::WillStopSession(StopTrigger trigger) {
                              base::TimeDelta::FromSeconds(15),
                              base::TimeDelta::FromHours(12), 50);
 
+  if (session_duration <= base::TimeDelta::FromSeconds(15)) {
+    // Record the session duration in finer scale for short sessions
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Media.Remoting.ShortSessionDuration", session_duration,
+        base::TimeDelta::FromSeconds(1), base::TimeDelta::FromSeconds(15), 56);
+
+    if (session_duration <= base::TimeDelta::FromSeconds(1)) {
+      // Record the stop trigger for sessions shorter than 1 second.
+      UMA_HISTOGRAM_ENUMERATION(
+          "Media.Remoting.SessionStopTriggerWithDuration0To1Sec", trigger,
+          STOP_TRIGGER_MAX + 1);
+    } else if (session_duration <= base::TimeDelta::FromSeconds(3)) {
+      // Record the stop trigger for sessions with duration in (1, 3] seconds.
+      UMA_HISTOGRAM_ENUMERATION(
+          "Media.Remoting.SessionStopTriggerWithDuration1To3Sec", trigger,
+          STOP_TRIGGER_MAX + 1);
+    } else if (session_duration <= base::TimeDelta::FromSeconds(5)) {
+      // Record the stop trigger for sessions with duration in (3, 5] seconds.
+      UMA_HISTOGRAM_ENUMERATION(
+          "Media.Remoting.SessionStopTriggerWithDuration3To5Sec", trigger,
+          STOP_TRIGGER_MAX + 1);
+    } else if (session_duration <= base::TimeDelta::FromSeconds(10)) {
+      // Record the stop trigger for sessions with duration in (5, 10] seconds.
+      UMA_HISTOGRAM_ENUMERATION(
+          "Media.Remoting.SessionStopTriggerWithDuration5o10Sec", trigger,
+          STOP_TRIGGER_MAX + 1);
+    } else {
+      // Record the stop trigger for sessions with duration in (10, 15] seconds.
+      UMA_HISTOGRAM_ENUMERATION(
+          "Media.Remoting.SessionStopTriggerWithDuration10To15Sec", trigger,
+          STOP_TRIGGER_MAX + 1);
+    }
+  }
+
   // Reset |start_trigger_| since metrics recording of the current remoting
   // session has now completed.
   start_trigger_ = base::nullopt;
