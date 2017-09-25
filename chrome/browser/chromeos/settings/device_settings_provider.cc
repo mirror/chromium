@@ -23,6 +23,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_cache.h"
+#include "chrome/browser/chromeos/tpm_firmware_update.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/cryptohome_client.h"
@@ -100,6 +101,7 @@ const char* const kKnownSettings[] = {
     kVariationsRestrictParameter,
     kDeviceLoginScreenLocales,
     kDeviceLoginScreenInputMethods,
+    kTPMFirmwareUpdateSettings,
 };
 
 void DecodeLoginPolicies(
@@ -485,8 +487,8 @@ void DecodeGenericPolicies(
   new_values_cache->SetBoolean(
       kReleaseChannelDelegated,
       policy.has_release_channel() &&
-      policy.release_channel().has_release_channel_delegated() &&
-      policy.release_channel().release_channel_delegated());
+          policy.release_channel().has_release_channel_delegated() &&
+          policy.release_channel().release_channel_delegated());
 
   if (policy.has_system_timezone()) {
     if (policy.system_timezone().has_timezone()) {
@@ -567,6 +569,12 @@ void DecodeGenericPolicies(
         base::DictionaryValue::From(base::JSONReader::Read(
             policy.device_wallpaper_image().device_wallpaper_image()));
     new_values_cache->SetValue(kDeviceWallpaperImage, std::move(dict_val));
+  }
+
+  if (policy.has_tpm_firmware_update_settings()) {
+    new_values_cache->SetValue(kTPMFirmwareUpdateSettings,
+                               tpm_firmware_update::DecodeSettingsProto(
+                                   policy.tpm_firmware_update_settings()));
   }
 }
 
