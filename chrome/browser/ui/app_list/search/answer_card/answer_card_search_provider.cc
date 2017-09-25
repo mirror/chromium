@@ -77,6 +77,8 @@ AnswerCardSearchProvider::AnswerCardSearchProvider(
 }
 
 AnswerCardSearchProvider::~AnswerCardSearchProvider() {
+  navigation_contexts_[0].contents->SetDelegate(nullptr);
+  navigation_contexts_[1].contents->SetDelegate(nullptr);
 }
 
 void AnswerCardSearchProvider::Start(bool is_voice_query,
