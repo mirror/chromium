@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc6c605_ff9b15c9",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-25T19:04:29Z",
+      "side": 1,
+      "message": "nit: unnecessary. [ChromeIcon backIcon] already has accessibility label set up.",
+      "revId": "5062750138eaf38c01e0a62c3423df8a4b41166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fde58f_85b3e59a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-25T19:04:29Z",
+      "side": 1,
+      "message": "This entire section seems unnecessary now that you\u0027re calling [self.tableView reloadData].",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 3
+      },
+      "revId": "5062750138eaf38c01e0a62c3423df8a4b41166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
