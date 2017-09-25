@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d48a79f_ac8f0a61",
+        "filename": "chrome/browser/vr/elements/invisible_hit_target.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T16:20:08Z",
+      "side": 1,
+      "message": "Perhaps a DCHECK(hit_testable()) to be safe?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6639c8d9_b0f3e590",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T16:20:08Z",
+      "side": 1,
+      "message": "nit: ASSERT_NE?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e023958d_7e070af9",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T16:20:08Z",
+      "side": 1,
+      "message": "give the above assert/expect, isn\u0027t this always return false?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dfb6bc_3d25c12c",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T16:20:08Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7f7f32_8c5bda0f",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-25T16:20:08Z",
+      "side": 1,
+      "message": "OOC, is this fix a different issue?",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
