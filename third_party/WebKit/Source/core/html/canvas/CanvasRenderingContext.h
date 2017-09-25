@@ -92,7 +92,7 @@ class CORE_EXPORT CanvasRenderingContext
   WTF::String ColorSpaceAsString() const;
   WTF::String PixelFormatAsString() const;
 
-  const CanvasColorParams& color_params() const { return color_params_; }
+  const CanvasColorParams& ColorParams() const { return color_params_; }
 
   virtual RefPtr<StaticBitmapImage> GetImage(AccelerationHint,
                                              SnapshotReason) const = 0;
@@ -111,6 +111,7 @@ class CORE_EXPORT CanvasRenderingContext
   virtual bool IsPaintable() const = 0;
   virtual void DidDraw(const SkIRect& dirty_rect);
   virtual void DidDraw();
+  void WillDraw() const;
 
   // Return true if the content is updated.
   virtual bool PaintRenderingResultsToCanvas(SourceDrawingBuffer) {

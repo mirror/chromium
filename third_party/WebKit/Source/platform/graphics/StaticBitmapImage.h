@@ -31,6 +31,10 @@ class PLATFORM_EXPORT StaticBitmapImage : public Image {
 
   bool IsStaticBitmapImage() const override { return true; }
 
+  WeakPtr<StaticBitmapImage> CreateWeakPtr() {
+    return weak_ptr_factory_.CreateWeakPtr();
+  }
+
   // Methods overridden by all sub-classes
   virtual ~StaticBitmapImage() {}
 
@@ -90,6 +94,8 @@ class PLATFORM_EXPORT StaticBitmapImage : public Image {
                                                 SkTransferFunctionBehavior);
 
  protected:
+  StaticBitmapImage() : weak_ptr_factory_(this) {}
+
   // Helper for sub-classes
   void DrawHelper(PaintCanvas*,
                   const PaintFlags&,
@@ -103,6 +109,9 @@ class PLATFORM_EXPORT StaticBitmapImage : public Image {
   // AcceleratedStaticBitmapImage. To change this property, the call site would
   // have to call SetOriginClean().
   bool is_origin_clean_ = true;
+
+ private:
+  WeakPtrFactory<StaticBitmapImage> weak_ptr_factory_;
 };
 
 }  // namespace blink

@@ -56,7 +56,6 @@
 namespace blink {
 
 class AffineTransform;
-class CanvasColorParams;
 class CanvasContextCreationAttributes;
 class CanvasRenderingContext;
 class CanvasRenderingContextFactory;
@@ -136,8 +135,9 @@ class CORE_EXPORT HTMLCanvasElement final
   void RemoveListener(CanvasDrawListener*);
 
   // Used for rendering
-  void DidDraw(const FloatRect&) override;
-  void DidDraw() override;
+  void DidDraw(const FloatRect&) final;
+  void DidDraw() final;
+  void WillDraw() const final;
 
   void Paint(GraphicsContext&, const LayoutRect&);
 
@@ -308,7 +308,7 @@ class CORE_EXPORT HTMLCanvasElement final
   void SetSurfaceSize(const IntSize&);
 
   bool PaintsIntoCanvasBuffer() const;
-  CanvasColorParams GetCanvasColorParams() const;
+  CanvasColorParams ColorParams() const;
 
   ImageData* ToImageData(SourceDrawingBuffer, SnapshotReason) const;
 

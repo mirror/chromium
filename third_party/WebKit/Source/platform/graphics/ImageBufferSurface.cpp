@@ -40,9 +40,8 @@
 namespace blink {
 
 ImageBufferSurface::ImageBufferSurface(const IntSize& size,
-                                       OpacityMode opacity_mode,
                                        const CanvasColorParams& color_params)
-    : opacity_mode_(opacity_mode), size_(size), color_params_(color_params) {
+    : size_(size), color_params_(color_params) {
   SetIsHidden(false);
 }
 
@@ -57,12 +56,8 @@ void ImageBufferSurface::Clear() {
   // if this wasn't required, but the canvas is currently filled with the magic
   // transparency color. Can we have another way to manage this?
   if (IsValid()) {
-    if (opacity_mode_ == kOpaque) {
-      Canvas()->clear(SK_ColorBLACK);
-    } else {
-      Canvas()->clear(SK_ColorTRANSPARENT);
-    }
-    DidDraw(FloatRect(FloatPoint(0, 0), FloatSize(size())));
+    Canvas()->clear(ColorParams().ClearColor());
+    DidDraw(FloatRect(FloatPoint(0, 0), FloatSize(Size())));
   }
 }
 

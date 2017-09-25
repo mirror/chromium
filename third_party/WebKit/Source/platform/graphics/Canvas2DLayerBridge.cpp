@@ -37,6 +37,7 @@
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
+#include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
@@ -66,131 +67,19 @@ enum {
                                   // two animation frames behind.
 };
 
-static void ReleaseMailboxImageResource(
-    RefPtr<blink::StaticBitmapImage>&& image,
-    bool lost_resource) {
-  if (lost_resource)
-    image->Abandon();
-  // Image going out of scope takes care of resource clean-up in
-  // AccelStaticBitmapImage and MailboxTextureHolder destructors.
-}
-
-// Resets Skia's texture bindings. This method should be called after
-// changing texture bindings.
-static void ResetSkiaTextureBinding(
-    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper) {
-  if (!context_provider_wrapper)
-    return;
-  GrContext* gr_context =
-      context_provider_wrapper->ContextProvider()->GetGrContext();
-  if (gr_context)
-    gr_context->resetContext(kTextureBinding_GrGLBackendState);
-}
-
-// Releases all resources associated with a CHROMIUM image.
-static void DeleteCHROMIUMImage(
-    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper,
-    std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
-    const GLuint& image_id,
-    const GLuint& texture_id) {
-  if (!context_provider_wrapper)
-    return;
-  gpu::gles2::GLES2Interface* gl =
-      context_provider_wrapper->ContextProvider()->ContextGL();
-
-  if (gl) {
-    GLenum target = GC3D_TEXTURE_RECTANGLE_ARB;
-    gl->BindTexture(target, texture_id);
-    gl->ReleaseTexImage2DCHROMIUM(target, image_id);
-    gl->DestroyImageCHROMIUM(image_id);
-    gl->DeleteTextures(1, &texture_id);
-    gl->BindTexture(target, 0);
-    gpu_memory_buffer.reset();
-
-    ResetSkiaTextureBinding(context_provider_wrapper);
-  }
-}
-
 }  // namespace
 
 namespace blink {
 
-struct Canvas2DLayerBridge::ImageInfo : public RefCounted<ImageInfo> {
-  ImageInfo(std::unique_ptr<gfx::GpuMemoryBuffer>,
-            GLuint image_id,
-            GLuint texture_id);
-  ~ImageInfo();
-
-  // The backing buffer.
-  std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
-
-  // The id of the CHROMIUM image.
-  const GLuint image_id_;
-
-  // The id of the texture bound to the CHROMIUM image.
-  const GLuint texture_id_;
-};
-
-static sk_sp<SkSurface> CreateSkSurface(GrContext* gr,
-                                        const IntSize& size,
-                                        int msaa_sample_count,
-                                        OpacityMode opacity_mode,
-                                        const CanvasColorParams& color_params,
-                                        bool* surface_is_accelerated) {
-  if (gr)
-    gr->resetContext();
-
-  SkAlphaType alpha_type =
-      (kOpaque == opacity_mode) ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
-  // If we need color correction for all color spaces, we set the proper color
-  // space when creating the surface. If color correct rendering is only toward
-  // SRGB, we leave the surface with no color space. The painting canvas will
-  // get wrapped with a proper SkColorSpaceXformCanvas in GetOrCreateSurface().
-  sk_sp<SkColorSpace> color_space = nullptr;
-  if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
-    color_space = color_params.GetSkColorSpaceForSkSurfaces();
-  SkImageInfo info =
-      SkImageInfo::Make(size.Width(), size.Height(),
-                        color_params.GetSkColorType(), alpha_type, color_space);
-  SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
-  sk_sp<SkSurface> surface;
-
-  if (gr) {
-    *surface_is_accelerated = true;
-    surface = SkSurface::MakeRenderTarget(
-        gr, SkBudgeted::kNo, info, msaa_sample_count,
-        kOpaque == opacity_mode ? 0 : &disable_lcd_props);
-  }
-
-  if (!surface) {
-    *surface_is_accelerated = false;
-    surface = SkSurface::MakeRaster(
-        info, kOpaque == opacity_mode ? 0 : &disable_lcd_props);
-  }
-
-  if (surface) {
-    if (opacity_mode == kOpaque) {
-      surface->getCanvas()->clear(SK_ColorBLACK);
-    } else {
-      surface->getCanvas()->clear(SK_ColorTRANSPARENT);
-    }
-  }
-  return surface;
-}
-
 Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
                                          int msaa_sample_count,
-                                         OpacityMode opacity_mode,
                                          AccelerationMode acceleration_mode,
                                          const CanvasColorParams& color_params,
                                          bool is_unit_test)
-    : ImageBufferSurface(size, opacity_mode, color_params),
+    : ImageBufferSurface(size, color_params),
       logger_(WTF::WrapUnique(new Logger)),
       weak_ptr_factory_(this),
       image_buffer_(0),
-      msaa_sample_count_(msaa_sample_count),
       bytes_allocated_(0),
       have_recorded_draw_commands_(false),
       destruction_in_progress_(false),
@@ -198,11 +87,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       is_hidden_(false),
       is_deferral_enabled_(true),
       software_rendering_while_hidden_(false),
-      last_image_id_(0),
-      last_filter_(GL_LINEAR),
       acceleration_mode_(acceleration_mode),
-      opacity_mode_(opacity_mode),
-      size_(size),
       color_params_(color_params) {
   if (acceleration_mode != kDisableAcceleration) {
     context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
@@ -222,12 +107,13 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
   BeginDestruction();
   DCHECK(destruction_in_progress_);
-  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
-    ClearCHROMIUMImageCache();
+  ClearCachedResources();
   layer_.reset();
 }
 
 void Canvas2DLayerBridge::Init() {
+  // TODO(junov): Get rid of this. Resource providers are supposed to clear on
+  // init.
   Clear();
   if (CheckSurfaceValid())
     FlushInternal();
@@ -237,7 +123,7 @@ void Canvas2DLayerBridge::StartRecording() {
   DCHECK(is_deferral_enabled_);
   recorder_ = WTF::WrapUnique(new PaintRecorder);
   PaintCanvas* canvas =
-      recorder_->beginRecording(size_.Width(), size_.Height());
+      recorder_->beginRecording(Size().Width(), Size().Height());
   // Always save an initial frame, to support resetting the top level matrix
   // and clip.
   canvas->save();
@@ -253,8 +139,7 @@ void Canvas2DLayerBridge::SetLoggerForTesting(std::unique_ptr<Logger> logger) {
 }
 
 void Canvas2DLayerBridge::ResetSurface() {
-  surface_paint_canvas_.reset();
-  surface_.reset();
+  resource_provider_.reset();
 }
 
 bool Canvas2DLayerBridge::ShouldAccelerate(AccelerationHint hint) const {
@@ -289,7 +174,7 @@ bool Canvas2DLayerBridge::IsAccelerated() const {
     // (|m_surface| is null) with restoration pending.
     return true;
   }
-  if (surface_)  // && !m_layer is implied
+  if (resource_provider_)  // && !m_layer is implied
     return false;
 
   // Whether or not to accelerate is not yet resolved. Determine whether
@@ -299,194 +184,9 @@ bool Canvas2DLayerBridge::IsAccelerated() const {
   return ShouldAccelerate(kPreferAcceleration);
 }
 
-GLenum Canvas2DLayerBridge::GetGLFilter() {
-  return filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
-}
-
-bool Canvas2DLayerBridge::PrepareGpuMemoryBufferMailboxFromImage(
-    SkImage* image,
-    MailboxInfo* info,
-    viz::TextureMailbox* out_mailbox) {
-  // Need to flush skia's internal queue, because the texture is about to be
-  // accessed directly.
-  GrContext* gr_context =
-      context_provider_wrapper_->ContextProvider()->GetGrContext();
-  gr_context->flush();
-
-  RefPtr<ImageInfo> image_info = CreateGpuMemoryBufferBackedTexture();
-  if (!image_info)
-    return false;
-
-  gpu::gles2::GLES2Interface* gl = ContextGL();
-  if (!gl)
-    return false;
-
-  GLuint image_texture =
-      skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
-          ->fID;
-  GLenum texture_target = GC3D_TEXTURE_RECTANGLE_ARB;
-  gl->CopySubTextureCHROMIUM(
-      image_texture, 0, texture_target, image_info->texture_id_, 0, 0, 0, 0, 0,
-      size_.Width(), size_.Height(), GL_FALSE, GL_FALSE, GL_FALSE);
-
-  gpu::Mailbox mailbox;
-  gl->GenMailboxCHROMIUM(mailbox.name);
-  gl->ProduceTextureDirectCHROMIUM(image_info->texture_id_, texture_target,
-                                   mailbox.name);
-
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->Flush();
-  gpu::SyncToken sync_token;
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
-
-  info->image_info_ = image_info;
-  bool is_overlay_candidate = true;
-  bool secure_output_only = false;
-
-  *out_mailbox =
-      viz::TextureMailbox(mailbox, sync_token, texture_target, gfx::Size(size_),
-                          is_overlay_candidate, secure_output_only);
-  gfx::ColorSpace color_space = color_params_.GetGfxColorSpace();
-  out_mailbox->set_color_space(color_space);
-  image_info->gpu_memory_buffer_->SetColorSpaceForScanout(color_space);
-
-  gl->BindTexture(GC3D_TEXTURE_RECTANGLE_ARB, 0);
-
-  // Because we are changing the texture binding without going through skia,
-  // we must dirty the context.
-  ResetSkiaTextureBinding(context_provider_wrapper_);
-
-  return true;
-}
-
-RefPtr<Canvas2DLayerBridge::ImageInfo>
-Canvas2DLayerBridge::CreateGpuMemoryBufferBackedTexture() {
-  if (!image_info_cache_.IsEmpty()) {
-    RefPtr<Canvas2DLayerBridge::ImageInfo> info = image_info_cache_.back();
-    image_info_cache_.pop_back();
-    return info;
-  }
-
-  gpu::gles2::GLES2Interface* gl = ContextGL();
-  if (!gl)
-    return nullptr;
-
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
-      Platform::Current()->GetGpuMemoryBufferManager();
-  if (!gpu_memory_buffer_manager)
-    return nullptr;
-
-  std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer =
-      gpu_memory_buffer_manager->CreateGpuMemoryBuffer(
-          gfx::Size(size_), gfx::BufferFormat::RGBA_8888,
-          gfx::BufferUsage::SCANOUT, gpu::kNullSurfaceHandle);
-  if (!gpu_memory_buffer)
-    return nullptr;
-
-  GLuint image_id =
-      gl->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
-                              size_.Width(), size_.Height(), GL_RGBA);
-  if (!image_id)
-    return nullptr;
-
-  GLuint texture_id;
-  gl->GenTextures(1, &texture_id);
-  GLenum target = GC3D_TEXTURE_RECTANGLE_ARB;
-  gl->BindTexture(target, texture_id);
-  gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, GetGLFilter());
-  gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, GetGLFilter());
-  gl->TexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  gl->BindTexImage2DCHROMIUM(target, image_id);
-
-  ResetSkiaTextureBinding(context_provider_wrapper_);
-
-  return AdoptRef(new Canvas2DLayerBridge::ImageInfo(
-      std::move(gpu_memory_buffer), image_id, texture_id));
-}
-
-void Canvas2DLayerBridge::ClearCHROMIUMImageCache() {
-  for (const auto& it : image_info_cache_) {
-    DeleteCHROMIUMImage(context_provider_wrapper_,
-                        std::move(it->gpu_memory_buffer_), it->image_id_,
-                        it->texture_id_);
-  }
-  image_info_cache_.clear();
-}
-
-bool Canvas2DLayerBridge::PrepareMailboxFromImage(
-    RefPtr<StaticBitmapImage>&& image,
-    MailboxInfo* mailbox_info,
-    viz::TextureMailbox* out_mailbox) {
-  if (!context_provider_wrapper_)
-    return false;
-
-  GrContext* gr_context =
-      context_provider_wrapper_->ContextProvider()->GetGrContext();
-  if (!gr_context) {
-    mailbox_info->image_ = std::move(image);
-    // For testing, skip GL stuff when using a mock graphics context.
-    return true;
-  }
-
-  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
-
-  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
-    if (PrepareGpuMemoryBufferMailboxFromImage(skia_image.get(), mailbox_info,
-                                               out_mailbox))
-      return true;
-    // Note: if GpuMemoryBuffer-backed texture creation failed we fall back to
-    // the non-GpuMemoryBuffer path.
-  }
-
-  mailbox_info->image_ = std::move(image);
-
-  if (context_provider_wrapper_->ContextProvider()
-          ->GetCapabilities()
-          .disable_2d_canvas_copy_on_write) {
-    surface_->notifyContentWillChange(SkSurface::kRetain_ContentChangeMode);
-  }
-
-  // Need to flush skia's internal queue, because the texture is about to be
-  // accessed directly.
-  gr_context->flush();
-
-  // Because of texture sharing with the compositor, we must invalidate
-  // the state cached in skia so that the deferred copy on write
-  // in SkSurface_Gpu does not make any false assumptions.
-  skia_image->getTexture()->textureParamsModified();
-
-  gpu::gles2::GLES2Interface* gl = ContextGL();
-  if (!gl)
-    return false;
-
-  GLuint texture_id =
-      skia::GrBackendObjectToGrGLTextureInfo(skia_image->getTextureHandle(true))
-          ->fID;
-  gl->BindTexture(GL_TEXTURE_2D, texture_id);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetGLFilter());
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetGLFilter());
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-  mailbox_info->image_->EnsureMailbox(kUnverifiedSyncToken);
-
-  *out_mailbox =
-      viz::TextureMailbox(mailbox_info->image_->GetMailbox(),
-                          mailbox_info->image_->GetSyncToken(), GL_TEXTURE_2D);
-
-  if (IsHidden()) {
-    // With hidden canvases, we release the SkImage immediately because
-    // there is no need for animations to be double buffered. Deleteing
-    // the SkImage will resulting skia's copy-on-write being skipped.
-    mailbox_info->image_ = nullptr;
-  }
-
-  gl->BindTexture(GL_TEXTURE_2D, 0);
-  // Because we are changing the texture binding without going through skia,
-  // we must dirty the context.
-  ResetSkiaTextureBinding(context_provider_wrapper_);
-  return true;
+void Canvas2DLayerBridge::ClearCachedResources() {
+  if (resource_provider_)
+    resource_provider_->ClearCachedResources();
 }
 
 static void HibernateWrapper(WeakPtr<Canvas2DLayerBridge> bridge,
@@ -744,6 +444,9 @@ void Canvas2DLayerBridge::SetIsHidden(bool hidden) {
     return;
 
   is_hidden_ = new_hidden_value;
+  if (IsHidden())
+    ClearCachedResources();
+
   if (CANVAS2D_HIBERNATION_ENABLED && surface_ && IsHidden() &&
       !destruction_in_progress_ && !hibernation_scheduled_) {
     if (layer_)
@@ -1159,6 +862,11 @@ RefPtr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
 
 void Canvas2DLayerBridge::WillOverwriteCanvas() {
   SkipQueuedDrawCommands();
+  resource_provider_->WillOverwriteCanvas();
+}
+
+void Canvas2DLayerBridge::WillDraw() {
+  resource_provider_->WillDraw();
 }
 
 Canvas2DLayerBridge::ImageInfo::ImageInfo(

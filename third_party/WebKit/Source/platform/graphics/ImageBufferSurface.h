@@ -64,7 +64,8 @@ class PLATFORM_EXPORT ImageBufferSurface {
   virtual PaintCanvas* Canvas() = 0;
   virtual void DisableDeferral(DisableDeferralReason) {}
   virtual void WillOverwriteCanvas() {}
-  virtual void DidDraw(const FloatRect& rect) {}
+  virtual void DidDraw(const FloatRect& rect) const {}
+  virtual void WillDraw() const {}
   virtual bool IsValid() const = 0;
   virtual bool Restore() { return false; }
   virtual WebLayer* Layer() const { return 0; }
@@ -103,17 +104,15 @@ class PLATFORM_EXPORT ImageBufferSurface {
   virtual RefPtr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
                                                      SnapshotReason) = 0;
 
-  OpacityMode GetOpacityMode() const { return opacity_mode_; }
-  const IntSize& size() const { return size_; }
-  const CanvasColorParams& color_params() const { return color_params_; }
+  const IntSize& Size() const { return size_; }
+  const CanvasColorParams& ColorParams() const { return color_params_; }
   void NotifyIsValidChanged(bool is_valid) const;
 
  protected:
-  ImageBufferSurface(const IntSize&, OpacityMode, const CanvasColorParams&);
+  ImageBufferSurface(const IntSize&, const CanvasColorParams&);
   void Clear();
 
  private:
-  OpacityMode opacity_mode_;
   IntSize size_;
   CanvasColorParams color_params_;
 };

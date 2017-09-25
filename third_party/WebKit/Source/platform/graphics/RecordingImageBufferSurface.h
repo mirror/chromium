@@ -31,7 +31,6 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   // Only GetRecord() should be used to access the resulting frame.
   RecordingImageBufferSurface(const IntSize&,
                               AllowFallback,
-                              OpacityMode = kNonOpaque,
                               const CanvasColorParams& = CanvasColorParams());
   ~RecordingImageBufferSurface() override;
 
@@ -40,7 +39,7 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   void DisableDeferral(DisableDeferralReason) override;
   sk_sp<PaintRecord> GetRecord() override;
   void Flush(FlushReason) override;
-  void DidDraw(const FloatRect&) override;
+  void DidDraw(const FloatRect&) const override;
   bool IsValid() const override { return true; }
   bool IsRecording() const override { return !fallback_surface_; }
   bool WritePixels(const SkImageInfo& orig_info,

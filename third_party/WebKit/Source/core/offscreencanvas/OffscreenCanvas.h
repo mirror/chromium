@@ -60,6 +60,10 @@ class CORE_EXPORT OffscreenCanvas final
   const IntSize& Size() const override { return size_; }
   void SetSize(const IntSize&);
 
+  void WillDraw() const final {}
+  void DidDraw() final {}
+  void DidDraw(const FloatRect&) final {}
+
   void SetPlaceholderCanvasId(DOMNodeId canvas_id) {
     placeholder_canvas_id_ = canvas_id;
   }

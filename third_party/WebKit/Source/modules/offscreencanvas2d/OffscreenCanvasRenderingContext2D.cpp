@@ -226,7 +226,7 @@ bool OffscreenCanvasRenderingContext2D::IsPaintable() const {
 }
 
 CanvasColorSpace OffscreenCanvasRenderingContext2D::ColorSpace() const {
-  return color_params().color_space();
+  return ColorParams().ColorSpace();
 }
 
 String OffscreenCanvasRenderingContext2D::ColorSpaceAsString() const {
@@ -234,7 +234,7 @@ String OffscreenCanvasRenderingContext2D::ColorSpaceAsString() const {
 }
 
 CanvasPixelFormat OffscreenCanvasRenderingContext2D::PixelFormat() const {
-  return color_params().pixel_format();
+  return ColorParams().PixelFormat();
 }
 
 bool OffscreenCanvasRenderingContext2D::IsAccelerated() const {
