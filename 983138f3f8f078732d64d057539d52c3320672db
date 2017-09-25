@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9a4345_4cc7bfb0",
+        "filename": "chrome/browser/extensions/bookmark_app_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "As discussed in person, we will just refer to PWAs as Bookmark Apps. If we really need to differentiate between old and new Bookmark Apps we will call the old ones \"Legacy Bookmark Apps\".\n\nUsing Experimental for this function is OK since it\u0027s actually checking if an experimental flag is enabled.",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b599d7_210c2198",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "s/PWAs/Bookmark Apps/",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9f031c_ce297d49",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "Optional, you could:\n\n1. Get a BrowserContext from the WebContents.\n2. Get a MenuManager from the BrowserContext.\n3. Get the extension id from the app name.\n4. Use the id to get the icon from the MenuManager.\n\nThat way you wouldn\u0027t need to change TabIconView. Also, as discussed, you could directly use ExtensionIconManager, though it will retrieve the icon asynchronously.",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f58eee_780132d6",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "s/PWAs/Bookmark Apps/",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0123a48_a94a42e0",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "s/PWAs/Bookmark Apps/",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295af379_a33ef399",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-25T05:42:48Z",
+      "side": 1,
+      "message": "s/PWAs/Bookmark Apps/",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
