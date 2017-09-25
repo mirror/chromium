@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b54729f5_98e5001d",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-25T16:59:55Z",
+      "side": 1,
+      "message": "How will this effect focus highlight? We don\u0027t send the root iirc. Can fix in a followup.",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3df17d4_c8949dfa",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-25T16:59:55Z",
+      "side": 1,
+      "message": "Seems like we need to call out this function is only valid when |node| is focused or within the focused window. Optional: pass the window as a argument to GetBounds.",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49582a8d_d73b2d4c",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-25T16:59:55Z",
+      "side": 1,
+      "message": "nit: it\u0027s (or it is the)",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
