@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ffccf68f_febd3964",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Done.\nIs that strictly true, though? Seems like we could theoretically get CANCELED even for a cached logo, in which case usable would be false. Also usable or not doesn\u0027t really matter here, since image and metadata will be null either way.\n\n(TBH, the \"usable\" field confuses me a bit. It\u0027s really only there to differentiate a fresh \"no logo\" from \"previous logo is still valid\", right?)",
+      "parentUuid": "7a87ac44_d3953fd0",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4643c84_45280b80",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de5dc34_67794caa",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4643c84_45280b80",
+      "range": {
+        "startLine": 681,
+        "startChar": 22,
+        "endLine": 682,
+        "endChar": 43
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "de68092d_ae8f454f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Done and done.",
+      "parentUuid": "71efd81f_4cebbb09",
+      "range": {
+        "startLine": 686,
+        "startChar": 11,
+        "endLine": 686,
+        "endChar": 41
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd009b3_a62e617e",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2c4a4cdc_c8e42fc3",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "I now reuse showLogoOrDoodle in the update/fade case, so I don\u0027t want to call it \"cut\".\nRenamed this one to fadeToLogoOrDoodle though.",
+      "parentUuid": "ffd009b3_a62e617e",
+      "range": {
+        "startLine": 759,
+        "startChar": 4,
+        "endLine": 759,
+        "endChar": 16
+      },
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c9621a_cc590476",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47615226_468c1e9f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c9621a_cc590476",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "21d0ef42_ddf4b707",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42484286_4f9a2b23",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5510cbf0_321e13d9",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -136,6 +262,24 @@
       "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01020a76_e02c8d02",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-25T13:16:19Z",
+      "side": 1,
+      "message": "Mostly - one checked for image being null, the other for metadata.\nReused showLogoOrDoodle.",
+      "parentUuid": "5510cbf0_321e13d9",
+      "revId": "b8693256c5b2484cb40870fdbb03820a2510a5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
