@@ -46,6 +46,30 @@
       "revId": "096682112f5e7b3ca439b9187a074a6b857774d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99402c50_a614b47c",
+        "filename": "remoting/ios/app/refresh_control_provider_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-25T22:41:31Z",
+      "side": 1,
+      "message": "I thought so from the remoting usage of it but I could be mistaken. I don\u0027t think it needs to block the change.",
+      "parentUuid": "6280d496_4e342224",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "096682112f5e7b3ca439b9187a074a6b857774d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
