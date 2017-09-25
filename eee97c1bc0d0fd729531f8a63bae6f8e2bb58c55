@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43bdc85d_f190fbde",
+        "filename": "components/signin/core/browser/profile_oauth2_token_service.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a31f28_ab1ef21f",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29ed9843_9b01de82",
         "filename": "components/signin/ios/browser/ios_signin_client.cc",
         "patchSetId": 23
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "909922f5_df67c354",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Pretty much copy pasted everything that could reasonably be refactored into here. The constructor now takes many KeyedServices.",
+      "parentUuid": "29ed9843_9b01de82",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d685d4d3_955d9e2c",
         "filename": "components/signin/ios/browser/ios_signin_client.cc",
         "patchSetId": 23
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T11:29:34Z",
       "side": 1,
       "message": "Looking at this code makes it clear that we could have done a better job when creating this client (this function does not belong in the client). I\u0027ll do a pass after you CL is submitted to see if there are things we can remove from the client.",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074fe89f_2f48fc65",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Do you mean it should belong in the Chrome/WebView specific subclasses? I can move this back if you think it\u0027s more appropriate.",
+      "parentUuid": "d685d4d3_955d9e2c",
       "range": {
         "startLine": 67,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a109f283_8b2ce38f",
+        "filename": "ios/chrome/browser/signin/oauth2_token_service_factory.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Ah my bad I misread your first comment. Done.",
+      "parentUuid": "330829e5_7b14be10",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a62a732_2d89f705",
         "filename": "ios/web_view/internal/signin/web_view_account_consistency_service_factory.h",
         "patchSetId": 23
@@ -114,6 +210,30 @@
       "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca81fbd_11f5f4b1",
+        "filename": "ios/web_view/internal/signin/web_view_account_consistency_service_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll remove all related services.",
+      "parentUuid": "5a62a732_2d89f705",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "067019d4_ac24c285",
+        "filename": "ios/web_view/internal/signin/web_view_account_reconcilor_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d74582_b30bd302",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5941b1a_8642f5ea",
         "filename": "ios/web_view/internal/signin/web_view_gaia_cookie_manager_service_factory.h",
         "patchSetId": 23
@@ -151,6 +295,30 @@
       "writtenOn": "2017-09-25T11:29:34Z",
       "side": 1,
       "message": "GaiaCookieManager is only needed for Mirror. You do not need it if you do not want Mirror.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "eee97c1bc0d0fd729531f8a63bae6f8e2bb58c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f230f23_dd89c91d",
+        "filename": "ios/web_view/internal/signin/web_view_gaia_cookie_manager_service_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-25T14:12:40Z",
+      "side": 1,
+      "message": "Looks like this is needed in SigninManager, is it ok to pass a nullptr there?",
+      "parentUuid": "f5941b1a_8642f5ea",
       "range": {
         "startLine": 26,
         "startChar": 13,
