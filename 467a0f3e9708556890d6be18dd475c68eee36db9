@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e3b2df_1d76f599",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T20:17:13Z",
+      "side": 1,
+      "message": "Maybe putting the empty size in the TODO is confusing if the TODO is about the refactoring. Just mention here that this size is only currently computed for BoxPainterBase and NinePieceImagePainter as these are the only painters which use custom paint and for other subclasses we pass an empty size. I assume it is unused in these other cases right? We should add a DCHECK(container_size.IsEmpty() || !logical_tile_size.IsEmpty()) in the paint function that uses it to verify.",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceec1a70_58a863a4",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-25T20:17:13Z",
+      "side": 1,
+      "message": "It took me a while to figure out what this meant since it is unrelated to the first sentence but instead related to a refactoring which isn\u0027t called out by this comment. How about:\nTODO(schenney): Pass the container_size unsnapped as a LayoutSize so that we don\u0027t need to pass an additional parameter.",
+      "range": {
+        "startLine": 74,
+        "startChar": 64,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
