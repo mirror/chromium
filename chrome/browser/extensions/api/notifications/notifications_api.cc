@@ -61,6 +61,10 @@ namespace notifications = api::notifications;
 
 namespace {
 
+// The maximum length of a notification ID, in number of characters. Some
+// platforms have limitattions on the length of the ID.
+constexpr int kNotificationIdLengthLimit = 500;
+
 const char kMissingRequiredPropertiesForCreateNotification[] =
     "Some of the required properties are missing: type, iconUrl, title and "
     "message.";
@@ -74,6 +78,8 @@ const char kExtraListItemsProvided[] =
     "List items provided for notification type != list";
 const char kExtraImageProvided[] =
     "Image resource provided for notification type != image";
+const char kNotificationIdTooLong[] =
+    "The notification's ID should be 500 characters or less";
 
 #if !defined(OS_CHROMEOS)
 const char kLowPriorityDeprecatedOnPlatform[] =
@@ -335,6 +341,11 @@ bool NotificationsApiFunction::CreateNotification(
 
   if (options->is_clickable.get())
     optional_fields.clickable = *options->is_clickable;
+
+  if (id.size() >= kNotificationIdLengthLimit) {
+    SetError(kNotificationIdTooLong);
+    return false;
+  }
 
   std::string notification_id = CreateScopedIdentifier(extension_->id(), id);
   Notification notification(
