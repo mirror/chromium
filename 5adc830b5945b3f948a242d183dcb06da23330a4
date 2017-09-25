@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b2e3124_d704886b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-25T23:39:34Z",
+      "side": 1,
+      "message": "Oh ok...should I cite the test case for this (as we often do in editing code)?",
+      "parentUuid": "debf8041_c2827fc7",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c4f28fc_bb9a2103",
         "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3dbbd4a5_697606c6",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-25T23:39:34Z",
+      "side": 1,
+      "message": "I think ReplaceFontSizeByKeyboard does some logic to see if we can use \"small\", \"medium\", \"large\", etc. as the size instead of a number. I don\u0027t think it\u0027s related.\n\nThe issue is that ReplaceSelectionCommand doesn\u0027t just apply text replacements, it can also paste in rich content, and it might need to change it to make it match the existing style (if the \"match style\" option is enabled). Perhaps there\u0027s some shortcut we could apply for a plain text insertion, but I don\u0027t think it would really solve the problem in general.\n\nThe end of ReplaceSelectionCommand::DoApply() calls CompleteHTMLReplacement(). If the \"match style\" option is enabled, this calls ApplyStyle() using the EditingStyle we have here to make sure the new text has the correct style.\n\nSomewhere in ApplyStyleCommand, there\u0027s some logic that checks if there\u0027s inline style around us that we need to manipulate (I assume there\u0027s some case involving rich content insertion where this is necessary). In our case:\n\n\u003cdiv contenteditable\u003e\u003cspan style\u003d\"font-size: 12px;\"\u003efoo bar\u003c/span\u003e\u003c/div\u003e,\n\nthere is indeed inline style involved. So I think there\u0027s a check that says \"do the properties on the inline style match the computed values we slurped into EditingStyle? If not, we need to break the node up, and put our own value on the new text.\" 12px does not match the computed value if text autosizing is enabled, so ApplyStyleCommand applies the larger computed size to the new text.",
+      "parentUuid": "5c4f28fc_bb9a2103",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aff0bd17_2a75186d",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-25T22:55:47Z",
       "side": 1,
       "message": "This is pretty synthetic because I don\u0027t think we are really testing how the autosizer comes in behind the editing code and changes the font size. WDYT of creating a page that really autosizes? For example, copying ResizeAndGlyphOverflowChanged in TextAutosizerTest.cpp and just doing a text replace and verify that the text is autosized before and after.",
+      "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afcf92b_a8b9032a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-25T23:39:34Z",
+      "side": 1,
+      "message": "I think this works fine for the purposes of the test case, but I can change it if you think that would be an improvement.",
+      "parentUuid": "aff0bd17_2a75186d",
       "revId": "5adc830b5945b3f948a242d183dcb06da23330a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
