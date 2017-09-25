@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
+#include "chrome/common/printing/printer_capabilities.h"
 
 #include <memory>
 #include <string>
@@ -15,7 +15,6 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chrome/common/cloud_print/cloud_print_cdd_conversion.h"
 #include "chrome/common/crash_keys.h"
 #include "printing/backend/print_backend.h"
@@ -39,26 +38,28 @@ namespace {
 // Returns a dictionary representing printer capabilities as CDD.  Returns
 // an empty dictionary if a dictionary could not be generated.
 std::unique_ptr<base::DictionaryValue>
-GetPrinterCapabilitiesOnBlockingPoolThread(const std::string& device_name) {
+GetPrinterCapabilitiesOnBlockingPoolThread(
+    const std::string& device_name,
+    scoped_refptr<PrintBackend> print_backend) {
   base::ThreadRestrictions::AssertIOAllowed();
   DCHECK(!device_name.empty());
-
-  scoped_refptr<PrintBackend> print_backend(
-      PrintBackend::CreateInstance(nullptr));
+  scoped_refptr<PrintBackend> backend =
+      print_backend ? print_backend
+                    : printing::PrintBackend::CreateInstance(nullptr);
 
   VLOG(1) << "Get printer capabilities start for " << device_name;
   crash_keys::ScopedPrinterInfo crash_key(
-      print_backend->GetPrinterDriverInfo(device_name));
+      backend->GetPrinterDriverInfo(device_name));
 
   auto empty_capabilities = std::make_unique<base::DictionaryValue>();
   std::unique_ptr<base::DictionaryValue> printer_info;
-  if (!print_backend->IsValidPrinter(device_name)) {
+  if (!backend->IsValidPrinter(device_name)) {
     LOG(WARNING) << "Invalid printer " << device_name;
     return empty_capabilities;
   }
 
   PrinterSemanticCapsAndDefaults info;
-  if (!print_backend->GetPrinterSemanticCapsAndDefaults(device_name, &info)) {
+  if (!backend->GetPrinterSemanticCapsAndDefaults(device_name, &info)) {
     LOG(WARNING) << "Failed to get capabilities for " << device_name;
     return empty_capabilities;
   }
@@ -143,7 +144,8 @@ std::pair<std::string, std::string> GetPrinterNameAndDescription(
 
 std::unique_ptr<base::DictionaryValue> GetSettingsOnBlockingPool(
     const std::string& device_name,
-    const PrinterBasicInfo& basic_info) {
+    const PrinterBasicInfo& basic_info,
+    scoped_refptr<PrintBackend> print_backend) {
   base::ThreadRestrictions::AssertIOAllowed();
 
   const auto printer_name_description =
@@ -160,15 +162,16 @@ std::unique_ptr<base::DictionaryValue> GetSettingsOnBlockingPool(
       base::ContainsKey(basic_info.options, kCUPSEnterprisePrinter) &&
           basic_info.options.at(kCUPSEnterprisePrinter) == kValueTrue);
 
-  printer_info->Set(kPrinterCapabilities,
-                    GetPrinterCapabilitiesOnBlockingPoolThread(device_name));
+  printer_info->Set(
+      kPrinterCapabilities,
+      GetPrinterCapabilitiesOnBlockingPoolThread(device_name, print_backend));
 
   return printer_info;
 }
 
 void ConvertPrinterListForCallback(
-    const PrinterHandler::AddedPrintersCallback& callback,
-    const PrinterHandler::GetPrintersDoneCallback& done_callback,
+    const base::Callback<void(const base::ListValue& printers)>& callback,
+    const base::Closure& done_callback,
     const printing::PrinterList& printer_list) {
   base::ListValue printers;
   PrintersToValues(printer_list, &printers);
