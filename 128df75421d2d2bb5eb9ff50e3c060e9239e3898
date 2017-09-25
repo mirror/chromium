@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb42bfa5_e4987507",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-09-25T16:45:54Z",
+      "side": 1,
+      "message": "Done. Initially I was using the was_changed value for additional resizing needed beyond GVR\u0027s buffer and the Surface, i.e. for the new AHardwareBuffer-based swap chain. But that logic can also be integrated directly in this function.\n\nGoing forward, we may want to consider encapsulating this in a \"WebVR image transport provider\" class where we can just appropriately overload a resize method as needed, especially if this also lets us factor out related logic such as OnFrameAvailable. But that sounds like a separate refactor.",
+      "parentUuid": "12e71b57_7da8dab2",
+      "range": {
+        "startLine": 742,
+        "startChar": 31,
+        "endLine": 742,
+        "endChar": 48
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe32b411_a3ebdf41",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c23f73f_1cda30cf",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-09-25T16:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe32b411_a3ebdf41",
+      "range": {
+        "startLine": 752,
+        "startChar": 4,
+        "endLine": 754,
+        "endChar": 16
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b25c357_8e574737",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9069c376_adc9876a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-09-25T16:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b25c357_8e574737",
+      "range": {
+        "startLine": 757,
+        "startChar": 4,
+        "endLine": 760,
+        "endChar": 57
+      },
+      "revId": "128df75421d2d2bb5eb9ff50e3c060e9239e3898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
