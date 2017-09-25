@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10012d9c_44e88744",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionPopupControllerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-25T22:43:33Z",
+      "side": 1,
+      "message": "Hmm... Thanks for fixing the nit, but this is slightly different from what I proposed. onClassified()/adjustSelectionByCharacterOffset() should come later than the second showSelectionMenu(). You\u0027ll need to mock out SelectionClient and call onClassified() later in order to implement that. Ideally, in that test, we should ignore it because selection changed. Also, that should explore mClassificationResult better.",
+      "range": {
+        "startLine": 164,
+        "startChar": 20,
+        "endLine": 164,
+        "endChar": 37
+      },
+      "revId": "d968a8e0411af40f624c9c0ecf5bf4fa7b50a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
