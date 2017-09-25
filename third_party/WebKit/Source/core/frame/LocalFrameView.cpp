@@ -136,6 +136,8 @@
 #include "platform/wtf/StdLibExtras.h"
 #include "public/platform/WebDisplayItemList.h"
 
+#include "core/paint/PaintPropertyTreePrinter.h"
+
 // Used to check for dirty layouts violating document lifecycle rules.
 // If arg evaluates to true, the program will continue. If arg evaluates to
 // false, program will crash if DCHECK_IS_ON() or return false from the current
@@ -3311,6 +3313,7 @@ void LocalFrameView::PrePaint() {
     PrePaintTreeWalk().Walk(*this);
   }
 
+  showAllPropertyTrees(*this);
   ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kPrePaintClean);
   });
