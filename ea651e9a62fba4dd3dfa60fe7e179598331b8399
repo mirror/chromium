@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "744c7436_6325cfab",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-25T02:52:06Z",
+      "side": 1,
+      "message": "do you know the types of elements here? We have some constraints. For example, file or filesystem type elements MUST have a size.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 47
+      },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243e44bd_93182a5c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-25T02:52:06Z",
+      "side": 1,
+      "message": "this can be broken if we go over memory quota, if there is invalid input, or we depend on a broken parent blob. Please handle this case.",
+      "range": {
+        "startLine": 233,
+        "startChar": 43,
+        "endLine": 233,
+        "endChar": 72
+      },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3589f09f_d6bb5feb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-25T02:52:06Z",
+      "side": 1,
+      "message": "unused declaration",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "ea651e9a62fba4dd3dfa60fe7e179598331b8399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
