@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e7b4ba_d14cc0c3",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T14:30:06Z",
+      "side": 1,
+      "message": "\"Depend\" doesn\u0027t seem like the right word here. Anything that checks a feature param depends on it. I would be more specific: the thing you are not supposed to do is use base::FeatureList::IsEnabled() with them.",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "1af6353cac90fae80d4cc77ad0ef1ded22ba3fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8229d1a2_7fae24f9",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-25T14:30:06Z",
+      "side": 1,
+      "message": "iOS checks IsEnabled(kArticleSuggestionsFeature)",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 53
+      },
+      "revId": "1af6353cac90fae80d4cc77ad0ef1ded22ba3fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
