@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/media_stream_request.h"
 
@@ -93,6 +94,9 @@ class CONTENT_EXPORT FakeMediaStreamUIProxy : public MediaStreamUIProxy {
                  WindowIdCallback window_id_callback) override;
 
  private:
+  class TestRenderFrameHostDelegate : public RenderFrameHostDelegate {};
+  TestRenderFrameHostDelegate delegate_;
+
   // This is used for RequestAccess().
   MediaStreamDevices devices_;
 

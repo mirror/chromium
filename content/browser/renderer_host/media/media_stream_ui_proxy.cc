@@ -10,7 +10,6 @@
 #include "base/feature_list.h"
 #include "base/macros.h"
 #include "content/browser/frame_host/frame_tree_node.h"
-#include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_features.h"
@@ -21,6 +20,17 @@
 #include "url/origin.h"
 
 namespace content {
+
+bool ShouldCheckFeaturePolicy(RenderFrameHost* rfh, bool is_test) {
+  if (!base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions))
+    return false;
+  // Some tests don't (or can't) set up the RenderFrameHost. In these cases we
+  // just ignore feature policy checks (there is no feature policy to test).
+  if (!rfh && is_test)
+    return false;
+
+  return true;
+}
 
 void SetAndCheckAncestorFlag(MediaStreamRequest* request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -128,9 +138,9 @@ void MediaStreamUIProxy::Core::ProcessAccessRequestResponse(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   MediaStreamDevices filtered_devices;
-  if (base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions)) {
-    RenderFrameHost* host =
-        RenderFrameHost::FromID(render_process_id, render_frame_id);
+  RenderFrameHost* host =
+      RenderFrameHost::FromID(render_process_id, render_frame_id);
+  if (ShouldCheckFeaturePolicy(host, test_render_delegate_ != nullptr)) {
     for (const MediaStreamDevice& device : devices) {
       if (device.type == MEDIA_DEVICE_AUDIO_CAPTURE &&
           !host->IsFeatureEnabled(
@@ -253,10 +263,7 @@ void MediaStreamUIProxy::OnWindowId(WindowIdCallback window_id_callback,
 }
 
 FakeMediaStreamUIProxy::FakeMediaStreamUIProxy()
-  : MediaStreamUIProxy(NULL),
-    mic_access_(true),
-    camera_access_(true) {
-}
+    : MediaStreamUIProxy(&delegate_), mic_access_(true), camera_access_(true) {}
 
 FakeMediaStreamUIProxy::~FakeMediaStreamUIProxy() {}
 
