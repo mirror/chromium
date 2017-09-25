@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8522cc5b_1025fba2",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-25T20:26:37Z",
+      "side": 1,
+      "message": "misc:\n\ndefine the values and the size int the other order.\n\nstatic const ServerFieldtype kSupportedTypesForValidation[] \u003d {\n  // Note no size between the square brackets\n  ...\n}\n\nstatic const size_t kNumSupportedtypesForValidation \u003d\n  sizeof(kSupportedTypesForValidation) / sizeof(kSupportedTypesForValidation[0]);",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a246b08f_96fc17ff",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-25T20:26:37Z",
+      "side": 1,
+      "message": "this find + update/insert is...\n\n  validity_states_[type] \u003d validity;",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddcee24_d5708acd",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-25T20:26:37Z",
+      "side": 1,
+      "message": "// I think the compiler will auto translate this for you.\nfor (auto supported_type : kTypesSupportedForValidation) {\n  if (type \u003d\u003d supported_type)\n    return true;\n}\nreturn false;",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6bec8c_affc4b9a",
+        "filename": "components/autofill/core/browser/webdata/autofill_profile_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-25T20:26:37Z",
+      "side": 1,
+      "message": "does this need a timestamp check?\n\nHmm... are we checking timestamps at all here? Do we just assume server data always wins?\n\nI guess this is consistent with the rest of the code, but I wonder if we have an offline update problem.",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bf564f_5c4e8e27",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-25T20:26:37Z",
+      "side": 1,
+      "message": "git cl format doesn\u0027t always get it right",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
