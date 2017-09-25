@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279960f6_11a74019",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T11:59:51Z",
+      "side": 1,
+      "message": "What about the following?\n\n|notifier_to_id_map_| is a HeapHashMap that is the inverse mapping of |id_to_notifier_map_|.  As the contents are the same, we don\u0027t need to trace |id_to_notifier_map_|.",
+      "revId": "d08f0826cfdb337e1facbaddf0435121976c4808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
