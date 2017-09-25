@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10d1260_c87225c6",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-25T02:57:10Z",
+      "side": 1,
+      "message": "return;\n\nThis seems like it should be treated as a bad message too.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 3
+      },
+      "revId": "e4f201f12392747b1b620618727a75dfe116391b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64fd75d_be23d3ba",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-25T02:57:10Z",
+      "side": 1,
+      "message": "Parameters should be named.",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 75
+      },
+      "revId": "e4f201f12392747b1b620618727a75dfe116391b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
