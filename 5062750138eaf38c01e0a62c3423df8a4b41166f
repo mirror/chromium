@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "14ec9a74_0adff609",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-25T20:21:15Z",
+      "side": 1,
+      "message": "That was causing a visual glitch - the MDCNavigationBar would slide down from the top before returning to the previous screen. -reloadData didn\u0027t cause that glitch.",
+      "parentUuid": "68c004c5_3c1919f1",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 3
+      },
+      "revId": "5062750138eaf38c01e0a62c3423df8a4b41166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bc97d5_b46c18ac",
         "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
         "patchSetId": 2
@@ -119,6 +143,30 @@
       "writtenOn": "2017-09-25T20:17:22Z",
       "side": 1,
       "message": "Same comment here.",
+      "range": {
+        "startLine": 251,
+        "startChar": 18,
+        "endLine": 251,
+        "endChar": 28
+      },
+      "revId": "5062750138eaf38c01e0a62c3423df8a4b41166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74b16f0_c2b2efb6",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-25T20:21:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "d0bc97d5_b46c18ac",
       "range": {
         "startLine": 251,
         "startChar": 18,
