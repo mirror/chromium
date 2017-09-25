@@ -16,6 +16,24 @@
       "revId": "3dc4df494df9d75f409f614576fc5a9bcd7f6d48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983c8ae3_1ef2eb2f",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-25T23:06:16Z",
+      "side": 1,
+      "message": "Oops, thanks. Merge bug. Fixed.",
+      "parentUuid": "ec16d09f_6bf4640c",
+      "revId": "3dc4df494df9d75f409f614576fc5a9bcd7f6d48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
