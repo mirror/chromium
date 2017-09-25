@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6fb0e39_be6f5203",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "constexpr needs these definitions or we get compile errors... Changed to extern const char[] and these lines are removed.",
+      "parentUuid": "33ce75d0_a7222bb1",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 75
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2706843d_ffba45b9",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6a6a9444_a66097c9",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2706843d_ffba45b9",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1984e670_36553669",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-22T23:38:14Z",
       "side": 1,
       "message": "If the intent is for this to remain boolean, then please just use UMA_HISTOGRAM_BOOLEAN.  It\u0027s not appropriate to change BooleanSuccess to contain more values if you decide you want additional values for this histogram, as it\u0027s used by a number of other histograms as well.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5c373a_fad706aa",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Removed this enum and used UMA_HISTOGRAM_BOOLEAN instead.",
+      "parentUuid": "1984e670_36553669",
       "range": {
         "startLine": 16,
         "startChar": 3,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "41506d07_9d0f8e8a",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d67112_fd810d45",
+      "range": {
+        "startLine": 104,
+        "startChar": 47,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5b2486_46d92fe6",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-22T23:38:14Z",
       "side": 1,
       "message": "nit: I\u0027d use dots throughout, rather than using an underscore here.  Ditto below.",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 42
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f947cf1_81b9b5d6",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "We would like to keep the name the same as in cast_analytics.js, so that it is easier to do comparison in finch exp.",
+      "parentUuid": "3a5b2486_46d92fe6",
       "range": {
         "startLine": 108,
         "startChar": 41,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "37e5b898_73c827bb",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25835,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744bb975_8b45ec19",
+      "range": {
+        "startLine": 25835,
+        "startChar": 24,
+        "endLine": 25835,
+        "endChar": 32
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "341c4585_c7d7800d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f1f1673a_2cd959c5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33557,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "341c4585_c7d7800d",
+      "range": {
+        "startLine": 33557,
+        "startChar": 45,
+        "endLine": 33557,
+        "endChar": 53
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b326aac3_bdc9ec11",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce3f24c_073fb1d4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33597,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-25T18:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b326aac3_bdc9ec11",
+      "range": {
+        "startLine": 33597,
+        "startChar": 51,
+        "endLine": 33597,
+        "endChar": 53
+      },
+      "revId": "2e7c09f3759fce575f45c9fa0e4054491a1c0f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
