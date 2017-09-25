@@ -157,6 +157,12 @@ void TaskManagerInterface::NotifyObserversOnTaskToBeRemoved(TaskId id) {
     observer.OnTaskToBeRemoved(id);
 }
 
+void TaskManagerInterface::NotifyObserversOnTaskReplaced(TaskId old_task_id,
+                                                         TaskId new_task_id) {
+  for (TaskManagerObserver& observer : observers_)
+    observer.OnTaskReplaced(old_task_id, new_task_id);
+}
+
 void TaskManagerInterface::NotifyObserversOnRefresh(
     const TaskIdList& task_ids) {
   for (TaskManagerObserver& observer : observers_)

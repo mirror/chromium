@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/task_manager/providers/task.h"
 #include "chrome/browser/task_manager/sampling/task_group_sampler.h"
+#include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/task_manager/task_manager_observer.h"
 #include "components/nacl/common/features.h"
 
@@ -139,8 +140,8 @@ class TaskGroup {
   void OnBackgroundRefreshTypeFinished(int64_t finished_refresh_type);
 
   // The process' handle and ID.
-  base::ProcessHandle process_handle_;
-  base::ProcessId process_id_;
+  const base::ProcessHandle process_handle_;
+  const base::ProcessId process_id_;
 
   // This is a callback into the TaskManagerImpl to inform it that the
   // background calculations for this TaskGroup has finished.

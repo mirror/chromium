@@ -25,6 +25,7 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/test/browser_test_utils.h"
@@ -321,6 +322,189 @@ IN_PROC_BROWSER_TEST_F(TaskManagerViewTest, SelectionConsistency) {
   chrome::CloseWebContents(browser(), tabs[0], false);
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows((rows -= 1), pattern));
   EXPECT_EQ(GetTable()->FirstSelectedRow(), FindRowForTab(tabs[2]));
+}
+
+IN_PROC_BROWSER_TEST_F(TaskManagerViewTest,
+                       SelectionConsistencyAfterCrossProcessNavigation) {
+  ASSERT_NO_FATAL_FAILURE(ClearStoredColumnSettings());
+
+  chrome::ShowTaskManager(browser());
+
+  // Set up a total of three tabs in different processes.
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("a.com", "/title2.html"));
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), embedded_test_server()->GetURL("b.com", "/title2.html"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), embedded_test_server()->GetURL("c.com", "/title2.html"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  // Wait for their titles to appear in the TaskManager. There should be three
+  // rows.
+  auto pattern = browsertest_util::MatchTab("Title *");
+  int rows = 3;
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(rows, pattern));
+
+  // Find the three tabs we set up, in TaskManager model order. Because we have
+  // not sorted the table yet, this should also be their UI display order.
+  std::unique_ptr<TaskManagerTester> tester =
+      TaskManagerTester::Create(base::Closure());
+  std::vector<content::WebContents*> tabs;
+  for (int i = 0; i < tester->GetRowCount(); ++i) {
+    // Filter based on our title.
+    if (!base::MatchPattern(tester->GetRowTitle(i), pattern))
+      continue;
+    content::WebContents* tab = FindWebContentsByTabId(tester->GetTabId(i));
+    EXPECT_NE(nullptr, tab);
+    tabs.push_back(tab);
+  }
+  EXPECT_EQ(3U, tabs.size());
+
+  // Select the middle row, and store its tab id.
+  GetTable()->Select(FindRowForTab(tabs[1]));
+  EXPECT_EQ(GetTable()->FirstSelectedRow(), FindRowForTab(tabs[1]));
+  EXPECT_EQ(1UL, GetTable()->selection_model().size());
+
+  // Navigate this tab cross-process, to a new process.
+  auto old_site_instance_id =
+      tabs[1]->GetMainFrame()->GetSiteInstance()->GetId();
+  tabs[1]->GetDelegate()->ActivateContents(tabs[1]);
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("d.com", "/title2.html"));
+  EXPECT_NE(old_site_instance_id,
+            tabs[1]->GetMainFrame()->GetSiteInstance()->GetId());
+
+  // Mutate the title to make sure we're looking at the row for the new page.
+  ASSERT_TRUE(content::ExecuteScript(tabs[1], "document.title = 'λ';"));
+  ASSERT_NO_FATAL_FAILURE(
+      WaitForTaskManagerRows(1, browsertest_util::MatchTab("λ")));
+
+  // Selection should be preserved across cross-process navigation.
+  EXPECT_EQ(GetTable()->FirstSelectedRow(), FindRowForTab(tabs[1]));
+}
+
+IN_PROC_BROWSER_TEST_F(TaskManagerViewTest,
+                       SelectionConsistencyAfterBackForwardToNewTabPage) {
+  ASSERT_NO_FATAL_FAILURE(ClearStoredColumnSettings());
+
+  chrome::ShowTaskManager(browser());
+
+  // Set up a total of three tabs on the New Tab Page. They should share a
+  // process due to NTP's process-per-site behavior; process sharing is
+  // important to the test case below.
+  GURL ntp_url("chrome://newtab");
+  ui_test_utils::NavigateToURL(browser(), ntp_url);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url, WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url, WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  // Wait for their titles to appear in the TaskManager. There should be three
+  // rows.
+  auto ntp_pattern = browsertest_util::MatchTab("New Tab");
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(3, ntp_pattern));
+
+  // Find the three tabs we set up, in TaskManager model order. Because we have
+  // not sorted the table yet, this should also be their UI display order.
+  std::unique_ptr<TaskManagerTester> tester =
+      TaskManagerTester::Create(base::Closure());
+  std::vector<content::WebContents*> tabs;
+  for (int i = 0; i < tester->GetRowCount(); ++i) {
+    // Filter based on our title.
+    if (!base::MatchPattern(tester->GetRowTitle(i), ntp_pattern))
+      continue;
+    content::WebContents* tab = FindWebContentsByTabId(tester->GetTabId(i));
+    EXPECT_NE(nullptr, tab);
+    tabs.push_back(tab);
+  }
+  EXPECT_EQ(3U, tabs.size());
+
+  // All three rows ought to share a process; clicking on any should select all
+  // three, so select the middle one.
+  GetTable()->Select(FindRowForTab(tabs[1]));
+
+  base::RunLoop().RunUntilIdle();
+
+  // Three rows should now be selected.
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->FirstSelectedRow());
+  EXPECT_EQ(FindRowForTab(tabs[1]), GetTable()->selection_model().anchor());
+  EXPECT_EQ(3U, GetTable()->selection_model().size());
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[0])));
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[1])));
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[2])));
+  EXPECT_FALSE(GetTable()->selection_model().IsSelected(0));
+
+  // Navigate the first tab cross-process.
+  GURL page_url = embedded_test_server()->GetURL("d.com", "/title2.html");
+  auto page_pattern = browsertest_util::MatchTab("Title Of Awesomeness");
+  tabs[0]->GetDelegate()->ActivateContents(tabs[0]);
+  ui_test_utils::NavigateToURL(browser(), page_url);
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(2, ntp_pattern));
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, page_pattern));
+
+  base::RunLoop().RunUntilIdle();
+
+  // Selection should be preserved -- all three rows (now spanning two
+  // processes) ought to be selected.
+  EXPECT_EQ(FindRowForTab(tabs[1]), GetTable()->selection_model().anchor());
+  EXPECT_EQ(3U, GetTable()->selection_model().size());
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[0])));
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[1])));
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[2])));
+  EXPECT_FALSE(GetTable()->selection_model().IsSelected(0));
+
+  // Select just tabs[0] now. This won't select any other rows because it has
+  // its own process now.
+  GetTable()->Select(FindRowForTab(tabs[0]));
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->selection_model().anchor());
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->FirstSelectedRow());
+  EXPECT_EQ(1U, GetTable()->selection_model().size());
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[0])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[1])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[2])));
+  EXPECT_FALSE(GetTable()->selection_model().IsSelected(0));
+
+  // Go back (returning to the NTP process).
+  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(3, ntp_pattern));
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(0, page_pattern));
+
+  // Only this one row should remain selected.
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->selection_model().anchor());
+  EXPECT_EQ(1U, GetTable()->selection_model().size());
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[0])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[1])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[2])));
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->FirstSelectedRow());
+
+  // Without altering the selection, navigate cross-process again.
+  chrome::GoForward(browser(), WindowOpenDisposition::CURRENT_TAB);
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(2, ntp_pattern));
+  ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, page_pattern));
+
+  base::RunLoop().RunUntilIdle();
+
+  // Only this one row should remain selected, even if it moved around.
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->selection_model().anchor());
+  EXPECT_EQ(1U, GetTable()->selection_model().size());
+  EXPECT_TRUE(GetTable()->selection_model().IsSelected(FindRowForTab(tabs[0])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[1])));
+  EXPECT_FALSE(
+      GetTable()->selection_model().IsSelected(FindRowForTab(tabs[2])));
+  EXPECT_EQ(FindRowForTab(tabs[0]), GetTable()->FirstSelectedRow());
 }
 
 }  // namespace task_manager
