@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216cdf41_61973eb7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-25T22:06:10Z",
+      "side": 1,
+      "message": "Don\u0027t you want to put GeneratorStatus and especially PrimitiveValue before other properties?",
+      "revId": "a063c953ddccff51556e74bc3110dfed2636b199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
