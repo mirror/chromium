@@ -39,6 +39,7 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
                    dispatcher:dispatcher];
   if (self) {
     _dispatcher = dispatcher;
+    // TODO: stop using |specificControlsArea|
     _stackViewToolbar =
         [[UIView alloc] initWithFrame:[self specificControlsArea]];
     [_stackViewToolbar setAutoresizingMask:UIViewAutoresizingFlexibleHeight |

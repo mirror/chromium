@@ -191,13 +191,6 @@ void RunBlockAfterDelay(NSTimeInterval delay, void (^block)(void)) {
                  dispatch_get_main_queue(), block);
 }
 
-CGRect RectShiftedDownForStatusBar(CGRect rect) {
-  if (IsIPadIdiom())
-    return rect;
-  rect.origin.y += StatusBarHeight();
-  return rect;
-}
-
 CGRect RectShiftedUpForStatusBar(CGRect rect) {
   if (IsIPadIdiom())
     return rect;
@@ -210,13 +203,6 @@ CGRect RectShiftedUpAndResizedForStatusBar(CGRect rect) {
     return rect;
   rect.size.height += StatusBarHeight();
   return RectShiftedUpForStatusBar(rect);
-}
-
-CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
-  if (IsIPadIdiom())
-    return rect;
-  rect.size.height -= StatusBarHeight();
-  return RectShiftedDownForStatusBar(rect);
 }
 
 }  // namespace
@@ -246,9 +232,19 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // Progress bar used to show what fraction of the page has loaded.
   MDCProgressView* _determinateProgressView;
   UIImageView* _omniboxBackground;
+
+  NSLayoutConstraint* _leadingOmniboxBackgroundConstraint;
+  NSLayoutConstraint* _trailingOmniboxBackgroundConstraint;
+  NSLayoutConstraint* _topOmniboxBackgroundConstraint;
+  NSLayoutConstraint* _bottomOmniboxBackgroundConstraint;
+
   BOOL _prerenderAnimating;
   UIImageView* _incognitoIcon;
   UIView* _clippingView;
+  NSLayoutConstraint* _leadingClippingViewConstraint;
+  NSLayoutConstraint* _trailingClippingViewConstraint;
+  NSLayoutConstraint* _topClippingViewConstraint;
+  NSLayoutConstraint* _bottomClippingViewConstraint;
 
   std::unique_ptr<LocationBarController> _locationBar;
   BOOL _initialLayoutComplete;
@@ -382,6 +378,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // this method.
   _webToolbar =
       [[UIView alloc] initWithFrame:LayoutRectGetRect(kWebToolbarFrame[idiom])];
+  [_webToolbar setTranslatesAutoresizingMaskIntoConstraints:NO];
   UIColor* textColor =
       _incognito
           ? [UIColor whiteColor]
@@ -422,44 +419,93 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
   [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                                   UIViewAutoresizingFlexibleTopMargin |
-                                   UIViewAutoresizingFlexibleBottomMargin];
+                                   UIViewAutoresizingFlexibleTopMargin];
   // Note that the forward button gets repositioned when -layoutOmnibox is
   // called.
   _forwardButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kForwardButtonFrame[idiom])];
   [_forwardButton
       setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                          UIViewAutoresizingFlexibleBottomMargin];
+                          UIViewAutoresizingFlexibleTopMargin];
 
   [_webToolbar addSubview:_backButton];
   [_webToolbar addSubview:_forwardButton];
 
   // _omniboxBackground needs to be added under _omniBox so as not to cover up
   // _omniBox.
-  _omniboxBackground = [[UIImageView alloc] initWithFrame:omniboxRect];
-  [_omniboxBackground
-      setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleBottomMargin];
+  _omniboxBackground = [[UIImageView alloc] initWithFrame:CGRectZero];
+  [_omniboxBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   if (idiom == IPAD_IDIOM) {
     [_webToolbar addSubview:_omniboxBackground];
+
+    _leadingOmniboxBackgroundConstraint = [_omniboxBackground.leadingAnchor
+        constraintEqualToAnchor:_webToolbar.leadingAnchor
+                       constant:10];
+    _trailingOmniboxBackgroundConstraint = [_omniboxBackground.trailingAnchor
+        constraintEqualToAnchor:_webToolbar.trailingAnchor
+                       constant:-10];
+    _topOmniboxBackgroundConstraint = [_omniboxBackground.topAnchor
+        constraintEqualToAnchor:_webToolbar.topAnchor
+                       constant:10];
+    _bottomOmniboxBackgroundConstraint = [_omniboxBackground.bottomAnchor
+        constraintEqualToAnchor:_webToolbar.bottomAnchor
+                       constant:10];
+
+    [NSLayoutConstraint activateConstraints:@[
+      _leadingOmniboxBackgroundConstraint, _trailingOmniboxBackgroundConstraint,
+      _topOmniboxBackgroundConstraint, _bottomOmniboxBackgroundConstraint
+    ]];
+
   } else {
     [_backButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, 0, 0, -9)];
     [_forwardButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -7, 0, 0)];
     CGRect clippingFrame =
         RectShiftedUpAndResizedForStatusBar(kToolbarFrame[idiom]);
     _clippingView = [[UIView alloc] initWithFrame:clippingFrame];
-    [_clippingView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                       UIViewAutoresizingFlexibleBottomMargin];
-    [_clippingView setClipsToBounds:YES];
-    [_clippingView setUserInteractionEnabled:NO];
     [_webToolbar addSubview:_clippingView];
 
-    CGRect omniboxBackgroundFrame =
-        RectShiftedDownForStatusBar([_omniboxBackground frame]);
-    [_omniboxBackground setFrame:omniboxBackgroundFrame];
+    [_clippingView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //    [_clippingView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+    //                                       UIViewAutoresizingFlexibleBottomMargin];
+
+    _leadingClippingViewConstraint = [_clippingView.leadingAnchor
+        constraintEqualToAnchor:_webToolbar.leadingAnchor
+                       constant:0];
+    _trailingClippingViewConstraint = [_clippingView.trailingAnchor
+        constraintEqualToAnchor:_webToolbar.trailingAnchor
+                       constant:0];
+    _topClippingViewConstraint =
+        [_clippingView.topAnchor constraintEqualToAnchor:_webToolbar.topAnchor
+                                                constant:0];
+    _bottomClippingViewConstraint = [_clippingView.bottomAnchor
+        constraintEqualToAnchor:_webToolbar.bottomAnchor
+                       constant:0];
+
+    [NSLayoutConstraint activateConstraints:@[
+      _leadingClippingViewConstraint, _trailingClippingViewConstraint,
+      _topClippingViewConstraint, _bottomClippingViewConstraint
+    ]];
+
+    [_clippingView setBackgroundColor:[UIColor blueColor]];
+    [_clippingView setClipsToBounds:YES];
+    [_clippingView setUserInteractionEnabled:NO];
     [_clippingView addSubview:_omniboxBackground];
+
+    _leadingOmniboxBackgroundConstraint = [_omniboxBackground.leadingAnchor
+        constraintEqualToAnchor:_clippingView.leadingAnchor];
+    _trailingOmniboxBackgroundConstraint = [_omniboxBackground.trailingAnchor
+        constraintEqualToAnchor:_clippingView.trailingAnchor];
+    _topOmniboxBackgroundConstraint = [_omniboxBackground.topAnchor
+        constraintEqualToAnchor:_clippingView.topAnchor];
+    _bottomOmniboxBackgroundConstraint = [_omniboxBackground.bottomAnchor
+        constraintEqualToAnchor:_clippingView.bottomAnchor];
+    [NSLayoutConstraint activateConstraints:@[
+      _leadingOmniboxBackgroundConstraint, _trailingOmniboxBackgroundConstraint,
+      _topOmniboxBackgroundConstraint, _bottomOmniboxBackgroundConstraint
+    ]];
+    [self updateOmniboxBackgroundConstraints:NO];
+
     [self.view
         setBackgroundColor:[UIColor colorWithWhite:kNTPBackgroundColorBrightness
                                              alpha:1.0]];
@@ -585,11 +631,38 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
   // TODO(leng):  Consider moving this to a pak file as well.  For now,
   // because it is also used by find_bar_controller_ios, leave it as is.
-  NSString* imageName =
-      _incognito ? @"omnibox_transparent_background" : @"omnibox_background";
-  [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
+  //  NSString* imageName =
+  //      _incognito ? @"omnibox_transparent_background" :
+  //      @"omnibox_background";
+  //  [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
+
+  [_omniboxBackground setBackgroundColor:[UIColor redColor]];
+
+  _leadingClippingViewConstraint = [_clippingView.leadingAnchor
+      constraintEqualToAnchor:_webToolbar.leadingAnchor
+                     constant:0];
+
+  _trailingClippingViewConstraint = [_clippingView.trailingAnchor
+      constraintEqualToAnchor:_webToolbar.trailingAnchor
+                     constant:0];
+
+  _topClippingViewConstraint =
+      [_clippingView.topAnchor constraintEqualToAnchor:_webToolbar.topAnchor
+                                              constant:0];
+
+  _bottomClippingViewConstraint = [_clippingView.bottomAnchor
+      constraintEqualToAnchor:_webToolbar.bottomAnchor
+                     constant:0];
+
+  [NSLayoutConstraint activateConstraints:@[
+    _leadingClippingViewConstraint, _trailingClippingViewConstraint,
+    _topClippingViewConstraint, _bottomClippingViewConstraint
+  ]];
+
+  [self updateOmniboxBackgroundConstraints:NO];
+
   [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleBottomMargin];
+                                UIViewAutoresizingFlexibleTopMargin];
   [_reloadButton addTarget:self
                     action:@selector(cancelOmniboxEdit)
           forControlEvents:UIControlEventTouchUpInside];
@@ -610,9 +683,16 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
   // Resize the container to match the available area.
   [self.view addSubview:_webToolbar];
-  [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                   UIViewAutoresizingFlexibleBottomMargin];
-  [_webToolbar setFrame:[self specificControlsArea]];
+  UILayoutGuide* layoutguide = [self specificControlsLayoutGuide];
+  [NSLayoutConstraint activateConstraints:@[
+    [_webToolbar.leadingAnchor
+        constraintEqualToAnchor:layoutguide.leadingAnchor],
+    [_webToolbar.trailingAnchor
+        constraintEqualToAnchor:layoutguide.trailingAnchor],
+    [_webToolbar.topAnchor constraintEqualToAnchor:layoutguide.topAnchor],
+    [_webToolbar.bottomAnchor constraintEqualToAnchor:layoutguide.bottomAnchor]
+  ]];
+
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       _omniBox, _browserState, preloader, self, self, self.dispatcher);
 
@@ -862,7 +942,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     }
 
     // Re-layout toolbar and omnibox.
-    [_webToolbar setFrame:[self specificControlsArea]];
+    //    [_webToolbar setFrame:[self specificControlsArea]];
     [self layoutOmnibox];
   }
 }
@@ -1130,11 +1210,11 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   opacityAnimation.timingFunction =
       TimingFunction(shouldFadeOutOmnibox ? ios::material::CurveEaseIn
                                           : ios::material::CurveEaseOut);
-  CAAnimation* animationGroup =
-      AnimationGroupMake(@[ frameAnimation, opacityAnimation ]);
+  //  CAAnimation* animationGroup =
+  //      AnimationGroupMake(@[ frameAnimation, opacityAnimation ]);
   [self.transitionLayers addObject:[_omniboxBackground layer]];
-  [[_omniboxBackground layer] addAnimation:animationGroup
-                                    forKey:kToolbarTransitionAnimationKey];
+  //  [[_omniboxBackground layer] addAnimation:animationGroup
+  //                                    forKey:kToolbarTransitionAnimationKey];
 
   // Animate progress bar: Match the width and bottom edge of the content
   // bounds while maintaining the height.
@@ -1285,8 +1365,9 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     model->SetCaretVisibility(false);
   } else {
     // Set the omnibox background's frame to full bleed.
-    CGRect mobFrame = CGRectInset([_clippingView bounds], -2, -2);
-    [_omniboxBackground setFrame:mobFrame];
+    //    CGRect mobFrame = CGRectInset([_clippingView bounds], -2, -2);
+    //    [_omniboxBackground setFrame:mobFrame];
+    [self updateOmniboxBackgroundConstraints:YES];
   }
 
   [self focusOmnibox];
@@ -1344,6 +1425,19 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     frame.size.height = CGRectGetMaxY([parent bounds]) - frame.origin.y;
   }
   return frame;
+}
+
+- (void)updateOmniboxBackgroundConstraints:(BOOL)fullwidth {
+  [UIView animateWithDuration:0.2
+                   animations:^{
+                     CGFloat constant = fullwidth ? 0 : 10;
+
+                     _leadingOmniboxBackgroundConstraint.constant = constant;
+                     _trailingOmniboxBackgroundConstraint.constant = -constant;
+                     _topOmniboxBackgroundConstraint.constant = constant;
+                     _bottomOmniboxBackgroundConstraint.constant = -constant;
+                     [_webToolbar layoutIfNeeded];
+                   }];
 }
 
 #pragma mark -
@@ -1585,7 +1679,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       [_omniBox rightViewRectForBounds:newOmniboxFrame];
   [_omniBox leftView].frame = [_omniBox leftViewRectForBounds:newOmniboxFrame];
 
-  CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
+  //  CGRect materialBackgroundFrame =
+  //  RectShiftedDownForStatusBar(newOmniboxFrame);
 
   // Extreme jank happens during initial layout if an animation is invoked. Not
   // certain why. o_O
@@ -1596,7 +1691,9 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       options:UIViewAnimationOptionAllowUserInteraction
       animations:^{
         [_omniBox setFrame:newOmniboxFrame];
-        [_omniboxBackground setFrame:materialBackgroundFrame];
+
+        [self updateOmniboxBackgroundConstraints:YES];
+        //        [_omniboxBackground setFrame:materialBackgroundFrame];
       }
       completion:^(BOOL finished) {
         [_omniBox setRightViewMode:UITextFieldViewModeAlways];
@@ -1887,10 +1984,11 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     // toolbar controls will be hidden below). Temporarily suppress autoresizing
     // to avoid interfering with the omnibox animation.
     [_webToolbar setAutoresizesSubviews:NO];
-    CGRect expandedFrame =
-        RectShiftedDownAndResizedForStatusBar(self.view.bounds);
-    [_webToolbar
-        setFrame:growOmnibox ? expandedFrame : [self specificControlsArea]];
+    //    CGRect expandedFrame =
+    //        RectShiftedDownAndResizedForStatusBar(self.view.bounds);
+    //    [_webToolbar
+    //        setFrame:growOmnibox ? expandedFrame : [self
+    //        specificControlsArea]];
     [_webToolbar setAutoresizesSubviews:YES];
 
     // Compute new omnibox layout after the web toolbar is resized.
@@ -1987,11 +2085,16 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     // Increase the bounds of the background so that the border extends past the
     // toolbar and is clipped.
     backgroundToBounds = CGRectInset(backgroundToBounds, -2, -2);
+
+    [self updateOmniboxBackgroundConstraints:YES];
+
   } else {
     // Shrink the background to the same bounds as the omnibox.
     backgroundToBounds = toBounds;
     backgroundToPosition = toPosition;
     backgroundToPosition.y += StatusBarHeight();
+
+    [self updateOmniboxBackgroundConstraints:NO];
   }
 
   // Is the omnibox already at the new size? Then there's nothing to animate.
@@ -2022,62 +2125,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     if (_incognito)
       [self fadeOutIncognitoIcon];
   }
-
-  // Animate the new bounds and position for the omnibox and background.
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    // Re-layout the omnibox's subviews after the animation to allow VoiceOver
-    // to select the clear text button.
-    [_omniBox setNeedsLayout];
-  }];
-  CGFloat duration = ios::material::kDuration1;
-  // If app is on the regular New Tab Page, make this animation occur instantly
-  // since this page has a fakebox to omnibox transition.
-  web::WebState* webState = [self.delegate currentWebState];
-  if (webState && webState->GetVisibleURL() == GURL(kChromeUINewTabURL) &&
-      !_incognito) {
-    duration = 0.0;
-  }
-  [CATransaction setAnimationDuration:duration];
-  [CATransaction
-      setAnimationTimingFunction:TimingFunction(ios::material::CurveEaseInOut)];
-
-  // TODO(crbug.com/525943): As part of animation cleanup, refactor
-  // these animations into groups produced by FrameAnimationMake() from
-  // animation_util, and do all of the bounds/position calculations above in
-  // terms of frames.
-
-  CABasicAnimation* resizeAnimation =
-      [CABasicAnimation animationWithKeyPath:@"bounds"];
-  resizeAnimation.delegate = self;
-  [resizeAnimation setValue:@"resizeOmnibox" forKey:@"id"];
-  resizeAnimation.fromValue = [NSValue valueWithCGRect:fromBounds];
-  resizeAnimation.toValue = [NSValue valueWithCGRect:toBounds];
-  [_omniBox layer].bounds = toBounds;
-  [[_omniBox layer] addAnimation:resizeAnimation forKey:@"resizeBounds"];
-  CABasicAnimation* positionAnimation =
-      [CABasicAnimation animationWithKeyPath:@"position"];
-  positionAnimation.fromValue = [NSValue valueWithCGPoint:fromPosition];
-  positionAnimation.toValue = [NSValue valueWithCGPoint:toPosition];
-  [_omniBox layer].position = toPosition;
-  [[_omniBox layer] addAnimation:positionAnimation forKey:@"movePosition"];
-
-  resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-  resizeAnimation.fromValue = [NSValue valueWithCGRect:backgroundFromBounds];
-  resizeAnimation.toValue = [NSValue valueWithCGRect:backgroundToBounds];
-  [_omniboxBackground layer].bounds = backgroundToBounds;
-  [[_omniboxBackground layer] addAnimation:resizeAnimation
-                                    forKey:@"resizeBounds"];
-  CABasicAnimation* backgroundPositionAnimation =
-      [CABasicAnimation animationWithKeyPath:@"position"];
-  backgroundPositionAnimation.fromValue =
-      [NSValue valueWithCGPoint:backgroundFromPosition];
-  backgroundPositionAnimation.toValue =
-      [NSValue valueWithCGPoint:backgroundToPosition];
-  [_omniboxBackground layer].position = backgroundToPosition;
-  [[_omniboxBackground layer] addAnimation:backgroundPositionAnimation
-                                    forKey:@"movePosition"];
-  [CATransaction commit];
 }
 
 - (void)fadeInOmniboxTrailingView {

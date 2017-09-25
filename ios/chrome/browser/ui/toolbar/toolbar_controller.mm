@@ -104,7 +104,7 @@ const int kStackButtonHighlightedColors[] = {
 const CGRect kBackgroundViewFrame[INTERFACE_IDIOM_COUNT] = FRAME_PAIR(56);
 const CGRect kShadowViewFrame[INTERFACE_IDIOM_COUNT] = FRAME_PAIR(2);
 // Full bleed shadow frame is iPhone-only
-const CGRect kFullBleedShadowViewFrame = IPHONE_FRAME(10);
+// const CGRect kFullBleedShadowViewFrame = IPHONE_FRAME(10);
 
 // Frames that change for RTL.
 // clang-format off
@@ -116,6 +116,24 @@ const LayoutRect kToolsMenuButtonFrame[INTERFACE_IDIOM_COUNT] = {
   {kPortraitWidth[IPHONE_IDIOM], {276, 4}, {44, 48}},
   {kPortraitWidth[IPAD_IDIOM], {723, 4}, {46, 48}}
 };
+
+struct ToolsMenuButtonLayout {
+  CGFloat width;
+  CGFloat height;
+  CGFloat trailingOffset;
+  CGFloat bottomOffset;
+};
+
+const ToolsMenuButtonLayout iPhoneToolsmenuLayout = {
+  // TODO: make sure the constants are OK
+  44, 48, 0, -4
+};
+
+const ToolsMenuButtonLayout iPadToolsmenuLayout = {
+  // TODO: make sure the constants are OK
+  46, 48, 0, 0
+};
+
 // clang-format on
 
 // Distance to shift buttons when fading out.
@@ -286,18 +304,35 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 
     view_ = [[ToolbarView alloc] initWithFrame:viewFrame];
     backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
+    [view_ addSubview:backgroundView_];
+
+    // Create, add, and layout the toolsMenuButton.
     toolsMenuButton_ =
-        [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
-                                                style:style_];
+        [[ToolbarToolsMenuButton alloc] initWithFrame:CGRectZero style:style_];
     [toolsMenuButton_ addTarget:self.dispatcher
                          action:@selector(showToolsMenu)
                forControlEvents:UIControlEventTouchUpInside];
-    [toolsMenuButton_
-        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
-
-    [view_ addSubview:backgroundView_];
     [view_ addSubview:toolsMenuButton_];
+    ToolsMenuButtonLayout const& toolsMenuButtonLayout =
+        (idiom == IPHONE_IDIOM ? iPhoneToolsmenuLayout : iPadToolsmenuLayout);
+    [toolsMenuButton_ setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [NSLayoutConstraint activateConstraints:@[
+      [toolsMenuButton_.trailingAnchor
+          constraintEqualToAnchor:view_.trailingAnchor
+                         constant:toolsMenuButtonLayout.trailingOffset],
+      [toolsMenuButton_.bottomAnchor
+          constraintEqualToAnchor:view_.bottomAnchor
+                         constant:toolsMenuButtonLayout.bottomOffset],
+      [toolsMenuButton_.leadingAnchor
+          constraintEqualToAnchor:view_.trailingAnchor
+                         constant:toolsMenuButtonLayout.trailingOffset -
+                                  toolsMenuButtonLayout.width],
+      [toolsMenuButton_.topAnchor
+          constraintEqualToAnchor:view_.bottomAnchor
+                         constant:toolsMenuButtonLayout.bottomOffset -
+                                  toolsMenuButtonLayout.height]
+    ]];
+
     [view_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                          UIViewAutoresizingFlexibleHeight];
@@ -331,17 +366,25 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 
     if (idiom == IPHONE_IDIOM) {
       // iPad omnibox does not expand to full bleed.
-      CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
-      fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
-      fullBleedShadowView_ =
-          [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
-      [fullBleedShadowView_
-          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+      fullBleedShadowView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
+      [fullBleedShadowView_ setTranslatesAutoresizingMaskIntoConstraints:NO];
       [fullBleedShadowView_ setUserInteractionEnabled:NO];
       [fullBleedShadowView_ setAlpha:0];
       [view_ addSubview:fullBleedShadowView_];
       [fullBleedShadowView_
           setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
+
+      [NSLayoutConstraint activateConstraints:@[
+        [fullBleedShadowView_.leadingAnchor
+            constraintEqualToAnchor:view_.leadingAnchor],
+        [fullBleedShadowView_.trailingAnchor
+            constraintEqualToAnchor:view_.trailingAnchor],
+        [fullBleedShadowView_.topAnchor
+            constraintEqualToAnchor:view_.bottomAnchor],
+        [fullBleedShadowView_.bottomAnchor
+            constraintEqualToAnchor:view_.bottomAnchor
+                           constant:10]
+      ]];
     }
 
     transitionLayers_ =
@@ -358,6 +401,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     if (idiom == IPHONE_IDIOM) {
       stackButton_ =
           [[ToolbarCenteredButton alloc] initWithFrame:stackButtonFrame];
+      [stackButton_ setTranslatesAutoresizingMaskIntoConstraints:NO];
       [[stackButton_ titleLabel]
           setFont:[self fontForSize:kFontSizeFewerThanTenTabs]];
       [stackButton_
@@ -379,6 +423,19 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
           hasDisabledImage:NO
              synchronously:NO];
       [view_ addSubview:stackButton_];
+
+      // TODO: find the right constants
+      [NSLayoutConstraint activateConstraints:@[
+        [stackButton_.leadingAnchor
+            constraintEqualToAnchor:toolsMenuButton_.leadingAnchor
+                           constant:-50],
+        [stackButton_.trailingAnchor
+            constraintEqualToAnchor:toolsMenuButton_.leadingAnchor],
+        [stackButton_.topAnchor constraintEqualToAnchor:view_.bottomAnchor
+                                               constant:-50],
+        [stackButton_.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor
+                                                  constant:0]
+      ]];
     }
     [self registerEventsForButton:toolsMenuButton_];
 
@@ -404,6 +461,26 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 - (instancetype)init {
   NOTREACHED();
   return nil;
+}
+
+- (void)layoutSubviews {
+  if (IsIPhoneX()) {
+    CGFloat statusBarOffset = [self statusBarOffset];
+    CGRect viewFrame = [view_ frame];
+    viewFrame.size.height =
+        CGRectGetHeight(kToolbarFrame[IPHONE_IDIOM]) + statusBarOffset;
+    [view_ setFrame:viewFrame];
+
+    // This can be easily removed:
+    CGRect backgroundFrame = [backgroundView_ frame];
+    backgroundFrame.size.height =
+        CGRectGetHeight(kBackgroundViewFrame[IPHONE_IDIOM]) + statusBarOffset;
+    [backgroundView_ setFrame:backgroundFrame];
+
+    CGRect shadowFrame = [shadowView_ frame];
+    shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
+    [shadowView_ setFrame:shadowFrame];
+  }
 }
 
 - (UIFont*)fontForSize:(NSInteger)size {
@@ -649,6 +726,26 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     controlsFrame.size.height -= StatusBarHeight();
   }
   return controlsFrame;
+}
+
+- (UILayoutGuide*)specificControlsLayoutGuide {
+  UIView* trailingControl = toolsMenuButton_;
+  if (!IsIPadIdiom())
+    trailingControl = stackButton_;
+  if ([self shareButtonShouldBeVisible])
+    trailingControl = shareButton_;
+
+  UILayoutGuide* layoutGuide = [[UILayoutGuide alloc] init];
+  [view_ addLayoutGuide:layoutGuide];
+  [NSLayoutConstraint activateConstraints:@[
+    [layoutGuide.leadingAnchor constraintEqualToAnchor:view_.leadingAnchor],
+    [layoutGuide.trailingAnchor
+        constraintEqualToAnchor:trailingControl.leadingAnchor],
+    [layoutGuide.topAnchor constraintEqualToAnchor:view_.topAnchor],
+    [layoutGuide.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor]
+  ]];
+
+  return layoutGuide;
 }
 
 - (void)animateStandardControlsForOmniboxExpansion:(BOOL)growOmnibox {
