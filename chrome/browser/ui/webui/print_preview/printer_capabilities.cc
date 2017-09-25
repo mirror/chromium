@@ -33,6 +33,8 @@ namespace printing {
 
 const char kPrinterId[] = "printerId";
 const char kPrinterCapabilities[] = "capabilities";
+const char kPrinterKey[] = "printer";
+const char kOptionKey[] = "option";
 
 namespace {
 
@@ -179,4 +181,47 @@ void ConvertPrinterListForCallback(
     callback.Run(printers);
   done_callback.Run();
 }
+
+std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
+    const std::unique_ptr<base::DictionaryValue>& cdd) {
+  auto out_final =
+      base::DictionaryValue::From(std::make_unique<base::Value>(cdd->Clone()));
+  base::Value* caps = cdd->FindPath({kPrinterKey});
+  if (!caps)
+    return out_final;
+  out_final->RemovePath({kPrinterKey});
+  auto out_caps = std::make_unique<base::DictionaryValue>();
+  for (const auto it : caps->DictItems()) {
+    if (it.second.type() == base::Value::Type::NONE)
+      continue;
+    base::Value* list =
+        caps->FindPathOfType({it.first}, base::Value::Type::LIST);
+    base::Value* dict =
+        caps->FindPathOfType({it.first}, base::Value::Type::DICTIONARY);
+    if (dict)  // implies !list
+      list = dict->FindPathOfType({kOptionKey}, base::Value::Type::LIST);
+    if (list) {
+      auto out_list =
+          base::ListValue::From(std::make_unique<base::Value>(list->Clone()));
+      for (size_t i = 0; i < list->GetList().size(); i++) {
+        if (list->GetList()[i].type() == base::Value::Type::NONE)
+          out_list->Remove(list->GetList()[i], nullptr);
+      }
+      if (out_list->GetSize() > 0) {
+        if (dict) {
+          auto option_dict = std::make_unique<base::DictionaryValue>();
+          option_dict->SetList(kOptionKey, std::move(out_list));
+          out_caps->SetDictionary(it.first, std::move(option_dict));
+        } else {
+          out_caps->SetList(it.first, std::move(out_list));
+        }
+      }
+    } else {
+      out_caps->SetPath({it.first}, it.second.Clone());
+    }
+  }
+  out_final->SetDictionary(kPrinterKey, std::move(out_caps));
+  return out_final;
+}
+
 }  // namespace printing

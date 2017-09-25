@@ -19,6 +19,7 @@
 #include "chrome/browser/printing/cloud_print/privet_constants.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "ui/gfx/geometry/size.h"
@@ -197,7 +198,7 @@ void PrivetPrinterHandler::OnGotCapabilities(
       capabilities->CreateDeepCopy();
   printer_info_and_caps->SetDictionary("capabilities",
                                        std::move(capabilities_copy));
-  callback.Run(std::move(printer_info_and_caps));
+  callback.Run(printing::ValidateCddForPrintPreview(printer_info_and_caps));
   privet_capabilities_operation_.reset();
 }
 
