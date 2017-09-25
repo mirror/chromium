@@ -99,6 +99,23 @@
     },
     {
       "key": {
+        "uuid": "06887ee0_fb78f716",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-25T14:41:50Z",
+      "side": 1,
+      "message": "Do we have any plans about immutability of the objects?\n\nDo we want to do something following for example?\n  def __init__(self):\n    self._type \u003d None\n\n  def type(self):\n    return self._type\n\n  # no setter for self._type\n\nOptionally, we can use \"property\".  In this way or some other ways, we can make it indistinguishable whether it\u0027s a real data member or it\u0027s a calculated value from some members.\n\n\nIf we\u0027re following a kind of builder pattern, then only builders need to modify these objects.  If we used a good builder pattern, then even builders don\u0027t need to modify the objects.\n\n  class SomethingBuilder:\n    def Build(node):\n      name \u003d ... get the name from |node| ...\n      type \u003d ... get the type from |node| ...\n      extended_attributes \u003d ... construct it from |node|! ...\n      return Something(name\u003dname, type\u003dtype, extended_attributes\u003dextended_attributes)\n\n  class Something:\n    def __init__(self, name\u003dNone, type\u003dNone, extended_attributes\u003dNone):\n      assert name\n      assert type\n      assert extended_attributes\n      self._name \u003d name\n      self._type \u003d type\n      self._extended_attributes \u003d extended_attributes\n      # only __init__ sets the fields.",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0d5a394_404da925",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
         "patchSetId": 8
