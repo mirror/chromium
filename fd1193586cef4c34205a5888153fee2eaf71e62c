@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b6863d8_6a8f4a70",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-25T21:56:52Z",
+      "side": 0,
+      "message": "OK",
+      "parentUuid": "e11240ff_77c921d0",
+      "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef25722_79148fa1",
         "filename": "cc/layers/layer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T17:58:16Z",
       "side": 0,
       "message": "Do we need mutable properties at all after compositor worker goes away?",
+      "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd011858_edd6fef0",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-25T21:56:52Z",
+      "side": 0,
+      "message": "property_trees_builder still references them.",
+      "parentUuid": "9ef25722_79148fa1",
       "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
