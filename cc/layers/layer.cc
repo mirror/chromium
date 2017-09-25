@@ -1434,8 +1434,6 @@ void Layer::SetMutableProperties(uint32_t properties) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.mutable_properties == properties)
     return;
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-               "Layer::SetMutableProperties", "properties", properties);
   inputs_.mutable_properties = properties;
   SetNeedsCommit();
 }

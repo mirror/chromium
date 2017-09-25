@@ -656,9 +656,6 @@ void LayerImpl::SetMutableProperties(uint32_t properties) {
   if (mutable_properties_ == properties)
     return;
 
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-               "LayerImpl::SetMutableProperties", "properties", properties);
-
   mutable_properties_ = properties;
   // If this layer is already in the element map, update its properties.
   layer_tree_impl_->AddToElementMap(this);
