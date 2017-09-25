@@ -26,7 +26,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
       gr_context.get(), SkBudgeted::kYes, image_info);
   SkCanvas* canvas = surface->getCanvas();
 
-  cc::PlaybackParams params(nullptr, canvas->getTotalMatrix());
+  cc::PlaybackParams params(nullptr, nullptr, canvas->getTotalMatrix());
 
   // Need 4 bytes to be able to read the type/skip.
   while (size >= 4) {
