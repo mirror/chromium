@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a2b0e6_f2207b9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "This comment needs updating.",
+      "range": {
+        "startLine": 643,
+        "startChar": 0,
+        "endLine": 646,
+        "endChar": 99
+      },
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b4020e_40eff15a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "nit: unneeded change?",
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725e8729_6ab9b12d",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "nit: ++offline_id",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded91769_355c52d6",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "nit: |past| sounds clearer to me.",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c226199_70043695",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "nit: this seems more of a error scenario test than an actual use-case. Maybe move it into the \"Should not crash\" section below?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14192bd9_4cf865a0",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-25T23:22:33Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "e77c8091f07e3e736fa6091d31e2bc6c1e275c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
