@@ -326,7 +326,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       if (result.bitmap.is_valid() || result.fallback_icon_style) {
         [strongSelf largeIconCache]->SetCachedResult(localURL, result);
       }
-      [strongSelf faviconOfType:tileType fetchedForURL:localURL];
+      [strongSelf faviconOfType:tileType
+                  fetchedForURL:localURL
+                       iconType:result.icon_type];
     }
   };
 
@@ -463,12 +465,13 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 // If it is the first time we see the favicon corresponding to |URL|, we log the
 // |tileType| impression.
 - (void)faviconOfType:(ntp_tiles::TileVisualType)tileType
-        fetchedForURL:(const GURL&)URL {
+        fetchedForURL:(const GURL&)URL
+             iconType:(favicon_base::IconType)iconType {
   for (size_t i = 0; i < _mostVisitedDataForLogging.size(); ++i) {
     ntp_tiles::NTPTile& ntpTile = _mostVisitedDataForLogging[i];
     if (ntpTile.url == URL) {
       ntp_tiles::metrics::RecordTileImpression(
-          i, ntpTile.source, tileType, URL,
+          i, ntpTile.source, tileType, iconType, URL,
           GetApplicationContext()->GetRapporServiceImpl());
       // Reset the URL to be sure to log the impression only once.
       ntpTile.url = GURL();

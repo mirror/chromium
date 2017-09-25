@@ -51,4 +51,25 @@ LargeIconImageResult::LargeIconImageResult(
 
 LargeIconImageResult::~LargeIconImageResult() {}
 
+int GetUmaFaviconType(IconType icon_type) {
+  switch (icon_type) {
+    case INVALID_ICON:
+      break;
+    case FAVICON:
+      return 1;
+    case TOUCH_ICON:
+      return 2;
+    case TOUCH_PRECOMPOSED_ICON:
+      return 3;
+    case WEB_MANIFEST_ICON:
+      return 4;
+      // Update GetLastUmaFaviconType() when new values are added.
+  }
+  return 0;
+}
+
+int GetLastUmaFaviconType() {
+  return 4;
+}
+
 }  // namespace favicon_base
