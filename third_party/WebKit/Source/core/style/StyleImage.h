@@ -68,10 +68,16 @@ class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
   // Note that the container_size is in the effective zoom level of
   // the style that applies to the given ImageResourceObserver, i.e if the zoom
   // level is 1.0 the container_size should be unzoomed.
+  // The |logical_tile_size| is the |container_size| without applying subpixel
+  // snapping.
+  // TODO(schenney): There are a few call sites of this function where the
+  // last parameter is an empty size. We should always pass the LayoutSize
+  // instead of the IntSize.
   virtual RefPtr<Image> GetImage(const ImageResourceObserver&,
                                  const Document&,
                                  const ComputedStyle&,
-                                 const IntSize& container_size) const = 0;
+                                 const IntSize& container_size,
+                                 const LayoutSize& logical_tile_size) const = 0;
   virtual WrappedImagePtr Data() const = 0;
   virtual float ImageScaleFactor() const { return 1; }
   virtual bool KnownToBeOpaque(const Document&, const ComputedStyle&) const = 0;

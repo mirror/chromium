@@ -29,6 +29,7 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSValue.h"
 #include "platform/geometry/IntSizeHash.h"
+#include "platform/geometry/LayoutSize.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/HashCountedSet.h"
 #include "platform/wtf/RefPtr.h"
@@ -61,7 +62,8 @@ class CORE_EXPORT CSSImageGeneratorValue : public CSSValue {
   RefPtr<Image> GetImage(const ImageResourceObserver&,
                          const Document&,
                          const ComputedStyle&,
-                         const IntSize&);
+                         const IntSize&,
+                         const LayoutSize&);
 
   bool IsFixedSize() const;
   IntSize FixedSize(const Document&, const FloatSize& default_object_size);

@@ -34,7 +34,8 @@ class CSSPaintValue : public CSSImageGeneratorValue {
   RefPtr<Image> GetImage(const ImageResourceObserver&,
                          const Document&,
                          const ComputedStyle&,
-                         const IntSize&);
+                         const IntSize&,
+                         const LayoutSize&);
   bool IsFixedSize() const { return false; }
   IntSize FixedSize(const Document&) { return IntSize(); }
 
