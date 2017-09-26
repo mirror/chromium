@@ -5,6 +5,8 @@
 #ifndef VideoFrameResourceProvider_h
 #define VideoFrameResourceProvider_h
 
+#include "cc/resources/video_resource_updater.h"
+
 namespace viz {
 class RenderPass;
 }
@@ -16,9 +18,22 @@ namespace blink {
 // frame.
 class VideoFrameResourceProvider {
  public:
-  VideoFrameResourceProvider();
+  explicit VideoFrameResourceProvider(
+      const base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>&);
+
+  void Initialize(viz::ContextProvider*);
 
   void AppendQuads(viz::RenderPass&);
+
+  base::WeakPtr<VideoFrameResourceProvider> CreateWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+ private:
+  base::WeakPtrFactory<VideoFrameResourceProvider> weak_ptr_factory_;
+  const base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>&
+      context_provider_callback_;
+  std::unique_ptr<cc::VideoResourceUpdater> resource_updater_;
 };
 
 }  // namespace blink
