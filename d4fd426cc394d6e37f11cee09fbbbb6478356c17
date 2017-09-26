@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "d7ba0cee_9dc971c6",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T13:16:37Z",
+      "side": 1,
+      "message": "This still needs the \u0027do\u0027 part of Done.  ;)",
+      "parentUuid": "eda5a500_fc3eca2e",
+      "revId": "d4fd426cc394d6e37f11cee09fbbbb6478356c17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e40b971_694a171e",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3

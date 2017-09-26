@@ -192,6 +192,24 @@
       "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00532245_35fc1de9",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T13:16:37Z",
+      "side": 1,
+      "message": "Why do we need new SkColors for every test though?  We can just have one variable \u0027color\u0027 and reuse it - then at least we\u0027re at 3 lines instead of 4 per case.",
+      "parentUuid": "2a0f96f1_e81c431e",
+      "revId": "fd34d1a3e1a7b28aa196400bece2804f11eaa11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
