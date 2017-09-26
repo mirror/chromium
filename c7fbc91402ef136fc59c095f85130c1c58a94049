@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "392c1076_c08b0598",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-26T18:14:43Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure whether to include this for completeness.\n\nIt also brings up that I may need to initialize the offscreen bool somewhere owned by ax_tree.cc so that each function doesn\u0027t have to initialize it to \u0027false\u0027 independently. Initializing it to \u0027true\u0027 would cause it always to be \u0027true\u0027, which is incorrect.",
+      "range": {
+        "startLine": 232,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "c7fbc91402ef136fc59c095f85130c1c58a94049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
