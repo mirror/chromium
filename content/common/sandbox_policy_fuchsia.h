@@ -5,7 +5,7 @@
 #ifndef CONTENT_COMMON_SANDBOX_POLICY_FUCHSIA_H_
 #define CONTENT_COMMON_SANDBOX_POLICY_FUCHSIA_H_
 
-#include "content/public/common/sandbox_type.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace base {
 struct LaunchOptions;

@@ -8,9 +8,9 @@
 #include "base/logging.h"
 #include "content/common/sandbox_win.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_type.h"
 #include "sandbox/win/src/sandbox.h"
 #include "sandbox/win/src/sandbox_types.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace content {
 
