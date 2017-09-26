@@ -100,7 +100,7 @@ def main():
 # This is not really a "script test" so does not need to manually add
 # any additional compile targets.
 def main_compile_targets(args):
-  json.dump([], args.output)
+  json.dump(['telemetry_perf_tests_new'], args.output)
 
 
 if __name__ == '__main__':
