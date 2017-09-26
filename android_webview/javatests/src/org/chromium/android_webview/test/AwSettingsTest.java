@@ -1817,8 +1817,9 @@ public class AwSettingsTest {
     }
 
     @Test
-    @SmallTest
-    @Feature({"AndroidWebView", "Preferences"})
+    //@SmallTest
+    //@Feature({"AndroidWebView", "Preferences"})
+    @DisabledTest // TODO(crbug.com/767180): Fix flake and enable test.
     public void testDatabaseEnabled() throws Throwable {
         TestAwContentsClient client = new TestAwContentsClient();
         final AwTestContainerView testContainerView =
