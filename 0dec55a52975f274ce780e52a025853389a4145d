@@ -22,6 +22,30 @@
       "revId": "0dec55a52975f274ce780e52a025853389a4145d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2466b6fe_7fa7c26a",
+        "filename": "media/gpu/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-26T04:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c3a1ee_e40f091b",
+      "range": {
+        "startLine": 24,
+        "startChar": 36,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "0dec55a52975f274ce780e52a025853389a4145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
