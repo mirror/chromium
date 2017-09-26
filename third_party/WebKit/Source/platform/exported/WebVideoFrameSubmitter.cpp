@@ -10,11 +10,18 @@ namespace cc {
 class VideoFrameProvider;
 }  // namespace cc
 
+namespace viz {
+class ContextProvider;
+}
+
 namespace blink {
 
 std::unique_ptr<WebVideoFrameSubmitter> WebVideoFrameSubmitter::Create(
-    cc::VideoFrameProvider* provider) {
-  return base::MakeUnique<VideoFrameSubmitter>(provider);
+    cc::VideoFrameProvider* provider,
+    const base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>&
+        context_provider_callback) {
+  return base::MakeUnique<VideoFrameSubmitter>(provider,
+                                               context_provider_callback);
 }
 
 }  // namespace blink
