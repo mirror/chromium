@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cffccf63_5f97630b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "Probably should mention omnibox somewhere in these variable and string names.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f68355b_72c1c9d8",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "probably best goes between ntp_tile and offline_page below",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846712fd_490d635c",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "Given your changes about how zero_suggest triggers in response to my earlier concerns, this is now out-of-sync with the zero_suggest code.  Can you refactor (or maybe make the relevant function public?) to make sure the logic here and there also stays in sync?",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb33df32_12f7df0e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "ditto about omnibox on focus here (in strings in this file and variable names)",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dc042d_a4621c7b",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "nit: May want omnibox in the string somewhere as I can easily imagine other forms of personalized suggestions that could be offered in Chrome Home.\n\nPlease revise the comment above while you\u0027re at it.  (e.g., mention \"on omnibox focus\")",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41223150_9dcc1e25",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "Rather than constantly guarding all InZeroSuggestMostVisitedFieldTrial() calls with \u0026\u0026 !PersonalizedSuggestionsEnabled(), I think it would be better to add a helper function MostVisitedEnabled() (or something) that does this for you, checks the field trial state and resolves any possible disagreement with PersonalizedSuggestionsEnabled().\n\nWhen taking this suggestion, be careful on line 514.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd960462_da76ff81",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "nit: please comment about the reason for caching.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d87d74d_25cb3681",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "Why is this cast necessary?  The base class providers both const and non-const return values.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a1cd9f_af874d23",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:23:30Z",
+      "side": 1,
+      "message": "nit: Please put immediately below ShouldShowNonContextualZeroSuggest; they seem related.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
