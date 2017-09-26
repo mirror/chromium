@@ -46,7 +46,10 @@ class ChromeNavigationBrowserTest : public InProcessBrowserTest {
     // tests to take more time to complete. Disable backgrounding so that the
     // tests don't time out.
     command_line->AppendSwitch(switches::kDisableRendererBackgrounding);
+  }
 
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
     ASSERT_TRUE(embedded_test_server()->Start());
   }
 
@@ -956,4 +959,40 @@ IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest, CrossSiteRedirectionToPDF) {
                          ->tab_strip_model()
                          ->GetActiveWebContents()
                          ->GetLastCommittedURL());
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest, VerifyUserGesture) {
+  const GURL a_url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  const GURL b_url(embedded_test_server()->GetURL("b.com", "/title1.html"));
+
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(browser(), a_url);
+
+  // Add a link.
+  const char* script = R"(
+    var a = document.createElement('a');
+    a.href = '%s';
+    document.body.appendChild(a);
+  )";
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents, base::StringPrintf(script, b_url.spec().c_str())));
+
+  // Click the link.
+  content::TestNavigationObserver b_waiter(web_contents, 1);
+  content::NavigationHandleObserver b_observer(web_contents, b_url);
+  EXPECT_TRUE(ExecuteScript(web_contents,
+                            "document.getElementsByTagName('a')[0].click()"));
+  b_waiter.Wait();
+  EXPECT_TRUE(b_observer.has_user_gesture());
+
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents, base::StringPrintf(script, b_url.spec().c_str())));
+  content::TestNavigationObserver b_waiter2(web_contents, 1);
+  content::NavigationHandleObserver b_observer2(web_contents, b_url);
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGesture(
+      web_contents, "document.getElementsByTagName('a')[0].click()"));
+  b_waiter2.Wait();
+  EXPECT_FALSE(b_observer2.has_user_gesture());
 }

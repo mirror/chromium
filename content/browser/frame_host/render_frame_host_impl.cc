@@ -3432,7 +3432,6 @@ void RenderFrameHostImpl::FailedNavigation(
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::FailedNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
                "error", error_code);
-
   // Update renderer permissions even for failed commits, so that for example
   // the URL bar correctly displays privileged URLs instead of filtering them.
   UpdatePermissionsForNavigation(common_params, request_params);

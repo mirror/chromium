@@ -759,6 +759,7 @@ void NavigationHandleImpl::DidCommitNavigation(
 
   did_replace_entry_ = did_replace_entry;
   method_ = params.method;
+
   has_user_gesture_ = (params.gesture == NavigationGestureUser);
   transition_ = params.transition;
   should_update_history_ = params.should_update_history;

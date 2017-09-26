@@ -49,6 +49,7 @@ void NavigationHandleObserver::DidFinishNavigation(
   net_error_code_ = navigation_handle->GetNetErrorCode();
 
   if (navigation_handle->HasCommitted()) {
+    has_user_gesture_ = navigation_handle->HasUserGesture();
     has_committed_ = true;
     if (!navigation_handle->IsErrorPage()) {
       page_transition_ = navigation_handle->GetPageTransition();

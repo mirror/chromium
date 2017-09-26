@@ -3571,10 +3571,9 @@ void RenderFrameImpl::DidStartProvisionalLoad(
       document_state->navigation_state());
   bool is_top_most = !frame_->Parent();
   if (is_top_most) {
-    render_view_->set_navigation_gesture(
-        WebUserGestureIndicator::IsProcessingUserGesture()
-            ? NavigationGestureUser
-            : NavigationGestureAuto);
+    render_view_->set_navigation_gesture(request.HasUserGesture()
+                                             ? NavigationGestureUser
+                                             : NavigationGestureAuto);
   } else if (document_loader->ReplacesCurrentHistoryItem()) {
     // Subframe navigations that don't add session history items must be
     // marked with AUTO_SUBFRAME. See also didFailProvisionalLoad for how we

@@ -267,13 +267,10 @@ NavigationEntryImpl::NavigationEntryImpl(
       should_clear_history_list_(false),
       can_load_local_resources_(false),
       frame_tree_node_id_(-1),
+      has_user_gesture_(false),
       reload_type_(ReloadType::NONE),
       started_from_context_menu_(false),
-      ssl_error_(false) {
-#if defined(OS_ANDROID)
-  has_user_gesture_ = false;
-#endif
-}
+      ssl_error_(false) {}
 
 NavigationEntryImpl::~NavigationEntryImpl() {
 }
@@ -643,9 +640,7 @@ std::unique_ptr<NavigationEntryImpl> NavigationEntryImpl::CloneAndReplace(
   // ResetForCommit: should_clear_history_list_
   // ResetForCommit: frame_tree_node_id_
   // ResetForCommit: intent_received_timestamp_
-#if defined(OS_ANDROID)
   copy->has_user_gesture_ = has_user_gesture_;
-#endif
   // ResetForCommit: reload_type_
   copy->extra_data_ = extra_data_;
 
@@ -724,10 +719,7 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
     current_length_to_send = 0;
   }
 
-  bool user_gesture = false;
-#if defined(OS_ANDROID)
-  user_gesture = has_user_gesture();
-#endif
+  bool user_gesture = has_user_gesture();
   RequestNavigationParams request_params(
       GetIsOverridingUserAgent(), redirects, original_url, original_method,
       GetCanLoadLocalResources(), frame_entry.page_state(), GetUniqueID(),
