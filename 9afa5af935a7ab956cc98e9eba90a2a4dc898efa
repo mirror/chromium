@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b444c2_fde51bc7",
+        "filename": "base/bind_helpers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:34:00Z",
+      "side": 1,
+      "message": "this should just be MakeRefCounted, cuz it\u0027s calling |new|",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7ad9ab_98c5798e",
+        "filename": "base/memory/ref_counted_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:34:00Z",
+      "side": 1,
+      "message": "Should be MakeRefCounted cuz it\u0027s |new|",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85f5f22_c72c1864",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:34:00Z",
+      "side": 1,
+      "message": "same",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e796783c_e74f3c22",
+        "filename": "cc/animation/animation_timeline.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:34:00Z",
+      "side": 1,
+      "message": "same, i\u0027ll stop commenting on each case of |new|",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
