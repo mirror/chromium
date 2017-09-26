@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f1514b3_5f35dfb0",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T21:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e68a6a8_6ffcc019",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd8dd2f_4b39a1dc",
         "filename": "chrome/browser/resources/md_extensions/shortcut_input.html",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7379f0e8_146231c1",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T21:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd8dd2f_4b39a1dc",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e93d6a5_a0664ed0",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T21:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84dd51c1_45547869",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b816f5b5_30090b87",
         "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-26T18:55:20Z",
       "side": 1,
       "message": "nit: can we do --paper-grey-700 here (or 800, this is between those)?",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1452258e_a433ff03",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T21:57:38Z",
+      "side": 1,
+      "message": "I decided to go with rgb(90, 90, 90) because that\u0027s what settings sub-page title use currently, and that page is already launched so I didn\u0027t want to impact that. Will double check with bettes@ and modify in a separate CL if he\u0027s okay with it.",
+      "parentUuid": "b816f5b5_30090b87",
       "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
