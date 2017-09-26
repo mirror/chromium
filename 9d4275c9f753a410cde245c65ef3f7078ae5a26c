@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d14cd0e4_e2ad189a",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-26T10:20:15Z",
+      "side": 1,
+      "message": "logging.error(...)",
+      "range": {
+        "startLine": 289,
+        "startChar": 10,
+        "endLine": 289,
+        "endChar": 16
+      },
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
