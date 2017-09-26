@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6887a84_f141d419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-26T23:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea5acb4_50b550db",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a319ef8b_c2a9b6ee",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_observer.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "90c51d36_cec21250",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-26T23:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a319ef8b_c2a9b6ee",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bba3593b_9e6354a8",
         "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-22T15:39:54Z",
       "side": 1,
       "message": "nit: I prefer something like \"RecordFreshOfflineContentAvailableForNotification\" or something since \"OnPageAdded\" is vague and implementation-dependent.",
+      "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538411a4_68fdf8f5",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-26T23:47:24Z",
+      "side": 1,
+      "message": "Changed to OnFreshOfflineContentAvailableForNotification.",
+      "parentUuid": "bba3593b_9e6354a8",
       "revId": "9dc3a4eaafd6c1a806037712ef1fcd550a10d1c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
