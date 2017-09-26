@@ -15,6 +15,7 @@
 #include "components/viz/service/display/overlay_strategy_single_on_top.h"
 #include "components/viz/service/display/overlay_strategy_underlay.h"
 #include "components/viz/service/display/overlay_strategy_underlay_cast.h"
+#include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/ozone/public/overlay_candidates_ozone.h"
 
 namespace viz {
@@ -98,15 +99,25 @@ void CompositorOverlayCandidateValidatorOzone::CheckOverlaySupport(
   ozone_surface_list.resize(surfaces->size());
 
   for (size_t i = 0; i < surfaces->size(); i++) {
-    ozone_surface_list.at(i).transform = surfaces->at(i).transform;
-    ozone_surface_list.at(i).format = surfaces->at(i).format;
-    ozone_surface_list.at(i).display_rect = surfaces->at(i).display_rect;
-    ozone_surface_list.at(i).crop_rect = surfaces->at(i).uv_rect;
-    ozone_surface_list.at(i).clip_rect = surfaces->at(i).clip_rect;
-    ozone_surface_list.at(i).is_clipped = surfaces->at(i).is_clipped;
-    ozone_surface_list.at(i).plane_z_order = surfaces->at(i).plane_z_order;
-    ozone_surface_list.at(i).buffer_size =
-        surfaces->at(i).resource_size_in_pixels;
+    auto& ozone_surface = ozone_surface_list.at(i);
+    ozone_surface.transform = surfaces->at(i).transform;
+    ozone_surface.format = surfaces->at(i).format;
+    ozone_surface.display_rect = surfaces->at(i).display_rect;
+    ozone_surface.crop_rect = surfaces->at(i).uv_rect;
+    ozone_surface.clip_rect = surfaces->at(i).clip_rect;
+    ozone_surface.is_clipped = surfaces->at(i).is_clipped;
+    ozone_surface.plane_z_order = surfaces->at(i).plane_z_order;
+    ozone_surface.buffer_size = surfaces->at(i).resource_size_in_pixels;
+
+    // Compositor doesn't have information about the total size of primary
+    // candidate. We get this information from display rect.
+    if (ozone_surface.plane_z_order == 0 &&
+        ozone_surface.buffer_size.IsEmpty()) {
+      ozone_surface.buffer_size =
+          gfx::ToNearestRect(ozone_surface.display_rect).size();
+    }
+
+    DCHECK(!ozone_surface.buffer_size.IsEmpty());
   }
 
   overlay_candidates_->CheckOverlaySupport(&ozone_surface_list);
