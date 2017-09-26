@@ -462,10 +462,6 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   state->SetBoolean("enabled", IsQueueEnabled());
   state->SetString("time_domain_name",
                    main_thread_only().time_domain->GetName());
-  bool verbose_tracing_enabled = false;
-  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
-      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.debug"),
-      &verbose_tracing_enabled);
   state->SetInteger("immediate_incoming_queue_size",
                     immediate_incoming_queue().size());
   state->SetInteger("delayed_incoming_queue_size",
@@ -483,20 +479,20 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   }
   if (main_thread_only().current_fence)
     state->SetInteger("current_fence", main_thread_only().current_fence);
-  if (verbose_tracing_enabled) {
-    state->BeginArray("immediate_incoming_queue");
-    QueueAsValueInto(immediate_incoming_queue(), now, state);
-    state->EndArray();
-    state->BeginArray("delayed_work_queue");
-    main_thread_only().delayed_work_queue->AsValueInto(now, state);
-    state->EndArray();
-    state->BeginArray("immediate_work_queue");
-    main_thread_only().immediate_work_queue->AsValueInto(now, state);
-    state->EndArray();
-    state->BeginArray("delayed_incoming_queue");
-    QueueAsValueInto(main_thread_only().delayed_incoming_queue, now, state);
-    state->EndArray();
-  }
+
+  state->BeginArray("immediate_incoming_queue");
+  QueueAsValueInto(immediate_incoming_queue(), now, state);
+  state->EndArray();
+  state->BeginArray("delayed_work_queue");
+  main_thread_only().delayed_work_queue->AsValueInto(now, state);
+  state->EndArray();
+  state->BeginArray("immediate_work_queue");
+  main_thread_only().immediate_work_queue->AsValueInto(now, state);
+  state->EndArray();
+  state->BeginArray("delayed_incoming_queue");
+  QueueAsValueInto(main_thread_only().delayed_incoming_queue, now, state);
+  state->EndArray();
+
   state->SetString("priority", TaskQueue::PriorityToString(GetQueuePriority()));
   state->EndDictionary();
 }
