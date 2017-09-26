@@ -575,6 +575,8 @@ void SurfaceManager::AppendDebugFrameSinkLabel(const FrameSinkId& frame_sink_id,
   std::string frame_sink_label = GetFrameSinkDebugLabel(frame_sink_id);
   if (!frame_sink_label.empty())
     *str << " " << frame_sink_label;
+  else
+    *str << " NO_LABEL";
 }
 
 void SurfaceManager::SurfaceReferencesToStringImpl(const SurfaceId& surface_id,
