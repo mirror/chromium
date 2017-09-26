@@ -5,7 +5,6 @@
 #include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 
 #include "core/animation/CompositorMutatorImpl.h"
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "modules/compositorworker/CompositorWorkerGlobalScope.h"

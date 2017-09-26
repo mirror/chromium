@@ -28,7 +28,6 @@
 #include "modules/geolocation/Geolocation.h"
 
 #include "bindings/core/v8/SourceLocation.h"
-#include "core/dom/Document.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"

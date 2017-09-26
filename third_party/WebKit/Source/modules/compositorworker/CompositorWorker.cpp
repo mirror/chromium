@@ -6,7 +6,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/CompositorWorkerProxyClient.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/LocalFrame.h"
 #include "core/page/ChromeClient.h"

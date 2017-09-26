@@ -11,7 +11,6 @@
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "build/build_config.h"
 #include "core/dom/DOMException.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"

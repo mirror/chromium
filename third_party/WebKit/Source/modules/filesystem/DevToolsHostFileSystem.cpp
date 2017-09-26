@@ -4,7 +4,6 @@
 
 #include "modules/filesystem/DevToolsHostFileSystem.h"
 
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/DevToolsHost.h"
 #include "core/page/Page.h"
