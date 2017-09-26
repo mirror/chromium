@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ed2f92_230d9705",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/reportView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T20:22:09Z",
+      "side": 1,
+      "message": "remove this as well then?",
+      "revId": "0f2cb65faabda5c1dfed8e4eab41c681d84967ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
