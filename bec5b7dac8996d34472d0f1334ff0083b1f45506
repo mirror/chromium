@@ -16,6 +16,24 @@
       "revId": "bec5b7dac8996d34472d0f1334ff0083b1f45506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e24edbb_693fdfd9",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-26T16:39:51Z",
+      "side": 1,
+      "message": "In fact, it\u0027s not needed.",
+      "parentUuid": "ef4e66e4_d1deec6e",
+      "revId": "bec5b7dac8996d34472d0f1334ff0083b1f45506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
