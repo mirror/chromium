@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83016cba_44fc0768",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T23:29:42Z",
+      "side": 1,
+      "message": "s/is an unmasked card/contains the full PAN\n\n(To me, \"unmasked\" means it used to be hidden for security and now it\u0027s not, but in this case it\u0027s just a ~16-digit number someone submitted on a form, right?)",
+      "range": {
+        "startLine": 315,
+        "startChar": 41,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "c7a5cca4b70e587a20390046709c63959deb07c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c561c1_3764bd15",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3603,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T23:29:42Z",
+      "side": 1,
+      "message": "(Does this matter since you added StripSeparators?)",
+      "range": {
+        "startLine": 3603,
+        "startChar": 31,
+        "endLine": 3603,
+        "endChar": 39
+      },
+      "revId": "c7a5cca4b70e587a20390046709c63959deb07c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
