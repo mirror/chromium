@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81709990_bc5e3938",
+        "filename": "base/bind_helpers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T15:49:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c6b444c2_fde51bc7",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc7ad9ab_98c5798e",
         "filename": "base/memory/ref_counted_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530ab561_6038778f",
+        "filename": "base/memory/ref_counted_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T15:49:02Z",
+      "side": 1,
+      "message": "This one is weird, it actually checks that WrapRefCounted DCHECKS if the object doesn\u0027t start with 0 refs. MakeRefCounted\u003c\u003e works correctly in this case, since it is constructing the thing, and doesn\u0027t DCHECK so the test fails. It took me way to long to figure out what is happening here, so I added some comments.",
+      "parentUuid": "fc7ad9ab_98c5798e",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b988192_e481c8a6",
+        "filename": "cc/animation/animation_timeline.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T15:49:02Z",
+      "side": 1,
+      "message": "So for this MakeRefCounted\u003cAnimationTimeline\u003e doesn\u0027t work because AnimationTimeline has a private constructor. This is a super common pattern where there is a scoped_refptr\u003cT\u003e T::Create() method or scoped_refptr\u003cT\u003e is constructed by a friend class. This applies to all the other ones below too.",
+      "parentUuid": "e796783c_e74f3c22",
+      "revId": "9afa5af935a7ab956cc98e9eba90a2a4dc898efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
