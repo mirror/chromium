@@ -52,6 +52,24 @@
       "revId": "7301ad0666cf57e6c4e69c1d040b3e0a97a2a9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80271a79_991c44c1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-26T00:08:43Z",
+      "side": 1,
+      "message": "\u003e Makes sense. I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d767606\n\u003e \n\u003e Do you want to take that bug or should I?\n\nThank you for fixing it! I replaced this with blink::IsSupportedJavascriptMimeType().\n\n\u003e FWIW I\u0027m sort of hoping a lot of the issues with request interception with the current impl will be fixed automatically when we migrate to s13nsw (many of the WorkerPainPoint bugs and maybe other quirks), so I wasn\u0027t too concerned with keeping behavior parity between them.\n\nAcked.",
+      "parentUuid": "1ecebd4e_f4902277",
+      "revId": "7301ad0666cf57e6c4e69c1d040b3e0a97a2a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
