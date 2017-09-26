@@ -38,6 +38,16 @@ using testing::StartsWith;
 
 const char kTestEmail[] = "foo@bar.com";
 const char kValidURL[] = "http://valid-url.test";
+const char kValidResponseData[] =
+    "{\"categories\" : [{"
+    "  \"id\": 0,"
+    "  \"suggestions\" : [{"
+    "    \"title\" : \"Title\","
+    "    \"summary\" : \"...\","
+    "    \"url\" : \"http://localhost/foobar\","
+    "    \"imageUrl\" : \"http://localhost/foobar.jpg\""
+    "  }]"
+    "}]}";
 
 MATCHER(IsEmptySuggestionsList, "is an empty list of suggestions") {
   ContextualSuggestionsFetcher::OptionalSuggestions& optional_suggestions =
@@ -178,16 +188,6 @@ TEST_F(ContextualSuggestionsFetcherTest, ShouldCreateFetcher) {
 
 TEST_F(ContextualSuggestionsFetcherTest, ShouldFetchSuggestion) {
   InitializeFakeCredentials();
-  const std::string kValidResponseData =
-      "{\"categories\" : [{"
-      "  \"id\": 0,"
-      "  \"suggestions\" : [{"
-      "    \"title\" : \"Title\","
-      "    \"summary\" : \"...\","
-      "    \"url\" : \"http://localhost/foobar\","
-      "    \"imageUrl\" : \"http://localhost/foobar.jpg\""
-      "  }]"
-      "}]}";
   SetFakeResponse(/*response_data=*/kValidResponseData, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   EXPECT_CALL(mock_suggestions_available_callback(),
@@ -262,6 +262,36 @@ TEST_F(ContextualSuggestionsFetcherTest,
   EXPECT_THAT(fetcher().GetLastStatusForTesting(),
               StartsWith("Received invalid JSON (error "));
   EXPECT_THAT(fetcher().GetLastJsonForTesting(), Eq(kInvalidResponseData));
+}
+
+TEST_F(ContextualSuggestionsFetcherTest, ShouldFetchOnlyOnceForSameUrl) {
+  InitializeFakeCredentials();
+  SetFakeResponse(/*response_data=*/kValidResponseData, net::HTTP_OK,
+                  net::URLRequestStatus::SUCCESS);
+  EXPECT_CALL(mock_suggestions_available_callback(),
+              Run(Property(&Status::IsSuccess, true),
+                  IsSingleSuggestion("http://localhost/foobar")));
+
+  fetcher().FetchContextualSuggestions(
+      GURL(kValidURL),
+      ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
+  IssueOAuth2Token();
+  FastForwardUntilNoTasksRemain();
+  EXPECT_THAT(fetcher().GetLastStatusForTesting(), Eq("OK"));
+  EXPECT_THAT(fetcher().GetLastJsonForTesting(), Eq(kValidResponseData));
+
+  SetFakeResponse(/*response_data=*/std::string(), net::HTTP_NOT_FOUND,
+                  net::URLRequestStatus::SUCCESS);
+  // Expect same result from cache even though http response would be empty.
+  EXPECT_CALL(mock_suggestions_available_callback(),
+              Run(Property(&Status::IsSuccess, true),
+                  IsSingleSuggestion("http://localhost/foobar")));
+  fetcher().FetchContextualSuggestions(
+      GURL(kValidURL),
+      ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
+  FastForwardUntilNoTasksRemain();
+  EXPECT_THAT(fetcher().GetLastStatusForTesting(), Eq("OK"));
+  EXPECT_THAT(fetcher().GetLastJsonForTesting(), Eq(kValidResponseData));
 }
 
 }  // namespace ntp_snippets

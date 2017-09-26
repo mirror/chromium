@@ -31,6 +31,8 @@ namespace {
 const char kContentSuggestionsApiScope[] =
     "https://www.googleapis.com/auth/chrome-content-suggestions";
 const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
+const int kMaxResponsesInCache = 100;
+const int kCacheInvalidateAfterHours = 24;
 
 std::string FetchResultToString(FetchResult result) {
   switch (result) {
@@ -137,6 +139,13 @@ const GURL& ContextualSuggestionsFetcherImpl::GetFetchUrlForTesting() const {
 void ContextualSuggestionsFetcherImpl::FetchContextualSuggestions(
     const GURL& url,
     SuggestionsAvailableCallback callback) {
+  auto optional_suggestions = FetchFromCache(url);
+  if (optional_suggestions.has_value()) {
+    FetchFinished(std::move(optional_suggestions), std::move(callback),
+                  FetchResult::SUCCESS, std::string());
+    return;
+  }
+
   ContextualJsonRequest::Builder builder;
   builder.SetParseJsonCallback(parse_json_callback_)
       .SetUrlRequestContextGetter(url_request_context_getter_)
@@ -250,6 +259,8 @@ void ContextualSuggestionsFetcherImpl::JsonRequestDone(
     return;
   }
 
+  SaveInCache(request->GetContentUrl(), *result);
+
   FetchFinished(std::move(optional_suggestions), std::move(callback),
                 FetchResult::SUCCESS, std::string());
 }
@@ -300,6 +311,40 @@ bool ContextualSuggestionsFetcherImpl::JsonToSuggestions(
   }
 
   return true;
+}
+
+ContextualSuggestionsFetcher::OptionalSuggestions
+ContextualSuggestionsFetcherImpl::FetchFromCache(const GURL& url) {
+  auto cached_response_it = cached_url_responses_.find(url);
+  if (cached_response_it == cached_url_responses_.end()) {
+    return {};
+  } else {
+    CachedSuggestionsResponse& cached_response = cached_response_it->second;
+    const base::TimeDelta cache_interval =
+        base::TimeDelta::FromHours(kCacheInvalidateAfterHours);
+    if (cached_response.time_received + cache_interval < base::Time::Now()) {
+      // Cached element is too old, discard it.
+      cached_url_responses_.erase(cached_response_it);
+      return {};
+    }
+
+    OptionalSuggestions suggestions = RemoteSuggestion::PtrVector();
+    if (JsonToSuggestions(cached_response.response, &suggestions.value())) {
+      return suggestions;
+    } else {
+      return {};
+    }
+  }
+}
+
+void ContextualSuggestionsFetcherImpl::SaveInCache(
+    const GURL& url,
+    const base::Value& response) {
+  if (cached_url_responses_.size() > kMaxResponsesInCache) {
+    cached_url_responses_.clear();
+  }
+  cached_url_responses_[url] =
+      CachedSuggestionsResponse{response.Clone(), base::Time::Now()};
 }
 
 }  // namespace ntp_snippets

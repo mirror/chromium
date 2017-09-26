@@ -55,6 +55,10 @@ void ContextualJsonRequest::Start(CompletedCallback callback) {
   url_fetcher_->Start();
 }
 
+GURL ContextualJsonRequest::GetContentUrl() const {
+  return content_url_;
+}
+
 std::string ContextualJsonRequest::GetResponseString() const {
   std::string response;
   url_fetcher_->GetResponseAsString(&response);
@@ -126,6 +130,7 @@ std::unique_ptr<ContextualJsonRequest> ContextualJsonRequest::Builder::Build()
   std::string body = BuildBody();
   std::string headers = BuildHeaders();
   request->url_fetcher_ = BuildURLFetcher(request.get(), headers, body);
+  request->content_url_ = content_url_;
 
   // Log the request for debugging network issues.
   VLOG(1) << "Sending a NTP snippets request to " << url_ << ":\n"
