@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88eb3149_778b7ad2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T09:47:52Z",
+      "side": 1,
+      "message": "Done (added the check + will ask at ux sync).\n\nUPD: tshcumann@ confirmed that it is in Chrome Home only.",
+      "parentUuid": "618c9962_d046fca1",
+      "range": {
+        "startLine": 194,
+        "startChar": 12,
+        "endLine": 194,
+        "endChar": 29
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81daadbe_2197f9fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa32f024_2baaa200",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81daadbe_2197f9fd",
+      "range": {
+        "startLine": 199,
+        "startChar": 53,
+        "endLine": 199,
+        "endChar": 65
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2ecfb47_e5fd653c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T09:47:52Z",
+      "side": 1,
+      "message": "Done both.\n\nFYI, the latter affects old design as well.",
+      "parentUuid": "337a1941_496908b3",
+      "range": {
+        "startLine": 200,
+        "startChar": 54,
+        "endLine": 200,
+        "endChar": 75
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d679c6e_a38f3f82",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c251030_ffaef94a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2538,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T09:47:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d679c6e_a38f3f82",
+      "range": {
+        "startLine": 2538,
+        "startChar": 24,
+        "endLine": 2538,
+        "endChar": 75
+      },
+      "revId": "c80d2e3083f789201bd9b76b7fe1be623114f9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

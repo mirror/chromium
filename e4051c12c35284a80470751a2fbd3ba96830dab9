@@ -22,6 +22,30 @@
       "revId": "e4051c12c35284a80470751a2fbd3ba96830dab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4586cfa_d7799119",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T09:47:52Z",
+      "side": 1,
+      "message": "Somewhat done.\n\nThat\u0027s a good explanation, thank you.\n\n\u003e Maybe move the test to HomeSheetUiCaptureTest[1] ?\n\nThis seems infeasible. There are multiple dependencies, I don\u0027t think I could share them between tests, moving them is too cumbersome.\n\nInstead mvanouwerkerk@ suggested to enable the feature by default and use existing render test, what I\u0027ve done in the end.",
+      "parentUuid": "b62648d2_b2dea3c7",
+      "range": {
+        "startLine": 269,
+        "startChar": 22,
+        "endLine": 269,
+        "endChar": 25
+      },
+      "revId": "e4051c12c35284a80470751a2fbd3ba96830dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
