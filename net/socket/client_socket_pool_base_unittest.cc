@@ -522,11 +522,13 @@ class TestClientSocketPool : public ClientSocketPool {
   void RequestSockets(const std::string& group_name,
                       const void* params,
                       int num_sockets,
-                      const NetLogWithSource& net_log) override {
+                      const NetLogWithSource& net_log,
+                      HttpRequestInfo::RequestMotivation motivation) override {
     const scoped_refptr<TestSocketParams>* casted_params =
         static_cast<const scoped_refptr<TestSocketParams>*>(params);
 
-    base_.RequestSockets(group_name, *casted_params, num_sockets, net_log);
+    base_.RequestSockets(group_name, *casted_params, num_sockets, net_log,
+                         motivation);
   }
 
   void SetPriority(const std::string& group_name,
@@ -3085,7 +3087,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSockets) {
   CreatePool(kDefaultMaxSockets, kDefaultMaxSocketsPerGroup);
   connect_job_factory_->set_job_type(TestConnectJob::kMockPendingJob);
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(2, pool_->NumConnectJobsInGroup("a"));
@@ -3139,7 +3142,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsWhenAlreadyHaveAConnectJob) {
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   EXPECT_EQ(2, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
@@ -3201,7 +3205,8 @@ TEST_F(ClientSocketPoolBaseTest,
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   EXPECT_EQ(3, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
@@ -3225,7 +3230,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsAtMaxSocketLimit) {
 
   ASSERT_FALSE(pool_->HasGroup("a"));
 
-  pool_->RequestSockets("a", &params_, kDefaultMaxSockets, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, kDefaultMaxSockets, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(kDefaultMaxSockets, pool_->NumConnectJobsInGroup("a"));
@@ -3233,7 +3239,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsAtMaxSocketLimit) {
 
   ASSERT_FALSE(pool_->HasGroup("b"));
 
-  pool_->RequestSockets("b", &params_, kDefaultMaxSockets, NetLogWithSource());
+  pool_->RequestSockets("b", &params_, kDefaultMaxSockets, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_FALSE(pool_->HasGroup("b"));
 }
@@ -3245,7 +3252,7 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsHitMaxSocketLimit) {
   ASSERT_FALSE(pool_->HasGroup("a"));
 
   pool_->RequestSockets("a", &params_, kDefaultMaxSockets - 1,
-                        NetLogWithSource());
+                        NetLogWithSource(), HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(kDefaultMaxSockets - 1, pool_->NumConnectJobsInGroup("a"));
@@ -3255,7 +3262,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsHitMaxSocketLimit) {
 
   ASSERT_FALSE(pool_->HasGroup("b"));
 
-  pool_->RequestSockets("b", &params_, kDefaultMaxSockets, NetLogWithSource());
+  pool_->RequestSockets("b", &params_, kDefaultMaxSockets, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("b"));
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("b"));
@@ -3281,7 +3289,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsCountIdleSockets) {
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
@@ -3307,7 +3316,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsCountActiveSockets) {
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
   EXPECT_EQ(1, pool_->NumActiveSocketsInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
@@ -3320,7 +3330,7 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsSynchronous) {
   connect_job_factory_->set_job_type(TestConnectJob::kMockJob);
 
   pool_->RequestSockets("a", &params_, kDefaultMaxSocketsPerGroup,
-                        NetLogWithSource());
+                        NetLogWithSource(), HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("a"));
@@ -3328,7 +3338,7 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsSynchronous) {
   EXPECT_EQ(kDefaultMaxSocketsPerGroup, pool_->IdleSocketCountInGroup("a"));
 
   pool_->RequestSockets("b", &params_, kDefaultMaxSocketsPerGroup,
-                        NetLogWithSource());
+                        NetLogWithSource(), HttpRequestInfo::NORMAL_MOTIVATION);
 
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("b"));
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("b"));
@@ -3340,14 +3350,14 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsSynchronousError) {
   connect_job_factory_->set_job_type(TestConnectJob::kMockFailingJob);
 
   pool_->RequestSockets("a", &params_, kDefaultMaxSocketsPerGroup,
-                        NetLogWithSource());
+                        NetLogWithSource(), HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_FALSE(pool_->HasGroup("a"));
 
   connect_job_factory_->set_job_type(
       TestConnectJob::kMockAdditionalErrorStateJob);
   pool_->RequestSockets("a", &params_, kDefaultMaxSocketsPerGroup,
-                        NetLogWithSource());
+                        NetLogWithSource(), HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_FALSE(pool_->HasGroup("a"));
 }
@@ -3356,14 +3366,16 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsMultipleTimesDoesNothing) {
   CreatePool(4, 4);
   connect_job_factory_->set_job_type(TestConnectJob::kMockPendingJob);
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(2, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(2, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(2, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(2, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
@@ -3399,7 +3411,8 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsMultipleTimesDoesNothing) {
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(2, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(2, pool_->IdleSocketCountInGroup("a"));
@@ -3409,24 +3422,28 @@ TEST_F(ClientSocketPoolBaseTest, RequestSocketsDifferentNumSockets) {
   CreatePool(4, 4);
   connect_job_factory_->set_job_type(TestConnectJob::kMockPendingJob);
 
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(2, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(2, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 3, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 3, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(3, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(3, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
 
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(3, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(3, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
@@ -3436,7 +3453,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectJobsTakenByNormalRequests) {
   CreatePool(kDefaultMaxSockets, kDefaultMaxSocketsPerGroup);
   connect_job_factory_->set_job_type(TestConnectJob::kMockPendingJob);
 
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
@@ -3470,7 +3488,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectJobsTakenByNormalRequests) {
 TEST_F(ClientSocketPoolBaseTest, ConnectedPreconnectJobsHaveNoConnectTimes) {
   CreatePool(kDefaultMaxSockets, kDefaultMaxSocketsPerGroup);
   connect_job_factory_->set_job_type(TestConnectJob::kMockJob);
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("a"));
@@ -3540,7 +3559,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectClosesIdleSocketRemovesGroup) {
   // Requesting 2 preconnected sockets for "a" should fail to allocate any more
   // sockets for "a", and "b" should still have 2 active sockets.
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->IdleSocketCountInGroup("a"));
@@ -3558,7 +3578,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectClosesIdleSocketRemovesGroup) {
   EXPECT_EQ(2, pool_->IdleSocketCountInGroup("b"));
   EXPECT_EQ(0, pool_->NumActiveSocketsInGroup("b"));
 
-  pool_->RequestSockets("a", &params_, 2, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 2, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->IdleSocketCountInGroup("a"));
@@ -3577,7 +3598,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectWithoutBackupJob) {
   connect_job_factory_->set_job_type(TestConnectJob::kMockWaitingJob);
   connect_job_factory_->set_timeout_duration(
       base::TimeDelta::FromMilliseconds(500));
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
@@ -3599,7 +3621,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectWithBackupJob) {
 
   // Make the ConnectJob hang forever.
   connect_job_factory_->set_job_type(TestConnectJob::kMockWaitingJob);
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
   EXPECT_EQ(1, pool_->NumConnectJobsInGroup("a"));
   EXPECT_EQ(1, pool_->NumUnassignedConnectJobsInGroup("a"));
   EXPECT_EQ(0, pool_->IdleSocketCountInGroup("a"));
@@ -3634,7 +3657,8 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectWithUnreadData) {
   CreatePool(kDefaultMaxSockets, kDefaultMaxSocketsPerGroup);
   connect_job_factory_->set_job_type(TestConnectJob::kMockUnreadDataJob);
 
-  pool_->RequestSockets("a", &params_, 1, NetLogWithSource());
+  pool_->RequestSockets("a", &params_, 1, NetLogWithSource(),
+                        HttpRequestInfo::NORMAL_MOTIVATION);
 
   ASSERT_TRUE(pool_->HasGroup("a"));
   EXPECT_EQ(0, pool_->NumConnectJobsInGroup("a"));
