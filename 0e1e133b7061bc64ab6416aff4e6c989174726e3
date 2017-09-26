@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4593b17_e9c66e93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "Does SmartSelection need the compositor to be initialized before setting its enabled value?",
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b1e039_8398cf1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "This description reads oddly to me. How about something like:\n\n\"Whether Smart Select as the only handler of long-press on Android O is disabled. If this returns true, the Contextual Search Bar will be allowed to show in response to a long-press gesture on Android O.\"",
+      "range": {
+        "startLine": 382,
+        "startChar": 15,
+        "endLine": 382,
+        "endChar": 52
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24011133_acfbc0c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "nit: will be connected?",
+      "range": {
+        "startLine": 1221,
+        "startChar": 14,
+        "endLine": 1221,
+        "endChar": 28
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225d6c76_2bd81d1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "Is there a better check for whether smart select is enabled?",
+      "range": {
+        "startLine": 1628,
+        "startChar": 45,
+        "endLine": 1628,
+        "endChar": 92
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d0c43b_d22ca936",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "Does this method get called if the user does:\n1. Tap, CS shows\n2. Tap on selected text, selection pins show",
+      "range": {
+        "startLine": 1632,
+        "startChar": 20,
+        "endLine": 1633,
+        "endChar": 67
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91664a73_385d7fa3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T17:06:58Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "range": {
+        "startLine": 2137,
+        "startChar": 27,
+        "endLine": 2137,
+        "endChar": 45
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
