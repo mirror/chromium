@@ -22,6 +22,30 @@
       "revId": "6fb1d3fc4afc3dee4f9119bc75efe8d9578efa42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dbba75_680815bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/OAuth2TokenService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-26T17:17:54Z",
+      "side": 1,
+      "message": "StrictModeContext implements Closeable, so this line uses try-with-resources Java feature: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html.\nI couldn\u0027t find any tests for StrictModeContext at the moment. I\u0027ll follow-up with Eric on this: https://crbug.com/766228#c14.",
+      "parentUuid": "b396bffe_24fc8354",
+      "range": {
+        "startLine": 235,
+        "startChar": 31,
+        "endLine": 235,
+        "endChar": 37
+      },
+      "revId": "6fb1d3fc4afc3dee4f9119bc75efe8d9578efa42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
