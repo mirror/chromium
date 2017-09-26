@@ -445,6 +445,7 @@ void VrShellGl::InitializeRenderer() {
   gvr::Sizei render_size_default = specs[kFramePrimaryBuffer].GetSize();
   render_size_default_ = {render_size_default.width,
                           render_size_default.height};
+  specs[kFramePrimaryBuffer].SetSamples(2);
 
   specs[kFrameWebVrBrowserUiBuffer].SetSize(
       {render_size_default.width / kWebVrBrowserUiSizeFactor,
