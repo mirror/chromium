@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29db825_c3cc2c8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-26T17:55:52Z",
+      "side": 0,
+      "message": "we will need to move this comment too I guess?",
+      "range": {
+        "startLine": 1388,
+        "startChar": 20,
+        "endLine": 1388,
+        "endChar": 29
+      },
+      "revId": "d12d58a24c7a0772bd97368088abfc10243508e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
