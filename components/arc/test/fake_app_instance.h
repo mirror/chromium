@@ -92,16 +92,14 @@ class FakeAppInstance : public mojom::AppInstance {
       const base::Optional<gfx::Rect>& dimension_on_screen) override;
   void RequestIcon(const std::string& icon_resource_id,
                    mojom::ScaleFactor scale_factor,
-                   const RequestIconCallback& callback) override;
+                   RequestIconCallback callback) override;
   void RemoveCachedIcon(const std::string& icon_resource_id) override;
-  void CanHandleResolution(
-      const std::string& package_name,
-      const std::string& activity,
-      const gfx::Rect& dimension,
-      const CanHandleResolutionCallback& callback) override;
+  void CanHandleResolution(const std::string& package_name,
+                           const std::string& activity,
+                           const gfx::Rect& dimension,
+                           CanHandleResolutionCallback callback) override;
   void UninstallPackage(const std::string& package_name) override;
-  void GetTaskInfo(int32_t task_id,
-                   const GetTaskInfoCallback& callback) override;
+  void GetTaskInfo(int32_t task_id, GetTaskInfoCallback callback) override;
   void SetTaskActive(int32_t task_id) override;
   void CloseTask(int32_t task_id) override;
   void ShowPackageInfoDeprecated(const std::string& package_name,
@@ -115,7 +113,7 @@ class FakeAppInstance : public mojom::AppInstance {
   void GetRecentAndSuggestedAppsFromPlayStore(
       const std::string& query,
       int32_t max_results,
-      const GetRecentAndSuggestedAppsFromPlayStoreCallback& callback) override;
+      GetRecentAndSuggestedAppsFromPlayStoreCallback callback) override;
   void StartPaiFlow() override;
 
   // Methods to reply messages.
