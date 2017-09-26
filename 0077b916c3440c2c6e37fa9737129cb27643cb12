@@ -16,6 +16,24 @@
       "revId": "0077b916c3440c2c6e37fa9737129cb27643cb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f326c3c1_59cf0aea",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-09-26T06:55:39Z",
+      "side": 1,
+      "message": "I feel your pain of having a crowded namespace, but it seems that this enum is heavily used as an integer, which means adding the static_cast\u003cint\u003e which, for a value that is inherently numerical (particularly the kNumModifierKeys), seemed like a separate yak to shave. So to avoid crowding the namespace but keeping it as an implicitly convertible int enum, I went ahead and just wrapped this in the ime namespace. wdyt?",
+      "parentUuid": "0d4110f6_a4ac195f",
+      "revId": "0077b916c3440c2c6e37fa9737129cb27643cb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
