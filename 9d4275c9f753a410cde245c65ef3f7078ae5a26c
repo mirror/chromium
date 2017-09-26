@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02afea35_1529027a",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-26T21:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec1864c7_cdb1af51",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b81ce2d_d58f8cf0",
         "filename": "build/android/play_services/update.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b10a6b5_501c28bc",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-26T21:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b81ce2d_d58f8cf0",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b0fda424_1828b145",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-26T21:00:23Z",
+      "side": 1,
+      "message": "Done\n\nreplaced the other uses of mkdtemp as well",
+      "parentUuid": "f1704caf_00d6be87",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e571fa3_ae7f1b1e",
         "filename": "build/android/play_services/update.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449f7dd1_26a53316",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-26T21:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e571fa3_ae7f1b1e",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c30f044_3a725035",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-26T21:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d5201f_cf5da24e",
+      "range": {
+        "startLine": 289,
+        "startChar": 10,
+        "endLine": 289,
+        "endChar": 16
+      },
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
