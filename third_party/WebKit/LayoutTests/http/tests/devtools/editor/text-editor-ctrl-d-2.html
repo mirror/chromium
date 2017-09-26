@@ -11,7 +11,7 @@ function test() {
   var textEditor = SourcesTestRunner.createTestEditor();
   textEditor.setMimeType('text/javascript');
   textEditor.setReadOnly(false);
-  textEditor.element.focus();
+  textEditor.focus();
   TestRunner.evaluateInPage('codeSnippet();', onCodeSnippet);
 
   function onCodeSnippet(result) {
@@ -22,11 +22,11 @@ function test() {
 
   function nextOccurrence(times) {
     for (var i = 0; i < times; ++i)
-      textEditor._selectNextOccurrenceController.selectNextOccurrence();
+      eventSender.keyDown('d', [Host.isMac() ? 'metaKey' : 'ctrlKey'])
   }
 
   function undoLastSelection() {
-    textEditor._selectNextOccurrenceController.undoLastSelection();
+      eventSender.keyDown('u', [Host.isMac() ? 'metaKey' : 'ctrlKey'])
   }
 
   function lineSelection(line, from, to) {

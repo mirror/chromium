@@ -119,7 +119,7 @@ UI.ShortcutsScreen = class {
     section.addAlternateKeys(
         UI.shortcutRegistry.shortcutDescriptorsForAction('sources.go-to-member'), Common.UIString('Go to member'));
     section.addAlternateKeys(
-        UI.ShortcutsScreen.SourcesPanelShortcuts.ToggleAutocompletion, Common.UIString('Autocompletion'));
+        UI.shortcutRegistry.shortcutDescriptorsForAction('editor.autocomplete'), Common.UIString('Autocompletion'));
     section.addAlternateKeys(
         UI.shortcutRegistry.shortcutDescriptorsForAction('sources.go-to-line'), Common.UIString('Go to line'));
     section.addAlternateKeys(
@@ -128,7 +128,8 @@ UI.ShortcutsScreen = class {
     section.addAlternateKeys(
         UI.shortcutRegistry.shortcutDescriptorsForAction('sources.jump-to-next-location'),
         Common.UIString('Jump to next editing location'));
-    section.addAlternateKeys(UI.ShortcutsScreen.SourcesPanelShortcuts.ToggleComment, Common.UIString('Toggle comment'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('editor.toggle-comment'), Common.UIString('Toggle comment'));
     section.addAlternateKeys(
         UI.ShortcutsScreen.SourcesPanelShortcuts.IncreaseCSSUnitByOne, Common.UIString('Increment CSS unit by 1'));
     section.addAlternateKeys(
@@ -138,10 +139,13 @@ UI.ShortcutsScreen = class {
     section.addAlternateKeys(
         UI.ShortcutsScreen.SourcesPanelShortcuts.DecreaseCSSUnitByTen, Common.UIString('Decrement CSS unit by 10'));
     section.addAlternateKeys(
-        UI.ShortcutsScreen.SourcesPanelShortcuts.SelectNextOccurrence, Common.UIString('Select next occurrence'));
-    section.addAlternateKeys(UI.ShortcutsScreen.SourcesPanelShortcuts.SoftUndo, Common.UIString('Soft undo'));
+        UI.shortcutRegistry.shortcutDescriptorsForAction('editor.select-next-occurrence'),
+        Common.UIString('Select next occurrence'));
     section.addAlternateKeys(
-        UI.ShortcutsScreen.SourcesPanelShortcuts.GotoMatchingBracket, Common.UIString('Go to matching bracket'));
+        UI.shortcutRegistry.shortcutDescriptorsForAction('editor.undo-last-selection'), Common.UIString('Soft undo'));
+    section.addAlternateKeys(
+        UI.shortcutRegistry.shortcutDescriptorsForAction('editor.go-to-matching-bracket'),
+        Common.UIString('Go to matching bracket'));
     section.addAlternateKeys(
         UI.shortcutRegistry.shortcutDescriptorsForAction('sources.close-editor-tab'),
         Common.UIString('Close editor tab'));
@@ -415,15 +419,6 @@ UI.ShortcutsScreen.ElementsPanelShortcuts = {
 };
 
 UI.ShortcutsScreen.SourcesPanelShortcuts = {
-  SelectNextOccurrence: [UI.KeyboardShortcut.makeDescriptor('d', UI.KeyboardShortcut.Modifiers.CtrlOrMeta)],
-
-  SoftUndo: [UI.KeyboardShortcut.makeDescriptor('u', UI.KeyboardShortcut.Modifiers.CtrlOrMeta)],
-
-  GotoMatchingBracket: [UI.KeyboardShortcut.makeDescriptor('m', UI.KeyboardShortcut.Modifiers.Ctrl)],
-
-  ToggleAutocompletion:
-      [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Space, UI.KeyboardShortcut.Modifiers.Ctrl)],
-
   IncreaseCSSUnitByOne:
       [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Up, UI.KeyboardShortcut.Modifiers.Alt)],
 
@@ -440,7 +435,4 @@ UI.ShortcutsScreen.SourcesPanelShortcuts = {
 
   AddSelectionToWatch: [UI.KeyboardShortcut.makeDescriptor(
       'a', UI.KeyboardShortcut.Modifiers.Shift | UI.KeyboardShortcut.Modifiers.Ctrl)],
-
-  ToggleComment:
-      [UI.KeyboardShortcut.makeDescriptor(UI.KeyboardShortcut.Keys.Slash, UI.KeyboardShortcut.Modifiers.CtrlOrMeta)],
 };

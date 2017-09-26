@@ -611,6 +611,9 @@ CodeMirror.LineWidget.prototype = {
 /** @type {Object.<string, !Object.<string, string>>} */
 CodeMirror.keyMap;
 
+/** @type {!Object<number, string>} */
+CodeMirror.keyNames;
+
 /** @type {{scrollLeft: number, scrollTop: number}} */
 CodeMirror.doc;
 

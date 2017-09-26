@@ -60,86 +60,11 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
 
     this._codeMirror._codeMirrorTextEditor = this;
 
-    CodeMirror.keyMap['devtools-common'] = {
-      'Left': 'goCharLeft',
-      'Right': 'goCharRight',
-      'Up': 'goLineUp',
-      'Down': 'goLineDown',
-      'End': 'goLineEnd',
-      'Home': 'goLineStartSmart',
-      'PageUp': 'goSmartPageUp',
-      'PageDown': 'goSmartPageDown',
-      'Delete': 'delCharAfter',
-      'Backspace': 'delCharBefore',
-      'Tab': 'defaultTab',
-      'Shift-Tab': 'indentLess',
-      'Enter': 'newlineAndIndent',
-      'Ctrl-Space': 'autocomplete',
-      'Esc': 'dismiss',
-      'Ctrl-M': 'gotoMatchingBracket'
-    };
-
-    CodeMirror.keyMap['devtools-pc'] = {
-      'Ctrl-A': 'selectAll',
-      'Ctrl-Z': 'undoAndReveal',
-      'Shift-Ctrl-Z': 'redoAndReveal',
-      'Ctrl-Y': 'redo',
-      'Ctrl-Home': 'goDocStart',
-      'Ctrl-Up': 'goDocStart',
-      'Ctrl-End': 'goDocEnd',
-      'Ctrl-Down': 'goDocEnd',
-      'Ctrl-Left': 'goGroupLeft',
-      'Ctrl-Right': 'goGroupRight',
-      'Alt-Left': 'moveCamelLeft',
-      'Alt-Right': 'moveCamelRight',
-      'Shift-Alt-Left': 'selectCamelLeft',
-      'Shift-Alt-Right': 'selectCamelRight',
-      'Ctrl-Backspace': 'delGroupBefore',
-      'Ctrl-Delete': 'delGroupAfter',
-      'Ctrl-/': 'toggleComment',
-      'Ctrl-D': 'selectNextOccurrence',
-      'Ctrl-U': 'undoLastSelection',
-      fallthrough: 'devtools-common'
-    };
-
-    CodeMirror.keyMap['devtools-mac'] = {
-      'Cmd-A': 'selectAll',
-      'Cmd-Z': 'undoAndReveal',
-      'Shift-Cmd-Z': 'redoAndReveal',
-      'Cmd-Up': 'goDocStart',
-      'Cmd-Down': 'goDocEnd',
-      'Alt-Left': 'goGroupLeft',
-      'Alt-Right': 'goGroupRight',
-      'Ctrl-Left': 'moveCamelLeft',
-      'Ctrl-Right': 'moveCamelRight',
-      'Ctrl-A': 'goLineLeft',
-      'Ctrl-E': 'goLineRight',
-      'Ctrl-B': 'goCharLeft',
-      'Ctrl-F': 'goCharRight',
-      'Ctrl-Alt-B': 'goGroupLeft',
-      'Ctrl-Alt-F': 'goGroupRight',
-      'Ctrl-H': 'delCharBefore',
-      'Ctrl-D': 'delCharAfter',
-      'Ctrl-K': 'killLine',
-      'Ctrl-T': 'transposeChars',
-      'Shift-Ctrl-Left': 'selectCamelLeft',
-      'Shift-Ctrl-Right': 'selectCamelRight',
-      'Cmd-Left': 'goLineStartSmart',
-      'Cmd-Right': 'goLineEnd',
-      'Cmd-Backspace': 'delLineLeft',
-      'Alt-Backspace': 'delGroupBefore',
-      'Alt-Delete': 'delGroupAfter',
-      'Cmd-/': 'toggleComment',
-      'Cmd-D': 'selectNextOccurrence',
-      'Cmd-U': 'undoLastSelection',
-      fallthrough: 'devtools-common'
-    };
-
     if (options.bracketMatchingSetting)
       options.bracketMatchingSetting.addChangeListener(this._enableBracketMatchingIfNeeded, this);
     this._enableBracketMatchingIfNeeded();
 
-    this._codeMirror.setOption('keyMap', Host.isMac() ? 'devtools-mac' : 'devtools-pc');
+    this._updateKeymap();
 
     this._codeMirror.addKeyMap({'\'': 'maybeAvoidSmartSingleQuotes', '\'"\'': 'maybeAvoidSmartDoubleQuotes'});
 
@@ -527,9 +452,9 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
 
   _enableBracketMatchingIfNeeded() {
     this._codeMirror.setOption(
-        'autoCloseBrackets', (this._options.bracketMatchingSetting && this._options.bracketMatchingSetting.get()) ?
-            {explode: false} :
-            false);
+        'autoCloseBrackets',
+        (this._options.bracketMatchingSetting && this._options.bracketMatchingSetting.get()) ? {explode: false} :
+                                                                                               false);
   }
 
   /**
@@ -573,6 +498,70 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
   _handleKeyDown(e) {
     if (this._autocompleteController && this._autocompleteController.keyDown(e))
       e.consume(true);
+  }
+
+  _updateKeymap() {
+    /** @type {!Object<string, string>} */
+    var actions = {
+      'editor.go-char-left': 'goCharLeft',
+      'editor.go-char-right': 'goCharRight',
+      'editor.go-line-up': 'goLineUp',
+      'editor.go-line-down': 'goLineDown',
+      'editor.go-line-end': 'goLineEnd',
+      'editor.go-line-start': 'goLineStartSmart',
+      'editor.go-page-up': 'goSmartPageUp',
+      'editor.go-page-down': 'goSmartPageDown',
+      'editor.del-char-after': 'delCharAfter',
+      'editor.del-char-before': 'delCharBefore',
+      'editor.default-tab': 'defaultTab',
+      'editor.indent-less': 'indentLess',
+      'editor.newline-and-indent': 'newlineAndIndent',
+      'editor.autocomplete': 'autocomplete',
+      'editor.dismiss': 'dismiss',
+      'editor.go-to-matching-bracket': 'gotoMatchingBracket',
+      'editor.select-all': 'selectAll',
+      'editor.undo-and-reveal': 'undoAndReveal',
+      'editor.redo-and-reveal': 'redoAndReveal',
+      'editor.redo': 'redo',
+      'editor.go-doc-start': 'goDocStart',
+      'editor.go-doc-end': 'goDocEnd',
+      'editor.move-camel-left': 'moveCamelLeft',
+      'editor.move-camel-right': 'moveCamelRight',
+      'editor.select-camel-left': 'selectCamelLeft',
+      'editor.select-camel-right': 'selectCamelRight',
+      'editor.go-group-left': 'goGroupLeft',
+      'editor.go-group-right': 'goGroupRight',
+      'editor.del-group-before': 'delGroupBefore',
+      'editor.del-group-after': 'delGroupAfter',
+      'editor.toggle-comment': 'toggleComment',
+      'editor.select-next-occurrence': 'selectNextOccurrence',
+      'editor.undo-last-selection': 'undoLastSelection',
+      'editor.go-line-left': 'goLineLeft',
+      'editor.go-line-right': 'goLineRight',
+      'editor.kill-line': 'killLine',
+      'editor.transpose-chars': 'transposeChars',
+      'editor.del-line-left': 'delLineLeft',
+      __proto__: null
+    };
+    var keyMap = {};
+    for (var actionId in actions) {
+      var descriptors = UI.shortcutRegistry.shortcutDescriptorsForAction(actionId);
+      for (var descriptor of descriptors) {
+        var info = UI.KeyboardShortcut.keyCodeAndModifiersFromKey(descriptor.key);
+        var shortcut = '';
+        if (info.modifiers & UI.KeyboardShortcut.Modifiers.Shift)
+          shortcut += 'Shift-';
+        if (info.modifiers & UI.KeyboardShortcut.Modifiers.Meta)
+          shortcut += 'Cmd-';
+        if (info.modifiers & UI.KeyboardShortcut.Modifiers.Ctrl)
+          shortcut += 'Ctrl-';
+        if (info.modifiers & UI.KeyboardShortcut.Modifiers.Alt)
+          shortcut += 'Alt-';
+        shortcut += CodeMirror.keyNames[info.keyCode];
+        keyMap[shortcut] = actions[actionId];
+      }
+    }
+    this._codeMirror.setOption('keyMap', keyMap);
   }
 
   /**
