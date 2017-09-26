@@ -30,6 +30,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test_utils.h"
 #include "google_apis/gaia/gaia_switches.h"
+#include "google_apis/gaia/gaia_urls.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -37,8 +38,12 @@
 namespace chromeos {
 
 namespace {
-const char kGAIAHost[] = "accounts.google.com";
-}
+
+constexpr char kGAIAHost[] = "accounts.google.com";
+
+constexpr char kTestAllScopeAccessToken[] = "fake-all-scope-token";
+
+}  // namespace
 
 // static
 const char OobeBaseTest::kFakeUserEmail[] = "fake-email@gmail.com";
@@ -59,6 +64,8 @@ OobeBaseTest::OobeBaseTest()
 
 OobeBaseTest::~OobeBaseTest() {
 }
+
+void OobeBaseTest::RegisterAdditionalRequestHandlers() {}
 
 void OobeBaseTest::SetUp() {
   base::FilePath test_data_dir;
@@ -158,9 +165,6 @@ void OobeBaseTest::SetUpCommandLine(base::CommandLine* command_line) {
 void OobeBaseTest::InitHttpsForwarders() {
   ASSERT_TRUE(gaia_https_forwarder_.Initialize(
       kGAIAHost, embedded_test_server()->base_url()));
-}
-
-void OobeBaseTest::RegisterAdditionalRequestHandlers() {
 }
 
 void OobeBaseTest::SimulateNetworkOffline() {
@@ -275,6 +279,19 @@ void OobeBaseTest::SetSignFormField(const std::string& field_id,
   base::ReplaceSubstringsAfterOffset(&js, 0, "$FieldId", field_id);
   base::ReplaceSubstringsAfterOffset(&js, 0, "$FieldValue", field_value);
   ExecuteJsInSigninFrame(js);
+}
+
+void OobeBaseTest::SetupFakeGaiaForLogin(const std::string& user_email,
+                                         const std::string& gaia_id,
+                                         const std::string& refresh_token) {
+  if (!gaia_id.empty())
+    fake_gaia_->MapEmailToGaiaId(user_email, gaia_id);
+
+  FakeGaia::AccessTokenInfo token_info;
+  token_info.token = kTestAllScopeAccessToken;
+  token_info.audience = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  token_info.email = user_email;
+  fake_gaia_->IssueOAuthToken(refresh_token, token_info);
 }
 
 }  // namespace chromeos

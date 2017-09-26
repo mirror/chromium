@@ -1197,6 +1197,8 @@ void SAMLPolicyTest::LogInWithSAML(const std::string& user_id,
 
   fake_gaia_->SetFakeMergeSessionParams(user_id, auth_sid_cookie,
                                         auth_lsid_cookie);
+  SetupFakeGaiaForLogin(user_id, "", kTestRefreshToken);
+
   SetSignFormField("Email", "fake_user");
   SetSignFormField("Password", "fake_password");
 

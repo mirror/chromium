@@ -21,20 +21,17 @@
 #include "components/user_manager/user_manager.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
-#include "google_apis/gaia/gaia_constants.h"
-#include "google_apis/gaia/gaia_urls.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
 namespace chromeos {
 
 namespace {
 
-const char kFakeGaiaId[] = "123456";
-const char kFakeUser[] = "test_user@consumer.example.com";
-const char kFakeSid[] = "fake-sid";
-const char kFakeLsid[] = "fake-lsid";
-const char kFakeRefreshToken[] = "fake-refresh-token";
-const char kFakeUserInfoToken[] = "fake-user-info-token";
+constexpr char kFakeGaiaId[] = "123456";
+constexpr char kFakeUser[] = "test_user@consumer.example.com";
+constexpr char kFakeSid[] = "fake-sid";
+constexpr char kFakeLsid[] = "fake-lsid";
+constexpr char kFakeRefreshToken[] = "fake-refresh-token";
 
 class ScopedCompleteCallbackForTesting {
  public:
@@ -85,18 +82,8 @@ class BootstrapTest : public OobeBaseTest {
   void SetUpOnMainThread() override {
     OobeBaseTest::SetUpOnMainThread();
 
-    GaiaUrls* gaia_urls = GaiaUrls::GetInstance();
-
     fake_gaia_->SetFakeMergeSessionParams(kFakeUser, kFakeSid, kFakeLsid);
-    fake_gaia_->MapEmailToGaiaId(kFakeUser, kFakeGaiaId);
-
-    FakeGaia::AccessTokenInfo userinfo_token_info;
-    userinfo_token_info.token = kFakeUserInfoToken;
-    userinfo_token_info.scopes.insert(GaiaConstants::kGoogleUserInfoEmail);
-    userinfo_token_info.scopes.insert(GaiaConstants::kGoogleUserInfoProfile);
-    userinfo_token_info.audience = gaia_urls->oauth2_chrome_client_id();
-    userinfo_token_info.email = kFakeUser;
-    fake_gaia_->IssueOAuthToken(kFakeRefreshToken, userinfo_token_info);
+    SetupFakeGaiaForLogin(kFakeUser, kFakeGaiaId, kFakeRefreshToken);
   }
 
   void SetExpectedCredentials(const UserContext& user_context) {
