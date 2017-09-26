@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae74c5c_a8b5e96f",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-26T03:32:06Z",
+      "side": 1,
+      "message": "Does discovery_session_weak_ptr_factory_ need to be a member property instead of just being created here?",
+      "range": {
+        "startLine": 246,
+        "startChar": 6,
+        "endLine": 246,
+        "endChar": 41
+      },
+      "revId": "861d3614a80da6190ec2c96c6f83d2f6224189ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a062d6_72a59074",
+        "filename": "chromeos/components/tether/ble_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-26T03:32:06Z",
+      "side": 1,
+      "message": "Please make a common helper method for adding to the queue?",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 14
+      },
+      "revId": "861d3614a80da6190ec2c96c6f83d2f6224189ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
