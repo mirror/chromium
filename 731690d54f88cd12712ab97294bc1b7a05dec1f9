@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "0aa23a53_b8071e4a",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-26T19:42:13Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not sure if that type of test is desirable. There are two possibilities when a dependent definition changes:\n1) The change is incompatible; it removes a field or changes its type.\n2) The change is compatible. It adds a field or expands the possible range of enum values.\n\n2) is fine as far as I can tell, and being able to make changes of this type easily is one of the advantages of this CL. But verifying that the serialization result is identical would fail these changes, which I don\u0027t think is desirable. \n\nWe can\u0027t really allow 1) to happen, since as Daniel points out, deserialization of a previously serialized PageState would start failing. Fortunately 1) should cause a compile failure, since we read/write to the field that\u0027s being changed/removed. I think this compile failure is a stronger signal than a unit test failing, but it might not communicate what the correct resolution is? Do you think we still need a test for this eventuality? I\u0027m hesitant to do this because it entails going back to the old pattern of \"dump a .dat file for every schema change and add a BackwardsCompatTestVXX.\"",
+      "parentUuid": "13e1e464_ef08640a",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "e486125a_fa9360f0",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-26T19:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2522ff5_c71d5440",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214bb47e_59b6d4ad",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
@@ -140,6 +188,30 @@
       "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7355cb_db67c1bc",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-26T19:42:13Z",
+      "side": 1,
+      "message": "Both done.",
+      "parentUuid": "214bb47e_59b6d4ad",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
