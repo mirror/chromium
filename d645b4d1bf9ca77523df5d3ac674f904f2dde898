@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3d985d_0ede13f4",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-26T01:49:16Z",
+      "side": 1,
+      "message": "Well, please move --* to the first. ( \u0027-\u0027 \u003c \u0027a\u0027 ).\nWhat I meant is to exchange --paper-toolbar-content and --paper-toolbar-height.",
+      "revId": "d645b4d1bf9ca77523df5d3ac674f904f2dde898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
