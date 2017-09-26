@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ec5e7fb_f10d8c5b",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-26T18:55:52Z",
+      "side": 1,
+      "message": "it looks like this change is causing compile failures.",
+      "range": {
+        "startLine": 416,
+        "startChar": 24,
+        "endLine": 416,
+        "endChar": 25
+      },
+      "revId": "83d91e2bd34b2c2cd1d2a8ab86f26899ed2ecd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0e17f2_01b0162c",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-26T18:55:52Z",
+      "side": 1,
+      "message": "nit: Rename to UseFakeUIFactoryForTests, but up to you.",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 24
+      },
+      "revId": "83d91e2bd34b2c2cd1d2a8ab86f26899ed2ecd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b951e3_418a0145",
+        "filename": "content/browser/renderer_host/media/media_stream_ui_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-26T18:55:52Z",
+      "side": 1,
+      "message": "Remove this #include",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "83d91e2bd34b2c2cd1d2a8ab86f26899ed2ecd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
