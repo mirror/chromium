@@ -136,6 +136,7 @@ void PaymentRequestUpdateEvent::OnUpdatePaymentDetails(
   abort_timer_.Stop();
   updater_->OnUpdatePaymentDetails(details_script_value);
   updater_ = nullptr;
+  SetStopImmediatePropagation(false);
 }
 
 void PaymentRequestUpdateEvent::OnUpdatePaymentDetailsFailure(
@@ -145,6 +146,7 @@ void PaymentRequestUpdateEvent::OnUpdatePaymentDetailsFailure(
   abort_timer_.Stop();
   updater_->OnUpdatePaymentDetailsFailure(error);
   updater_ = nullptr;
+  SetStopImmediatePropagation(false);
 }
 
 DEFINE_TRACE(PaymentRequestUpdateEvent) {
