@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "a34749ac_18593f65",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:10:29Z",
+      "side": 1,
+      "message": "Ok ... there\u0027s just enough subtlety to this (given the OOB calling of these routines) that I\u0027d biased towards more stringent checking.  But up to you.",
+      "parentUuid": "2bdbb36b_47672a31",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 10
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27ae02d8_b4e50937",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 2
@@ -390,6 +414,30 @@
       "side": 1,
       "message": "PauseNetworkRead() sounds like we also care about pausing response header reading, which I am not sure yet how to enforce. Do we care about this inaccuracy?\n\n\nThe in-band/OOB distinction is pretty natural:\n- The current \"defer\" is an output parameter of WillStartRequest() etc. So it must be in-band.\n- All the notifications on URLLoaderThrottle::Delegate could be called both in-band/OOB.\nI added a comment above URLLoaderThrottle::Delegate.",
       "parentUuid": "0436ce6c_0d0d4b38",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b0d0e7_39b6c90e",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:10:29Z",
+      "side": 1,
+      "message": "I\u0027d be fine with PauseNetworkBodyRead().\n\nIf Resume() is OOB, no need to do anything else with the comments.",
+      "parentUuid": "929eb794_e6ba621e",
       "range": {
         "startLine": 43,
         "startChar": 17,
