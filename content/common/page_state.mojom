@@ -1,0 +1,85 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.history.mojom;
+
+import "mojo/common/file_path.mojom";
+import "mojo/common/string16.mojom";
+import "mojo/common/time.mojom";
+import "third_party/WebKit/public/platform/referrer.mojom";
+import "url/mojo/url.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// This file contains the mojo IDL definitions for PageState and its constituent 
+// parts. The resultant generated code is used to serialize and deserialize
+// PageState for the purpose of history restore. 
+// When adding fields, take care to only add fields to the end of the struct 
+// definition; the ordinal value of fields must be preserved between versions.
+// You'll also need to read/write the new field's value when decoding and
+// encoding PageState, and update PageStateSerializationTest to check that
+// your new field is preserved across serialization.
+// Don't remove fields; this will break compatibility.
+
+struct FileSystemFile {
+  url.mojom.Url filesystem_url;
+  uint64 offset;
+  uint64 length;
+  mojo.common.mojom.Time modification_time;
+};
+
+struct File {
+  mojo.common.mojom.FilePath path;
+  uint64 offset;
+  uint64 length;
+  mojo.common.mojom.Time modification_time;
+};
+
+union Element {
+  string blob_uuid;
+  array<uint8> bytes;
+  File file;
+  FileSystemFile file_system_file;
+};
+
+struct RequestBody {
+  array<Element> elements;
+  int64 identifier;
+  bool contains_sensitive_info;
+};
+
+struct HttpBody {
+  mojo.common.mojom.String16 http_content_type;
+  RequestBody? request_body;
+  bool contains_passwords = false;
+};
+
+// This enum's values must match blink::WebHistoryScrollRestorationType.
+enum ScrollRestorationType {
+  kAuto = 0,
+  kManual = 1
+};
+
+struct FrameState {
+  mojo.common.mojom.String16 http_content_type;
+  mojo.common.mojom.String16 url_string;
+  mojo.common.mojom.String16 referrer;
+  mojo.common.mojom.String16 target;
+  mojo.common.mojom.String16 state_object;
+  array<mojo.common.mojom.String16> document_state;
+  ScrollRestorationType scroll_restoration_type;
+  bool did_save_scroll_or_scale_state;
+  gfx.mojom.PointF visual_viewport_scroll_offset;
+  gfx.mojom.Point scroll_offset;
+  int64 item_sequence_number;
+  int64 document_sequence_number;
+  double page_scale_factor;
+  blink.mojom.ReferrerPolicy referrer_policy;
+  HttpBody http_body;
+  array<FrameState> children;
+};
+
+struct PageState {
+  array<mojo.common.mojom.String16> referenced_files;
+  FrameState top;
+};
