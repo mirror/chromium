@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "2069ec4b_eadd5787",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T00:29:16Z",
+      "side": 1,
+      "message": "Good point. Makes sense.",
+      "parentUuid": "07897547_e05ae45a",
+      "revId": "b6ef511fe22c93f44f553ecdd8496ce6b9eb9ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26876b10_4e036014",
         "filename": "net/url_request/redirect_info.h",
         "patchSetId": 3
