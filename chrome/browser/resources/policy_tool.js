@@ -123,6 +123,8 @@ policy.Policy.prototype.setStatus_ = function(value) {
     status = loadTimeData.getString('unset');
   } else if (value.error) {
     status = value.error;
+  } else if (value.invalid) {
+    status = 'The policy type is invalid.';
   } else {
     status = loadTimeData.getString('ok');
   }
