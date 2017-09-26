@@ -1078,23 +1078,40 @@ static std::unique_ptr<DragImage> DragImageForImage(
   return drag_image;
 }
 
-static std::unique_ptr<DragImage> DragImageForLink(
-    const KURL& link_url,
-    const String& link_text,
-    float device_scale_factor,
-    const IntPoint& mouse_dragged_point,
-    IntPoint& drag_loc) {
+static std::unique_ptr<DragImage> DragImageForLink(const KURL& link_url,
+                                                   const String& link_text,
+                                                   float device_scale_factor) {
   FontDescription font_description;
   LayoutTheme::GetTheme().SystemFont(blink::CSSValueNone, font_description);
-  std::unique_ptr<DragImage> drag_image = DragImage::Create(
-      link_url, link_text, font_description, device_scale_factor);
+  return DragImage::Create(link_url, link_text, font_description,
+                           device_scale_factor);
+}
 
-  IntSize size = drag_image ? drag_image->Size() : IntSize();
-  IntPoint drag_image_offset(-size.Width() / 2, -kLinkDragBorderInset);
-  drag_loc = IntPoint(mouse_dragged_point.X() + drag_image_offset.X(),
-                      mouse_dragged_point.Y() + drag_image_offset.Y());
+static IntPoint DragLocationForLink(const DragImage* link_image,
+                                    const IntPoint& origin,
+                                    float device_scale_factor,
+                                    float page_scale_factor) {
+  if (!link_image)
+    return origin;
+  LOG(ERROR) << "DragLocationForLink, link_image->Size().Width(): " << link_image->Size().Width();
+  // Offset the image so that the cursor is horizontally centered.
+  FloatPoint image_offset(-link_image->Size().Width() / 2.f,
+                          -kLinkDragBorderInset);
+  // |drag_offset| is in the coordinate space of the frame's contents whereas
+  // |link_image| is in physical pixels. Adjust the offset to be scaled in the
+  // frame's contents.
+  // TODO(pdr): Unify this calculation with the DragImageForImage scaling code.
+  float scale = 1.f / (device_scale_factor * page_scale_factor);
+  image_offset.Scale(scale, scale);
 
-  return drag_image;
+  LOG(ERROR) << "DragLocationForLink, image_offset before origin: " << image_offset.ToString();
+
+  image_offset.MoveBy(origin);
+
+  LOG(ERROR) << "DragLocationForLink, image_offset after origin adjust: " << image_offset.ToString();
+  LOG(ERROR) << "DragLocationForLink, image_offset after rounding: " << RoundedIntPoint(image_offset).ToString();
+
+  return RoundedIntPoint(image_offset);
 }
 
 // static
@@ -1230,8 +1247,10 @@ bool DragController::StartDrag(LocalFrame* src,
       float screen_device_scale_factor =
           src->GetPage()->GetChromeClient().GetScreenInfo().device_scale_factor;
       drag_image = DragImageForLink(link_url, hit_test_result.TextContent(),
-                                    screen_device_scale_factor,
-                                    mouse_dragged_point, drag_location);
+                                    screen_device_scale_factor);
+      drag_location = DragLocationForLink(drag_image.get(), mouse_dragged_point,
+                                          screen_device_scale_factor,
+                                          src->GetPage()->PageScaleFactor());
     }
     DoSystemDrag(drag_image.get(), drag_location, mouse_dragged_point,
                  data_transfer, src, true);
@@ -1256,10 +1275,16 @@ void DragController::DoSystemDrag(DragImage* image,
   did_initiate_drag_ = true;
   drag_initiator_ = frame->GetDocument();
 
+  LOG(ERROR) << "DoSystemDrag, drag_location: " << drag_location.ToString();
+  LOG(ERROR) << "DoSystemDrag, event_pos: " << event_pos.ToString();
+
   IntPoint adjusted_drag_location =
       frame->View()->ContentsToViewport(drag_location);
+  LOG(ERROR) << "DoSystemDrag, adjusted_drag_location: " << adjusted_drag_location.ToString();
   IntPoint adjusted_event_pos = frame->View()->ContentsToViewport(event_pos);
+  LOG(ERROR) << "DoSystemDrag, adjusted_event_pos: " << adjusted_event_pos.ToString();
   IntSize offset_size(adjusted_event_pos - adjusted_drag_location);
+  LOG(ERROR) << "DoSystemDrag, offset_size: " << offset_size.ToString();
   WebPoint offset_point(offset_size.Width(), offset_size.Height());
   WebDragData drag_data = data_transfer->GetDataObject()->ToWebDragData();
   WebDragOperationsMask drag_operation_mask =
