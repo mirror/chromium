@@ -166,7 +166,8 @@ void AXTree::UpdateData(const AXTreeData& new_data) {
 }
 
 gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
-                                        gfx::RectF bounds) const {
+                                        gfx::RectF bounds,
+                                        bool* offscreen) const {
   // If |bounds| is uninitialized, which is not the same as empty,
   // start with the node bounds.
   if (bounds.width() == 0 && bounds.height() == 0) {
@@ -177,7 +178,7 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
     if (bounds.IsEmpty()) {
       for (size_t i = 0; i < node->children().size(); i++) {
         ui::AXNode* child = node->children()[i];
-        bounds.Union(GetTreeBounds(child));
+        bounds.Union(GetTreeBounds(child, offscreen));
       }
       if (bounds.width() > 0 && bounds.height() > 0)
         return bounds;
@@ -228,6 +229,9 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
       if (!clipped.IsEmpty()) {
         // We can simply clip it to the container.
         bounds = clipped;
+        // This is a no-op but included for completeness...
+        if (offscreen != nullptr)
+          *offscreen |= false;
       } else {
         // Totally offscreen. Find the nearest edge or corner.
         // Make the minimum dimension 1 instead of 0.
@@ -245,6 +249,8 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
           bounds.set_y(0);
           bounds.set_height(1);
         }
+        if (offscreen != nullptr)
+          *offscreen |= true;
       }
     }
 
@@ -254,8 +260,8 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
   return bounds;
 }
 
-gfx::RectF AXTree::GetTreeBounds(const AXNode* node) const {
-  return RelativeToTreeBounds(node, gfx::RectF());
+gfx::RectF AXTree::GetTreeBounds(const AXNode* node, bool* offscreen) const {
+  return RelativeToTreeBounds(node, gfx::RectF(), offscreen);
 }
 
 std::set<int32_t> AXTree::GetReverseRelations(AXIntAttribute attr,
