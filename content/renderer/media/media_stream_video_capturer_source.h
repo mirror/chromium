@@ -40,6 +40,9 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
       RenderFrame* render_frame);
   ~MediaStreamVideoCapturerSource() override;
 
+  bool HasSingleSecurityOrigin() const override;
+  bool DidPassCORSAccessCheck() const override;
+
  private:
   friend class CanvasCaptureHandlerTest;
   friend class MediaStreamVideoCapturerSourceTest;

@@ -26,6 +26,8 @@ namespace content {
 // passed weak WebAudioSourceProviderImpl to receive a copy of the audio data
 // intended for rendering. This copied data is received on OnAudioBus() and sent
 // to all the registered Tracks.
+// TODO(guidou): Implement overrides of HasSingleSecurityOrigin() and
+// DidPassCORSAccessCheck().
 class CONTENT_EXPORT HtmlAudioElementCapturerSource final
     : public MediaStreamAudioSource {
  public:
