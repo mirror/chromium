@@ -22,6 +22,30 @@
       "revId": "626b53c44d242323f9ef85bceeb75bc857613f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd631a91_2092635c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-26T09:30:15Z",
+      "side": 1,
+      "message": "(I thought I replied to this but it\u0027s gone) Yes Nicolas that looks great, better than what I did :-)",
+      "parentUuid": "a72a2a8e_6c1d3520",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "626b53c44d242323f9ef85bceeb75bc857613f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
