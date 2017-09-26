@@ -9,9 +9,9 @@
 #include <atomic>
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/base_export.h"
 #include "base/logging.h"
+#include "base/synchronization/spin_lock.h"
 #include "build/build_config.h"
 
 #if defined(OS_MACOSX)

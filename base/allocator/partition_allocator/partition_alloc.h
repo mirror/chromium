@@ -63,10 +63,10 @@
 #include <string.h>
 
 #include "base/allocator/partition_allocator/page_allocator.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/bits.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "base/synchronization/spin_lock.h"
 #include "base/sys_byteorder.h"
 #include "build/build_config.h"
 
