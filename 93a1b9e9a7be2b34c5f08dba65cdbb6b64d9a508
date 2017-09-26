@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4df76bfb_53fec3e3",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-26T08:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866dadd4_74d66b7e",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 26
+      },
+      "revId": "93a1b9e9a7be2b34c5f08dba65cdbb6b64d9a508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1655dbde_b6a07734",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If you want to handle arbitrary invalid URLs cropping up, please remove them from prefs when they\u0027re detected. Unactionable logspam is not very helpful.",
       "parentUuid": "058ede79_46f269cc",
+      "range": {
+        "startLine": 152,
+        "startChar": 22,
+        "endLine": 152,
+        "endChar": 30
+      },
+      "revId": "93a1b9e9a7be2b34c5f08dba65cdbb6b64d9a508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4144a221_5871013a",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-26T08:15:46Z",
+      "side": 1,
+      "message": "OK fair enough; I removed the logspam. I don\u0027t see much point removing them from prefs; it\u0027s equivalent to them not being there (to just ignore them). And they should never be written in there in the first place (after this bug is fixed).",
+      "parentUuid": "aab454d1_6cf9245e",
       "range": {
         "startLine": 152,
         "startChar": 22,
