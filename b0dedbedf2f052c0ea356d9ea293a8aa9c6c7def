@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf26c7ef_9fb71cbc",
+        "filename": "content/test/data/accessibility/aria/aria-level-expected-blink.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-09-26T23:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3781758d_2eaaae3e",
+      "revId": "b0dedbedf2f052c0ea356d9ea293a8aa9c6c7def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c92487b5_822416a2",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T04:34:46Z",
       "side": 1,
       "message": "How about deleting this line instead of returning the\ndefault?\n\nI think \u003ch1 aria-level\u003d999\u003e should return 1.\nThe 999 is not a valid level, so I think it makes more\nsense to fall back on the actual HTML level (1) rather than\nthe ARIA default (2).\n\nIn the case of \u003cdiv role\u003dheading\u003e, it will still return 2,\nbecause of the code below.",
+      "revId": "b0dedbedf2f052c0ea356d9ea293a8aa9c6c7def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc39f13c_bfcfa9ab",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-09-26T23:51:21Z",
+      "side": 1,
+      "message": "Thanks for reviewing.\nI agree your opinion that is more reasonable in this case.\nI\u0027ve updated on new patch-set.",
+      "parentUuid": "c92487b5_822416a2",
       "revId": "b0dedbedf2f052c0ea356d9ea293a8aa9c6c7def",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
