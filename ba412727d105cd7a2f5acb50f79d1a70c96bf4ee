@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6422692_9ce6bd42",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T18:00:39Z",
+      "side": 1,
+      "message": "This will turn this on for WebVR too right? We probably don\u0027t want to do that.",
+      "range": {
+        "startLine": 448,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "ba412727d105cd7a2f5acb50f79d1a70c96bf4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
