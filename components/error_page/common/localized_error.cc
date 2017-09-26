@@ -388,6 +388,22 @@ const LocalizedErrorMap http_error_options[] = {
     },
 };
 
+const LocalizedErrorMap default_400_error = {
+    400,
+    IDS_ERRORPAGES_HEADING_PAGE_NOT_WORKING,
+    IDS_ERRORPAGES_SUMMARY_CONTACT_SITE_OWNER,
+    SUGGEST_NONE,
+    SHOW_BUTTON_RELOAD,
+};
+
+const LocalizedErrorMap default_500_error = {
+    500,
+    IDS_ERRORPAGES_HEADING_PAGE_NOT_WORKING,
+    IDS_ERRORPAGES_SUMMARY_CONTACT_SITE_OWNER,
+    SUGGEST_NONE,
+    SHOW_BUTTON_RELOAD,
+};
+
 const LocalizedErrorMap dns_probe_error_options[] = {
   {error_page::DNS_PROBE_POSSIBLE,
    IDS_ERRORPAGES_HEADING_NOT_AVAILABLE,
@@ -437,6 +453,15 @@ const LocalizedErrorMap* FindErrorMapInArray(const LocalizedErrorMap* maps,
   for (size_t i = 0; i < num_maps; ++i) {
     if (maps[i].error_code == error_code)
       return &maps[i];
+  }
+
+  // Show general messsages for unspecified 400 / 500 errors.
+  if (maps == http_error_options) {
+    if (error_code >= 400 && error_code < 500) {
+      return &default_400_error;
+    } else if (error_code >= 500 && error_code < 600) {
+      return &default_500_error;
+    }
   }
   return nullptr;
 }
