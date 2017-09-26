@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31543a94_d9b8b257",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T18:51:24Z",
+      "side": 1,
+      "message": "durationMs here might be more clear as well as the doc above, but I\u0027m ok either way.",
+      "range": {
+        "startLine": 101,
+        "startChar": 33,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "6b3194a1bc2a3bf0008b505b0cba4fe7e9f10991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
