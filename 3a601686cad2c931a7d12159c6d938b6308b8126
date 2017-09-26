@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef4ec371_12e5f812",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T16:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b733b42_60290d33",
+      "revId": "3a601686cad2c931a7d12159c6d938b6308b8126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47528909_a4f3d3c5",
         "filename": "content/renderer/mus/renderer_window_tree_client.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T16:01:54Z",
       "side": 1,
       "message": "I think these are out of order from the .h file.",
+      "revId": "3a601686cad2c931a7d12159c6d938b6308b8126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7368f9_47b55e06",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T16:34:46Z",
+      "side": 1,
+      "message": "Indeed. Updated.",
+      "parentUuid": "47528909_a4f3d3c5",
       "revId": "3a601686cad2c931a7d12159c6d938b6308b8126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
