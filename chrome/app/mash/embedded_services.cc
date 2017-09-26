@@ -4,6 +4,7 @@
 
 #include "chrome/app/mash/embedded_services.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "mash/catalog_viewer/catalog_viewer.h"
 #include "mash/catalog_viewer/public/interfaces/constants.mojom.h"
 #include "mash/common/config.h"
@@ -26,6 +27,7 @@
 
 #if defined(OS_LINUX) && !defined(OS_ANDROID)
 #include "components/font_service/font_service_app.h"
+#include "components/font_service/public/interfaces/constants.mojom.h"
 #endif  // defined(OS_LINUX) && !defined(OS_ANDROID)
 
 std::unique_ptr<service_manager::Service> CreateEmbeddedMashService(
@@ -57,6 +59,39 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedMashService(
   if (service_name == "font_service")
     return base::MakeUnique<font_service::FontServiceApp>();
 #endif  // defined(OS_LINUX) && !defined(OS_ANDROID)
-
   return nullptr;
+}
+
+void RegisterOutOfProcessServicesForMash(
+    content::ContentBrowserClient::OutOfProcessServiceMap* services) {
+#if defined(OS_CHROMEOS)
+  (*services)[ash::mojom::kServiceName] =
+      base::ASCIIToUTF16("Ash Window Manager and Shell");
+/*  if (service_name == "accessibility_autoclick")
+  return base::MakeUnique<ash::autoclick::AutoclickApplication>();
+if (service_name == "touch_hud")
+  return base::MakeUnique<ash::touch_hud::TouchHudApplication>();
+*/
+#endif  // defined(OS_CHROMEOS)
+/*
+if (service_name == mash::catalog_viewer::mojom::kServiceName)
+  return base::MakeUnique<mash::catalog_viewer::CatalogViewer>();
+if (service_name == mash::session::mojom::kServiceName)
+  return base::MakeUnique<mash::session::Session>();
+if (service_name == ui::mojom::kServiceName)
+  return base::MakeUnique<ui::Service>();
+if (service_name == mash::quick_launch::mojom::kServiceName)
+  return base::MakeUnique<mash::quick_launch::QuickLaunch>();
+if (service_name == mash::task_viewer::mojom::kServiceName)
+  return base::MakeUnique<mash::task_viewer::TaskViewer>();
+if (service_name == "test_ime_driver")
+  return base::MakeUnique<ui::test::TestIMEApplication>();
+*/
+#if defined(OS_LINUX) && !defined(OS_ANDROID)
+  LOG(ERROR) << "registering font_service="
+             << font_service::mojom::kServiceName;
+  (*services)[font_service::mojom::kServiceName] =
+      base::ASCIIToUTF16("Font Service");
+#endif  // defined(OS_LINUX) && !defined(OS_ANDROID)
+  (*services)[ui::mojom::kServiceName] = base::ASCIIToUTF16("UI Service");
 }

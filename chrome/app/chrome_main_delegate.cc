@@ -315,6 +315,12 @@ void AdjustLinuxOOMScore(const std::string& process_type) {
 // Returns true if this subprocess type needs the ResourceBundle initialized
 // and resources loaded.
 bool SubprocessNeedsResourceBundle(const std::string& process_type) {
+  if (process_type == switches::kUtilityProcess) {
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kIsMojoService)) {
+      return false;
+    }
+  }
   return
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
       // The zygote process opens the resources for the renderers.
@@ -1135,12 +1141,6 @@ service_manager::ProcessType ChromeMainDelegate::OverrideProcessType() {
     // Don't mess with embedded service command lines.
     return service_manager::ProcessType::kDefault;
   }
-
-#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
-  if (command_line.HasSwitch(switches::kMash))
-    return service_manager::ProcessType::kServiceManager;
-#endif
-
   return service_manager::ProcessType::kDefault;
 }
 

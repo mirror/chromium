@@ -61,7 +61,10 @@ source_set("embedded_services") {
   }
 
   if (is_linux && !is_android) {
-    deps += [ "//components/font_service:lib" ]
+    deps += [
+      "//components/font_service:lib",
+      "//components/font_service/public/interfaces",
+    ]
   }
 }
 

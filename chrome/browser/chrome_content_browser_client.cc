@@ -365,6 +365,11 @@
 #include "chrome/browser/media/cast_transport_host_filter.h"
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+#include "chrome/app/mash/embedded_services.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
+#endif
+
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/plugins/chrome_content_browser_client_plugins_part.h"
 #include "chrome/browser/plugins/flash_download_interception.h"
@@ -1819,6 +1824,15 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   }
 }
 
+void ChromeContentBrowserClient::AdjustUtilityServiceProcessCommandLine(
+    const service_manager::Identity& identity,
+    base::CommandLine* command_line) {
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+  if (identity.name() == ui::mojom::kServiceName)
+    command_line->AppendSwitch(switches::kMessageLoopTypeUi);
+#endif
+}
+
 std::string ChromeContentBrowserClient::GetApplicationLocale() {
   if (BrowserThread::CurrentlyOn(BrowserThread::IO))
     return g_io_thread_application_locale.Get();
@@ -3007,7 +3021,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
 }
 
 void ChromeContentBrowserClient::RegisterOutOfProcessServices(
-      OutOfProcessServiceMap* services) {
+    OutOfProcessServiceMap* services) {
 #if BUILDFLAG(ENABLE_PRINTING)
   (*services)[printing::mojom::kServiceName] =
       base::ASCIIToUTF16("PDF Compositor Service");
@@ -3024,6 +3038,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #if !defined(OS_ANDROID)
   (*services)[chrome::mojom::kProfileImportServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME);
+#endif
+
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))
+    RegisterOutOfProcessServicesForMash(services);
 #endif
 }
 

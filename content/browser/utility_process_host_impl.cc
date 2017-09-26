@@ -12,6 +12,7 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/singleton.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/network_session_configurator/common/network_switches.h"
@@ -44,6 +45,13 @@
 #endif
 
 namespace content {
+
+namespace {
+
+// See SetServiceProgramPath() for details.
+base::FilePath* g_service_program_path = nullptr;
+
+}  // namespace
 
 // NOTE: changes to this class need to be reviewed by the security team.
 class UtilitySandboxedProcessLauncherDelegate
@@ -128,6 +136,12 @@ void UtilityProcessHostImpl::RegisterUtilityMainThreadFactory(
   g_utility_main_thread_factory = create;
 }
 
+// static
+void UtilityProcessHostImpl::SetServiceProgramPath(const base::FilePath& path) {
+  delete g_service_program_path;
+  g_service_program_path = new base::FilePath(path);
+}
+
 UtilityProcessHostImpl::UtilityProcessHostImpl(
     const scoped_refptr<UtilityProcessHostClient>& client,
     const scoped_refptr<base::SequencedTaskRunner>& client_task_runner)
@@ -203,6 +217,110 @@ void UtilityProcessHostImpl::SetName(const base::string16& name) {
   name_ = name;
 }
 
+void UtilityProcessHostImpl::SetServiceIdentity(
+    const service_manager::Identity& identity) {
+  service_identity_ = identity;
+}
+
+std::unique_ptr<base::CommandLine> UtilityProcessHostImpl::CreateCommandLine() {
+  const base::CommandLine& browser_command_line =
+      *base::CommandLine::ForCurrentProcess();
+
+  bool has_cmd_prefix =
+      browser_command_line.HasSwitch(switches::kUtilityCmdPrefix);
+
+#if defined(OS_ANDROID)
+  // readlink("/prof/self/exe") sometimes fails on Android at startup.
+  // As a workaround skip calling it here, since the executable name is
+  // not needed on Android anyway. See crbug.com/500854.
+  std::unique_ptr<base::CommandLine> cmd_line =
+      base::MakeUnique<base::CommandLine>(base::CommandLine::NO_PROGRAM);
+#else
+  int child_flags = child_flags_;
+
+  // When running under gdb, forking /proc/self/exe ends up forking the gdb
+  // executable instead of Chromium. It is almost safe to assume that no
+  // updates will happen while a developer is running with
+  // |switches::kUtilityCmdPrefix|. See ChildProcessHost::GetChildPath() for
+  // a similar case with Valgrind.
+  if (has_cmd_prefix)
+    child_flags = ChildProcessHost::CHILD_NORMAL;
+
+  base::FilePath exe_path = ChildProcessHost::GetChildPath(child_flags);
+  if (exe_path.empty()) {
+    NOTREACHED() << "Unable to get utility process binary name.";
+    return nullptr;
+  }
+
+  std::unique_ptr<base::CommandLine> cmd_line =
+      base::MakeUnique<base::CommandLine>(exe_path);
+#endif
+
+  const bool is_mojo_service = service_identity_.has_value();
+  if (is_mojo_service) {
+    cmd_line->AppendArguments(*base::CommandLine::ForCurrentProcess(), false);
+    if (g_service_program_path)
+      cmd_line->SetProgram(*g_service_program_path);
+    cmd_line->AppendSwitch(switches::kIsMojoService);
+    GetContentClient()->browser()->AdjustUtilityServiceProcessCommandLine(
+        *service_identity_, cmd_line.get());
+  }
+
+  cmd_line->AppendSwitchASCII(switches::kProcessType,
+                              switches::kUtilityProcess);
+
+  if (is_mojo_service)
+    return cmd_line;
+
+  BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(cmd_line.get());
+  std::string locale = GetContentClient()->browser()->GetApplicationLocale();
+  cmd_line->AppendSwitchASCII(switches::kLang, locale);
+
+#if defined(OS_WIN)
+  cmd_line->AppendArg(switches::kPrefetchArgumentOther);
+#endif  // defined(OS_WIN)
+
+  SetCommandLineFlagsForSandboxType(cmd_line.get(), sandbox_type_);
+
+  // Browser command-line switches to propagate to the utility process.
+  static const char* const kSwitchNames[] = {
+    switches::kHostResolverRules,
+    switches::kLogNetLog,
+    switches::kNoSandbox,
+    switches::kProxyServer,
+#if defined(OS_MACOSX)
+    switches::kEnableSandboxLogging,
+#endif
+    switches::kUseFakeDeviceForMediaStream,
+    switches::kUseFileForFakeVideoCapture,
+    switches::kUtilityStartupDialog,
+  };
+  cmd_line->CopySwitchesFrom(browser_command_line, kSwitchNames,
+                             arraysize(kSwitchNames));
+  network_session_configurator::CopyNetworkSwitches(browser_command_line,
+                                                    cmd_line.get());
+
+  if (has_cmd_prefix) {
+    // Launch the utility child process with some prefix
+    // (usually "xterm -e gdb --args").
+    cmd_line->PrependWrapper(
+        browser_command_line.GetSwitchValueNative(switches::kUtilityCmdPrefix));
+  }
+
+  if (!exposed_dir_.empty()) {
+    cmd_line->AppendSwitchPath(switches::kUtilityProcessAllowedDir,
+                               exposed_dir_);
+  }
+
+#if defined(OS_WIN)
+  // Let the utility process know if it is intended to be elevated.
+  if (run_elevated_)
+    cmd_line->AppendSwitch(switches::kUtilityProcessRunningElevated);
+#endif
+
+  return cmd_line;
+}
+
 bool UtilityProcessHostImpl::StartProcess() {
   if (started_)
     return true;
@@ -221,94 +339,16 @@ bool UtilityProcessHostImpl::StartProcess() {
             process_->GetInProcessBrokerClientInvitation(),
             process_->child_connection()->service_token())));
     in_process_thread_->Start();
-  } else {
-    const base::CommandLine& browser_command_line =
-        *base::CommandLine::ForCurrentProcess();
-
-    bool has_cmd_prefix = browser_command_line.HasSwitch(
-        switches::kUtilityCmdPrefix);
-
-    #if defined(OS_ANDROID)
-      // readlink("/prof/self/exe") sometimes fails on Android at startup.
-      // As a workaround skip calling it here, since the executable name is
-      // not needed on Android anyway. See crbug.com/500854.
-    std::unique_ptr<base::CommandLine> cmd_line =
-        base::MakeUnique<base::CommandLine>(base::CommandLine::NO_PROGRAM);
-    #else
-      int child_flags = child_flags_;
-
-      // When running under gdb, forking /proc/self/exe ends up forking the gdb
-      // executable instead of Chromium. It is almost safe to assume that no
-      // updates will happen while a developer is running with
-      // |switches::kUtilityCmdPrefix|. See ChildProcessHost::GetChildPath() for
-      // a similar case with Valgrind.
-      if (has_cmd_prefix)
-        child_flags = ChildProcessHost::CHILD_NORMAL;
-
-      base::FilePath exe_path = ChildProcessHost::GetChildPath(child_flags);
-      if (exe_path.empty()) {
-        NOTREACHED() << "Unable to get utility process binary name.";
-        return false;
-      }
-
-      std::unique_ptr<base::CommandLine> cmd_line =
-          base::MakeUnique<base::CommandLine>(exe_path);
-    #endif
-
-    cmd_line->AppendSwitchASCII(switches::kProcessType,
-                                switches::kUtilityProcess);
-    BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(cmd_line.get());
-    std::string locale = GetContentClient()->browser()->GetApplicationLocale();
-    cmd_line->AppendSwitchASCII(switches::kLang, locale);
-
-#if defined(OS_WIN)
-    cmd_line->AppendArg(switches::kPrefetchArgumentOther);
-#endif  // defined(OS_WIN)
-
-    SetCommandLineFlagsForSandboxType(cmd_line.get(), sandbox_type_);
-
-    // Browser command-line switches to propagate to the utility process.
-    static const char* const kSwitchNames[] = {
-      switches::kHostResolverRules,
-      switches::kLogNetLog,
-      switches::kNoSandbox,
-      switches::kProxyServer,
-#if defined(OS_MACOSX)
-      switches::kEnableSandboxLogging,
-#endif
-      switches::kUseFakeDeviceForMediaStream,
-      switches::kUseFileForFakeVideoCapture,
-      switches::kUtilityStartupDialog,
-    };
-    cmd_line->CopySwitchesFrom(browser_command_line, kSwitchNames,
-                               arraysize(kSwitchNames));
-
-    network_session_configurator::CopyNetworkSwitches(browser_command_line,
-                                                      cmd_line.get());
-
-    if (has_cmd_prefix) {
-      // Launch the utility child process with some prefix
-      // (usually "xterm -e gdb --args").
-      cmd_line->PrependWrapper(browser_command_line.GetSwitchValueNative(
-          switches::kUtilityCmdPrefix));
-    }
-
-    if (!exposed_dir_.empty()) {
-      cmd_line->AppendSwitchPath(switches::kUtilityProcessAllowedDir,
-                                 exposed_dir_);
-    }
-
-#if defined(OS_WIN)
-    // Let the utility process know if it is intended to be elevated.
-    if (run_elevated_)
-      cmd_line->AppendSwitch(switches::kUtilityProcessRunningElevated);
-#endif
-
-    process_->Launch(base::MakeUnique<UtilitySandboxedProcessLauncherDelegate>(
-                         exposed_dir_, run_elevated_, sandbox_type_, env_),
-                     std::move(cmd_line), true);
+    return true;
   }
 
+  std::unique_ptr<base::CommandLine> cmd_line = CreateCommandLine();
+  if (!cmd_line)
+    return false;
+
+  process_->Launch(base::MakeUnique<UtilitySandboxedProcessLauncherDelegate>(
+                       exposed_dir_, run_elevated_, sandbox_type_, env_),
+                   std::move(cmd_line), true);
   return true;
 }
 

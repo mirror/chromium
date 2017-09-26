@@ -32,6 +32,7 @@
 #include "base/test/test_timeouts.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "content/browser/utility_process_host_impl.h"
 #include "content/public/app/content_main.h"
 #include "content/public/app/content_main_delegate.h"
 #include "content/public/common/content_switches.h"
@@ -470,6 +471,10 @@ const char kRunManualTestsFlag[] = "run-manual";
 
 const char kSingleProcessTestsFlag[]   = "single_process";
 
+base::FilePath TestLauncherDelegate::GetUtilityServiceProgramPath() {
+  return base::FilePath();
+}
+
 std::unique_ptr<TestState> TestLauncherDelegate::PreRunTest(
     base::CommandLine* command_line,
     base::TestLauncher::LaunchOptions* test_launch_options) {
@@ -496,6 +501,11 @@ int LaunchTests(TestLauncherDelegate* launcher_delegate,
     PrintUsage();
     return 0;
   }
+
+  const base::FilePath service_program_path =
+      launcher_delegate->GetUtilityServiceProgramPath();
+  if (!service_program_path.empty())
+    UtilityProcessHostImpl::SetServiceProgramPath(service_program_path);
 
   std::unique_ptr<ContentMainDelegate> content_main_delegate(
       launcher_delegate->CreateContentMainDelegate());
