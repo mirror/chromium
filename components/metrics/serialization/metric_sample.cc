@@ -55,6 +55,13 @@ std::string MetricSample::ToString() const {
                               sample_,
                               max_,
                               '\0');
+  } else if (type_ == EXACT_HISTOGRAM) {
+    return base::StringPrintf("linearhistogram%c%s %d %d%c",
+                              '\0',
+                              name().c_str(),
+                              sample_,
+                              max_,
+                              '\0');
   } else if (type_ == HISTOGRAM) {
     return base::StringPrintf("histogram%c%s %d %d %d %d%c",
                               '\0',

@@ -22,6 +22,7 @@ class MetricSample {
     CRASH,
     HISTOGRAM,
     LINEAR_HISTOGRAM,
+    EXACT_HISTOGRAM,
     SPARSE_HISTOGRAM,
     USER_ACTION
   };
@@ -55,6 +56,7 @@ class MetricSample {
   // histogram: histogram\0|name_| |sample_| |min_| |max_| |bucket_count_|\0
   // sparsehistogram: sparsehistogram\0|name_| |sample_|\0
   // linearhistogram: linearhistogram\0|name_| |sample_| |max_|\0
+  // exacthistogram: exacthistogram\0|name_| |sample_| |max_|\0
   std::string ToString() const;
 
   // Builds a crash sample.
@@ -80,11 +82,18 @@ class MetricSample {
   static std::unique_ptr<MetricSample> ParseSparseHistogram(
       const std::string& serialized);
 
-  // Builds a linear histogram sample.
+  // Builds a linear/enum histogram sample.
   static std::unique_ptr<MetricSample>
   LinearHistogramSample(const std::string& histogram_name, int sample, int max);
-  // Deserializes a linear histogram sample.
+  // Deserializes a linear/enum histogram sample.
   static std::unique_ptr<MetricSample> ParseLinearHistogram(
+      const std::string& serialized);
+
+  // Builds an exact/linear histogram sample.
+  static std::unique_ptr<MetricSample>
+  ExactHistogramSample(const std::string& histogram_name, int sample, int max);
+  // Deserializes an exact/linear histogram sample.
+  static std::unique_ptr<MetricSample> ParseExactHistogram(
       const std::string& serialized);
 
   // Builds a user action sample.

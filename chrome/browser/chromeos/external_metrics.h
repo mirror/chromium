@@ -65,14 +65,20 @@ class ExternalMetrics : public base::RefCountedThreadSafe<ExternalMetrics> {
   // Records an external crash of the given string description.
   void RecordCrash(const std::string& crash_kind);
 
-  // Records an histogram. |sample| is expected to be an histogram.
+  // Records an histogram. |sample| is expected to be a histogram sample.
   void RecordHistogram(const metrics::MetricSample& sample);
 
-  // Records a sparse histogram. |sample| is expected to be a sparse histogram.
+  // Records a sparse histogram. |sample| is expected to be a sparse histogram
+  // sample.
   void RecordSparseHistogram(const metrics::MetricSample& sample);
 
-  // Records a linear histogram. |sample| is expected to be a linear histogram.
+  // Records a linear/enum histogram. |sample| is expected to be a linear/enum
+  // histogram sample.
   void RecordLinearHistogram(const metrics::MetricSample& sample);
+
+  // Records a linear histogram. |sample| is expected to be a linear/exac
+  // histogram sample.
+  void RecordExactHistogram(const metrics::MetricSample& sample);
 
   // Collects external events from metrics log file.  This is run at periodic
   // intervals.

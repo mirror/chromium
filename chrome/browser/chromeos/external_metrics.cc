@@ -126,6 +126,23 @@ void ExternalMetrics::RecordLinearHistogram(
   counter->Add(sample.sample());
 }
 
+void ExternalMetrics::RecordExactHistogram(
+    const metrics::MetricSample& sample) {
+  CHECK_EQ(metrics::MetricSample::LINEAR_HISTOGRAM, sample.type());
+  if (!CheckLinearValues(sample.name(), sample.max())) {
+    DLOG(ERROR) << "Invalid exact histogram: " << sample.name();
+    return;
+  }
+  // Not a copy-paste mistake, we're really calling LinearHistogram here.
+  base::HistogramBase* counter = base::LinearHistogram::FactoryGet(
+      sample.name(),
+      1,
+      sample.max(),
+      sample.max() + 1,
+      base::Histogram::kUmaTargetedHistogramFlag);
+  counter->Add(sample.sample());
+}
+
 void ExternalMetrics::RecordSparseHistogram(
     const metrics::MetricSample& sample) {
   CHECK_EQ(metrics::MetricSample::SPARSE_HISTOGRAM, sample.type());
@@ -156,6 +173,9 @@ int ExternalMetrics::CollectEvents() {
         break;
       case metrics::MetricSample::LINEAR_HISTOGRAM:
         RecordLinearHistogram(sample);
+        break;
+      case metrics::MetricSample::EXACT_HISTOGRAM:
+        RecordExactHistogram(sample);
         break;
       case metrics::MetricSample::SPARSE_HISTOGRAM:
         RecordSparseHistogram(sample);
