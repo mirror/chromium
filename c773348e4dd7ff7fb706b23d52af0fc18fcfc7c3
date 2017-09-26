@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "4a921e5f_21c72b60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-26T13:59:49Z",
+      "side": 1,
+      "message": "All titles are titled \"title\" now.",
+      "parentUuid": "6a390be9_686c9aa4",
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e708419a_1258d703",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -466,6 +484,30 @@
       "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b482bb91_ecb9103f",
+        "filename": "chrome/common/search/instant_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-26T13:59:49Z",
+      "side": 1,
+      "message": "title-ified.",
+      "parentUuid": "76a15f0b_3de5b244",
+      "range": {
+        "startLine": 131,
+        "startChar": 38,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "c773348e4dd7ff7fb706b23d52af0fc18fcfc7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
