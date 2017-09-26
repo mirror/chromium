@@ -1449,14 +1449,16 @@ RendererSchedulerImpl::AsValue(base::TimeTicks optional_now) const {
 
 void RendererSchedulerImpl::CreateTraceEventObjectSnapshot() const {
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
-      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
-      this, AsValue(helper_.scheduler_tqm_delegate()->NowTicks()));
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.verbose"),
+      "RendererScheduler", this,
+      AsValue(helper_.scheduler_tqm_delegate()->NowTicks()));
 }
 
 void RendererSchedulerImpl::CreateTraceEventObjectSnapshotLocked() const {
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
-      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
-      this, AsValueLocked(helper_.scheduler_tqm_delegate()->NowTicks()));
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.verbose"),
+      "RendererScheduler", this,
+      AsValueLocked(helper_.scheduler_tqm_delegate()->NowTicks()));
 }
 
 // static
@@ -1482,6 +1484,10 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
 
   if (optional_now.is_null())
     optional_now = helper_.scheduler_tqm_delegate()->NowTicks();
+  bool debug_tracing_enabled = false;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.debug"),
+      &debug_tracing_enabled);
   std::unique_ptr<base::trace_event::TracedValue> state(
       new base::trace_event::TracedValue());
   state->SetBoolean(
@@ -1552,19 +1558,28 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
   state->SetBoolean("virtual_time_stopped",
                     main_thread_only().virtual_time_stopped);
 
-  state->BeginDictionary("web_view_schedulers");
-  for (WebViewSchedulerImpl* web_view_scheduler :
-       main_thread_only().web_view_schedulers) {
-    state->BeginDictionaryWithCopiedName(
-        trace_helper::PointerToString(web_view_scheduler));
-    web_view_scheduler->AsValueInto(state.get());
+  if (debug_tracing_enabled) {
+    state->BeginDictionary("web_view_schedulers");
+    for (WebViewSchedulerImpl* web_view_scheduler :
+         main_thread_only().web_view_schedulers) {
+      state->BeginDictionaryWithCopiedName(
+          trace_helper::PointerToString(web_view_scheduler));
+      web_view_scheduler->AsValueInto(state.get());
+      state->EndDictionary();
+    }
     state->EndDictionary();
-  }
-  state->EndDictionary();
 
-  state->BeginDictionary("policy");
-  main_thread_only().current_policy.AsValueInto(state.get());
-  state->EndDictionary();
+    state->BeginDictionary("policy");
+    main_thread_only().current_policy.AsValueInto(state.get());
+    state->EndDictionary();
+
+    state->BeginDictionary("task_queue_throttler");
+    task_queue_throttler_->AsValueInto(state.get(), optional_now);
+    state->EndDictionary();
+
+    any_thread().user_model.AsValueInto(state.get());
+    render_widget_scheduler_signals_.AsValueInto(state.get());
+  }
 
   // TODO(skyostil): Can we somehow trace how accurate these estimates were?
   state->SetDouble(
@@ -1582,13 +1597,6 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
   state->SetString(
       "expensive_task_policy",
       ExpensiveTaskPolicyToString(main_thread_only().expensive_task_policy));
-
-  any_thread().user_model.AsValueInto(state.get());
-  render_widget_scheduler_signals_.AsValueInto(state.get());
-
-  state->BeginDictionary("task_queue_throttler");
-  task_queue_throttler_->AsValueInto(state.get(), optional_now);
-  state->EndDictionary();
 
   return std::move(state);
 }
