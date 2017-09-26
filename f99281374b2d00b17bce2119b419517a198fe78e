@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66337663_478145df",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-26T15:34:43Z",
+      "side": 1,
+      "message": "This is a clunky API though, right? The API should really need to specify the target it already has, and the query should normally have enough information to walk up the tree and find the appropriate path from target to root?",
+      "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
