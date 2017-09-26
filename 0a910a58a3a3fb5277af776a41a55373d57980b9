@@ -16,6 +16,24 @@
       "revId": "0a910a58a3a3fb5277af776a41a55373d57980b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d2744b_adac132e",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-26T15:16:49Z",
+      "side": 1,
+      "message": "I did some refactoring: BulletedView in extension_install_dialog_view and the literal in sad_tab_view are both factored out (kind of) now, but the table_view \"grouping indicator\" is some whole other thing that can span multiple rows, so I left it as-is. I favored drawing the circle directly as an SkPath over using a views::Label since my impression is that text rendering is quite expensive compared to raw canvas ops.",
+      "parentUuid": "4ba7d849_61c53341",
+      "revId": "0a910a58a3a3fb5277af776a41a55373d57980b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
