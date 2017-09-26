@@ -38,9 +38,9 @@ void WebAudioBus::Initialize(unsigned number_of_channels,
   audio_bus->SetSampleRate(sample_rate);
 
   if (private_)
-    (static_cast<AudioBus*>(private_))->Deref();
+    static_cast<AudioBus*>(private_)->Release();
 
-  audio_bus->Ref();
+  audio_bus->AddRef();
   private_ = static_cast<WebAudioBusPrivate*>(audio_bus.Get());
 }
 
@@ -54,8 +54,8 @@ void WebAudioBus::ResizeSmaller(size_t new_length) {
 
 void WebAudioBus::Reset() {
   if (private_) {
-    (static_cast<AudioBus*>(private_))->Deref();
-    private_ = 0;
+    static_cast<AudioBus*>(private_)->Release();
+    private_ = nullptr;
   }
 }
 
