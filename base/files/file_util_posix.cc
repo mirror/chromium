@@ -216,85 +216,11 @@ bool CopyFileContents(File* infile, File* outfile) {
   NOTREACHED();
   return false;
 }
-#endif  // !defined(OS_NACL_NONSFI)
 
-#if !defined(OS_MACOSX)
-// Appends |mode_char| to |mode| before the optional character set encoding; see
-// https://www.gnu.org/software/libc/manual/html_node/Opening-Streams.html for
-// details.
-std::string AppendModeCharacter(StringPiece mode, char mode_char) {
-  std::string result(mode.as_string());
-  size_t comma_pos = result.find(',');
-  result.insert(comma_pos == std::string::npos ? result.length() : comma_pos, 1,
-                mode_char);
-  return result;
-}
-#endif
-
-}  // namespace
-
-#if !defined(OS_NACL_NONSFI)
-FilePath MakeAbsoluteFilePath(const FilePath& input) {
-  ThreadRestrictions::AssertIOAllowed();
-  char full_path[PATH_MAX];
-  if (realpath(input.value().c_str(), full_path) == NULL)
-    return FilePath();
-  return FilePath(full_path);
-}
-
-// TODO(erikkay): The Windows version of this accepts paths like "foo/bar/*"
-// which works both with and without the recursive flag.  I'm not sure we need
-// that functionality. If not, remove from file_util_win.cc, otherwise add it
-// here.
-bool DeleteFile(const FilePath& path, bool recursive) {
-  ThreadRestrictions::AssertIOAllowed();
-  const char* path_str = path.value().c_str();
-  stat_wrapper_t file_info;
-  if (CallLstat(path_str, &file_info) != 0) {
-    // The Windows version defines this condition as success.
-    return (errno == ENOENT || errno == ENOTDIR);
-  }
-  if (!S_ISDIR(file_info.st_mode))
-    return (unlink(path_str) == 0);
-  if (!recursive)
-    return (rmdir(path_str) == 0);
-
-  bool success = true;
-  std::stack<std::string> directories;
-  directories.push(path.value());
-  FileEnumerator traversal(path, true,
-      FileEnumerator::FILES | FileEnumerator::DIRECTORIES |
-      FileEnumerator::SHOW_SYM_LINKS);
-  for (FilePath current = traversal.Next(); success && !current.empty();
-       current = traversal.Next()) {
-    if (traversal.GetInfo().IsDirectory())
-      directories.push(current.value());
-    else
-      success = (unlink(current.value().c_str()) == 0);
-  }
-
-  while (success && !directories.empty()) {
-    FilePath dir = FilePath(directories.top());
-    directories.pop();
-    success = (rmdir(dir.value().c_str()) == 0);
-  }
-  return success;
-}
-
-bool ReplaceFile(const FilePath& from_path,
-                 const FilePath& to_path,
-                 File::Error* error) {
-  ThreadRestrictions::AssertIOAllowed();
-  if (rename(from_path.value().c_str(), to_path.value().c_str()) == 0)
-    return true;
-  if (error)
-    *error = File::OSErrorToFileError(errno);
-  return false;
-}
-
-bool CopyDirectory(const FilePath& from_path,
-                   const FilePath& to_path,
-                   bool recursive) {
+bool DoCopyDirectory(const FilePath& from_path,
+                     const FilePath& to_path,
+                     bool recursive,
+                     bool check_destination_files) {
   ThreadRestrictions::AssertIOAllowed();
   // Some old callers of CopyDirectory want it to support wildcards.
   // After some discussion, we decided to fix those callers.
@@ -396,6 +322,12 @@ bool CopyDirectory(const FilePath& from_path,
       continue;
     }
 
+    int open_flags = O_WRONLY | O_CREAT | O_TRUNC | O_NONBLOCK;
+    // Ensure we don't open symlinks below if |check_destination_files| is set.
+    // Opening a symlink in the destination might lead us to copy a file's
+    // contents somewhere unintended.
+    if (check_destination_files)
+      open_flags |= O_NOFOLLOW;
 #if defined(OS_MACOSX)
     int mode = 0666 | (stat_at_use.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH));
 #elif defined(OS_CHROMEOS)
@@ -403,13 +335,27 @@ bool CopyDirectory(const FilePath& from_path,
 #else
     int mode = 0600;
 #endif
-    base::File outfile(
-        open(target_path.value().c_str(),
-             O_WRONLY | O_CREAT | O_TRUNC | O_NONBLOCK, mode));
+    base::File outfile(open(target_path.value().c_str(), open_flags, mode));
     if (!outfile.IsValid()) {
       DPLOG(ERROR) << "CopyDirectory() couldn't create file: "
                    << target_path.value();
       return false;
+    }
+
+    if (check_destination_files) {
+      // Ensure we're not about to copy data into a fifo or device...
+      struct stat dest_stat;
+      if (fstat(outfile.GetPlatformFile(), &dest_stat) < 0) {
+        DPLOG(ERROR) << "CopyDirectory() couldn't stat file: "
+                     << target_path.value();
+        return false;
+      }
+
+      if (!S_ISREG(dest_stat.st_mode)) {
+        DLOG(WARNING) << "CopyDirectory() encountered non-regular file "
+                      << "in destination: " << target_path.value();
+        continue;
+      }
     }
 
     if (!CopyFileContents(&infile, &outfile)) {
@@ -419,6 +365,93 @@ bool CopyDirectory(const FilePath& from_path,
   } while (AdvanceEnumeratorWithStat(&traversal, &current, &from_stat));
 
   return true;
+}
+#endif  // !defined(OS_NACL_NONSFI)
+
+#if !defined(OS_MACOSX)
+// Appends |mode_char| to |mode| before the optional character set encoding; see
+// https://www.gnu.org/software/libc/manual/html_node/Opening-Streams.html for
+// details.
+std::string AppendModeCharacter(StringPiece mode, char mode_char) {
+  std::string result(mode.as_string());
+  size_t comma_pos = result.find(',');
+  result.insert(comma_pos == std::string::npos ? result.length() : comma_pos, 1,
+                mode_char);
+  return result;
+}
+#endif
+
+}  // namespace
+
+#if !defined(OS_NACL_NONSFI)
+FilePath MakeAbsoluteFilePath(const FilePath& input) {
+  ThreadRestrictions::AssertIOAllowed();
+  char full_path[PATH_MAX];
+  if (realpath(input.value().c_str(), full_path) == NULL)
+    return FilePath();
+  return FilePath(full_path);
+}
+
+// TODO(erikkay): The Windows version of this accepts paths like "foo/bar/*"
+// which works both with and without the recursive flag.  I'm not sure we need
+// that functionality. If not, remove from file_util_win.cc, otherwise add it
+// here.
+bool DeleteFile(const FilePath& path, bool recursive) {
+  ThreadRestrictions::AssertIOAllowed();
+  const char* path_str = path.value().c_str();
+  stat_wrapper_t file_info;
+  if (CallLstat(path_str, &file_info) != 0) {
+    // The Windows version defines this condition as success.
+    return (errno == ENOENT || errno == ENOTDIR);
+  }
+  if (!S_ISDIR(file_info.st_mode))
+    return (unlink(path_str) == 0);
+  if (!recursive)
+    return (rmdir(path_str) == 0);
+
+  bool success = true;
+  std::stack<std::string> directories;
+  directories.push(path.value());
+  FileEnumerator traversal(path, true,
+      FileEnumerator::FILES | FileEnumerator::DIRECTORIES |
+      FileEnumerator::SHOW_SYM_LINKS);
+  for (FilePath current = traversal.Next(); success && !current.empty();
+       current = traversal.Next()) {
+    if (traversal.GetInfo().IsDirectory())
+      directories.push(current.value());
+    else
+      success = (unlink(current.value().c_str()) == 0);
+  }
+
+  while (success && !directories.empty()) {
+    FilePath dir = FilePath(directories.top());
+    directories.pop();
+    success = (rmdir(dir.value().c_str()) == 0);
+  }
+  return success;
+}
+
+bool ReplaceFile(const FilePath& from_path,
+                 const FilePath& to_path,
+                 File::Error* error) {
+  ThreadRestrictions::AssertIOAllowed();
+  if (rename(from_path.value().c_str(), to_path.value().c_str()) == 0)
+    return true;
+  if (error)
+    *error = File::OSErrorToFileError(errno);
+  return false;
+}
+
+bool CopyDirectory(const FilePath& from_path,
+                   const FilePath& to_path,
+                   bool recursive) {
+  return DoCopyDirectory(from_path, to_path, recursive, false);
+}
+
+bool CopyDirectoryWithDestinationChecks(const FilePath& from_path,
+                                        const FilePath& to_path,
+                                        bool recursive) {
+  return DoCopyDirectory(from_path, to_path, recursive, true);
 }
 #endif  // !defined(OS_NACL_NONSFI)
 
