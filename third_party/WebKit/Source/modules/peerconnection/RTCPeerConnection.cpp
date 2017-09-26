@@ -1155,6 +1155,30 @@ MediaStreamVector RTCPeerConnection::getRemoteStreams() const {
   return remote_streams_;
 }
 
+MediaStream* RTCPeerConnection::getRemoteStream(
+    MediaStreamDescriptor* descriptor) const {
+  for (const auto& remote_stream : remote_streams_) {
+    if (remote_stream->Descriptor() == descriptor)
+      return remote_stream;
+  }
+  return nullptr;
+}
+
+size_t RTCPeerConnection::getRemoteStreamUsageCount(
+    MediaStreamDescriptor* descriptor) const {
+  size_t usage_count = 0;
+  for (const auto& receiver_entry : rtp_receivers_) {
+    RTCRtpReceiver* receiver = receiver_entry.value;
+    WebVector<WebMediaStream> streams = receiver->web_receiver().Streams();
+    for (const WebMediaStream& stream : streams) {
+      if (stream == descriptor) {
+        ++usage_count;
+      }
+    }
+  }
+  return usage_count;
+}
+
 ScriptPromise RTCPeerConnection::getStats(ScriptState* script_state,
                                           RTCStatsCallback* success_callback,
                                           MediaStreamTrack* selector) {
@@ -1210,6 +1234,9 @@ HeapVector<Member<RTCRtpSender>> RTCPeerConnection::getSenders() {
   return rtp_senders;
 }
 
+// TODO(hbos): Add to |rtp_receivers_| on |DidAddRemoteTrack| and remove on
+// |DidRemoveRemoteTrack|, define this as "return rtp_receivers_;" and remove
+// |GetOrCreateRTCRtpReceiver|. http://crbug.com/755166
 HeapVector<Member<RTCRtpReceiver>> RTCPeerConnection::getReceivers() {
   WebVector<std::unique_ptr<WebRTCRtpReceiver>> web_rtp_receivers =
       peer_handler_->GetReceivers();
@@ -1448,86 +1475,98 @@ void RTCPeerConnection::DidChangeICEConnectionState(
   ChangeIceConnectionState(new_state);
 }
 
-void RTCPeerConnection::DidAddRemoteStream(
-    const WebMediaStream& remote_stream,
-    WebVector<std::unique_ptr<WebRTCRtpReceiver>>* stream_web_rtp_receivers) {
+void RTCPeerConnection::DidAddRemoteTrack(
+    std::unique_ptr<WebRTCRtpReceiver>* web_rtp_receiver) {
   DCHECK(!closed_);
   DCHECK(GetExecutionContext()->IsContextThread());
-
   if (signaling_state_ == kSignalingStateClosed)
     return;
-
-  MediaStream* stream =
-      MediaStream::Create(GetExecutionContext(), remote_stream, false);
-  WebVector<WebMediaStreamTrack> web_tracks;
-  remote_stream.AudioTracks(web_tracks);
-  for (WebMediaStreamTrack& web_track : web_tracks) {
-    NonThrowableExceptionState exception_state;
-    stream->addTrack(MediaStreamTrack::Create(GetExecutionContext(), web_track),
-                     exception_state);
-  }
-  remote_stream.VideoTracks(web_tracks);
-  for (WebMediaStreamTrack& web_track : web_tracks) {
-    NonThrowableExceptionState exception_state;
-    stream->addTrack(MediaStreamTrack::Create(GetExecutionContext(), web_track),
-                     exception_state);
-  }
-
-  remote_streams_.push_back(stream);
-  stream->RegisterObserver(this);
-  for (auto& track : stream->getTracks()) {
-    DCHECK(track->Component());
-    tracks_.insert(track->Component(), track);
-  }
-
-  ScheduleDispatchEvent(
-      MediaStreamEvent::Create(EventTypeNames::addstream, stream));
-
-  // Fire a track event for each track added.
-  HeapVector<Member<MediaStream>> streams(1, stream);
-  for (auto& track : stream->getTracks()) {
-    std::unique_ptr<WebRTCRtpReceiver> track_web_rtp_receiver;
-    for (auto& web_rtp_receiver : *stream_web_rtp_receivers) {
-      if (!web_rtp_receiver)
-        continue;
-      if (static_cast<String>(web_rtp_receiver->Track().Id()) == track->id()) {
-        track_web_rtp_receiver.reset(web_rtp_receiver.release());
-        break;
-      }
+  // TODO(hbos): Make sure a |MediaStreamTrack| is created even if there are no
+  // associated streams. Currently we rely on |MediaStream::Create| which
+  // assumes every track is new. If |(*web_rtp_receiver)->Streams().size() > 1|,
+  // duplicate tracks might be created.
+  HeapVector<Member<MediaStream>> streams;
+  WebVector<WebMediaStream> web_streams = (*web_rtp_receiver)->Streams();
+  streams.ReserveCapacity(web_streams.size());
+  for (const WebMediaStream& web_stream : web_streams) {
+    MediaStream* stream = getRemoteStream(web_stream);
+    if (!stream) {
+      stream = MediaStream::Create(GetExecutionContext(), web_stream, false);
+      remote_streams_.push_back(stream);
     }
-    RTCRtpReceiver* track_rtp_receiver =
-        GetOrCreateRTCRtpReceiver(std::move(track_web_rtp_receiver));
-    if (RuntimeEnabledFeatures::RTCRtpSenderEnabled()) {
-      ScheduleDispatchEvent(
-          new RTCTrackEvent(track_rtp_receiver, track, streams));
+
+    NonThrowableExceptionState exception;
+    WebVector<WebMediaStreamTrack> web_tracks;
+    web_stream.AudioTracks(web_tracks);
+    for (const WebMediaStreamTrack& web_track : web_tracks) {
+      MediaStreamTrack* track = MediaStreamTrack::Create(GetExecutionContext(),
+                                                         web_track);
+      stream->addTrack(track, exception);
     }
+    web_stream.VideoTracks(web_tracks);
+    for (const WebMediaStreamTrack& web_track : web_tracks) {
+      MediaStreamTrack* track = MediaStreamTrack::Create(GetExecutionContext(),
+                                                         web_track);
+      stream->addTrack(track, exception);
+    }
+
+    stream->RegisterObserver(this);
+    for (auto& track : stream->getTracks()) {
+      DCHECK(track->Component());
+      tracks_.insert(track->Component(), track);
+    }
+    streams.push_back(stream);
+    remote_streams_.push_back(stream);
+    ScheduleDispatchEvent(
+        MediaStreamEvent::Create(EventTypeNames::addstream, stream));
+  }
+  RTCRtpReceiver* rtp_receiver = GetOrCreateRTCRtpReceiver(
+      std::move(*web_rtp_receiver));
+  if (RuntimeEnabledFeatures::RTCRtpSenderEnabled()) {
+    ScheduleDispatchEvent(
+        new RTCTrackEvent(rtp_receiver, rtp_receiver->track(), streams));
   }
 }
 
-void RTCPeerConnection::DidRemoveRemoteStream(
-    const WebMediaStream& remote_stream) {
+void RTCPeerConnection::DidRemoveRemoteTrack(
+    std::unique_ptr<WebRTCRtpReceiver>* web_rtp_receiver) {
   DCHECK(!closed_);
   DCHECK(GetExecutionContext()->IsContextThread());
+  printf("DidRemoveRemoteTrack\n");
 
-  MediaStreamDescriptor* stream_descriptor = remote_stream;
-  DCHECK(stream_descriptor->Client());
+  WebVector<WebMediaStream> web_streams = (*web_rtp_receiver)->Streams();
+  RTCRtpReceiver* rtp_receiver = GetOrCreateRTCRtpReceiver(
+      std::move(*web_rtp_receiver));
+  MediaStreamTrack* track = rtp_receiver->track();
+  rtp_receivers_.erase(rtp_receiver->web_receiver().Id());
 
-  MediaStream* stream = static_cast<MediaStream*>(stream_descriptor->Client());
-  stream->StreamEnded();
+  for (const WebMediaStream& web_stream : web_streams) {
+    MediaStreamDescriptor* stream_descriptor = web_stream;
+    DCHECK(stream_descriptor->Client());
+    MediaStream* stream = static_cast<MediaStream*>(
+        stream_descriptor->Client());
 
-  if (signaling_state_ == kSignalingStateClosed)
-    return;
+    // Remove track.
+    if (stream->getTracks().Contains(track)) {
+      NonThrowableExceptionState exception;
+      stream->removeTrack(track, exception);
+    }
 
-  size_t pos = remote_streams_.Find(stream);
-  DCHECK(pos != kNotFound);
-  remote_streams_.erase(pos);
-  stream->UnregisterObserver(this);
-  // TODO(hbos): When we listen to receivers/tracks being added and removed
-  // instead of streams we should remove the receiver(s) from |rtp_receivers_|
-  // here. https://crbug.com/741619
-
-  ScheduleDispatchEvent(
-      MediaStreamEvent::Create(EventTypeNames::removestream, stream));
+    // Was this the last usage of the stream? Remove from remote streams.
+    if (!getRemoteStreamUsageCount(web_stream)) {
+      // TODO(hbos): The stream should already have ended by being empty, no
+      // need for |StreamEnded|.
+      stream->StreamEnded();
+      // TODO(hbos): Remove |remote_streams_| in favor of returning all streams
+      // of all receivers. https://crbug.com/741618
+      size_t pos = remote_streams_.Find(stream);
+      DCHECK(pos != kNotFound);
+      remote_streams_.erase(pos);
+      stream->UnregisterObserver(this);
+      ScheduleDispatchEvent(
+          MediaStreamEvent::Create(EventTypeNames::removestream, stream));
+    }
+  }
 }
 
 void RTCPeerConnection::DidAddRemoteDataChannel(
