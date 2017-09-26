@@ -950,21 +950,6 @@ hooks = [
                 '-d', 'src/chrome/installer/zucchini/testdata',
     ],
   },
-
-  # Download checkstyle for use in PRESUBMIT for Java changes.
-  # TODO(jbudorick): Move this back down to the android section of hooks_os
-  # once it's no longer necessary for the chromium_presubmit bot.
-  {
-    'name': 'checkstyle',
-    'pattern': '.',
-    'action': [ 'python',
-                'src/third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--no_auth',
-                '--bucket', 'chromium-android-tools/checkstyle',
-                '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
-    ],
-  },
 ]
 
 # Note: These are keyed off target os, not host os. So don't move things here

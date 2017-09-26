@@ -31,12 +31,6 @@ favorite IDE:
 * [Android Studio](https://chromium.googlesource.com/chromium/src/+/master/docs/android_studio.md)
 * [Eclipse](https://chromium.googlesource.com/chromium/src/+/master/docs/eclipse.md)
 
-### Checkstyle
-
-Checkstyle is automatically run by the build bots, and to ensure you do not have
-any surprises, you can also set up checkstyle locally using [this
-guide](https://sites.google.com/a/chromium.org/dev/developers/checkstyle).
-
 ### Lint
 
 Lint is run as part of the build. For more information, see
@@ -139,10 +133,6 @@ This is the order of the import groups:
 1. org.chromium
 1. java
 1. javax
-
-This is enforced by the
-[Chromium Checkstyle configuration](../../tools/android/checkstyle/chromium-style-5.0.xml)
-under the ImportOrder module.
 
 ## Location
 
