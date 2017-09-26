@@ -9,6 +9,7 @@
 #include "core/editing/SelectionAdjuster.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "core/editing/testing/SelectionSample.h"
 
 #define LOREM_IPSUM                                                            \
   "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod "  \
@@ -647,6 +648,75 @@ TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   // Simulates to restore selection from undo stack.
   selection = CreateVisibleSelection(selection.AsSelection());
   EXPECT_EQ(Position(sample->firstChild(), 0), selection.Start());
+}
+
+TEST_F(VisibleSelectionTest, FirstEphemeralRangeOfInFlatTree) {
+  SetBodyContent(
+      "<div id=host1>"
+        "<template data-mode='open'>"
+          "<slot name=two></slot>"
+          "foo"
+          "<slot name=one></slot>"
+        "</template>"
+        "<span slot=one id=one>a</span>"
+        "<span>b</span>"
+        "<span slot=two id=two>c</span>"
+      "</div>"
+      "<div id=host2>"
+        "<template data-mode='open'>"
+          "<slot name=four></slot>"
+          "bar"
+          "<slot name=three></slot>"
+        "</template>"
+        "<span slot=three id=three>d</span>"
+        "<span>e</span>"
+        "<span slot=four id=four>f</span>"
+      "</span>");
+
+  Element* body = GetDocument().body();
+  SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+      *(ToHTMLElement(body)));
+  UpdateAllLifecyclePhases();
+
+  Element* one = body->QuerySelector("#one");
+  Element* two = body->QuerySelector("#two");
+  Element* three = body->QuerySelector("#three");
+  Element* four = body->QuerySelector("#four");
+
+  VisibleSelectionInFlatTree selection =
+      CreateVisibleSelection(
+          SelectionInFlatTree::Builder()
+              .Collapse(PositionInFlatTree::FirstPositionInNode(*two))
+              .Extend(PositionInFlatTree::LastPositionInNode(*three))
+              .Build());
+
+  const EphemeralRangeInFlatTree& range = FirstEphemeralRangeOf(selection);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(three->firstChild(), 1), range.EndPosition());
+
+  VisibleSelectionInFlatTree selectionInSameDOM =
+      CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                 .Collapse(PositionInFlatTree(two, 0))
+                                 .Extend(PositionInFlatTree(one, 1))
+                                 .Build());
+  const EphemeralRangeInFlatTree& rangeInSameDOM =
+      FirstEphemeralRangeOf(selectionInSameDOM);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0),
+            rangeInSameDOM.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 1),
+            rangeInSameDOM.EndPosition());
+
+  VisibleSelectionInFlatTree selectionOverMultipleDOM =
+      CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                 .Collapse(PositionInFlatTree(one, 0))
+                                 .Extend(PositionInFlatTree(four, 1))
+                                 .Build());
+  const EphemeralRangeInFlatTree& rangeOverMultipleDOM =
+      FirstEphemeralRangeOf(selectionOverMultipleDOM);
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 0),
+            rangeOverMultipleDOM.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(four->firstChild(), 1),
+            rangeOverMultipleDOM.EndPosition());
 }
 
 }  // namespace blink
