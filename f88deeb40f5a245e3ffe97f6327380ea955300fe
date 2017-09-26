@@ -307,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "2bc6e13c_a62dcca0",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T00:21:50Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be needed. for other impl it\u0027s here for historic reasons but we really should remove it asap. ownership is passed using the handle so there\u0027s really no need unless import of a handle is not working correctly",
+      "parentUuid": "890e09ab_b5f2fe31",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72205cf2_55ce6fda",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 6
@@ -436,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "8c23ad91_cfb04f09",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T00:21:50Z",
+      "side": 1,
+      "message": "anonymous namespace seems ideal. if you can add a comment next to them that link to some documentation for why they are 0 and 1 then that would be even better",
+      "parentUuid": "87f52a4f_3404be68",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe9e8bac_35695bb0",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 6
@@ -471,6 +507,30 @@
       "side": 1,
       "message": "ScopedHandle is more correct here - the handle we are passing around is a Windows NT handle to a dxgi object rather than a shared memory segment.  jbauman\u0027s original change (and mine here) used the SharedMemoryHandle somewhat as a convenience because it is a nice wrapper over NT handles that support IPC already.\n\nIf its preferable, I can factor out the IPC support from SharedMemoryHandle and use that instead in GpuMemoryBuffer.  I looked at using ipc::HandleWin, but that required adding dependencies on ipc for GpuMemoryBuffer.cc.",
       "parentUuid": "fe9e8bac_35695bb0",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edebe5e_cd4994e8",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T00:21:50Z",
+      "side": 1,
+      "message": "I think something is off if we need to store a handle. We must be creating some instance using this handle, why not create it instead of storing the handle that should really just be used for ipc?",
+      "parentUuid": "57f3ef79_53932783",
       "range": {
         "startLine": 132,
         "startChar": 26,
