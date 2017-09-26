@@ -237,16 +237,6 @@ bool IsPathOnReadOnlyDiskImage(const char path[],
   return MediaResidesOnDiskImage(media, NULL);
 }
 
-// Returns true if the application is located on a read-only filesystem of a
-// disk image. Returns false if not, or in the event of an error. If
-// dmg_bsd_device_name is present, it will be set to the BSD device name for
-// the disk image's device, in "diskNsM" form.
-bool IsAppRunningFromReadOnlyDiskImage(std::string* dmg_bsd_device_name) {
-  return IsPathOnReadOnlyDiskImage(
-      [[base::mac::OuterBundle() bundlePath] fileSystemRepresentation],
-      dmg_bsd_device_name);
-}
-
 // Shows a dialog asking the user whether or not to install from the disk
 // image.  Returns true if the user approves installation.
 bool ShouldInstallDialog() {
@@ -405,6 +395,12 @@ void ShowErrorDialog() {
 }
 
 }  // namespace
+
+bool IsAppRunningFromReadOnlyDiskImage(std::string* dmg_bsd_device_name) {
+  return IsPathOnReadOnlyDiskImage(
+      [[base::mac::OuterBundle() bundlePath] fileSystemRepresentation],
+      dmg_bsd_device_name);
+}
 
 bool MaybeInstallFromDiskImage() {
   base::mac::ScopedNSAutoreleasePool autorelease_pool;
