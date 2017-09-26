@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "866dadd4_74d66b7e",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-26T05:59:40Z",
+      "side": 1,
+      "message": "Can you remove this unnecessary copy while you\u0027re here?",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 26
+      },
+      "revId": "93a1b9e9a7be2b34c5f08dba65cdbb6b64d9a508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1655dbde_b6a07734",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Well that\u0027s the only invalid URLs that we *know* have been written to the data store.\n\nMy view is that we shouldn\u0027t crash (or DCHECK fail) in any situation that\u0027s out of our control, and the contents of that file is out of our control (since the user, or a malicious app, could edit it to have an invalid URL). So I think you should always fail gracefully for any corrupted data in the prefs file. WDYT?",
       "parentUuid": "1655dbde_b6a07734",
+      "range": {
+        "startLine": 152,
+        "startChar": 22,
+        "endLine": 152,
+        "endChar": 30
+      },
+      "revId": "93a1b9e9a7be2b34c5f08dba65cdbb6b64d9a508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab454d1_6cf9245e",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-26T05:59:40Z",
+      "side": 1,
+      "message": "If you want to handle arbitrary invalid URLs cropping up, please remove them from prefs when they\u0027re detected. Unactionable logspam is not very helpful.",
+      "parentUuid": "058ede79_46f269cc",
       "range": {
         "startLine": 152,
         "startChar": 22,
