@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "958c38c8_58adf045",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dad4ed47_3c38ba56",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee5d2db4_598ffd82",
         "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
         "patchSetId": 14
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "I forgot one other aspect here of my motivation for this approach: the vector was already effectively sorted by TaskId, if you create it via push_back, given how Tasks are created in order. The out-of-order registrations occur in unit tests, or potentially in real life if a TaskProvider de-registers a task, or delays addition of a Task (the FallbackTaskProvider does do that), or similar.\n\nSince the sorted vector of task_ids_ comes basically for free, and the interface requires us to keep something like task_ids_ around, I figured why not use it as the index for the TaskId -\u003e TaskGroup mapping too -- searching a sorted vector ought to be faster than a map lookup, and the code complexity is not much; we already had to update the task_groups_by_task_id_ map in lockstep with task_ids_.\n\nI\u0027m reluctant to use flat_set here unless we also make task_groups_ into a map or flat_map -- it\u0027s just not clear to me if deriving an offset flat_set::iterator is something that will be future-proof. If you\u0027d prefer we drop the use of |task_ids_| as an index to |task_groups_| let me know and I\u0027ll convert task_groups_ back to a map, and make task_ids_ unsorted.",
       "parentUuid": "90a431b3_c0ff5d86",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8a6aeb_35496b07",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "I see your motivation behind this design and I agree it makes sense. I\u0027m ok with leaving it that way. It just kind of reminds me of the funny architectures like:\n\ninstead of:\n\n  struct Student {\n    string name;\n    string address;\n    int age;\n  };\n  vector\u003cStudent\u003e students;\n\nyou see something like:\n\n  vector\u003cstring\u003e student_names;\n  vector\u003cstring\u003e student_addresses;\n  vector\u003cint\u003e student_ages;\n\n:D :D\n\nAlternatively we could consider making Task store a reference to its TaskGroup. And then we won\u0027t need task_groups_ at all. However this feels like spaghetti already (Task knows about TaskGroup, TaskGroup knows about Tasks, ... etc.) so never mind! :)",
+      "parentUuid": "f7554d99_1109f9d3",
       "range": {
         "startLine": 158,
         "startChar": 2,
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "fc785bed_62f416f0",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1af9be6e_8b429f31",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1321b549_f6a868a0",
         "filename": "chrome/browser/task_manager/task_manager_interface.h",
         "patchSetId": 14
@@ -273,6 +345,30 @@
       "side": 1,
       "message": "I\u0027ve reworked these comments, though maybe not totally to your liking. In truth, I\u0027m having a tough time explaining this ordering in English -- if you have ideas for how to make it clearer, please take a stab \u0026 I can iterate on what you come up with.\n\nThe thing that\u0027s tricky is that a task\u0027s ProcessSortKey may, ultimately, be determined by a completely unrelated task: it could be determined by a Task sharing a process with a Task that is the parent of a Task sharing a process with |task|. And the sort key may actually outlive the Tasks corresponding to the TaskId\u0027s embedded in the keys.\n\nThe first three fields are inherited parent -\u003e child.\nAll six fields are inherited by Tasks that are added to an already-existing TaskGroup.",
       "parentUuid": "1321b549_f6a868a0",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad4ca43_f6b70ef1",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "No I actually liked your documentation in task.h. Thanks!",
+      "parentUuid": "63559ea6_6fcfb8b3",
       "range": {
         "startLine": 44,
         "startChar": 36,
@@ -325,6 +421,53 @@
         "startChar": 34,
         "endLine": 176,
         "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01390601_44ce6a95",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Sounds like now the keys are not *equal* for tasks sharing a process, since SecondaryKey came into the picture, correct? Do we need to update the doc here?",
+      "parentUuid": "56990376_ff597131",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521a68bf_f548291a",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Optional: Does this implementation still work?\nYour new implementation is more optimized and I like it, but this one seems to be less hairy and straight forward.",
+      "range": {
+        "startLine": 649,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 26
       },
       "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -426,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "ed70ec44_81470a9c",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Oh, I see, never mind then.",
+      "parentUuid": "864e8135_137dc3f8",
+      "range": {
+        "startLine": 692,
+        "startChar": 6,
+        "endLine": 692,
+        "endChar": 27
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dbd0d12_86d32306",
         "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
         "patchSetId": 14
@@ -517,6 +684,30 @@
       "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3f1354_348ead85",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77f1153c_2f376733",
+      "range": {
+        "startLine": 957,
+        "startChar": 11,
+        "endLine": 957,
+        "endChar": 15
+      },
+      "revId": "bdf1a9d8795180d2453a0e6d13faec45e427062e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

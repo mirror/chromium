@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12143410_e452f5e0",
+        "filename": "chrome/browser/extensions/api/processes/processes_api.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nit: braces?",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 349,
+        "endChar": 72
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c41bbfe_60d74ecf",
+        "filename": "chrome/browser/task_manager/providers/task.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Amazing documentation! Thanks.",
+      "range": {
+        "startLine": 87,
+        "startChar": 50,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300ff12a_55239478",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nit: You might want to consider caching values you access repeatedly here:\n\nconst bool has_parent_task \u003d task-\u003eHasParentTask();\nconst int tab_id \u003d task-\u003eGetTabId();\nconst TaskId task_id \u003d task-\u003etaks_id();\n\n... etc.",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0f879a_cef2009c",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "range": {
+        "startLine": 516,
+        "startChar": 7,
+        "endLine": 516,
+        "endChar": 13
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fea669_377f2128",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "I think it\u0027s a better idea, since all you need to access is the task and its group, so it makes sense to make the key while the task is being added inside TaskGroup::AddTask().",
+      "range": {
+        "startLine": 551,
+        "startChar": 2,
+        "endLine": 552,
+        "endChar": 19
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2bbcdc_d9a8496e",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nit: no braces.",
+      "range": {
+        "startLine": 690,
+        "startChar": 29,
+        "endLine": 690,
+        "endChar": 30
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea35b6c_f6a121c3",
+        "filename": "chrome/browser/ui/task_manager/task_manager_table_model_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nit: Please add empty line above.",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20989ea9_60da7c0d",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "const, or just inline it?",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 348,
+        "endChar": 10
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7b9e8b_e7f47054",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Why lambda?",
+      "range": {
+        "startLine": 381,
+        "startChar": 65,
+        "endLine": 381,
+        "endChar": 66
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d45605_c1b6c26a",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Duplicate code in both tests. Can we extract it in a helper function?",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 424,
+        "endChar": 3
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98410d39_1b13ff34",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "...IsSelected(0));  // Browser process?",
+      "range": {
+        "startLine": 440,
+        "startChar": 44,
+        "endLine": 440,
+        "endChar": 60
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8f4d53_8b3a75c7",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T20:41:56Z",
+      "side": 1,
+      "message": "Nice test!",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 1
+      },
+      "revId": "24bf8b0ff926c2e3c6b4bbc1eeffacf744a657ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
