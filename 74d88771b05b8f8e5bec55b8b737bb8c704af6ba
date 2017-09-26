@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053916cc_320e9920",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "I talked to Tommy and I\u0027ll make a CL that changes all the names of the in-product help trackers. Need to think harder of a more suitable name :)",
+      "parentUuid": "aa6a8c45_a7d1297e",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd8676d1_e461f0eb",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b58f90_18c707fb",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "there should always be an active chrome window as in product help promos is only triggered after a user action on a browser",
+      "parentUuid": "fd8676d1_e461f0eb",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53339a10_42990b07",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0379a24_93b507b2",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94c97a0_6a305fe6",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585d3a3f_c0068412",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b94c97a0_6a305fe6",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "95e331b6_272820ff",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "403ec96c_5fcf607e",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c06210a_a4326d2e",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa71aec4_d19822fb",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Moved this functionality into the tracker",
+      "parentUuid": "3c06210a_a4326d2e",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fa51e164_77d5cf9d",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Moved everything into the tracker",
+      "parentUuid": "645155fb_d5bd4d21",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9559a862_b424dd67",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eff3bf_b0a8a1a3",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9559a862_b424dd67",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "962827db_c69990b0",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d705ecf1_d035af65",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492b1688_8bb76a08",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 11
@@ -175,6 +343,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a160cf4_157c6e50",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "492b1688_8bb76a08",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "10126fd1_94fe7ee8",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9226f9fc_db3f42da",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4a7fc1a_247dfc72",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 11
@@ -226,6 +430,24 @@
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7913338a_130aa649",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a7fc1a_247dfc72",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "0266a430_782484be",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae21d97f_d6a25023",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac2e348_c25da051",
         "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
         "patchSetId": 11
@@ -263,6 +503,24 @@
     },
     {
       "key": {
+        "uuid": "18244a79_92a381d8",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac2e348_c25da051",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea5ed53f_ac613943",
         "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
         "patchSetId": 11
@@ -274,6 +532,24 @@
       "writtenOn": "2017-09-26T14:58:37Z",
       "side": 1,
       "message": "aside: it might be nice if IncognitoWindowTracker had a static GetForProfile, so users like this wouldn\u0027t need to access the factory singleton instance directly (it would simplify this line and drop an include from this file)",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c50d443_23d62791",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-26T23:45:24Z",
+      "side": 1,
+      "message": "I thought we had to use factories for keyedservice?\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/chrome_browser_main_extra_parts_profiles.cc?type\u003dcs\u0026q\u003dincognitowindowtrackerfactory\u0026sq\u003dpackage:chromium\u0026l\u003d292",
+      "parentUuid": "ea5ed53f_ac613943",
       "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
