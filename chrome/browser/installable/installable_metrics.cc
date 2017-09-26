@@ -52,6 +52,8 @@ class AccumulatingRecorder : public InstallableMetrics::Recorder {
     DCHECK_EQ(0, add_to_homescreen_installability_timeout_count_);
   }
 
+  bool HasCompletedCheck() const override { return false; }
+
   void Resolve(bool check_passed) override {
     // Resolve queued metrics to their appropriate state based on whether or not
     // we passed the installability check.
@@ -179,6 +181,7 @@ class DirectRecorder : public InstallableMetrics::Recorder {
 
   ~DirectRecorder() override {}
 
+  bool HasCompletedCheck() const override { return true; }
   void Resolve(bool check_passed) override {}
   void Flush(bool waiting_for_service_worker) override {}
   void Start() override {}
@@ -233,6 +236,10 @@ void InstallableMetrics::RecordAddToHomescreenManifestAndIconTimeout() {
 
 void InstallableMetrics::RecordAddToHomescreenInstallabilityTimeout() {
   recorder_->RecordAddToHomescreenInstallabilityTimeout();
+}
+
+bool InstallableMetrics::HasCompletedCheck() const {
+  return recorder_->HasCompletedCheck();
 }
 
 void InstallableMetrics::Resolve(bool check_passed) {

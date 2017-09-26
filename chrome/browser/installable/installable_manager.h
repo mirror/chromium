@@ -149,6 +149,10 @@ class InstallableManager
   // WebContents doesn't exist or is currently being destroyed.
   content::WebContents* GetWebContents();
 
+  // Returns true if we have completed a full installability check or there is
+  // a task scheduled which will complete one; otherwise false.
+  bool HasPwaCheck() const;
+
   // Returns true if |params| requires no more work to be done.
   bool IsComplete(const InstallableParams& params) const;
 
