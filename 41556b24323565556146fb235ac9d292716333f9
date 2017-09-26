@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b2b59a1a_3bcd95af",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-26T20:11:30Z",
+      "side": 1,
+      "message": "I thought so, but it seems to be a good building block to have (even though it looks funny that way).",
+      "parentUuid": "4b941d12_ba0f1288",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 3
+      },
+      "revId": "41556b24323565556146fb235ac9d292716333f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "411b59eb_e22e03f5",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 10
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yes, reverse cycling is shifting from shelf \u003c-\u003e system and normal cycling stays within shelf / system menu. And it\u0027s true that if using reverse tabbing multiple times, the focus will eventually go back to the system tray.\n\nI think in order to have a cycler ring, all views should be a subclass of AccessiblePaneView?\n But the lock screen related views (|WebUILoginView| and |LockContentsView|) are not. In addition, this code needs to work with Web-UI login screen (|WebUILoginView| is notified by calling |NotifyFocusOut| in line 139), it cannot form a cycler ring.\n\nBy the way, the comments in line 138 will be changed because this code should not assume the observers are login/lock screen.",
       "parentUuid": "411b59eb_e22e03f5",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "41556b24323565556146fb235ac9d292716333f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9aea6cf_11de37f2",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-26T20:11:30Z",
+      "side": 1,
+      "message": "I checked with UX and yes, that is what they want. So - okay!",
+      "parentUuid": "8a001e6c_cc790359",
       "range": {
         "startLine": 137,
         "startChar": 0,
