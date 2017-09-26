@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673f92c7_45aff132",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-26T13:49:22Z",
+      "side": 1,
+      "message": "Instead of the local variable, does it work if we use StaticTextWithAccessibilityLabel() ? Or if it\u0027s too long to use inline, could we use that method to set the local variable?",
+      "revId": "ad958bf6f57a9b67ce279ffc8a61c64634f482a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
