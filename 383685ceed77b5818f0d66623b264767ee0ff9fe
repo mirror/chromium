@@ -16,6 +16,24 @@
       "revId": "383685ceed77b5818f0d66623b264767ee0ff9fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58d5a52_bdf19140",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T22:37:15Z",
+      "side": 1,
+      "message": "\u003e This seems correct now but unnecessarily complex. How about replacing this condition and DCHECK with simply:\n\u003e \n\u003e  if (ui::PageTransitionTypeIncludingQualifiersIs(\n\u003e         match.transition, ui::PAGE_TRANSITION_TYPED))\n\u003e \n\u003e If some hypothetical new type is added in the future that\u0027s not any of these three I think it\u0027s way more likely that it\u0027s a thing we won\u0027t care to record here than it is that it\u0027s a thing we wish triggered a DCHECK.\n\nGood idea.  I agree that if we add any other types in the future then they\u0027ll likely be things we don\u0027t want to record this metric for.  I\u0027m confident enough in that statement that I\u0027m willing to use your implementation strategy (where we won\u0027t be told by DCHECK to think about this metric).",
+      "parentUuid": "90dadf94_59262050",
+      "revId": "383685ceed77b5818f0d66623b264767ee0ff9fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
