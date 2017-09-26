@@ -24,6 +24,10 @@ class SingleThreadTaskRunner;
 class TaskRunner;
 }
 
+namespace viz {
+class ContextProvider;
+}
+
 namespace blink {
 class WebContentDecryptionModule;
 class WebSurfaceLayerBridge;
@@ -47,6 +51,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   typedef base::Callback<Context3D()> Context3DCB;
   typedef base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       CreateCapabilitiesRecorderCB;
+
+  // Callback to obtain the media ContextProvider.
+  // Requires being called on the media thread.
+  // The argument callback is also called on the media thread as a reply.
+  using ContextProviderCB =
+      base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>;
 
   // Callback to tell V8 about the amount of memory used by the WebMediaPlayer
   // instance.  The input parameter is the delta in bytes since the last call to
@@ -77,7 +87,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::WatchTimeRecorderProvider* provider,
       CreateCapabilitiesRecorderCB create_capabilities_recorder_cb,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
-          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback);
+          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      ContextProviderCB context_provider_callback);
 
   ~WebMediaPlayerParams();
 
@@ -149,6 +160,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_bridge_callback_;
   }
 
+  ContextProviderCB context_provider_callback() const {
+    return context_provider_callback_;
+  }
+
   CreateCapabilitiesRecorderCB create_capabilities_recorder_cb() const {
     return create_capabilities_recorder_cb_;
   }
@@ -176,6 +191,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
+  ContextProviderCB context_provider_callback_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };
