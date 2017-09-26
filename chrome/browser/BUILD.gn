@@ -620,6 +620,8 @@ split_static_library("browser") {
     "media/midi_sysex_permission_context.h",
     "media/output_protection_proxy.cc",
     "media/output_protection_proxy.h",
+    "media/platform_verification_impl.cc",
+    "media/platform_verification_impl.h",
     "media/router/media_router_feature.cc",
     "media/router/media_router_feature.h",
     "media/webrtc/desktop_media_list.h",
