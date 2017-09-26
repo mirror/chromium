@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6371a487_4207ed22",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/resources/last-event-id.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-26T03:59:47Z",
+      "side": 1,
+      "message": "I don\u0027t like the inconsistency between quotation and double-quotation. Can you use only one of them in this file?",
+      "revId": "9a177989e8f4b9b0977ecb7359a2b6ef5027debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7378b46_5041cdcd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/resources/last-event-id.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-26T03:59:47Z",
+      "side": 1,
+      "message": "u\"\\u2026\"?",
+      "revId": "9a177989e8f4b9b0977ecb7359a2b6ef5027debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
