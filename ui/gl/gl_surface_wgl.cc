@@ -297,11 +297,17 @@ bool NativeViewGLSurfaceWGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceWGL::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceWGL::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceWGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
+  gfx::SwapResult result = SwapBuffersInternal();
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
+  return result;
+}
 
+gfx::SwapResult NativeViewGLSurfaceWGL::SwapBuffersInternal() {
   // Resize the child window to match the parent before swapping. Do not repaint
   // it as it moves.
   RECT rect;
@@ -397,7 +403,8 @@ bool PbufferGLSurfaceWGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceWGL::SwapBuffers() {
+gfx::SwapResult PbufferGLSurfaceWGL::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   NOTREACHED() << "Attempted to call SwapBuffers on a pbuffer.";
   return gfx::SwapResult::SWAP_FAILED;
 }

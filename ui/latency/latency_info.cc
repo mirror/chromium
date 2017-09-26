@@ -162,6 +162,16 @@ bool LatencyInfo::Verify(const std::vector<LatencyInfo>& latency_info,
   return true;
 }
 
+void LatencyInfo::AddTerminatedFrameSwapComponent(
+    std::vector<LatencyInfo>* latency_info) {
+  base::TimeTicks swap_ack_time = base::TimeTicks::Now();
+  for (auto& latency : *latency_info) {
+    latency.AddLatencyNumberWithTimestamp(
+        ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
+        swap_ack_time, 1);
+  }
+}
+
 void LatencyInfo::CopyLatencyFrom(const LatencyInfo& other,
                                   LatencyComponentType type) {
   for (const auto& lc : other.latency_components()) {

@@ -260,8 +260,9 @@ bool GLSurfaceAdapter::IsOffscreen() {
   return surface_->IsOffscreen();
 }
 
-gfx::SwapResult GLSurfaceAdapter::SwapBuffers() {
-  return surface_->SwapBuffers();
+gfx::SwapResult GLSurfaceAdapter::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  return surface_->SwapBuffers(latency_info);
 }
 
 void GLSurfaceAdapter::SwapBuffersAsync(

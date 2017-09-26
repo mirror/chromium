@@ -948,22 +948,26 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
 
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
+    ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
     return gfx::SwapResult::SWAP_FAILED;
   }
 
   if (!eglSwapBuffers(GetDisplay(), surface_)) {
     DVLOG(1) << "eglSwapBuffers failed with error "
              << GetLastEGLErrorString();
+    ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
     return gfx::SwapResult::SWAP_FAILED;
   }
 
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -1208,7 +1212,8 @@ bool PbufferGLSurfaceEGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   NOTREACHED() << "Attempted to call SwapBuffers on a PbufferGLSurfaceEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }
@@ -1292,7 +1297,8 @@ bool SurfacelessEGL::IsSurfaceless() const {
   return true;
 }
 
-gfx::SwapResult SurfacelessEGL::SwapBuffers() {
+gfx::SwapResult SurfacelessEGL::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   LOG(ERROR) << "Attempted to call SwapBuffers with SurfacelessEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }
