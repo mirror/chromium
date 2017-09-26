@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fad28a2_a3cc5e8f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserScopedTokenBuffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T06:13:00Z",
+      "side": 1,
+      "message": "can we scope this to only be a thing if dchecks are on?",
+      "revId": "0bafcf8cd75b68969da35df7a8ee7bbde3b954d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed3d195_45774225",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStreamTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T06:13:00Z",
+      "side": 1,
+      "message": "why is this commented out and not deleted?",
+      "revId": "0bafcf8cd75b68969da35df7a8ee7bbde3b954d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
