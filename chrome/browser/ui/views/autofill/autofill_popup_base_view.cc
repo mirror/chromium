@@ -150,6 +150,7 @@ void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
   bounds.set_height(bounds.height() + 2 * kPopupBorderThicknessDp);
   bounds.set_width(bounds.width() + 2 * kPopupBorderThicknessDp);
   GetWidget()->SetBounds(bounds);
+
   SchedulePaint();
 }
 
