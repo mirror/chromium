@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -41,12 +42,14 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
@@ -104,7 +107,7 @@ public class PageInfoPopup implements OnClickListener {
      * An entry in the settings dropdown for a given permission. There are two options for each
      * permission: Allow and Block.
      */
-    private static final class PageInfoPermissionEntry {
+    protected static final class PageInfoPermissionEntry {
         public final String name;
         public final int type;
         public final ContentSetting setting;
@@ -321,8 +324,8 @@ public class PageInfoPopup implements OnClickListener {
      * @param offlinePageCreationDate  Date when the offline page was created.
      * @param publisher                The name of the content publisher, if any.
      */
-    private PageInfoPopup(Activity activity, Tab tab, String offlinePageCreationDate,
-            String publisher) {
+    protected PageInfoPopup(
+            Activity activity, Tab tab, String offlinePageCreationDate, String publisher) {
         mContext = activity;
         mTab = tab;
         mIsBottomPopup = mTab.getActivity().getBottomSheet() != null;
@@ -385,7 +388,7 @@ public class PageInfoPopup implements OnClickListener {
                 (Button) mContainer.findViewById(R.id.page_info_open_online_button);
         mOpenOnlineButton.setOnClickListener(this);
 
-        mDisplayedPermissions = new ArrayList<PageInfoPermissionEntry>();
+        createOrClearDisplayedPermissionsList();
 
         // Hide the permissions list for sites with no permissions.
         setVisibilityOfPermissionsList(false);
@@ -528,6 +531,21 @@ public class PageInfoPopup implements OnClickListener {
         showDialog();
     }
 
+    @VisibleForTesting
+    LinearLayout getContainerForTesting() {
+        return mContainer;
+    }
+
+    @VisibleForTesting
+    LinearLayout getPermissionsListForTesting() {
+        return mPermissionsList;
+    }
+
+    @VisibleForTesting
+    List<PageInfoPermissionEntry> getDisplayedPermissionsForTesting() {
+        return mDisplayedPermissions;
+    }
+
     /**
      * Sets the visibility of the permissions list, which contains padding and borders that should
      * not be shown if a site has no permissions.
@@ -575,18 +593,29 @@ public class PageInfoPopup implements OnClickListener {
     }
 
     /**
-     * Adds a new row for the given permission.
-     *
+     * Create or clear {@link mDisplayedPermissions} in preparation for
+     * updated permissions.
+     */
+    @CalledByNative
+    private void createOrClearDisplayedPermissionsList() {
+        if (mDisplayedPermissions != null) {
+            mDisplayedPermissions.clear();
+            return;
+        }
+        mDisplayedPermissions = new ArrayList<PageInfoPermissionEntry>();
+    }
+
+    /**
+     * Creates a {@link PageInfoPermissionEntry} from the parameters and adds it to {@link
+     * mDisplayedPermissions}.
      * @param name The title of the permission to display to the user.
      * @param type The ContentSettingsType of the permission.
      * @param currentSettingValue The ContentSetting value of the currently selected setting.
      */
     @CalledByNative
-    private void addPermissionSection(String name, int type, int currentSettingValue) {
-        // We have at least one permission, so show the lower permissions area.
-        setVisibilityOfPermissionsList(true);
-        mDisplayedPermissions.add(new PageInfoPermissionEntry(name, type, ContentSetting
-                .fromInt(currentSettingValue)));
+    private void addDisplayedPermission(String name, int type, int currentSettingValue) {
+        mDisplayedPermissions.add(new PageInfoPermissionEntry(
+                name, type, ContentSetting.fromInt(currentSettingValue)));
     }
 
     /**
@@ -595,12 +624,27 @@ public class PageInfoPopup implements OnClickListener {
     @CalledByNative
     private void updatePermissionDisplay() {
         mPermissionsList.removeAllViews();
+        setVisibilityOfPermissionsList(!mDisplayedPermissions.isEmpty());
+        if (mDisplayedPermissions.isEmpty()) return;
+
         for (PageInfoPermissionEntry permission : mDisplayedPermissions) {
-            addReadOnlyPermissionSection(permission);
+            addPermissionSection(permission);
         }
     }
 
-    private void addReadOnlyPermissionSection(PageInfoPermissionEntry permission) {
+    private SpannableStringBuilder computePermissionStatusString(
+            PageInfoPermissionEntry permission, int statusStringResource) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(permission.name);
+        builder.append(" – "); // en-dash.
+        builder.append(mContext.getString(statusStringResource));
+        // Set the permission name to be bolded.
+        builder.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, permission.name.length(),
+                Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        return builder;
+    }
+
+    private void addPermissionSection(PageInfoPermissionEntry permission) {
         View permissionRow = LayoutInflater.from(mContext).inflate(
                 R.layout.page_info_permission_row, null);
 
@@ -609,20 +653,23 @@ public class PageInfoPopup implements OnClickListener {
         permissionIcon.setImageDrawable(TintedDrawable.constructTintedDrawable(
                 permissionIcon.getResources(), getImageResourceForPermission(permission.type)));
 
+        // Add warning text underneath the permission if the system-level setting is turned off
+        // (geolocation) or the permission is denied to Chrome.
         if (permission.setting == ContentSetting.ALLOW) {
             int warningTextResource = 0;
 
             // If warningTextResource is non-zero, then the view must be tagged with either
             // permission_intent_override or permission_type.
+            View textClickTarget = permissionRow.findViewById(R.id.page_info_permission_text);
             LocationUtils locationUtils = LocationUtils.getInstance();
             if (permission.type == ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION
                     && !locationUtils.isSystemLocationSettingEnabled()) {
                 warningTextResource = R.string.page_info_android_location_blocked;
-                permissionRow.setTag(R.id.permission_intent_override,
+                textClickTarget.setTag(R.id.permission_intent_override,
                         locationUtils.getSystemLocationSettingsIntent());
             } else if (!hasAndroidPermission(permission.type)) {
                 warningTextResource = R.string.page_info_android_permission_blocked;
-                permissionRow.setTag(R.id.permission_type,
+                textClickTarget.setTag(R.id.permission_type,
                         PrefServiceBridge.getAndroidPermissionsForContentSetting(permission.type));
             }
 
@@ -636,7 +683,7 @@ public class PageInfoPopup implements OnClickListener {
                 permissionIcon.setColorFilter(ApiCompatibilityUtils.getColor(
                         mContext.getResources(), R.color.google_blue_700));
 
-                permissionRow.setOnClickListener(this);
+                textClickTarget.setOnClickListener(this);
             }
         }
 
@@ -650,20 +697,18 @@ public class PageInfoPopup implements OnClickListener {
 
         TextView permissionStatus = (TextView) permissionRow.findViewById(
                 R.id.page_info_permission_status);
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        SpannableString nameString = new SpannableString(permission.name);
-        final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
-        nameString.setSpan(boldSpan, 0, nameString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        SwitchCompat permissionSwitch =
+                (SwitchCompat) permissionRow.findViewById(R.id.page_info_permission_switch);
 
-        builder.append(nameString);
-        builder.append(" – ");  // en-dash.
-        String status_text = "";
+        int statusStringResource = -1;
         switch (permission.setting) {
             case ALLOW:
-                status_text = mContext.getString(R.string.page_info_permission_allowed);
+                statusStringResource = R.string.page_info_permission_allowed;
+                permissionSwitch.setChecked(true);
                 break;
             case BLOCK:
-                status_text = mContext.getString(R.string.page_info_permission_blocked);
+                statusStringResource = R.string.page_info_permission_blocked;
+                permissionSwitch.setChecked(false);
                 break;
             default:
                 assert false : "Invalid setting " + permission.setting + " for permission "
@@ -671,22 +716,28 @@ public class PageInfoPopup implements OnClickListener {
         }
         if (permission.type == ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION
                 && WebsitePreferenceBridge.shouldUseDSEGeolocationSetting(mFullUrl, false)) {
-            status_text = statusTextForDSEPermission(permission);
+            statusStringResource = statusTextForDSEPermission(permission);
         }
-        builder.append(status_text);
-        permissionStatus.setText(builder);
+        permissionStatus.setText(computePermissionStatusString(permission, statusStringResource));
+
+        permissionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                ContentSetting setting = isChecked ? ContentSetting.ALLOW : ContentSetting.BLOCK;
+                changeSitePermission(permission.type, setting.toInt());
+            }
+        });
+
         mPermissionsList.addView(permissionRow);
     }
 
     /**
      * Update the permission string for the Default Search Engine.
      */
-    private String statusTextForDSEPermission(PageInfoPermissionEntry permission) {
-        if (permission.setting == ContentSetting.ALLOW) {
-            return mContext.getString(R.string.page_info_dse_permission_allowed);
-        }
-
-        return mContext.getString(R.string.page_info_dse_permission_blocked);
+    private int statusTextForDSEPermission(PageInfoPermissionEntry permission) {
+        return permission.setting == ContentSetting.ALLOW
+                ? R.string.page_info_dse_permission_allowed
+                : R.string.page_info_dse_permission_blocked;
     }
 
     /**
@@ -834,7 +885,7 @@ public class PageInfoPopup implements OnClickListener {
                     }
                 }
             });
-        } else if (view.getId() == R.id.page_info_permission_row) {
+        } else if (view.getId() == R.id.page_info_permission_text) {
             final Object intentOverride = view.getTag(R.id.permission_intent_override);
 
             if (intentOverride == null && mWindowAndroid != null) {
@@ -993,6 +1044,12 @@ public class PageInfoPopup implements OnClickListener {
         }
     }
 
+    protected void changeSitePermission(int type, int setting) {
+        if (mNativePageInfoPopup != 0) {
+            nativeOnSitePermissionChanged(mNativePageInfoPopup, type, setting);
+        }
+    }
+
     /**
      * Whether website dialog is displayed for an offline page.
      */
@@ -1041,4 +1098,7 @@ public class PageInfoPopup implements OnClickListener {
 
     private native void nativeRecordPageInfoAction(
             long nativePageInfoPopupAndroid, int action);
+
+    private native void nativeOnSitePermissionChanged(
+            long nativePageInfoPopupAndroid, int type, int setting);
 }
