@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1179e7_76b1eacb",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-26T16:06:38Z",
+      "side": 1,
+      "message": "nit: s/clientLofi/clientLofiPreviews/",
+      "range": {
+        "startLine": 15,
+        "startChar": 36,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "1528825309fe701611ff11ebde852d072ce6ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b1c24e_cfd9eb10",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-26T16:06:38Z",
+      "side": 1,
+      "message": "nit:  s/kOfflinePreviewsDesciption/kOfflineDesciption/ or change the others to have previews in them.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "1528825309fe701611ff11ebde852d072ce6ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73dbd820_0cbe7275",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-26T16:06:38Z",
+      "side": 1,
+      "message": "nit here and one below: s/TestClientLoFiDisabled/ClientLoFiDisabled/ to match other tests.",
+      "range": {
+        "startLine": 97,
+        "startChar": 46,
+        "endLine": 97,
+        "endChar": 68
+      },
+      "revId": "1528825309fe701611ff11ebde852d072ce6ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
