@@ -32,6 +32,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/test/test_launcher.h"
 #include "mash/session/public/interfaces/constants.mojom.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -231,6 +232,7 @@ bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
     base::TaskScheduler::CreateAndStartWithDefaultParams("StandaloneService");
 
     command_line->AppendSwitch(ui::switches::kUseTestConfig);
+    mojo::edk::Init();
     service_manager::RunStandaloneService(base::Bind(&StartEmbeddedService));
     *exit_code = 0;
 
