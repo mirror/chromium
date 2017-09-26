@@ -7,6 +7,12 @@
 InstallableTaskQueue::InstallableTaskQueue() {}
 InstallableTaskQueue::~InstallableTaskQueue() {}
 
+// static
+bool InstallableTaskQueue::IsParamsForPwaCheck(
+    const InstallableParams& params) {
+  return params.check_installable && params.fetch_valid_primary_icon;
+}
+
 void InstallableTaskQueue::Add(InstallableTask task) {
   tasks_.push_back(task);
 }
@@ -29,6 +35,20 @@ bool InstallableTaskQueue::HasCurrent() const {
 
 bool InstallableTaskQueue::HasPaused() const {
   return !paused_tasks_.empty();
+}
+
+bool InstallableTaskQueue::HasPwaCheck() const {
+  for (const auto& task : tasks_) {
+    if (IsParamsForPwaCheck(task.first))
+      return true;
+  }
+
+  for (const auto& task : paused_tasks_) {
+    if (IsParamsForPwaCheck(task.first))
+      return true;
+  }
+
+  return false;
 }
 
 InstallableTask& InstallableTaskQueue::Current() {
