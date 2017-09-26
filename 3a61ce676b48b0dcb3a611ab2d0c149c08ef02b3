@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "296c08a7_0a31f960",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-26T19:07:11Z",
+      "side": 1,
+      "message": "it\u0027s hard to perceive what 0.5 stands for and why it should be 0.5 without digging into the implementation details of WaitUntilConditionOrTimeoutWithLoopDelay. Maybe add a comment or create a constant for |loop_delay|?",
+      "range": {
+        "startLine": 252,
+        "startChar": 66,
+        "endLine": 252,
+        "endChar": 67
+      },
+      "revId": "3a61ce676b48b0dcb3a611ab2d0c149c08ef02b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
