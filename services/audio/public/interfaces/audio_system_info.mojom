@@ -1,0 +1,18 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module audio.mojom;
+
+import "media/mojo/interfaces/audio_parameters.mojom";
+import "services/audio/public/interfaces/audio_device_description.mojom";
+
+interface AudioSystemInfo {
+  GetInputStreamParameters(string device_id) => (media.mojom.AudioParameters? params);
+  GetOutputStreamParameters(string device_id) => (media.mojom.AudioParameters? params);
+  HasInputDevices() => (bool has_input_devices);
+  HasOutputDevices() => (bool has_output_devices);
+  GetDeviceDescriptions(bool for_input) => (array<audio.mojom.AudioDeviceDescription> device_descriptions);
+  GetAssociatedOutputDeviceID(string input_device_id) => (string associated_output_device_id);
+  GetInputDeviceInfo(string input_device_id) => (media.mojom.AudioParameters? input_params, media.mojom.AudioParameters? output_params, string associated_output_device_id);
+};
