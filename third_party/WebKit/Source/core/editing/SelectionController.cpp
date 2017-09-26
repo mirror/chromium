@@ -76,9 +76,9 @@ DEFINE_TRACE(SelectionController) {
   SynchronousMutationObserver::Trace(visitor);
 }
 
-namespace {
-
 SelectionInDOMTree ConvertToSelectionInDOMTree(
+    // TODO(editing-dev):We should move this function to
+    // SelectionTemplate.cpp.
     const SelectionInFlatTree& selection_in_flat_tree) {
   return SelectionInDOMTree::Builder()
       .SetAffinity(selection_in_flat_tree.Affinity())
@@ -87,6 +87,18 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetIsDirectional(selection_in_flat_tree.IsDirectional())
       .Build();
 }
+
+SelectionInFlatTree ConvertToSelectionInFlatTree(
+    const SelectionInDOMTree& selection) {
+  return SelectionInFlatTree::Builder()
+      .SetAffinity(selection.Affinity())
+      .SetBaseAndExtent(ToPositionInFlatTree(selection.Base()),
+                        ToPositionInFlatTree(selection.Extent()))
+      .SetIsDirectional(selection.IsDirectional())
+      .Build();
+}
+
+namespace {
 
 DispatchEventResult DispatchSelectStart(Node* node) {
   if (!node || !node->GetLayoutObject())
