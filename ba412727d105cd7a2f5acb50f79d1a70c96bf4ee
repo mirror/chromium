@@ -22,6 +22,30 @@
       "revId": "ba412727d105cd7a2f5acb50f79d1a70c96bf4ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459ca515_11a4019d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T18:02:59Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll look into doing this dynamically. And, as you pointed out offline, for the buffer containing the overlaid elements.",
+      "parentUuid": "e6422692_9ce6bd42",
+      "range": {
+        "startLine": 448,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "ba412727d105cd7a2f5acb50f79d1a70c96bf4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
