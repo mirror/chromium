@@ -22,6 +22,30 @@
       "revId": "bb4a02e2dbb4a96f076052e30a1236bc8d6831df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca8faf7_3c9e8a3a",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-26T23:34:33Z",
+      "side": 0,
+      "message": "Not browser_tests, I meant interactive_ui_tests :-)\n\nLocally, AppListTest.PressAppListButtonToShowAndDismiss is flaky on ToT but seems to pass consistently after reverting this CL. So I\u0027ll open a revert of this CL.",
+      "parentUuid": "7828ec1e_31fa6dc3",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 74
+      },
+      "revId": "bb4a02e2dbb4a96f076052e30a1236bc8d6831df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
