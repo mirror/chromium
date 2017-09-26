@@ -20,7 +20,6 @@
 #include "cc/blink/web_layer_impl.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/child/web_url_loader_impl.h"
 #include "content/test/mock_webclipboard_impl.h"
 #include "content/test/web_gesture_curve_mock.h"
@@ -127,9 +126,6 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport() {
   // Set up a FeatureList instance, so that code using that API will not hit a
   // an error that it's not set. Cleared by ClearInstanceForTesting() below.
   base::FeatureList::SetInstance(base::WrapUnique(new base::FeatureList));
-
-  // Initialize mojo firstly to enable Blink initialization to use it.
-  InitializeMojo();
 
   blink::Initialize(this);
   blink::SetLayoutTestMode(true);

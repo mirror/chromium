@@ -17,7 +17,6 @@
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
@@ -45,8 +44,6 @@ class ComponentsTestSuite : public base::TestSuite {
  private:
   void Initialize() override {
     base::TestSuite::Initialize();
-
-    mojo::edk::Init();
 
     // Initialize the histograms subsystem, so that any histograms hit in tests
     // are correctly registered with the statistics recorder and can be queried

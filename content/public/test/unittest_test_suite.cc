@@ -8,6 +8,7 @@
 #include "base/rand_util.h"
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
+#include "content/app/mojo/mojo_init.h"
 #include "content/test/test_blink_web_unit_test_support.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 
@@ -31,6 +32,7 @@ UnitTestTestSuite::UnitTestTestSuite(base::TestSuite* test_suite)
   env_ = aura::Env::CreateInstance();
 #endif
   DCHECK(test_suite);
+  InitializeMojo();
   blink_test_support_.reset(new TestBlinkWebUnitTestSupport);
 }
 
