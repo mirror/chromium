@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff0d01a_d0b1fa06",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T00:13:17Z",
+      "side": 1,
+      "message": "Comment obsolete?",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff52689_d960d4a9",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T00:13:17Z",
+      "side": 1,
+      "message": "@private, @param missing\n\nNit: s/stopPropagate_/stopPropagation_ ?",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a9d943_0373fcd0",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T00:13:17Z",
+      "side": 1,
+      "message": "For consistency, let\u0027s keep all i18n string IDs starting with a lower case letter.",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
