@@ -111,6 +111,8 @@ void UiRenderer::DrawWebVrOverlayForeground(
 
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  LOG(ERROR) << "===render_info==size=="
+             << render_info.surface_texture_size.ToString();
   DrawUiView(render_info, controller_info,
              scene_->GetVisibleWebVrOverlayForegroundElements(),
              kReticleHidden);

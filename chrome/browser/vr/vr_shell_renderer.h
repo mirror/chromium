@@ -39,18 +39,18 @@ class VrShellRenderer : public vr::UiElementRenderer {
   // vr::UiElementRenderer interface (exposed to UI elements).
   void DrawTexturedQuad(int texture_data_handle,
                         TextureLocation texture_location,
-                        const gfx::Transform& view_proj_matrix,
+                        const gfx::Transform& model_view_proj_matrix,
                         const gfx::RectF& copy_rect,
                         float opacity,
                         gfx::SizeF element_size,
                         float corner_radius) override;
-  void DrawGradientQuad(const gfx::Transform& view_proj_matrix,
+  void DrawGradientQuad(const gfx::Transform& model_view_proj_matrix,
                         const SkColor edge_color,
                         const SkColor center_color,
                         float opacity,
                         gfx::SizeF element_size,
                         float corner_radius) override;
-  void DrawGradientGridQuad(const gfx::Transform& view_proj_matrix,
+  void DrawGradientGridQuad(const gfx::Transform& model_view_proj_matrix,
                             const SkColor edge_color,
                             const SkColor center_color,
                             const SkColor grid_color,
@@ -69,7 +69,6 @@ class VrShellRenderer : public vr::UiElementRenderer {
 
   void Flush();
 
-  gfx::Size surface_texture_size() const { return surface_texture_size_; }
   void set_surface_texture_size(const gfx::Size& surface_texture_size) {
     surface_texture_size_ = surface_texture_size;
   }
@@ -136,7 +135,7 @@ class TexturedQuadRenderer : public BaseRenderer {
   // Enqueues a textured quad for rendering. The GL will ultimately be issued
   // in |Flush|.
   void AddQuad(int texture_data_handle,
-               const gfx::Transform& view_proj_matrix,
+               const gfx::Transform& model_view_proj_matrix,
                const gfx::RectF& copy_rect,
                float opacity,
                const gfx::Size& surface_texture_size,
@@ -153,7 +152,7 @@ class TexturedQuadRenderer : public BaseRenderer {
  private:
   struct QuadData {
     int texture_data_handle;
-    gfx::Transform view_proj_matrix;
+    gfx::Transform model_view_proj_matrix;
     gfx::RectF copy_rect;
     float opacity;
     gfx::Size surface_texture_size;
@@ -286,7 +285,7 @@ class GradientQuadRenderer : public BaseRenderer {
   GradientQuadRenderer();
   ~GradientQuadRenderer() override;
 
-  void Draw(const gfx::Transform& view_proj_matrix,
+  void Draw(const gfx::Transform& model_view_proj_matrix,
             SkColor edge_color,
             SkColor center_color,
             float opacity,
@@ -317,7 +316,7 @@ class GradientGridRenderer : public BaseQuadRenderer {
   GradientGridRenderer();
   ~GradientGridRenderer() override;
 
-  void Draw(const gfx::Transform& view_proj_matrix,
+  void Draw(const gfx::Transform& model_view_proj_matrix,
             SkColor edge_color,
             SkColor center_color,
             SkColor grid_color,
