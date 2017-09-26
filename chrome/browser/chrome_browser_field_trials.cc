@@ -15,6 +15,7 @@
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
+#include "base/metrics/persistent_memory_allocator.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -101,8 +102,18 @@ void InstantiatePersistentHistograms() {
   // Move any existing "active" file to the final name from which it will be
   // read when reporting initial stability metrics. If there is no file to
   // move, remove any old, existing file from before the previous session.
-  if (!base::ReplaceFile(active_file, upload_file, nullptr))
+  if (base::ReplaceFile(active_file, upload_file, nullptr)) {
+    base::PostTaskWithTraits(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        base::BindOnce(
+            base::IgnoreResult(
+                &base::FilePersistentMemoryAllocator::MinimizeFilePath),
+            base::Passed(&upload_file)));
+  } else {
     base::DeleteFile(active_file, /*recursive=*/false);
+  }
 
   // This is used to report results to an UMA histogram.
   enum InitResult {

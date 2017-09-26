@@ -914,6 +914,51 @@ TEST(FilePersistentMemoryAllocatorTest, AcceptableTest) {
     }
   }
 }
+
+TEST(FilePersistentMemoryAllocatorTest, MinimizeTest) {
+  ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("extend_test");
+  size_t used_size;
+
+  // Start with a small but valid file of persistent data.
+  ASSERT_FALSE(PathExists(file_path));
+  {
+    LocalPersistentMemoryAllocator local(TEST_MEMORY_SIZE, TEST_ID, "");
+    local.Allocate(1, 1);
+    local.Allocate(11, 11);
+
+    used_size = local.used();
+    File writer(file_path, File::FLAG_CREATE | File::FLAG_WRITE);
+    ASSERT_TRUE(writer.IsValid());
+    writer.Write(0, (const char*)local.data(), used_size + 100);
+  }
+
+  ASSERT_TRUE(PathExists(file_path));
+  int64_t before_size;
+  ASSERT_TRUE(GetFileSize(file_path, &before_size));
+  EXPECT_LT(used_size, static_cast<size_t>(before_size));
+
+  // Minimize the file and check that it has been reduced.
+  ASSERT_TRUE(FilePersistentMemoryAllocator::MinimizeFilePath(file_path));
+  int64_t after_size;
+  ASSERT_TRUE(GetFileSize(file_path, &after_size));
+  EXPECT_EQ(used_size, static_cast<size_t>(after_size));
+
+  std::unique_ptr<MemoryMappedFile> mmfile;
+  mmfile.reset(new MemoryMappedFile());
+  mmfile->Initialize(
+      File(file_path, File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE),
+      MemoryMappedFile::READ_WRITE);
+  EXPECT_EQ(used_size, mmfile->length());
+  ASSERT_TRUE(FilePersistentMemoryAllocator::IsFileAcceptable(*mmfile, true));
+  ASSERT_TRUE(FilePersistentMemoryAllocator::IsFileAcceptable(*mmfile, false));
+
+  FilePersistentMemoryAllocator allocator(std::move(mmfile), TEST_MEMORY_SIZE,
+                                          0, "", true);
+  EXPECT_EQ(used_size, allocator.used());
+}
+
 #endif  // !defined(OS_NACL)
 
 }  // namespace base

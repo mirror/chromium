@@ -13,6 +13,7 @@
 #include <sys/mman.h>
 #endif
 
+#include "base/files/file.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "base/memory/shared_memory.h"
@@ -1039,6 +1040,35 @@ bool FilePersistentMemoryAllocator::IsFileAcceptable(
     const MemoryMappedFile& file,
     bool read_only) {
   return IsMemoryAcceptable(file.data(), file.length(), 0, read_only);
+}
+
+// static
+bool FilePersistentMemoryAllocator::MinimizeFile(File* file) {
+  SharedMetadata metadata;
+  if (file->Read(0, reinterpret_cast<char*>(&metadata), sizeof(metadata)) !=
+      sizeof(metadata)) {
+    return false;
+  }
+  if (metadata.cookie != kGlobalCookie)
+    return false;
+  if (CheckFlag(&metadata.flags, kFlagCorrupt))
+    return false;
+
+  uint32_t used = metadata.freeptr.load(std::memory_order_relaxed);
+  int64_t file_length = file->GetLength();
+  if (file_length < used)
+    return false;
+
+  return file->SetLength(used);
+}
+
+// static
+bool FilePersistentMemoryAllocator::MinimizeFilePath(const FilePath& path) {
+  File file(path, File::FLAG_OPEN_ALWAYS | File::FLAG_SHARE_DELETE |
+                      File::FLAG_READ | File::FLAG_WRITE);
+  if (!file.IsValid())
+    return false;
+  return MinimizeFile(&file);
 }
 
 void FilePersistentMemoryAllocator::FlushPartial(size_t length, bool sync) {
