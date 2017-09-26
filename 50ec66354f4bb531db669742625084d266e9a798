@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a71fde_1836d809",
+        "filename": "media/audio/audio_input_stream_data_interceptor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "DCHECK is redundant - will crash on next line if null. Remove here and elsewhere.",
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a6e4f_5134069f",
+        "filename": "media/audio/audio_input_stream_data_interceptor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a339a2_857129da",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "Remove \"output\".",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f212273_755a704f",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 180,
+        "startChar": 13,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f714a233_85c4c64f",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "Add comment on why unretained is safe.",
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ae9761_55c41e0b",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-26T13:01:36Z",
+      "side": 1,
+      "message": "To verify: the params won\u0027t ever change in real the stream object?",
+      "range": {
+        "startLine": 238,
+        "startChar": 42,
+        "endLine": 238,
+        "endChar": 48
+      },
+      "revId": "50ec66354f4bb531db669742625084d266e9a798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
