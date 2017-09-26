@@ -1304,8 +1304,8 @@ TEST_F(IncidentReportingServiceTest, UploadsWithBothDownloadTypes) {
 // Test that a profile's prune state is properly cleaned upon load.
 TEST_F(IncidentReportingServiceTest, CleanLegacyPruneState) {
   CreateIncidentReportingService();
-  const std::string omnibox_type(base::IntToString(
-      static_cast<int32_t>(safe_browsing::IncidentType::OMNIBOX_INTERACTION)));
+  const std::string omnibox_type(base::IntToString(static_cast<int32_t>(
+      safe_browsing::IncidentType::OBSOLETE_BLACKLIST_LOAD)));
   const std::string preference_type(base::IntToString(
       static_cast<int32_t>(safe_browsing::IncidentType::TRACKED_PREFERENCE)));
 
