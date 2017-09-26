@@ -26,6 +26,7 @@ class TextureMailboxDeleter;
 namespace cc {
 class DisplayResourceProvider;
 class FakeOutputSurfaceClient;
+class LocalResourceProvider;
 class OutputSurface;
 class TestSharedBitmapManager;
 
@@ -66,6 +67,7 @@ class PixelTest : public testing::Test {
   std::unique_ptr<TestSharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<viz::TestGpuMemoryBufferManager> gpu_memory_buffer_manager_;
   std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<viz::TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<viz::DirectRenderer> renderer_;
   viz::SoftwareRenderer* software_renderer_ = nullptr;
@@ -105,10 +107,12 @@ class GLRendererWithExpandedViewport : public viz::GLRenderer {
       const viz::RendererSettings* settings,
       viz::OutputSurface* output_surface,
       DisplayResourceProvider* resource_provider,
+      LocalResourceProvider* local_resource_provider,
       viz::TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
                         resource_provider,
+                        local_resource_provider,
                         texture_mailbox_deleter) {}
 };
 
@@ -127,10 +131,12 @@ class GLRendererWithFlippedSurface : public viz::GLRenderer {
       const viz::RendererSettings* settings,
       viz::OutputSurface* output_surface,
       DisplayResourceProvider* resource_provider,
+      LocalResourceProvider* local_resource_provider,
       viz::TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
                         resource_provider,
+                        local_resource_provider,
                         texture_mailbox_deleter) {}
 };
 
