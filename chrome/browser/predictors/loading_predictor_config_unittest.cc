@@ -114,6 +114,7 @@ TEST_F(LoadingPredictorConfigTest, EnablePreconnectLearning) {
   EXPECT_TRUE(config.IsLearningEnabled());
   EXPECT_TRUE(config.is_origin_learning_enabled);
   EXPECT_FALSE(config.is_host_learning_enabled);
+  EXPECT_FALSE(config.are_other_preconnects_disabled);
   EXPECT_FALSE(config.IsPrefetchingEnabledForSomeOrigin(profile_.get()));
   EXPECT_FALSE(config.IsPreconnectEnabledForSomeOrigin(profile_.get()));
   TestIsDefaultExtraConfig(config);
@@ -153,8 +154,24 @@ TEST_F(LoadingPredictorConfigTest, EnablePreconnect) {
   EXPECT_TRUE(MaybeEnableSpeculativePreconnect(&config));
 
   EXPECT_TRUE(config.IsLearningEnabled());
+  EXPECT_TRUE(config.are_other_preconnects_disabled);
   EXPECT_FALSE(config.IsPrefetchingEnabledForSomeOrigin(profile_.get()));
   EXPECT_TRUE(config.IsPreconnectEnabledForSomeOrigin(profile_.get()));
+  TestIsDefaultExtraConfig(config);
+}
+
+TEST_F(LoadingPredictorConfigTest, EnableNoPreconnect) {
+  variations::testing::VariationParamsManager params_manager(
+      "dummy-trial", {{kModeParamName, kNoPreconnectMode}},
+      {kSpeculativePreconnectFeatureName});
+
+  LoadingPredictorConfig config;
+  EXPECT_FALSE(MaybeEnableSpeculativePreconnect(&config));
+
+  EXPECT_FALSE(config.IsLearningEnabled());
+  EXPECT_TRUE(config.are_other_preconnects_disabled);
+  EXPECT_FALSE(config.IsPrefetchingEnabledForSomeOrigin(profile_.get()));
+  EXPECT_FALSE(config.IsPreconnectEnabledForSomeOrigin(profile_.get()));
   TestIsDefaultExtraConfig(config);
 }
 
