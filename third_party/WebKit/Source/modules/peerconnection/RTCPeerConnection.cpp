@@ -1458,7 +1458,21 @@ void RTCPeerConnection::DidAddRemoteStream(
     return;
 
   MediaStream* stream =
-      MediaStream::Create(GetExecutionContext(), remote_stream);
+      MediaStream::Create(GetExecutionContext(), remote_stream, false);
+  WebVector<WebMediaStreamTrack> web_tracks;
+  remote_stream.AudioTracks(web_tracks);
+  for (WebMediaStreamTrack& web_track : web_tracks) {
+    NonThrowableExceptionState exception_state;
+    stream->addTrack(MediaStreamTrack::Create(GetExecutionContext(), web_track),
+                     exception_state);
+  }
+  remote_stream.VideoTracks(web_tracks);
+  for (WebMediaStreamTrack& web_track : web_tracks) {
+    NonThrowableExceptionState exception_state;
+    stream->addTrack(MediaStreamTrack::Create(GetExecutionContext(), web_track),
+                     exception_state);
+  }
+
   remote_streams_.push_back(stream);
   stream->RegisterObserver(this);
   for (auto& track : stream->getTracks()) {

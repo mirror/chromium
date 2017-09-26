@@ -62,7 +62,13 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
   static MediaStream* Create(ExecutionContext*);
   static MediaStream* Create(ExecutionContext*, MediaStream*);
   static MediaStream* Create(ExecutionContext*, const MediaStreamTrackVector&);
-  static MediaStream* Create(ExecutionContext*, MediaStreamDescriptor*);
+  // If |create_tracks| is true, tracks are created for the associated
+  // components and added to the MediaStream.
+  // If |create_tracks| is false, you MUST add the associated tracks yourself.
+  // This allows you to create a stream using pre-existing tracks.
+  static MediaStream* Create(ExecutionContext*,
+                             MediaStreamDescriptor*,
+                             bool create_tracks = true);
   ~MediaStream() override;
 
   String id() const { return descriptor_->Id(); }
@@ -113,7 +119,7 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
       const AddEventListenerOptionsResolved&) override;
 
  private:
-  MediaStream(ExecutionContext*, MediaStreamDescriptor*);
+  MediaStream(ExecutionContext*, MediaStreamDescriptor*, bool create_tracks);
   MediaStream(ExecutionContext*,
               const MediaStreamTrackVector& audio_tracks,
               const MediaStreamTrackVector& video_tracks);

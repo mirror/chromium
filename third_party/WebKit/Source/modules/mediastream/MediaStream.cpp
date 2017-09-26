@@ -93,12 +93,14 @@ MediaStream* MediaStream::Create(ExecutionContext* context,
 }
 
 MediaStream* MediaStream::Create(ExecutionContext* context,
-                                 MediaStreamDescriptor* stream_descriptor) {
-  return new MediaStream(context, stream_descriptor);
+                                 MediaStreamDescriptor* stream_descriptor,
+                                 bool create_tracks) {
+  return new MediaStream(context, stream_descriptor, create_tracks);
 }
 
 MediaStream::MediaStream(ExecutionContext* context,
-                         MediaStreamDescriptor* stream_descriptor)
+                         MediaStreamDescriptor* stream_descriptor,
+                         bool create_tracks)
     : ContextClient(context),
       descriptor_(stream_descriptor),
       scheduled_event_timer_(
@@ -107,22 +109,24 @@ MediaStream::MediaStream(ExecutionContext* context,
           &MediaStream::ScheduledEventTimerFired) {
   descriptor_->SetClient(this);
 
-  size_t number_of_audio_tracks = descriptor_->NumberOfAudioComponents();
-  audio_tracks_.ReserveCapacity(number_of_audio_tracks);
-  for (size_t i = 0; i < number_of_audio_tracks; i++) {
-    MediaStreamTrack* new_track =
-        MediaStreamTrack::Create(context, descriptor_->AudioComponent(i));
-    new_track->RegisterMediaStream(this);
-    audio_tracks_.push_back(new_track);
-  }
+  if (create_tracks) {
+    size_t number_of_audio_tracks = descriptor_->NumberOfAudioComponents();
+    audio_tracks_.ReserveCapacity(number_of_audio_tracks);
+    for (size_t i = 0; i < number_of_audio_tracks; i++) {
+      MediaStreamTrack* new_track =
+          MediaStreamTrack::Create(context, descriptor_->AudioComponent(i));
+      new_track->RegisterMediaStream(this);
+      audio_tracks_.push_back(new_track);
+    }
 
-  size_t number_of_video_tracks = descriptor_->NumberOfVideoComponents();
-  video_tracks_.ReserveCapacity(number_of_video_tracks);
-  for (size_t i = 0; i < number_of_video_tracks; i++) {
-    MediaStreamTrack* new_track =
-        MediaStreamTrack::Create(context, descriptor_->VideoComponent(i));
-    new_track->RegisterMediaStream(this);
-    video_tracks_.push_back(new_track);
+    size_t number_of_video_tracks = descriptor_->NumberOfVideoComponents();
+    video_tracks_.ReserveCapacity(number_of_video_tracks);
+    for (size_t i = 0; i < number_of_video_tracks; i++) {
+      MediaStreamTrack* new_track =
+          MediaStreamTrack::Create(context, descriptor_->VideoComponent(i));
+      new_track->RegisterMediaStream(this);
+      video_tracks_.push_back(new_track);
+    }
   }
 
   if (EmptyOrOnlyEndedTracks()) {
