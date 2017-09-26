@@ -2,15 +2,47 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <iostream>
+
 #include "chrome/browser/ui/webui/policy_tool_ui_handler.h"
 
+#include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
+#include "chrome/browser/policy/schema_registry_service.h"
+#include "chrome/browser/policy/schema_registry_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
+
+namespace {
+
+base::FilePath::StringType StringToFilePathStringType(
+    const base::StringPiece& value) {
+#if defined(OS_WIN)
+  return base::UTF8ToUTF16(value);
+#else
+  return base::FilePath::StringType(value);
+#endif
+}
+
+}  // namespace
+
+// static
+const base::FilePath::CharType PolicyToolUIHandler::kPolicyToolSessionsDir[] =
+    FILE_PATH_LITERAL("Policy sessions");
+
+// static
+const base::FilePath::CharType
+    PolicyToolUIHandler::kPolicyToolDefaultSessionName[] =
+        FILE_PATH_LITERAL("policy");
+
+// static
+const base::FilePath::CharType
+    PolicyToolUIHandler::kPolicyToolSessionExtension[] =
+        FILE_PATH_LITERAL("json");
 
 PolicyToolUIHandler::PolicyToolUIHandler() : callback_weak_ptr_factory_(this) {}
 
@@ -18,11 +50,8 @@ PolicyToolUIHandler::~PolicyToolUIHandler() {}
 
 void PolicyToolUIHandler::RegisterMessages() {
   // Set directory for storing sessions.
-  sessions_dir_ = Profile::FromWebUI(web_ui())->GetPath().Append(
-      FILE_PATH_LITERAL("Policy sessions"));
-  // Set current session name.
-  // TODO(urusant): do so in a smarter way, e.g. choose the last edited session.
-  session_name_ = FILE_PATH_LITERAL("policy");
+  sessions_dir_ =
+      Profile::FromWebUI(web_ui())->GetPath().Append(kPolicyToolSessionsDir);
 
   web_ui()->RegisterMessageCallback(
       "initialized", base::Bind(&PolicyToolUIHandler::HandleInitializedAdmin,
@@ -44,6 +73,44 @@ base::FilePath PolicyToolUIHandler::GetSessionPath(
   return sessions_dir_.Append(name).AddExtension(FILE_PATH_LITERAL("json"));
 }
 
+base::ListValue PolicyToolUIHandler::GetSessionsList() {
+  base::FilePath::StringType sessions_pattern =
+      FILE_PATH_LITERAL("*.") +
+      base::FilePath::StringType(kPolicyToolSessionExtension);
+  base::FileEnumerator enumerator(sessions_dir_, false /* recursive */,
+                                  base::FileEnumerator::FILES,
+                                  sessions_pattern);
+  // A vector of session names and their last access times.
+  using Session = std::pair<base::Time, base::FilePath::StringType>;
+  std::vector<Session> sessions;
+  for (base::FilePath name = enumerator.Next(); !name.empty();
+       name = enumerator.Next()) {
+    base::File::Info info;
+    base::GetFileInfo(name, &info);
+    sessions.push_back(
+        {info.last_accessed, name.BaseName().RemoveExtension().value()});
+  }
+  // Sort the sessions by the the time of last access in decreasing order.
+  std::sort(sessions.begin(), sessions.end(), std::greater<Session>());
+
+  // Convert sessions to the list containing only names.
+  base::ListValue session_names;
+  for (Session session : sessions)
+    session_names.GetList().push_back(base::Value(session.second));
+  return session_names;
+}
+
+void PolicyToolUIHandler::SetDefaultSessionName() {
+  base::ListValue sessions = GetSessionsList();
+  if (sessions.empty()) {
+    // If there are no sessions, fallback to the default session name.
+    session_name_ = kPolicyToolDefaultSessionName;
+  } else {
+    session_name_ =
+        StringToFilePathStringType(sessions.GetList()[0].GetString());
+  }
+}
+
 std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   // Create sessions directory, if it doesn't exist yet.
   // If unable to create a directory, just silently return a dictionary
@@ -53,7 +120,12 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   if (!base::CreateDirectory(sessions_dir_))
     return "{\"logged\": false}";
 
+  // Initialize session name if it is not initialized yet.
+  if (session_name_.empty())
+    SetDefaultSessionName();
+
   const base::FilePath session_path = GetSessionPath(session_name_);
+
   // Check if the file for the current session already exists. If not, create it
   // and put an empty dictionary in it.
   base::File session_file(session_path, base::File::Flags::FLAG_CREATE |
@@ -70,12 +142,17 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   // one of the filesystem operations wasn't successful. In this case, return
   // a dictionary indicating that logging was unsuccessful. Potentially this can
   // also be the place to disable logging to disk.
-  if (!PathExists(session_path)) {
+  if (!PathExists(session_path))
     return "{\"logged\": false}";
-  }
   // Read file contents.
   std::string contents;
   base::ReadFileToString(session_path, &contents);
+
+  // Touch the file to remember the last session.
+  base::File::Info info;
+  base::GetFileInfo(session_path, &info);
+  base::TouchFile(session_path, base::Time::Now(), info.last_modified);
+
   return contents;
 }
 
@@ -101,8 +178,7 @@ void PolicyToolUIHandler::OnFileRead(const std::string& contents) {
       value->Remove("logged", nullptr);
     }
   }
-  // TODO(urusant): convert the policy values so that the types are consistent
-  // with actual policy types.
+  CheckPolicyTypes(value.get());
   CallJavascriptFunction("policy.Page.setPolicyValues", *value);
 }
 
@@ -132,12 +208,8 @@ bool PolicyToolUIHandler::IsValidSessionName(
 
 void PolicyToolUIHandler::HandleLoadSession(const base::ListValue* args) {
   DCHECK_EQ(1U, args->GetSize());
-#if defined(OS_WIN)
   base::FilePath::StringType new_session_name =
-      base::UTF8ToUTF16(args->GetList()[0].GetString());
-#else
-  base::FilePath::StringType new_session_name = args->GetList()[0].GetString();
-#endif
+      StringToFilePathStringType(args->GetList()[0].GetString());
   if (!IsValidSessionName(new_session_name)) {
     ShowErrorMessageToUser("errorInvalidSessionName");
     return;
@@ -166,6 +238,96 @@ void PolicyToolUIHandler::HandleUpdateSession(const base::ListValue* args) {
       base::BindOnce(&PolicyToolUIHandler::DoUpdateSession,
                      callback_weak_ptr_factory_.GetWeakPtr(),
                      converted_values));
+
+  // Send the dictionary back to UI in order to update the errors about policy
+  // types.
+  OnFileRead(converted_values);
+}
+
+void PolicyToolUIHandler::CheckPolicyTypes(base::DictionaryValue* values) {
+  Profile* profile = Profile::FromWebUI(web_ui());
+  policy::SchemaRegistry* registry =
+      policy::SchemaRegistryServiceFactory::GetForContext(
+          profile->GetOriginalProfile())
+          ->registry();
+  scoped_refptr<policy::SchemaMap> schema_map = registry->schema_map();
+
+  // Check chrome policies.
+  base::Value* chrome_policies = values->FindKey("chromePolicies");
+  if (chrome_policies) {
+    policy::PolicyNamespace chrome_ns(policy::POLICY_DOMAIN_CHROME, "");
+    const policy::Schema* chrome_schema = schema_map->GetSchema(chrome_ns);
+    for (const auto& policy : chrome_policies->DictItems()) {
+      const std::string policy_name = policy.first;
+      base::Value* policy_value = policy.second.FindKey("value");
+      policy::Schema policy_schema =
+          chrome_schema->GetKnownProperty(policy_name);
+      // If the policy schema is invalid, this means that the policy is unknown,
+      // so we don't have information about it.
+      if (!policy_schema.valid()) {
+        continue;
+      }
+      // Try to unstringify the policy value if needed.
+      if (policy_value->type() == base::Value::Type::STRING &&
+          policy_schema.type() != base::Value::Type::STRING) {
+        std::unique_ptr<base::Value> value =
+            base::JSONReader::Read(policy_value->GetString());
+        if (!value) {
+          policy.second.SetKey("invalid", base::Value(true));
+          continue;
+        }
+        *policy_value = value->Clone();
+      }
+      // Validate the value against schema.
+      std::string error_path, error;
+      if (!policy_schema.Validate(*policy_value, policy::SCHEMA_STRICT,
+                                  &error_path, &error)) {
+        policy.second.SetKey("invalid", base::Value(true));
+      }
+    }
+  }
+
+  // Check extension policies.
+  base::Value* extension_policies = values->FindKey("extensionPolicies");
+  if (extension_policies) {
+    for (auto extension : extension_policies->DictItems()) {
+      const std::string extension_name = extension.first;
+      policy::PolicyNamespace extension_ns(policy::POLICY_DOMAIN_EXTENSIONS,
+                                           extension_name);
+      const policy::Schema* extension_schema =
+          schema_map->GetSchema(extension_ns);
+
+      for (const auto& policy : extension.second.DictItems()) {
+        const std::string policy_name = policy.first;
+        base::Value* policy_value = policy.second.FindKey("value");
+        policy::Schema policy_schema =
+            extension_schema->GetKnownProperty(policy_name);
+        // If the policy schema is invalid, this means that the policy is
+        // unknown, so we don't have information about it.
+        if (!policy_schema.valid()) {
+          continue;
+        }
+        // Try to unstringify the policy value if needed.
+        if (policy_value->type() == base::Value::Type::STRING &&
+            policy_schema.type() != base::Value::Type::STRING) {
+          std::unique_ptr<base::Value> value =
+              base::JSONReader::Read(policy_value->GetString());
+          if (!value) {
+            policy.second.SetKey("invalid", base::Value(true));
+            continue;
+          }
+          policy_value = value->DeepCopy();
+        }
+        std::cerr << *policy_value << std::endl;
+        // Validate the value against schema.
+        std::string error_path, error;
+        if (!policy_schema.Validate(*policy_value, policy::SCHEMA_STRICT,
+                                    &error_path, &error)) {
+          policy.second.SetKey("invalid", base::Value(true));
+        }
+      }
+    }
+  }
 }
 
 void PolicyToolUIHandler::ShowErrorMessageToUser(
