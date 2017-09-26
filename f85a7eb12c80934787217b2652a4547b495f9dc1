@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce91114_c224fb66",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5442,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-26T20:29:51Z",
+      "side": 0,
+      "message": "AFAIK, this is for Webview only. please cleanup the code that receives the message.",
+      "range": {
+        "startLine": 5442,
+        "startChar": 0,
+        "endLine": 5442,
+        "endChar": 70
+      },
+      "revId": "f85a7eb12c80934787217b2652a4547b495f9dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c282560_d601a1b0",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-26T20:29:51Z",
+      "side": 1,
+      "message": "as we discussed back/forwards should be filtered out here, see the comment:\n\nhttps://cs.chromium.org/chromium/src/android_webview/renderer/aw_content_renderer_client.cc?rcl\u003df307d848f5fc86925e0a846daaacd528648f61ab\u0026l\u003d119",
+      "revId": "ea27d96b2c1a2ef083ea1bc764244ac8cc8d8b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
