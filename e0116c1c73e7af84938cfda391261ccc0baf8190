@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdf5419_f4220073",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T19:48:44Z",
+      "side": 1,
+      "message": "Remove this line, it will be unnecessary.",
+      "revId": "e0116c1c73e7af84938cfda391261ccc0baf8190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981dc8d5_5931baea",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T19:48:44Z",
+      "side": 1,
+      "message": "Just check that GetFrameSinkDebugLabel() works correctly instead. There is less setup that way and it\u0027s not reliant on SurfaceReferencesToString() working correctly.\n\nEXPECT_EQUAL(kLabel, GetSurfaceManager().GetFrameSinkDebugLabel(kFrameSink1));",
+      "revId": "e0116c1c73e7af84938cfda391261ccc0baf8190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1551fc0_6c0df823",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T19:48:44Z",
+      "side": 1,
+      "message": "Similarly, EXPECT_EQUALS with whatever it should be after invalidation.",
+      "revId": "e0116c1c73e7af84938cfda391261ccc0baf8190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b7b45f_1d8a99c8",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T19:48:44Z",
+      "side": 1,
+      "message": "Can you remove this function and move the first three lines to where it\u0027s called from. That is the only use of this. Having only GetFrameSinkDebugLabel() is cleaner.",
+      "revId": "e0116c1c73e7af84938cfda391261ccc0baf8190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
