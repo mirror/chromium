@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54332cb8_286e6430",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-26T15:15:20Z",
+      "side": 1,
+      "message": "I\u0027m worried the name implies that we always have the draw end time of the previous active tree, but this is only true right now when we also have animations.\n\nInstead, we could either:\n- move this outside the main_thread_animations_count checks and remove the for_uma_ so that it is always the draw_end_ time of the last time we used a new active tree\n- rename it to something more specific like draw_end_time_for_previous_animating_pending_tree_activation_. Note, we could set it to zero and use an is_zero check instead of having the additional previous_frame_had_main_thread_animations_ flag.",
+      "range": {
+        "startLine": 923,
+        "startChar": 41,
+        "endLine": 923,
+        "endChar": 49
+      },
+      "revId": "edd72cac1e46e334695cb020710398d44b102ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

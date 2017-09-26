@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a785fd0d_19ea5d44",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-26T15:15:20Z",
+      "side": 1,
+      "message": "A main thread animation wouldn\u0027t paint into its own backing, so it should be true that element_does_*not*_paint_into_own_backing.",
+      "parentUuid": "a0ead59f_325f58f7",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e5d195_c27ef87c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 25
