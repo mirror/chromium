@@ -49,5 +49,51 @@ TEST(SdpMessages, AddCodecParameterMissingCodec) {
   EXPECT_EQ(kSourceSdp, sdp_message.ToString());
 }
 
+TEST(SdpMessages, PreferVideoCodec) {
+  const std::string kSourceSdp =
+      "m=video 98 UDP/TLS/RTP/SAVPF 96 98 100\n"
+      "a=rtpmap:96 VP8/90000\n"
+      "a=fmtp:96\n"
+      "a=rtpmap:98 VP9/90000\n"
+      "a=fmtp:98\n"
+      "a=rtpmap:100 H264/90000\n"
+      "a=fmtp:100\n";
+  SdpMessage sdp_message(kSourceSdp);
+  EXPECT_TRUE(sdp_message.PreferVideoCodec("VP8"));
+  EXPECT_EQ(kSourceSdp, sdp_message.ToString());
+
+  EXPECT_TRUE(sdp_message.PreferVideoCodec("VP9"));
+  EXPECT_EQ("m=video 98 UDP/TLS/RTP/SAVPF 98 96 100\n"
+            "a=rtpmap:96 VP8/90000\n"
+            "a=fmtp:96\n"
+            "a=rtpmap:98 VP9/90000\n"
+            "a=fmtp:98\n"
+            "a=rtpmap:100 H264/90000\n"
+            "a=fmtp:100\n",
+            sdp_message.ToString());
+
+  sdp_message = SdpMessage(kSourceSdp);
+  EXPECT_TRUE(sdp_message.PreferVideoCodec("H264"));
+  EXPECT_EQ("m=video 98 UDP/TLS/RTP/SAVPF 100 96 98\n"
+            "a=rtpmap:96 VP8/90000\n"
+            "a=fmtp:96\n"
+            "a=rtpmap:98 VP9/90000\n"
+            "a=fmtp:98\n"
+            "a=rtpmap:100 H264/90000\n"
+            "a=fmtp:100\n",
+            sdp_message.ToString());
+
+  sdp_message = SdpMessage(kSourceSdp);
+  EXPECT_FALSE(sdp_message.PreferVideoCodec("VP7"));
+  EXPECT_EQ("m=video 98 UDP/TLS/RTP/SAVPF 96 98 100\n"
+            "a=rtpmap:96 VP8/90000\n"
+            "a=fmtp:96\n"
+            "a=rtpmap:98 VP9/90000\n"
+            "a=fmtp:98\n"
+            "a=rtpmap:100 H264/90000\n"
+            "a=fmtp:100\n",
+            sdp_message.ToString());
+}
+
 }  // namespace protocol
 }  // namespace remoting
