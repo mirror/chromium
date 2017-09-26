@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8346166d_2b92e1bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: Probably, just drop this - it just duplicates the title.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce378ac_24766490",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: Unnecessary.",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f6cc07_77b153a2",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: Maybe kSecond.InMilliseconds() for consistency? :)",
+      "range": {
+        "startLine": 69,
+        "startChar": 42,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4411097d_07f000ba",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: The argument name should contain the word \"milliseconds\".",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb5aa00_84099e63",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: It looks like this method doesn\u0027t really care whether it\u0027s \"GMT\" or any other offset? Then better drop it from here - i.e. rename to GetOffsetted() or AddMilliseconds(). (You\u0027ll probably have to negate the passed argument.)",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4977a4_15162fb8",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: \"using namespace\" is disallowed by the Style Guide: https://google.github.io/styleguide/cppguide.html#Namespaces\nWhat you can do, however, is a) writing \"using foo::Bar\", b) aliasing namespaces \"namespace baz \u003d ::foo::bar::baz\".",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c6188c_ca3beb01",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: Just inherit from testing::TestWithParam?",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91d7ef2_872cd482",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit 1: GetInteger() is deprecated.\nnit 2: The absence of the key in the dictionary would lead to an use of uninitialized variable. Either ASSERT on the success of the value extraction, or do EXPECT together with initialization.\n\nActually, a completely different proposal - could you change the test to simply construct the expected DictionaryValue and compare it with the result of ToValue()? This will nicely bypass all those issues.",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c25efd0_0b963b27",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:03:59Z",
+      "side": 1,
+      "message": "nit: This number looks a bit mysterious. Will sum of TimeDelta::FromHours() and TimeDelta::FromMinutes() work here?",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 70
+      },
+      "revId": "f787b82854aad8ee89d8bcd714981f8e0d64035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
