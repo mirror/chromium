@@ -52,6 +52,7 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
   // the given |notification_data|, and writes that to |*xml_template|. Calls
   // must be wrapped in ASSERT_NO_FATAL_FAILURE().
   void BuildTemplate(const NotificationData& notification_data,
+                     std::vector<message_center::ButtonInfo>* buttons,
                      base::string16* xml_template) {
     GURL origin_url(notification_data.origin);
 
@@ -61,6 +62,9 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
         base::UTF8ToUTF16(notification_data.message), gfx::Image() /* icon */,
         base::string16() /* display_source */, origin_url,
         NotifierId(origin_url), RichNotificationData(), nullptr /* delegate */);
+    if (buttons) {
+      notification.set_buttons(*buttons);
+    }
 
     template_ =
         NotificationTemplateBuilder::Build(notification_data.id, notification);
@@ -80,7 +84,8 @@ TEST_F(NotificationTemplateBuilderTest, SimpleToast) {
   NotificationData notification_data;
   base::string16 xml_template;
 
-  ASSERT_NO_FATAL_FAILURE(BuildTemplate(notification_data, &xml_template));
+  ASSERT_NO_FATAL_FAILURE(
+      BuildTemplate(notification_data, nullptr, &xml_template));
 
   const wchar_t kExpectedXml[] =
       LR"(<toast launch="notification_id">
@@ -91,6 +96,36 @@ TEST_F(NotificationTemplateBuilderTest, SimpleToast) {
    <text id="3">example.com</text>
   </binding>
  </visual>
+</toast>
+)";
+
+  EXPECT_EQ(xml_template, kExpectedXml);
+}
+
+TEST_F(NotificationTemplateBuilderTest, Buttons) {
+  NotificationData notification_data;
+  base::string16 xml_template;
+
+  std::vector<message_center::ButtonInfo> buttons;
+  buttons.push_back(message_center::ButtonInfo(base::ASCIIToUTF16("Button1")));
+  buttons.push_back(message_center::ButtonInfo(base::ASCIIToUTF16("Button2")));
+
+  ASSERT_NO_FATAL_FAILURE(
+      BuildTemplate(notification_data, &buttons, &xml_template));
+
+  const wchar_t kExpectedXml[] =
+      LR"(<toast launch="notification_id">
+ <visual>
+  <binding template="ToastText04">
+   <text id="1">My Title</text>
+   <text id="2">My Message</text>
+   <text id="3">example.com</text>
+  </binding>
+ </visual>
+ <actions>
+  <action activationType="foreground" content="Button1" arguments="Button1"/>
+  <action activationType="foreground" content="Button2" arguments="Button2"/>
+ </actions>
 </toast>
 )";
 
