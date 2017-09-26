@@ -34,6 +34,24 @@
       "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60abe181_2174aeb8",
+        "filename": "chrome/browser/extensions/install_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-26T01:44:13Z",
+      "side": 0,
+      "message": "AFAIK, #2 above isn\u0027t possible (without tampering stuff) through external registry at least: we allow either a crx file or allow specifying an update url.\n\nFrom content verifier code\u0027s perspective, relying (only) on update_url \u003d\u003d webstore url to decide webstore-ness (and not looking at from_webstore() or other source) sounds good to me. I\u0027m not very familiar with this InstallVerifier though: I\u0027m curious as to how this change affects content verification... Can you explain?\ni.e. how does this fix the scenario from the bug comment #6 below?\n3. Fake update URL, from_webstore in creation flag",
+      "parentUuid": "0d30c46c_04079818",
+      "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
