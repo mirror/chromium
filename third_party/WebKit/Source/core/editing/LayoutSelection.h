@@ -74,17 +74,17 @@ class SelectionPaintRange {
   bool operator==(const SelectionPaintRange& other) const;
 
   LayoutObject* StartLayoutObject() const;
-  int StartOffset() const;
+  base::Optional<int> StartOffset() const;
   LayoutObject* EndLayoutObject() const;
-  int EndOffset() const;
+  base::Optional<int> EndOffset() const;
 
   bool IsNull() const { return !start_layout_object_; }
 
  private:
   LayoutObject* start_layout_object_ = nullptr;
-  int start_offset_ = -1;
+  base::Optional<int> start_offset_;
   LayoutObject* end_layout_object_ = nullptr;
-  int end_offset_ = -1;
+  base::Optional<int> end_offset_;
 };
 
 class LayoutSelection final : public GarbageCollected<LayoutSelection> {
