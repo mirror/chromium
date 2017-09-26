@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f7a3a8e_665f3804",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "use const char* to avoid needless std::string temporaries",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a028c3c_f1be7575",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "nit: add braces for multi-line conditional",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398b0f88_aca5e6f7",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "are the Resolve* functions needed? it seems like less typing without:\n\nvoid* LoadComBaseFunction(const char* function_name) {\n  static HMODULE const handle \u003d ::LoadLibrary(L\"combase.dll\");\n  return handle ? ::GetProcAddress(handle, function_name) : nullptr;\n}\n\ndecltype(\u0026::RoActivateInstance) GetRoActivateInstanceFunction() {\n  static decltype(\u0026::RoActivateInstance) const function \u003d []() {\n    return reinterpret_cast\u003cdecltype(\u0026::RoActivateInstance)\u003e(\n        LoadComBaseFunction(\"RoActivateInstance\"));\n  }();\n  return function;\n}\n\ndecltype(\u0026::RoGetActivationFactory) GetRoGetActivationFactoryFunction() {\n  static decltype(\u0026::RoGetActivationFactory) const function \u003d []() {\n    return reinterpret_cast\u003cdecltype(\u0026::RoGetActivationFactory)\u003e(\n        LoadComBaseFunction(\"RoGetActivationFactory\"));\n  }();\n  return function;\n}\n\nthen again, i don\u0027t really love the way there\u0027s a separate static for each function since each has its own overhead. maybe add a todo (or file a bug) to follow this CL with one that manages N loaded functions in a single static variable.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399ff97d_ac41fa53",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "i think GetFooBar makes more sense than PreloadFooBar since it returns the FooBar.",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc948fbb_c8003463",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "these next three functions should be in an unnamed namespace since they are not used outside of this .cc file.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85896d2b_0ecb820c",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "move this above GetAsUTF8 to match the ordering in the .h.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d52a72_25040191",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "maybe it should be obvious, but consider documenting that this takes ownership of |hstr|.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad911fcc_0f21d927",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "now that i look over StringPiece again, i see that this returned instance doesn\u0027t need to be const -- methods on StringPiece can\u0027t modify the underlying string.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4518921e_a5f16f4b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "these four lines can be removed, no?",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1681941_5d539296",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "this doesn\u0027t make sense since CHECK will crash the process. do you mean:\n  CHECK(preload_success);\nin place of lines 111-114?",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

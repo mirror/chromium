@@ -2,6 +2,165 @@
   "comments": [
     {
       "key": {
+        "uuid": "186def6d_406fb6ff",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "nit: constipate all of these pieces of static data that are not meant to change. for example:\n  static HMODULE const combase_dll \u003d ...",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f809d8e_e4bd20fc",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "a few comments:\n- \"function_signature\" doesn\u0027t really convey that this receives a pointer to the function. maybe \"function_pointer\" is more clear?\n- out params come after in params, so this should be the last param to the func",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da98a436_8a1ddd43",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "how about simply:\n  return *function_pointer;",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c305ff_34ba675a",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "how about having GetProcAddress return the function pointer so that the extra local variable and conditional aren\u0027t needed?",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f54b53_1119d491",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "delete this one?",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c441d87_7d33da31",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "these next two functions aren\u0027t declared in the .h, so move them into the unnamed namespace above.",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7f642e_5e87fbd8",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "nit: remove \"static\" since PreloadRoActivateInstance does its own caching",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107c337b_f2f0fc33",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "nit: move this above the two preceding functions to maintain the ordering in the .h",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75bb6ad_3ba95c33",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T20:30:27Z",
+      "side": 1,
+      "message": "consider getting rid of the local static here since both of the functions called do their own caching. unless this is a super hot function, i don\u0027t think the cost of the local static is needed.",
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b028bb7_1a726c8a",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 19
