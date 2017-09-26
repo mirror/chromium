@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31908f6_bfad83a4",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-26T17:45:57Z",
+      "side": 1,
+      "message": "Just wondering - wouldn\u0027t it be better to keep this in \"FocusNextWidget\"?",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 3
+      },
+      "revId": "41556b24323565556146fb235ac9d292716333f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411b59eb_e22e03f5",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-26T17:45:57Z",
+      "side": 1,
+      "message": "I might be wrong here, but this behavior seems weird?\nSo am I right that reverse cycling is shifting from shelf \u003c-\u003e system and normal cycling stays within shelf / system menu.\n\nWhat happens then if you use reverse tabbing multiple times? Do you constantly switch between system and shelf?\n\nWouldn\u0027t it be better to use all views as one big alt tab cycler ring?",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "41556b24323565556146fb235ac9d292716333f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

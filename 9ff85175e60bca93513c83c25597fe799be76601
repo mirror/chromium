@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c597c2f_810a6981",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-26T17:45:57Z",
+      "side": 0,
+      "message": "We do not need this one?",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 76
+      },
+      "revId": "9ff85175e60bca93513c83c25597fe799be76601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
