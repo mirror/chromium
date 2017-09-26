@@ -16,6 +16,23 @@
       "revId": "d645b4d1bf9ca77523df5d3ac674f904f2dde898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6772571_121a5698",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-26T01:50:09Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "d645b4d1bf9ca77523df5d3ac674f904f2dde898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
