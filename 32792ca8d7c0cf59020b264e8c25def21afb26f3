@@ -16,6 +16,24 @@
       "revId": "32792ca8d7c0cf59020b264e8c25def21afb26f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db24a81d_6ec9a8a4",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-26T21:21:31Z",
+      "side": 1,
+      "message": "Done. I found a relevant existing bug at crbug.com/708230 and added a TODO. I\u0027ve also added a brief analysis to my doc at go/phbin.",
+      "parentUuid": "cd2247e2_6a3e69c3",
+      "revId": "32792ca8d7c0cf59020b264e8c25def21afb26f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
