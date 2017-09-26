@@ -85,6 +85,16 @@ enum LatencyComponentType {
   // Timestamp of when the gesture scroll update is generated from a mouse wheel
   // event.
   INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL,
+  // Fields for timestamps we can get from eglGetFrameTimestampsANDROID.
+  DISPLAY_EVENT_REQUESTED_PRESENT,
+  DISPLAY_EVENT_RENDERING_COMPLETE,
+  DISPLAY_EVENT_COMPOSITION_LATCH,
+  DISPLAY_EVENT_FIRST_COMPOSITION_START,
+  DISPLAY_EVENT_LAST_COMPOSITION_START,
+  DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED,
+  DISPLAY_EVENT_DISPLAY_PRESENT,
+  DISPLAY_EVENT_DEQUEUE_READY,
+  DISPLAY_EVENT_READS_DONE,
   // ---------------------------TERMINAL COMPONENT-----------------------------
   // Timestamp when the event is acked from renderer when it does not
   // cause any rendering to be scheduled.
