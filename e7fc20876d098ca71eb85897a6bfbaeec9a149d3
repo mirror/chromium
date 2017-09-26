@@ -22,6 +22,30 @@
       "revId": "e7fc20876d098ca71eb85897a6bfbaeec9a149d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4539a6bb_b3ab759e",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-26T16:50:29Z",
+      "side": 1,
+      "message": "You should be able to change this to:\n\nkeyBindings: {\n  // \u003cif expr\u003d\"macosx\"\u003e\n  \u0027meta+z\u0027: \u0027onUndoKeyBinding_\u0027,\n  // \u003c/if\u003e\n  // \u003cif expr\u003d\"not is_macosx\"\u003e\n  \u0027ctrl+z\u0027: \u0027onUndoKeyBinding_\u0027,\n  // \u003c/if\u003e\n},\n\nIf that doesn\u0027t work, then we\u0027ll need to use \u003ccommand\u003e like downloads does. It can then be made platform specific.\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_downloads/downloads.html?rcl\u003d96e48af52beed52e443c8368392ebdd8878a2d14\u0026l\u003d32\n\n\u003cif expr\u003d\"is_macosx\"\u003e\n  \u003ccommand id\u003d\"undo-command\" shortcut\u003d\"Meta|z\"\u003e\n\u003c/if\u003e\n\u003cif expr\u003d\"not is_macosx\"\u003e\n  \u003ccommand id\u003d\"undo-command\" shortcut\u003d\"Ctrl|z\"\u003e\n\u003c/if\u003e\n\nThen we need to listen for the undo command:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_downloads/manager.js?rcl\u003d9b0497eba55b0c8dcf1fb0e365210f743d72341f\u0026l\u003d156",
+      "parentUuid": "c2c600e0_0286ba14",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 18
+      },
+      "revId": "e7fc20876d098ca71eb85897a6bfbaeec9a149d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
