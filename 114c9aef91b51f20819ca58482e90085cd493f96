@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffa2384_17cf0725",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-26T16:03:47Z",
+      "side": 1,
+      "message": "nit: base::WrapUnique",
+      "revId": "114c9aef91b51f20819ca58482e90085cd493f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
