@@ -243,6 +243,8 @@ void ChromotingClient::OnSignalStrategyStateChange(
     }
   } else if (state == SignalStrategy::DISCONNECTED) {
     VLOG(1) << "Signaling connection closed.";
+    // Input stub must be reset before the connection is reset.
+    mouse_input_scaler_.set_input_stub(nullptr);
     connection_.reset();
     user_interface_->OnConnectionState(protocol::ConnectionToHost::CLOSED,
                                        protocol::SIGNALING_ERROR);
