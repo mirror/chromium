@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "a7fdb2ab_b74fc5a3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserRangeBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T05:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "554c41af_611b22b1",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89efc5b9_404720d8",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserRangeBuffer.h",
         "patchSetId": 5
@@ -261,6 +279,24 @@
       "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157eb80e_8aea93b6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserRangeBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T05:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89efc5b9_404720d8",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "c66e3c4a_fd7daa01",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizerBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T05:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4830778b_11c60761",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b940b23_242f3e29",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizerBuffer.h",
         "patchSetId": 5
@@ -313,6 +367,24 @@
       "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b96b0a_cee05fb1",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizerBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T05:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b940b23_242f3e29",
+      "revId": "eaf2bc47b2a2917dbf9e2dc9fb03f7726a3d3926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
