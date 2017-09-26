@@ -69,7 +69,8 @@ ContentSubresourceFilterDriverFactory::
 void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
-    const Configuration& matched_configuration) {
+    const Configuration& matched_configuration,
+    bool warning) {
   DCHECK(navigation_handle->IsInMainFrame());
   DCHECK(!navigation_handle->IsSameDocument());
   if (navigation_handle->GetNetErrorCode() != net::OK)
@@ -92,11 +93,15 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
 
   ActivationState state =
       ActivationState(activation_options().activation_level);
+
+  // A list that matches as warning should have a DRYRUN state. If other
+  // conditions apply then devtools messages will still be logged.
+  if (state.activation_level == ActivationLevel::ENABLED && warning)
+    state.activation_level = ActivationLevel::DRYRUN;
+
   state.measure_performance = ShouldMeasurePerformanceForPageLoad(
       activation_options().performance_measurement_rate);
 
-  // TODO(csharrison): Also use metadata returned from the safe browsing filter,
-  // when it is available to set enable_logging. Add tests for this behavior.
   state.enable_logging =
       activation_options().activation_level == ActivationLevel::ENABLED &&
       !activation_options().should_suppress_notifications &&
