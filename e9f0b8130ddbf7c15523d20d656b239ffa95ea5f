@@ -69,6 +69,29 @@
       "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15eb8a13_2145d86f",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-26T23:55:50Z",
+      "side": 1,
+      "message": "I really don\u0027t like the way that this pushes more knowledge/responsibility about the progress of the PWA check into the task queue and metrics classes. The task queue shouldn\u0027t need to understand the contents of its tasks; it should just manage the queue. The metrics classes should ideally just increment counters, possibly buffering some of those increments.\n\nThe state of the pwa check feels like something that InstallableManager should be able to keep track of itself.",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 1
+      },
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
