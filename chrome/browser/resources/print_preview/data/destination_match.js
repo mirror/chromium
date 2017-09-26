@@ -88,6 +88,14 @@ cr.define('print_preview', function() {
       }
       return arrayContains(
           [print_preview.Destination.GooglePromotedId.DOCS], destination.id);
+    },
+
+    /**
+     * @return {!print_preview.DestinationOrigin} origin The first origin in
+     *     the match. Will be the only origin except for Cloud destinations.
+     */
+    getOrigin: function() {
+      return this.origins_[0];
     }
   };
 
