@@ -13,4 +13,12 @@ namespace media {
 // to generate symbols across linking units.
 VideoCapturerSource::~VideoCapturerSource() {}
 
+bool VideoCapturerSource::HasSingleSecurityOrigin() const {
+  return true;
+}
+
+bool VideoCapturerSource::DidPassCORSAccessCheck() const {
+  return true;
+}
+
 }  // namespace media

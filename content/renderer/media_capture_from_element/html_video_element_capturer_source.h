@@ -54,6 +54,9 @@ class CONTENT_EXPORT HtmlVideoElementCapturerSource final
                     const RunningCallback& running_callback) override;
   void StopCapture() override;
 
+  bool HasSingleSecurityOrigin() const override;
+  bool DidPassCORSAccessCheck() const override;
+
  private:
   // This method includes collecting data from the WebMediaPlayer and converting
   // it into a format suitable for MediaStreams.

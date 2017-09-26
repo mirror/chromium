@@ -187,6 +187,15 @@ MediaStreamVideoCapturerSource::~MediaStreamVideoCapturerSource() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
+bool MediaStreamVideoCapturerSource::HasSingleSecurityOrigin() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return source_->HasSingleSecurityOrigin();
+}
+bool MediaStreamVideoCapturerSource::DidPassCORSAccessCheck() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return source_->DidPassCORSAccessCheck();
+}
+
 void MediaStreamVideoCapturerSource::RequestRefreshFrame() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   source_->RequestRefreshFrame();
