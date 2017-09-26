@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5206ad41_c2c4c177",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T18:06:10Z",
+      "side": 1,
+      "message": "I think you could leave out the DelegatedFrameHostIsVisible() test. FrameEvictor::SwappedFrame will immediately (re-entrantly) evict the frame if we go over the limit (and we\u0027re not visible). The argument is that we went through the process of generating the frame, so we could at least leave the decision to evict to the FrameEvictionManager which has a bit more context (i.e. it can decide to keep it).",
+      "revId": "891a89e8c160bb9caf1caa76e21b1d0fc6d028bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
