@@ -769,7 +769,6 @@ TEST(PNGCodec, EncodeBGRASkBitmapStridePadded) {
   const int kHeight = 20;
   const int kPaddedWidth = 32;
   const int kBytesPerPixel = 4;
-  const int kPaddedSize = kPaddedWidth * kHeight;
   const int kRowBytes = kPaddedWidth * kBytesPerPixel;
 
   SkImageInfo info = SkImageInfo::MakeN32Premul(kWidth, kHeight);
@@ -778,11 +777,14 @@ TEST(PNGCodec, EncodeBGRASkBitmapStridePadded) {
   original_bitmap.allocPixels();
 
   // Write data over the source bitmap.
-  // We write on the pad area here too.
   // The encoder should ignore the pad area.
-  uint32_t* src_data = original_bitmap.getAddr32(0, 0);
-  for (int i = 0; i < kPaddedSize; i++) {
-    src_data[i] = SkPreMultiplyARGB(i % 255, i % 250, i % 245, i % 240);
+  int i = 0;
+  for (int x = 0; x < kWidth; x++) {
+    for (int y = 0; y < kHeight; y++) {
+      *original_bitmap.getAddr32(x, y) =
+          SkPreMultiplyARGB(i % 255, i % 250, i % 245, i % 240);
+      i += 1;
+    }
   }
 
   // Encode the bitmap.
