@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d59f809_812d374b",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-26T15:10:02Z",
+      "side": 1,
+      "message": "While I don\u0027t have a strong opinion on this, I\u0027m leaning towards _not_ having a generally vague flag like this, at least for now. As we add more flags and some patterns start to emerge, that could be a moment to introduce concepts like this. If we do so now, it\u0027ll likely influence the future additions, which might not be optimal.\n\nIn order to resolve this, I suggest starting a discussion on chromium-dev. If the community is broadly in favor of this, I\u0027d also be fine. Otherwise, maybe we could keep things granular for now and reevaluate this later.",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "f2eef84a3a3da5eb0f14b178da03d21a19ea9a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a300a8_2ef602cc",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-26T15:10:02Z",
+      "side": 1,
+      "message": "nit: it should be possible to omit this",
+      "range": {
+        "startLine": 992,
+        "startChar": 51,
+        "endLine": 992,
+        "endChar": 59
+      },
+      "revId": "f2eef84a3a3da5eb0f14b178da03d21a19ea9a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
