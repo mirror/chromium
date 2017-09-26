@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c29e57b_627f33f3",
+        "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T16:18:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02371ee6_5b634608",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T16:18:22Z",
+      "side": 1,
+      "message": "You probably want an else that adds null object otherwise. If you don\u0027t, ordinals of the message format will slide...",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8f0e99_e0f9eff2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T16:18:22Z",
+      "side": 1,
+      "message": "v8_inspector::V8InspectorSession is not an oilpan heap object, should be\n\nv8_inspector::V8InspectorSession* v8_session_;",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223327cc_ea3cbb9e",
+        "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T16:18:22Z",
+      "side": 1,
+      "message": "You have v8 session here, no reason not to pass.",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1489d857_0fc33b2d",
+        "filename": "third_party/WebKit/public/web/WebNode.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T16:18:22Z",
+      "side": 1,
+      "message": "Didn\u0027t it land? If so, you can rebaseline...",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
