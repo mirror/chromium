@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76e5056_788e6ff5",
+        "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T20:25:25Z",
+      "side": 1,
+      "message": "also unconditionally.",
+      "revId": "9dbe2e30c3c5945184e603e3b0a0c2d215844ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
