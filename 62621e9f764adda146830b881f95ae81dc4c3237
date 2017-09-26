@@ -52,6 +52,24 @@
       "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f2da28_b0ed3ce0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/View.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-26T07:10:24Z",
+      "side": 1,
+      "message": "Actually I think it works ok as-is, after playing with it. If it\u0027s newly switching to the view then it focuses it correctly as desired. It\u0027s only cases like the one I was looking at, where a view is already showing but showView() is called because of reveal(), that hits the case this is checking for.",
+      "parentUuid": "f7048508_9db23cbf",
+      "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
