@@ -35,6 +35,7 @@
 namespace chrome_pdf {
 
 class ShadowMatrix;
+class FakeProgress;
 
 class PDFiumEngine : public PDFEngine,
                      public DocumentLoader::Client,
@@ -644,6 +645,7 @@ class PDFiumEngine : public PDFEngine,
   unsigned int current_rotation_;
 
   std::unique_ptr<DocumentLoader> doc_loader_;  // Main document's loader.
+  std::unique_ptr<FakeProgress> fake_progress_;
   std::string url_;
   std::string headers_;
   pp::CompletionCallbackFactory<PDFiumEngine> find_factory_;

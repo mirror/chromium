@@ -71,6 +71,8 @@ class DocumentLoader {
 
   bool is_partial_loader_active() const { return is_partial_loader_active_; }
 
+  Client* client() const { return client_; }
+
  private:
   using DataStream = ChunkStream<kDefaultRequestSize>;
   struct Chunk {
