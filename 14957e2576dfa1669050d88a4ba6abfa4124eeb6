@@ -677,6 +677,30 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517aa37d_95e979ad",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-09-26T22:03:08Z",
+      "side": 1,
+      "message": "Which unittests? I was thinking of TypedURLSyncBridgeTest.",
+      "parentUuid": "d6729aca_58c7760d",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
