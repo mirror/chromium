@@ -114,6 +114,75 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea63952c_046c2d8a",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T18:42:40Z",
+      "side": 1,
+      "message": "Why is this a return rather than a DCHECK?",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 10
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ae02d8_b4e50937",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T18:42:40Z",
+      "side": 1,
+      "message": "This is a bit of an odd use of the variable since the stream was indeed paused--it suggests that in some alternative world it might be named \"paused_caching_response_body_and_stream_open_\".  Could you either add an explanatory comment at declaration about the contexts in which it\u0027ll be true/false or change its name to something like \"initiate_read_on_resume_\"?",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 31
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb5ca2c_aeb21eae",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T18:42:40Z",
+      "side": 1,
+      "message": "So I think my biggest question on this CL is why these interfaces are framed in terms of caching and not reading, and secondary to that, why this interface isn\u0027t just unified with Resume() above (i.e. add a Pause() to the interface and be done).  At this level we aren\u0027t actually affecting caching directly; we\u0027re presuming if we don\u0027t drive the read, nothing else will, and thus the resource won\u0027t get cached (further).  There\u0027s a way in which we\u0027re being disingenuous in this interface, as if we\u0027re not fetching from the network and caching is not supported, we\u0027ll still pause reading.  Can you give me a sense as to why to frame the interface this way, instead of just in terms of pausing/resuming loading?",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
