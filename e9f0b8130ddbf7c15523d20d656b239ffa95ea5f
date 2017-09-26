@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8a685c_877c83ef",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-26T19:38:09Z",
+      "side": 1,
+      "message": "Nit: GetData -\u003e GetData()",
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94527320_e7f5ab3d",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-26T19:38:09Z",
+      "side": 1,
+      "message": "Can you use\n\nInstallableCallback()\n\ninstead of\n\nbase::Bind(\u0026DoNothingCallback)\n\nthe way that add_to_homescreen_data_fetcher.cc does right now?",
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
