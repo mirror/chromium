@@ -73,7 +73,7 @@ public class SyncTest {
     @Test
     @LargeTest
     @Feature({"Sync"})
-    public void testSignInAndOut() throws InterruptedException {
+    public void testSignInAndOut() throws Exception {
         Account account = mSyncTestRule.setUpTestAccountAndSignIn();
 
         // Signing out should disable sync.
@@ -88,7 +88,7 @@ public class SyncTest {
     @Test
     @LargeTest
     @Feature({"Sync"})
-    public void testStopAndClear() {
+    public void testStopAndClear() throws Exception {
         mSyncTestRule.setUpTestAccountAndSignIn();
         CriteriaHelper.pollUiThread(
                 new Criteria("Timed out checking that isSignedInOnNative() == true") {
@@ -123,7 +123,7 @@ public class SyncTest {
      */
     @Test
     @DisabledTest(message = "crbug.com/588050,crbug.com/595893")
-    public void testRename() {
+    public void testRename() throws Exception {
         // The two accounts object that would represent the account rename.
         final Account oldAccount = mSyncTestRule.setUpTestAccountAndSignIn();
         final Account newAccount = SigninTestUtil.addTestAccount("test2@gmail.com");
@@ -172,7 +172,7 @@ public class SyncTest {
     @Test
     @LargeTest
     @Feature({"Sync"})
-    public void testStopAndStartSync() {
+    public void testStopAndStartSync() throws Exception {
         Account account = mSyncTestRule.setUpTestAccountAndSignIn();
 
         mSyncTestRule.stopSync();
@@ -188,7 +188,7 @@ public class SyncTest {
      */
     @Test
     @FlakyTest(message = "crbug.com/594558")
-    public void testStopAndStartSyncThroughAndroid() {
+    public void testStopAndStartSyncThroughAndroid() throws Exception {
         Account account = mSyncTestRule.setUpTestAccountAndSignIn();
 
         String authority =
@@ -227,7 +227,7 @@ public class SyncTest {
     @Test
     @LargeTest
     @Feature({"Sync"})
-    public void testMasterSyncBlocksSyncStart() {
+    public void testMasterSyncBlocksSyncStart() throws Exception {
         mSyncTestRule.setUpTestAccountAndSignIn();
         mSyncTestRule.stopSync();
         Assert.assertFalse(SyncTestUtil.isSyncRequested());
