@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2683b2df_d39b21a3",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 6
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-26T22:55:19Z",
+      "side": 0,
+      "message": "The above might not be related to this change. I just removed all \"unexpected pass\" tests.",
+      "revId": "defd75b9fb377e866044db43128cd2d9f366f17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8b0454_fd51c955",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/animated-gif-transformed-offscreen-expected.txt",
         "patchSetId": 6

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c312cd3_fb9e8707",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/video-mute-repaint-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-26T22:55:19Z",
+      "side": 1,
+      "message": "This might be because some unrelated change by others caused the failure. Rebaseline it any way.",
+      "revId": "7fab9e54179b6d76eb99021a202a139607b5d663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d9ff116_489f184c",
         "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
         "patchSetId": 6
