@@ -16,6 +16,24 @@
       "revId": "ebaf91d3a5f6a47260aec880b9422a664f27db5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8499624_99bbb1ac",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-09-26T14:45:04Z",
+      "side": 1,
+      "message": "I fixed the test by checking multiple GSU events.",
+      "parentUuid": "73fdb681_4046ac91",
+      "revId": "ebaf91d3a5f6a47260aec880b9422a664f27db5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
