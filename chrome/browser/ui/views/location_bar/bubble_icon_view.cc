@@ -53,6 +53,12 @@ void BubbleIconView::SetTooltipText(const base::string16& tooltip) {
   image_->SetTooltipText(tooltip);
 }
 
+void BubbleIconView::OnBubbleCreated(LocationBarBubbleDelegateView* bubble) {
+  // This observer is removed when the bubble's widget is destroyed, by
+  // |OnWidgetDestroying|.
+  bubble->GetWidget()->AddObserver(this);
+}
+
 void BubbleIconView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   image_->GetAccessibleNodeData(node_data);
   node_data->role = ui::AX_ROLE_BUTTON;
