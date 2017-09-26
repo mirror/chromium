@@ -34,7 +34,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/data_usage/tab_id_annotator.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h"
-#include "chrome/browser/net/async_dns_field_trial.h"
 #include "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
 #include "chrome/browser/net/dns_probe_service.h"
@@ -136,6 +135,19 @@ class SafeBrowsingURLRequestContext;
 
 // The IOThread object must outlive any tasks posted to the IO thread before the
 // Quit task, so base::Bind() calls are not refcounted.
+
+namespace features {
+// Defined outside of the anonymous namespace so it's accessible from
+// about_flags.cc.
+const base::Feature kAsyncDns {
+  "AsyncDns",
+#if defined(OS_CHROMEOS) || defined(OS_MACOSX)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+}  // namespace features
 
 namespace {
 
@@ -355,11 +367,9 @@ IOThread::IOThread(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
 
   base::Value* dns_client_enabled_default =
-      new base::Value(chrome_browser_net::ConfigureAsyncDnsFieldTrial());
+      new base::Value(base::FeatureList::IsEnabled(features::kAsyncDns));
   local_state->SetDefaultPrefValue(prefs::kBuiltInDnsClientEnabled,
                                    dns_client_enabled_default);
-  chrome_browser_net::LogAsyncDnsPrefSource(
-      local_state->FindPreference(prefs::kBuiltInDnsClientEnabled));
 
   dns_client_enabled_.Init(prefs::kBuiltInDnsClientEnabled,
                            local_state,

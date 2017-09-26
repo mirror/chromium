@@ -28,6 +28,7 @@
 #include "cc/base/switches.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/flag_descriptions.h"
+#include "chrome/browser/io_thread.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/channel_info.h"
@@ -3489,6 +3490,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kHtmlBasedUsernameDetectorDescription, kOsAll,
      FEATURE_VALUE_TYPE(
          password_manager::features::kEnableHtmlBasedUsernameDetector)},
+
+#if defined(OS_ANDROID)
+    {"enable-async-dns", flag_descriptions::kAsyncDnsName,
+     flag_descriptions::kAsyncDnsDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kAsyncDns)},
+#endif  // defined(OS_ANDROID)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

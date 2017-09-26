@@ -40,6 +40,10 @@ class PrefService;
 class PrefRegistrySimple;
 class SystemNetworkContextManager;
 
+namespace base {
+struct Feature;
+}
+
 #if defined(OS_ANDROID)
 namespace chrome {
 namespace android {
@@ -99,6 +103,10 @@ class PolicyService;
 namespace test {
 class IOThreadPeer;
 }  // namespace test
+
+namespace features {
+extern const base::Feature kAsyncDns;
+}
 
 // Contains state associated with, initialized and cleaned up on, and
 // primarily used on, the IO thread.
