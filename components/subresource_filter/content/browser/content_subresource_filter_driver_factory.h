@@ -50,7 +50,8 @@ class ContentSubresourceFilterDriverFactory
   void NotifyPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
-      const Configuration& matched_configuration);
+      const Configuration& matched_configuration,
+      bool warning);
 
   // Returns whether or not the current WebContents is allowed to create a new
   // window.
