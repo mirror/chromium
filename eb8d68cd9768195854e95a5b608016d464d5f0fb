@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad6c026f_f1c9bf0d",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-09-26T00:14:17Z",
+      "side": 1,
+      "message": "No particular set of distros. We want to see the full breakdown including distro version.\n\nI created a histogram for the distro (Linux.Distro). Without any insight into what our users run, I\u0027ve had to guess as to which distros to include. Therefore there\u0027s still a reasonable chunk of users that we don\u0027t know what they\u0027re using (and so which packages we can expect them to have access to etc). Also it would be nice not to have to update the histogram regularly with new distro releases.",
+      "parentUuid": "4c56677e_a53e7c96",
+      "range": {
+        "startLine": 182,
+        "startChar": 41,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "eb8d68cd9768195854e95a5b608016d464d5f0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "812e0b5d_4895adf0",
         "filename": "components/metrics/proto/system_profile.proto",
         "patchSetId": 1
