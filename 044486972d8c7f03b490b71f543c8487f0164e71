@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f652ba3_1aeb67c2",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-26T04:58:30Z",
+      "side": 1,
+      "message": "is this part required?",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 53
+      },
+      "revId": "044486972d8c7f03b490b71f543c8487f0164e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
