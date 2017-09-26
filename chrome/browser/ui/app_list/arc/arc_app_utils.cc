@@ -257,6 +257,14 @@ bool ShouldShowInLauncher(const std::string& app_id) {
   return true;
 }
 
+bool LaunchAndroidSettingsAppWithIntent(
+    content::BrowserContext* context,
+    int event_flags,
+    base::Optional<std::string>& launch_intent) {
+  return LaunchAppWithIntent(context, kSettingsAppId, launch_intent,
+                             event_flags);
+}
+
 bool LaunchAndroidSettingsApp(content::BrowserContext* context,
                               int event_flags) {
   return LaunchApp(context, kSettingsAppId, event_flags);
