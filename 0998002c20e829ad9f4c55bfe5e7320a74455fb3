@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445204f8_5579fce4",
+        "filename": "chrome/browser/media/webrtc/desktop_capture_access_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-26T20:06:30Z",
+      "side": 1,
+      "message": "please add DCHECK(media_id.is_video_capture());",
+      "range": {
+        "startLine": 78,
+        "startChar": 3,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "0998002c20e829ad9f4c55bfe5e7320a74455fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
