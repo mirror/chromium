@@ -29,7 +29,7 @@ class ResourcePoolTest : public testing::Test {
     task_runner_ = base::ThreadTaskRunnerHandle::Get();
     resource_pool_ =
         ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                             ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                             viz::RemotableResourceTextureHint::kImmutable,
                              ResourcePool::kDefaultExpirationDelay, false);
   }
 
@@ -162,7 +162,7 @@ TEST_F(ResourcePoolTest, BusyResourcesEventuallyFreed) {
   // to run.
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::RemotableResourceTextureHint::kImmutable,
                            base::TimeDelta::FromMilliseconds(10), false);
 
   // Limits high enough to not be hit by this test.
@@ -203,7 +203,7 @@ TEST_F(ResourcePoolTest, UnusedResourcesEventuallyFreed) {
   // to run.
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::RemotableResourceTextureHint::kImmutable,
                            base::TimeDelta::FromMilliseconds(100), false);
 
   // Limits high enough to not be hit by this test.
@@ -414,7 +414,7 @@ TEST_F(ResourcePoolTest, TextureHintRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::RemotableResourceTextureHint::kImmutable,
                            base::TimeDelta::FromMilliseconds(100), false);
   Resource* resource =
       resource_pool_->AcquireResource(size, format, color_space);
@@ -423,7 +423,7 @@ TEST_F(ResourcePoolTest, TextureHintRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_DEFAULT,
+                           viz::RemotableResourceTextureHint::kDefault,
                            base::TimeDelta::FromMilliseconds(100), false);
   resource = resource_pool_->AcquireResource(size, format, color_space);
   EXPECT_FALSE(resource_provider_->IsImmutable(resource->id()));
@@ -436,7 +436,7 @@ TEST_F(ResourcePoolTest, ExactRequestsRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_DEFAULT,
+                           viz::RemotableResourceTextureHint::kDefault,
                            base::TimeDelta::FromMilliseconds(100), true);
 
   // Create unused resource with size 100x100.
