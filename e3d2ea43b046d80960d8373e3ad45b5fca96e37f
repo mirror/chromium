@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6734db1c_293d3d5d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/webtiming-cross-origin-and-back-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-09-26T08:30:36Z",
+      "side": 1,
+      "message": "Since in test case second parameter is not a function object, console error should come. Firefox also behaves same. So this is expected.",
+      "parentUuid": "06ca0a12_a1fcc8f0",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b565a6_d7fa3d4d",
         "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T12:34:40Z",
       "side": 1,
       "message": "Is this really expected?",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba878966_3e4d95c0",
+        "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-09-26T08:30:36Z",
+      "side": 1,
+      "message": "Since in test case second parameter is not a function object, console error should come. Also this test case is intended for invalid event listeners. Firefox also behaves same. So this is expected.",
+      "parentUuid": "b0b565a6_d7fa3d4d",
       "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

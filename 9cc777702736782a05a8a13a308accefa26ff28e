@@ -70,6 +70,30 @@
       "revId": "9cc777702736782a05a8a13a308accefa26ff28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bebe69_b16deb15",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-09-26T08:30:36Z",
+      "side": 1,
+      "message": "Thanks for the review. Done.",
+      "parentUuid": "4f6db041_4a4b5f69",
+      "range": {
+        "startLine": 154,
+        "startChar": 44,
+        "endLine": 154,
+        "endChar": 94
+      },
+      "revId": "9cc777702736782a05a8a13a308accefa26ff28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
