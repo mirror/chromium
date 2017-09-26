@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ash/login_status.h"
+#include "ash/public/cpp/session_types.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "base/logging.h"
@@ -81,6 +82,11 @@ void TestSessionControllerClient::SetShouldLockScreenAutomatically(
   controller_->SetSessionInfo(session_info_->Clone());
 }
 
+void TestSessionControllerClient::SetMultiProfileAvailable() {
+  session_info_->add_user_session_policy = AddUserSessionPolicy::ALLOWED;
+  controller_->SetSessionInfo(session_info_->Clone());
+}
+
 void TestSessionControllerClient::SetSessionState(
     session_manager::SessionState state) {
   session_info_->state = state;
@@ -102,8 +108,24 @@ void TestSessionControllerClient::CreatePredefinedUserSessions(int count) {
   // Sets the first user as active.
   SwitchActiveUser(controller_->GetUserSession(0)->user_info->account_id);
 
+  // Assume there are no more users that can be added for multi-profile.
+  session_info_->add_user_session_policy =
+      AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
+
   // Updates session state after adding user sessions.
-  SetSessionState(session_manager::SessionState::ACTIVE);
+  session_info_->state = session_manager::SessionState::ACTIVE;
+  controller_->SetSessionInfo(session_info_->Clone());
+}
+
+void TestSessionControllerClient::SimulateUserLogin(
+    const std::string& user_email) {
+  AddUserSession(user_email);
+  SwitchActiveUser(AccountId::FromUserEmail(user_email));
+  // Assume there are no more users that can be added for multi-profile.
+  session_info_->add_user_session_policy =
+      AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
+  session_info_->state = session_manager::SessionState::ACTIVE;
+  controller_->SetSessionInfo(session_info_->Clone());
 }
 
 void TestSessionControllerClient::AddUserSession(
