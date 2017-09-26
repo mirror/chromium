@@ -45,7 +45,7 @@ var CookieTreeBehaviorImpl = {
    * @private
    */
   loadChildren_: function(list) {
-    var loadChildrenRecurse = childList => {
+    var loadChildrenRecurse = (childList) => {
       var parentId = childList.id;
       var children = childList.children;
       var prefix = '';
