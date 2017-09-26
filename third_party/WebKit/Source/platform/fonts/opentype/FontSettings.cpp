@@ -7,6 +7,7 @@
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/StringHasher.h"
 #include "platform/wtf/text/AtomicStringHash.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/StringHash.h"
 
 namespace blink {
