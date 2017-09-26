@@ -11,8 +11,8 @@
 #include "content/common/sandbox_mac.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandbox_type.h"
 #include "sandbox/mac/seatbelt.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace content {
 

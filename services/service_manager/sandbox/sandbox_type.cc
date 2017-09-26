@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/sandbox_type.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 #include <string>
 
-#include "content/public/common/content_switches.h"
+#include "services/service_manager/embedder/switches.h"
 
-namespace content {
+namespace service_manager {
 
 namespace {
 
-// Must be in sync with "sandbox_type" value in mojo service manifest.json
-// files.
+// Must be in sync with "sandbox_type" values as used in service manager's
+// manifest.json catalog files.
 const char kNoSandbox[] = "none";
 const char kNetworkSandbox[] = "network";
 const char kPpapiSandbox[] = "ppapi";
@@ -117,4 +117,4 @@ SandboxType UtilitySandboxTypeFromString(const std::string& sandbox_string) {
   return SANDBOX_TYPE_UTILITY;
 }
 
-}  // namespace content
+}  // namespace service_manager

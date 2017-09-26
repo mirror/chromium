@@ -15,8 +15,8 @@ extern "C" {
 #include "base/logging.h"
 #include "base/process/kill.h"
 #include "content/common/sandbox_mac.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/test/test_content_client.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 #include "testing/multiprocess_func_list.h"
 
 namespace content {
