@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5323ff_f782a1c0",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-26T19:01:23Z",
+      "side": 1,
+      "message": "Can you share this layout code too? It\u0027s fairly similar to the other sites you changed, with 1 fixed column + 1 use_pref column. I\u0027m imagining something like c/b/ui/views/harmony/textfield_layout.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47716f4d_4d435834",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-26T19:01:23Z",
+      "side": 1,
+      "message": "nit: inline construction in AddView",
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c5467e_a4f35b62",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-26T19:01:23Z",
+      "side": 1,
+      "message": "Change second parameter to label context.",
+      "range": {
+        "startLine": 650,
+        "startChar": 54,
+        "endLine": 650,
+        "endChar": 61
+      },
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
