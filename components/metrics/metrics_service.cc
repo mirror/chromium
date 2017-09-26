@@ -846,11 +846,20 @@ void MetricsService::RecordCurrentHistograms() {
   DCHECK(log_manager_.current_log());
   SCOPED_UMA_HISTOGRAM_TIMER("UMA.MetricsService.RecordCurrentHistograms.Time");
 
-  // "true" indicates that StatisticsRecorder should include histograms held in
-  // persistent storage.
+  // Get the reduction amount but only report it for "cellular" (the only time
+  // it should be non-zero) so that the "0" bucket isn't overloaded by WiFi
+  // reports.
+  int omit_percentage = reporting_service_.GetUploadReductionPercent();
+  if (reporting_service_.IsCellular()) {
+    UMA_HISTOGRAM_PERCENTAGE(
+        "UMA.MetricsService.RecordCurrentHistograms.Omit.Cellular",
+        omit_percentage);
+  }
+
   base::StatisticsRecorder::PrepareDeltas(
-      true, base::Histogram::kNoFlags,
-      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_);
+      /*include_persistent=*/true, base::Histogram::kNoFlags,
+      base::Histogram::kUmaTargetedHistogramFlag, &histogram_snapshot_manager_,
+      omit_percentage);
   delegating_provider_.RecordHistogramSnapshots(&histogram_snapshot_manager_);
 }
 

@@ -131,11 +131,14 @@ class BASE_EXPORT StatisticsRecorder {
   // set flags for each histogram. |required_flags| is used to select
   // histograms to be recorded. Only histograms that have all the flags
   // specified by the argument will be chosen. If all histograms should be
-  // recorded, set it to |Histogram::kNoFlags|.
+  // recorded, set it to |Histogram::kNoFlags|. The |omit_percentage| will
+  // cause that amount of histograms to be excluded from this snapshot, though
+  // the collected samples will be remembered for the next time.
   static void PrepareDeltas(bool include_persistent,
                             HistogramBase::Flags flags_to_set,
                             HistogramBase::Flags required_flags,
-                            HistogramSnapshotManager* snapshot_manager);
+                            HistogramSnapshotManager* snapshot_manager,
+                            int omit_percentage = 0);
 
   // TODO(asvitkine): Remove this after crbug/736675.
   static void ValidateAllHistograms(int identifier = 0);

@@ -40,9 +40,12 @@ class DataUseTracker {
                                int message_size,
                                bool is_cellular);
 
-  // Returns whether a log with provided |log_bytes| can be uploaded according
-  // to data use ratio and UMA quota provided by variations.
-  bool ShouldUploadLogOnCellular(int log_bytes);
+  // Determines, roughly, the percentage of data to omit from an upload in
+  // order to stay within data usage limits.
+  int GetUploadReductionPercent();
+
+  // Returns if the last reported activity was over a cellular link.
+  bool is_cellular() { return last_is_cellular_; }
 
  private:
   FRIEND_TEST_ALL_PREFIXES(DataUseTrackerTest, CheckUpdateUsagePref);
@@ -76,6 +79,12 @@ class DataUseTracker {
 
   // Returns the current date as a string with a proper formatting.
   virtual std::string GetCurrentMeasurementDateAsString() const;
+
+  // The last "is cellular" parameter. This is used when determining the upload
+  // "reduction" amount because it isn't possible to determine it at the time
+  // of that call because the flag is in net/ which isn't accessible from
+  // components/.
+  bool last_is_cellular_ = false;
 
   PrefService* local_state_;
 

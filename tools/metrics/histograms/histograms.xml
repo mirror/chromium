@@ -85767,6 +85767,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="UMA.MetricsService.RecordCurrentHistograms.Omit.Cellular"
+    units="%">
+  <owner>asvitkine@chromium.org</owner>
+  <owner>bcwhite@chromium.org</owner>
+  <summary>
+    Records what percentage of histograms were omitted from an upload in order
+    to try not to exceed bandwitdth limitations, typically on cellular networks.
+  </summary>
+</histogram>
+
 <histogram name="UMA.MetricsService.RecordCurrentHistograms.Time" units="ms">
   <owner>asvitkine@chromium.org</owner>
   <owner>bcwhite@chromium.org</owner>
