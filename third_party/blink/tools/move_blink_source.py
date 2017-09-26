@@ -179,6 +179,11 @@ class MoveBlinkSource(object):
                 self._fs.move(self._fs.join(self._repo_root, src_from_repo),
                               self._fs.join(self._repo_root, dest_from_repo))
                 _log.info('[%d/%d] Moved %s', i + 1, len(file_pairs), src)
+        self._options.run = True
+        self._update_single_file_content(
+            'build/get_landmines.py',
+            [('\ndef main', '  print \'The Great Blink mv for source files (crbug.com/768828)\'\n\ndef main')])
+
 
     def _create_basename_maps(self, file_pairs):
         basename_map = {}
