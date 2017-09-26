@@ -9,6 +9,7 @@
 #include "base/android/jni_string.h"
 #include "content/browser/android/text_suggestion_host_mojo_impl_android.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/common/content_switches_internal.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -133,6 +134,14 @@ void TextSuggestionHostAndroid::OnSuggestionMenuClosed(
   text_suggestion_backend->OnSuggestionMenuClosed();
 }
 
+double TextSuggestionHostAndroid::DivideByDeviceScaleIfNeeded(double value) {
+  WebContents* contents = RenderWidgetHostConnector::web_contents();
+  if (IsUseZoomForDSFEnabled() && contents && contents->GetNativeView()) {
+    return value / contents->GetNativeView()->GetDipScale();
+  }
+  return value;
+}
+
 void TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu(
     double caret_x,
     double caret_y,
@@ -147,6 +156,9 @@ void TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu(
   ScopedJavaLocalRef<jobject> obj = java_text_suggestion_host_.get(env);
   if (obj.is_null())
     return;
+
+  caret_x = DivideByDeviceScaleIfNeeded(caret_x);
+  caret_y = DivideByDeviceScaleIfNeeded(caret_y);
 
   Java_TextSuggestionHost_showSpellCheckSuggestionMenu(
       env, obj, caret_x, caret_y, ConvertUTF8ToJavaString(env, marked_text),
@@ -177,6 +189,9 @@ void TextSuggestionHostAndroid::ShowTextSuggestionMenu(
         ConvertUTF8ToJavaString(env, suggestion_ptr->suggestion),
         ConvertUTF8ToJavaString(env, suggestion_ptr->suffix));
   }
+
+  caret_x = DivideByDeviceScaleIfNeeded(caret_x);
+  caret_y = DivideByDeviceScaleIfNeeded(caret_y);
 
   Java_TextSuggestionHost_showTextSuggestionMenu(
       env, obj, caret_x, caret_y, ConvertUTF8ToJavaString(env, marked_text),
