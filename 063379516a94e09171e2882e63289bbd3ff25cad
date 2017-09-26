@@ -16,6 +16,24 @@
       "revId": "063379516a94e09171e2882e63289bbd3ff25cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197c5ddc_10dde2ac",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T21:37:16Z",
+      "side": 1,
+      "message": "\u003e From line 501 above, it looks like this could possibly be PAGE_TRANSITION_LINK?\n\nGood catch!\n\nI guess it\u0027s a sign that no test ends up with OpenMatch() call that gets identified as PAGE_TRANSITION_LINK.\n\nNow fixed.\n\nSpeaking of which, are you still planning to improve test harnesses during omnibox bug fixit weeks? ;-)",
+      "parentUuid": "7be48a00_931c4b24",
+      "revId": "063379516a94e09171e2882e63289bbd3ff25cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
