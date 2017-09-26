@@ -108,6 +108,7 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
   fragment->SetOffset(physical_offset);
 
   physical_root_fragment_ = fragment;
+  paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(fragment);
 }
 
 void LayoutNGBlockFlow::UpdateMargins(

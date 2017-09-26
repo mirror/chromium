@@ -13,6 +13,7 @@
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "core/paint/ng/ng_text_fragment_painter.h"
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
@@ -29,14 +30,16 @@ LayoutRectOutsets BoxStrutToLayoutRectOutsets(
 }
 }  // anonymous namespace
 
-NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPhysicalBoxFragment& box)
+NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPaintFragment& box)
     : BoxPainterBase(box,
                      &box.GetLayoutObject()->GetDocument(),
                      box.Style(),
                      box.GetLayoutObject()->GeneratingNode(),
-                     BoxStrutToLayoutRectOutsets(box.BorderWidths()),
+                     BoxStrutToLayoutRectOutsets(box.PhysicalFragment().BorderWidths()),
                      LayoutRectOutsets()),
-      box_fragment_(box) {}
+      box_fragment_(box) {
+  DCHECK_EQ(NGPhysicalFragment::kFragmentBox, box.PhysicalFragment().Type());
+}
 
 void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
@@ -87,7 +90,7 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
       paint_info.context, display_item_client,
       DisplayItem::kBoxDecorationBackground,
       FloatRect(BoundsForDrawingRecorder(paint_info, paint_offset)));
-  BoxDecorationData box_decoration_data(box_fragment_);
+  BoxDecorationData box_decoration_data(box_fragment_.PhysicalFragment());
   GraphicsContextStateSaver state_saver(paint_info.context, false);
 
   if (!painting_overflow_contents) {
@@ -132,34 +135,30 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
 }
 
 void NGBoxFragmentPainter::PaintChildren(
-    const Vector<RefPtr<NGPhysicalFragment>>& children,
+    const Vector<std::unique_ptr<NGPaintFragment>>& children,
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
   PaintInfo child_info(paint_info);
 
   for (const auto& child : children) {
+    const NGPhysicalFragment& fragment = child->PhysicalFragment();
     LayoutPoint child_offset =
-        paint_offset + LayoutSize(child->Offset().left, child->Offset().top);
-    if (child->Type() == NGPhysicalBoxFragment::kFragmentLineBox) {
-      const NGPhysicalLineBoxFragment& line_box_fragment =
-          ToNGPhysicalLineBoxFragment(*child.Get());
-      PaintChildren(line_box_fragment.Children(), child_info, child_offset);
-    } else if (child->Type() == NGPhysicalBoxFragment::kFragmentBox) {
-      const NGPhysicalBoxFragment& box_fragment =
-          ToNGPhysicalBoxFragment(*child.Get());
+        paint_offset + LayoutSize(fragment.Offset().left, fragment.Offset().top);
+    if (fragment.Type() == NGPhysicalBoxFragment::kFragmentLineBox) {
+      PaintChildren(child->Children(), child_info, child_offset);
+    } else if (fragment.Type() == NGPhysicalBoxFragment::kFragmentBox) {
       PaintInfo child_paint_info(paint_info);
-      NGBoxFragmentPainter(box_fragment).Paint(child_paint_info, child_offset);
+      NGBoxFragmentPainter(*child).Paint(child_paint_info, child_offset);
 
       // TODO(layout-dev): Implement support for this.
-    } else if (child->Type() == NGPhysicalBoxFragment::kFragmentText) {
-      PaintText(ToNGPhysicalTextFragment(*child.Get()), paint_info,
-                paint_offset);
+    } else if (fragment.Type() == NGPhysicalBoxFragment::kFragmentText) {
+      PaintText(*child, paint_info, paint_offset);
     }
   }
 }
 
 void NGBoxFragmentPainter::PaintText(
-    const NGPhysicalTextFragment& text_fragment,
+    const NGPaintFragment& text_fragment,
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
   LayoutRect overflow_rect(box_fragment_.VisualOverflowRect());
@@ -169,14 +168,14 @@ void NGBoxFragmentPainter::PaintText(
       DisplayItem::PaintPhaseToDrawingType(paint_info.phase),
       PixelSnappedIntRect(overflow_rect));
 
-  const Document& document = box_fragment_.GetLayoutObject()->GetDocument();
+  const Document& document = box_fragment_.PhysicalFragment().GetLayoutObject()->GetDocument();
   NGTextFragmentPainter text_painter(text_fragment);
   text_painter.Paint(document, paint_info, paint_offset);
 }
 
 bool NGBoxFragmentPainter::
     IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
-        const NGPhysicalFragment& fragment,
+        const NGPaintFragment& fragment,
         const PaintInfo& paint_info) {
   // TODO(layout-dev): Implement once we have support for scrolling.
   return false;

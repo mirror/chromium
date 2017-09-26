@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 
 namespace blink {
 
@@ -49,6 +50,10 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
     return physical_root_fragment_;
   }
 
+  NGPaintFragment* PaintFragment() const {
+    return paint_fragment_.get();
+  }
+
  protected:
   void AddOverflowFromChildren() override;
 
@@ -64,6 +69,7 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
   RefPtr<NGLayoutResult> cached_result_;
   RefPtr<const NGConstraintSpace> cached_constraint_space_;
   RefPtr<const NGPhysicalBoxFragment> physical_root_fragment_;
+  std::unique_ptr<NGPaintFragment> paint_fragment_;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutNGBlockFlow, IsLayoutNGBlockFlow());
