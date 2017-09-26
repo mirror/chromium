@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "062dee64_86fac140",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-26T07:49:51Z",
+      "side": 1,
+      "message": "I do not know honestly - from a quick search it is only used in signin-internals page on iOS and I think you do not need that in this WebView implementation.",
+      "parentUuid": "423a182f_21afd0aa",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d870bcd2_50042534",
         "filename": "ios/web_view/internal/signin/web_view_account_fetcher_service_factory.cc",
         "patchSetId": 24
