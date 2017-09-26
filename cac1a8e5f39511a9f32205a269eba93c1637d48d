@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1d82e7_0e5d802c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T07:23:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like we need to past |setting_applied|: we could just DCHECK() directly in SetVoiceInteractionEnabled, right?",
+      "revId": "cac1a8e5f39511a9f32205a269eba93c1637d48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
