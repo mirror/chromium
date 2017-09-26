@@ -85,6 +85,7 @@ char kTSanDefaultSuppressions[] =
 
     // http://crbug.com/244856
     "race:AutoPulseLock\n"
+    "race:pthread_mutex_lock\n"
 
     // http://crbug.com/246968
     "race:webrtc::VideoCodingModuleImpl::RegisterPacketRequestCallback\n"
