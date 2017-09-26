@@ -18,6 +18,7 @@ component("blink") {
     "cdm_result_promise_helper.h",
     "cdm_session_adapter.cc",
     "cdm_session_adapter.h",
+    "context_provider_callback.h",
     "interval_map.h",
     "key_system_config_selector.cc",
     "key_system_config_selector.h",

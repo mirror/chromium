@@ -15,6 +15,7 @@
 #include "media/base/media_log.h"
 #include "media/base/media_observer.h"
 #include "media/base/routing_token_callback.h"
+#include "media/blink/context_provider_callback.h"
 #include "media/blink/media_blink_export.h"
 #include "media/filters/context_3d.h"
 #include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
@@ -77,7 +78,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::WatchTimeRecorderProvider* provider,
       CreateCapabilitiesRecorderCB create_capabilities_recorder_cb,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
-          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback);
+          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      ContextProviderCallback context_provider_callback);
 
   ~WebMediaPlayerParams();
 
@@ -149,6 +151,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_bridge_callback_;
   }
 
+  ContextProviderCallback context_provider_callback() const {
+    return context_provider_callback_;
+  }
+
   CreateCapabilitiesRecorderCB create_capabilities_recorder_cb() const {
     return create_capabilities_recorder_cb_;
   }
@@ -176,6 +182,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
+  ContextProviderCallback context_provider_callback_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };
