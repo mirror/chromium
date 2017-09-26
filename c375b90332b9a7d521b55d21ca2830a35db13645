@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e68a6a8_6ffcc019",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-26T18:55:20Z",
+      "side": 1,
+      "message": "nit: I don\u0027t recall the second line indented so far on TODO\u0027s. If there are other examples in the code this is fine, if not please go for consistency.\n(Though another reason to avoid indenting is that if \"scottchen\" changes to \"crbug.com/nnnnn\" then the alignment would be off).\n\nAlso: all caps in TODO.",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd8dd2f_4b39a1dc",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-26T18:55:20Z",
+      "side": 1,
+      "message": "nit: two (or more) spaces between code and comment on the same line.\nmargin-top: 2px;  /* Offset underline spacing. */",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dd51c1_45547869",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-26T18:55:20Z",
+      "side": 1,
+      "message": "nit: remove blank line(?)",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b816f5b5_30090b87",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-26T18:55:20Z",
+      "side": 1,
+      "message": "nit: can we do --paper-grey-700 here (or 800, this is between those)?",
+      "revId": "c375b90332b9a7d521b55d21ca2830a35db13645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
