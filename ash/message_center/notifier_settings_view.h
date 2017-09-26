@@ -18,12 +18,7 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/view.h"
 
-namespace ui {
-class ComboboxModel;
-}
-
 namespace views {
-class Combobox;
 class Label;
 }  // namespace views
 
@@ -34,8 +29,7 @@ namespace ash {
 class ASH_EXPORT NotifierSettingsView
     : public message_center::NotifierSettingsObserver,
       public views::View,
-      public views::ButtonListener,
-      public views::ComboboxListener {
+      public views::ButtonListener {
  public:
   explicit NotifierSettingsView(
       message_center::NotifierSettingsProvider* provider);
@@ -109,19 +103,14 @@ class ASH_EXPORT NotifierSettingsView
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
-  // Overridden from views::ComboboxListener:
-  void OnPerformAction(views::Combobox* combobox) override;
-
   // Callback for views::MenuModelAdapter.
   void OnMenuClosed();
 
   views::ImageButton* title_arrow_;
   views::Label* title_label_;
-  views::Combobox* notifier_group_combobox_;
   views::ScrollView* scroller_;
   message_center::NotifierSettingsProvider* provider_;
   std::set<NotifierButton*> buttons_;
-  std::unique_ptr<ui::ComboboxModel> notifier_group_model_;
 
   DISALLOW_COPY_AND_ASSIGN(NotifierSettingsView);
 };
