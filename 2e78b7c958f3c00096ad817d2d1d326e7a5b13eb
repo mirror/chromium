@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "a5d8152a_f03fe0ec",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-26T04:37:13Z",
+      "side": 1,
+      "message": "I\u0027d suggest a test that navigates to a site with an overridable/non-overridable certificate error and then uses content::ExecuteScript to test that the Proceed link appears/doesn\u0027t appear and/or that sending a proceed command fails/succeeds.\n\nExample: https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_browser_tests.cc?q\u003dssl_browser_test\u0026sq\u003dpackage:chromium\u0026l\u003d3484",
+      "parentUuid": "a9c98943_16ae8d6a",
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d633fe68_1e2065ab",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 6
@@ -260,6 +278,30 @@
       "side": 1,
       "message": "SSLErrorHandlerTest doesn\u0027t exist, and I don\u0027t need fancy fixtures (with setup/teardown) to test a static method.\nShould I still create a full class definition for it?",
       "parentUuid": "d633fe68_1e2065ab",
+      "range": {
+        "startLine": 1425,
+        "startChar": 0,
+        "endLine": 1428,
+        "endChar": 32
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b003fe8c_2480345f",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1428,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-26T04:37:13Z",
+      "side": 1,
+      "message": "I don\u0027t think you need a test class for the TEST macro. see https://cs.chromium.org/chromium/src/components/url_matcher/url_matcher_factory_unittest.cc?type\u003dcs\u0026q\u003d%22TEST(%22+file:%5Esrc/components/+package:%5Echromium$\u0026l\u003d25 for example",
+      "parentUuid": "f518485c_30a1f04b",
       "range": {
         "startLine": 1425,
         "startChar": 0,
