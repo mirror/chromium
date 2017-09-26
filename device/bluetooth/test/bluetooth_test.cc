@@ -36,6 +36,8 @@ const std::string BluetoothTestBase::kTestUUIDLinkLoss =
     "00001803-0000-1000-8000-00805f9b34fb";
 const std::string BluetoothTestBase::kTestUUIDHeartRate =
     "0000180d-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDU2f =
+    "0000fffd-0000-1000-8000-00805f9b34fb";
 // Characteristic UUIDs
 const std::string BluetoothTestBase::kTestUUIDDeviceName =
     "00002a00-0000-1000-8000-00805f9b34fb";
@@ -45,6 +47,8 @@ const std::string BluetoothTestBase::kTestUUIDReconnectionAddress =
     "00002a03-0000-1000-8000-00805f9b34fb";
 const std::string BluetoothTestBase::kTestUUIDHeartRateMeasurement =
     "00002a37-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDU2fControlPointLength =
+    "f1d0fff3-deaa-ecee-b42f-c9ba7ed623bb";
 // Descriptor UUIDs
 const std::string BluetoothTestBase::kTestUUIDCharacteristicUserDescription =
     "00002901-0000-1000-8000-00805f9b34fb";

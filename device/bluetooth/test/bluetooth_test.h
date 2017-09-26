@@ -93,6 +93,7 @@ class BluetoothTestBase : public testing::Test {
   static const std::string kTestUUIDImmediateAlert;
   static const std::string kTestUUIDLinkLoss;
   static const std::string kTestUUIDHeartRate;
+  static const std::string kTestUUIDU2f;
   // Characteristics
   // The following three characteristics are for kTestUUIDGenericAccess.
   static const std::string kTestUUIDDeviceName;
@@ -100,6 +101,8 @@ class BluetoothTestBase : public testing::Test {
   static const std::string kTestUUIDReconnectionAddress;
   // This characteristic is for kTestUUIDHeartRate.
   static const std::string kTestUUIDHeartRateMeasurement;
+  // This characteristic is for kTestUUIDU2f.
+  static const std::string kTestUUIDU2fControlPointLength;
   // Descriptors
   static const std::string kTestUUIDCharacteristicUserDescription;
   static const std::string kTestUUIDClientCharacteristicConfiguration;
@@ -187,6 +190,13 @@ class BluetoothTestBase : public testing::Test {
   //      No Service Data
   //      No Tx Power
   //   6: Name:    kTestDeviceName
+  //      Address: kTestDeviceAddress2
+  //      RSSI:    kTestRSSI1,
+  //      No Advertised UUIDs
+  //      No Service Data
+  //      No Tx Power
+  //      Supports BR/EDR and LE.
+  //   7: Name:    kTestDeviceName   FIXME
   //      Address: kTestDeviceAddress2
   //      RSSI:    kTestRSSI1,
   //      No Advertised UUIDs
