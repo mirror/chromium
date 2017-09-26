@@ -4,7 +4,6 @@
 
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
 
-#include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/DocumentPaintDefinition.h"

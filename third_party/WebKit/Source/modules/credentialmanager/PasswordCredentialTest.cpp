@@ -6,7 +6,6 @@
 
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/FormData.h"

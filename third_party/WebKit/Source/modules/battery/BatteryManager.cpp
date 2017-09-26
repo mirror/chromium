@@ -5,7 +5,6 @@
 #include "modules/battery/BatteryManager.h"
 
 #include "core/dom/DOMException.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
 #include "modules/battery/BatteryDispatcher.h"

@@ -5,7 +5,6 @@
 #include "modules/audio_output_devices/AudioOutputDeviceClientImpl.h"
 
 #include <memory>
-#include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "public/web/WebFrameClient.h"

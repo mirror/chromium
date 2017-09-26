@@ -6,7 +6,6 @@
 
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/WTF.h"

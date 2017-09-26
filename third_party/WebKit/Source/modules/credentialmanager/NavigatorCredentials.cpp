@@ -4,7 +4,6 @@
 
 #include "modules/credentialmanager/NavigatorCredentials.h"
 
-#include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
