@@ -34,6 +34,8 @@ if (enable_pdf) {
       "document_loader.h",
       "draw_utils.cc",
       "draw_utils.h",
+      "fake_progress.cc",
+      "fake_progress.h",
       "out_of_process_instance.cc",
       "out_of_process_instance.h",
       "paint_aggregator.cc",

@@ -31,6 +31,7 @@
 #include "gin/public/gin_embedders.h"
 #include "gin/public/isolate_holder.h"
 #include "pdf/draw_utils.h"
+#include "pdf/fake_progress.h"
 #include "pdf/pdfium/pdfium_api_string_buffer_adapter.h"
 #include "pdf/pdfium/pdfium_mem_buffer_file_read.h"
 #include "pdf/pdfium/pdfium_mem_buffer_file_write.h"
@@ -1186,10 +1187,14 @@ bool PDFiumEngine::HandleDocumentLoad(const pp::URLLoader& loader) {
       base::MakeUnique<URLLoaderWrapperImpl>(GetPluginInstance(), loader);
   loader_wrapper->SetResponseHeaders(headers_);
 
+  fake_progress_.reset();
   doc_loader_ = base::MakeUnique<DocumentLoader>(this);
+  fake_progress_ = base::MakeUnique<FakeProgress>(doc_loader_.get());
   if (doc_loader_->Init(std::move(loader_wrapper), url_)) {
     // request initial data.
     doc_loader_->RequestData(0, 1);
+    fake_progress_->Start();
+    fake_progress_->SimulateNewData();
     return true;
   }
   return false;
@@ -1275,11 +1280,13 @@ void PDFiumEngine::OnPendingRequestComplete() {
 }
 
 void PDFiumEngine::OnNewDataReceived() {
-  client_->DocumentLoadProgress(doc_loader_->count_of_bytes_received(),
-                                doc_loader_->GetDocumentSize());
+  client_->DocumentLoadProgress(
+      fake_progress_->GetSimulatedCountOfBytesReceived(),
+      fake_progress_->GetSimulatedDocumentSize());
 }
 
 void PDFiumEngine::OnDocumentComplete() {
+  fake_progress_->Stop();
   if (doc_) {
     return FinishLoadingDocument();
   }
@@ -1292,6 +1299,7 @@ void PDFiumEngine::OnDocumentComplete() {
 }
 
 void PDFiumEngine::OnDocumentCanceled() {
+  fake_progress_->Stop();
   if (visible_pages_.empty())
     client_->DocumentLoadFailed();
   else
