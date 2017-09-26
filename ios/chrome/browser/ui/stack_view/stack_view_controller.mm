@@ -758,6 +758,17 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   CGRect scrollViewFrame =
       UIEdgeInsetsInsetRect(self.view.bounds, contentInsets);
   _scrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
+
+  if (IsIPhoneX()) {
+    if (@available(iOS 11, *)) {
+      // The safe area adds an content inset which negatively impacts the stack
+      // view opening animation after a rotation.
+      // TODO(crbug.com/768868): Figure out what is going on, and whether
+      // changing the contentInsetAdjustmentBehavior is the right fix.
+      _scrollView.contentInsetAdjustmentBehavior =
+          UIScrollViewContentInsetAdjustmentNever;
+    }
+  }
   [self.view addSubview:_scrollView];
   [_scrollView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight |
                                     UIViewAutoresizingFlexibleWidth)];
@@ -3001,6 +3012,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
       [self scrollOffsetAmountForPoint:[_scrollView contentOffset]];
   CGFloat contentLength = [self scrollLength:[_scrollView contentSize]];
   CGFloat viewportLength = [self scrollLength:[_scrollView bounds].size];
+
   DCHECK(contentLength > viewportLength || [_activeCardSet.cards count] == 0);
 
   CGFloat centerOffset = (contentLength - viewportLength) / 2.0;
