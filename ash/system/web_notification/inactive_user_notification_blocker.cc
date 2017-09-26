@@ -6,7 +6,6 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_delegate.h"
 #include "ash/system/system_notifier.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
@@ -15,24 +14,44 @@ namespace ash {
 
 InactiveUserNotificationBlocker::InactiveUserNotificationBlocker(
     message_center::MessageCenter* message_center)
-    : NotificationBlocker(message_center), scoped_observer_(this) {
+    : NotificationBlocker(message_center),
+      // multi_profile_allowed_(IsMultiProfileAllowed()),
+    scoped_observer_(this) {
   auto* session = Shell::Get()->session_controller()->GetUserSession(0);
-  if (session)
+  if (session) {
     active_account_id_ = session->user_info->account_id;
+    // LOG(ERROR) << "JAMES on start got " << active_account_id_.Serialize();
+  } else {
+    // LOG(ERROR) << "JAMES on start got nothing";
+  }
 }
 
 InactiveUserNotificationBlocker::~InactiveUserNotificationBlocker() = default;
 
 bool InactiveUserNotificationBlocker::ShouldShowNotification(
     const message_center::Notification& notification) const {
-  if (!Shell::Get()->shell_delegate()->IsMultiProfilesEnabled())
+  // LOG(ERROR) << "JAMES ShouldShowNotification profile_id "
+  //     << notification.notifier_id().profile_id;
+  if (!Shell::Get()->session_controller()->IsMultiProfileAvailable()) {
+    // LOG(ERROR) << "JAMES no multiprofile";
     return true;
+  }
+
+  // if (active_account_id_.empty())
+  //     return true;
 
   if (system_notifier::IsAshSystemNotifier(notification.notifier_id()))
     return true;
 
-  return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
+  bool val = AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
          active_account_id_;
+  // if (!val) {
+  //   LOG(ERROR) << "JAMES blocked profile_id " << notification.notifier_id().profile_id
+  //     << " active_account_id_ " << active_account_id_.Serialize();
+  // } else {
+  //   LOG(ERROR) << "JAMES allowed";
+  // }
+  return val;
 }
 
 bool InactiveUserNotificationBlocker::ShouldShowNotificationAsPopup(
@@ -42,6 +61,8 @@ bool InactiveUserNotificationBlocker::ShouldShowNotificationAsPopup(
 
 void InactiveUserNotificationBlocker::OnActiveUserSessionChanged(
     const AccountId& account_id) {
+  LOG(ERROR) << "JAMES on sesson change " << account_id.Serialize();
+
   if (active_account_id_ == account_id)
     return;
 

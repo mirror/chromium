@@ -18,6 +18,7 @@ class AccountId;
 
 namespace ash {
 
+enum class AddUserSessionPolicy;
 class SessionController;
 
 // Implement SessionControllerClient mojo interface to simulate chrome behavior
@@ -41,6 +42,7 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   // Helpers to set SessionController state.
   void SetCanLockScreen(bool can_lock);
   void SetShouldLockScreenAutomatically(bool should_lock);
+  void SetMultiProfileAvailable();
   void SetSessionState(session_manager::SessionState state);
 
   // Creates the |count| pre-defined user sessions. The users are named by
@@ -48,6 +50,10 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   // to be consistent with crash-and-restore scenario.  Note that existing user
   // sessions prior this call will be removed without sending out notifications.
   void CreatePredefinedUserSessions(int count);
+
+  // Simulates a user sign-in. It creates a new user session, adds it to
+  // existing user sessions and makes it the active user session.
+  void SimulateUserLogin(const std::string& user_email);
 
   // Adds a user session from a given display email. The display email will be
   // canonicalized and used to construct an AccountId. |enable_settings| sets

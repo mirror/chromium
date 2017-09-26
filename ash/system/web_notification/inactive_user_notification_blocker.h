@@ -34,6 +34,9 @@ class ASH_EXPORT InactiveUserNotificationBlocker
   void OnActiveUserSessionChanged(const AccountId& account_id) override;
 
  private:
+  // Whether multi-profile was supported at startup.
+  //Nope, won't work, SessionController doesn't know at startup.
+  // const bool multi_profile_allowed_;
   AccountId active_account_id_;
   std::map<AccountId, bool> quiet_modes_;
   ScopedSessionObserver scoped_observer_;

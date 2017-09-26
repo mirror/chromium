@@ -14,7 +14,6 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_delegate.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/system_tray.h"
@@ -67,8 +66,8 @@ void SwitchUser(UserIndex user_index) {
 }
 
 bool IsMultiProfileSupportedAndUserActive() {
-  return Shell::Get()->shell_delegate()->IsMultiProfilesEnabled() &&
-         !Shell::Get()->session_controller()->IsUserSessionBlocked();
+  SessionController* session = Shell::Get()->session_controller();
+  return session->IsMultiProfileAvailable() && !session->IsUserSessionBlocked();
 }
 
 // Creates the view shown in the user switcher popup ("AddUserMenuOption").
@@ -331,6 +330,7 @@ void UserView::ToggleUserDropdownWidget() {
   const AddUserSessionPolicy add_user_policy =
       session_controller->GetAddUserPolicy();
   add_user_enabled_ = add_user_policy == AddUserSessionPolicy::ALLOWED;
+  LOG(ERROR) << "JAMES add_user_enabled_ " << add_user_enabled_;
 
   // Position the widget on top of the user card view (which is still in the
   // system menu). The top half of the widget will be transparent to allow

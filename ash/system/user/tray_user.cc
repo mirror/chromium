@@ -59,6 +59,7 @@ void TrayUser::UpdateAfterLoginStatusChangeForTest(LoginStatus status) {
 }
 
 views::View* TrayUser::CreateTrayView(LoginStatus status) {
+  LOG(ERROR) << "JAMES CreateTrayView";
   DCHECK(!layout_view_);
   layout_view_ = new views::View;
   UpdateAfterLoginStatusChange(status);
@@ -66,6 +67,7 @@ views::View* TrayUser::CreateTrayView(LoginStatus status) {
 }
 
 views::View* TrayUser::CreateDefaultView(LoginStatus status) {
+  LOG(ERROR) << "JAMES CreateDefaultView";
   if (status == LoginStatus::NOT_LOGGED_IN)
     return nullptr;
 
@@ -81,6 +83,7 @@ void TrayUser::OnTrayViewDestroyed() {
 }
 
 void TrayUser::OnDefaultViewDestroyed() {
+  LOG(ERROR) << "JAMES OnDefaultViewDestroyed";
   user_ = nullptr;
 }
 
