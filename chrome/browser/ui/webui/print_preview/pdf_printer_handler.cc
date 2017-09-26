@@ -31,6 +31,7 @@
 #include "components/cloud_devices/common/printer_description.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
+#include "printing/print_job_constants.h"
 #include "printing/printing_context.h"
 #include "printing/units.h"
 #include "ui/gfx/geometry/size.h"
@@ -162,9 +163,9 @@ void PdfPrinterHandler::StartGetCapability(
     const std::string& destination_id,
     const GetCapabilityCallback& callback) {
   auto printer_info = base::MakeUnique<base::DictionaryValue>();
-  printer_info->SetString(printing::kPrinterId, destination_id);
+  printer_info->SetString(printing::kSettingDeviceName, destination_id);
   printer_info->Set(
-      printing::kPrinterCapabilities,
+      printing::kSettingCapabilities,
       GetPdfCapabilities(g_browser_process->GetApplicationLocale()));
   callback.Run(std::move(printer_info));
 }
