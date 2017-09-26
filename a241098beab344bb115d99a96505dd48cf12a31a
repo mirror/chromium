@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9d7ee763_0c007bb0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b48adc5_22be3841",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e9b828_6b81d63d",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "writtenOn": "2017-09-26T14:27:58Z",
       "side": 1,
       "message": "I don\u0027t know if the closure compiler is going to be happy about this. ChromeCleanupCardFlags is an enum with possible values 0,1,2,4,8 while |flags| is a number with any value between 0 and 15.",
+      "range": {
+        "startLine": 66,
+        "startChar": 55,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34255cfb_e4e0e13c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "The closure compiler hasn\u0027t complained about yet, but maybe it\u0027s been hidden by other errors. I will rerun it on the new patch to double check. In the meantime, is there a recommended js way of doing it?",
+      "parentUuid": "23e9b828_6b81d63d",
       "range": {
         "startLine": 66,
         "startChar": 55,
@@ -89,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "65696be2_cd2b72e7",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d99486fe_75bc0cf8",
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0737daf8_0bf565d0",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
@@ -109,6 +175,30 @@
       "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eec7584_682b0eb2",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0737daf8_0bf565d0",
+      "range": {
+        "startLine": 187,
+        "startChar": 54,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "9add7f99_4c5cce53",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2514ccd9_86acab68",
+      "range": {
+        "startLine": 321,
+        "startChar": 13,
+        "endLine": 321,
+        "endChar": 21
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb7b0d05_a228e1a3",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
@@ -155,6 +269,30 @@
       "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76f1e06_3501e9fe",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7b0d05_a228e1a3",
+      "range": {
+        "startLine": 354,
+        "startChar": 25,
+        "endLine": 354,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "6e154a4d_b250c261",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5936d8a_5aa9e451",
+      "range": {
+        "startLine": 379,
+        "startChar": 45,
+        "endLine": 379,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b379bbfb_f237eb0c",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "7a5a2020_a6c2d73c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b379bbfb_f237eb0c",
+      "range": {
+        "startLine": 426,
+        "startChar": 43,
+        "endLine": 426,
+        "endChar": 51
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98a8fe87_50803810",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
@@ -224,6 +410,30 @@
       "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d021bb_962b429d",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T17:04:18Z",
+      "side": 1,
+      "message": "As discussed offline, there are a few dependencies on this object: i18n() and the button actions (methods that belong to this object). Considering the additional complexities this would add, I found that there is no clear benefit in separating it, so we will keep it as is.",
+      "parentUuid": "98a8fe87_50803810",
+      "range": {
+        "startLine": 452,
+        "startChar": 34,
+        "endLine": 452,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
