@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72acc959_ca824649",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-26T18:55:11Z",
+      "side": 1,
+      "message": "s/reanmed/rename it/",
+      "revId": "a15db54dbea96f85a085766f772bbe574f2f12b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
