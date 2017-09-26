@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9199a3da_114d1a5f",
+        "filename": "chrome/browser/mac/dock.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "Optional, but “enum class” is kind of nice. (Applies to DiskImageStatus too. Even applies to AddIconStatus, but that might be more of a thread than you’d like to yank on in this change.)",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dec3330_aeaf9113",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "These names no longer need to be _const, because there’s no mutable version to contrast them to. Same with persistent_apps_const in PersistentAppsFromDockPlist().",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab42a967_2f952f67",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "If PersistentAppPaths() returns nil, that should also be ChromeInDockFailure.",
+      "range": {
+        "startLine": 186,
+        "startChar": 10,
+        "endLine": 186,
+        "endChar": 45
+      },
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaf1f59_015239f0",
+        "filename": "chrome/browser/mac/install_from_dmg.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "Dangling semicolon.",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8bf776_36eb9584",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "Since we’re tracking two bits of information, can we name the values to convey their full meanings? The first two are undocked/docked non-dmg. Also convey this in enums.xml.",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52438b42_1576ec69",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T20:34:19Z",
+      "side": 1,
+      "message": "The interaction between these is confusing without referring to the code. Dock and dmg states are conceptually entirely distinct, but there’s ambiguity in what “dock error” means for dmg state, and what “dmg error” means for dock state. By looking at the code, I can see that you check dmg status first, and don’t even bother to check the dock state.\n\nIt’d be best if we just carried the two bits (well, they’re tri-states) separately, although that gives nine combinations. Or we could treat either type of error as “overriding” any other information, which gives us five possibilities.\n\nIt’s also OK keep the six combinations that you have here, but I think that you should document here (and in enums.xml) that one of the error codes means that the other condition wasn’t even checked, and the other error code implies that there was no error in the first condition but that we’ve thrown the result away. For any sort of analysis involving these codes, it could be important to know exactly what the implications of the different values are.",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
