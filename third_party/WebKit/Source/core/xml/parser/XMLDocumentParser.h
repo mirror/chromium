@@ -118,7 +118,7 @@ class XMLDocumentParser final : public ScriptableDocumentParser,
   void SetScriptStartPosition(TextPosition);
 
  private:
-  explicit XMLDocumentParser(Document&, LocalFrameView* = 0);
+  explicit XMLDocumentParser(Document&, LocalFrameView* = nullptr);
   XMLDocumentParser(DocumentFragment*, Element*, ParserContentPolicy);
 
   // From DocumentParser
