@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6670c95e_37399e18",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "nit: could this be a member function? I think all callers now call this on Resource::type  (ResourceProvider::Settings::default_resource_type was removed).",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5861054_94867a1f",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "How about: the mailbox associated with this resource. This is the client/parent-provided mailbox for EXTERNAL/DELEGATED resources, or the ResourceProvider-created mailbox for INTERNAL resources sent to the parent.",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833a1bff_adab3560",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "typo: underlaying -\u003e underlying",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a93f158_15eed241",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "Or also to allocate the GMB",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea23bb5_18c9e647",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "Maybe we can indicate that this is what is used to derive the GL internal_format/format/type or the Skia SkColorType.",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b41cd7_0e152495",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T19:41:50Z",
+      "side": 1,
+      "message": "Note: this is used both for the SyncToken to wait for (if NEEDS_WAIT), and for the SyncToken that was generated before sending to parent (if SYNCHRONIZED).",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
