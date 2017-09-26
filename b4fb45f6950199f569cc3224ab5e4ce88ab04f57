@@ -72,6 +72,70 @@
     },
     {
       "key": {
+        "uuid": "6df162e2_87584697",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "Hmm, I actually feel for-loop might be simpler (and probably faster?) in this case since it just converts the type.\n\u003d\u003d\nfor (const auto\u0026 c : version-\u003eused_features())\n  params-\u003eused_features.push_back(base::strict_cast\u003c..\u003e(c));",
+      "parentUuid": "85cfd546_22f754b4",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a036ce7b_e1b78a5d",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "controller?",
+      "range": {
+        "startLine": 379,
+        "startChar": 20,
+        "endLine": 379,
+        "endChar": 24
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48edfa8e_40fa4ea3",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "You can just move the instance.\nstd::move(*remote_endpoints_.back().client_request());",
+      "range": {
+        "startLine": 397,
+        "startChar": 6,
+        "endLine": 397,
+        "endChar": 47
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5db4f91_fad5d62f",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 6
@@ -475,6 +539,86 @@
     },
     {
       "key": {
+        "uuid": "ec377506_ea74beab",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "MakeIsolatedRequest?",
+      "range": {
+        "startLine": 184,
+        "startChar": 23,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf58da73_c6ef69e1",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "Mojo structs are initialized by default ctor, so I don\u0027t think we need to initialize it again.\nShould should_notify_controllerchange be true in this test?",
+      "range": {
+        "startLine": 191,
+        "startChar": 37,
+        "endLine": 192,
+        "endChar": 64
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c0a32f_09f0b043",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "Is it possible to test the provider context with making Mojo IPC calls instead of setting the tests as a friend class?\nYou can make IPC calls over associated interfaces if you make requests using MakeIsolatedRequest().",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b64be2_8d67fab4",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "How about splitting the unittests into two since there seems no dependency between them?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe170ef6_ced18d35",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 6
@@ -491,6 +635,52 @@
         "startChar": 22,
         "endLine": 208,
         "endChar": 23
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0593bf90_ad1e8073",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "MakeIsolatedRequest",
+      "range": {
+        "startLine": 251,
+        "startChar": 13,
+        "endLine": 251,
+        "endChar": 23
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b09ca9_9a0f78c2",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T03:42:52Z",
+      "side": 1,
+      "message": "just setting to true instead of having |should_notify_controller_change| seems enough.",
+      "range": {
+        "startLine": 265,
+        "startChar": 43,
+        "endLine": 265,
+        "endChar": 73
       },
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
