@@ -16,6 +16,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c183c0_544556ec",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:26:06Z",
+      "side": 1,
+      "message": "yangguo / rmcilroy might be able to answer this",
+      "parentUuid": "4ea1f5ce_bee0cd86",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
