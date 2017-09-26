@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c913ab_c2d7c0a4",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T20:26:28Z",
+      "side": 1,
+      "message": "I believe this can be called fairly often. Is it worth caching the desktop_env? At a minimum early out if !maximized.",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "9947410161c817ad0a656adf9c4a7e8a0c077474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
