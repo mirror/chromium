@@ -158,6 +158,24 @@
       "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1198634c_06ee6bb5",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-26T08:16:52Z",
+      "side": 1,
+      "message": "Argh, forgot to mark as resolved.",
+      "parentUuid": "2c786821_277ffa78",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
