@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b895ac58_bdaebc4d",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-26T01:14:36Z",
+      "side": 1,
+      "message": "These JS changes are split out in https://chromium-review.googlesource.com/c/chromium/src/+/683301 which is planned to land first.",
+      "range": {
+        "startLine": 1518,
+        "startChar": 10,
+        "endLine": 1518,
+        "endChar": 15
+      },
+      "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
