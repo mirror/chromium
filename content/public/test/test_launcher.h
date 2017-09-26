@@ -48,6 +48,10 @@ class TestLauncherDelegate {
       const base::FilePath& temp_data_dir) = 0;
   virtual ContentMainDelegate* CreateContentMainDelegate() = 0;
 
+  // Returns the path of the executable to run services in. The default return
+  // value is an empty path, which means use the path of the current executable.
+  virtual base::FilePath GetUtilityServiceProgramPath();
+
   // Called prior to running each test. The delegate may alter the CommandLine
   // and options used to launch the subprocess. Additionally the client may
   // return a TestState that is destroyed once the test completes as well as
