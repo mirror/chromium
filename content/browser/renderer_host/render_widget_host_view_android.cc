@@ -2320,6 +2320,7 @@ void RenderWidgetHostViewAndroid::OnStylusSelectBegin(float x0,
                                                       float y0,
                                                       float x1,
                                                       float y1) {
+  SetTextHandlesTemporarilyHidden(true);
   SelectBetweenCoordinates(gfx::PointF(x0, y0), gfx::PointF(x1, y1));
 }
 
@@ -2328,6 +2329,7 @@ void RenderWidgetHostViewAndroid::OnStylusSelectUpdate(float x, float y) {
 }
 
 void RenderWidgetHostViewAndroid::OnStylusSelectEnd(float x, float y) {
+  SetTextHandlesTemporarilyHidden(false);
   ShowContextMenuAtPoint(gfx::Point(x, y), ui::MENU_SOURCE_STYLUS);
 }
 
