@@ -16,6 +16,109 @@
       "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e18d1b_45e63550",
+        "filename": "content/browser/accessibility/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "Go ahead and revert these changes.\n\nI originally tried adding a rule to this file and then it\ncaused problems when trying to build it on a platform other\nthan Android.",
+      "parentUuid": "b6ee23e9_38d1bfc1",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff33efb_997069e7",
+        "filename": "content/browser/accessibility/accessibility_event_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "Would it work to use the type ProcessId from\nbase/process/process_handle.h?",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71acf89d_6ce53e59",
+        "filename": "content/browser/accessibility/accessibility_event_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "Move this to the .cc file, we try to avoid non-trivial\ndefinitions in header files - basically anything other than\na getter or setter.",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0741ae0_3ff246a2",
+        "filename": "content/browser/accessibility/dump_accessibility_events_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "Then we could remove the static_cast here",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a472f4f_c2ef92d8",
+        "filename": "tools/accessibility/inspect/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9561a1e2_27f027f7",
+        "filename": "tools/accessibility/inspect/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T18:42:15Z",
+      "side": 1,
+      "message": "How about a brief README.md in this directory explaining\nwhat ax_dump_events is for.",
+      "revId": "b95cde364f7fd4a193fb4cb982c3a6380f42c6f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
