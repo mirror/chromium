@@ -42,9 +42,10 @@ std::unique_ptr<service_manager::Service> CreateMediaServiceForTesting() {
       new MediaService(base::MakeUnique<TestMojoMediaClient>()));
 }
 
-std::unique_ptr<service_manager::Service> CreateUtilityMediaService() {
+std::unique_ptr<service_manager::Service> CreateUtilityMediaService(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   return std::unique_ptr<service_manager::Service>(
-      new MediaService(base::MakeUnique<UtilityMojoMediaClient>()));
+      new MediaService(base::MakeUnique<UtilityMojoMediaClient>(task_runner)));
 }
 
 }  // namespace media

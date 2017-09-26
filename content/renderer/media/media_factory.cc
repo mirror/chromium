@@ -25,6 +25,7 @@
 #include "media/base/media_switches.h"
 #include "media/base/renderer_factory_selector.h"
 #include "media/base/surface_manager.h"
+#include "media/base/video_frame_provider_factory.h"
 #include "media/blink/resource_fetch_context.h"
 #include "media/blink/webencryptedmediaclient_impl.h"
 #include "media/blink/webmediaplayer_impl.h"
@@ -380,7 +381,8 @@ MediaFactory::CreateRendererFactorySelector(
         base::MakeUnique<media::DefaultRendererFactory>(
             media_log, decoder_factory,
             base::Bind(&RenderThreadImpl::GetGpuFactories,
-                       base::Unretained(render_thread))));
+                       base::Unretained(render_thread)),
+            nullptr));
 
     factory_selector->SetBaseFactoryType(
         media::RendererFactorySelector::FactoryType::DEFAULT);
