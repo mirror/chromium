@@ -25,6 +25,64 @@
     },
     {
       "key": {
+        "uuid": "d42ebb86_54fdbd75",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-26T17:53:17Z",
+      "side": 1,
+      "message": "i think that the initialization of the callback is the only reason that it doesn\u0027t compile elsewhere.  the callback type itself is defined everywhere.  passing in an empty cb on other platforms should be fine.",
+      "parentUuid": "7c413285_b7aa35f6",
+      "range": {
+        "startLine": 274,
+        "startChar": 1,
+        "endLine": 276,
+        "endChar": 1
+      },
+      "revId": "ff14cab6bbadc4405fe53303ebdac231e07c7cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdb333b_fbfd3c12",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-26T17:53:17Z",
+      "side": 1,
+      "message": "as an aside, if you\u0027re creating an empty |overlay_factory_cb| now, then you can remove the #if here.  was present just because CreateAndroidOverlay must be android only (refers to the mojo impl, which is android only).\n\nthen again, it\u0027s not useful code so maybe leaving as is.",
+      "revId": "ff14cab6bbadc4405fe53303ebdac231e07c7cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689c9dae_1e8997db",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-26T17:53:17Z",
+      "side": 1,
+      "message": "if MojoAndroidOverlay talks to |overlay_provider| before this completes, what happens?  that\u0027s a nifty thing to remember if so.\n\nor does this rely on the consumer not touching the overlays from the current thread, so it\u0027s serialized on the main thread anyway?",
+      "revId": "ff14cab6bbadc4405fe53303ebdac231e07c7cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5eca18b_f53c92ff",
         "filename": "content/gpu/gpu_service_factory.h",
         "patchSetId": 1
@@ -45,6 +103,30 @@
       "revId": "ff14cab6bbadc4405fe53303ebdac231e07c7cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ca01c3_d6c72e65",
+        "filename": "content/gpu/gpu_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-26T17:53:17Z",
+      "side": 1,
+      "message": "you\u0027re correct -- the factory and config types aren\u0027t android only.  done to prevent a lot of #if\u0027s.\n\nthe actual AndroidOverlay API class and mojo impl, however, are android only since the api uses java refs.",
+      "parentUuid": "f5eca18b_f53c92ff",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "ff14cab6bbadc4405fe53303ebdac231e07c7cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
