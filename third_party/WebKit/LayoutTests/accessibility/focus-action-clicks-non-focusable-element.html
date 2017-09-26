@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<div id="non-focusable-element">Div</div>
+<button id="focusable-element">Button</button>
+
+<script>
+test(function() {
+  if (document.activeElement)
+    document.activeElement.blur();
+
+  var nonFocusable = document.getElementById('non-focusable-element');
+  var axNonFocusable = accessibilityController.accessibleElementById('non-focusable-element');
+
+  var gotEvent = false;
+  nonFocusable.addEventListener('click', function(e) {
+    gotEvent = true;
+  });
+  axNonFocusable.takeFocus();
+
+  assert_true(gotClickEvent);
+  assert_not_equals(document.activeElement, nonFocusable);
+  nonFocusable.display = 'none';
+}, 'A click event should be dispatched if an element cannot take focus.');
+
+test(function() {
+  if (document.activeElement)
+    document.activeElement.blur();
+
+  var focusable = document.getElementById('focusable-element');
+  var axFocusable = accessibilityController.accessibleElementById('focusable-element');
+
+  var gotEvent = false;
+  focusable.addEventListener('click', function(e) {
+    gotEvent = true;
+  });
+  axFocusable.takeFocus();
+
+  assert_false(gotClickEvent);
+  assert_equals(document.activeElement, focusable);
+  focusable.display = 'none';
+}, 'A click event should not be dispatched if an element is focusable.');
+</script>
