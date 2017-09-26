@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db44a2eb_e89bec7d",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-26T15:43:25Z",
+      "side": 1,
+      "message": "Can we just get rid of both casts instead?   They\u0027re both Categories.\n\nAlso, are enums really unsigned by default on OSX non-component builds?  Or is something else going on here?",
+      "range": {
+        "startLine": 922,
+        "startChar": 29,
+        "endLine": 922,
+        "endChar": 30
+      },
+      "revId": "1a8c66402b42b86cdd3fca52d3ed7296741f0889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
