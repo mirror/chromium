@@ -22,6 +22,30 @@
       "revId": "73741a92fe539cf54efc54f2ad5901675c552140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74711826_8ccf963a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-09-26T04:56:32Z",
+      "side": 1,
+      "message": "Done. Sorry, missed it in previous patch.",
+      "parentUuid": "0ee2f073_d90fcf53",
+      "range": {
+        "startLine": 418,
+        "startChar": 30,
+        "endLine": 418,
+        "endChar": 62
+      },
+      "revId": "73741a92fe539cf54efc54f2ad5901675c552140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
