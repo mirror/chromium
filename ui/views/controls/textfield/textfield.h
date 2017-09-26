@@ -213,6 +213,11 @@ class VIEWS_EXPORT Textfield : public View,
   // Set the accessible name of the text field.
   void SetAccessibleName(const base::string16& name);
 
+  // Set bullet as the password replacement char for TEXT_INPUT_TYPE_PASSWORD.
+  void set_password_replacement_char_to_bullet() {
+    GetRenderText()->set_password_replacement_char_to_bullet();
+  }
+
   // View overrides:
   gfx::Insets GetInsets() const override;
   int GetBaseline() const override;
