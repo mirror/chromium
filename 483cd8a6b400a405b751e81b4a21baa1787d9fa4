@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ba47be9_b6cb3542",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T17:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f77c92_4410e70e",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb64d67d_0b88f460",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "35a4f574_f9babf02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T17:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb64d67d_0b88f460",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5041d0da_291c59cf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T17:34:02Z",
       "side": 1,
       "message": "This is more for informing myself, but is requestUpdate here then OK to be called multiple times for the same frame? Because we will get this update here and then if we add another animator then we will still get that second requestUpdate. Or is it required to exactly have two calls? I guess I am confused about mWasUpdateRequestedForAnimationStart and this one call to request here.",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "483cd8a6b400a405b751e81b4a21baa1787d9fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe9b77c_59d7e7a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T17:12:06Z",
+      "side": 1,
+      "message": "In practice this is to prevent needlessly hitting requestUpdate if multiple animations start at the same time. The only case where this would be called more than once per frame is if an animation starts in an onAnimationUpdate event, in which case it would be called twice.",
+      "parentUuid": "5041d0da_291c59cf",
       "range": {
         "startLine": 89,
         "startChar": 20,
