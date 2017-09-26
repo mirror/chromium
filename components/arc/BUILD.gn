@@ -204,6 +204,10 @@ mojom("arc_bindings") {
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
+
+  # ARC is built outside of the Chromium source tree, so we need to have stable
+  # message IDs for the generated bindings.
+  scramble_message_ids = false
 }
 
 static_library("arc_test_support") {
