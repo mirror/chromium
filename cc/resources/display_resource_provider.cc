@@ -48,11 +48,11 @@ void DisplayResourceProvider::SendPromotionHints(
     if (it->second.marked_for_deletion)
       continue;
 
-    const Resource* resource = LockForRead(id);
+    const viz::internal::RemotableResource* resource = LockForRead(id);
     DCHECK(resource->wants_promotion_hint);
 
     // Insist that this is backed by a GPU texture.
-    if (ResourceProvider::IsGpuResourceType(resource->type)) {
+    if (viz::internal::RemotableResource::IsGpuResourceType(resource->type)) {
       DCHECK(resource->gl_id);
       auto iter = promotion_hints.find(id);
       bool promotable = iter != promotion_hints.end();
@@ -164,15 +164,17 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   for (viz::ResourceId local_id : unused) {
     ResourceMap::iterator it = resources_.find(local_id);
     CHECK(it != resources_.end());
-    Resource& resource = it->second;
+    viz::internal::RemotableResource& resource = it->second;
 
     DCHECK(!resource.locked_for_write);
 
     viz::ResourceId child_id = resource.id_in_child;
     DCHECK(child_info->child_to_parent_map.count(child_id));
 
-    bool is_lost = resource.lost ||
-                   (IsGpuResourceType(resource.type) && lost_context_provider_);
+    bool is_lost =
+        resource.lost ||
+        (viz::internal::RemotableResource::IsGpuResourceType(resource.type) &&
+         lost_context_provider_);
     if (resource.exported_count > 0 || resource.lock_for_read_count > 0) {
       if (style != FOR_SHUTDOWN) {
         // Defer this resource deletion.
@@ -193,7 +195,7 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
       is_lost = true;
     }
 
-    if (IsGpuResourceType(resource.type) &&
+    if (viz::internal::RemotableResource::IsGpuResourceType(resource.type) &&
         resource.filter != resource.original_filter) {
       DCHECK(resource.target);
       DCHECK(resource.gl_id);
@@ -213,7 +215,8 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
     returned.lost = is_lost;
     to_return.push_back(returned);
 
-    if (IsGpuResourceType(resource.type) && child_info->needs_sync_tokens) {
+    if (viz::internal::RemotableResource::IsGpuResourceType(resource.type) &&
+        child_info->needs_sync_tokens) {
       if (resource.needs_sync_token()) {
         need_synchronization_resources.push_back(&to_return.back());
       } else if (returned.sync_token.HasData() &&
@@ -271,7 +274,8 @@ void DisplayResourceProvider::ReceiveFromChild(
     ResourceIdMap::iterator resource_in_map_it =
         child_info.child_to_parent_map.find(it->id);
     if (resource_in_map_it != child_info.child_to_parent_map.end()) {
-      Resource* resource = GetResource(resource_in_map_it->second);
+      viz::internal::RemotableResource* resource =
+          GetResource(resource_in_map_it->second);
       resource->marked_for_deletion = false;
       resource->imported_count++;
       continue;
@@ -288,17 +292,21 @@ void DisplayResourceProvider::ReceiveFromChild(
     }
 
     viz::ResourceId local_id = next_id_++;
-    Resource* resource = nullptr;
+    viz::internal::RemotableResource* resource = nullptr;
     if (it->is_software) {
-      resource = InsertResource(local_id,
-                                Resource(it->mailbox_holder.mailbox, it->size,
-                                         Resource::DELEGATED, GL_LINEAR));
+      resource = InsertResource(
+          local_id,
+          viz::internal::RemotableResource(
+              it->mailbox_holder.mailbox, it->size,
+              viz::internal::RemotableResource::DELEGATED, GL_LINEAR));
     } else {
       resource = InsertResource(
-          local_id, Resource(0, it->size, Resource::DELEGATED,
-                             it->mailbox_holder.texture_target, it->filter,
-                             TEXTURE_HINT_IMMUTABLE, RESOURCE_TYPE_GL_TEXTURE,
-                             it->format));
+          local_id,
+          viz::internal::RemotableResource(
+              0, it->size, viz::internal::RemotableResource::DELEGATED,
+              it->mailbox_holder.texture_target, it->filter,
+              viz::RemotableResourceTextureHint::kImmutable,
+              viz::RemotableResourceType::kTexture, it->format));
       resource->buffer_format = it->buffer_format;
       resource->SetMailbox(viz::TextureMailbox(
           it->mailbox_holder.mailbox, it->mailbox_holder.sync_token,
@@ -356,16 +364,17 @@ DisplayResourceProvider::ScopedReadLockGL::ScopedReadLockGL(
     DisplayResourceProvider* resource_provider,
     viz::ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
-  const Resource* resource = resource_provider->LockForRead(resource_id);
+  const viz::internal::RemotableResource* resource =
+      resource_provider->LockForRead(resource_id);
   texture_id_ = resource->gl_id;
   target_ = resource->target;
   size_ = resource->size;
   color_space_ = resource->color_space;
 }
 
-const ResourceProvider::Resource* DisplayResourceProvider::LockForRead(
+const viz::internal::RemotableResource* DisplayResourceProvider::LockForRead(
     viz::ResourceId id) {
-  Resource* resource = GetResource(id);
+  viz::internal::RemotableResource* resource = GetResource(id);
   DCHECK(!resource->locked_for_write)
       << "locked for write: " << resource->locked_for_write;
   DCHECK_EQ(resource->exported_count, 0);
@@ -374,10 +383,12 @@ const ResourceProvider::Resource* DisplayResourceProvider::LockForRead(
 
   // Mailbox sync_tokens must be processed by a call to WaitSyncToken() prior to
   // calling LockForRead().
-  DCHECK_NE(Resource::NEEDS_WAIT, resource->synchronization_state());
+  DCHECK_NE(viz::internal::RemotableResource::NEEDS_WAIT,
+            resource->synchronization_state());
 
-  if (IsGpuResourceType(resource->type) && !resource->gl_id) {
-    DCHECK(resource->origin != Resource::INTERNAL);
+  if (viz::internal::RemotableResource::IsGpuResourceType(resource->type) &&
+      !resource->gl_id) {
+    DCHECK(resource->origin != viz::internal::RemotableResource::INTERNAL);
     DCHECK(resource->mailbox().IsTexture());
 
     GLES2Interface* gl = ContextGL();
@@ -413,7 +424,7 @@ void DisplayResourceProvider::UnlockForRead(viz::ResourceId id) {
   ResourceMap::iterator it = resources_.find(id);
   CHECK(it != resources_.end());
 
-  Resource* resource = &it->second;
+  viz::internal::RemotableResource* resource = &it->second;
   DCHECK_GT(resource->lock_for_read_count, 0);
   DCHECK_EQ(resource->exported_count, 0);
   resource->lock_for_read_count--;
@@ -461,7 +472,8 @@ DisplayResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
     DisplayResourceProvider* resource_provider,
     viz::ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
-  const Resource* resource = resource_provider->LockForRead(resource_id);
+  const viz::internal::RemotableResource* resource =
+      resource_provider->LockForRead(resource_id);
   if (resource_provider_->resource_sk_image_.find(resource_id) !=
       resource_provider_->resource_sk_image_.end()) {
     // Use cached sk_image.
@@ -502,7 +514,8 @@ DisplayResourceProvider::ScopedReadLockSoftware::ScopedReadLockSoftware(
     DisplayResourceProvider* resource_provider,
     viz::ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
-  const Resource* resource = resource_provider->LockForRead(resource_id);
+  const viz::internal::RemotableResource* resource =
+      resource_provider->LockForRead(resource_id);
   resource_provider->PopulateSkBitmapWithResource(&sk_bitmap_, resource);
 }
 

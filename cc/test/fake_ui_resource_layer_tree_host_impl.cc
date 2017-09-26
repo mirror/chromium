@@ -24,7 +24,7 @@ void FakeUIResourceLayerTreeHostImpl::CreateUIResource(
 
   UIResourceData data;
   data.resource_id = resource_provider()->CreateResource(
-      bitmap.GetSize(), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      bitmap.GetSize(), viz::RemotableResourceTextureHint::kImmutable,
       viz::RGBA_8888, gfx::ColorSpace());
 
   data.opaque = bitmap.GetOpaque();

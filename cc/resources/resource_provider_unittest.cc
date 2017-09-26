@@ -403,15 +403,15 @@ void GetResourcePixels(DisplayResourceProvider* resource_provider,
                        uint8_t* pixels) {
   resource_provider->WaitSyncToken(id);
   switch (resource_provider->default_resource_type()) {
-    case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE: {
+    case viz::RemotableResourceType::kGpuMemoryBuffer:
+    case viz::RemotableResourceType::kTexture: {
       DisplayResourceProvider::ScopedReadLockGL lock_gl(resource_provider, id);
       ASSERT_NE(0U, lock_gl.texture_id());
       context->bindTexture(GL_TEXTURE_2D, lock_gl.texture_id());
       context->GetPixels(size, format, pixels);
       break;
     }
-    case ResourceProvider::RESOURCE_TYPE_BITMAP: {
+    case viz::RemotableResourceType::kBitmap: {
       DisplayResourceProvider::ScopedReadLockSoftware lock_software(
           resource_provider, id);
       memcpy(pixels,
@@ -423,15 +423,15 @@ void GetResourcePixels(DisplayResourceProvider* resource_provider,
 }
 
 class ResourceProviderTest
-    : public testing::TestWithParam<ResourceProvider::ResourceType> {
+    : public testing::TestWithParam<viz::RemotableResourceType> {
  public:
   explicit ResourceProviderTest(bool child_needs_sync_token)
       : shared_data_(ContextSharedData::Create()),
         context3d_(NULL),
         child_context_(NULL) {
     switch (GetParam()) {
-      case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-      case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE: {
+      case viz::RemotableResourceType::kGpuMemoryBuffer:
+      case viz::RemotableResourceType::kTexture: {
         std::unique_ptr<ResourceProviderContext> context3d(
             ResourceProviderContext::Create(shared_data_.get()));
         context3d_ = context3d.get();
@@ -446,7 +446,7 @@ class ResourceProviderTest
         child_context_provider_->BindToCurrentThread();
         break;
       }
-      case ResourceProvider::RESOURCE_TYPE_BITMAP:
+      case viz::RemotableResourceType::kBitmap:
         break;
     }
 
@@ -493,7 +493,7 @@ class ResourceProviderTest
                                      bool* lost_resource,
                                      bool* release_called,
                                      gpu::SyncToken* sync_token) {
-    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+    if (GetParam() == viz::RemotableResourceType::kTexture) {
       unsigned texture = child_context_->createTexture();
       gpu::Mailbox gpu_mailbox;
       child_context_->genMailboxCHROMIUM(gpu_mailbox.name);
@@ -540,7 +540,7 @@ class ResourceProviderTest
   std::unique_ptr<TestSharedBitmapManager> shared_bitmap_manager_;
 };
 
-void CheckCreateResource(ResourceProvider::ResourceType expected_default_type,
+void CheckCreateResource(viz::RemotableResourceType expected_default_type,
                          DisplayResourceProvider* resource_provider,
                          ResourceProviderContext* context) {
   DCHECK_EQ(expected_default_type, resource_provider->default_resource_type());
@@ -551,15 +551,15 @@ void CheckCreateResource(ResourceProvider::ResourceType expected_default_type,
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   EXPECT_EQ(1, static_cast<int>(resource_provider->num_resources()));
-  if (expected_default_type == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (expected_default_type == viz::RemotableResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 
   uint8_t data[4] = { 1, 2, 3, 4 };
   resource_provider->CopyToResource(id, data, size);
-  if (expected_default_type == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (expected_default_type == viz::RemotableResourceType::kTexture)
     EXPECT_EQ(1u, context->NumTextures());
 
   uint8_t result[4] = { 0 };
@@ -568,7 +568,7 @@ void CheckCreateResource(ResourceProvider::ResourceType expected_default_type,
 
   resource_provider->DeleteResource(id);
   EXPECT_EQ(0, static_cast<int>(resource_provider->num_resources()));
-  if (expected_default_type == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (expected_default_type == viz::RemotableResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 }
 
@@ -583,7 +583,7 @@ TEST_P(ResourceProviderTest, SimpleUpload) {
   ASSERT_EQ(16U, pixel_size);
 
   viz::ResourceId id = resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
 
   uint8_t image[16] = {0};
@@ -610,7 +610,7 @@ TEST_P(ResourceProviderTest, SimpleUpload) {
 }
 
 TEST_P(ResourceProviderTest, TransferGLResources) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
@@ -619,18 +619,19 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
 
   gfx::ColorSpace color_space1 = gfx::ColorSpace::CreateSRGB();
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format, color_space1);
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
+      color_space1);
   uint8_t data1[4] = { 1, 2, 3, 4 };
   child_resource_provider_->CopyToResource(id1, data1, size);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data2[4] = { 5, 5, 5, 5 };
   child_resource_provider_->CopyToResource(id2, data2, size);
 
   viz::ResourceId id3 = child_resource_provider_->CreateGpuMemoryBufferResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, gfx::ColorSpace());
   {
     LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer lock(
@@ -883,7 +884,7 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
 
 #if defined(OS_ANDROID)
 TEST_P(ResourceProviderTest, OverlayPromotionHint) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   GLuint external_texture_id = child_context_->createExternalTexture();
@@ -982,7 +983,7 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
 class ResourceProviderTestNoSyncToken : public ResourceProviderTest {
  public:
   ResourceProviderTestNoSyncToken() : ResourceProviderTest(false) {
-    EXPECT_EQ(ResourceProvider::RESOURCE_TYPE_GL_TEXTURE, GetParam());
+    EXPECT_EQ(viz::RemotableResourceType::kTexture, GetParam());
   }
 };
 
@@ -993,13 +994,13 @@ TEST_P(ResourceProviderTestNoSyncToken, TransferGLResources) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data1, size);
 
   viz::ResourceId id2 = child_resource_provider_->CreateGpuMemoryBufferResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, gfx::ColorSpace());
   {
     // Ensure locking the memory buffer doesn't create an unnecessary sync
@@ -1091,11 +1092,11 @@ TEST_P(ResourceProviderTestNoSyncToken, TransferGLResources) {
 INSTANTIATE_TEST_CASE_P(
     ResourceProviderTests,
     ResourceProviderTestNoSyncToken,
-    ::testing::Values(ResourceProvider::RESOURCE_TYPE_GL_TEXTURE));
+    ::testing::Values(viz::RemotableResourceType::kTexture));
 
 // Test that SetBatchReturnResources batching works.
 TEST_P(ResourceProviderTest, SetBatchPreventsReturn) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
@@ -1110,7 +1111,7 @@ TEST_P(ResourceProviderTest, SetBatchPreventsReturn) {
   viz::ResourceId ids[2];
   for (size_t i = 0; i < arraysize(ids); i++) {
     ids[i] = child_resource_provider_->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
     child_resource_provider_->CopyToResource(ids[i], data1, size);
     resource_ids_to_transfer.push_back(ids[i]);
@@ -1157,13 +1158,13 @@ TEST_P(ResourceProviderTest, SetBatchPreventsReturn) {
 }
 
 TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data1, size);
@@ -1204,10 +1205,11 @@ TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
   resource_provider_->DestroyChild(child_id);
 }
 
-class TestFence : public ResourceProvider::Fence {
+class TestFence : public viz::RemotableResourceFence {
  public:
   TestFence() {}
 
+  // viz::RemotableResourceFence implementation.
   void Set() override {}
   bool HasPassed() override { return passed; }
   void Wait() override {}
@@ -1219,13 +1221,13 @@ class TestFence : public ResourceProvider::Fence {
 };
 
 TEST_P(ResourceProviderTest, ReadLockFenceStopsReturnToChildOrDelete) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data1, size);
@@ -1274,20 +1276,20 @@ TEST_P(ResourceProviderTest, ReadLockFenceStopsReturnToChildOrDelete) {
 }
 
 TEST_P(ResourceProviderTest, ReadLockFenceDestroyChild) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data, size);
   child_resource_provider_->EnableReadLockFencesForTesting(id1);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   child_resource_provider_->CopyToResource(id2, data, size);
 
@@ -1339,20 +1341,20 @@ TEST_P(ResourceProviderTest, ReadLockFenceDestroyChild) {
 }
 
 TEST_P(ResourceProviderTest, ReadLockFenceContextLost) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data, size);
   child_resource_provider_->EnableReadLockFencesForTesting(id1);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   child_resource_provider_->CopyToResource(id2, data, size);
 
@@ -1397,7 +1399,7 @@ TEST_P(ResourceProviderTest, ReadLockFenceContextLost) {
 }
 
 TEST_P(ResourceProviderTest, TransferSoftwareResources) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_BITMAP)
+  if (GetParam() != viz::RemotableResourceType::kBitmap)
     return;
 
   gfx::Size size(1, 1);
@@ -1406,13 +1408,13 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = { 1, 2, 3, 4 };
   child_resource_provider_->CopyToResource(id1, data1, size);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data2[4] = { 5, 5, 5, 5 };
   child_resource_provider_->CopyToResource(id2, data2, size);
@@ -1594,7 +1596,7 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
 }
 
 TEST_P(ResourceProviderTest, TransferGLToSoftware) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_BITMAP)
+  if (GetParam() != viz::RemotableResourceType::kBitmap)
     return;
 
   scoped_refptr<TestContextProvider> child_context_provider =
@@ -1614,7 +1616,7 @@ TEST_P(ResourceProviderTest, TransferGLToSoftware) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = { 1, 2, 3, 4 };
   child_resource_provider->CopyToResource(id1, data1, size);
@@ -1653,7 +1655,7 @@ TEST_P(ResourceProviderTest, TransferGLToSoftware) {
 }
 
 TEST_P(ResourceProviderTest, TransferInvalidSoftware) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_BITMAP)
+  if (GetParam() != viz::RemotableResourceType::kBitmap)
     return;
 
   gfx::Size size(1, 1);
@@ -1662,7 +1664,7 @@ TEST_P(ResourceProviderTest, TransferInvalidSoftware) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = { 1, 2, 3, 4 };
   child_resource_provider_->CopyToResource(id1, data1, size);
@@ -1711,13 +1713,13 @@ TEST_P(ResourceProviderTest, DeleteExportedResources) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = { 1, 2, 3, 4 };
   child_resource_provider_->CopyToResource(id1, data1, size);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data2[4] = {5, 5, 5, 5};
   child_resource_provider_->CopyToResource(id2, data2, size);
@@ -1735,7 +1737,7 @@ TEST_P(ResourceProviderTest, DeleteExportedResources) {
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
                                                   &list);
     ASSERT_EQ(2u, list.size());
-    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+    if (GetParam() == viz::RemotableResourceType::kTexture) {
       EXPECT_TRUE(list[0].mailbox_holder.sync_token.HasData());
       EXPECT_TRUE(list[1].mailbox_holder.sync_token.HasData());
     }
@@ -1770,13 +1772,13 @@ TEST_P(ResourceProviderTest, DestroyChildWithExportedResources) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id1 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data1[4] = {1, 2, 3, 4};
   child_resource_provider_->CopyToResource(id1, data1, size);
 
   viz::ResourceId id2 = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data2[4] = {5, 5, 5, 5};
   child_resource_provider_->CopyToResource(id2, data2, size);
@@ -1794,7 +1796,7 @@ TEST_P(ResourceProviderTest, DestroyChildWithExportedResources) {
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
                                                   &list);
     ASSERT_EQ(2u, list.size());
-    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+    if (GetParam() == viz::RemotableResourceType::kTexture) {
       EXPECT_TRUE(list[0].mailbox_holder.sync_token.HasData());
       EXPECT_TRUE(list[1].mailbox_holder.sync_token.HasData());
     }
@@ -1823,7 +1825,7 @@ TEST_P(ResourceProviderTest, DeleteTransferredResources) {
   ASSERT_EQ(4U, pixel_size);
 
   viz::ResourceId id = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   uint8_t data[4] = { 1, 2, 3, 4 };
   child_resource_provider_->CopyToResource(id, data, size);
@@ -1840,7 +1842,7 @@ TEST_P(ResourceProviderTest, DeleteTransferredResources) {
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
                                                   &list);
     ASSERT_EQ(1u, list.size());
-    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+    if (GetParam() == viz::RemotableResourceType::kTexture)
       EXPECT_TRUE(list[0].mailbox_holder.sync_token.HasData());
     EXPECT_TRUE(child_resource_provider_->InUseByConsumer(id));
     resource_provider_->ReceiveFromChild(child_id, list);
@@ -1862,7 +1864,7 @@ TEST_P(ResourceProviderTest, DeleteTransferredResources) {
     resource_provider_->DeclareUsedResourcesFromChild(child_id, no_resources);
 
     ASSERT_EQ(1u, returned_to_child.size());
-    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+    if (GetParam() == viz::RemotableResourceType::kTexture)
       EXPECT_TRUE(returned_to_child[0].sync_token.HasData());
     child_resource_provider_->ReceiveReturnsFromParent(returned_to_child);
   }
@@ -1911,7 +1913,7 @@ class ResourceProviderTestTextureFilters : public ResourceProviderTest {
     ASSERT_EQ(4U, pixel_size);
 
     viz::ResourceId id = child_resource_provider->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
 
     // The new texture is created with GL_LINEAR.
@@ -2014,14 +2016,14 @@ class ResourceProviderTestTextureFilters : public ResourceProviderTest {
 };
 
 TEST_P(ResourceProviderTest, TextureFilters_ChildLinearParentNearest) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   ResourceProviderTestTextureFilters::RunTest(GL_LINEAR, GL_NEAREST);
 }
 
 TEST_P(ResourceProviderTest, TransferMailboxResources) {
   // Other mailbox transfers tested elsewhere.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   unsigned texture = context()->createTexture();
   context()->bindTexture(GL_TEXTURE_2D, texture);
@@ -2157,12 +2159,12 @@ TEST_P(ResourceProviderTest, LostResourceInParent) {
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
   viz::ResourceId resource = child_resource_provider_->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   child_resource_provider_->AllocateForTesting(resource);
   // Expect a GL resource to be lost.
   bool should_lose_resource =
-      GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE;
+      GetParam() == viz::RemotableResourceType::kTexture;
 
   std::vector<viz::ReturnedResource> returned_to_child;
   int child_id =
@@ -2251,7 +2253,7 @@ TEST_P(ResourceProviderTest, LostMailboxInParent) {
     ASSERT_EQ(1u, returned_to_child.size());
     // Losing an output surface only loses hardware resources.
     EXPECT_EQ(returned_to_child[0].lost,
-              GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE);
+              GetParam() == viz::RemotableResourceType::kTexture);
     child_resource_provider_->ReceiveReturnsFromParent(returned_to_child);
     returned_to_child.clear();
   }
@@ -2259,8 +2261,7 @@ TEST_P(ResourceProviderTest, LostMailboxInParent) {
   // Delete the resource in the child. Expect the resource to be lost if it's
   // a GL texture.
   child_resource_provider_->DeleteResource(resource);
-  EXPECT_EQ(lost_resource,
-            GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE);
+  EXPECT_EQ(lost_resource, GetParam() == viz::RemotableResourceType::kTexture);
 }
 
 TEST_P(ResourceProviderTest, Shutdown) {
@@ -2276,7 +2277,7 @@ TEST_P(ResourceProviderTest, Shutdown) {
 
   child_resource_provider_ = nullptr;
 
-  if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+  if (GetParam() == viz::RemotableResourceType::kTexture) {
     EXPECT_LE(sync_token.release_count(), release_sync_token.release_count());
   }
   EXPECT_TRUE(release_called);
@@ -2309,7 +2310,7 @@ TEST_P(ResourceProviderTest, ShutdownWithExportedResource) {
 
 TEST_P(ResourceProviderTest, LostContext) {
   // viz::TextureMailbox callbacks only exist for GL textures for now.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   unsigned texture = context()->createTexture();
   context()->bindTexture(GL_TEXTURE_2D, texture);
@@ -2342,7 +2343,7 @@ TEST_P(ResourceProviderTest, LostContext) {
 
 TEST_P(ResourceProviderTest, ScopedSampler) {
   // Sampling is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2362,7 +2363,7 @@ TEST_P(ResourceProviderTest, ScopedSampler) {
   int texture_id = 1;
 
   viz::ResourceId id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
 
   // Check that the texture gets created with the right sampler settings.
@@ -2420,7 +2421,7 @@ TEST_P(ResourceProviderTest, ScopedSampler) {
 
 TEST_P(ResourceProviderTest, ManagedResource) {
   // Sampling is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2441,7 +2442,7 @@ TEST_P(ResourceProviderTest, ManagedResource) {
 
   // Check that the texture gets created with the right sampler settings.
   viz::ResourceId id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
   EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, texture_id));
   EXPECT_CALL(*context,
@@ -2462,7 +2463,7 @@ TEST_P(ResourceProviderTest, ManagedResource) {
 
 TEST_P(ResourceProviderTest, TextureWrapMode) {
   // Sampling is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2483,7 +2484,7 @@ TEST_P(ResourceProviderTest, TextureWrapMode) {
   for (int texture_id = 1; texture_id <= 2; ++texture_id) {
     // Check that the texture gets created with the right sampler settings.
     viz::ResourceId id = resource_provider->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, texture_id));
     EXPECT_CALL(*context,
@@ -2503,7 +2504,7 @@ TEST_P(ResourceProviderTest, TextureWrapMode) {
 
 TEST_P(ResourceProviderTest, TextureHint) {
   // Sampling is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2523,11 +2524,12 @@ TEST_P(ResourceProviderTest, TextureHint) {
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
 
-  const ResourceProvider::TextureHint hints[4] = {
-      ResourceProvider::TEXTURE_HINT_DEFAULT,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-      ResourceProvider::TEXTURE_HINT_FRAMEBUFFER,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+  const viz::RemotableResourceTextureHint hints[4] = {
+      viz::RemotableResourceTextureHint::kDefault,
+      viz::RemotableResourceTextureHint::kImmutable,
+      viz::RemotableResourceTextureHint::kFramebuffer,
+      viz::RemotableResourceTextureHint::kImmutable |
+          viz::RemotableResourceTextureHint::kFramebuffer,
   };
   for (GLuint texture_id = 1; texture_id <= arraysize(hints); ++texture_id) {
     // Check that the texture gets created with the right sampler settings.
@@ -2546,7 +2548,7 @@ TEST_P(ResourceProviderTest, TextureHint) {
         texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
     // Check only TEXTURE_HINT_FRAMEBUFFER set GL_TEXTURE_USAGE_ANGLE.
     bool is_framebuffer_hint =
-        hints[texture_id - 1] & ResourceProvider::TEXTURE_HINT_FRAMEBUFFER;
+        hints[texture_id - 1] & viz::RemotableResourceTextureHint::kFramebuffer;
     EXPECT_CALL(*context,
                 texParameteri(GL_TEXTURE_2D,
                               GL_TEXTURE_USAGE_ANGLE,
@@ -2560,7 +2562,7 @@ TEST_P(ResourceProviderTest, TextureHint) {
 }
 
 TEST_P(ResourceProviderTest, TextureMailbox_SharedMemory) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_BITMAP)
+  if (GetParam() != viz::RemotableResourceType::kBitmap)
     return;
 
   gfx::Size size(64, 64);
@@ -2693,7 +2695,7 @@ class ResourceProviderTestTextureMailboxGLFilters
 
 TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_LinearToLinear) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   ResourceProviderTestTextureMailboxGLFilters::RunTest(
@@ -2705,7 +2707,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_LinearToLinear) {
 
 TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_NearestToNearest) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   ResourceProviderTestTextureMailboxGLFilters::RunTest(
@@ -2717,7 +2719,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_NearestToNearest) {
 
 TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_NearestToLinear) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   ResourceProviderTestTextureMailboxGLFilters::RunTest(
@@ -2729,7 +2731,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_NearestToLinear) {
 
 TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_LinearToNearest) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   ResourceProviderTestTextureMailboxGLFilters::RunTest(
@@ -2741,7 +2743,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTexture2D_LinearToNearest) {
 
 TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2809,7 +2811,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
 TEST_P(ResourceProviderTest,
        TextureMailbox_WaitSyncTokenIfNeeded_WithSyncToken) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2863,7 +2865,7 @@ TEST_P(ResourceProviderTest,
 
 TEST_P(ResourceProviderTest, TextureMailbox_WaitSyncTokenIfNeeded_NoSyncToken) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -2911,7 +2913,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_WaitSyncTokenIfNeeded_NoSyncToken) {
 
 TEST_P(ResourceProviderTest, TextureMailbox_PrepareSendToParent_NoSyncToken) {
   // Mailboxing is only supported for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<TextureStateTrackingContext> context_owned(
@@ -3025,7 +3027,7 @@ class AllocationTrackingContext3D : public TextureStateTrackingContext {
 
 TEST_P(ResourceProviderTest, TextureAllocation) {
   // Only for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3048,7 +3050,7 @@ TEST_P(ResourceProviderTest, TextureAllocation) {
 
   // Lazy allocation. Don't allocate when creating the resource.
   id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
 
   EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
@@ -3062,7 +3064,7 @@ TEST_P(ResourceProviderTest, TextureAllocation) {
 
   // Do allocate when we set the pixels.
   id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace());
 
   EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
@@ -3079,7 +3081,7 @@ TEST_P(ResourceProviderTest, TextureAllocation) {
 
 TEST_P(ResourceProviderTest, TextureAllocationHint) {
   // Only for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3099,11 +3101,12 @@ TEST_P(ResourceProviderTest, TextureAllocationHint) {
 
   const viz::ResourceFormat formats[3] = {viz::RGBA_8888, viz::BGRA_8888,
                                           viz::RGBA_F16};
-  const ResourceProvider::TextureHint hints[4] = {
-      ResourceProvider::TEXTURE_HINT_DEFAULT,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-      ResourceProvider::TEXTURE_HINT_FRAMEBUFFER,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+  const viz::RemotableResourceTextureHint hints[4] = {
+      viz::RemotableResourceTextureHint::kDefault,
+      viz::RemotableResourceTextureHint::kImmutable,
+      viz::RemotableResourceTextureHint::kFramebuffer,
+      viz::RemotableResourceTextureHint::kImmutable |
+          viz::RemotableResourceTextureHint::kFramebuffer,
   };
   for (size_t i = 0; i < arraysize(formats); ++i) {
     for (GLuint texture_id = 1; texture_id <= arraysize(hints); ++texture_id) {
@@ -3114,7 +3117,7 @@ TEST_P(ResourceProviderTest, TextureAllocationHint) {
       EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
       EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, texture_id)).Times(2);
       bool is_immutable_hint =
-          hints[texture_id - 1] & ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+          hints[texture_id - 1] & viz::RemotableResourceTextureHint::kImmutable;
       bool support_immutable_texture =
           is_immutable_hint && formats[i] != viz::BGRA_8888;
       EXPECT_CALL(*context, texStorage2DEXT(_, _, _, 2, 2))
@@ -3133,7 +3136,7 @@ TEST_P(ResourceProviderTest, TextureAllocationHint) {
 
 TEST_P(ResourceProviderTest, TextureAllocationHint_BGRA) {
   // Only for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3153,11 +3156,12 @@ TEST_P(ResourceProviderTest, TextureAllocationHint_BGRA) {
   gfx::Size size(2, 2);
   const viz::ResourceFormat formats[2] = {viz::RGBA_8888, viz::BGRA_8888};
 
-  const ResourceProvider::TextureHint hints[4] = {
-      ResourceProvider::TEXTURE_HINT_DEFAULT,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-      ResourceProvider::TEXTURE_HINT_FRAMEBUFFER,
-      ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+  const viz::RemotableResourceTextureHint hints[4] = {
+      viz::RemotableResourceTextureHint::kDefault,
+      viz::RemotableResourceTextureHint::kImmutable,
+      viz::RemotableResourceTextureHint::kFramebuffer,
+      viz::RemotableResourceTextureHint::kImmutable |
+          viz::RemotableResourceTextureHint::kFramebuffer,
   };
   for (size_t i = 0; i < arraysize(formats); ++i) {
     for (GLuint texture_id = 1; texture_id <= arraysize(hints); ++texture_id) {
@@ -3168,7 +3172,7 @@ TEST_P(ResourceProviderTest, TextureAllocationHint_BGRA) {
       EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
       EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, texture_id)).Times(2);
       bool is_immutable_hint =
-          hints[texture_id - 1] & ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+          hints[texture_id - 1] & viz::RemotableResourceTextureHint::kImmutable;
       EXPECT_CALL(*context, texStorage2DEXT(_, _, _, 2, 2))
           .Times(is_immutable_hint ? 1 : 0);
       EXPECT_CALL(*context, texImage2D(_, _, _, 2, 2, _, _, _, _))
@@ -3185,7 +3189,7 @@ TEST_P(ResourceProviderTest, TextureAllocationHint_BGRA) {
 
 TEST_P(ResourceProviderTest, Image_GLTexture) {
   // Only for GL textures.
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3206,7 +3210,7 @@ TEST_P(ResourceProviderTest, Image_GLTexture) {
           kEnableColorCorrectRendering, CreateResourceSettings()));
 
   viz::ResourceId id = resource_provider->CreateGpuMemoryBufferResource(
-      gfx::Size(kWidth, kHeight), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      gfx::Size(kWidth, kHeight), viz::RemotableResourceTextureHint::kImmutable,
       format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, gfx::ColorSpace());
 
   InSequence sequence;
@@ -3243,7 +3247,7 @@ TEST_P(ResourceProviderTest, Image_GLTexture) {
 }
 
 TEST_P(ResourceProviderTest, CompressedTextureETC1Allocate) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
@@ -3262,7 +3266,7 @@ TEST_P(ResourceProviderTest, CompressedTextureETC1Allocate) {
   int texture_id = 123;
 
   viz::ResourceId id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::ETC1,
+      size, viz::RemotableResourceTextureHint::kImmutable, viz::ETC1,
       gfx::ColorSpace());
   EXPECT_NE(0u, id);
   EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
@@ -3274,7 +3278,7 @@ TEST_P(ResourceProviderTest, CompressedTextureETC1Allocate) {
 }
 
 TEST_P(ResourceProviderTest, CompressedTextureETC1Upload) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
@@ -3294,7 +3298,7 @@ TEST_P(ResourceProviderTest, CompressedTextureETC1Upload) {
   uint8_t pixels[8];
 
   viz::ResourceId id = resource_provider->CreateResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::ETC1,
+      size, viz::RemotableResourceTextureHint::kImmutable, viz::ETC1,
       gfx::ColorSpace());
   EXPECT_NE(0u, id);
   EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
@@ -3308,11 +3312,10 @@ TEST_P(ResourceProviderTest, CompressedTextureETC1Upload) {
   resource_provider->DeleteResource(id);
 }
 
-INSTANTIATE_TEST_CASE_P(
-    ResourceProviderTests,
-    ResourceProviderTest,
-    ::testing::Values(ResourceProvider::RESOURCE_TYPE_GL_TEXTURE,
-                      ResourceProvider::RESOURCE_TYPE_BITMAP));
+INSTANTIATE_TEST_CASE_P(ResourceProviderTests,
+                        ResourceProviderTest,
+                        ::testing::Values(viz::RemotableResourceType::kTexture,
+                                          viz::RemotableResourceType::kBitmap));
 
 class TextureIdAllocationTrackingContext : public TestWebGraphicsContext3D {
  public:
@@ -3347,7 +3350,7 @@ TEST(ResourceProviderTest, TextureAllocationChunkSize) {
             CreateResourceSettings(kTextureAllocationChunkSize)));
 
     viz::ResourceId id = resource_provider->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
     resource_provider->AllocateForTesting(id);
     Mock::VerifyAndClearExpectations(context);
@@ -3365,7 +3368,7 @@ TEST(ResourceProviderTest, TextureAllocationChunkSize) {
             CreateResourceSettings(kTextureAllocationChunkSize)));
 
     viz::ResourceId id = resource_provider->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
     resource_provider->AllocateForTesting(id);
     Mock::VerifyAndClearExpectations(context);
@@ -3376,7 +3379,7 @@ TEST(ResourceProviderTest, TextureAllocationChunkSize) {
 }
 
 TEST_P(ResourceProviderTest, GetSyncTokenForResources) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
 
   gfx::Size size(1, 1);
@@ -3388,7 +3391,7 @@ TEST_P(ResourceProviderTest, GetSyncTokenForResources) {
   ResourceProvider::ResourceIdArray array;
   for (uint32_t i = 0; i < arraysize(release_counts); ++i) {
     viz::ResourceId id = child_resource_provider_->CreateResource(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+        size, viz::RemotableResourceTextureHint::kImmutable, format,
         gfx::ColorSpace());
     array.push_back(id);
 
@@ -3406,7 +3409,7 @@ TEST_P(ResourceProviderTest, GetSyncTokenForResources) {
 }
 
 TEST_P(ResourceProviderTest, ScopedWriteLockGL) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3426,7 +3429,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL) {
           kEnableColorCorrectRendering, CreateResourceSettings()));
 
   viz::ResourceId id = resource_provider->CreateResource(
-      gfx::Size(kWidth, kHeight), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      gfx::Size(kWidth, kHeight), viz::RemotableResourceTextureHint::kImmutable,
       format, gfx::ColorSpace());
 
   InSequence sequence;
@@ -3454,7 +3457,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL) {
 }
 
 TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3475,7 +3478,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer) {
           kEnableColorCorrectRendering, CreateResourceSettings()));
 
   viz::ResourceId id = resource_provider->CreateGpuMemoryBufferResource(
-      gfx::Size(kWidth, kHeight), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      gfx::Size(kWidth, kHeight), viz::RemotableResourceTextureHint::kImmutable,
       format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, gfx::ColorSpace());
 
   InSequence sequence;
@@ -3506,7 +3509,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer) {
 }
 
 TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3527,7 +3530,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
           kEnableColorCorrectRendering, CreateResourceSettings()));
 
   viz::ResourceId id = resource_provider->CreateResource(
-      gfx::Size(kWidth, kHeight), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      gfx::Size(kWidth, kHeight), viz::RemotableResourceTextureHint::kImmutable,
       format, gfx::ColorSpace());
 
   InSequence sequence;
@@ -3589,7 +3592,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
 }
 
 TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer_Mailbox) {
-  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+  if (GetParam() != viz::RemotableResourceType::kTexture)
     return;
   std::unique_ptr<AllocationTrackingContext3D> context_owned(
       new StrictMock<AllocationTrackingContext3D>);
@@ -3611,7 +3614,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer_Mailbox) {
           kEnableColorCorrectRendering, CreateResourceSettings()));
 
   viz::ResourceId id = resource_provider->CreateGpuMemoryBufferResource(
-      gfx::Size(kWidth, kHeight), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      gfx::Size(kWidth, kHeight), viz::RemotableResourceTextureHint::kImmutable,
       format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, gfx::ColorSpace());
 
   InSequence sequence;
