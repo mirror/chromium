@@ -325,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "7d62bce6_3e7cad60",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-26T21:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bc6e13c_a62dcca0",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72205cf2_55ce6fda",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 6
@@ -472,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "7facfb04_bda71b7f",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-26T21:21:20Z",
+      "side": 1,
+      "message": "0 and 1 are mostly arbitrary, just something we need to keep in sync between this code (used in GPU process), and other code that is sharing textures with the GPU process.",
+      "parentUuid": "8c23ad91_cfb04f09",
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe9e8bac_35695bb0",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 6
@@ -540,6 +576,30 @@
       "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9be44ec_4ae16c51",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-09-26T21:21:20Z",
+      "side": 1,
+      "message": "Good point - the handle is only used to create/initialize texture_ and keyed_mutex_, so it represents the state of the object between the constructor and the call to Initialize().  We could pass in the handle to intialize, and avoid storing it here at all.",
+      "parentUuid": "9edebe5e_cd4994e8",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "f88deeb40f5a245e3ffe97f6327380ea955300fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
