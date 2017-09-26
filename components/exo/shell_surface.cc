@@ -12,6 +12,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/window_animations.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -33,6 +34,7 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/class_property.h"
 #include "ui/compositor/compositor.h"
+#include "ui/compositor/layer_tree_owner.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/path.h"
@@ -473,6 +475,11 @@ void ShellSurface::Maximize() {
   // maximized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Maximize();
+  window_state_ = ui::SHOW_STATE_MAXIMIZED;
+}
+
+void ShellSurface::MaximizeWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_MAXIMIZED;
 }
 
 void ShellSurface::Minimize() {
@@ -485,6 +492,7 @@ void ShellSurface::Minimize() {
   // minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Minimize();
+  window_state_ = ui::SHOW_STATE_MINIMIZED;
 }
 
 void ShellSurface::Restore() {
@@ -497,18 +505,32 @@ void ShellSurface::Restore() {
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Restore();
+  window_state_ = ui::SHOW_STATE_NORMAL;
+}
+
+void ShellSurface::RestoreWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
   TRACE_EVENT1("exo", "ShellSurface::SetFullscreen", "fullscreen", fullscreen);
 
   if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_FULLSCREEN);
+    CreateShellSurfaceWidget(fullscreen ? ui::SHOW_STATE_FULLSCREEN
+                                        : ui::SHOW_STATE_NORMAL);
 
   // Note: This will ask client to configure its surface even if fullscreen
   // state doesn't change.
   ScopedConfigure scoped_configure(this, true);
   widget_->SetFullscreen(fullscreen);
+  if (widget_->IsFullscreen())
+    window_state_ = ui::SHOW_STATE_FULLSCREEN;
+  else if (widget_->IsMaximized())
+    window_state_ = ui::SHOW_STATE_MAXIMIZED;
+  else if (widget_->IsMinimized())
+    window_state_ = ui::SHOW_STATE_MINIMIZED;
+  else
+    window_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ShellSurface::SetPinned(ash::mojom::WindowPinType type) {
@@ -781,6 +803,19 @@ void ShellSurface::OnSurfaceCommit() {
   if (pending_shadow_underlay_in_surface_ && shadow_content_bounds_changed_)
     host_window()->AllocateLocalSurfaceId();
 
+  const bool should_cross_fade =
+      (window_state_ == ui::SHOW_STATE_NORMAL &&
+       pending_window_state_ == ui::SHOW_STATE_MAXIMIZED) ||
+      ((window_state_ == ui::SHOW_STATE_MAXIMIZED ||
+        window_state_ == ui::SHOW_STATE_FULLSCREEN) &&
+       pending_window_state_ == ui::SHOW_STATE_NORMAL);
+
+  // Create fresh layers for the window and all its children to paint into and
+  // keep the old one for a cross fade animation fired below.
+  std::unique_ptr<ui::LayerTreeOwner> layer_owner_for_cross_fade;
+  if (should_cross_fade)
+    layer_owner_for_cross_fade = wm::RecreateLayers(widget_->GetNativeWindow());
+
   SurfaceTreeHost::OnSurfaceCommit();
 
   // Apply the accumulated pending origin offset to reflect acknowledged
@@ -856,6 +891,36 @@ void ShellSurface::OnSurfaceCommit() {
       orientation_compositor_lock_.reset();
   } else {
     orientation_compositor_lock_.reset();
+  }
+
+  // Fire pending window state changes, if any.
+  if (pending_window_state_ != ui::SHOW_STATE_DEFAULT) {
+    // Animate the window state with a cross fade.
+    if (layer_owner_for_cross_fade) {
+      ash::CrossFadeAnimation(widget_->GetNativeWindow(),
+                              std::move(layer_owner_for_cross_fade),
+                              gfx::Tween::EASE_OUT);
+    }
+
+    switch (pending_window_state_) {
+      case ui::SHOW_STATE_NORMAL: {
+        Restore();
+        break;
+      }
+      case ui::SHOW_STATE_MAXIMIZED: {
+        Maximize();
+        break;
+      }
+      case ui::SHOW_STATE_DEFAULT:
+      case ui::SHOW_STATE_FULLSCREEN:
+      case ui::SHOW_STATE_MINIMIZED:
+      case ui::SHOW_STATE_INACTIVE:
+      case ui::SHOW_STATE_END:
+        NOTREACHED();
+        break;
+    }
+
+    pending_window_state_ = ui::SHOW_STATE_DEFAULT;
   }
 }
 
