@@ -22,6 +22,30 @@
       "revId": "2aa69a1f862ea57638a261f352e10311528d353c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e977a20b_4f512fe2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-26T19:01:29Z",
+      "side": 1,
+      "message": "Keeping the histogram as discussed, since it\u0027s standard in Chromium code.\n\nReorganized the logic so that we don\u0027t proceed if the status is not success.",
+      "parentUuid": "76a381b3_e6e6302e",
+      "range": {
+        "startLine": 220,
+        "startChar": 57,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "2aa69a1f862ea57638a261f352e10311528d353c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
