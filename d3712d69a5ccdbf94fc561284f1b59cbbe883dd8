@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae16672b_1c277f40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "So this patch is actually adding support for alignment to positioned items,\nthanks to the usage of FindChildLogicalPosition(*child) in LayoutGrid::LayoutPositionedObjects().\nI believe the commit message should be modified and tests for that should be added.\n\nBTW, I\u0027m fine to keep \"stretch\" in a different patch\nto avoid adding more stuff to the current one.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19117a1f_982dc406",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "As I said as you\u0027re moving this I\u0027d go with HasOverrideContainingBlockForChild().",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19b0f7c_761f3f29",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "And here OverrideContainingBlockForChild().",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b83d85_d65d5577",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "This method is only used in 1 place, maybe we don\u0027t need it.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a18159d_5cec999e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "If I\u0027m not wrong, the only difference between this method and the previous one\nare these 2 lines where you get End() instead of Start().\nI believe we should be able to use the same data for calculating both things.\nOne option would be if we could pass the GridPosition by parameter.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee8263b_0fcd962a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "What about removing StartGridLineForOutOfFlowChild() and inlining that code here.\nThat way we won\u0027t need the call to EndGridLineForOutOfFlowChild() and could reuse\nthe variables already computed.\n\nThen we could cache the start_line and use it in the other methods.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2f6891_2aef44ae",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "We should understand what\u0027s going on here, in which cases this happens and if it\u0027s right or not.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ee510b_f354c0b8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "Please add tests for this branch if we\u0027re not testing it yet.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907488ea_ec3bf784",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2258,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "I believe we don\u0027t need this if. It\u0027d be enough with the \"if (line)\" below.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6e28a7_588a7f3b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2260,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "We would use the cached value here.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20caa1f8_cd597379",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2436,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-26T08:46:20Z",
+      "side": 1,
+      "message": "We would use the cached value here too.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
