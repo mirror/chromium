@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "593e2a35_17853b58",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "This old comment is too vague. Can we improve it now that we know more? When do I use one vs. the other?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5767946e_ae87d590",
         "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.cc",
         "patchSetId": 7
@@ -78,6 +95,24 @@
       "side": 1,
       "message": "Probably a semantic difference only. If the author decided to\ncall it a combo box then we should respect that on Windows.\nOn all pother platforms they should be mapped to the same thing.",
       "parentUuid": "5767946e_ae87d590",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8a5af1_0b2ea9a6",
+        "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "No action required, but a comment -- I think Matt King proposes these be exposed as a listbox, because from his point of view it\u0027s the same (up/down to choose). I suppose someone might have required a spacebar or Enter key to open it, in which case exposing it as a listbox would be bad.",
+      "parentUuid": "e3360d0a_0dada008",
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +160,64 @@
         "endLine": 4,
         "endChar": 18
       },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63bb0a0_f2c5026b",
+        "filename": "content/test/data/accessibility/aria/aria-orientation-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "Still not seeing the orientation here or in the mac expectations.",
+      "parentUuid": "dbb025ba_1f6e2705",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ed30d1_6c63a4d7",
+        "filename": "content/test/data/accessibility/aria/aria-readonly-expected-android.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "Just want to check that these changes are intentional.",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f39eb5_6c9a74c8",
+        "filename": "content/test/data/accessibility/event/aria-combo-box-collapse-expected-mac.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "This is correct?",
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -339,6 +432,40 @@
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4784bbd1_413e55ca",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "Side comment (no action required) -- it would probably be easy for these 2 methods to get out of date without anyone noticing.",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e01812_b16548d5",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-26T15:47:24Z",
+      "side": 1,
+      "message": "Are there any additional properties to expose so the user knows it\u0027s a special text field?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
