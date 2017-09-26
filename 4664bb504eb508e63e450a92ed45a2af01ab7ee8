@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fe592863_47509c65",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf69432_5ccc5bf1",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809d1e03_e8bdda06",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "15200061_480dc7ba",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe3e0ca1_c55fd797",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472e7e07_05a25aa8",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 2
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "Sure, only calling when there is/isn\u0027t input is fine (make sure to deal with the case of \u003e1 char being inputted at once though, discussed in a different comment), but Cleared is a confusing name. How about\n\n  enum PasswordFieldState {\n    kEmpty, kNonEmpty\n  };\n  OnPasswordFieldStateChanged(PasswordFieldState state);\n\nI wonder if this is worthwhile though - I think it is a bit more flexible and clear to just call it whenever the text has changed, despite the slight performance loss.",
       "parentUuid": "30fee2f5_a64dfc4c",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67b1d4a_901136ff",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "Done. Changed to the cleaner version.",
+      "parentUuid": "b20e2479_ea9dd3fa",
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "cf969a0c_77ffc13f",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "It seems that the SetPreferredSize(Size(20, 20)) call in the original code is a no-op. The ImageView is rendered as 36*20 checked by the dev tool. IMO we don\u0027t really need to declare a const for 20 because this value can be deduced from 204 and 184.\n\nIn terms of the height, it seems we have to either override the ImageButton or define a custom layout manager in order to enforce a height of 20? I\u0027m not sure if it\u0027s worthwhile..",
+      "parentUuid": "5d631375_f46133b1",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ece60ce_f60b0bf0",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2
@@ -210,6 +282,24 @@
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209c5b1a_4f0ba745",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ece60ce_f60b0bf0",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +335,24 @@
       "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd9978e_b26d11ac",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T02:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5d9d9f5_5d317af8",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
