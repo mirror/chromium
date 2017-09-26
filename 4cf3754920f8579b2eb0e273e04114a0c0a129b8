@@ -34,6 +34,24 @@
       "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe6d1c5_f1641218",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-26T09:38:19Z",
+      "side": 1,
+      "message": "piman@, do you have any inputs of how else to handle the cases ?\n\nFor reference if we use GrGLAssembleInterface, the proc addresses i see are available.\n\nAnd for gl interface bindings for skia, https://cs.chromium.org/chromium/src/gpu/skia_bindings/gl_bindings_skia_cmd_buffer.cc?type\u003dcs\u0026l\u003d31 we use opengles2 (for perf ?) where the extensions are not supported. \n\nIs the ui/gl bindings lookup an issue here ?",
+      "parentUuid": "bc9d1dd6_d61359cd",
+      "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
