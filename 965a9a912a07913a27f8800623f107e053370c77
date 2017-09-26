@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fc6de5cc_16a4f4eb",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-26T11:11:55Z",
+      "side": 1,
+      "message": "\u003e Just check DDI0406C, section A3.2.1 \u0027Unaligned data access\u0027.\n\u003e \n\u003e Basically unaligned access is ok if you are using VLD(1, 2, 3, 4), VST(1, 2, 3, 4).\n\nThe generated SIMD code uses VLD1, however, ...\n\n\u003e AFAICT, this block should not affect performance in ARMv8 (could you validate it similarly to the experiment in Intel for unaligned loads?).\n\n  - DDI0487B: ARMv8-A ARM Architecture Reference Manual\n  Section B2.4.3 Unaligned data access restrictions \n  Unaligned accesses typically takes a number of additional cycles to\n  complete compared to a naturally-aligned access.\n\n\u003e It *may* have an effect for ARMv7 though (not completely sure).\n\n  - DDI0406C: ARMV7-A ARMv7-R ARM Architecture Reference Manual\n  Section A3.2.3 Unaligned data access restrictions in ARMv7 and ARMv6\n  Unaligned accesses typically take a number of additional cycles to\n  complete compared to a naturally aligned transfer. The real-time\n  implications must be analyzed carefully and key data structures might\n  need to have their alignment adjusted for optimum performance.\n  Unaligned access operations must not be used for accessing memory-\n  mapped registers in a Device or Strongly-ordered memory region.\n\nSeems that unaligned access does affect perf on both ARM8/ARM7, per the manuals. A second issue is that the user of zlib on ARM may also set the SCTLR CPU register at application-level if needed to require aligned memory access (and that\u0027d fault any unaligned memory access as a result).\n\nAligning the data avoids both issues.",
+      "parentUuid": "e1fe5f3c_7b045d11",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1830dbd_aa1fc7f8",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 41
@@ -265,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "e4a74d3b_1421a4d0",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-26T11:11:55Z",
+      "side": 1,
+      "message": "I do not think we need to explain that s2 \u003c\u003c 16 is the same as * 65536.  I re-used the comment from alder32.c instead.",
+      "parentUuid": "80514297_ea31ac0f",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f1364a_479d3425",
         "filename": "third_party/zlib/adler32_simd.h",
         "patchSetId": 41
@@ -297,6 +333,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0863d5_f9240ab7",
+        "filename": "third_party/zlib/adler32_simd.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-26T11:11:55Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "bdf60376_72186f94",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
