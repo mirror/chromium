@@ -30,22 +30,15 @@ gfx::Insets FocusBorderInsets(const Label& label) {
   return label.GetInsets();
 }
 
-// Calculates the height of a line of text. Currently returns the height of
-// a label.
-int CalculateLineHeight(const gfx::FontList& font_list) {
-  Label label;
-  label.SetFontList(font_list);
-  return label.GetPreferredSize().height();
-}
-
 std::unique_ptr<Label> CreateLabelRange(
     const base::string16& text,
-    const gfx::FontList& font_list,
+    int text_context,
+    int default_style,
     const StyledLabel::RangeStyleInfo& style_info,
     views::LinkListener* link_listener) {
   std::unique_ptr<Label> result;
 
-  if (style_info.is_link) {
+  if (style_info.IsLink()) {
     Link* link = new Link(text);
     link->set_listener(link_listener);
 
@@ -53,29 +46,23 @@ std::unique_ptr<Label> CreateLabelRange(
     // the default focus style: If focus rings are not the default, nothing is
     // inset. So an individual range can't deviate from that.
     if (Link::GetDefaultFocusStyle() == Link::FocusStyle::UNDERLINE) {
-      // Nothing should (and nothing does) request underlines for links with MD.
-      DCHECK_EQ(0, style_info.font_style & gfx::Font::UNDERLINE);
+      // Nothing should (and nothing does) use a custom font for links with MD.
+      DCHECK(!style_info.custom_font);
       link->SetUnderline(false);  // Override what Link::Init() does.
     } else {
-      link->SetUnderline((style_info.font_style & gfx::Font::UNDERLINE) != 0);
+      link->SetUnderline(style_info.underline_links_in_old_ui.value_or(false));
     }
 
     result.reset(link);
+  } else if (style_info.custom_font) {
+    result.reset(new Label(text, {style_info.custom_font.value()}));
   } else {
-    result.reset(new Label(text));
+    result.reset(new Label(text, text_context,
+                           style_info.text_style.value_or(default_style)));
   }
 
-  if (style_info.color != SK_ColorTRANSPARENT)
-    result->SetEnabledColor(style_info.color);
-  result->SetFontList(font_list);
-
-  if (!style_info.tooltip.empty())
-    result->SetTooltipText(style_info.tooltip);
-  if (style_info.font_style != gfx::Font::NORMAL ||
-      style_info.weight != gfx::Font::Weight::NORMAL) {
-    result->SetFontList(result->font_list().Derive(0, style_info.font_style,
-                                                   style_info.weight));
-  }
+  if (!style_info.xtooltip.empty())
+    result->SetTooltipText(style_info.xtooltip);
 
   return result;
 }
@@ -84,12 +71,9 @@ std::unique_ptr<Label> CreateLabelRange(
 
 // StyledLabel::RangeStyleInfo ------------------------------------------------
 
-StyledLabel::RangeStyleInfo::RangeStyleInfo()
-    : font_style(gfx::Font::NORMAL),
-      weight(gfx::Font::Weight::NORMAL),
-      color(SK_ColorTRANSPARENT),
-      disable_line_wrapping(false),
-      is_link(false) {}
+StyledLabel::RangeStyleInfo::RangeStyleInfo() = default;
+StyledLabel::RangeStyleInfo::RangeStyleInfo(const RangeStyleInfo& copy) =
+    default;
 
 StyledLabel::RangeStyleInfo::~RangeStyleInfo() {}
 
@@ -97,10 +81,13 @@ StyledLabel::RangeStyleInfo::~RangeStyleInfo() {}
 StyledLabel::RangeStyleInfo StyledLabel::RangeStyleInfo::CreateForLink() {
   RangeStyleInfo result;
   result.disable_line_wrapping = true;
-  result.is_link = true;
+  result.text_style = style::STYLE_LINK;
   return result;
 }
 
+bool StyledLabel::RangeStyleInfo::IsLink() const {
+  return text_style && text_style.value() == style::STYLE_LINK;
+}
 
 // StyledLabel::StyleRange ----------------------------------------------------
 
@@ -117,9 +104,7 @@ const char StyledLabel::kViewClassName[] = "StyledLabel";
 
 StyledLabel::StyledLabel(const base::string16& text,
                          StyledLabelListener* listener)
-    : font_list_(Label().font_list()),
-      specified_line_height_(0),
-      listener_(listener),
+    : listener_(listener),
       width_at_last_size_calculation_(0),
       width_at_last_layout_(0),
       displayed_on_background_color_(SkColorSetRGB(0xFF, 0xFF, 0xFF)),
@@ -137,9 +122,8 @@ void StyledLabel::SetText(const base::string16& text) {
   PreferredSizeChanged();
 }
 
-void StyledLabel::SetBaseFontList(const gfx::FontList& font_list) {
-  font_list_ = font_list;
-  PreferredSizeChanged();
+gfx::FontList StyledLabel::DeriveDefaultFontList() const {
+  return style::GetFont(text_context_, default_text_style_);
 }
 
 void StyledLabel::AddStyleRange(const gfx::Range& range,
@@ -156,8 +140,17 @@ void StyledLabel::AddStyleRange(const gfx::Range& range,
   PreferredSizeChanged();
 }
 
-void StyledLabel::SetDefaultStyle(const RangeStyleInfo& style_info) {
-  default_style_info_ = style_info;
+void StyledLabel::SetDefaultColor(SkColor color) {
+  default_color_ = color;
+}
+
+void StyledLabel::SetTextContext(int text_context) {
+  text_context_ = text_context;
+  PreferredSizeChanged();
+}
+
+void StyledLabel::SetDefaultTextStyle(int text_style) {
+  default_text_style_ = text_style;
   PreferredSizeChanged();
 }
 
@@ -198,10 +191,12 @@ gfx::Insets StyledLabel::GetInsets() const {
     return insets;
 
   // We need a focus border iff we contain a link that will have a focus border.
-  // That in turn will be true only if the link is non-empty.
+  // That in turn will be true only if the link is non-empty. Note this
+  // intentionally ignores |underline_links_in_old_ui| since the logic must
+  // match what's done in Link.
   for (StyleRanges::const_iterator i(style_ranges_.begin());
         i != style_ranges_.end(); ++i) {
-    if (i->style_info.is_link && !i->range.is_empty()) {
+    if (i->style_info.IsLink() && !i->range.is_empty()) {
       insets += gfx::Insets(Link::kFocusBorderPadding);
       break;
     }
@@ -233,9 +228,36 @@ void StyledLabel::PreferredSizeChanged() {
   View::PreferredSizeChanged();
 }
 
+void StyledLabel::OnNativeThemeChanged(const ui::NativeTheme* theme) {
+  // TODO: update colors!
+}
+
 void StyledLabel::LinkClicked(Link* source, int event_flags) {
   if (listener_)
     listener_->StyledLabelLinkClicked(this, link_targets_[source], event_flags);
+}
+
+int StyledLabel::DeriveDefaultLineHeight() const {
+  if (specified_line_height_ > 0)
+    return specified_line_height_;
+
+  int line_spacing = style::GetLineHeight(text_context_, default_text_style_);
+  if (line_spacing > 0)
+    return line_spacing;
+
+  return DeriveDefaultFontList().GetHeight();
+}
+
+gfx::FontList StyledLabel::DeriveFontListForRange(
+    const StyleRanges::const_iterator& range) const {
+  if (range == style_ranges_.end())
+    return style::GetFont(text_context_, default_text_style_);
+
+  return range->style_info.custom_font
+             ? range->style_info.custom_font.value()
+             : style::GetFont(
+                   text_context_,
+                   range->style_info.text_style.value_or(default_text_style_));
 }
 
 gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
@@ -257,8 +279,8 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
   if (width <= 0 || text_.empty())
     return gfx::Size();
 
-  const int line_height = specified_line_height_ > 0 ? specified_line_height_
-      : CalculateLineHeight(font_list_);
+  const int line_height = DeriveDefaultLineHeight();
+
   // The index of the line we're on.
   int line = 0;
   // The x position (in pixels) of the line we're on, relative to content
@@ -267,6 +289,10 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
   int total_height = 0;
   // The width that was actually used. Guaranteed to be no larger than |width|.
   int used_width = 0;
+
+  RangeStyleInfo default_style;
+  default_style.text_style = default_text_style_;
+  default_style.colorx = default_color_;
 
   base::string16 remaining_string = text_;
   StyleRanges::const_iterator current_range = style_ranges_.begin();
@@ -298,15 +324,9 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
 
     const gfx::Rect chunk_bounds(x, 0, width - x, 2 * line_height);
     std::vector<base::string16> substrings;
-    gfx::FontList text_font_list = font_list_;
-    // If the start of the remaining text is inside a styled range, the font
-    // style may differ from the base font. The font specified by the range
-    // should be used when eliding text.
-    if (position >= range.start()) {
-      text_font_list =
-          text_font_list.Derive(0, current_range->style_info.font_style,
-                                current_range->style_info.weight);
-    }
+    gfx::FontList text_font_list = position >= range.start()
+                                       ? DeriveFontListForRange(current_range)
+                                       : DeriveDefaultFontList();
     gfx::ElideRectangleText(remaining_string,
                             text_font_list,
                             chunk_bounds.width(),
@@ -347,9 +367,10 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
       if (chunk.size() > range.end() - position)
         chunk = chunk.substr(0, range.end() - position);
 
-      label = CreateLabelRange(chunk, font_list_, style_info, this);
+      label = CreateLabelRange(chunk, text_context_, default_text_style_,
+                               style_info, this);
 
-      if (style_info.is_link && !dry_run)
+      if (style_info.IsLink() && !dry_run)
         link_targets_[label.get()] = range;
 
       if (position + chunk.size() >= range.end())
@@ -358,7 +379,8 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
       // This chunk is normal text.
       if (position + chunk.size() > range.start())
         chunk = chunk.substr(0, range.start() - position);
-      label = CreateLabelRange(chunk, font_list_, default_style_info_, this);
+      label = CreateLabelRange(chunk, text_context_, default_text_style_,
+                               default_style, this);
     }
 
     if (displayed_on_background_color_set_)

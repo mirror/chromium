@@ -339,7 +339,9 @@ TEST_F(StyledLabelTest, MAYBE_StyledRangeUnderlined) {
   const std::string underlined_text("and this should be undelined");
   InitStyledLabel(text + underlined_text);
   StyledLabel::RangeStyleInfo style_info;
-  style_info.font_style = gfx::Font::UNDERLINE;
+  style_info.xtooltip = ASCIIToUTF16("tooltip");
+  style_info.custom_font =
+      styled()->DeriveDefaultFontList().DeriveWithStyle(gfx::Font::UNDERLINE);
   styled()->AddStyleRange(
       gfx::Range(static_cast<uint32_t>(text.size()),
                  static_cast<uint32_t>(text.size() + underlined_text.size())),
@@ -363,7 +365,8 @@ TEST_F(StyledLabelTest, StyledRangeBold) {
   InitStyledLabel(bold_text + text);
 
   StyledLabel::RangeStyleInfo style_info;
-  style_info.weight = gfx::Font::Weight::BOLD;
+  style_info.custom_font = styled()->DeriveDefaultFontList().DeriveWithWeight(
+      gfx::Font::Weight::BOLD);
   styled()->AddStyleRange(
       gfx::Range(0u, static_cast<uint32_t>(bold_text.size())), style_info);
 
@@ -425,7 +428,7 @@ TEST_F(StyledLabelTest, Color) {
   InitStyledLabel(text_red + text_link + text);
 
   StyledLabel::RangeStyleInfo style_info_red;
-  style_info_red.color = SK_ColorRED;
+  style_info_red.colorx = SK_ColorRED;
   styled()->AddStyleRange(
       gfx::Range(0u, static_cast<uint32_t>(text_red.size())), style_info_red);
 
@@ -488,7 +491,7 @@ TEST_P(MDStyledLabelTest, StyledRangeWithTooltip) {
 
   InitStyledLabel(text + tooltip_text + normal_text + link_text);
   StyledLabel::RangeStyleInfo tooltip_style;
-  tooltip_style.tooltip = ASCIIToUTF16("tooltip");
+  tooltip_style.xtooltip = ASCIIToUTF16("tooltip");
   styled()->AddStyleRange(
       gfx::Range(static_cast<uint32_t>(tooltip_start),
                  static_cast<uint32_t>(tooltip_start + tooltip_text.size())),
@@ -538,24 +541,6 @@ TEST_P(MDStyledLabelTest, StyledRangeWithTooltip) {
   EXPECT_TRUE(
       styled()->child_at(2)->GetTooltipText(gfx::Point(1, 1), &tooltip));
   EXPECT_EQ(ASCIIToUTF16("tooltip"), tooltip);
-}
-
-TEST_F(StyledLabelTest, SetBaseFontList) {
-  const std::string text("This is a test block of text.");
-  InitStyledLabel(text);
-  std::string font_name("arial");
-  gfx::Font font(font_name, 30);
-  styled()->SetBaseFontList(gfx::FontList(font));
-  Label label(ASCIIToUTF16(text), Label::CustomFont{gfx::FontList(font)});
-
-  styled()->SetBounds(0,
-                      0,
-                      label.GetPreferredSize().width(),
-                      label.GetPreferredSize().height());
-
-  // Make sure we have the same sizing as a label.
-  EXPECT_EQ(label.GetPreferredSize().height(), styled()->height());
-  EXPECT_EQ(label.GetPreferredSize().width(), styled()->width());
 }
 
 TEST_F(StyledLabelTest, LineHeight) {
