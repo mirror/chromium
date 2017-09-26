@@ -93,23 +93,40 @@ void TrustStoreNSS::GetTrust(const scoped_refptr<ParsedCertificate>& cert,
     return;
   }
 
-  // TODO(eroman): Determine if |nss_matched_cert| is distrusted.
+  int trust_flags = SEC_GET_TRUST_FLAGS(&trust, trust_type_);
 
-  // Determine if the certificate is a trust anchor.
-  const int ca_trust = CERTDB_TRUSTED_CA;
-  bool is_trusted =
-      (SEC_GET_TRUST_FLAGS(&trust, trust_type_) & ca_trust) == ca_trust;
+  // Short-circuit if no relevant trust flags are present.
+  if (!(trust_flags &
+        (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED_CA | CERTDB_TRUSTED))) {
+    *out_trust = CertificateTrust::ForUnspecified();
+    return;
+  }
 
   // To consider |cert| trusted, need to additionally check that
   // |cert| is the same as |nss_matched_cert|. This is because the lookup in NSS
   // was only by issuer + serial number, so could be for a different
   // SPKI.
-  if (is_trusted &&
-      (cert->der_cert() == der::Input(nss_matched_cert->derCert.data,
-                                      nss_matched_cert->derCert.len))) {
+  if (cert->der_cert() != der::Input(nss_matched_cert->derCert.data,
+                                     nss_matched_cert->derCert.len)) {
+    *out_trust = CertificateTrust::ForUnspecified();
+    return;
+  }
+
+  // Determine if the certificate is distrusted.
+  if ((trust_flags & (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED_CA |
+                      CERTDB_TRUSTED)) == CERTDB_TERMINAL_RECORD) {
+    *out_trust = CertificateTrust::ForDistrusted();
+    return;
+  }
+
+  // Determine if the certificate is a trust anchor.
+  if ((trust_flags & CERTDB_TRUSTED_CA) == CERTDB_TRUSTED_CA) {
     *out_trust = CertificateTrust::ForTrustAnchor();
     return;
   }
+
+  // TODO(mattm): how to handle trusted server certs (CERTDB_TERMINAL_RECORD +
+  // CERTDB_TRUSTED)?
 
   *out_trust = CertificateTrust::ForUnspecified();
   return;
