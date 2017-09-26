@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6102a8b6_6ec07d92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-26T02:19:37Z",
+      "side": 1,
+      "message": "SelectionSample::Parser does conversion a pure DOM tree to one with shadow roots.\nI don\u0027t know exact term to say we want to parse: \"\u003cdiv\u003e\u003ctemplate mode\u003dopen\u003efoo\u003c/template\u003e\u003c/div\u003e\"\n\"DOMTree with shadow contents.\" sounds a dom tree with shadow roots.\nCould you use more clear term?",
+      "revId": "fea6b4e26ea6f832ceb80f41281c8eedbb11e8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5226d80_8c51e0bd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
