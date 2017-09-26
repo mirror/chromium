@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "383a29c5_fd05a63f",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/lazy-parsing-pseudo-attribute.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T05:33:38Z",
+      "side": 1,
+      "message": "Are other lazy parsing tests done using layout tests? I might be missing something, but it seems like this is not really testing lazy parsing. If lazy parsing was turned off, this test will still pass I\u0027m guessing?",
+      "revId": "653e7fd49ec678c222a2fb1c5f8e08933d3614e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
