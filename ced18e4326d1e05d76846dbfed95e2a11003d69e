@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3194b36d_035811fc",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-26T21:24:08Z",
+      "side": 1,
+      "message": "How about name this \"FullMediaPlayPage(..)\"?",
+      "revId": "ced18e4326d1e05d76846dbfed95e2a11003d69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6653f40f_12a23f05",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-26T21:24:08Z",
+      "side": 1,
+      "message": "Unrelated but these \"add_browser_metrics\" seem problematic if we want to convert this to TBMv2. Is this for outputting metrics only on certain page?",
+      "revId": "ced18e4326d1e05d76846dbfed95e2a11003d69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
