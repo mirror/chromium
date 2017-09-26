@@ -16,6 +16,24 @@
       "revId": "88517b8b19d5262da47f5941cc53a721e3eae36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed8f2a5_8783fc2d",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-26T18:27:56Z",
+      "side": 1,
+      "message": "Done. \n\nActually, this was done to avoid overriding AnimationPlayer::Tick as it has a whole bunch of\nunrelated logic. However, since I had rebased, most of that functionality has moved to AnimationTicker so overriding Tick makes more sens. \n\nNow, I simply implement an interface on player that allows it to control \nindividual tick values for each animation while actual ticking is done by ticker.\n\nPTAL.",
+      "parentUuid": "88dec965_5a979da7",
+      "revId": "88517b8b19d5262da47f5941cc53a721e3eae36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
