@@ -5,13 +5,15 @@
 #ifndef CONTENT_BROWSER_ACCESSIBILITY_ACCESSIBILITY_EVENT_RECORDER_H_
 #define CONTENT_BROWSER_ACCESSIBILITY_ACCESSIBILITY_EVENT_RECORDER_H_
 
-#include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "content/common/content_export.h"
 
 namespace content {
+
+typedef base::RepeatingCallback<void(std::string)> AccesibilityEventCallback;
 
 class BrowserAccessibilityManager;
 
@@ -32,19 +34,30 @@ class AccessibilityEventRecorder {
  public:
   // Construct the right platform-specific subclass.
   static AccessibilityEventRecorder* Create(
-      BrowserAccessibilityManager* manager);
+      BrowserAccessibilityManager* manager,
+      int pid);
   virtual ~AccessibilityEventRecorder();
+
+  void ListenToEvents(AccesibilityEventCallback callback) {
+    callback_ = std::move(callback);
+  }
 
   // Access the vector of human-readable event logs, one string per event.
   const std::vector<std::string>& event_logs() { return event_logs_; }
 
  protected:
-  explicit AccessibilityEventRecorder(BrowserAccessibilityManager* manager);
+  explicit AccessibilityEventRecorder(BrowserAccessibilityManager* manager,
+                                      int pid);
+
+  void OnEvent(std::string event) { callback_.Run(event); }
 
   BrowserAccessibilityManager* manager_;
   std::vector<std::string> event_logs_;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityEventRecorder);
+
+ private:
+  AccesibilityEventCallback callback_;
 };
 
 }  // namespace content
