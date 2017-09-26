@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b4e153a3_5fea327d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T17:32:33Z",
+      "side": 1,
+      "message": "That would be between when PM reports problems and devtools opens. If the node is removed between these two points in time, `node` is going to be nullptr. The worst is when in the message format is \"Node %o is not guilty, but node %o is!\" :)\n\nI\u0027m fine with following up. What needs to happen is each console message needs to get a frame associated with it. That way, you can pass null node into ResolveNode and you have enough information to wrap v8::Undefined in place of the collected Node.",
+      "parentUuid": "835e16de_2af96799",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d8f0e99_e0f9eff2",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
         "patchSetId": 32
