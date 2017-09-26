@@ -127,6 +127,12 @@ class MediaSessionImpl : public MediaSession,
   // |type| represents the origin of the request.
   CONTENT_EXPORT void Stop(MediaSession::SuspendType suspend_type) override;
 
+  // Seek the media session forward.
+  CONTENT_EXPORT void SeekForward(base::TimeDelta seek_time) override;
+
+  // Seek the media session backward.
+  CONTENT_EXPORT void SeekBackward(base::TimeDelta seek_time) override;
+
   // Let the media session start ducking such that the volume multiplier is
   // reduced.
   CONTENT_EXPORT void StartDucking() override;
