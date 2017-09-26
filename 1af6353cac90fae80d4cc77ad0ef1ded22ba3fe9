@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "155f840d_0291f079",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T08:51:27Z",
+      "side": 1,
+      "message": "Done.\n\n// DO NOT check directly whether these features are enabled (i.e. do\n// not use base::FeatureList::IsEnabled()).",
+      "parentUuid": "e2e7b4ba_d14cc0c3",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "1af6353cac90fae80d4cc77ad0ef1ded22ba3fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8229d1a2_7fae24f9",
         "filename": "components/ntp_snippets/features.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1af6353cac90fae80d4cc77ad0ef1ded22ba3fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbdef51_5bb79ca4",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T08:51:27Z",
+      "side": 1,
+      "message": "Done.\n\nkArticleSuggestionsFeature is independent, thus, I separated the list explicitly into dependent/independent features.\n\nAlso added comments to downloads related features in /chrome_features.cc.",
+      "parentUuid": "8229d1a2_7fae24f9",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 53
+      },
+      "revId": "1af6353cac90fae80d4cc77ad0ef1ded22ba3fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
