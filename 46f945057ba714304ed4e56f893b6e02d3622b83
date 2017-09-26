@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7af0d616_4f508a18",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "DCHECK means it should never happen. We are not supposed to also try to handle the failure \"just to stay on the safe side\".\n\nThat means pattern like \"\"\"\n  DCHECK(foo);\n  if (!foo)\n    DoSomthing();\n\"\"\" is not recommended.\n\nGoing back to your question: we don\u0027t expect this to be negative in either debug or non-debug builds.",
+      "parentUuid": "666f5f13_0a5fd6f1",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3946ff9_1f55a94d",
         "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "997284a1_6c730b19",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "There already comments about slow check in safe_browsing.mojom. But I added comments here for more clarity.",
+      "parentUuid": "b3946ff9_1f55a94d",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e8d0107_97a0c8f1",
         "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T23:49:56Z",
       "side": 1,
       "message": "Can you add a comment for this also?\nWhy is the value \"\u003d\u003d 1\" special? (there\u0027s a check for \u003d\u003d1 in one of the files)",
+      "range": {
+        "startLine": 72,
+        "startChar": 9,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3431fbf_40ad4daf",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "When going from 0 slow check to 1, we knows that the URL may be unsafe and therefore pausing caching.\n\nWe don\u0027t need to do anything from 1 pending slow checks to multiple, because caching has already been paused.",
+      "parentUuid": "4e8d0107_97a0c8f1",
       "range": {
         "startLine": 72,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3c2b190e_ec4d0acb",
+        "filename": "components/safe_browsing/renderer/renderer_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535d72a8_3df96670",
+      "range": {
+        "startLine": 99,
+        "startChar": 26,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fec90ec_f688760d",
         "filename": "components/safe_browsing/renderer/renderer_url_loader_throttle.cc",
         "patchSetId": 2
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5d629524_f58bcdd1",
+        "filename": "components/safe_browsing/renderer/renderer_url_loader_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fec90ec_f688760d",
+      "range": {
+        "startLine": 113,
+        "startChar": 28,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea63952c_046c2d8a",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-26T18:42:40Z",
       "side": 1,
       "message": "Why is this a return rather than a DCHECK?",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 10
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdbb36b_47672a31",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "I imagine that calling Resume* when it is not paused is a no-op instead of a failure. (I don\u0027t have a very strong opinion on this behavior. I just think that is pretty common.)",
+      "parentUuid": "ea63952c_046c2d8a",
       "range": {
         "startLine": 433,
         "startChar": 4,
@@ -160,6 +304,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db6db70_2eea2979",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "I added a comment to the declaration.",
+      "parentUuid": "27ae02d8_b4e50937",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 31
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +366,30 @@
       "side": 1,
       "message": "For those following along at home, Yuzhu and I talked offline about this, and the concern that drove this implementation is a) putting in an interface that it\u0027s not reasonable to simple no-op for URLLoader implementations that don\u0027t have an easy way of supporting it, and b) the distinction between an interface that will be called in band in response to a notification (CancelWithError/Resume above) and one that might be called out of band.\n\nYuzhu: Given the above, how would you feel about making these interfaces PauseNetworkRead() and ResumeNetworkRead() with commentary indicating that that won\u0027t happen if it doesn\u0027t make sense in the context of the implementation at the other end of the pipe?  That fact that reading implies caching is very much an effect of the current //net implementation that the implementation of these methods doesn\u0027t touch, so I think it\u0027s a more accurate statement?\n\nI\u0027d also like to see something in the comments about the in-band/OOB distinction you raised--I do agree it\u0027s an important one, and I don\u0027t think (?) it\u0027s been mentioned anywhere in the CL.",
       "parentUuid": "2cb5ca2c_aeb21eae",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929eb794_e6ba621e",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:03:04Z",
+      "side": 1,
+      "message": "PauseNetworkRead() sounds like we also care about pausing response header reading, which I am not sure yet how to enforce. Do we care about this inaccuracy?\n\n\nThe in-band/OOB distinction is pretty natural:\n- The current \"defer\" is an output parameter of WillStartRequest() etc. So it must be in-band.\n- All the notifications on URLLoaderThrottle::Delegate could be called both in-band/OOB.\nI added a comment above URLLoaderThrottle::Delegate.",
+      "parentUuid": "0436ce6c_0d0d4b38",
       "range": {
         "startLine": 43,
         "startChar": 17,
