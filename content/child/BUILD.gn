@@ -19,6 +19,7 @@ target(link_target_type, "child") {
   # content component (i.e. not content/test or content/shell).
   visibility = [
     ":*",
+    "//components/printing/service/public/cpp/*",
     "//content/gpu/*",
     "//content/ppapi_plugin/*",
     "//content/public/child:child_sources",
