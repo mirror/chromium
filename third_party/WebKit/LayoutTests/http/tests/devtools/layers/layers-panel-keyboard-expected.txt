@@ -1,0 +1,71 @@
+Initial
+scale: 1
+offsetX: 0
+offsetY: 0
+rotateX: 0
+rotateY: 0
+
+Pan Up
+scale: 1
+offsetX: 0
+offsetY: -12
+rotateX: 0
+rotateY: 0
+
+Pan Left
+scale: 1
+offsetX: -12
+offsetY: -12
+rotateX: 0
+rotateY: 0
+
+Rotate Left
+scale: 1
+offsetX: -12
+offsetY: -12
+rotateX: 0
+rotateY: -10
+
+Rotate Down
+scale: 1
+offsetX: -12
+offsetY: -12
+rotateX: 10
+rotateY: -10
+
+Switch to Pan and Pan Right
+scale: 1
+offsetX: 0
+offsetY: -12
+rotateX: 10
+rotateY: -10
+
+Zoom in
+scale: 1
+offsetX: 0
+offsetY: -12
+rotateX: 10
+rotateY: -10
+
+Reset
+scale: 1
+offsetX: 0
+offsetY: 0
+rotateX: 0
+rotateY: 0
+
+Zoom out
+scale: 1
+offsetX: 0
+offsetY: 0
+rotateX: 0
+rotateY: 0
+
+Toggle and Rotate Down
+scale: 1
+offsetX: 0
+offsetY: 12
+rotateX: 0
+rotateY: 0
+
+

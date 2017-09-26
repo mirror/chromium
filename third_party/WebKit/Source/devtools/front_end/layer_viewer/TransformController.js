@@ -60,43 +60,34 @@ LayerViewer.TransformController = class extends Common.Object {
   }
 
   _onKeyDown(event) {
-    if (event.keyCode === UI.KeyboardShortcut.Keys.Shift.code) {
-      this._toggleMode();
+    for (var actionId in this._shortcuts) {
+      // If the toggle shortcut is held down, we should still trigger other shortcuts
+      if (!UI.shortcutRegistry.eventMatchesAction(event, actionId, 'layers.toggle-pan-rotate'))
+        continue;
+      if (!this._shortcuts[actionId](event))
+        continue;
+      event.consume();
       return;
     }
-
-    var shortcutKey = UI.KeyboardShortcut.makeKeyFromEventIgnoringModifiers(event);
-    var handler = this._shortcuts[shortcutKey];
-    if (handler && handler(event))
-      event.consume();
   }
 
   _onKeyUp(event) {
-    if (event.keyCode === UI.KeyboardShortcut.Keys.Shift.code)
+    if (UI.shortcutRegistry.eventMatchesAction(event, 'layers.toggle-pan-rotate'))
       this._toggleMode();
   }
 
-  _addShortcuts(keys, handler) {
-    for (var i = 0; i < keys.length; ++i)
-      this._shortcuts[keys[i].key] = handler;
-  }
-
   _registerShortcuts() {
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.ResetView, this.resetAndNotify.bind(this));
-    this._addShortcuts(
-        UI.ShortcutsScreen.LayersPanelShortcuts.PanMode,
-        this._setMode.bind(this, LayerViewer.TransformController.Modes.Pan));
-    this._addShortcuts(
-        UI.ShortcutsScreen.LayersPanelShortcuts.RotateMode,
-        this._setMode.bind(this, LayerViewer.TransformController.Modes.Rotate));
+    this._shortcuts['layers.reset-view'] = this.resetAndNotify.bind(this);
+    this._shortcuts['layers.pan-mode'] = this._setMode.bind(this, LayerViewer.TransformController.Modes.Pan);
+    this._shortcuts['layers.rotate-mode'] = this._setMode.bind(this, LayerViewer.TransformController.Modes.Rotate);
+    this._shortcuts['layers.toggle-pan-rotate'] = this._toggleMode.bind(this);
     var zoomFactor = 1.1;
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.ZoomIn, this._onKeyboardZoom.bind(this, zoomFactor));
-    this._addShortcuts(
-        UI.ShortcutsScreen.LayersPanelShortcuts.ZoomOut, this._onKeyboardZoom.bind(this, 1 / zoomFactor));
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.Up, this._onKeyboardPanOrRotate.bind(this, 0, -1));
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.Down, this._onKeyboardPanOrRotate.bind(this, 0, 1));
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.Left, this._onKeyboardPanOrRotate.bind(this, -1, 0));
-    this._addShortcuts(UI.ShortcutsScreen.LayersPanelShortcuts.Right, this._onKeyboardPanOrRotate.bind(this, 1, 0));
+    this._shortcuts['layers.zoom-in'] = this._onKeyboardZoom.bind(this, zoomFactor);
+    this._shortcuts['layers.zoom-out'] = this._onKeyboardZoom.bind(this, 1 / zoomFactor);
+    this._shortcuts['layers.up'] = this._onKeyboardPanOrRotate.bind(this, 0, -1);
+    this._shortcuts['layers.down'] = this._onKeyboardPanOrRotate.bind(this, 0, 1);
+    this._shortcuts['layers.left'] = this._onKeyboardPanOrRotate.bind(this, -1, 0);
+    this._shortcuts['layers.right'] = this._onKeyboardPanOrRotate.bind(this, 1, 0);
   }
 
   _postChangeEvent() {

@@ -51,18 +51,19 @@ UI.KeyboardShortcut = class {
    * @return {number}
    */
   static makeKeyFromEvent(keyboardEvent) {
-    var modifiers = UI.KeyboardShortcut.Modifiers.None;
-    if (keyboardEvent.shiftKey)
-      modifiers |= UI.KeyboardShortcut.Modifiers.Shift;
-    if (keyboardEvent.ctrlKey)
-      modifiers |= UI.KeyboardShortcut.Modifiers.Ctrl;
-    if (keyboardEvent.altKey)
-      modifiers |= UI.KeyboardShortcut.Modifiers.Alt;
-    if (keyboardEvent.metaKey)
-      modifiers |= UI.KeyboardShortcut.Modifiers.Meta;
-
     // Use either a real or a synthetic keyCode (for events originating from extensions).
     var keyCode = keyboardEvent.keyCode || keyboardEvent['__keyCode'];
+
+    var modifiers = UI.KeyboardShortcut.Modifiers.None;
+    if (keyboardEvent.shiftKey && keyCode !== UI.KeyboardShortcut.Keys.Shift.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Shift;
+    if (keyboardEvent.ctrlKey && keyCode !== UI.KeyboardShortcut.Keys.Ctrl.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Ctrl;
+    if (keyboardEvent.altKey && keyCode !== UI.KeyboardShortcut.Keys.Alt.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Alt;
+    if (keyboardEvent.metaKey && keyCode !== UI.KeyboardShortcut.Keys.Meta.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Meta;
+
     return UI.KeyboardShortcut._makeKeyFromCodeAndModifiers(keyCode, modifiers);
   }
 
@@ -110,9 +111,10 @@ UI.KeyboardShortcut = class {
   static makeDescriptorFromBindingShortcut(shortcut) {
     var parts = shortcut.split(/\+(?!$)/);
     var modifiers = 0;
+    /** @type {string} */
     var keyString;
     for (var i = 0; i < parts.length; ++i) {
-      if (typeof UI.KeyboardShortcut.Modifiers[parts[i]] !== 'undefined') {
+      if (i < parts.length - 1 && typeof UI.KeyboardShortcut.Modifiers[parts[i]] !== 'undefined') {
         modifiers |= UI.KeyboardShortcut.Modifiers[parts[i]];
         continue;
       }
@@ -121,9 +123,6 @@ UI.KeyboardShortcut = class {
       keyString = parts[i];
       break;
     }
-    console.assert(keyString, 'Modifiers-only shortcuts are not allowed (encountered <' + shortcut + '>)');
-    if (!keyString)
-      return null;
 
     var key = UI.KeyboardShortcut.Keys[keyString] || UI.KeyboardShortcut.KeyBindings[keyString];
     if (key && key.shiftKey)
@@ -167,6 +166,24 @@ UI.KeyboardShortcut = class {
    */
   static keyCodeAndModifiersFromKey(key) {
     return {keyCode: key & 255, modifiers: key >> 8};
+  }
+
+  /**
+   * @param {number} key
+   * @return {number}
+   */
+  static allModifiersFromKey(key) {
+    var data = this.keyCodeAndModifiersFromKey(key);
+    var modifiers = data.modifiers;
+    if (data.keyCode === UI.KeyboardShortcut.Keys.Shift.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Shift;
+    if (data.keyCode === UI.KeyboardShortcut.Keys.Ctrl.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Ctrl;
+    if (data.keyCode === UI.KeyboardShortcut.Keys.Alt.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Alt;
+    if (data.keyCode === UI.KeyboardShortcut.Keys.Meta.code)
+      modifiers |= UI.KeyboardShortcut.Modifiers.Meta;
+    return modifiers;
   }
 
   /**
@@ -222,6 +239,7 @@ UI.KeyboardShortcut.Keys = {
   Enter: {code: 13, name: {mac: '\u21a9', other: 'Enter'}},
   Shift: {code: 16, name: {mac: '\u21e7', other: 'Shift'}},
   Ctrl: {code: 17, name: 'Ctrl'},
+  Alt: {code: 18, name: 'Alt'},
   Esc: {code: 27, name: 'Esc'},
   Space: {code: 32, name: 'Space'},
   PageUp: {code: 33, name: {mac: '\u21de', other: 'PageUp'}},      // also NUM_NORTH_EAST

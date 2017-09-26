@@ -1,4 +1,96 @@
 {
+    "extensions": [
+        {
+            "type": "action",
+            "actionId": "layers.reset-view",
+            "bindings": [
+                {
+                    "shortcut": "0"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.pan-mode",
+            "bindings": [
+                {
+                    "shortcut": "x"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.rotate-mode",
+            "bindings": [
+                {
+                    "shortcut": "v"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.toggle-pan-rotate",
+            "bindings": [
+                {
+                    "shortcut": "Shift"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.zoom-in",
+            "bindings": [
+                {
+                    "shortcut": "Shift+Plus NumpadPlus"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.zoom-out",
+            "bindings": [
+                {
+                    "shortcut": "Shift+Minus NumpadMinus"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.up",
+            "bindings": [
+                {
+                    "shortcut": "Up w"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.down",
+            "bindings": [
+                {
+                    "shortcut": "Down s"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.left",
+            "bindings": [
+                {
+                    "shortcut": "Left a"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "layers.right",
+            "bindings": [
+                {
+                    "shortcut": "Right d"
+                }
+            ]
+        }
+    ],
     "dependencies": [
         "components",
         "sdk",
