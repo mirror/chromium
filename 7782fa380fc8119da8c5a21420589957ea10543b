@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "088de266_00cc5ba4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-09-26T00:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa58ccd1_cc41bd3f",
+      "range": {
+        "startLine": 1119,
+        "startChar": 44,
+        "endLine": 1119,
+        "endChar": 51
+      },
+      "revId": "7782fa380fc8119da8c5a21420589957ea10543b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480c0845_aebfae63",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7782fa380fc8119da8c5a21420589957ea10543b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607c5c52_9cb11c35",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-09-26T00:51:01Z",
+      "side": 1,
+      "message": "Done, this must have changed since I initially implemented this. Turns out that vsync_auditor doesn\u0027t look at the component name, so it worked either way, but it\u0027s of course cleaner to match the original source.",
+      "parentUuid": "480c0845_aebfae63",
+      "range": {
+        "startLine": 1129,
+        "startChar": 23,
+        "endLine": 1129,
+        "endChar": 27
+      },
+      "revId": "7782fa380fc8119da8c5a21420589957ea10543b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
