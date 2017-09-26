@@ -1,0 +1,16 @@
+{
+  "name": "Global Google Search",
+  "description": "Use the context menu to search a different country google",
+  "version": "1.0",
+  "manifest_version": 2,
+  "options_page": "options.html",
+  "permissions": ["contextMenus", "storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon" : "globalGoogle.png",
+    "default_popup": "options.html"
+  }
+}
