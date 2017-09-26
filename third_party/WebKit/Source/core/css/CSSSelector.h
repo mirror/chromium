@@ -452,9 +452,9 @@ inline void CSSSelector::SetValue(const AtomicString& value,
   // Need to do ref counting manually for the union.
   if (!has_rare_data_) {
     if (data_.value_)
-      data_.value_->Deref();
+      data_.value_->Release();
     data_.value_ = value.Impl();
-    data_.value_->Ref();
+    data_.value_->AddRef();
     return;
   }
   data_.rare_data_->matching_value_ =
@@ -507,7 +507,7 @@ inline CSSSelector::CSSSelector(const CSSSelector& o)
     data_.rare_data_->Ref();
   } else if (o.data_.value_) {
     data_.value_ = o.data_.value_;
-    data_.value_->Ref();
+    data_.value_->AddRef();
   }
 }
 
@@ -517,7 +517,7 @@ inline CSSSelector::~CSSSelector() {
   else if (has_rare_data_)
     data_.rare_data_->Deref();
   else if (data_.value_)
-    data_.value_->Deref();
+    data_.value_->Release();
 }
 
 inline const QualifiedName& CSSSelector::TagQName() const {

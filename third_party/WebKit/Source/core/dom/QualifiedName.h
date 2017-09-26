@@ -66,13 +66,13 @@ class CORE_EXPORT QualifiedName {
 
     unsigned ComputeHash() const;
 
-    void Ref() {
+    void AddRef() {
       if (is_static_)
         return;
       RefCounted<QualifiedNameImpl>::Ref();
     }
 
-    void Deref() {
+    void Release() {
       if (is_static_)
         return;
       RefCounted<QualifiedNameImpl>::Deref();
