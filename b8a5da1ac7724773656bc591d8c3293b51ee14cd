@@ -46,6 +46,30 @@
       "revId": "b8a5da1ac7724773656bc591d8c3293b51ee14cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93933c0_24566486",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3241,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-26T03:44:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9499d8f2_e776e819",
+      "range": {
+        "startLine": 3241,
+        "startChar": 29,
+        "endLine": 3241,
+        "endChar": 51
+      },
+      "revId": "b8a5da1ac7724773656bc591d8c3293b51ee14cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
