@@ -9,14 +9,14 @@
 #include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/ng_break_token.h"
-#include "core/loader/resource/ImageResourceObserver.h"
-#include "platform/graphics/paint/DisplayItemClient.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class ComputedStyle;
 class LayoutObject;
+class Node;
 struct NGPixelSnappedPhysicalBoxStrut;
 
 // The NGPhysicalFragment contains the output geometry from layout. The
@@ -30,18 +30,7 @@ struct NGPixelSnappedPhysicalBoxStrut;
 // Layout code should only access geometry information through the
 // NGFragment wrapper classes which transforms information into the logical
 // coordinate system.
-//
-// NGPhysicalFragment is an ImageResourceObserver, which means that it gets
-// notified when associated images are changed.
-// This is used for 2 main use cases:
-// - reply to 'background-image' as we need to invalidate the background in this
-//   case.
-//   (See https://drafts.csswg.org/css-backgrounds-3/#the-background-image)
-// - image (<img>, svg <image>) or video (<video>) elements that are
-//   placeholders for displaying them.
-class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
-                                       public DisplayItemClient,
-                                       public ImageResourceObserver {
+class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
  public:
   enum NGFragmentType {
     kFragmentBox = 0,
@@ -87,13 +76,8 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
   // with LegacyLayout.
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 
-  // DisplayItemClient methods.
-  String DebugName() const override { return "NGPhysicalFragment"; }
-
   // TODO(layout-dev): Implement when we have oveflow support.
-  bool HasOverflowClip() const { return false; }
-  LayoutRect VisualRect() const { return visual_rect_; }
-  LayoutRect VisualOverflowRect() const { return VisualRect(); }
+  LayoutRect LocalVisualRect() const { return visual_rect_; }
 
   // Update visual rect for this fragment.
   // This is called not only after layout, but also after transform changes,
