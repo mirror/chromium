@@ -246,8 +246,11 @@
   <message name="IDS_POLICY_TOOL_INVALID_SESSION_NAME" desc="A message that is shown to the user when the entered session name is invalid.">
     Please enter a valid session name.
   </message>
-  <message name="IDS_POLICY_TOOL_CORRUPTED_FILE" desc="A message that is shown to the user when the session file is corrupted">
-    The session file is corrupted. Please load another session or create a new one.
+  <message name="IDS_POLICY_TOOL_ENABLE_EDITING" desc="Label for the button to enable editing policy values.">
+    Enable editing
+  </message>
+  <message name="IDS_POLICY_TOOL_CORRUPTED_FILE" desc="A message that is shown to the user when the session file is corrupted.">
+    The file seems to be corrupted. If you still want to use it, please click this button (note that this will override the contents of the file).
   </message>
   <!-- chrome://policy -->
   <message name="IDS_POLICY_TITLE" desc="Page title and the title of the section that lists policies.">
