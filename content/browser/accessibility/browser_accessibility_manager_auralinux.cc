@@ -48,11 +48,21 @@ ui::AXTreeUpdate
   return update;
 }
 
-void BrowserAccessibilityManagerAuraLinux::NotifyAccessibilityEvent(
-    BrowserAccessibilityEvent::Source source,
+void BrowserAccessibilityManagerAuraLinux::FireFocusEvent(
+    BrowserAccessibility* node) {
+  // Need to implement.
+}
+
+void BrowserAccessibilityManagerAuraLinux::FireBlinkEvent(
     ui::AXEvent event_type,
     BrowserAccessibility* node) {
-  // TODO(shreeram.k) : Implement.
+  // Need to implement.
+}
+
+void BrowserAccessibilityManagerAuraLinux::FireGeneratedEvent(
+    AXEventGenerator::Event event_type,
+    BrowserAccessibility* node) {
+  // Need to implement.
 }
 
 }  // namespace content
