@@ -167,6 +167,9 @@ class FakePrinterDetector : public PrinterDetector {
   void RemoveObserver(Observer* observer) override {
     observers_.RemoveObserver(observer);
   }
+
+  void StartObservers() override {}
+
   std::vector<DetectedPrinter> GetPrinters() override { return detections_; }
 
   void AddDetections(

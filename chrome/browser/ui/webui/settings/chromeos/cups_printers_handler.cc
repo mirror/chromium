@@ -248,6 +248,8 @@ CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
 CupsPrintersHandler::~CupsPrintersHandler() {}
 
 void CupsPrintersHandler::RegisterMessages() {
+  printers_manager_->StartObserving();
+
   web_ui()->RegisterMessageCallback(
       "getCupsPrintersList",
       base::Bind(&CupsPrintersHandler::HandleGetCupsPrintersList,

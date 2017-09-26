@@ -160,6 +160,12 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
     observer_list_.RemoveObserver(observer);
   }
 
+  // Used to initiate the callbacks after the observers have been constructed.
+  void StartObserving() override {
+    usb_detector_->StartObservers();
+    zeroconf_detector_->StartObservers();
+  }
+
   // Public API function.
   void PrinterInstalled(const Printer& printer) override {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_);
