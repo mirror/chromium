@@ -227,6 +227,24 @@
       "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9d88ff8_3b231e1a",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T17:22:27Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m using ui.reset() now.",
+      "parentUuid": "3a969521_5596145d",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
