@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "da8b2e2d_6123c571",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-26T00:47:29Z",
+      "side": 1,
+      "message": "Ah right you will. I got my mousedown and mouseup confused.",
+      "parentUuid": "f24db1e4_5ef65101",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723d8bde_b005266d",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 3
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "The hidden text is so that it shows up for copy/paste. WDYT?",
       "parentUuid": "24fb13b0_a9c02428",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae965c0_1a5a8344",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-26T00:47:29Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "8b72bff1_852745d7",
       "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
