@@ -22,6 +22,30 @@
       "revId": "5eb98e5eb112fbaba6693aa5d3c3ac7c47fa9ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95b2add_441033cb",
+        "filename": "content/browser/download/download_item_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:37:35Z",
+      "side": 1,
+      "message": "That is odd behavior... it feels like the first failure cause should be the reported one.  Can you file a bug related to this to investigate and/or fix if necessary?",
+      "parentUuid": "3c9a6610_9aec5ae2",
+      "range": {
+        "startLine": 1462,
+        "startChar": 5,
+        "endLine": 1462,
+        "endChar": 71
+      },
+      "revId": "5eb98e5eb112fbaba6693aa5d3c3ac7c47fa9ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
