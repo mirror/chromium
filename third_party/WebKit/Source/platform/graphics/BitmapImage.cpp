@@ -26,6 +26,7 @@
 
 #include "platform/graphics/BitmapImage.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "platform/Timer.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/BitmapImageMetrics.h"
@@ -589,6 +590,9 @@ void BitmapImage::StartAnimationInternal(const double time) {
       desired_frame_start_time_ = frame_after_next_start_time;
       next_frame = frame_after_next;
     }
+
+    UMA_HISTOGRAM_COUNTS_100000("AnimatedImage.NumOfFramesSkipped.Main",
+                                last_num_frames_skipped_);
 
     // Since we just advanced a bunch of frames during catch up, post a
     // notification to the observers. Note this has to be async because
