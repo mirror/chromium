@@ -170,6 +170,10 @@ public abstract class AwContentsClient {
             request.hasUserGesture = hasUserGesture;
             request.isRedirect = isRedirect;
             request.method = "GET";  // Only GET requests can be overridden.
+            Log.w("SELIM", "AwContentsClient calling shouldoverrideurlloading " + url);
+            Log.w("SELIM",  "AwContentsClient shouldoverrideurlloading attributes are isMainFrame:"
+                    + isMainFrame + " hasUserGesture:"
+                    + hasUserGesture + " isRedirect:" + isRedirect);
             return shouldOverrideUrlLoading(request);
         } else {
             return sendBrowsingIntent(context, url, hasUserGesture, isRedirect);

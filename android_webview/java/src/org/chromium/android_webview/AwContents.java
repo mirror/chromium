@@ -109,7 +109,7 @@ import java.util.concurrent.Callable;
 @JNINamespace("android_webview")
 public class AwContents implements SmartClipProvider {
     private static final String TAG = "AwContents";
-    private static final boolean TRACE = false;
+    private static final boolean TRACE = true;
     private static final int NO_WARN = 0;
     private static final int WARN = 1;
     private static final String PRODUCT_VERSION = AwContentsStatics.getProductVersion();
@@ -551,6 +551,9 @@ public class AwContents implements SmartClipProvider {
             boolean ignoreNavigation = false;
             if (mDeferredShouldOverrideUrlLoadingIsPendingForPopup) {
                 mDeferredShouldOverrideUrlLoadingIsPendingForPopup = false;
+
+                Log.w("SELIM", "shouldIgnoreNavigation for Popups" + url);
+
                 // If this is used for all navigations in future, cases for application initiated
                 // load, redirect and backforward should also be filtered out.
                 if (!navigationParams.isPost) {
