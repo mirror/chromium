@@ -49,6 +49,9 @@ public class FakeSuggestionsSource implements SuggestionsSource {
 
     private boolean mRemoteSuggestionsEnabled = true;
 
+    /* The last failureRunnable provided with fetchSuggestions so we can simulate a failure. */
+    private Runnable mFetchFailureRunnable;
+
     /**
      * Sets the status to be returned for a given category.
      */
@@ -169,6 +172,13 @@ public class FakeSuggestionsSource implements SuggestionsSource {
         mObserverList.clear();
     }
 
+    /**
+     * Calls the failure Runnable provided with the last {@link #fetchSuggestions}.
+     */
+    public void failLastFetchSuggestions() {
+        mFetchFailureRunnable.run();
+    }
+
     @Override
     public void fetchRemoteSuggestions() {}
 
@@ -243,7 +253,9 @@ public class FakeSuggestionsSource implements SuggestionsSource {
 
     @Override
     public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
-            Callback<List<SnippetArticle>> callback) {}
+            Callback<List<SnippetArticle>> successCallback, Runnable failureRunnable) {
+        mFetchFailureRunnable = failureRunnable;
+    }
 
     @Override
     public void fetchContextualSuggestions(String url, Callback<List<SnippetArticle>> callback) {

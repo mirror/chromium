@@ -485,7 +485,7 @@ public class SuggestionsSectionTest {
 
         // Tap the button -- we handle this case explicitly here to avoid complexity in
         // verifyAction().
-        section.getActionItemForTesting().performAction(mUiDelegate);
+        section.getActionItemForTesting().performAction(mUiDelegate, null);
         verify(mUiDelegate.getSuggestionsSource(), times(1)).fetchRemoteSuggestions();
 
         // Simulate the arrival of new data.
@@ -499,6 +499,42 @@ public class SuggestionsSectionTest {
         assertEquals(10, section.getSuggestionsCount());
 
         assertFalse(section.isDataStale());
+    }
+
+    @Test
+    @Feature("Ntp")
+    public void testFetchMoreFailure() {
+        SuggestionsCategoryInfo info =
+                spy(new CategoryInfoBuilder(REMOTE_TEST_CATEGORY)
+                        .withAction(ContentSuggestionsAdditionalAction.FETCH)
+                        .showIfEmpty()
+                        .build());
+        SuggestionsSection section = createSection(info);
+        section.setStatus(CategoryStatus.AVAILABLE);
+        section.appendSuggestions(createDummySuggestions(10, REMOTE_TEST_CATEGORY),
+                /*keepSectionSize=*/true);
+
+        assertEquals(ActionItem.State.BUTTON, section.getActionItemForTesting().getState());
+        assertTrue(section.getCategoryInfo().isRemote());
+
+        Runnable onFailure = spy(new Runnable() {
+            @Override public void run() { }
+        });
+
+        // Tap the button.
+        section.getActionItemForTesting().performAction(mUiDelegate, onFailure);
+        verify(mUiDelegate.getSuggestionsSource(), times(1))
+                .fetchSuggestions(eq(REMOTE_TEST_CATEGORY), any(), any(), any());
+
+        // Ensure the progress spinner is show.
+        assertEquals(ActionItem.State.LOADING, section.getActionItemForTesting().getState());
+
+        // Simulate a failure.
+        mSuggestionsSource.failLastFetchSuggestions();
+
+        // Ensure we're back to the button and the failure runnable has been run.
+        assertEquals(ActionItem.State.BUTTON, section.getActionItemForTesting().getState());
+        verify(onFailure, times(1)).run();
     }
 
     /**
@@ -908,7 +944,7 @@ public class SuggestionsSectionTest {
     private void verifyAction(
             SuggestionsSection section, @ContentSuggestionsAdditionalAction int action) {
         if (action != ContentSuggestionsAdditionalAction.NONE) {
-            section.getActionItemForTesting().performAction(mUiDelegate);
+            section.getActionItemForTesting().performAction(mUiDelegate, null);
         }
 
         verify(section.getCategoryInfo(),
@@ -918,6 +954,7 @@ public class SuggestionsSectionTest {
         // noinspection unchecked -- See https://crbug.com/740162 for rationale.
         verify(mUiDelegate.getSuggestionsSource(),
                 (action == ContentSuggestionsAdditionalAction.FETCH ? times(1) : never()))
-                .fetchSuggestions(anyInt(), any(String[].class), any(Callback.class));
+                .fetchSuggestions(anyInt(), any(String[].class), any(Callback.class),
+                        any(Runnable.class));
     }
 }
