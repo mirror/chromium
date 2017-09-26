@@ -1394,13 +1394,12 @@ void Editor::SetBaseWritingDirection(WritingDirection direction) {
 }
 
 void Editor::RevealSelectionAfterEditingOperation(
-    const ScrollAlignment& alignment,
-    RevealExtentOption reveal_extent_option) {
+    const ScrollAlignment& alignment) {
   if (prevent_reveal_selection_)
     return;
   if (!GetFrameSelection().IsAvailable())
     return;
-  GetFrameSelection().RevealSelection(alignment, reveal_extent_option);
+  GetFrameSelection().RevealSelection(alignment, kDoNotRevealExtent);
 }
 
 // TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
