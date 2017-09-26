@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a75f286_9613e5cc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/resources/import-tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T04:57:20Z",
+      "side": 1,
+      "message": "can use assert_throws",
+      "revId": "24302cfe755448de3ba1192e38f4da03091ce6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376a300d_0aa862e9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/resources/import-tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T04:57:20Z",
+      "side": 1,
+      "message": "ditto (also could have used arrow operator)",
+      "revId": "24302cfe755448de3ba1192e38f4da03091ce6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304c6ac6_ce20afa5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/resources/import-tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T04:57:20Z",
+      "side": 1,
+      "message": "assert_Throws",
+      "revId": "24302cfe755448de3ba1192e38f4da03091ce6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a83489_aa47a878",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/resources/import-tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T04:57:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "24302cfe755448de3ba1192e38f4da03091ce6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
