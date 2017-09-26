@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "866149ac_ab9f59fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-26T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ae195e_7b8e816a",
+      "range": {
+        "startLine": 127,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 34
+      },
+      "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b98ef7_769f43a6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "317d9d38_bc06b266",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-26T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b98ef7_769f43a6",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 85
+      },
+      "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c851991_04fdc5ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17d6846_8dc54f23",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-26T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c851991_04fdc5ff",
+      "range": {
+        "startLine": 143,
+        "startChar": 40,
+        "endLine": 143,
+        "endChar": 66
+      },
+      "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
