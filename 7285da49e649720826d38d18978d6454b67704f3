@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7674dc4f_d72de768",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-26T17:05:15Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me which is better: to let the detaching child navigate this frame and deal with the fallout of overriding the JS url document replacement, or to just suppress the navigation. This way is cleaner, so I went with it :)",
+      "revId": "7285da49e649720826d38d18978d6454b67704f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
