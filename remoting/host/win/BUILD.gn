@@ -474,6 +474,7 @@ executable("remoting_native_messaging_host") {
     ":remoting_core",
     ":remoting_windows_resources",
     "//build/win:default_exe_manifest",
+    "//third_party/webrtc_overrides:task_queue_impl",
   ]
 
   sources = [

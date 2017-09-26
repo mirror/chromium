@@ -609,6 +609,7 @@ if (enable_remoting_host) {
       deps += [
         "//third_party/libjingle_xmpp",
         "//third_party/webrtc_overrides:init_webrtc",
+        "//third_party/webrtc_overrides:task_queue_impl",
       ]
     }
   }
