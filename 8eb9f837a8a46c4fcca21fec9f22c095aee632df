@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271aadc3_a9662bf0",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "Other stuff that should be made clear by the API comment:\n\nPresumably this also gates when callbacks to observers of CupsPrintersManager might start happening?\n\nAre there any constraints around the ordering of StartObserving() and AddObserver()?\n\nIs it wrong to call StartObserving multiple times?",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c6015f_5220ea94",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "It\u0027s not wrong, and the code seems reasonable but this is an unusual way to organize tests -- you\u0027re not testing the printer_detector interface here, you\u0027re testing the implementations of it  \n\nIn the future if you want to do something like this, my advise would be to pull the common code (FakePrinterDetectorObserver and a parameterized version of PrinterDetectorTest that takes the PrinterDetector to test in SetUp()) out to a printer_detector_test_util library, then put the actual unit tests into usb_printer_detector_unittest.cc and zeroconf_printer_detector_unittest.cc\n\nHowever, the gain of doing so over what you\u0027ve done here is minimal, so I don\u0027t think you need to rewrite what you have.",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7292f449_de11bd89",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "Generally style guide says to use int for stuff like this\n\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbe5c8c_d506dd3c",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "MockUsbService seems like a better fit for a test like this:\n\nhttps://cs.chromium.org/chromium/src/device/usb/mock_usb_service.h?rcl\u003d3131414035a033d1fb624913474dbdac04158198\u0026l\u003d14",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b343a383_006e63f8",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "Does having these things be members of PrinterDetectorTest (as opposed to just declaring them as needed in the unit test bodies) buy us anything?  Seems a little weird.",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec16f188_3bbb78fa",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "EXPECT_EQ calls should be (actual, expected). \n\n(It only really matters for the error messages, which label the values as expected and actual).",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d2586b_2c11059f",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-26T18:06:06Z",
+      "side": 1,
+      "message": "Remove at least one of these blank lines.",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
