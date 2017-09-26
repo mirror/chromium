@@ -82,6 +82,8 @@ class ContextualJsonRequest : public net::URLFetcherDelegate {
 
   void Start(CompletedCallback callback);
 
+  GURL GetContentUrl() const;
+
   std::string GetResponseString() const;
 
  private:
@@ -91,6 +93,8 @@ class ContextualJsonRequest : public net::URLFetcherDelegate {
   void ParseJsonResponse();
   void OnJsonParsed(std::unique_ptr<base::Value> result);
   void OnJsonError(const std::string& error);
+
+  GURL content_url_;
 
   // The fetcher for downloading the snippets. Only non-null if a fetch is
   // currently ongoing.

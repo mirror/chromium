@@ -28,6 +28,11 @@ class SigninManagerBase;
 
 namespace ntp_snippets {
 
+struct CachedSuggestionsResponse {
+  base::Value response;
+  base::Time time_received;
+};
+
 // TODO(gaschler): Move authentication that is in common with
 // RemoteSuggestionsFetcher to a helper class.
 class ContextualSuggestionsFetcherImpl : public ContextualSuggestionsFetcher {
@@ -73,6 +78,11 @@ class ContextualSuggestionsFetcherImpl : public ContextualSuggestionsFetcher {
   bool JsonToSuggestions(const base::Value& parsed,
                          RemoteSuggestion::PtrVector* suggestions);
 
+  // Returns base::nullopt if cache has no response.
+  OptionalSuggestions FetchFromCache(const GURL& url);
+
+  void SaveInCache(const GURL& url, const base::Value& response);
+
   // Authentication for signed-in users.
   SigninManagerBase* signin_manager_;
   OAuth2TokenService* token_service_;
@@ -95,6 +105,9 @@ class ContextualSuggestionsFetcherImpl : public ContextualSuggestionsFetcher {
   // Info on the last finished fetch.
   std::string last_status_;
   std::string last_fetch_json_;
+
+  // Runtime cache from fetch_url to parsed Json response.
+  std::map<GURL, CachedSuggestionsResponse> cached_url_responses_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSuggestionsFetcherImpl);
 };
