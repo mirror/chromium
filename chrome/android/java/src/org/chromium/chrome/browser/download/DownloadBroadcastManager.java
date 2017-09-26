@@ -128,8 +128,12 @@ public class DownloadBroadcastManager extends Service {
 
         switch (action) {
             case ACTION_DOWNLOAD_PAUSE:
-                mDownloadNotificationService.notifyDownloadPaused(entry.id, entry.fileName, true,
-                        false, entry.isOffTheRecord, entry.isTransient, null, true);
+                DownloadInfo downloadInfo = DownloadInfo.Builder.fromSharedPreferenceEntry(entry)
+                                                    .setIsResumable(true)
+                                                    .setIsAutoResumable(false)
+                                                    .setIcon(null)
+                                                    .build();
+                mDownloadNotificationService.notifyDownloadPaused(downloadInfo, true);
                 break;
 
             case ACTION_DOWNLOAD_CANCEL:
@@ -137,9 +141,12 @@ public class DownloadBroadcastManager extends Service {
                 break;
 
             case ACTION_DOWNLOAD_RESUME:
-                mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
-                        entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
-                        null, true);
+                DownloadInfo info =
+                        DownloadInfo.Builder.fromSharedPreferenceEntry(entry)
+                                .setCanDownloadWhileMetered(entry.canDownloadWhileMetered)
+                                .setIcon(null)
+                                .build();
+                mDownloadNotificationService.notifyDownloadPending(info, true);
                 break;
 
             default:

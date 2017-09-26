@@ -35,9 +35,11 @@ public class SystemDownloadNotifier2 implements DownloadNotifier {
     public void notifyDownloadSuccessful(DownloadInfo info, long systemDownloadId,
             boolean canResolve, boolean isSupportedMimeType) {
         final int notificationId = mDownloadNotificationService.notifyDownloadSuccessful(
-                info.getContentId(), info.getFilePath(), info.getFileName(), systemDownloadId,
-                info.isOffTheRecord(), isSupportedMimeType, info.getIsOpenable(), info.getIcon(),
-                info.getOriginalUrl(), info.getReferrer());
+                DownloadInfo.Builder.fromDownloadInfo(info)
+                        .setSystemDownloadId(systemDownloadId)
+                        .setCanResolve(canResolve)
+                        .setIsSupportedMimeType(isSupportedMimeType)
+                        .build());
 
         if (info.getIsOpenable()) {
             DownloadManagerService.getDownloadManagerService().onSuccessNotificationShown(
@@ -47,30 +49,32 @@ public class SystemDownloadNotifier2 implements DownloadNotifier {
 
     @Override
     public void notifyDownloadFailed(DownloadInfo info) {
-        mDownloadNotificationService.notifyDownloadFailed(
-                info.getContentId(), info.getFileName(), info.getIcon());
+        mDownloadNotificationService.notifyDownloadFailed(info);
     }
 
     @Override
     public void notifyDownloadProgress(
             DownloadInfo info, long startTime, boolean canDownloadWhileMetered) {
-        mDownloadNotificationService.notifyDownloadProgress(info.getContentId(), info.getFileName(),
-                info.getProgress(), info.getBytesReceived(), info.getTimeRemainingInMillis(),
-                startTime, info.isOffTheRecord(), canDownloadWhileMetered, info.getIsTransient(),
-                info.getIcon());
+        info = DownloadInfo.Builder.fromDownloadInfo(info)
+                       .setStartTime(startTime)
+                       .setCanDownloadWhileMetered(canDownloadWhileMetered)
+                       .build();
+
+        mDownloadNotificationService.notifyDownloadProgress(info);
     }
 
     @Override
     public void notifyDownloadPaused(DownloadInfo info) {
-        mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
-                true, false, info.isOffTheRecord(), info.getIsTransient(), info.getIcon(), false);
+        info = DownloadInfo.Builder.fromDownloadInfo(info)
+                       .setIsResumable(true)
+                       .setIsAutoResumable(false)
+                       .build();
+        mDownloadNotificationService.notifyDownloadPaused(info, false);
     }
 
     @Override
     public void notifyDownloadInterrupted(DownloadInfo info, boolean isAutoResumable) {
-        mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
-                info.isResumable(), isAutoResumable, info.isOffTheRecord(), info.getIsTransient(),
-                info.getIcon(), false);
+        mDownloadNotificationService.notifyDownloadPaused(info, false);
     }
 
     @Override
