@@ -56,6 +56,7 @@ class CookieStoreIOSPersistentTest : public testing::Test {
  public:
   CookieStoreIOSPersistentTest()
       : kTestCookieURL("http://foo.google.com/bar"),
+        cookie_store_ios_client_(base::MakeUnique<TestCookieStoreIOSClient>()),
         backend_(new net::TestPersistentCookieStore),
         store_(
             base::MakeUnique<net::CookieStoreIOSPersistent>(backend_.get())) {
@@ -85,6 +86,7 @@ class CookieStoreIOSPersistentTest : public testing::Test {
 
  protected:
   base::MessageLoop loop_;
+  ScopedTestingCookieStoreIOSClient cookie_store_ios_client_;
   scoped_refptr<net::TestPersistentCookieStore> backend_;
   std::unique_ptr<net::CookieStoreIOS> store_;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription>
