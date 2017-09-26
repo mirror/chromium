@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a203c7f0_88af0a0d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T09:40:42Z",
+      "side": 1,
+      "message": "I\u0027ve refactored ResolveNode into its own file, so as not to repeat code. Could you just check you\u0027re happy with this change before it\u0027s submitted?",
+      "parentUuid": "0a476bc4_5d4b94e1",
+      "revId": "f0915db1d61f44f9a1c4968864bc0e806e5d9f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a2a9f6c_c071f9c8",
         "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
         "patchSetId": 30
@@ -33,6 +51,24 @@
       "revId": "f0915db1d61f44f9a1c4968864bc0e806e5d9f9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcae243_7815b2d1",
+        "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T09:40:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a2a9f6c_c071f9c8",
+      "revId": "f0915db1d61f44f9a1c4968864bc0e806e5d9f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
