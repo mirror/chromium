@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "97dea949_da037d35",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-26T05:28:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9f86604_8d7808a1",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1234292_4059c446",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 7
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "When I click on a submit button I expect the website to replace the form with a success message. I think opening the app in this case would break that expectation. Imagine submitting the form and then a new window opens with a success message, but the form is still there in the other tab.",
       "parentUuid": "c1234292_4059c446",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6fe33a_eff28462",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-26T05:28:27Z",
+      "side": 1,
+      "message": "Yeah that would suck.\n\nI think eventually it would be good to redirect all cross-site navigations into the app (so if you submit a form from Site A to Site B then it opens in the app, but if you submit a form on Site B to Site B then it stays). But this is fine now.",
+      "parentUuid": "d85a69d9_1130da83",
       "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
