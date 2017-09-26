@@ -13,7 +13,7 @@
 namespace testing {
 
 const NSTimeInterval kSpinDelaySeconds = 0.01;
-const NSTimeInterval kWaitForJSCompletionTimeout = 2.0;
+const NSTimeInterval kWaitForJSCompletionTimeout = 5.0;
 const NSTimeInterval kWaitForUIElementTimeout = 4.0;
 const NSTimeInterval kWaitForDownloadTimeout = 10.0;
 const NSTimeInterval kWaitForPageLoadTimeout = 10.0;
@@ -25,6 +25,19 @@ bool WaitUntilConditionOrTimeout(NSTimeInterval timeout,
   while (!success && [[NSDate date] compare:deadline] != NSOrderedDescending) {
     base::test::ios::SpinRunLoopWithMaxDelay(
         base::TimeDelta::FromSecondsD(testing::kSpinDelaySeconds));
+    success = condition();
+  }
+  return success;
+}
+
+bool WaitUntilConditionOrTimeoutWithLoopDelay(NSTimeInterval timeout,
+                                              ConditionBlock condition,
+                                              NSTimeInterval loop_delay) {
+  NSDate* deadline = [NSDate dateWithTimeIntervalSinceNow:timeout];
+  bool success = condition();
+  while (!success && [[NSDate date] compare:deadline] != NSOrderedDescending) {
+    base::test::ios::SpinRunLoopWithMinDelay(
+        base::TimeDelta::FromSecondsD(loop_delay));
     success = condition();
   }
   return success;
