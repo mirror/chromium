@@ -172,6 +172,7 @@ FrameTree::NodeRange FrameTree::NodesExceptSubtree(FrameTreeNode* node) {
 bool FrameTree::AddFrame(FrameTreeNode* parent,
                          int process_id,
                          int new_routing_id,
+                         InterfaceProviderRequest initial_interfaces_request,
                          blink::WebTreeScopeType scope,
                          const std::string& frame_name,
                          const std::string& frame_unique_name,
@@ -203,7 +204,8 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
 
   // Add the new node to the FrameTree, creating the RenderFrameHost.
   FrameTreeNode* added_node =
-      parent->AddChild(std::move(new_node), process_id, new_routing_id);
+      parent->AddChild(std::move(new_node), process_id, new_routing_id,
+                       std::move(initial_interfaces_request));
 
   // The last committed NavigationEntry may have a FrameNavigationEntry with the
   // same |frame_unique_name|, since we don't remove FrameNavigationEntries if

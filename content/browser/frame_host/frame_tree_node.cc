@@ -205,9 +205,12 @@ bool FrameTreeNode::IsMainFrame() const {
   return frame_tree_->root() == this;
 }
 
-FrameTreeNode* FrameTreeNode::AddChild(std::unique_ptr<FrameTreeNode> child,
-                                       int process_id,
-                                       int frame_routing_id) {
+FrameTreeNode* FrameTreeNode::AddChild(
+    std::unique_ptr<FrameTreeNode> child,
+    int process_id,
+    int frame_routing_id,
+    service_manager::mojom::InterfaceProviderRequest
+        initial_interfaces_request) {
   // Child frame must always be created in the same process as the parent.
   CHECK_EQ(process_id, render_manager_.current_host()->GetProcess()->GetID());
 
@@ -217,7 +220,7 @@ FrameTreeNode* FrameTreeNode::AddChild(std::unique_ptr<FrameTreeNode> child,
   child->render_manager()->Init(
       render_manager_.current_host()->GetSiteInstance(),
       render_manager_.current_host()->GetRoutingID(), frame_routing_id,
-      MSG_ROUTING_NONE, false);
+      std::move(initial_interfaces_request), MSG_ROUTING_NONE, false);
 
   // Other renderer processes in this BrowsingInstance may need to find out
   // about the new frame.  Create a proxy for the child frame in all

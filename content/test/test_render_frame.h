@@ -27,7 +27,7 @@ struct StartNavigationParams;
 class TestRenderFrame : public RenderFrameImpl {
  public:
   static RenderFrameImpl* CreateTestRenderFrame(
-      const RenderFrameImpl::CreateParams& params);
+      RenderFrameImpl::CreateParams params);
   ~TestRenderFrame() override;
 
   const blink::WebHistoryItem& current_history_item() {
@@ -61,8 +61,11 @@ class TestRenderFrame : public RenderFrameImpl {
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
   TakeLastCommitParams();
 
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest();
+
  private:
-  explicit TestRenderFrame(const RenderFrameImpl::CreateParams& params);
+  explicit TestRenderFrame(RenderFrameImpl::CreateParams params);
 
   mojom::FrameHost* GetFrameHost() override;
 

@@ -27,6 +27,11 @@ class MockFrameHost : public mojom::FrameHost {
     return std::move(last_commit_params_);
   }
 
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest() {
+    return std::move(last_interface_provider_request_);
+  }
+
  protected:
   // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr,
@@ -46,28 +51,30 @@ class MockFrameHost : public mojom::FrameHost {
   void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override {}
 
   void DidCommitProvisionalLoad(
-      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params)
-      override {
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params,
+      service_manager::mojom::InterfaceProviderRequest request) override {
     last_commit_params_ = std::move(params);
+    last_interface_provider_request_ = std::move(request);
   }
 
  private:
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
       last_commit_params_;
+  service_manager::mojom::InterfaceProviderRequest
+      last_interface_provider_request_;
 
   DISALLOW_COPY_AND_ASSIGN(MockFrameHost);
 };
 
 // static
 RenderFrameImpl* TestRenderFrame::CreateTestRenderFrame(
-    const RenderFrameImpl::CreateParams& params) {
-  return new TestRenderFrame(params);
+    RenderFrameImpl::CreateParams params) {
+  return new TestRenderFrame(std::move(params));
 }
 
-TestRenderFrame::TestRenderFrame(const RenderFrameImpl::CreateParams& params)
-    : RenderFrameImpl(params),
-      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {
-}
+TestRenderFrame::TestRenderFrame(RenderFrameImpl::CreateParams params)
+    : RenderFrameImpl(std::move(params)),
+      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {}
 
 TestRenderFrame::~TestRenderFrame() {}
 
@@ -145,6 +152,11 @@ std::unique_ptr<blink::WebURLLoader> TestRenderFrame::CreateURLLoader(
 std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
 TestRenderFrame::TakeLastCommitParams() {
   return mock_frame_host_->TakeLastCommitParams();
+}
+
+service_manager::mojom::InterfaceProviderRequest
+TestRenderFrame::TakeLastInterfaceProviderRequest() {
+  return mock_frame_host_->TakeLastInterfaceProviderRequest();
 }
 
 mojom::FrameHost* TestRenderFrame::GetFrameHost() {
