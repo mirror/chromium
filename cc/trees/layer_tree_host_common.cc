@@ -395,6 +395,7 @@ static void ComputeInitialRenderSurfaceList(
     }
 
     layer->set_contributes_to_drawn_render_surface(true);
+    layer->SetContributesToHitTest(true);
 
     // The layer contributes its drawable content rect to its render target.
     render_target->AccumulateContentRectFromContributingLayer(layer);
