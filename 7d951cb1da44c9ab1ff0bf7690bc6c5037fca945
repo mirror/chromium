@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d2772d_8fb38f6c",
+        "filename": "content/browser/renderer_host/file_utilities_host_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-26T01:07:19Z",
+      "side": 1,
+      "message": "We don\u0027t need to qualify content inside content. Fix everywhere.",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "7d951cb1da44c9ab1ff0bf7690bc6c5037fca945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
