@@ -70,6 +70,11 @@ const base::Feature kAndroidFakeboxDemotion{"OmniboxAndroidFakeboxDemotion",
 const base::Feature kAndroidFakeboxDemotionOnPhones{
     "OmniboxAndroidFakeboxDemotionOnPhones", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature to enable personalized suggestions when Android's Chrome Home feature
+// is enabled.
+const base::Feature kAndroidChromeHomePersonalizedSuggestions{
+    "ChromeHomePersonalizedSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature to enable the search provider to send a request to the suggest
 // server on focus.  This allows the suggest server to warm up, by, for
 // example, loading per-user models into memory.  Having a per-user model

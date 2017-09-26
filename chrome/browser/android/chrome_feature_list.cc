@@ -18,6 +18,7 @@
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_tiles/constants.h"
 #include "components/offline_pages/core/offline_page_feature.h"
+#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/payments/core/features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
@@ -49,6 +50,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kVrShell,
     &features::kWebPayments,
     &features::kTabsInCbd,
+    &omnibox::kAndroidChromeHomePersonalizedSuggestions,
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,

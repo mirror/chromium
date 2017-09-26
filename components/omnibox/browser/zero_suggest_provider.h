@@ -66,6 +66,9 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   void ResetSession() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ZeroSuggestProviderTest,
+                           TestPersonalizedSuggestionsEnabled);
+
   ZeroSuggestProvider(AutocompleteProviderClient* client,
                       HistoryURLProvider* history_url_provider,
                       AutocompleteProviderListener* listener);
@@ -128,6 +131,10 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // Checks whether we have a set of zero suggest results cached, and if so
   // populates |matches_| with cached results.
   void MaybeUseCachedSuggestions();
+
+  // Checks whether personalized suggestions are enabled either by a field
+  // trial or a saved preference.
+  bool PersonalizedSuggestionsEnabled() const;
 
   // Used for efficiency when creating the verbatim match.  Can be null.
   HistoryURLProvider* history_url_provider_;
