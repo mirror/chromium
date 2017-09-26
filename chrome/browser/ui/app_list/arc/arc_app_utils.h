@@ -83,6 +83,12 @@ class Intent {
 // Checks if a given app should be hidden in launcher.
 bool ShouldShowInLauncher(const std::string& app_id);
 
+// Launch Android settings app with intent.
+bool LaunchAndroidSettingsAppWithIntent(
+    content::BrowserContext* context,
+    int event_flags,
+    base::Optional<std::string>& launch_intent);
+
 // Launch Android Settings app.
 bool LaunchAndroidSettingsApp(content::BrowserContext* context,
                               int event_flags);

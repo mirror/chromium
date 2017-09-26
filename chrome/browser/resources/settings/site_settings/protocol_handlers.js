@@ -36,6 +36,8 @@ var ProtocolEntry;
 Polymer({
   is: 'protocol-handlers',
 
+  browserProxy_: null,
+
   behaviors: [SiteSettingsBehavior, WebUIListenerBehavior],
 
   properties: {
@@ -59,6 +61,11 @@ Polymer({
     /* Labels for the toggle on/off positions. */
     toggleOffLabel: String,
     toggleOnLabel: String,
+  },
+
+  /** @override */
+  created: function() {
+    this.browserProxy_ = settings.AndroidAppsBrowserProxyImpl.getInstance();
   },
 
   /** @override */
@@ -177,5 +184,13 @@ Polymer({
         .showAt(
             /** @type {!Element} */ (
                 Polymer.dom(/** @type {!Event} */ (event)).localTarget));
-  }
+  },
+
+  /**
+   * Opens an activity to handle App links (preferred apps).
+   * @private
+   */
+  onManageAndroidAppsTap_: function() {
+    this.browserProxy_.showAndroidManageAppLinks();
+  },
 });
