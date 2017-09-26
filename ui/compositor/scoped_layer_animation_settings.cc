@@ -53,6 +53,55 @@ class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
   DISALLOW_COPY_AND_ASSIGN(CacheRenderSurfaceObserver);
 };
 
+class DeferredPaintObserver : public ui::ImplicitAnimationObserver,
+                              public ui::LayerObserver {
+ public:
+  DeferredPaintObserver(ui::Layer* layer) : layer_(layer) {
+    layer_->AddObserver(this);
+    AddDeferredPaintRequestRecursive(layer);
+  }
+  ~DeferredPaintObserver() override {
+    if (layer_)
+      layer_->RemoveObserver(this);
+  }
+
+  // ui::ImplicitAnimationObserver overrides:
+  void OnImplicitAnimationsCompleted() override {
+    // If animation finishes before |layer_| is destoyed, we will remove the
+    // request of deferred painting and remove |this| from the |layer_|
+    // observer list when deleting |this|.
+    if (layer_)
+      RemoveDeferredPaintRequestRecursive(layer_);
+    delete this;
+  }
+
+  // ui::LayerObserver overrides:
+  void LayerDestroyed(ui::Layer* layer) override {
+    // If the animation is still going past layer destruction then we want the
+    // layer too keep being deferred paint until the animation has finished. We
+    // will defer deleting |this| until the animation finishes.
+    layer_->RemoveObserver(this);
+    layer_ = nullptr;
+  }
+
+ private:
+  void AddDeferredPaintRequestRecursive(ui::Layer* layer) {
+    layer->AddDeferredPaintRequest();
+    for (auto* child : layer->children())
+      child->AddDeferredPaintRequest();
+  }
+
+  void RemoveDeferredPaintRequestRecursive(ui::Layer* layer) {
+    layer->RemoveDeferredPaintRequest();
+    for (auto* child : layer->children())
+      child->RemoveDeferredPaintRequest();
+  }
+
+  ui::Layer* layer_;
+
+  DISALLOW_COPY_AND_ASSIGN(DeferredPaintObserver);
+};
+
 }  // namespace
 
 namespace ui {
@@ -104,6 +153,10 @@ void ScopedLayerAnimationSettings::SetTransitionDuration(
 void ScopedLayerAnimationSettings::CacheRenderSurface() {
   AddObserver(
       new CacheRenderSurfaceObserver(animator_->delegate()->GetLayer()));
+}
+
+void ScopedLayerAnimationSettings::DeferPaint() {
+  AddObserver(new DeferredPaintObserver(animator_->delegate()->GetLayer()));
 }
 
 void ScopedLayerAnimationSettings::LockTransitionDuration() {
