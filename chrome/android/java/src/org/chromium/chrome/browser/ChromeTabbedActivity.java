@@ -120,6 +120,7 @@ import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog;
 import org.chromium.chrome.browser.widget.emptybackground.EmptyBackgroundViewWrapper;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
@@ -485,7 +486,14 @@ public class ChromeTabbedActivity
                     if (!DataReductionPromoScreen.launchDataReductionPromo(
                                 this, currentModel.isIncognito())
                             && getBottomSheet() != null) {
-                        getBottomSheet().showHelpBubbleIfNecessary();
+                        // TODO(mdjones): Refine this triggering logic when promo is complete:
+                        // crbug.com/767738
+                        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                            ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
+                            chDialog.show();
+                        } else {
+                            getBottomSheet().showHelpBubbleIfNecessary();
+                        }
                     }
                 }
             } else {
