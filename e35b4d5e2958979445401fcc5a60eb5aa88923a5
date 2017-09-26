@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe71142_a7a136b2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 54631,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:14:21Z",
+      "side": 1,
+      "message": "Please add a units, just bookmarks would be file.",
+      "range": {
+        "startLine": 54631,
+        "startChar": 40,
+        "endLine": 54631,
+        "endChar": 0
+      },
+      "revId": "e35b4d5e2958979445401fcc5a60eb5aa88923a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27cd7480_f1281be3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 54635,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:14:21Z",
+      "side": 1,
+      "message": "Please mention when this is logged, e.g. once on startup, at most once a session, whenever a particular event occurs, ...\n\nSame for the other histograms.",
+      "range": {
+        "startLine": 54634,
+        "startChar": 4,
+        "endLine": 54635,
+        "endChar": 78
+      },
+      "revId": "e35b4d5e2958979445401fcc5a60eb5aa88923a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34fcbd9_62ee48f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 54639,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:14:21Z",
+      "side": 1,
+      "message": "Please add an enum of the form Boolean*, there are a number of them already defined in enums.xml but you\u0027ll probably need to define your own.",
+      "revId": "e35b4d5e2958979445401fcc5a60eb5aa88923a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adda9849_2de4fc4a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 54647,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:14:21Z",
+      "side": 1,
+      "message": "Please add an enum.",
+      "revId": "e35b4d5e2958979445401fcc5a60eb5aa88923a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
