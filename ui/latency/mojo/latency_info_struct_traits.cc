@@ -62,6 +62,27 @@ ui::mojom::LatencyComponentType UILatencyComponentTypeToMojo(
     case ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL:
       return ui::mojom::LatencyComponentType::
           INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL;
+    case ui::DISPLAY_EVENT_REQUESTED_PRESENT:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_REQUESTED_PRESENT;
+    case ui::DISPLAY_EVENT_RENDERING_COMPLETE:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_RENDERING_COMPLETE;
+    case ui::DISPLAY_EVENT_COMPOSITION_LATCH:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_COMPOSITION_LATCH;
+    case ui::DISPLAY_EVENT_FIRST_COMPOSITION_START:
+      return ui::mojom::LatencyComponentType::
+          DISPLAY_EVENT_FIRST_COMPOSITION_START;
+    case ui::DISPLAY_EVENT_LAST_COMPOSITION_START:
+      return ui::mojom::LatencyComponentType::
+          DISPLAY_EVENT_LAST_COMPOSITION_START;
+    case ui::DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED:
+      return ui::mojom::LatencyComponentType::
+          DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED;
+    case ui::DISPLAY_EVENT_DISPLAY_PRESENT:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_DISPLAY_PRESENT;
+    case ui::DISPLAY_EVENT_DEQUEUE_READY:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_DEQUEUE_READY;
+    case ui::DISPLAY_EVENT_READS_DONE:
+      return ui::mojom::LatencyComponentType::DISPLAY_EVENT_READS_DONE;
     case ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT:
       return ui::mojom::LatencyComponentType::
           INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT;
@@ -132,6 +153,25 @@ ui::LatencyComponentType MojoLatencyComponentTypeToUI(
     case ui::mojom::LatencyComponentType::
         INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL:
       return ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_REQUESTED_PRESENT:
+      return ui::DISPLAY_EVENT_REQUESTED_PRESENT;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_RENDERING_COMPLETE:
+      return ui::DISPLAY_EVENT_RENDERING_COMPLETE;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_COMPOSITION_LATCH:
+      return ui::DISPLAY_EVENT_COMPOSITION_LATCH;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_FIRST_COMPOSITION_START:
+      return ui::DISPLAY_EVENT_FIRST_COMPOSITION_START;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_LAST_COMPOSITION_START:
+      return ui::DISPLAY_EVENT_LAST_COMPOSITION_START;
+    case ui::mojom::LatencyComponentType::
+        DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED:
+      return ui::DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_DISPLAY_PRESENT:
+      return ui::DISPLAY_EVENT_DISPLAY_PRESENT;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_DEQUEUE_READY:
+      return ui::DISPLAY_EVENT_DEQUEUE_READY;
+    case ui::mojom::LatencyComponentType::DISPLAY_EVENT_READS_DONE:
+      return ui::DISPLAY_EVENT_READS_DONE;
     case ui::mojom::LatencyComponentType::
         INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT:
       return ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT;
