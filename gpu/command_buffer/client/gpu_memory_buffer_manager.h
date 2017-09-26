@@ -29,6 +29,13 @@ class GPU_EXPORT GpuMemoryBufferManager {
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle) = 0;
 
+  // TODO(klausw): add args for size, format, usage?
+  virtual std::unique_ptr<gfx::GpuMemoryBuffer> CreateFromHandle(
+      const gfx::GpuMemoryBufferHandle& handle,
+      const gfx::Size& size,
+      gfx::BufferFormat format,
+      gfx::BufferUsage usage);
+
   // Associates destruction sync point with |buffer|. It can be called on any
   // thread.
   virtual void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,

@@ -43,6 +43,16 @@ GpuMemoryBufferHandle CloneHandleForIPC(
 #endif
       return handle;
     }
+    case gfx::ANDROID_HARDWARE_BUFFER: {
+      gfx::GpuMemoryBufferHandle handle;
+      handle.type = gfx::ANDROID_HARDWARE_BUFFER;
+      handle.id = source_handle.id;
+#if defined(OS_ANDROID)
+      handle.hardware_buffer_handle =
+          gfx::CloneHandleForIPC(source_handle.hardware_buffer_handle);
+#endif
+      return handle;
+    }
     case gfx::IO_SURFACE_BUFFER:
       return source_handle;
   }

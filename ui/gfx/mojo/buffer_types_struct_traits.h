@@ -183,6 +183,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
         return gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP;
+      case gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
+        return gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
     }
     NOTREACHED();
     return gfx::mojom::GpuMemoryBufferType::LAST;
@@ -202,6 +204,9 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return true;
       case gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP:
         *out = gfx::GpuMemoryBufferType::NATIVE_PIXMAP;
+        return true;
+      case gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
+        *out = gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
         return true;
     }
     return false;
@@ -270,6 +275,29 @@ struct StructTraits<gfx::mojom::NativePixmapHandleDataView,
 };
 
 template <>
+struct StructTraits<gfx::mojom::AndroidHardwareBufferHandleDataView,
+                    gfx::AndroidHardwareBufferHandle> {
+  static bool IsNull(const gfx::AndroidHardwareBufferHandle& handle) {
+#if defined(OS_ANDROID)
+    // TODO(klausw): a "return true" here breaks pages such as Google Search
+    // and Google Docs due to trying to xfer an invalid FD via IPC. not sure
+    // why that's ok for other implementations such as NativePixmapHandle but
+    // not for us.
+    return !handle.scoped_ahardwarebuffer.is_valid();
+#else
+    // AndroidHardwareBufferHandle is not used on other platforms.
+    return true;
+#endif
+  }
+
+  static mojo::ScopedHandle socket_fd(
+      const gfx::AndroidHardwareBufferHandle& buffer_handle);
+
+  static bool Read(gfx::mojom::AndroidHardwareBufferHandleDataView data,
+                   gfx::AndroidHardwareBufferHandle* out);
+};
+
+template <>
 struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
                     gfx::GpuMemoryBufferHandle> {
   static gfx::GpuMemoryBufferType type(
@@ -288,6 +316,8 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
     return handle.stride;
   }
   static const gfx::NativePixmapHandle& native_pixmap_handle(
+      const gfx::GpuMemoryBufferHandle& handle);
+  static const gfx::AndroidHardwareBufferHandle& hardware_buffer_handle(
       const gfx::GpuMemoryBufferHandle& handle);
   static mojo::ScopedHandle mach_port(const gfx::GpuMemoryBufferHandle& handle);
   static bool Read(gfx::mojom::GpuMemoryBufferHandleDataView data,

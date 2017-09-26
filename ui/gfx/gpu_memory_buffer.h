@@ -20,6 +20,8 @@
 #include "ui/gfx/native_pixmap_handle.h"
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
 #include "ui/gfx/mac/io_surface.h"
+#elif defined(OS_ANDROID)
+#include "ui/gfx/android/hardware_buffer_handle.h"
 #endif
 
 extern "C" typedef struct _ClientBuffer* ClientBuffer;
@@ -33,7 +35,8 @@ enum GpuMemoryBufferType {
   SHARED_MEMORY_BUFFER,
   IO_SURFACE_BUFFER,
   NATIVE_PIXMAP,
-  GPU_MEMORY_BUFFER_TYPE_LAST = NATIVE_PIXMAP
+  ANDROID_HARDWARE_BUFFER,
+  GPU_MEMORY_BUFFER_TYPE_LAST = ANDROID_HARDWARE_BUFFER
 };
 
 using GpuMemoryBufferId = GenericSharedMemoryId;
@@ -52,6 +55,8 @@ struct GFX_EXPORT GpuMemoryBufferHandle {
   NativePixmapHandle native_pixmap_handle;
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   ScopedRefCountedIOSurfaceMachPort mach_port;
+#elif defined(OS_ANDROID)
+  AndroidHardwareBufferHandle hardware_buffer_handle;
 #endif
 };
 

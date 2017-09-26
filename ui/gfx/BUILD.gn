@@ -44,6 +44,8 @@ component("geometry_skia") {
 
 component("gfx") {
   sources = [
+    "android/hardware_buffer_handle.cc",
+    "android/hardware_buffer_handle.h",
     "android/java_bitmap.cc",
     "android/java_bitmap.h",
     "android/view_configuration.cc",
@@ -567,6 +569,13 @@ source_set("memory_buffer_sources") {
     ]
 
     deps += [ "//third_party/libdrm" ]
+  }
+
+  if (is_android) {
+    sources += [
+      "android/scoped_android_hardware_buffer.cc",
+      "android/scoped_android_hardware_buffer.h",
+    ]
   }
 }
 

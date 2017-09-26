@@ -4,6 +4,7 @@
 
 #include "ui/gl/gl_image_egl.h"
 
+#include "base/trace_event/trace_event.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_surface_egl.h"
 
@@ -13,6 +14,7 @@ GLImageEGL::GLImageEGL(const gfx::Size& size)
     : egl_image_(EGL_NO_IMAGE_KHR), size_(size) {}
 
 GLImageEGL::~GLImageEGL() {
+  TRACE_EVENT0("gpu", "eglDestroyImageKHR");
   DCHECK(thread_checker_.CalledOnValidThread());
   if (egl_image_ != EGL_NO_IMAGE_KHR) {
     EGLBoolean result =
@@ -39,6 +41,32 @@ bool GLImageEGL::Initialize(EGLenum target,
   return true;
 }
 
+bool GLImageEGL::InitializeFromHardwareBuffer(void* buffer,
+                                              const EGLint* attrs) {
+  // LOG(INFO) << __FUNCTION__ << ";;; buffer=" << buffer;
+  TRACE_EVENT0("gpu", "InitializeFromHardwareBuffer");
+  if (!buffer)
+    return false;
+
+  // Looks like eglGetNativeClientBufferANDROID is part of the
+  // EGL_ANDROID_get_native_client_buffer extension but that isn't documented
+  // yet (404... Oops):
+  // https://www.khronos.org/registry/EGL/extensions/ANDROID/EGL_ANDROID_get_native_client_buffer.txt
+  //
+  // This is the wrong one:
+  // https://www.khronos.org/registry/EGL/extensions/ANDROID/EGL_ANDROID_create_native_client_buffer.txt
+  // .
+  //
+  // This is also the wrong one, and it's extra misleading since it says
+  // to just cast the pointer. That produces a "bad magic number" driver
+  // error since it's the wrong type.
+  // https://www.khronos.org/registry/EGL/extensions/ANDROID/EGL_ANDROID_image_native_buffer.txt
+  EGLClientBuffer clientBuffer = eglGetNativeClientBufferANDROID(buffer);
+  bool ret = Initialize(EGL_NATIVE_BUFFER_ANDROID, clientBuffer, attrs);
+  // LOG(INFO) << __FUNCTION__ << ";;; ret=" << ret;
+  return ret;
+}
+
 gfx::Size GLImageEGL::GetSize() {
   return size_;
 }
@@ -46,6 +74,7 @@ gfx::Size GLImageEGL::GetSize() {
 unsigned GLImageEGL::GetInternalFormat() { return GL_RGBA; }
 
 bool GLImageEGL::BindTexImage(unsigned target) {
+  TRACE_EVENT0("gpu", "glEGLImageTargetTexture2DOES");
   DCHECK(thread_checker_.CalledOnValidThread());
   if (egl_image_ == EGL_NO_IMAGE_KHR)
     return false;
@@ -72,5 +101,9 @@ bool GLImageEGL::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                                       const gfx::RectF& crop_rect) {
   return false;
 }
+
+void GLImageEGL::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
+                              uint64_t process_tracing_id,
+                              const std::string& dump_name) {}
 
 }  // namespace gl
