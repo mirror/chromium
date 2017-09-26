@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb5fd5ca_6b86d67a",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T20:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "280c42f9_f9efdeb3",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f98ea9f_41764b2c",
         "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bca8be70_e1ba4dc1",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T20:14:07Z",
+      "side": 1,
+      "message": "Right, good point. I\u0027ve switched this to reading a salt from a file, and the file is updated any time //build/util/LASTCHANGE is changed, which gclient sync does locally. (See //base:build_date for another example use where we rely on this behavior.)",
+      "parentUuid": "8f98ea9f_41764b2c",
+      "range": {
+        "startLine": 198,
+        "startChar": 48,
+        "endLine": 198,
+        "endChar": 76
+      },
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cfad3e4_1ff46f6a",
         "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ad015a_27b54e26",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T20:14:07Z",
+      "side": 1,
+      "message": "Updated to reflect new usage as a filename",
+      "parentUuid": "5cfad3e4_1ff46f6a",
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
