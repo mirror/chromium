@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2df16f3e_bf54637a",
+        "filename": "components/signin/core/browser/profile_oauth2_token_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "We should leave this one for sure since user_prefs::PrefRegistrySyncable is not guarded below. The one below could be #ifdef\u0027d away though.",
+      "parentUuid": "b536b14b_4db418ed",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1830bc4_f51a5137",
         "filename": "components/signin/ios/browser/ios_signin_client.cc",
         "patchSetId": 24
@@ -39,6 +63,24 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b4785a_adc22139",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done. Removing this pattern elsewhere in this CL.",
+      "parentUuid": "c1830bc4_f51a5137",
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1e60fb7a_e3a5b59c",
+        "filename": "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77d5831_eff87a71",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d38e798a_d9f61afe",
         "filename": "ios/web_view/internal/content_settings/web_view_host_content_settings_map_factory.h",
         "patchSetId": 24
@@ -85,6 +151,30 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c275115a_fba17b63",
+        "filename": "ios/web_view/internal/content_settings/web_view_host_content_settings_map_factory.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38e798a_d9f61afe",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "423a182f_21afd0aa",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "I\u0027ll add TODOs here for now since we aren\u0027t signing in just yet.",
+      "parentUuid": "f79e03a0_385216f0",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d870bcd2_50042534",
         "filename": "ios/web_view/internal/signin/web_view_account_fetcher_service_factory.cc",
         "patchSetId": 24
@@ -131,6 +245,30 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0c72b5_2420cb8f",
+        "filename": "ios/web_view/internal/signin/web_view_account_fetcher_service_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d870bcd2_50042534",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 35
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "23882689_b8b17b5a",
+        "filename": "ios/web_view/internal/signin/web_view_account_tracker_service_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47bb8f68_9239cd22",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 74
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c3ea2ca_c954590e",
         "filename": "ios/web_view/internal/signin/web_view_account_tracker_service_factory.cc",
         "patchSetId": 24
@@ -177,6 +339,30 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1160f1d_0e1a7c36",
+        "filename": "ios/web_view/internal/signin/web_view_account_tracker_service_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c3ea2ca_c954590e",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "a723a9a7_56c83efb",
+        "filename": "ios/web_view/internal/signin/web_view_account_tracker_service_factory.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe24eb1d_dd9921f2",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9ac8619_94845072",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
         "patchSetId": 24
@@ -223,6 +433,30 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa45c70_1c6778b7",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ac8619_94845072",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "0ef1b280_c67a1000",
+        "filename": "ios/web_view/internal/signin/web_view_signin_error_controller_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fe4fe7f_eec7bbbb",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795de154_335c30db",
         "filename": "ios/web_view/internal/signin/web_view_signin_manager_factory.cc",
         "patchSetId": 24
@@ -269,6 +527,30 @@
       "revId": "e5732925cc9444a66b17aaab305befde43caee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45b2f67_8d3578a9",
+        "filename": "ios/web_view/internal/signin/web_view_signin_manager_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-26T04:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795de154_335c30db",
+      "range": {
+        "startLine": 72,
+        "startChar": 19,
+        "endLine": 72,
+        "endChar": 26
+      },
+      "revId": "e5732925cc9444a66b17aaab305befde43caee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
