@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1300f58f_67b9255e",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-26T00:04:30Z",
+      "side": 1,
+      "message": "OK, I\u0027ve gone back to the LoadLibrary and GetProcAddr approach. Two reasons:\n\n1) I can\u0027t get the __HrLoadAllImportsForDll approach to work on Win7. It requires delayloading a handful of DLLs for Chrome, but what\u0027s worse is that transport_security_state_generator requires 27 (!) other DLLs to also be delayloaded (and I haven\u0027t even gotten to the telemetry test failures). \n\nIt is hard to find out which DLLs are required (you need a Win7 machine where it repros) and it is really tedious to add a DLL to the list (build, repro, add one dll, build, repro, add one dll, etc). And once I was done with that, transport_security_state_generator crashed with \"stack exhausted\", while attempting to delayload an error handler dll in an endless loop. \n\nI worry this is brittle and will fail in spectacular ways in the future if MS decides to move functions around or add new versions of their DLLs. And the failures are going to be non-obvious (some exe failing to run during compile step with an error saying something is missing).\n\n2) There\u0027s also the forward compat problem Robert mentioned.",
+      "parentUuid": "09b6f10d_9afa457d",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b550d7c2_9b6da75b",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 15
