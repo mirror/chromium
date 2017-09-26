@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0ab60d9_7b02e64d",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-26T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6510b51a_d6b868e8",
+      "revId": "22c0c1c62195938abefda41057321337eaa90e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62abb0ec_b0d2275a",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "22c0c1c62195938abefda41057321337eaa90e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485714d0_4f8a3961",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-26T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62abb0ec_b0d2275a",
+      "revId": "22c0c1c62195938abefda41057321337eaa90e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
