@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b88c3729_9d5a8312",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-26T15:39:36Z",
+      "side": 1,
+      "message": "Exactly, that\u0027ll happen if it becomes active. This matches the previous behavior.",
+      "parentUuid": "71354c53_3708c9e3",
+      "revId": "75bcebdfdea7516edde60509cfc86be650ea094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb28e9e0_ff3366c3",
         "filename": "chrome/browser/ui/search/instant_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "75bcebdfdea7516edde60509cfc86be650ea094b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d042fce5_77fc6d9d",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-26T15:39:36Z",
+      "side": 1,
+      "message": "Technically correct, but this file does use curlies for single-line bodies, so I\u0027m staying consistent with that. (It\u0027d be really nice if we had a clear guidance either way in the style guide - as it is, whichever way you do it, there\u0027s about a 50% chance of getting a comment on it...)",
+      "parentUuid": "cb28e9e0_ff3366c3",
+      "revId": "75bcebdfdea7516edde60509cfc86be650ea094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
