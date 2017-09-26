@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd76c9e0_748caaf0",
+        "filename": "content/common/frame_owner_properties.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:20:20Z",
+      "side": 1,
+      "message": "i wouldn\u0027t use an int here, but an enum class, so we\u0027d be forced to always use the named constant, i.e. kActivationDelegationNone here",
+      "revId": "14d6c9140cee99a0aa0d2fa84df423272347eee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4972eed3_612f1d7f",
+        "filename": "third_party/WebKit/Source/core/html/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:20:20Z",
+      "side": 1,
+      "message": "same here, no per-file rule please",
+      "revId": "14d6c9140cee99a0aa0d2fa84df423272347eee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2f5fd0_d21a8c29",
+        "filename": "third_party/WebKit/public/platform/ActivationDelegationFlags.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:20:20Z",
+      "side": 1,
+      "message": "nit. enum class",
+      "revId": "14d6c9140cee99a0aa0d2fa84df423272347eee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6824e3_56efb7b1",
+        "filename": "third_party/WebKit/public/platform/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:20:20Z",
+      "side": 1,
+      "message": "we don\u0027t generally do that for feature files in public/",
+      "revId": "14d6c9140cee99a0aa0d2fa84df423272347eee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
