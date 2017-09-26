@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c81cdf4_b3cbeeab",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-26T22:43:34Z",
+      "side": 1,
+      "message": "NOTE: I guess nobody\u0027s building it with these options, since its wrong, and has been so for at least a week after the CL I landed that changed this.",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 3
+      },
+      "revId": "c50f544dc5316793caad0115f14621f4fa0ea730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
