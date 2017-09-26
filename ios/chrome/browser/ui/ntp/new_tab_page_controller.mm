@@ -220,7 +220,8 @@ enum {
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
                              OmniboxFocuser,
-                             UrlLoader>)dispatcher {
+                             UrlLoader>)dispatcher
+                safeArea:(UIEdgeInsets)safeArea {
   self = [super initWithNibName:nil url:url];
   if (self) {
     DCHECK(browserState);
@@ -236,15 +237,12 @@ enum {
     self.title = l10n_util::GetNSString(IDS_NEW_TAB_TITLE);
     _scrollInitialized = NO;
 
-    UIScrollView* scrollView =
-        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 412)];
-    [scrollView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
-                                     UIViewAutoresizingFlexibleHeight)];
-    NewTabPageBar* tabBar =
-        [[NewTabPageBar alloc] initWithFrame:CGRectMake(0, 412, 320, 48)];
-    _ntpView = [[NewTabPageView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)
+    UIScrollView* scrollView = [[UIScrollView alloc] init];
+    NewTabPageBar* tabBar = [[NewTabPageBar alloc] init];
+    _ntpView = [[NewTabPageView alloc] initWithFrame:CGRectZero
                                        andScrollView:scrollView
                                            andTabBar:tabBar];
+    _ntpView.safeAreaForToolbar = safeArea;
     // TODO(crbug.com/607113): Merge view and ntpView.
     self.view = _ntpView;
     [tabBar setDelegate:self];
@@ -479,7 +477,7 @@ enum {
 
 // Update selectedIndex and scroll position as the scroll view moves.
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
-  if (!_scrollInitialized)
+  if (!_scrollInitialized || PresentNTPPanelModally())
     return;
 
   // Position is used to track the exact X position of the scroll view, whereas
