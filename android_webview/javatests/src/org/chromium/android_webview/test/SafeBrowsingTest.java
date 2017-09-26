@@ -94,12 +94,13 @@ public class SafeBrowsingTest {
     // These colors correspond to the body.background attribute in GREEN_HTML_PATH, SAFE_HTML_PATH,
     // MALWARE_HTML_PATH, IFRAME_HTML_PATH, etc. They should only be changed if those values are
     // changed as well
-    private static final int GREEN_PAGE_BACKGROUND_COLOR = Color.rgb(0, 255, 0);
-    private static final int SAFE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
-    private static final int PHISHING_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
-    private static final int MALWARE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
-    private static final int UNWANTED_SOFTWARE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
-    private static final int IFRAME_EMBEDDER_BACKGROUND_COLOR = Color.rgb(10, 10, 10);
+    private static final int GREEN_PAGE_BACKGROUND_COLOR = Color.rgb(0, 255, 0); // -16711936
+    private static final int SAFE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255); // -16776961
+    private static final int PHISHING_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255); // -16776961
+    private static final int MALWARE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255); // -16776961
+    private static final int UNWANTED_SOFTWARE_PAGE_BACKGROUND_COLOR =
+            Color.rgb(0, 0, 255); // -16776961
+    private static final int IFRAME_EMBEDDER_BACKGROUND_COLOR = Color.rgb(10, 10, 10); // -16119286
 
     private static final String RESOURCE_PATH = "/android_webview/test/data";
 
