@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "97c633d1_03be3844",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T15:03:39Z",
+      "side": 1,
+      "message": "This is ultimately going to end up in ChromeTabbedActivity#finishNativeInitialization() with the other promo logic. Maybe we should just plop it in there now with a TODO to refine triggering logic?\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java?type\u003dcs\u0026q\u003ddatareductionpromo+file:.java\u0026sq\u003dpackage:chromium\u0026l\u003d479",
+      "range": {
+        "startLine": 810,
+        "startChar": 7,
+        "endLine": 813,
+        "endChar": 9
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a778b6_bd9e0ee5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 2
