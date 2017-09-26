@@ -46,6 +46,30 @@
       "revId": "2b7ae4983f7a1a7a3271ad5035d36d3451e7edbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd06b3d8_5cbe5467",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-26T16:55:15Z",
+      "side": 1,
+      "message": "\u003e \u003e - When the bottom sheet is already half open, we don\u0027t get an event because the state change is skipped, so the stateChangeReason is not useful there.\n\u003e \n\u003e I thought we get an onContentHidden() when the Activity goes into the background, and then subsequently an onContentShown() when it is resumed?\n\nYes, but we don\u0027t treat that as opening/closing the bottom sheet. So if you go in the background and back we don\u0027t reload the data etc. We consider the user still might want to keep interacting.\n\nThe worry is that if we reset we would have a lot less time before being expected to have content compared to when we animate from the closed state.",
+      "parentUuid": "72b97891_8aead3e6",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "2b7ae4983f7a1a7a3271ad5035d36d3451e7edbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
