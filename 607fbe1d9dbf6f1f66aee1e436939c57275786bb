@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f56b81b9_1cebc0e4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "sgtm, thanks",
+      "parentUuid": "ff128aa9_fb11bc42",
+      "range": {
+        "startLine": 201,
+        "startChar": 14,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44e74ffa_b50ba73a",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 37
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "afe8fc3a_7e17a103",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "You\u0027re saying that it\u0027s possible to have an entry_ and be in mode NONE, which means the comment on line 398 needs to be updated.",
+      "parentUuid": "0ff9e04f_ce45d031",
+      "range": {
+        "startLine": 412,
+        "startChar": 27,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489c4da2_0e8ecebe",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 37
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Using success instead of keep_entry. WDYT? In your suggestion above, I am not sure why we are always invoking DoneWithEntry with false. That will be a behavior change because some of the scenarios are calling DoneWithEntry with true now.",
       "parentUuid": "489c4da2_0e8ecebe",
+      "range": {
+        "startLine": 2898,
+        "startChar": 18,
+        "endLine": 2898,
+        "endChar": 45
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e89343_0e1e03be",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Created new comment, but I believe that when calling ContinueInNetworkReadOnlyMode we already know that success is false, so why do we even take a boolean argument?",
+      "parentUuid": "afc70609_2950c177",
       "range": {
         "startLine": 2898,
         "startChar": 18,
@@ -375,6 +447,52 @@
       "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a72d098b_4ae9fa86",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Rename to RemoveTransaction?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d08942_8f532d3d",
+        "filename": "net/http/http_transaction.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "which it may choose to ignore.",
+      "range": {
+        "startLine": 127,
+        "startChar": 55,
+        "endLine": 128,
+        "endChar": 18
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

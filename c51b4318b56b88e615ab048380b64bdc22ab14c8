@@ -1,0 +1,504 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b19c5e9_abdc63a1",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Callers of this function (in HC::T) are making strong statements (in comments) about what will happen when they set did_finish to false. \n\nIf this is information HC::T really needs to know, then it needs to be documented here:\n\ne.g., If |did_finish| is false, the entry will be doomed if the transaction hasn\u0027t written response body yet, or truncated it it has.",
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e6ff43_f0164fb9",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "More bike shedding, my apologies! I\u0027m wondering if |entry_is_complete| might be a better name here. It makes it about the state of the cache entry as opposed to the state of the transaction when it was done with the entry.\n\nFor instance, the HC::T will set the value to true if it wants to keep the entry even though the transaction is essentially aborting early to not overwrite the cached entry. The transaction wasn\u0027t finished, but the entry is fine.",
+      "range": {
+        "startLine": 419,
+        "startChar": 26,
+        "endLine": 419,
+        "endChar": 36
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff578871_7a33cde0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "let\u0027s use OK here",
+      "range": {
+        "startLine": 177,
+        "startChar": 28,
+        "endLine": 177,
+        "endChar": 29
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1d15db_943ed94f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Isn\u0027t success always false here? We\u0027re abandoning the entry early in order to read from the network. In fact, I\u0027m not sure why ContinueInNetworkReadOnlyMode even takes a bool argument.",
+      "range": {
+        "startLine": 358,
+        "startChar": 34,
+        "endLine": 358,
+        "endChar": 53
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19c5f02_cedc4a6a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "constant comes first, so:\n\nDCHECK_GT(OK, shared_writing_error_);",
+      "range": {
+        "startLine": 394,
+        "startChar": 4,
+        "endLine": 394,
+        "endChar": 40
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b4c6e7_ffb241b2",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Suggest moving these two lines down to 421 where it says \"Full Request\"",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 63
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033eb8b1_c36e0683",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "This condition needs braces around it since there are 3 lines in it (2 comment lines and 1 statement).",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 45
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f7280b_fec04fb4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Let\u0027s not talk about dependent transactions in this file. Suggest just, \"This entry is now doomed\".",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 445,
+        "endChar": 32
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b2141f_9d5ed931",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "What if the consumer calls this before the body is finished? Shouldn\u0027t we say false in that case?",
+      "range": {
+        "startLine": 487,
+        "startChar": 18,
+        "endLine": 487,
+        "endChar": 22
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc78c1b0_6f4a99d2",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "This code (and the old code) goes against the comment for HttpTransaction::SetWebSocketHandshaeStreamCreateHelper which says that it *must* be called before calling Start. Before start we shouldn\u0027t have a network_transaction_.\n\nWe should DCHECK that we don\u0027t have a network transaction if anything.\n\nCan you add a TODO to do that?",
+      "range": {
+        "startLine": 575,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 18
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7184e7_76bc52cb",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "I believe we\u0027d set shared_writing_error_ anytime the state isn\u0027t STATE_NETWORK_READ_CACHE_WRITE_COMPLETE right? That seems simpler than listing all of the possible other states it could be in that we might want to set it.",
+      "range": {
+        "startLine": 645,
+        "startChar": 20,
+        "endLine": 646,
+        "endChar": 66
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de478265_d47dedb0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "That DoneWithEntry(false) will doom a headers entry seems a bit more than HC::T should have to worry about. I recommend removing this entire comment.",
+      "range": {
+        "startLine": 1408,
+        "startChar": 9,
+        "endLine": 1408,
+        "endChar": 23
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c92ce4_5436beb7",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "What is this part of the comment is talking about?",
+      "range": {
+        "startLine": 1409,
+        "startChar": 9,
+        "endLine": 1410,
+        "endChar": 32
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d22d99_8cce871f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Let\u0027s avoid the condition in production code, suggest: DCHECK(!reading_ || rv \u003d\u003d OK) \u003c\u003c \"Expected OK, but got \" \u003c\u003c rv;",
+      "range": {
+        "startLine": 1988,
+        "startChar": 0,
+        "endLine": 1990,
+        "endChar": 3
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cba1b62_6ec52121",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "Move this above TransitionToState",
+      "range": {
+        "startLine": 2053,
+        "startChar": 2,
+        "endLine": 2053,
+        "endChar": 22
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b8cbee_54c275dd",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "AboutToBeRemovedFromWriters should always be called when the transaction is removed. Given that, we can either handle the read failure in AboutToBeRemovedFromWriters (and get rid of the mode check) or we can leave the mode check and handle it here.\n\nIf we remove the mode check, this code would change to something like:\n\nif (result \u003c 0) {\n  // We should have discovered this error in AboutToBeRemovedFromWriters\n  DCHECK_EQ(result, shared_writing_error_);\n  DCHECK_EQ(NONE, mode_);\n  DCHECK(!entry_);\n  TransitionToState(STATE_NONE);\n  return result;\n}\n\nWhich seems reasonable to me. WDYT?",
+      "range": {
+        "startLine": 2069,
+        "startChar": 0,
+        "endLine": 2073,
+        "endChar": 18
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04909f2_8c218a11",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to apply to the condition below? If nothing is returned, result would be 0.",
+      "range": {
+        "startLine": 2092,
+        "startChar": 0,
+        "endLine": 2092,
+        "endChar": 67
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586c4eee_ef8ed89f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand what set of states this condition is trying to cover. Any chance you could clarify the comment?",
+      "range": {
+        "startLine": 2093,
+        "startChar": 5,
+        "endLine": 2094,
+        "endChar": 51
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb48e555_0e7924ea",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "s/fails/should fail/",
+      "range": {
+        "startLine": 186,
+        "startChar": 47,
+        "endLine": 186,
+        "endChar": 52
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360099fb_83786bb8",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "This comment is tricky to write, since it does two entirely different things. I\u0027d prefer the comment specify what the function does rather than when it should be called.\n\nPerhaps:\n\nConfigures the transaction to read from the network and stop writing to the entry. It will release the entry if possible.",
+      "range": {
+        "startLine": 430,
+        "startChar": 5,
+        "endLine": 430,
+        "endChar": 76
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cb6820_243030f3",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "It\u0027s important for the reader to understand when the function should be called, but in this case I think that can be determined by just specifying what the function does.\n\ne.g.,\n\nInforms the HttpCache that this transaction is done with the entry and changes the mode to NONE. Set |did_finish| to false if the transaction has not yet finished fully reading or writing the request to/from the entry. If |did_finish| is false then the HttpCache may attempt to truncate the entry rather than doom it.",
+      "range": {
+        "startLine": 440,
+        "startChar": 5,
+        "endLine": 440,
+        "endChar": 17
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7d703e_5028a425",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 1,
+      "message": "For consistency we need to call AboutToBeRemvoedFromWriters(result) here. Otherwise HC::T has to be aware that sometimes it\u0027ll be called and sometimes not depending on its state.",
+      "range": {
+        "startLine": 587,
+        "startChar": 6,
+        "endLine": 587,
+        "endChar": 38
+      },
+      "revId": "c51b4318b56b88e615ab048380b64bdc22ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

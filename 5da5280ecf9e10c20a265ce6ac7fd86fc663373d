@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2215b1f_a50b8630",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-26T20:32:33Z",
+      "side": 0,
+      "message": "Was it a bug that we bypassed STATE_FINISH_HEADERS before?",
+      "range": {
+        "startLine": 1891,
+        "startChar": 0,
+        "endLine": 1895,
+        "endChar": 5
+      },
+      "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
