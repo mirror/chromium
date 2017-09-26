@@ -146,6 +146,19 @@ var SourceEntry = (function() {
         case EventSourceType.DNS_TRANSACTION:
           this.description_ = e.params.hostname;
           break;
+        case EventSourceType.DOWNLOAD:
+          switch (e.type) {
+            case EventType.DOWNLOAD_FILE_RENAMED:
+              this.description_ = e.params.new_filename;
+              break;
+            case EventType.DOWNLOAD_FILE_OPENED:
+              this.description_ = e.params.file_name;
+              break;
+            case EventType.DOWNLOAD_ITEM_ACTIVE:
+              this.description_ = e.params.file_name;
+              break;
+          }
+          break;
         case EventSourceType.FILESTREAM:
           this.description_ = e.params.file_name;
           break;
@@ -184,6 +197,20 @@ var SourceEntry = (function() {
         return undefined;
       if (this.entries_[0].source.type == EventSourceType.FILESTREAM) {
         var e = this.findLogEntryByType_(EventType.FILE_STREAM_OPEN);
+        if (e != undefined)
+          return e;
+      }
+      if (this.entries_[0].source.type == EventSourceType.DOWNLOAD) {
+        // If any rename occurred, use the last name
+        e = this.findLastLogEntryStartByType_(EventType.DOWNLOAD_FILE_RENAMED);
+        if (e != undefined)
+          return e;
+        // Otherwise, if the file was opened, use that name
+        e = this.findLogEntryByType_(EventType.DOWNLOAD_FILE_OPENED);
+        if (e != undefined)
+          return e;
+        // History items are never opened, so use the activation info
+        e = this.findLogEntryByType_(EventType.DOWNLOAD_ITEM_ACTIVE);
         if (e != undefined)
           return e;
       }

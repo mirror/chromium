@@ -151,7 +151,6 @@
 #include "components/metrics/client_info.h"
 #include "components/nacl/common/features.h"
 #include "components/nacl/common/nacl_constants.h"
-#include "components/net_log/chrome_net_log.h"
 #include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
@@ -2371,10 +2370,6 @@ void ChromeContentBrowserClient::ResourceDispatcherHostCreated() {
 content::SpeechRecognitionManagerDelegate*
     ChromeContentBrowserClient::CreateSpeechRecognitionManagerDelegate() {
   return new speech::ChromeSpeechRecognitionManagerDelegate();
-}
-
-net::NetLog* ChromeContentBrowserClient::GetNetLog() {
-  return g_browser_process->net_log();
 }
 
 void ChromeContentBrowserClient::OverrideWebkitPrefs(

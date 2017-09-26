@@ -114,7 +114,6 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
                        bool opener_suppressed,
                        bool* no_javascript_access) override;
   void ResourceDispatcherHostCreated() override;
-  net::NetLog* GetNetLog() override;
   base::FilePath GetDefaultDownloadDirectory() override;
   std::string GetDefaultDownloadName() override;
   void DidCreatePpapiPlugin(content::BrowserPpapiHost* browser_host) override;

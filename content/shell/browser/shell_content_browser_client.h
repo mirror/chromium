@@ -63,7 +63,6 @@ class ShellContentBrowserClient : public ContentBrowserClient {
       std::unique_ptr<ClientCertificateDelegate> delegate) override;
   SpeechRecognitionManagerDelegate* CreateSpeechRecognitionManagerDelegate()
       override;
-  net::NetLog* GetNetLog() override;
   bool ShouldSwapProcessesForRedirect(BrowserContext* browser_context,
                                       const GURL& current_url,
                                       const GURL& new_url) override;

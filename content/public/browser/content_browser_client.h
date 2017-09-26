@@ -82,7 +82,6 @@ namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
 class CookieOptions;
-class NetLog;
 class SSLCertRequestInfo;
 class SSLInfo;
 class URLRequest;
@@ -541,9 +540,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   // The delegate will be owned by the manager. It's valid to return nullptr.
   virtual SpeechRecognitionManagerDelegate*
       CreateSpeechRecognitionManagerDelegate();
-
-  // Getters for common objects.
-  virtual net::NetLog* GetNetLog();
 
   // Called by WebContents to override the WebKit preferences that are used by
   // the renderer. The content layer will add its own settings, and then it's up

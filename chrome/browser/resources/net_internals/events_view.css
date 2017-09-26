@@ -86,6 +86,14 @@
   color: green;
 }
 
+#events-view-source-list-tbody .source-download {
+  color: rgb(112, 112, 0);
+}
+
+#events-view-source-list-tbody .source-filestream {
+  color: rgb(112, 0, 112);
+}
+
 #events-view-source-list-tbody .source-ipv6-probe-job {
   color: rgb(235, 0, 0);
 }

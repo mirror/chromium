@@ -54,8 +54,6 @@ class HeadlessContentBrowserClient : public content::ContentBrowserClient {
 
   void ResourceDispatcherHostCreated() override;
 
-  net::NetLog* GetNetLog() override;
-
  private:
   std::unique_ptr<base::Value> GetBrowserServiceManifestOverlay();
   std::unique_ptr<base::Value> GetRendererServiceManifestOverlay();

@@ -32,7 +32,6 @@
 #include "content/shell/browser/shell_browser_context.h"
 #include "content/shell/browser/shell_browser_main_parts.h"
 #include "content/shell/browser/shell_devtools_manager_delegate.h"
-#include "content/shell/browser/shell_net_log.h"
 #include "content/shell/browser/shell_quota_permission_context.h"
 #include "content/shell/browser/shell_resource_dispatcher_host_delegate.h"
 #include "content/shell/browser/shell_web_contents_view_delegate_creator.h"
@@ -320,10 +319,6 @@ void ShellContentBrowserClient::SelectClientCertificate(
 SpeechRecognitionManagerDelegate*
     ShellContentBrowserClient::CreateSpeechRecognitionManagerDelegate() {
   return new ShellSpeechRecognitionManagerDelegate();
-}
-
-net::NetLog* ShellContentBrowserClient::GetNetLog() {
-  return shell_browser_main_parts_->net_log();
 }
 
 bool ShellContentBrowserClient::ShouldSwapProcessesForRedirect(
