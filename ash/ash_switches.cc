@@ -16,6 +16,10 @@ const char kAshDebugShortcuts[] = "ash-debug-shortcuts";
 // Enable keyboard shortcuts used by developers only.
 const char kAshDeveloperShortcuts[] = "ash-dev-shortcuts";
 
+// Disables shelf model synchronization between Ash and Chrome in Classic Ash.
+const char kAshDisableShelfModelSynchronization[] =
+    "ash-disable-shelf-model-synchronization";
+
 // Disables autohide titlebars feature. With this flag disabled, apps in tablet
 // mode will have visible titlebars instead of autohidden titlebars.
 // TODO(crbug.com/764393): Remove this flag in M66/M67.
@@ -38,10 +42,6 @@ const char kAshEnableNightLight[] = "ash-enable-night-light";
 // Enables the palette on every display, instead of only the internal one.
 const char kAshEnablePaletteOnAllDisplays[] =
     "ash-enable-palette-on-all-displays";
-
-// Enables shelf model synchronization between Ash and Chrome in Classic Ash.
-const char kAshEnableShelfModelSynchronization[] =
-    "ash-enable-shelf-model-synchronization";
 
 // Enables the split view on tablet mode.
 const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";

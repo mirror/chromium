@@ -89,12 +89,12 @@ void SetShelfBehaviorsFromPrefs() {
 
 ShelfController::ShelfController() {
   // Synchronization is required in the Mash config, since Chrome and Ash run in
-  // separate processes; it's optional via kAshEnableShelfModelSynchronization
+  // separate processes; it's optional via kAshDisableShelfModelSynchronization
   // in the Classic Ash config, where Chrome can uses Ash's ShelfModel directly.
   should_synchronize_shelf_models_ =
       Shell::GetAshConfig() == Config::MASH ||
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kAshEnableShelfModelSynchronization);
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kAshDisableShelfModelSynchronization);
 
   // Set the delegate and title string for the app list item.
   model_.SetShelfItemDelegate(ShelfID(kAppListId),
@@ -201,9 +201,11 @@ void ShelfController::MoveShelfItem(const ShelfID& id, int32_t index) {
   DCHECK_GT(index, 0) << " Items can not precede the AppList";
   DCHECK_LT(index, model_.item_count()) << " Index out of bounds";
   index = std::min(std::max(index, 1), model_.item_count() - 1);
-  DCHECK_NE(current_index, index) << " The item is already at the given index";
-  if (current_index == index)
+  if (current_index == index) {
+    DVLOG(1) << "The item is already at the given index (" << index << "). "
+             << "This happens when syncing a ShelfModel weight reordering.";
     return;
+  }
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   model_.Move(current_index, index);
 }
