@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5dbd1f_7685e52b",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "nit (maybe not this CL): Just noticed these should all be const sets.",
+      "revId": "f0cff0d466023e9c002b3939262b53841baa98c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfa02e0_a97c911e",
+        "filename": "chrome/browser/vr/vr_shell_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "One might say a bug should be filed for this.",
+      "revId": "f0cff0d466023e9c002b3939262b53841baa98c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

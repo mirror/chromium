@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "19c36c81_3d421352",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "067f5db1_bfd12643",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5b8172_3e5f703b",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
         "patchSetId": 2
@@ -104,6 +122,24 @@
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c463ba_058827aa",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65b0432a_982688a8",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +190,24 @@
       "side": 1,
       "message": "Whoops, I meant to say that I now *don\u0027t* think these should disappear! I.e., the BrowserUiInterface will continue to have these and wrap up the model. UiSceneManager will eventually not implement the BrowserUiInterface. Please lemme know if you disagree.",
       "parentUuid": "40bbf6f3_66a09c67",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4865a09_98a254f2",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "I do not disagree that these should now not disappear.",
+      "parentUuid": "fe8968ee_b116f085",
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -300,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "57034b83_a4e47bb8",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78f7dc83_47fba01f",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c74fd3_90fd2341",
         "filename": "chrome/browser/vr/ui_scene_manager.h",
         "patchSetId": 2
@@ -332,6 +404,24 @@
       "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047d12f5_d40253c6",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T17:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6b875b4_44e9f6d3",
+      "revId": "1db46433dc6bd12e6f9de8d673c4a9429c5f3fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
