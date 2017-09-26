@@ -79,7 +79,18 @@ public class BrowserActionsTabModelSelector
         return sInstance;
     }
 
-    private void initializeSelector() {
+    /**
+     * @return The {@link BrowserActionsTabModelSelector} if it has been initialized. Otherwise
+     * return null.
+     */
+    public static BrowserActionsTabModelSelector getSelector() {
+        return sInstance;
+    }
+
+    /**
+     * Initializes the selectors for the {@link BrowserActionsTabModelSelector}.
+     */
+    public void initializeSelector() {
         BrowserActionsTabCreator regularTabCreator =
                 (BrowserActionsTabCreator) mTabCreatorManager.getTabCreator(false);
         TabModelImpl normalModel = new TabModelImpl(false, false, regularTabCreator, null, null,
@@ -90,6 +101,10 @@ public class BrowserActionsTabModelSelector
             @Override
             public void didAddTab(Tab tab, TabLaunchType type) {
                 if (tab != null) mTabSaver.addTabToSaveQueue(tab);
+            }
+            @Override
+            public void tabRemoved(Tab tab) {
+                mTabSaver.addTabToSaveQueue(null);
             }
         };
         normalModel.addObserver(tabModelObserver);
