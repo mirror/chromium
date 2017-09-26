@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a9e6916_24e6be25",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a27bff_771d522a",
+      "range": {
+        "startLine": 14,
+        "startChar": 54,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6822788_51bccc4b",
         "filename": "ios/chrome/browser/ui/main/main_view_controller.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "67b19acf_f904eaac",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6822788_51bccc4b",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed86cdfa_5b1b9d1d",
         "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T23:04:01Z",
       "side": 1,
       "message": "It would be easier to test this if you injected a flag for this experiment.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dfd07d_2bb775db",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "Used ScopedFeatureList for now to expand the set of tests.  I didn\u0027t want to add this to the public API for the class.",
+      "parentUuid": "ed86cdfa_5b1b9d1d",
       "range": {
         "startLine": 17,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ea4c7814_13d74e04",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "Added comments to both calls.",
+      "parentUuid": "dc4edb13_80596205",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdbba269_9dbf5f8b",
         "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-25T23:04:01Z",
       "side": 1,
       "message": "Is there a reference cycle here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fddd001_d0f1f505",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "The block will extend the lifetime of MainViewController, but we\u0027re not keeping a pointer to the block itself, so I don\u0027t think there\u0027s a cycle?",
+      "parentUuid": "bdbba269_9dbf5f8b",
       "range": {
         "startLine": 42,
         "startChar": 28,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cb1f408e_2c26ff07",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "I tried that first, but invoking a nil block will crash the app.",
+      "parentUuid": "e883e764_e42fff76",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae6ec9f_6752359d",
         "filename": "ios/chrome/browser/ui/main/main_view_controller_unittest.mm",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-09-25T23:04:01Z",
       "side": 1,
       "message": "Can we add some tests for presentation too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "e293d1bc86a66a2eed5f13a253dc999094ea86bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdfa8a6_aba0a9e2",
+        "filename": "ios/chrome/browser/ui/main/main_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-26T10:45:25Z",
+      "side": 1,
+      "message": "Done.  I renamed the new test I added below and added some extra checks, because that was already effectively testing \"SetActiveVC\".",
+      "parentUuid": "5ae6ec9f_6752359d",
       "range": {
         "startLine": 78,
         "startChar": 31,
