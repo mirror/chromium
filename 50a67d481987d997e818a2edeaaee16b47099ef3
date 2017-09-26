@@ -93,6 +93,30 @@
       "revId": "50a67d481987d997e818a2edeaaee16b47099ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c211b8c_d65fd1c7",
+        "filename": "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-26T13:47:18Z",
+      "side": 1,
+      "message": "That doesn\u0027t make the issue that I\u0027m concerned about much better, which is that we use a magic value to indicate absence of a value. Given that CookieSettings internally stores |extension_scheme_| as a char* anyway, we could simply officially allow that to be null, and add the necessary checks to handle it.\n\nAlternatively, we could make the magic value official, and declare it as a (public) constant on CookieSettings?",
+      "parentUuid": "3d7a91ff_0c4cc862",
+      "range": {
+        "startLine": 52,
+        "startChar": 33,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "50a67d481987d997e818a2edeaaee16b47099ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
