@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87f5da2_aff5dd40",
+        "filename": "tools/perf/page_sets/loading_mobile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T07:45:34Z",
+      "side": 1,
+      "message": "cache_temperature",
+      "range": {
+        "startLine": 6,
+        "startChar": 65,
+        "endLine": 6,
+        "endChar": 72
+      },
+      "revId": "c1bbce0c8a0352f8209fbc8c8ff3baab3a35b68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a079da_039c57b4",
+        "filename": "tools/perf/page_sets/loading_mobile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T07:45:34Z",
+      "side": 1,
+      "message": "Just passing [cache_temperature.ANY] for each AddStories seems good to me because that would be easier to know each story in LoadingMobileStorySet will run different (and fixed) cache temperature.",
+      "revId": "c1bbce0c8a0352f8209fbc8c8ff3baab3a35b68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
