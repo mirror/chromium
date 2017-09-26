@@ -22,6 +22,30 @@
       "revId": "305d32bb0646bed6773b7c7ec33013a00f49f0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48dd9347_c3432a2c",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-26T20:05:29Z",
+      "side": 1,
+      "message": "Sounds like a good idea, otherwise I suppose this would hang forever in the case you mentioned. Changed it now.",
+      "parentUuid": "646db44e_58d1a6f8",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "305d32bb0646bed6773b7c7ec33013a00f49f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
