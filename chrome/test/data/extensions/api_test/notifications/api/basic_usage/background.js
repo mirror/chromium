@@ -153,6 +153,26 @@ function testIdUsage() {
     .then(succeed);
 };
 
+function testIdLimit() {
+  var testName = "testIdLimit";
+  console.log("Starting " + testName);
+  var succeed = succeedTest(testName);
+  var fail = failTest(testName);
+
+  var id = 'a';
+
+  // Make sure |id.length| is 2^10 = 1024 characters.
+  for (var i = 0; i < 10; ++i)
+    id += id;
+
+  create(id, {
+    type: 'basic',
+    iconUrl: red_dot,
+    title: 'My title',
+    message: 'My message'
+  }).then(fail, succeed);
+}
+
 function testBaseFormat() {
   var testName = "testBaseFormat";
   console.log("Starting " + testName);
@@ -351,6 +371,6 @@ function testOptionalParameters() {
 }
 
 chrome.test.runTests([
-    testIdUsage, testBaseFormat, testListItem, testGetAll, testProgress,
-    testLargeImage, testOptionalParameters
+    testIdUsage, testIdLimit, testBaseFormat, testListItem, testGetAll,
+    testProgress, testLargeImage, testOptionalParameters
 ]);
