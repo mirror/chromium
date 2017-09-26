@@ -22,6 +22,30 @@
       "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a1ee07_9c1d0b64",
+        "filename": "content/common/render_widget_window_tree_client_factory.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T17:10:28Z",
+      "side": 1,
+      "message": "These interfaces are provided from the renderer to the browser (listed in https://chromium.googlesource.com/chromium/src/+/master/content/public/app/mojo/content_renderer_manifest.json ). So, it\u0027s the browser that initiates all this.",
+      "parentUuid": "a519a46c_9e029020",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
