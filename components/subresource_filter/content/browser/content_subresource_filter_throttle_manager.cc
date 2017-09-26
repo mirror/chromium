@@ -145,8 +145,12 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
       if (filter->activation_state().enable_logging) {
         DCHECK(filter->activation_state().activation_level !=
                ActivationLevel::DISABLED);
+        std::string message = filter->activation_state().activation_level ==
+                                      ActivationLevel::ENABLED
+                                  ? kActivationConsoleMessage
+                                  : kActivationWarningConsoleMessage;
         frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
-                                        kActivationConsoleMessage);
+                                        message);
       }
     }
     ActivationLevel level = filter ? filter->activation_state().activation_level
