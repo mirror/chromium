@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c25c7c_489a51a1",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-26T00:55:30Z",
+      "side": 1,
+      "message": "nit: truth is, layer_mask_-\u003eScheduleDraw() is redundant with this-\u003eScheduleDraw() (it has the same value to GetCompositor(), and Compositor::ScheduleDraw is idempotent), so you can just remove this.",
+      "revId": "7013fdae1ad4d8e4697c5777075695cbde0e70f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
