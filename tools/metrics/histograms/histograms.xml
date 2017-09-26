@@ -32442,6 +32442,67 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Tracks the trigger for stopping a remoting session.</summary>
 </histogram>
 
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration0To100MiliSec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration less than 1
+    second.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration100MiliSecTo1Sec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration less than 1
+    second.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration10To15Sec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration in (10, 15]
+    seconds.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration1To3Sec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration in (1, 3]
+    seconds.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration3To5Sec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration in (3, 5]
+    seconds.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.SessionStopTriggerWithDuration5To10Sec"
+    enum="RemotingStopTrigger">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Tracks the trigger for stopping a remoting session with duration in (5, 10]
+    seconds.
+  </summary>
+</histogram>
+
+<histogram name="Media.Remoting.ShortSessionDuration" units="ms">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    Measures the duration of each remoting session shorter than 15 seconds.
+  </summary>
+</histogram>
+
 <histogram name="Media.Remoting.StartMediaBitrate" units="kbps">
   <owner>miu@chromium.org</owner>
   <summary>
