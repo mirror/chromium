@@ -124,6 +124,7 @@ void AutofillPopupBaseView::RemoveObserver() {
 }
 
 void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
+  LOG(ERROR) << "AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup";
   gfx::Rect bounds = delegate_->popup_bounds();
 
   // |bounds| is in screen space and we want the bounds relative to the parent
@@ -150,7 +151,9 @@ void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
   bounds.set_height(bounds.height() + 2 * kPopupBorderThicknessDp);
   bounds.set_width(bounds.width() + 2 * kPopupBorderThicknessDp);
   GetWidget()->SetBounds(bounds);
-  SchedulePaint();
+
+  // SchedulePaint();
+  Layout();
 }
 
 void AutofillPopupBaseView::OnNativeFocusChanged(gfx::NativeView focused_now) {
