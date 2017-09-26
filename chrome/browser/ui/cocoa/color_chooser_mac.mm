@@ -104,6 +104,11 @@ void ColorChooserMac::SetSelectedColor(SkColor color) {
   [panel_ setColor:skia::SkColorToDeviceNSColor(color)];
 }
 
+@interface NSColorPanel (Private)
+// Private method returning the NSColorPanel's target.
+- (id)__target;
+@end
+
 @implementation ColorPanelCocoa
 
 - (id)initWithChooser:(ColorChooserMac*)chooser {
@@ -120,10 +125,25 @@ void ColorChooserMac::SetSelectedColor(SkColor color) {
 
 - (void)dealloc {
   NSColorPanel* panel = [NSColorPanel sharedColorPanel];
+
   if ([panel delegate] == self) {
     [panel setDelegate:nil];
     [panel setTarget:nil];
-    [panel setAction:nil];
+    [panel setAction:0];
+  }
+
+  // On macOS 10.13 the delegate can apparently get reset to nil while leacving
+  // the target unchanged. Use the private __target method to see if the
+  // ColorPanelCocoa is still the delegate.
+  BOOL respondsToPrivateTargetMethod =
+      [panel respondsToSelector:@selector(__target)];
+
+  // We want to know if NSColorPanel ever stops implementing __target.
+  DCHECK(respondsToPrivateTargetMethod);
+
+  if (respondsToPrivateTargetMethod && [panel __target] == self) {
+    [panel setTarget:nil];
+    [panel setAction:0];
   }
 
   [super dealloc];
