@@ -404,6 +404,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9cdf82_f96ee5f3",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-26T11:22:44Z",
+      "side": 1,
+      "message": "Well that seems to be a issue for the Intel simd.patch.  I don\u0027t see the burden but I may be misunderstanding, so please add details to the relevant bug 764094 to explain why it is a burden.",
+      "parentUuid": "cd8c19da_f0216f8c",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
