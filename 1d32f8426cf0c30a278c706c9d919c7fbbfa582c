@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfac41bc_a02179a7",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:37:05Z",
+      "side": 1,
+      "message": "Is this large range needed? do you expect that many profiles to be deleted at a given time? A higher max size decreases the resolution of the histogram. All the UMA_HISTOGRAM_COUNTS_* macros use the same number of buckets, so for a larger range the buckets have to be stretched to fit the range.\n\nNot, histograms will always have an overflow bucket that captures values above the max.",
+      "range": {
+        "startLine": 939,
+        "startChar": 23,
+        "endLine": 939,
+        "endChar": 27
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea469e5_3d3e9e7c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4457,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:37:05Z",
+      "side": 1,
+      "message": "Please add a units, probably \"addresses\".",
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60c1c57_4a216382",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4460,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T14:37:05Z",
+      "side": 1,
+      "message": "Please remove extra spaces.",
+      "range": {
+        "startLine": 4460,
+        "startChar": 73,
+        "endLine": 4460,
+        "endChar": 76
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
