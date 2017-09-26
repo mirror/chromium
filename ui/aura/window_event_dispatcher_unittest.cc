@@ -1988,6 +1988,46 @@ TEST_P(WindowEventDispatcherTest, WindowHideCancelsActiveGestures) {
   root_window()->RemovePreTargetHandler(&recorder);
 }
 
+// Places two windows side by side.  Starts a pinch in one window, then sets
+// capture to the other window.  Ensures that subsequent pinch events aren't
+// sent to the window which gained capture.
+TEST_P(WindowEventDispatcherTest, PinchEventsDontRetarget) {
+  EventFilterRecorder recorder1;
+  EventFilterRecorder recorder2;
+  std::unique_ptr<Window> window1(CreateNormalWindow(1, root_window(), NULL));
+  window1->SetBounds(gfx::Rect(0, 0, 40, 40));
+
+  std::unique_ptr<Window> window2(CreateNormalWindow(2, root_window(), NULL));
+  window2->SetBounds(gfx::Rect(40, 0, 40, 40));
+
+  window1->AddPreTargetHandler(&recorder1);
+  window2->AddPreTargetHandler(&recorder2);
+
+  gfx::Point position1 = window1->bounds().CenterPoint();
+
+  ui::GestureEventDetails begin_details(ui::ET_GESTURE_PINCH_BEGIN);
+  ui::GestureEvent begin(position1.x(), position1.y(), 0, ui::EventTimeForNow(),
+                         begin_details);
+  DispatchEventUsingWindowDispatcher(&begin);
+
+  window2->SetCapture();
+
+  ui::GestureEventDetails update_details(ui::ET_GESTURE_PINCH_UPDATE);
+  ui::GestureEvent update(position1.x(), position1.y(), 0, ui::EventTimeForNow(),
+                         update_details);
+  DispatchEventUsingWindowDispatcher(&update);
+
+  ui::GestureEventDetails end_details(ui::ET_GESTURE_PINCH_END);
+  ui::GestureEvent end(position1.x(), position1.y(), 0, ui::EventTimeForNow(),
+                         end_details);
+  DispatchEventUsingWindowDispatcher(&end);
+
+  EXPECT_EQ("GESTURE_PINCH_BEGIN GESTURE_PINCH_UPDATE GESTURE_PINCH_END",
+            EventTypesToString(recorder1.events()));
+
+  EXPECT_TRUE(recorder2.events().empty());
+}
+
 // Places two windows side by side. Presses down on one window, and starts a
 // scroll. Sets capture on the other window and ensures that the "ending" events
 // aren't sent to the window which gained capture.

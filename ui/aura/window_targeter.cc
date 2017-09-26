@@ -60,6 +60,12 @@ Window* WindowTargeter::GetPriorityTargetInRootWindow(
       return dispatcher->mouse_pressed_handler();
   }
 
+  if (event.IsPinchEvent()) {
+    WindowEventDispatcher* dispatcher = root_window->GetHost()->dispatcher();
+    if (dispatcher->pinch_handler())
+      return dispatcher->pinch_handler();
+  }
+
   // All events should be directed towards the capture window (if any).
   Window* capture_window = client::GetCaptureWindow(root_window);
   if (capture_window)
