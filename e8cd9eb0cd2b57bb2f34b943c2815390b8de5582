@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b52a06_273dbede",
+        "filename": "chrome/browser/devtools/chrome_devtools_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-26T20:24:14Z",
+      "side": 1,
+      "message": "Unconditionally create it, let page targets control browser window.",
+      "revId": "e8cd9eb0cd2b57bb2f34b943c2815390b8de5582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
