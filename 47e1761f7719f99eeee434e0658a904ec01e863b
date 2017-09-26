@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b9b0fe4_3264cd7e",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T21:06:01Z",
+      "side": 1,
+      "message": "Update description to be accurate in relation to latest changes.",
+      "revId": "47e1761f7719f99eeee434e0658a904ec01e863b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e3c3b4_ccabbb1d",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T21:06:01Z",
+      "side": 1,
+      "message": "This should be EXPECT_EQUALS() not DCHECK_EQ().",
+      "revId": "47e1761f7719f99eeee434e0658a904ec01e863b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ee2453_525d70e2",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T21:06:01Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t have a check for the bug you mention, that |valid_frame_sink_ids_| doesn\u0027t contain kFrameSink1 after this point. I would also have a comment there to explain why you\u0027re doing that check. You\u0027ll need to access private |valid_frame_sink_ids_| via SurfaceReferencesTest since it\u0027s a friend.",
+      "revId": "47e1761f7719f99eeee434e0658a904ec01e863b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
