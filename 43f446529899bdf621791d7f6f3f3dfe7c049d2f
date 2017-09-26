@@ -16,6 +16,24 @@
       "revId": "43f446529899bdf621791d7f6f3f3dfe7c049d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e7fbf9_0ad04c7f",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-26T15:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6803992b_16877a04",
+      "revId": "43f446529899bdf621791d7f6f3f3dfe7c049d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
