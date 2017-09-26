@@ -41,20 +41,25 @@ class MEDIA_GPU_EXPORT VideoFrameFactory {
   // Initializes the factory and runs |init_cb| on the current thread when it's
   // complete. If initialization fails, the returned surface texture will be
   // null.
-  virtual void Initialize(
-      scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-      GetStubCb get_stub_cb,
-      InitCb init_cb) = 0;
+  virtual void Initialize(InitCb init_cb) = 0;
 
   // Creates a new VideoFrame backed by |output_buffer| and |surface_texture|.
   // |surface_texture| may be null if the buffer is backed by an overlay
-  // instead. Runs |output_cb| on the current thread to return the frame.
+  // instead. Runs |output_cb| on the calling sequence to return the frame.
   virtual void CreateVideoFrame(
       std::unique_ptr<CodecOutputBuffer> output_buffer,
       scoped_refptr<SurfaceTextureGLOwner> surface_texture,
       base::TimeDelta timestamp,
       gfx::Size natural_size,
       OutputWithReleaseMailboxCB output_cb) = 0;
+
+  // Runs |closure| on the calling sequence after all previous |output_cb|s
+  // given to CreateVideoFrame() have run.
+  virtual void RunAfterPendingVideoFrames(base::Closure closure) = 0;
+
+  // Cancels all pending callbacks due to other calls that signal completion via
+  // a callback.
+  virtual void CancelPendingCallbacks() = 0;
 };
 
 }  // namespace media
