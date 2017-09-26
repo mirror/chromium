@@ -50,12 +50,6 @@ NOINLINE void ThreadUnresponsive_UI() {
   ReportThreadHang();
 }
 
-NOINLINE void ThreadUnresponsive_FILE() {
-  volatile int inhibit_comdat = __LINE__;
-  ALLOW_UNUSED_LOCAL(inhibit_comdat);
-  ReportThreadHang();
-}
-
 NOINLINE void ThreadUnresponsive_PROCESS_LAUNCHER() {
   volatile int inhibit_comdat = __LINE__;
   ALLOW_UNUSED_LOCAL(inhibit_comdat);
@@ -73,8 +67,6 @@ NOINLINE void CrashBecauseThreadWasUnresponsive(
   switch (thread_id) {
     case content::BrowserThread::UI:
       return ThreadUnresponsive_UI();
-    case content::BrowserThread::FILE:
-      return ThreadUnresponsive_FILE();
     case content::BrowserThread::PROCESS_LAUNCHER:
       return ThreadUnresponsive_PROCESS_LAUNCHER();
     case content::BrowserThread::IO:

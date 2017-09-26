@@ -33,7 +33,7 @@ enum Thread {
   // Browser process threads from content/public/browser/browser_thread.h,
   // some of which occur in other processes as well.
   UI_THREAD = 1;
-  FILE_THREAD = 2;
+  FILE_THREAD = 2;                // Deprecated.
   FILE_USER_BLOCKING_THREAD = 3;  // Deprecated.
   PROCESS_LAUNCHER_THREAD = 4;
   CACHE_THREAD = 5;  // Deprecated.

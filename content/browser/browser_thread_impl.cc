@@ -33,7 +33,6 @@ namespace {
 // Friendly names for the well-known threads.
 static const char* const g_browser_thread_names[BrowserThread::ID_COUNT] = {
   "",  // UI (name assembled in browser_main.cc).
-  "Chrome_FileThread",  // FILE
   "Chrome_ProcessLauncherThread",  // PROCESS_LAUNCHER
   "Chrome_IOThread",  // IO
 };
@@ -179,8 +178,7 @@ void BrowserThreadImpl::Init() {
   }
 #endif  // DCHECK_IS_ON()
 
-  if (identifier_ == BrowserThread::FILE ||
-      identifier_ == BrowserThread::PROCESS_LAUNCHER) {
+  if (identifier_ == BrowserThread::PROCESS_LAUNCHER) {
     // Nesting and task observers are not allowed on redirected threads.
     base::RunLoop::DisallowNestingOnCurrentThread();
     message_loop()->DisallowTaskObservers();
@@ -200,12 +198,6 @@ MSVC_DISABLE_OPTIMIZE()
 MSVC_PUSH_DISABLE_WARNING(4748)
 
 NOINLINE void BrowserThreadImpl::UIThreadRun(base::RunLoop* run_loop) {
-  volatile int line_number = __LINE__;
-  Thread::Run(run_loop);
-  CHECK_GT(line_number, 0);
-}
-
-NOINLINE void BrowserThreadImpl::FileThreadRun(base::RunLoop* run_loop) {
   volatile int line_number = __LINE__;
   Thread::Run(run_loop);
   CHECK_GT(line_number, 0);
@@ -244,8 +236,6 @@ void BrowserThreadImpl::Run(base::RunLoop* run_loop) {
   switch (identifier_) {
     case BrowserThread::UI:
       return UIThreadRun(run_loop);
-    case BrowserThread::FILE:
-      return FileThreadRun(run_loop);
     case BrowserThread::PROCESS_LAUNCHER:
       return ProcessLauncherThreadRun(run_loop);
     case BrowserThread::IO:

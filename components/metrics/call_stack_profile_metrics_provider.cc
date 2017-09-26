@@ -467,8 +467,6 @@ Thread ToExecutionContextThread(CallStackProfileParams::Thread thread) {
       return UNKNOWN_THREAD;
     case CallStackProfileParams::UI_THREAD:
       return UI_THREAD;
-    case CallStackProfileParams::FILE_THREAD:
-      return FILE_THREAD;
     case CallStackProfileParams::PROCESS_LAUNCHER_THREAD:
       return PROCESS_LAUNCHER_THREAD;
     case CallStackProfileParams::IO_THREAD:
