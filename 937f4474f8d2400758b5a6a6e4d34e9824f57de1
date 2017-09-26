@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19c4128d_bcc145f4",
+        "filename": "chrome/browser/vr/test/gl_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "To clarify, this graphics util object would have something like a bindMainBuffer and bindHeadlockedBuffer function?",
+      "parentUuid": "c4573769_7a27ebd2",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c1092d_2e2cf9fc",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0bfb03d7_1aa9c7ce",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "I\u0027m unsure how much code is really duplicate since my CL setup and input management is different. I think we have to wait for Chris\u0027 implementation and see how much code we can share.\n\nAdded a fixture.",
+      "parentUuid": "b5c1092d_2e2cf9fc",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b132cb_1bae477e",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-26T12:48:44Z",
       "side": 1,
       "message": "Oh! Do we have a bug to track this?",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1d4dba_1a6fe7ba",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "Not that I know of. This has been like this since a long time.",
+      "parentUuid": "12b132cb_1bae477e",
       "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bf1fea2c_f462f29c",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "Nope, we don\u0027t have to save a file. Removed this.",
+      "parentUuid": "279fb7d4_fccc092a",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa9e7d74_1f3aba94",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 5
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e0ca53c4_d16c8eca",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9e7d74_1f3aba94",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61d1c6b_4e093edd",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5b5823_611f3c80",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-26T16:27:23Z",
+      "side": 1,
+      "message": "I want to make sure that the UI gets destroyed before the GL context gets cleaned up.",
+      "parentUuid": "c61d1c6b_4e093edd",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
