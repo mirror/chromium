@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12467120_9d0daf31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "\"a non-persistent cache\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9339e476_76064488",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "kMaxCachedResponseAge?",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567ebfbc_b78d3c4e",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "/*error_details\u003d*/",
+      "range": {
+        "startLine": 145,
+        "startChar": 38,
+        "endLine": 145,
+        "endChar": 40
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add102aa_41dd2660",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "Does this compile?\n\nI\u0027ve never seen this used instead of base::nullopt.\nDo you mind using base::nullopt explicitly?",
+      "range": {
+        "startLine": 320,
+        "startChar": 11,
+        "endLine": 320,
+        "endChar": 13
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038e5aec_478ac2ce",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "you don\u0027t need else after \"if ... return\".\n\nIt is very surprising, but these \n\nif A return\nif B return\nif C return\n\nare much easier to follow then with else.",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 8
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eb4af8_dd0febf6",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "so why not caching already parsed suggestions?\nThen you would not need to parse the same things again.\n\nAre they much large than base::Value representation?",
+      "range": {
+        "startLine": 333,
+        "startChar": 13,
+        "endLine": 333,
+        "endChar": 24
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7786d5ba_97338098",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 334,
+        "startChar": 6,
+        "endLine": 334,
+        "endChar": 10
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d65d06f_75d3359c",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "wow, that\u0027s dramatic and unexpected.\nSo why do you discard everything?",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 34
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef1d6e0_fd28700a",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "Have you considered having a separate class for the Cache?\n\nWhile now it is not clear whether you need it, you may require more functionality in future (e.g. persisting or storing also items sorted by time). If so, keeping it together with the Fetcher may become cumbersome.\n\n+ ease of testing.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 66
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd1614d_17bc1503",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "this is much nicer as a raw string R\"( )\".\nE.g. https://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestion_unittest.cc?type\u003dcs\u0026q\u003dR%5C%22%5C(+file:%5Esrc/components/ntp_snippets/+package:%5Echromium$\u0026l\u003d40",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5720443_a720c758",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "It would be also nice to test max cache size and removing of old items.\nWhile now it is obvious, that it works, this may change in future.\n\nAgain here I feel like it should be a simple separate class (easy to test and maintain) :)",
+      "range": {
+        "startLine": 267,
+        "startChar": 41,
+        "endLine": 267,
+        "endChar": 70
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e75305c_e124f1f4",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "that\u0027s not the main intention of the test (there is another test which tests explicitly this), thus, it must be an ASSERT.",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 13
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b909e6_2e54191a",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "it would be nice to test that there is no network request at all, because that\u0027s what you are trying to avoid. E.g. now if the fetcher did a network request and then returned from cache, this test would pass.",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 17
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1692d4d4_15c87818",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "\"retrieved\"",
+      "range": {
+        "startLine": 285,
+        "startChar": 23,
+        "endLine": 285,
+        "endChar": 24
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de430103_346bc7b9",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-26T14:36:05Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 13
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
