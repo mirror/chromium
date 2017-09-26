@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8f0191e_bac532d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-26T15:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50752899_c6b2e962",
+      "revId": "6093a9979909bbd0e627cbe6427121bf19b9587d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef80d9d_7353a2d2",
         "filename": "base/rand_util_fuchsia.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6093a9979909bbd0e627cbe6427121bf19b9587d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f406726e_ab24f428",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-26T15:04:54Z",
+      "side": 1,
+      "message": "The idea (dating from https://crbug.com/140076) was that code which requires secure randomness must use crypto::RandBytes, even though that\u0027s a dumb wrapper around base::RandBytes which is secretly secure random, in order to make code that depends on secure randomness easily discoverable (perhaps in case base::RandBytes was ever refactored to stop being secure? or maybe just so that everything security sensitive can be audited by searching for \"crypto/\"?).\n\nI agree though that this made the header comments rather misleading. I\u0027ve changed the header comment for base::RandBytes to explain this more clearly, and as a result I\u0027ve removed the comments in the .cc files since they are now redundant (as well as repetitive).",
+      "parentUuid": "bef80d9d_7353a2d2",
+      "revId": "6093a9979909bbd0e627cbe6427121bf19b9587d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
