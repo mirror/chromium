@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "627d177b_9a74deb7",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-26T09:52:10Z",
+      "side": 1,
+      "message": "I\u0027m still not sure how this is intended to work. My instinct tells me this design doesn\u0027t work. Probably easier to chat in person about this though. \n\nFrameGenerator is the root in Mus+Ash, and will eventually be the root in content too, but it only gets BeginFrames if something changes (resolution, device scale factor, window manager, etc).",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07db9e86_d978e890",
         "filename": "components/viz/service/hit_test/hit_test_manager.cc",
         "patchSetId": 6
