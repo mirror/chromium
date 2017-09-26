@@ -16,6 +16,24 @@
       "revId": "c72ec973246133373e805d59548d08904cb7f76a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9255ff84_65dcea2f",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-26T15:55:59Z",
+      "side": 1,
+      "message": "Done. There is still some dependency on the internal EventGenerator implementation, but a simple one (documented in a comment).",
+      "parentUuid": "85a0f37b_780a21f5",
+      "revId": "c72ec973246133373e805d59548d08904cb7f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
