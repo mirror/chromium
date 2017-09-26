@@ -1099,6 +1099,11 @@ void VrShellRenderer::DrawTexturedQuad(int texture_data_handle,
                                        float opacity,
                                        gfx::SizeF element_size,
                                        float corner_radius) {
+  // TODO(vollick): handle drawing this degenerate situation crbug.com/768922
+  if (corner_radius * 2.0 > element_size.width() ||
+      corner_radius * 2.0 > element_size.height()) {
+    return;
+  }
   TexturedQuadRenderer* renderer = texture_location == kTextureLocationExternal
                                        ? GetExternalTexturedQuadRenderer()
                                        : GetTexturedQuadRenderer();
