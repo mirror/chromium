@@ -40,6 +40,7 @@ class CC_EXPORT PictureLayer : public Layer {
   void SetNeedsDisplayRect(const gfx::Rect& layer_rect) override;
   bool Update() override;
   void SetLayerMaskType(LayerMaskType mask_type) override;
+  LayerMaskType mask_type() { return mask_type_; }
   sk_sp<SkPicture> GetPicture() const override;
 
   bool HasSlowPaths() const override;
@@ -76,8 +77,6 @@ class CC_EXPORT PictureLayer : public Layer {
   ~PictureLayer() override;
 
   bool HasDrawableContent() const override;
-
-  LayerMaskType mask_type() { return mask_type_; }
 
   PictureLayerInputs picture_layer_inputs_;
 
