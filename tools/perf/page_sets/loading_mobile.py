@@ -16,13 +16,12 @@ class LoadingMobileStorySet(story.StorySet):
   Design doc: https://docs.google.com/document/d/1QKlZIoURAxZk-brrXsKYZl9O8ieqXht3ogeF9yLNFCI/edit
   """
 
-  def __init__(self, cache_temperatures=None, traffic_settings=None):
+  def __init__(self, traffic_settings=None):
     super(LoadingMobileStorySet, self).__init__(
         archive_data_file='data/loading_mobile.json',
         cloud_storage_bucket=story.PARTNER_BUCKET)
 
-    if cache_temperatures is None:
-      cache_temperatures = [cache_temperature_module.ANY]
+    default_cache_temperatures = [cache_temperature.ANY]
 
     if traffic_settings is None:
       traffic_settings = [traffic_setting_module.NONE]
@@ -79,7 +78,7 @@ class LoadingMobileStorySet(story.StorySet):
       # pylint: disable=line-too-long
       # ('http://m.detik.com/finance/read/2016/02/19/151843/3146351/1034/ekspor-tambang-mentah-mau-dibuka-lagi-kalau-sudah-bangun-smelter-bagaimana',
       #  'Detik'),
-    ], cache_temperatures, traffic_settings)
+    ], default_cache_temperatures, traffic_settings)
 
     self.AddStories(['pwa'], [
       # pylint: disable=line-too-long
@@ -103,7 +102,9 @@ class LoadingMobileStorySet(story.StorySet):
       #  'WikiOffline'),
       # ('https://busrouter.sg', 'BusRouter'),
       # ('https://airhorner.com', 'AirHorner'),
-    ], cache_temperatures, traffic_settings)
+    ], [cache_temperature_module.COLD,
+        cache_temperature_module.WARM,
+        cache_temperature_module.HOT], traffic_settings)
 
     self.AddStories(['tough_ttfmp'], [
       ('http://www.localmoxie.com', 'LocalMoxie'),
@@ -111,7 +112,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.thairath.co.th', 'Thairath'),
       ('http://www.hashocean.com', 'HashOcean'),
       ('http://www.163.com', '163'),
-    ], cache_temperatures, traffic_settings)
+    ], default_cache_temperatures, traffic_settings)
 
     self.AddStories(['easy_ttfmp'], [
       ('http://www.slideshare.net', 'SlideShare'),
@@ -119,7 +120,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.gsshop.com', 'GSShop'),
       ('http://www.sbs.co.kr', 'SBS'),
       ('http://www.futura-sciences.com', 'FuturaSciences'),
-    ], cache_temperatures, traffic_settings)
+    ], default_cache_temperatures, traffic_settings)
 
     self.AddStories(['tough_tti'], [
       ('http://www.thestar.com.my', 'TheStar'),
@@ -127,7 +128,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.hongkiat.com', 'Hongkiat'),
       ('http://www.ebs.in', 'EBS'),
       ('http://www.ibicn.com', 'IBI'),
-    ], cache_temperatures, traffic_settings)
+    ], default_cache_temperatures, traffic_settings)
 
     self.AddStories(['easy_tti'], [
       ('http://www.dramaq.com.tw', 'Dramaq'),
@@ -135,7 +136,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.francetvinfo.fr', 'FranceTVInfo'),
       ('http://www.gfk.com', 'GFK'),
       ('http://www.mlsmatrix.com', 'MLSMatrix'),
-    ], cache_temperatures, traffic_settings)
+    ], default_cache_temperatures, traffic_settings)
 
   def AddStories(self, tags, urls, cache_temperatures, traffic_settings):
     for url, name in urls:
