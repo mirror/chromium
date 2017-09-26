@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f3bc89_7daaad0f",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-26T08:59:27Z",
+      "side": 1,
+      "message": "This file uses braces for single-line bodies, please leave them in place.",
+      "range": {
+        "startLine": 120,
+        "startChar": 26,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "5e9ebfda56182c9d7a25c0f7d1c981f0a3b824d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

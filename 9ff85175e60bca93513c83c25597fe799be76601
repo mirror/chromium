@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc765bf_c7af5f51",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-26T08:59:27Z",
+      "side": 0,
+      "message": "This call is *not* okay to remove. MostVisitedSites wraps over more than just TopSites, and other backends might require the explicit refresh. SuggestionsService in particular needs it.\nInstead, we can probably remove the TopSites::SyncWithHistory call in MostVisitedSites::Refresh.",
+      "range": {
+        "startLine": 116,
+        "startChar": 35,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "9ff85175e60bca93513c83c25597fe799be76601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
