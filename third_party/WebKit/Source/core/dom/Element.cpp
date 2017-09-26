@@ -680,10 +680,6 @@ void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // that if JS overrides one of these methods, but not the
   // other, this bookkeeping remains accurate.
   scroll_state.SetCurrentNativeScrollingElement(this);
-  if (scroll_state.fromUserInput()) {
-    if (DocumentLoader* document_loader = GetDocument().Loader())
-      document_loader->GetInitialScrollState().was_scrolled_by_user = true;
-  }
 };
 
 void Element::CallApplyScroll(ScrollState& scroll_state) {
