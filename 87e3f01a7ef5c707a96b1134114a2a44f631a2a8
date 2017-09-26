@@ -22,6 +22,30 @@
       "revId": "87e3f01a7ef5c707a96b1134114a2a44f631a2a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27301185_d0e1a781",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T19:41:38Z",
+      "side": 1,
+      "message": "Done, but had to re-add the OmniboxInteractionIncident to have the proper type of tag 5.",
+      "parentUuid": "7d387e4d_1798391a",
+      "range": {
+        "startLine": 741,
+        "startChar": 4,
+        "endLine": 741,
+        "endChar": 54
+      },
+      "revId": "87e3f01a7ef5c707a96b1134114a2a44f631a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
