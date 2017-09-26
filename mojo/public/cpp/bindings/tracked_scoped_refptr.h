@@ -5,7 +5,11 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_TRACKED_SCOPED_REFPTR_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_TRACKED_SCOPED_REFPTR_H_
 
+#include <cinttypes>
+
 #include "base/debug/alias.h"
+#include "base/debug/crash_logging.h"
+#include "base/strings/stringprintf.h"
 
 namespace mojo {
 
@@ -16,20 +20,14 @@ class TrackedScopedRefPtr {
  public:
   TrackedScopedRefPtr() {}
 
-  TrackedScopedRefPtr(T* ptr) : ptr_(ptr) {
-    null_reason_ = ptr_ ? NOT_NULL : INITIALIZED_BY_ASSIGN;
-  }
+  TrackedScopedRefPtr(T* ptr) : ptr_(ptr), ptr_copy_(ptr) {}
 
-  TrackedScopedRefPtr(const TrackedScopedRefPtr<T>& other) : ptr_(other.ptr_) {
-    null_reason_ = ptr_ ? NOT_NULL : INITIALIZED_BY_ASSIGN;
-  }
+  TrackedScopedRefPtr(const TrackedScopedRefPtr<T>& other)
+      : ptr_(other.ptr_), ptr_copy_(other.ptr_copy_) {}
 
   TrackedScopedRefPtr(TrackedScopedRefPtr<T>&& other)
-      : ptr_(std::move(other.ptr_)) {
-    null_reason_ = ptr_ ? NOT_NULL : INITIALIZED_BY_MOVE;
-
-    if (ptr_)
-      other.null_reason_ = MOVED_OUT;
+      : ptr_(std::move(other.ptr_)), ptr_copy_(other.ptr_copy_) {
+    other.ptr_copy_ = nullptr;
   }
 
   ~TrackedScopedRefPtr() { state_ = DESTROYED; }
@@ -42,21 +40,20 @@ class TrackedScopedRefPtr {
 
   TrackedScopedRefPtr<T>& operator=(T* ptr) {
     ptr_ = ptr;
-    null_reason_ = ptr_ ? NOT_NULL : ASSIGNED;
+    ptr_copy_ = ptr;
     return *this;
   }
 
   TrackedScopedRefPtr<T>& operator=(const TrackedScopedRefPtr<T>& other) {
     ptr_ = other.ptr_;
-    null_reason_ = ptr_ ? NOT_NULL : ASSIGNED;
+    ptr_copy_ = other.ptr_copy_;
     return *this;
   }
 
   TrackedScopedRefPtr<T>& operator=(TrackedScopedRefPtr<T>&& other) {
     ptr_ = std::move(other.ptr_);
-    null_reason_ = ptr_ ? NOT_NULL : MOVED_IN;
-    if (ptr_)
-      other.null_reason_ = MOVED_OUT;
+    ptr_copy_ = other.ptr_copy_;
+    other.ptr_copy_ = nullptr;
     return *this;
   }
 
@@ -66,13 +63,20 @@ class TrackedScopedRefPtr {
     LifeState state = state_;
     base::debug::Alias(&state);
 
-    NullReason null_reason = null_reason_;
-    base::debug::Alias(&null_reason);
+    T* ptr = ptr_.get();
+    base::debug::Alias(&ptr);
 
-    CHECK_EQ(ALIVE, state_);
+    T* ptr_copy = ptr_copy_;
+    base::debug::Alias(&ptr_copy);
 
-    CHECK_EQ(NOT_NULL, null_reason_);
-    CHECK(ptr_);
+    if (state_ != ALIVE || !ptr_ || ptr_.get() != ptr_copy_) {
+      std::string value = base::StringPrintf(
+          "%" PRIx64 " %" PRIxPTR " %" PRIxPTR, static_cast<uint64_t>(state_),
+          reinterpret_cast<uintptr_t>(ptr_.get()),
+          reinterpret_cast<uintptr_t>(ptr_copy_));
+      base::debug::SetCrashKeyValue("tracked_scoped_refptr_state", value);
+      CHECK(false);
+    }
   }
 
  private:
@@ -81,19 +85,9 @@ class TrackedScopedRefPtr {
     DESTROYED = 0xdcebfa6574839201
   };
 
-  enum NullReason : uint64_t {
-    DEFAULT_INITIALIZED = 0x1234432112344321,
-    INITIALIZED_BY_ASSIGN = 0x3456654334566543,
-    INITIALIZED_BY_MOVE = 0x5678876556788765,
-    ASSIGNED = 0x789a9a87789a9a87,
-    MOVED_IN = 0x9abccba99abccba9,
-    MOVED_OUT = 0xbcdeedcbbcdeedcb,
-    NOT_NULL = 0xcdeffedccdeffedc
-  };
-
   LifeState state_ = ALIVE;
   scoped_refptr<T> ptr_;
-  NullReason null_reason_ = DEFAULT_INITIALIZED;
+  T* ptr_copy_;
 };
 
 }  // namespace mojo
