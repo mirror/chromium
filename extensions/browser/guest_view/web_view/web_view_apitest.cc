@@ -293,6 +293,13 @@ content::WebContents* WebViewAPITest::GetGuestWebContents() {
 #define MAYBE_AcceptTouchEvents AcceptTouchEvents
 #endif
 IN_PROC_BROWSER_TEST_F(WebViewAPITest, MAYBE_AcceptTouchEvents) {
+  // This test only makes sense for non-OOPIF WebView, since with
+  // GuestViewCrossProcessFrames events are routed directly to the
+  // guest, so the embedder does not need to know about the installation of
+  // touch handlers.
+  if (base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames))
+    return;
+
   LaunchApp("web_view/accept_touch_events");
 
   content::RenderViewHost* embedder_rvh =
