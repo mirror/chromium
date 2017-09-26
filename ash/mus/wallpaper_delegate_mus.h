@@ -18,8 +18,6 @@ class WallpaperDelegateMus : public WallpaperDelegate {
  private:
   // WallpaperDelegate overrides:
   int GetAnimationType() override;
-  int GetAnimationDurationOverride() override;
-  void SetAnimationDurationOverride(int animation_duration_in_ms) override;
   bool ShouldShowInitialAnimation() override;
   void UpdateWallpaper(bool clear_cache) override;
   void InitializeWallpaper() override;

@@ -15,15 +15,6 @@ int WallpaperDelegateMus::GetAnimationType() {
   return ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE;
 }
 
-int WallpaperDelegateMus::GetAnimationDurationOverride() {
-  return 0;
-}
-
-void WallpaperDelegateMus::SetAnimationDurationOverride(
-    int animation_duration_in_ms) {
-  NOTIMPLEMENTED();
-}
-
 bool WallpaperDelegateMus::ShouldShowInitialAnimation() {
   return false;
 }

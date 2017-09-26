@@ -249,11 +249,11 @@ views::Widget* CreateWallpaper(aura::Window* root_window, int container_id) {
       Shell::Get()->session_controller()->NumberOfLoggedInUsers()) {
     ::wm::SetWindowVisibilityAnimationTransition(wallpaper_window,
                                                  ::wm::ANIMATE_SHOW);
-    int duration_override = wallpaper_delegate->GetAnimationDurationOverride();
-    if (duration_override) {
-      ::wm::SetWindowVisibilityAnimationDuration(
-          wallpaper_window,
-          base::TimeDelta::FromMilliseconds(duration_override));
+    base::TimeDelta duration_override =
+        controller->GetAnimationDurationOverride();
+    if (!duration_override.is_zero()) {
+      ::wm::SetWindowVisibilityAnimationDuration(wallpaper_window,
+                                                 duration_override);
     }
   } else {
     // Disable animation if transition to login screen from an empty background.

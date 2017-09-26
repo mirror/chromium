@@ -14,6 +14,7 @@
 #include "ash/shell_observer.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/wallpaper/wallpaper_color_calculator_observer.h"
 #include "components/wallpaper/wallpaper_info.h"
@@ -78,6 +79,8 @@ class ASH_EXPORT WallpaperController
   // Returns the prominent color based on |color_profile|.
   SkColor GetProminentColor(color_utils::ColorProfile color_profile) const;
 
+  base::TimeDelta GetAnimationDurationOverride() const;
+
   // Provides current image on the wallpaper, or empty gfx::ImageSkia if there
   // is no image, e.g. wallpaper is none.
   gfx::ImageSkia GetWallpaper() const;
@@ -132,6 +135,7 @@ class ASH_EXPORT WallpaperController
   void SetWallpaperPicker(mojom::WallpaperPickerPtr picker) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
+  void SetAnimationDurationOverride(base::TimeDelta duration) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
 
   // WallpaperResizerObserver:
@@ -227,6 +231,8 @@ class ASH_EXPORT WallpaperController
   base::OneShotTimer timer_;
 
   int wallpaper_reload_delay_;
+
+  base::TimeDelta animation_duration_override_;
 
   scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner_;
 

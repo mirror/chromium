@@ -14,13 +14,6 @@ int DefaultWallpaperDelegate::GetAnimationType() {
   return ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE;
 }
 
-int DefaultWallpaperDelegate::GetAnimationDurationOverride() {
-  return 0;
-}
-
-void DefaultWallpaperDelegate::SetAnimationDurationOverride(
-    int animation_duration_in_ms) {}
-
 bool DefaultWallpaperDelegate::ShouldShowInitialAnimation() {
   return false;
 }

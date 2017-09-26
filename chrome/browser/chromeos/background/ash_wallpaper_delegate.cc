@@ -41,9 +41,7 @@ bool IsNormalWallpaperChange() {
 
 class WallpaperDelegate : public ash::WallpaperDelegate {
  public:
-  WallpaperDelegate()
-      : boot_animation_finished_(false),
-        animation_duration_override_in_ms_(0) {}
+  WallpaperDelegate() : boot_animation_finished_(false) {}
 
   ~WallpaperDelegate() override {}
 
@@ -51,14 +49,6 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
     return ShouldShowInitialAnimation()
                ? ash::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_BRIGHTNESS_GRAYSCALE
                : static_cast<int>(::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE);
-  }
-
-  int GetAnimationDurationOverride() override {
-    return animation_duration_override_in_ms_;
-  }
-
-  void SetAnimationDurationOverride(int animation_duration_in_ms) override {
-    animation_duration_override_in_ms_ = animation_duration_in_ms;
   }
 
   bool ShouldShowInitialAnimation() override {
@@ -125,9 +115,6 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
 
  private:
   bool boot_animation_finished_;
-
-  // The animation duration to show a new wallpaper if an animation is required.
-  int animation_duration_override_in_ms_;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperDelegate);
 };
