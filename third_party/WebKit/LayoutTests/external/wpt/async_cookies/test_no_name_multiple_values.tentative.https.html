@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Async Cookes: Test No Name, Multiple Values (HTTPS)</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(new Promise(_ => {
+    location.pathname = location.pathname.split('.https.html').join('.html');
+}, 'This never resolves!'));
+
+</script>
