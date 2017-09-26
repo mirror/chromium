@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b028bb7_1a726c8a",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-26T05:44:56Z",
+      "side": 1,
+      "message": "Would be better to declare them in anonymous namespace rather than private static. That would also allow you to remove friend struct of line 71.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 74
+      },
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
