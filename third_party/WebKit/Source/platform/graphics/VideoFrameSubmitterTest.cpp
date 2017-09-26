@@ -85,11 +85,11 @@ class VideoFrameSubmitterTest : public ::testing::Test {
   }
 
   void MakeSubmitter() {
-    submitter_ = base::MakeUnique<VideoFrameSubmitter>(provider_.get());
+    submitter_ = std::make_unique<VideoFrameSubmitter>(provider_.get());
     viz::mojom::blink::CompositorFrameSinkPtr submitter_sink;
     viz::mojom::blink::CompositorFrameSinkRequest request =
         mojo::MakeRequest(&submitter_sink);
-    sink_ = base::MakeUnique<StrictMock<MockCompositorFrameSink>>(&request);
+    sink_ = std::make_unique<StrictMock<MockCompositorFrameSink>>(&request);
     submitter_->SetSink(&submitter_sink);
   }
 

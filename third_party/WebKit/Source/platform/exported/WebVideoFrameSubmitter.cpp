@@ -14,7 +14,7 @@ namespace blink {
 
 std::unique_ptr<WebVideoFrameSubmitter> WebVideoFrameSubmitter::Create(
     cc::VideoFrameProvider* provider) {
-  return base::MakeUnique<VideoFrameSubmitter>(provider);
+  return std::make_unique<VideoFrameSubmitter>(provider);
 }
 
 }  // namespace blink
