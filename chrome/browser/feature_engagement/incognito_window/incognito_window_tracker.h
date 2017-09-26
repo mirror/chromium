@@ -9,6 +9,10 @@
 
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
+#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
+#include "ui/views/widget/widget_observer.h"
+
+class IncognitoWindowPromoBubbleView;
 
 namespace feature_engagement {
 
@@ -23,7 +27,8 @@ namespace feature_engagement {
 // - At least two hours of observed session time have elapsed.
 // - The user has never opened incognito window through any means.
 // - The user has cleared browsing data.
-class IncognitoWindowTracker : public FeatureTracker {
+class IncognitoWindowTracker : public FeatureTracker,
+                               public views::WidgetObserver {
  public:
   IncognitoWindowTracker(Profile* profile,
                          SessionDurationUpdater* session_duration_updater);
@@ -46,12 +51,33 @@ class IncognitoWindowTracker : public FeatureTracker {
                            TestOnSessionTimeMet);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldShowPromo);
+  FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerBrowserTest, TestShowPromo);
+
+  // views::WidgetObserver:
+  void OnWidgetDestroying(views::Widget* widget) override;
+
+  // Retrieves the last active BrowserView instance to display the
+  // IncognitoWindowPromo.
+  static void ShowPromoForLastActiveBrowser();
+
+  IncognitoWindowPromoBubbleView* incognito_window_promo() {
+    return incognito_window_promo_;
+  }
 
   // FeatureTracker:
   void OnSessionTimeMet() override;
 
   // Shows the Incognito Window in-product help promo bubble.
   void ShowPromo();
+
+  // Promotional UI that appears next to the AppMenuButton and encourages its
+  // use. Owned by its NativeWidget.
+  IncognitoWindowPromoBubbleView* incognito_window_promo_;
+
+  // Observes the IncognitoWindowPromo's Widget.  Used to tell whether the promo
+  // is open and get called back when it closes.
+  ScopedObserver<views::Widget, WidgetObserver>
+      incognito_window_promo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(IncognitoWindowTracker);
 };
