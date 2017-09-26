@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73f6ebe_345ecb1c",
+        "filename": "chrome/browser/extensions/bookmark_app_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:06:56Z",
+      "side": 1,
+      "message": "I suggest moving a lot of this to HostedAppBrowserController. It\u0027s documented as\n\n  // Helper which handles bookmark app specific browser configuration.\n  std::unique_ptr\u003cextensions::HostedAppBrowserController\u003e\n      hosted_app_controller_;\n\n\nwhich seems like exactly what this is..\n\n\nThen I don\u0027t have to hassle you about\n - why not use bookmark_app_helper.h?\n - shouldn\u0027t this go in c/b/ui/extensions not c/b/extensions?\n - foo_util.h files tend to become a grab-bag of random functionality since the name is not very descriptive.",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65afff89_96c87992",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:06:56Z",
+      "side": 1,
+      "message": "comment?\n\nAnd this should move to HostedAppBrowserController.",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6485fe_7dbd5be7",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:06:56Z",
+      "side": 1,
+      "message": "const SkBitmap*?\n\nmakes it look _slightly_ less like a memory leak.",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc88346c_768fe961",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:06:56Z",
+      "side": 1,
+      "message": "isn\u0027t this backwards?",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b19d69_7aab91d5",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:06:56Z",
+      "side": 1,
+      "message": "These comments (\"do not show\" .. \"always show\") are really hard to map to a single if condition that returns `false`. Perhaps\n\n  // Bookmark apps on ChromeOS should always show their window icon.\n  if (extensions::IsExperimentalBookmarkAppBrowser(browser_)) {\n    DCHECK(browser_-\u003eSupportsWindowFeature(Browser::FEATURE_TITLEBAR));\n    return true;\n  }",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
