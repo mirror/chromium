@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c35634f_b1762542",
+        "filename": "net/filter/gzip_source_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-26T21:10:55Z",
+      "side": 1,
+      "message": "I thought the bug was when deflate is being used?\nShould this be SourceStream::TYPE_DEFLATE instead of TYPE_GZIP?",
+      "revId": "7ef8eab9cca055329de5064bd2a7f1b7f8f2e61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
