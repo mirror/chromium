@@ -56,6 +56,8 @@ class ExitPrompt;
 //           kLoadingIndicator
 //       kExitPrompt
 //         kExitPromptBackplane
+//       kExclusiveScreenToastTransientParent
+//         kExclusiveScreenToast
 //       kCloseButton
 //       kUrlBar
 //         kLoadingIndicator
@@ -66,14 +68,18 @@ class ExitPrompt;
 //       kExitWarning
 //   kWebVrRoot
 //     kWebVrViewportAwareRoot
-//       kExclusiveScreenToastViewportAware
+//       kExclusiveScreenToastTransientParent
+//         kExclusiveScreenToastViewportAware
 //       kWebVrPermanentHttpSecurityWarning
-//       kWebVrTransientHttpSecurityWarning
-//       kWebVrUrlToast
+//       kWebVrTransientHttpSecurityWarningTransientParent
+//         kWebVrTransientHttpSecurityWarning
+//       kWebVrUrlToastTransientParent
+//         kWebVrUrlToast
 //   kSplashScreenRoot
 //     kSplashScreenViewportAwareRoot
-//       kSplashScreenText
-//         kSplashScreenBackground
+//       kSplashScreenTransientParent
+//         kSplashScreenText
+//           kSplashScreenBackground
 //
 // TODO(vollick): The above hierarchy is complex, brittle, and would be easier
 // to manage if it were specified in a declarative format.
@@ -111,6 +117,7 @@ class UiSceneManager {
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnWebVrFrameAvailable();
   void OnWebVrTimedOut();
+  void OnSplashScreenHidden(TransientElementHideReason);
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
 
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
@@ -163,6 +170,7 @@ class UiSceneManager {
   TransientElement* exclusive_screen_toast_transient_parent_ = nullptr;
   TransientElement* exclusive_screen_toast_viewport_aware_transient_parent_ =
       nullptr;
+  ShowUntilSignalTransientElement* splash_screen_transient_parent_ = nullptr;
   ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
