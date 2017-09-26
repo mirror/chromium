@@ -62,7 +62,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           BitmapRasterBufferProvider::Create(resource_provider);
       *resource_pool =
           ResourcePool::Create(resource_provider, task_runner,
-                               ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                               viz::RemotableResourceTextureHint::kImmutable,
                                ResourcePool::kDefaultExpirationDelay, false);
       break;
     case GPU:
@@ -76,7 +76,8 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           false, false);
       *resource_pool = ResourcePool::Create(
           resource_provider, task_runner,
-          ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+          viz::RemotableResourceTextureHint::kImmutable |
+              viz::RemotableResourceTextureHint::kFramebuffer,
           ResourcePool::kDefaultExpirationDelay, false);
       break;
     case ZERO_COPY:
@@ -102,7 +103,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           viz::PlatformColor::BestTextureFormat(), false);
       *resource_pool =
           ResourcePool::Create(resource_provider, task_runner,
-                               ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                               viz::RemotableResourceTextureHint::kImmutable,
                                ResourcePool::kDefaultExpirationDelay, false);
       break;
   }
