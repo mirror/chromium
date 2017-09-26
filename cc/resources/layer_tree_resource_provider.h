@@ -37,8 +37,8 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
       const ResourceIdArray& resource_ids,
       std::vector<viz::TransferableResource>* transferable_resources);
 
-  // Receives resources from the parent, moving them from mailboxes. Resource
-  // IDs passed are in the child namespace.
+  // Receives resources from the parent, moving them from mailboxes. ResourceIds
+  // passed are in the child namespace.
   // NOTE: if the sync_token is set on any viz::TransferableResource, this will
   // wait on it.
   void ReceiveReturnsFromParent(
@@ -74,7 +74,7 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   };
 
  private:
-  void TransferResource(Resource* source,
+  void TransferResource(viz::internal::RemotableResource* source,
                         viz::ResourceId id,
                         viz::TransferableResource* resource);
 

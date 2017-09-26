@@ -53,7 +53,7 @@ class LayerTreeHostPixelResourceTest : public LayerTreePixelTest {
  protected:
   unsigned draw_texture_target_;
   RasterBufferProviderType raster_buffer_provider_type_;
-  ResourceProvider::TextureHint texture_hint_;
+  viz::RemotableResourceTextureHint texture_hint_;
   Layer::LayerMaskType mask_type_;
   bool initialized_;
 
