@@ -834,13 +834,12 @@ void View::Paint(const PaintInfo& parent_paint_info) {
   if (!ShouldPaint())
     return;
 
-  const gfx::Rect& parent_bounds = !parent()
-                                       ? GetPaintRecordingBounds()
-                                       : parent()->GetPaintRecordingBounds();
+  const gfx::Rect& parent_bounds =
+      !parent() ? GetMirroredBounds() : parent()->GetMirroredBounds();
 
   PaintInfo paint_info = PaintInfo::CreateChildPaintInfo(
-      parent_paint_info, GetPaintRecordingBounds(), parent_bounds.size(),
-      GetPaintScaleType());
+      parent_paint_info, GetMirroredBounds(), parent_bounds.size(),
+      GetPaintScaleType(), !!layer());
 
   const ui::PaintContext& context = paint_info.context();
   bool is_invalidated = true;
@@ -1578,6 +1577,11 @@ void View::OnPaintBorder(gfx::Canvas* canvas) {
   }
 }
 
+std::string View::LayerOffsetData::ToString() const {
+  return "LayerOffsetData: offset=" + offset_.ToString() + ", rounded pixel=" + rounded_pixel_offset_.ToString()
+      + ", dsf=" + base::StringPrintf("%f", device_scale_factor_);
+
+}
 // Accelerated Painting --------------------------------------------------------
 
 View::LayerOffsetData View::CalculateOffsetToAncestorWithLayer(
@@ -2003,14 +2007,6 @@ bool View::ShouldPaint() const {
   return visible_ && !size().IsEmpty();
 }
 
-gfx::Rect View::GetPaintRecordingBounds() const {
-  // If the View has a layer() then it is a paint root and no offset information
-  // is needed. Otherwise, we need bounds that includes an offset from the
-  // parent to add to the total offset from the paint root.
-  DCHECK(layer() || parent() || origin() == gfx::Point());
-  return layer() ? GetLocalBounds() : GetMirroredBounds();
-}
-
 void View::SetupTransformRecorderForPainting(
     const gfx::Vector2d& offset_from_parent,
     ui::TransformRecorder* recorder) const {
@@ -2051,11 +2047,11 @@ void View::PaintDebugRects(const PaintInfo& parent_paint_info) {
     return;
 
   const gfx::Rect& parent_bounds = (layer() || !parent())
-                                       ? GetPaintRecordingBounds()
-                                       : parent()->GetPaintRecordingBounds();
+                                       ? GetMirroredBounds()
+                                       : parent()->GetMirroredBounds();
   PaintInfo paint_info = PaintInfo::CreateChildPaintInfo(
-      parent_paint_info, GetPaintRecordingBounds(), parent_bounds.size(),
-      GetPaintScaleType());
+      parent_paint_info, GetMirroredBounds(), parent_bounds.size(),
+      GetPaintScaleType(), !!layer());
 
   const ui::PaintContext& context = paint_info.context();
 
@@ -2235,6 +2231,7 @@ void View::SnapLayerToPixelBoundary(const LayerOffsetData& offset_data) {
   if (snap_layer_to_pixel_boundary_ && layer()->parent() &&
       layer()->GetCompositor()) {
     if (layer()->GetCompositor()->is_pixel_canvas()) {
+      LOG(ERROR) << "SnapLayerToPixelBoundsary:" << offset_data.GetSubpixelOffset().ToString();
       layer()->SetSubpixelPositionOffset(offset_data.GetSubpixelOffset());
     } else {
       ui::SnapLayerToPhysicalPixelBoundary(layer()->parent(), layer());
