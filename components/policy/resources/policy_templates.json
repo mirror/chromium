@@ -9549,7 +9549,7 @@
       NativePrintersBulkConfiguration are available to users.
 
       Designates which access policy is used for bulk printer configuration.
-      If AllowAll is selected, all printers are shown. If BlacklistRestrction
+      If AllowAll is selected, all printers are shown. If BlacklistRestriction
       is selected, NativePrintersBulkBlacklist is used to restrict access to
       the specified printers.  If WhitelistPrintersOnly is selected,
       NativePrintersWhitelist designates only those printers which are
@@ -9605,7 +9605,7 @@
       NativePrintersBulkAccessMode.
 
       If this policy is used, only the printers with ids matching the values
-      in this policy are available to the user. The ids must coorespond to
+      in this policy are available to the user. The ids must correspond to
       the entries in the file specified in NativePrintersBulkConfiguration.''',
     },
     {
@@ -9658,7 +9658,7 @@
       This policy is additive to the NativePrintersBulkConfiguration.
 
       If this policy is unset, there will be no device printers and the other
-      NativeDevicePrinter* policies will be ignroed.''',
+      NativeDevicePrinter* policies will be ignored.''',
     },
     {
       'name': 'DeviceNativePrintersAccessMode',
@@ -9698,7 +9698,7 @@
       DeviceNativePrintersConfiguration are available to users.
 
       Designates which access policy is used for bulk printer configuration.
-      If AllowAll is selected, all printers are shown. If BlacklistRestrction
+      If AllowAll is selected, all printers are shown. If BlacklistRestriction
       is selected, DeviceNativePrintersBlacklist is used to restrict access to
       the specified printers.  If WhitelistPrintersOnly is selected,
       DeviceNativePrintersWhitelist designates only those printers which are
@@ -9755,7 +9755,7 @@
       DeviceNativePrintersAccessMode.
 
       If this policy is used, only the printers with ids matching the values
-      in this policy are available to the user. The ids must coorespond to
+      in this policy are available to the user. The ids must correspond to
       the entries in the file specified in DeviceNativePrinters.''',
     },
     {
