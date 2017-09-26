@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2891eb29_e31b3f33",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-26T02:52:24Z",
+      "side": 1,
+      "message": "Discussed with Nektar:\n\nMoving this to base and renaming it to GetValue.\n\nAlso, we should add a TODO about on-click link urls.",
+      "revId": "dab339d202af87b976cc0848519983ffa9dbad17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
