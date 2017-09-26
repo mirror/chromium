@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f632af1_7af2587d",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-26T14:36:09Z",
+      "side": 1,
+      "message": "we don\u0027t need to encode, it\u0027s already done by appendQueryParameter which results in double encoding. Sorry I missed this.",
+      "range": {
+        "startLine": 147,
+        "startChar": 46,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "125524080130d34cd565cf9abcbb53cd0b7da0d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
