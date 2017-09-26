@@ -23,13 +23,17 @@ class LogSourceResource : public ApiResource {
   static const content::BrowserThread::ID kThreadId =
       content::BrowserThread::UI;
 
+  using UnregisterCallback = base::Callback<void(int)>;
+
   LogSourceResource(const std::string& extension_id,
                     std::unique_ptr<system_logs::SystemLogsSource> source,
-                    base::Closure unregister_callback_);
+                    const UnregisterCallback& callback);
 
   ~LogSourceResource() override;
 
   system_logs::SystemLogsSource* GetLogSource() const { return source_.get(); }
+
+  void set_resource_id(int resource_id) { resource_id_ = resource_id; }
 
  private:
   friend class ApiResourceManager<LogSourceResource>;
@@ -41,6 +45,8 @@ class LogSourceResource : public ApiResource {
   // this resource is cleaned up. Just pass in a base::Closure to the
   // constructor.
   base::ScopedClosureRunner unregister_runner_;
+  UnregisterCallback callback_;
+  int resource_id_;
 
   DISALLOW_COPY_AND_ASSIGN(LogSourceResource);
 };
