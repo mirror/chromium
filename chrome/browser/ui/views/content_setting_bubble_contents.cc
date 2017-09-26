@@ -383,16 +383,6 @@ void ContentSettingBubbleContents::Init() {
       content_setting_bubble_model_->bubble_content();
   bool bubble_content_empty = true;
 
-  if (!provider->IsHarmonyMode() && !bubble_content.title.empty()) {
-    views::Label* title_label =
-        new views::Label(bubble_content.title, CONTEXT_BODY_TEXT_SMALL);
-    title_label->SetMultiLine(true);
-    title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    layout->StartRow(0, kSingleColumnSetId);
-    layout->AddView(title_label);
-    bubble_content_empty = false;
-  }
-
   if (!bubble_content.message.empty()) {
     views::Label* message_label = new views::Label(bubble_content.message);
     // For bubble's without titles there is no need for padding.
@@ -539,14 +529,6 @@ void ContentSettingBubbleContents::Init() {
     manage_checkbox_ = new views::Checkbox(bubble_content.manage_text);
     manage_checkbox_->set_listener(this);
     layout->AddView(manage_checkbox_);
-  }
-
-  if (!bubble_content_empty && !provider->IsHarmonyMode()) {
-    layout->AddPaddingRow(0, related_control_vertical_spacing);
-    layout->StartRow(0, kSingleColumnSetId);
-    layout->AddView(new views::Separator(), 1, 1, GridLayout::FILL,
-                    GridLayout::FILL);
-    layout->AddPaddingRow(0, related_control_vertical_spacing);
   }
 
   if (list_item_container_)
