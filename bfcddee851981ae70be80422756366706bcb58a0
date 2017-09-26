@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e642e9e_70e04f19",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-26T21:30:58Z",
+      "side": 1,
+      "message": "nit: I think it would be clearer to write\n\n  for (int i \u003d allocation.context.backtrace.frame_count - 1; i \u003e\u003d 0; --i) { ... }\n\nand use i as the index here.",
+      "range": {
+        "startLine": 606,
+        "startChar": 22,
+        "endLine": 606,
+        "endChar": 70
+      },
+      "revId": "bfcddee851981ae70be80422756366706bcb58a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
