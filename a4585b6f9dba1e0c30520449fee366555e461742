@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de17fc87_7d624b21",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "Is there a pre-defined text style we can use instead of this custom color?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6ba365_9359739c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "It looks like InfoBarLayout.java has clickable links baked in: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarLayout.java?type\u003dcs\u0026q\u003dinfobar+clickablespan\u0026l\u003d479\n\nCan we hook into that somehow?",
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79e8f2a_0c5ad290",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "Do we actually need to set all of this styling ourselves?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1758849f_6ffd6e45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "What does the survey controller do with a null advertising id?",
+      "range": {
+        "startLine": 102,
+        "startChar": 43,
+        "endLine": 102,
+        "endChar": 70
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9396b640_137a9af6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "This public class needs a JavaDoc.",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaf6a9a_e6419c9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "Should we pull this from a field trial rather than hard-coding?",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 71
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7c9542_d116d1db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-26T21:25:49Z",
+      "side": 1,
+      "message": "It seems odd that ToolbarPhone would be responsible for triggering the survey.\n\nI think we want to allow the survey to be triggered for Chrome Home and non-Chrome users, so somewhere like ChromeActivity.java or ChromeTabbedActivity.java may be best. We should look for sometime after startup, when we know an native page isn\u0027t showing, to check whether a survey should be triggered.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 8,
+        "endLine": 1495,
+        "endChar": 9
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
