@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66214e07_3a0200d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "and writes",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79ac00c_d6f6985f",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "This comment isn\u0027t accurate now.",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb4d30b_79a9dc58",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "What happens if we call WriteDecoderBuffer() twice, while the pipe isn\u0027t writable? In that case we will call ArmOrNotify() twice, but it\u0027s unclear to me what\u0027s the expected behavior here. Will we get notified again after writing everything?\n\nMy feeling is that we should only call ArmOrNotify() if the pipe isn\u0027t writable, and we do have data to write. But the old code calls ArmOrNotify() right in the constructor, which seems not necessary to me. But I might be missing something.",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3122570a_e751c149",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "hmm, in the old implementation, do we need to call ArmOrNotify() if we have written everything?",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8717170b_8a9138ca",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "Please update the documentation about concurrent reads, e.g. how things work now.",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046edd1a_34974149",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "s/)//",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8280de90_21cfa900",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "ditto about documentation update",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfef9e79_ea66a407",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:09:16Z",
+      "side": 1,
+      "message": "Use a small size so we also test chunked write for the first buffer? I am interested in the case where we call WriteDecoderBuffer() with non-EOS buffer while we are in the middle of writing the first buffer, and are waiting for the pipe to be writable again. (See my comment on calling ArmOrNotify() twice.)",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
