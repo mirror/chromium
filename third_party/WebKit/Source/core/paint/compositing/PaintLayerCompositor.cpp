@@ -138,6 +138,8 @@ void PaintLayerCompositor::EnableCompositingModeIfNeeded() {
 }
 
 bool PaintLayerCompositor::RootShouldAlwaysComposite() const {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return false;
   if (!has_accelerated_compositing_)
     return false;
   return layout_view_.GetFrame()->IsLocalRoot() ||
