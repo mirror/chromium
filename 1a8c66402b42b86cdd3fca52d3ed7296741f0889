@@ -22,6 +22,30 @@
       "revId": "1a8c66402b42b86cdd3fca52d3ed7296741f0889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cba678_d8eeb353",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T15:49:52Z",
+      "side": 1,
+      "message": "\u003e Can we just get rid of both casts instead?   They\u0027re both Categories.\n\nNo, doesn’t work. When there’s a Category in there, the logging DCHECK stuff wants to emit code to compare and print Category values: CheckLTImpl, MakeCheckOpString, and MakeCheckOpValueString. These wind up as exported symbols. That’s what causes the problem: we don’t want junk exported symbols like these, and it trips up the verification.\n\n\u003e Also, are enums really unsigned by default on OSX non-component builds? \n\u003e Or is something else going on here?\n\nThe problem occurs at the link stage, not the compile stage.",
+      "parentUuid": "db44a2eb_e89bec7d",
+      "range": {
+        "startLine": 922,
+        "startChar": 29,
+        "endLine": 922,
+        "endChar": 30
+      },
+      "revId": "1a8c66402b42b86cdd3fca52d3ed7296741f0889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
