@@ -31,8 +31,17 @@ vr_test( (t) => {
             magicWindowOnly.requestSession({ exclusive: true }));
       }, "requestSession rejected for device that only supports non-exclusive sessions.");
 
-      // TODO: Once implemented, ensure that the pixel device can create an
-      // exclusive session.
+      promise_test( function() {
+        return pixel.requestSession({ exclusive: true }).then( (session) => {
+          t.step( () => {
+            assert_true(session.exclusive);
+          }, "requestSession returned correct results");
+        }).catch( (err) => {
+          t.step( () => {
+            assert_unreached("requestSession rejected");
+          });
+        });
+      }, "requestSession succeeds for device that supports exclusive sessions.");
 
       t.done();
     });
