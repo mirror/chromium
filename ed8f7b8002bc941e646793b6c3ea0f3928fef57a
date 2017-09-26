@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1188f11f_87e993f6",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:47:51Z",
+      "side": 1,
+      "message": "nit: These could go in layer_tree_host_pixeltest_masks.cc? Is there a reason for a separate file? That one doesn\u0027t seem unweildly large yet?",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ca7286_4fd283f5",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:47:51Z",
+      "side": 1,
+      "message": "This can go https://cs.chromium.org/chromium/src/cc/test/layer_tree_pixel_test.h?rcl\u003ddc10ba2abdf20a272e2ff39fa249603559bd9fcc\u0026l\u003d97 with the other colors?",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b1eb2b_5709fcb8",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T14:47:51Z",
+      "side": 1,
+      "message": "Put these helpers into the test base class, since they are very specific to that test set?",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a097eb4_58863e7a",
         "filename": "cc/trees/occlusion_tracker.cc",
         "patchSetId": 3
