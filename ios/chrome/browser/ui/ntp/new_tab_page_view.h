@@ -14,6 +14,7 @@
 @interface NewTabPageView : UIView
 @property(nonatomic, weak, readonly) UIScrollView* scrollView;
 @property(nonatomic, weak, readonly) NewTabPageBar* tabBar;
+@property(nonatomic, assign) UIEdgeInsets safeAreaForToolbar;
 
 - (instancetype)initWithFrame:(CGRect)frame
                 andScrollView:(UIScrollView*)scrollView
