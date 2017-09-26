@@ -34,6 +34,24 @@
       "revId": "e811ff84025ec6fb3a6ed54ea56cf73e4eca5b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bff782b_0f5de8d2",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-26T13:22:36Z",
+      "side": 1,
+      "message": "Just removing the implied_by, thanks.",
+      "parentUuid": "f3c9b22a_4000dc5f",
+      "revId": "e811ff84025ec6fb3a6ed54ea56cf73e4eca5b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
