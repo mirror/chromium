@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207ae8b6_a33f106e",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "Can we limit the uasge of base::ACFR() helper more so that it is used only 1) when the call back has to be passed to both success and failure callbacks or 2) the function you\u0027re calling only accepts Repeatable (e.g. OnPoweredOn)?\n\n if (...) {\n  ...\n } else {\n   if (...) {\n     EnqueueRemotePowerChange(std::move(callback));\n     return\n   }\n }\n OnPoweredOn(base::ACFR(std::move(callback));\n\nSince a \"repeatable\" callback converted by ACFR is not really repeatable, I\u0027d like to limit the usage to make the code less error prone. WDYT?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6256b207_33dfb42e",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "same",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34042247_c6ed937b",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "So we have to use repeating here because L2174 has two Bind calls, correct?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9fec90_00b31245",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "(see my comment above.)",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bd2db2_5b2afe2f",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "callback_helper.h missing?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16db24c4_209af4c4",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "since you\u0027re rewriting the line, std::make_unique?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d867f9f6_cb8bfb4d",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-26T17:42:50Z",
+      "side": 1,
+      "message": "callback_helper.h",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
