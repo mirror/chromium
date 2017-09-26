@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb5a592b_5229ec26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-26T00:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23292ea6_3eaf8709",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23cc2ae0_db156690",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 17
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "4e5b8611_3d0fef8e",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-26T00:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f418a71_a5c299d0",
+      "range": {
+        "startLine": 519,
+        "startChar": 66,
+        "endLine": 519,
+        "endChar": 69
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdad07b0_f680d3e6",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-26T00:39:18Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "23cc2ae0_db156690",
+      "range": {
+        "startLine": 519,
+        "startChar": 52,
+        "endLine": 519,
+        "endChar": 58
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d03b7b32_8fc08969",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 17
@@ -85,6 +157,24 @@
       "revId": "07b650f36e8a93940356113a2410244dc45e225f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27666919_67958387",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-26T00:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03b7b32_8fc08969",
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "07b650f36e8a93940356113a2410244dc45e225f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706b4128_b96aff9d",
+        "filename": "extensions/utility/unpacker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-26T00:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b33d90_62215a46",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 80
+      },
+      "revId": "07b650f36e8a93940356113a2410244dc45e225f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
