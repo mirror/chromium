@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d078ce_84b549bc",
+        "filename": "content/browser/renderer_host/file_utilities_message_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-26T12:05:21Z",
+      "side": 0,
+      "message": "Follow-up question on my mind: prior to this CL, this singleton sequence serviced all renderers by the looks.\n\nWith this CL, do we now have a unique sequence per renderer?  Is that ok to do, resource-wise?",
+      "revId": "de1fbac56080d0e1ecdf5cbc7fe526a834437a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
