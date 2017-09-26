@@ -131,6 +131,7 @@ void TracingObserver::AddToTrace(
 
 bool TracingObserver::AddChromeDumpToTraceIfEnabled(
     const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::ProcessId pid,
     const ProcessMemoryDump* process_memory_dump) {
   if (!ShouldAddToTrace(args))
     return false;

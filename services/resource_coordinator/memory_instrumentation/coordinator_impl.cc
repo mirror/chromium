@@ -383,7 +383,17 @@ void CoordinatorImpl::OnChromeMemoryDumpResponse(
     return;
   }
 
-  request->responses[client].chrome_dump = std::move(chrome_memory_dump);
+  auto* response = &request->responses[client];
+  response->chrome_dump = std::move(chrome_memory_dump);
+
+  // SUMMARY_ONLY dumps should just return the summarized result in the
+  // ProcessMemoryDumpCallback. These shouldn't be added to the trace to
+  // avoid confusing trace consumers.
+  if (request->args.dump_type != base::trace_event::MemoryDumpType::SUMMARY_ONLY) {
+    bool added_to_trace = tracing_observer_->AddChromeDumpToTraceIfEnabled(
+      request->args, response->process_id, chrome_memory_dump.get());
+    success = success && added_to_trace;
+  }
 
   if (!success) {
     request->failed_memory_dump_count++;
