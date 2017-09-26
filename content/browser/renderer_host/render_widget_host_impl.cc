@@ -1105,7 +1105,7 @@ void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
   // VrController moves the pointer during the scrolling and fling. To ensure
   // that scroll performance is not affected we drop mouse events during
   // scroll/fling.
-  if (GetView()->IsInVR() &&
+  if (GetView() && GetView()->IsInVR() &&
       (is_in_gesture_scroll_[blink::kWebGestureDeviceTouchpad] ||
        is_in_touchpad_gesture_fling_)) {
     return;

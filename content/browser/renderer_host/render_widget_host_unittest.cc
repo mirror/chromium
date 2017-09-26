@@ -2298,6 +2298,13 @@ TEST_F(RenderWidgetHostTest, MouseEventCallbackCanHandleEvent) {
   EXPECT_TRUE(host_->mock_input_router()->sent_mouse_event_);
 }
 
+// Check that no crash occurs when sending mouse events when the
+// renderer has crashed.
+TEST_F(RenderWidgetHostTest, MouseEventPostRendererCrash) {
+  host_->SetView(nullptr);
+  SimulateMouseEvent(WebInputEvent::kMouseMove);
+}
+
 TEST_F(RenderWidgetHostTest, InputRouterReceivesHandleInputEvent_ACK) {
   host_->SetupForInputRouterTest();
 
