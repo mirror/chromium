@@ -1,0 +1,14 @@
+{
+  "name": "audio",
+  "display_name": "Audio Service",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+       "provides": {
+         "device" : [ "audio::mojom::AudioSystemInfo" ]
+      },
+      "requires": {
+        "service_manager": [ "service_manager:all_users" ]
+      }
+    }
+  }
+}
