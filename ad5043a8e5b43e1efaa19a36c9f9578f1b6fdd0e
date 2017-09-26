@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca44a2c5_808a10ce",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Can an enum type be used here rather than int?  We\u0027ve got too many priority types running around, and while you\u0027re fairly clear in the comment, it\u0027s possible to be clearer if we can specify a type.\n\nETA: Whoops, reading the code below, I made an incorrect assumption; this is a net::RequestPriority, not a ResourceLoaderPriority.  I think that needs to be explicit, ideally through a type decl, sub-ideally through mentioning the type in the comment.",
+      "range": {
+        "startLine": 249,
+        "startChar": 28,
+        "endLine": 249,
+        "endChar": 40
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce2893d_622d2bc8",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion for clarity: \"All public methods except the destructor are called on BodyHandler\u0027s TaskRunner.  All private methods and the destructor are run on the file TaskRunner.\"",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 15
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fe8917_48946ceb",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit: destruction",
+      "range": {
+        "startLine": 314,
+        "startChar": 46,
+        "endLine": 314,
+        "endChar": 57
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29042a51_fe93a3c5",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d find it a bit easier to read this file if this class wasn\u0027t inline in the SaveToFileBodyHandler decl, but instead was its own, top-level-in-file class.",
+      "range": {
+        "startLine": 317,
+        "startChar": 21,
+        "endLine": 317,
+        "endChar": 27
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc2036e_4f05f1a4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion, OCD: I generally like to see comments near base::Unretained() explaining why it\u0027s safe to pass an unretained pointer.  If you wanted to do so at top level describing why it\u0027s ok everywhere in the implementation, that\u0027s fine.",
+      "range": {
+        "startLine": 352,
+        "startChar": 42,
+        "endLine": 352,
+        "endChar": 52
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6bcf14_705b160b",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "What are the lifetime guarantees for this object?  My guess would be that we\u0027re relying on the reference held by the file_writer during the PostTask?  Worth commenting?  (Comment completely up to you--I just wanted to raise the lifetime issue.)",
+      "range": {
+        "startLine": 366,
+        "startChar": 23,
+        "endLine": 366,
+        "endChar": 47
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0636f975_1358162e",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, thought: Just on the basis of \"more conditionals mean more opportunity for bugs and more things to go wrong\", I would prefer a somewhat more complex DeleteTask() that tested the conditional an posted back rather than having two different pathways for destruction based on whether the conditional was null or not.  There\u0027s still a conditional, but more of the destruction path is shared.  I don\u0027t feel at all strongly about it; up to you.",
+      "range": {
+        "startLine": 367,
+        "startChar": 11,
+        "endLine": 367,
+        "endChar": 31
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4574bcc_ec20389d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Why?  You indirect through this above.",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 25
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27fd392_b5529693",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Why a CHECK?",
+      "range": {
+        "startLine": 374,
+        "startChar": 14,
+        "endLine": 374,
+        "endChar": 25
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715f7400_d91ad4db",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit: Why in the middle of the function?  I think of this as being a check that the function as a whole is on the right thread, and hence at the beginning of the function.",
+      "range": {
+        "startLine": 439,
+        "startChar": 13,
+        "endLine": 439,
+        "endChar": 37
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30ad29d_fb26ab11",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion: DestroyOnFileSequence()?",
+      "range": {
+        "startLine": 448,
+        "startChar": 16,
+        "endLine": 448,
+        "endChar": 26
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29a708f_9a1e9615",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Willing to make clear (by grouping + comments or a lot of individual comments) which sequence each of these variables will be accessed on (after \u0026 not counting construction)?",
+      "range": {
+        "startLine": 450,
+        "startChar": 10,
+        "endLine": 450,
+        "endChar": 18
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938011d0_6fc37167",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "We don\u0027t actually check validity of file_, so I think \"If valid during destruction\" to be a bit misleading.  The deletion is based on owns_file_ and the value of path_.",
+      "range": {
+        "startLine": 451,
+        "startChar": 42,
+        "endLine": 451,
+        "endChar": 48
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9c6132_e8aaeb4b",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "With everything else inline, why is this OOL?",
+      "range": {
+        "startLine": 477,
+        "startChar": 25,
+        "endLine": 477,
+        "endChar": 26
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc09f6b_a8311022",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Just confirming, based on our previous conversation: You plan to add DownloadToTemporaryFile in a future CL?",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5f6a25_74a773f8",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion: The comment is slightly inaccurate since whether the file was deleted or not was dependent on the setter on SimpleURLLoader/the expect variable tested below.",
+      "range": {
+        "startLine": 231,
+        "startChar": 15,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2efbcae_36945816",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d rather have an accessor?  But I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 359,
+        "startChar": 25,
+        "endLine": 359,
+        "endChar": 37
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e94133_88b0d94a",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T21:07:00Z",
+      "side": 1,
+      "message": "Suggestion: Auto-generate the test cases by running through all 8 cases and continuing on any that have both of bbc and cpc true.",
+      "range": {
+        "startLine": 1198,
+        "startChar": 23,
+        "endLine": 1198,
+        "endChar": 26
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
