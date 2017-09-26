@@ -16,6 +16,24 @@
       "revId": "3fb1da9b78df2eac0e8da20fdb41f644a3dbd808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96465122_759f66bc",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1244263
+      },
+      "writtenOn": "2017-09-26T00:40:03Z",
+      "side": 1,
+      "message": "It was weak in MessagePort::MessageAvailable. I wanted to do the exact same thing (except not cross-thread).\n\nBut after poking around and looking back at ancient history [1] I can\u0027t think of any reason either case needs to be weak.\n\nShall I try changing this to WrapPersistent and changing MessageAvailable to WrapCrossThreadPersistent?\n\n[1]\nAncient History: https://codereview.chromium.org/60233009/#ps180001",
+      "parentUuid": "2248e701_dbacbc11",
+      "revId": "3fb1da9b78df2eac0e8da20fdb41f644a3dbd808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
