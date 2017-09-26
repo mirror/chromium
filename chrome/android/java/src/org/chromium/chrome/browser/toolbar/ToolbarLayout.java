@@ -719,6 +719,14 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
         if (mToolbarTabController != null) mToolbarTabController.openHomepage();
     }
 
+    /**
+     * Opens url in the current tab.
+     */
+    protected void openURL(String url) {
+        getLocationBar().hideSuggestions();
+        if (mToolbarTabController != null) mToolbarTabController.openURL(url);
+    }
+
     @Override
     public void setMenuButtonHighlight(boolean highlight) {
         mHighlightingMenu = highlight;

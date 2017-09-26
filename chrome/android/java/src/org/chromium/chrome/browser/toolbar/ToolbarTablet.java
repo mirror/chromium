@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.NavigationPopup;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.ntp.NewTabPage;
@@ -41,6 +42,8 @@ public class ToolbarTablet
         extends ToolbarLayout implements OnClickListener, View.OnLongClickListener {
     // The number of toolbar buttons that can be hidden at small widths (reload, back, forward).
     public static final int HIDEABLE_BUTTON_COUNT = 3;
+
+    private static final String CHROME_MEMEX_URL = "https://chrome-memex.corp.google.com";
 
     private TintedImageButton mHomeButton;
     private TintedImageButton mBackButton;
@@ -254,6 +257,12 @@ public class ToolbarTablet
         mSaveOfflineButton.setOnLongClickListener(this);
 
         mSecurityButton.setOnLongClickListener(this);
+
+        // If Memex is enabled enable the accessibility tab switcher button.
+        if (ChromeFeatureList.isInitialized()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_MEMEX)) {
+            onAccessibilityStatusChanged(true);
+        }
     }
 
     @Override
@@ -312,6 +321,12 @@ public class ToolbarTablet
                 RecordUserAction.record("MobileToolbarToggleBookmark");
             }
         } else if (mAccessibilitySwitcherButton == v) {
+            if (ChromeFeatureList.isInitialized()
+                    && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_MEMEX)) {
+                RecordUserAction.record("Memex");
+                openURL(CHROME_MEMEX_URL);
+                return;
+            }
             if (mTabSwitcherListener != null) {
                 cancelAppMenuUpdateBadgeAnimation();
                 mTabSwitcherListener.onClick(mAccessibilitySwitcherButton);
