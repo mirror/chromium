@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8241f64_719d63c1",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-26T12:35:19Z",
+      "side": 1,
+      "message": "nit: were enabled (since you said \"would\") in the first part",
+      "range": {
+        "startLine": 337,
+        "startChar": 69,
+        "endLine": 337,
+        "endChar": 71
+      },
+      "revId": "d44648050526b523593f3d29b4b0f76bd7543bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027d5a4d_036dfcb9",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-26T12:35:19Z",
+      "side": 1,
+      "message": "I would drop this sentence, because the causality is the other way around - the user facing feature is to disable cookies, and that also disables service workers. IMHO that makes it hard to understand. And the \"setting\" field also already explains it.",
+      "range": {
+        "startLine": 339,
+        "startChar": 34,
+        "endLine": 340,
+        "endChar": 46
+      },
+      "revId": "d44648050526b523593f3d29b4b0f76bd7543bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
