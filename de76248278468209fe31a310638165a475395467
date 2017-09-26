@@ -555,6 +555,24 @@
       "revId": "de76248278468209fe31a310638165a475395467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bc07df_d7280897",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-26T21:03:20Z",
+      "side": 1,
+      "message": "I think it\u0027d be useful now. You could drop Warning and Info though, it seems like.\n\n(Also, per discussion on other reviews, this will end up in just //sandbox, and not //sandbox/common).",
+      "parentUuid": "503d1051_399263cd",
+      "revId": "de76248278468209fe31a310638165a475395467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

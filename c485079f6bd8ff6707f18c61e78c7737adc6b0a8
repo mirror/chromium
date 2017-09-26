@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "dbaa42bd_4a635d73",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-26T21:03:20Z",
+      "side": 1,
+      "message": "ABORT()",
+      "revId": "c485079f6bd8ff6707f18c61e78c7737adc6b0a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7be652_37f3ff5a",
+        "filename": "sandbox/mac/sandbox_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-26T21:03:20Z",
+      "side": 1,
+      "message": "\"//base\" is the canonical way to refer to Chromium targets, and on line 11.",
+      "range": {
+        "startLine": 10,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 78
+      },
+      "revId": "c485079f6bd8ff6707f18c61e78c7737adc6b0a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd6d9f6_ca5ceda6",
         "filename": "sandbox/mac/seatbelt_exec.cc",
         "patchSetId": 3
