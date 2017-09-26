@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "bc209611_ee9a11e8",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55915c3_2e670de4",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 60
+      },
+      "revId": "d53d0324647d15ebd5181c8803fb18a36eb96762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d57abda_da5f5f3d",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55915c3_2e670de4",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 60
+      },
+      "revId": "d53d0324647d15ebd5181c8803fb18a36eb96762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfe8acb2_6a6ea79b",
         "filename": "components/offline_pages/core/offline_page_model_impl.cc",
         "patchSetId": 6
@@ -45,6 +93,30 @@
       "revId": "d53d0324647d15ebd5181c8803fb18a36eb96762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4126ab90_1aa963d3",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe8acb2_6a6ea79b",
+      "range": {
+        "startLine": 1079,
+        "startChar": 2,
+        "endLine": 1079,
+        "endChar": 24
+      },
+      "revId": "d53d0324647d15ebd5181c8803fb18a36eb96762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

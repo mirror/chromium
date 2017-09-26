@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "82363b08_6a2cb06b",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "I\u0027ve added the comment on top of the declaration of StorageStatus as well.",
+      "parentUuid": "7f66101f_eddd1829",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 67
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2556a9e6_35843f45",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "2b4b1089_64590915",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45edfdbb_61dc0eb7",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0ce994_598e3c6a",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -306,6 +354,30 @@
       "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e51452_60877b1d",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T22:56:56Z",
+      "side": 1,
+      "message": "removed the DCHECK.",
+      "parentUuid": "5169034d_0ee8fed5",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
