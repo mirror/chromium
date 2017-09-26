@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f689263_d68a1903",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-26T21:51:59Z",
+      "side": 1,
+      "message": "hmm, it seems pretty harmless, considering it only shows up in debug builds and that two constructors now use it.",
+      "parentUuid": "4a91b1c0_226b5c95",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0c999f1_e3ea47e2",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d809d3_1a1d23ce",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-26T21:51:59Z",
+      "side": 1,
+      "message": "I tried placing them in relevant places and updating them (mostly to read better in new location.)\n\nI added a little to the constructors but I don\u0027t really see them having \"personalities\" so I\u0027m not sure what to call them.",
+      "parentUuid": "d0c999f1_e3ea47e2",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cc40fe0b_709a7192",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-26T21:51:59Z",
+      "side": 1,
+      "message": "I don\u0027t see it used very often but it was easy to add and I updated the calling locations.",
+      "parentUuid": "6ff33ab8_fe06d31e",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19667e71_7e9e02fc",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f982253_6f762d03",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-26T21:51:59Z",
+      "side": 1,
+      "message": "I added a comment, but more like the other \u0027Init()\u0027s in this directory.",
+      "parentUuid": "19667e71_7e9e02fc",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
