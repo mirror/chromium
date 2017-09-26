@@ -118,6 +118,13 @@ class TranslatePrefs {
   void BlockLanguage(const std::string& original_language);
   void UnblockLanguage(const std::string& original_language);
 
+  // Adds the language to the language list at chrome://settings/languages.
+  // The language is also added to the blocked list if the param force_blocked
+  // is set to true.
+  void AddToLanguageList(const std::string& language, const bool force_blocked);
+  // Removes the language from the language list at chrome://settings/languages.
+  void RemoveFromLanguageList(const std::string& language);
+
   bool IsSiteBlacklisted(const std::string& site) const;
   void BlacklistSite(const std::string& site);
   void RemoveSiteFromBlacklist(const std::string& site);
@@ -207,6 +214,13 @@ class TranslatePrefs {
                                const char* accept_languages_pref);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest, BlockLanguage);
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest, UnblockLanguage);
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest, AddToLanguageList);
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest, RemoveFromLanguageList);
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest, AddToLanguageListFeatureEnabled);
+  FRIEND_TEST_ALL_PREFIXES(TranslatePrefsTest,
+                           RemoveFromLanguageListFeatureEnabled);
   friend class TranslatePrefsTest;
 
   // Merges two language sets to migrate to the language setting UI.

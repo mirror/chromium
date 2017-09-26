@@ -105,8 +105,8 @@ void ExpandLanguageCodes(const std::vector<std::string>& languages,
 const base::Feature kTranslateUI2016Q2{"TranslateUI2016Q2",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kImprovedLanguageSettings{
-    "ImprovedLanguageSettings", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kImprovedLanguageSettings{"ImprovedLanguageSettings",
+                                              base::FEATURE_ENABLED_BY_DEFAULT};
 
 DenialTimeUpdate::DenialTimeUpdate(PrefService* prefs,
                                    const std::string& language,
@@ -207,25 +207,78 @@ bool TranslatePrefs::IsBlockedLanguage(
   return IsValueBlacklisted(kPrefTranslateBlockedLanguages, original_language);
 }
 
-void TranslatePrefs::BlockLanguage(const std::string& original_language) {
-  BlacklistValue(kPrefTranslateBlockedLanguages, original_language);
+// Note: the language codes used in the language settings list have the Chrome
+// internal format and not the Translate server format.
+// To convert from one to the other use util functions
+// ToTranslateLanguageSynonym() and ToChromeLanguageSynonym().
+void TranslatePrefs::AddToLanguageList(const std::string& input_language,
+                                       const bool force_blocked) {
+  if (input_language.empty())
+    return;
 
-  // Add the language to the language list at chrome://settings/languages.
-  std::string language = original_language;
-  translate::ToChromeLanguageSynonym(&language);
+  std::string chrome_language = input_language;
+  translate::ToChromeLanguageSynonym(&chrome_language);
 
   std::vector<std::string> languages;
   GetLanguageList(&languages);
 
-  if (std::find(languages.begin(), languages.end(), language) ==
+  bool should_block = true;
+  if (base::FeatureList::IsEnabled(kImprovedLanguageSettings)) {
+    // We should block the language if the list does not already contain another
+    // language with the same base language.
+    should_block = !ContainsSameBaseLanguage(languages, chrome_language);
+  }
+
+  if (force_blocked || should_block) {
+    BlockLanguage(input_language);
+  }
+
+  // Add the language to the list.
+  if (std::find(languages.begin(), languages.end(), chrome_language) ==
       languages.end()) {
-    languages.push_back(language);
+    languages.push_back(chrome_language);
     UpdateLanguageList(languages);
   }
 }
 
-void TranslatePrefs::UnblockLanguage(const std::string& original_language) {
-  RemoveValueFromBlacklist(kPrefTranslateBlockedLanguages, original_language);
+void TranslatePrefs::RemoveFromLanguageList(const std::string& input_language) {
+  std::string chrome_language = input_language;
+  translate::ToChromeLanguageSynonym(&chrome_language);
+
+  std::vector<std::string> languages;
+  GetLanguageList(&languages);
+
+  // Remove the language from the list.
+  const auto& it =
+      std::find(languages.begin(), languages.end(), chrome_language);
+  if (it != languages.end()) {
+    languages.erase(it);
+    UpdateLanguageList(languages);
+
+    if (base::FeatureList::IsEnabled(kImprovedLanguageSettings)) {
+      // We should unblock the language if this was the last one from the same
+      // language family.
+      bool should_unblock =
+          !ContainsSameBaseLanguage(languages, chrome_language);
+      if (should_unblock) {
+        UnblockLanguage(input_language);
+      }
+    }
+  }
+}
+
+void TranslatePrefs::BlockLanguage(const std::string& input_language) {
+  std::string translate_language = input_language;
+  translate::ToTranslateLanguageSynonym(&translate_language);
+
+  BlacklistValue(kPrefTranslateBlockedLanguages, translate_language);
+}
+
+void TranslatePrefs::UnblockLanguage(const std::string& input_language) {
+  std::string translate_language = input_language;
+  translate::ToTranslateLanguageSynonym(&translate_language);
+
+  RemoveValueFromBlacklist(kPrefTranslateBlockedLanguages, translate_language);
 }
 
 bool TranslatePrefs::IsSiteBlacklisted(const std::string& site) const {
@@ -456,6 +509,10 @@ void TranslatePrefs::ResetDenialState() {
   prefs_->ClearPref(kPrefTranslateTooOftenDeniedForLanguage);
 }
 
+// Note: the language codes used in the language settings list have the Chrome
+// internal format and not the Translate server format.
+// To convert from one to the other use util functions
+// ToTranslateLanguageSynonym() and ToChromeLanguageSynonym().
 void TranslatePrefs::GetLanguageList(
     std::vector<std::string>* languages) const {
   DCHECK(languages);
@@ -471,6 +528,8 @@ void TranslatePrefs::GetLanguageList(
                                  base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
 }
 
+// Note: the language codes used in the language settings list have the Chrome
+// internal format and not the Translate server format.
 void TranslatePrefs::UpdateLanguageList(
     const std::vector<std::string>& languages) {
   std::string languages_str = base::JoinString(languages, ",");
@@ -615,15 +674,16 @@ bool TranslatePrefs::IsValueBlacklisted(const char* pref_id,
 
 void TranslatePrefs::BlacklistValue(const char* pref_id,
                                     const std::string& value) {
-  {
-    ListPrefUpdate update(prefs_, pref_id);
-    base::ListValue* blacklist = update.Get();
-    if (!blacklist) {
-      NOTREACHED() << "Unregistered translate blacklist pref";
-      return;
-    }
-    blacklist->AppendString(value);
+  ListPrefUpdate update(prefs_, pref_id);
+  base::ListValue* blacklist = update.Get();
+  if (!blacklist) {
+    NOTREACHED() << "Unregistered translate blacklist pref";
+    return;
   }
+  if (value.empty() || IsValueBlacklisted(pref_id, value)) {
+    return;
+  }
+  blacklist->AppendString(value);
 }
 
 void TranslatePrefs::RemoveValueFromBlacklist(const char* pref_id,
@@ -632,6 +692,9 @@ void TranslatePrefs::RemoveValueFromBlacklist(const char* pref_id,
   base::ListValue* blacklist = update.Get();
   if (!blacklist) {
     NOTREACHED() << "Unregistered translate blacklist pref";
+    return;
+  }
+  if (value.empty()) {
     return;
   }
   base::Value string_value(value);
