@@ -22,6 +22,30 @@
       "revId": "f1b465f9885f38699ab39ee623c166459c69b4c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3787b08_8154c7be",
+        "filename": "chrome/browser/media/android/router/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-26T18:05:16Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a21d4b27_c9c95a83",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "f1b465f9885f38699ab39ee623c166459c69b4c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
