@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fbc3b59_eac27cab",
+        "filename": "components/viz/client/frame_eviction_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-26T16:17:13Z",
+      "side": 0,
+      "message": "Will this work if FrameEvictionManager is in a source_set? I think each *.so will have it\u0027s own instance, unless using base::Singleton fixes that?",
+      "revId": "a57d5aa65194cc780ab7039d97aa33d11c6d6585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
