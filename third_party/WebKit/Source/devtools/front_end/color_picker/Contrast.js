@@ -4,6 +4,9 @@
 
 ColorPicker.ContrastInfo = class {
   constructor() {
+    /** @type {?Array<number>} */
+    this._hsva = null;
+
     /** @type {?Common.Color} */
     this._fgColor = null;
 
@@ -65,6 +68,7 @@ ColorPicker.ContrastInfo = class {
    * @param {string} colorString
    */
   setColor(hsva, colorString) {
+    this._hsva = hsva;
     this._fgColor = Common.Color.fromHSVA(hsva);
     this._colorString = colorString;
     if (this._gradient)
@@ -91,7 +95,7 @@ ColorPicker.ContrastInfo = class {
    * @return {?Array<number>}
    */
   hsva() {
-    return this._fgColor.hsva();
+    return this._hsva;
   }
 
   /**
@@ -206,12 +210,14 @@ ColorPicker.ContrastInfo._ContrastThresholds = {
 
 ColorPicker.ContrastOverlay = class {
   /**
+   * @param {!ColorPicker.ContrastInfo} contrastInfo
    * @param {!Element} colorElement
-   * @param {!Element} contentElement
-   * @param {function(boolean=, !Common.Event=)} toggleMainColorPickerCallback
    */
-  constructor(colorElement, contentElement, toggleMainColorPickerCallback) {
-    this._contrastInfo = new ColorPicker.ContrastInfo();
+  constructor(contrastInfo, colorElement) {
+    /** @type {!ColorPicker.ContrastInfo} */
+    this._contrastInfo = contrastInfo;
+
+    this._visible = true;
 
     var contrastRatioSVG = colorElement.createSVGChild('svg', 'spectrum-contrast-container fill');
     this._contrastRatioLine = contrastRatioSVG.createSVGChild('path', 'spectrum-contrast-line');
@@ -222,16 +228,14 @@ ColorPicker.ContrastOverlay = class {
     this._contrastValue = this._contrastValueBubble.createChild('span', 'value');
     this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-contrast-ratio'));
     this._contrastValueBubble.title = Common.UIString('Click to toggle contrast ratio details');
-    this._contrastValueBubble.addEventListener('mousedown', this._toggleContrastDetails.bind(this), true);
 
     /** @type {!AnchorBox} */
     this._contrastValueBubbleBoxInWindow = new AnchorBox(0, 0, 0, 0);
 
-    this._contrastDetails = new ColorPicker.ContrastDetails(
-        this._contrastInfo, contentElement, toggleMainColorPickerCallback, this._update.bind(this));
-
     this._width = 0;
     this._height = 0;
+    this._dragX = 0;
+    this._dragY = 0;
 
     this._contrastRatioLineThrottler = new Common.Throttler(0);
     this._drawContrastRatioLineBound = this._drawContrastRatioLine.bind(this);
@@ -245,28 +249,11 @@ ColorPicker.ContrastOverlay = class {
   }
 
   /**
-   * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
-   */
-  setContrastInfo(contrastInfo) {
-    this._contrastInfo.setContrastInfo(contrastInfo);
-    this._update();
-  }
-
-  /**
-   * @param {!Array<number>} hsva
-   * @param {string} colorString
-   */
-  setColor(hsva, colorString) {
-    this._contrastInfo.setColor(hsva, colorString);
-    this._update();
-  }
-
-  /**
    * @param {number} x
    * @param {number} y
    */
   moveAwayFrom(x, y) {
-    if (!this._contrastValueBubbleBoxInWindow.width || !this._contrastValueBubbleBoxInWindow.height ||
+    if (!this._visible || !this._contrastValueBubbleBoxInWindow.width || !this._contrastValueBubbleBoxInWindow.height ||
         !this._contrastValueBubbleBoxInWindow.contains(x, y))
       return;
 
@@ -277,7 +264,9 @@ ColorPicker.ContrastOverlay = class {
       bubble.classList.toggle('contrast-info-left');
   }
 
-  _update() {
+  update() {
+    if (!this._visible)
+      return;
     var AA = this._contrastInfo.contrastRatioThreshold('AA');
     if (!AA)
       return;
@@ -295,7 +284,7 @@ ColorPicker.ContrastOverlay = class {
     }
 
     this._contrastValueBubbleBoxInWindow = this._contrastValueBubble.boxInWindow();
-    this._contrastDetails.update();
+    this.moveAwayFrom(this._dragX, this._dragY);
   }
 
   /**
@@ -304,32 +293,22 @@ ColorPicker.ContrastOverlay = class {
    * @param {number} dragX
    * @param {number} dragY
    */
-  show(width, height, dragX, dragY) {
-    if (this._contrastInfo.contrastRatioThreshold('AA') === null) {
-      this.hide();
-      return;
-    }
-
+  setDimensionsAndDragPos(width, height, dragX, dragY) {
     this._width = width;
     this._height = height;
-    this._update();
-
-    this._contrastValueBubble.classList.remove('hidden');
-    this.moveAwayFrom(dragX, dragY);
-  }
-
-  hide() {
-    this._contrastValueBubble.classList.add('hidden');
+    this._dragX = dragX;
+    this._dragY = dragY;
+    this.update();
   }
 
   /**
-   * @param {!Event} event
+   * @param {boolean} visible
    */
-  _toggleContrastDetails(event) {
-    if ('button' in event && event.button !== 0)
-      return;
-    event.consume();
-    this._contrastDetails.toggleVisible();
+  setVisible(visible) {
+    this._visible = visible;
+    this._contrastRatioLine.classList.toggle('hidden', !visible);
+    this._contrastValueBubble.classList.toggle('hidden', !visible);
+    this.update();
   }
 
   /**
@@ -472,32 +451,61 @@ ColorPicker.ContrastOverlay = class {
 
 ColorPicker.ContrastDetails = class {
   /**
-   * @param {!ColorPicker.ContrastInfo} contrastInfo
+   * @param {!Element} contrastPanelElement
+   * @param {!Element} colorElement
    * @param {!Element} contentElement
    * @param {function(boolean=, !Common.Event=)} toggleMainColorPickerCallback
-   * @param {function()} backgroundColorPickedCallback
+   * @param {function()} expandedChangedCallback
    */
-  constructor(contrastInfo, contentElement, toggleMainColorPickerCallback, backgroundColorPickedCallback) {
+  constructor(
+      contrastPanelElement, colorElement, contentElement, toggleMainColorPickerCallback, expandedChangedCallback) {
+    /** @type {!Element} */
+    this._contrastPanel = contrastPanelElement;
+
     /** @type {!ColorPicker.ContrastInfo} */
-    this._contrastInfo = contrastInfo;
+    this._contrastInfo = new ColorPicker.ContrastInfo();
 
     /** @type {function(boolean=, !Common.Event=)} */
     this._toggleMainColorPicker = toggleMainColorPickerCallback;
 
     /** @type {function()} */
-    this._backgroundColorPickedCallback = backgroundColorPickedCallback;
+    this._expandedChangedCallback = expandedChangedCallback;
 
-    this._contrastDetails = contentElement.createChild('div', 'spectrum-contrast-details');
+    /** @type {boolean} */
+    this._expanded = false;
+
+    /** @type {boolean} */
+    this._passesAA = true;
+
+    /** @type {boolean} */
+    this._contrastUnknown = false;
+
+    /** @type {boolean} */
+    this._visible = true;
+
+    this._colorElement = colorElement;
+
+    /** @type {!ColorPicker.ContrastOverlay} */
+    this._contrastOverlay = new ColorPicker.ContrastOverlay(this._contrastInfo, this._colorElement);
+    this._contrastOverlay.setVisible(false);
+
+    this._contrastDetails = contrastPanelElement;
     var contrastValueRow = this._contrastDetails.createChild('div');
-    contrastValueRow.createTextChild(Common.UIString('Contrast Ratio'));
+    contrastValueRow.addEventListener('click', this._topRowClicked.bind(this));
+    var contrastValueRowContents = contrastValueRow.createChild('div', 'container');
+    contrastValueRowContents.createTextChild(Common.UIString('Contrast Ratio'));
 
-    var contrastLink = contrastValueRow.appendChild(UI.createExternalLink(
+    /** @type {!Element} */
+    this._contrastLink = /** @type {!Element} */ (contrastValueRowContents.appendChild(UI.createExternalLink(
         'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast',
-        'Color and contrast on Web Fundamentals', 'contrast-link'));
-    contrastLink.textContent = '';
-    contrastLink.appendChild(UI.Icon.create('mediumicon-info'));
+        'Color and contrast on Web Fundamentals', 'contrast-link')));
+    this._contrastLink.textContent = '';
+    this._contrastLink.appendChild(UI.Icon.create('mediumicon-info'));
+    this._contrastLink.appendChild(UI.Icon.create('mediumicon-warning'));
 
-    this._contrastValueBubble = contrastValueRow.createChild('span', 'contrast-details-value force-white-icons');
+    this._contrastValueBubble =
+        contrastValueRowContents.createChild('span', 'contrast-details-value force-white-icons');
+    this._contrastValueBubble.title = Common.UIString('Copy contrast ratio to clipboard');
     this._contrastValue = this._contrastValueBubble.createChild('span');
     this._contrastValueBubbleIcons = [];
     this._contrastValueBubbleIcons.push(
@@ -506,17 +514,21 @@ ColorPicker.ContrastDetails = class {
         this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-checkmark-behind')));
     this._contrastValueBubbleIcons.push(this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-no')));
     this._contrastValueBubble.addEventListener('mouseenter', this._toggleContrastValueHovered.bind(this));
+    this._contrastValueBubble.addEventListener('click', this._onContrastValueBubbleClick.bind(this));
     this._contrastValueBubble.addEventListener('mouseleave', this._toggleContrastValueHovered.bind(this));
 
-    var toolbar = new UI.Toolbar('', contrastValueRow);
-    var closeButton = new UI.ToolbarButton('Hide contrast ratio details', 'largeicon-delete');
-    closeButton.addEventListener(UI.ToolbarButton.Events.Click, this.hide.bind(this));
-    toolbar.appendToolbarItem(closeButton);
+    var expandToolbar = new UI.Toolbar('expand', contrastValueRowContents);
+    this._expandButton = new UI.ToolbarButton(Common.UIString('Show more'), 'smallicon-expand-more');
+    this._expandButton.addEventListener(UI.ToolbarButton.Events.Click, this._expandButtonClicked.bind(this));
+    UI.ARIAUtils.setExpanded(this._expandButton.element, false);
+    expandToolbar.appendToolbarItem(this._expandButton);
 
-    this._chooseBgColor = this._contrastDetails.createChild('div', 'contrast-choose-bg-color');
-    this._chooseBgColor.textContent = Common.UIString('Please select background color to compute contrast ratio.');
+    this._expandedDetails = this._contrastDetails.createChild('div', 'container expanded-details');
+    this._expandedDetails.id = 'expanded-contrast-details';
+    UI.ARIAUtils.setControls(this._expandButton.element, this._expandedDetails);
 
-    this._contrastThresholds = this._contrastDetails.createChild('div', 'contrast-thresholds');
+    this._contrastThresholds = this._expandedDetails.createChild('div', 'contrast-thresholds');
+
     this._contrastAA = this._contrastThresholds.createChild('div', 'contrast-threshold');
     this._contrastAA.appendChild(UI.Icon.create('smallicon-checkmark-square'));
     this._contrastAA.appendChild(UI.Icon.create('smallicon-no'));
@@ -527,25 +539,35 @@ ColorPicker.ContrastDetails = class {
     this._contrastAAA.appendChild(UI.Icon.create('smallicon-no'));
     this._contrastPassFailAAA = this._contrastAAA.createChild('span', 'contrast-pass-fail');
 
-    var bgColorRow = this._contrastDetails.createChild('div');
-    bgColorRow.createTextChild(Common.UIString('Background color:'));
-    this._bgColorSwatch = new ColorPicker.ContrastDetails.Swatch(bgColorRow);
+    this._chooseBgColor = this._expandedDetails.createChild('div', 'contrast-choose-bg-color');
+    this._chooseBgColor.textContent = Common.UIString('Please select background color.');
 
-    this._bgColorPicker = bgColorRow.createChild('button', 'background-color-picker');
-    this._bgColorPicker.appendChild(UI.Icon.create('largeicon-eyedropper'));
-    this._bgColorPicker.addEventListener('click', this._toggleBackgroundColorPicker.bind(this, undefined));
+    var bgColorContainer = this._expandedDetails.createChild('div', 'background-color');
+
+    var pickerToolbar = new UI.Toolbar('spectrum-eye-dropper', bgColorContainer);
+    this._bgColorPickerButton =
+        new UI.ToolbarToggle(Common.UIString('Toggle background color picker'), 'largeicon-eyedropper');
+    this._bgColorPickerButton.addEventListener(
+        UI.ToolbarButton.Events.Click, this._toggleBackgroundColorPicker.bind(this, undefined));
+    pickerToolbar.appendToolbarItem(this._bgColorPickerButton);
     this._bgColorPickedBound = this._bgColorPicked.bind(this);
+
+    this._bgColorSwatch = new ColorPicker.ContrastDetails.Swatch(bgColorContainer);
   }
 
   update() {
     var AA = this._contrastInfo.contrastRatioThreshold('AA');
     var AAA = this._contrastInfo.contrastRatioThreshold('AAA');
-    if (!AA)
+    if (!AA) {
+      this.setVisible(false);
       return;
+    }
+    this.setVisible(true);
 
     var contrastRatio = this._contrastInfo.contrastRatio();
     var bgColor = this._contrastInfo.bgColor();
     if (!contrastRatio || !bgColor) {
+      this._contrastUnknown = true;
       this._contrastValue.textContent = '?';
       this._contrastValueBubble.classList.add('contrast-unknown');
       this._chooseBgColor.classList.remove('hidden');
@@ -553,6 +575,7 @@ ColorPicker.ContrastDetails = class {
       return;
     }
 
+    this._contrastUnknown = false;
     this._chooseBgColor.classList.add('hidden');
     this._contrastThresholds.classList.remove('hidden');
     this._contrastValueBubble.classList.remove('contrast-unknown');
@@ -576,12 +599,12 @@ ColorPicker.ContrastDetails = class {
       this._bgColorSwatch.setColor(bgColor);
     }
 
-    var passesAA = this._contrastInfo.contrastRatio() >= AA;
+    this._passesAA = this._contrastInfo.contrastRatio() >= AA;
     this._contrastPassFailAA.textContent = '';
-    this._contrastPassFailAA.createTextChild(passesAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
+    this._contrastPassFailAA.createTextChild(this._passesAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
     this._contrastPassFailAA.createChild('strong').textContent = Common.UIString('AA (%s)', AA.toFixed(1));
-    this._contrastAA.classList.toggle('pass', passesAA);
-    this._contrastAA.classList.toggle('fail', !passesAA);
+    this._contrastAA.classList.toggle('pass', this._passesAA);
+    this._contrastAA.classList.toggle('fail', !this._passesAA);
 
     var passesAAA = this._contrastInfo.contrastRatio() >= AAA;
     this._contrastPassFailAAA.textContent = '';
@@ -590,13 +613,59 @@ ColorPicker.ContrastDetails = class {
     this._contrastAAA.classList.toggle('pass', passesAAA);
     this._contrastAAA.classList.toggle('fail', !passesAAA);
 
-    this._contrastValueBubble.classList.toggle('contrast-fail', !passesAA);
-    this._contrastValueBubble.classList.toggle('contrast-aa', passesAA);
+    this._contrastPanel.classList.toggle('contrast-fail', !this._passesAA);
+    this._contrastValueBubble.classList.toggle('contrast-aa', this._passesAA);
     this._contrastValueBubble.classList.toggle('contrast-aaa', passesAAA);
-    this._contrastValueBubble.style.color = this._contrastInfo.colorString();
-    for (var i = 0; i < this._contrastValueBubbleIcons.length; i++)
-      this._contrastValueBubbleIcons[i].style.setProperty('background', this._contrastInfo.colorString(), 'important');
+    this._setContrastValueColors();
 
+    this._contrastOverlay.update();
+  }
+
+  /**
+   * @return {!ColorPicker.ContrastOverlay}
+   */
+  contrastOverlay() {
+    return this._contrastOverlay;
+  }
+
+  /**
+   * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
+   */
+  setContrastInfo(contrastInfo) {
+    this._contrastInfo.setContrastInfo(contrastInfo);
+    this.update();
+  }
+
+  /**
+   * @param {!Array<number>} hsva
+   * @param {string} colorString
+   */
+  setColor(hsva, colorString) {
+    this._contrastInfo.setColor(hsva, colorString);
+    this.update();
+  }
+
+  /**
+   * @param {boolean} visible
+   */
+  setVisible(visible) {
+    this._visible = visible;
+    this._contrastPanel.classList.toggle('hidden', !visible);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  visible() {
+    return this._visible;
+  }
+
+  _setContrastValueColors() {
+    this._contrastValueBubble.classList.remove('mousedown');
+    this._contrastValueBubble.classList.remove('hover');
+    this._contrastValueBubble.classList.remove('copied');
+
+    this._contrastValueBubble.style.color = this._contrastInfo.colorString();
     var isWhite = (this._contrastInfo.bgColor().hsla()[2] > 0.9);
     this._contrastValueBubble.style.background =
         /** @type {string} */ (this._contrastInfo.bgColor().asString(Common.Color.Format.RGBA));
@@ -608,33 +677,78 @@ ColorPicker.ContrastDetails = class {
       this._contrastValueBubble.style.borderColor =
           /** @type {string} */ (this._contrastInfo.bgColor().asString(Common.Color.Format.RGBA));
     }
+
+    for (var i = 0; i < this._contrastValueBubbleIcons.length; i++)
+      this._contrastValueBubbleIcons[i].style.setProperty('background', this._contrastInfo.colorString(), 'important');
   }
 
-  toggleVisible() {
-    this._contrastDetails.classList.toggle('visible');
-    if (this._contrastDetails.classList.contains('visible'))
+  /**
+   * @param {!Common.Event} event
+   */
+  _expandButtonClicked(event) {
+    this._contrastValueBubble.getComponentSelection().empty();
+    this._toggleExpanded();
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _topRowClicked(event) {
+    if (event.path.includes(this._contrastLink) || event.path.includes(this._contrastValueBubble))
+      return;
+    this._contrastValueBubble.getComponentSelection().empty();
+    this._toggleExpanded();
+    event.consume(true);
+  }
+
+  _toggleExpanded() {
+    this._expanded = !this._expanded;
+    UI.ARIAUtils.setExpanded(this._expandButton.element, this._expanded);
+    this._contrastDetails.classList.toggle('collapsed', !this._expanded);
+    if (this._expanded) {
       this._toggleMainColorPicker(false);
-    else
+      this._expandButton.setGlyph('smallicon-expand-less');
+      this._expandButton.setTitle(Common.UIString('Show less'));
+      this._contrastOverlay.setVisible(true);
+      if (this._contrastUnknown)
+        this._toggleBackgroundColorPicker(true);
+    } else {
       this._toggleBackgroundColorPicker(false);
+      this._expandButton.setGlyph('smallicon-expand-more');
+      this._expandButton.setTitle(Common.UIString('Show more'));
+      this._contrastOverlay.setVisible(false);
+    }
+    this._expandedChangedCallback();
   }
 
-  hide() {
-    this._contrastDetails.classList.remove('visible');
+  collapse() {
+    this._contrastDetails.classList.remove('expanded');
+    this._toggleBackgroundColorPicker(false);
     this._toggleMainColorPicker(false);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  expanded() {
+    return this._expanded;
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onContrastValueBubbleClick(event) {
+    InspectorFrontendHost.copyText(this._contrastValueBubble.textContent);
+    this._contrastValueBubble.getComponentSelection().selectAllChildren(this._contrastValueBubble);
   }
 
   /**
    * @param {boolean=} enabled
    */
   _toggleBackgroundColorPicker(enabled) {
-    if (enabled === undefined) {
-      this._bgColorPicker.classList.toggle('active');
-      enabled = this._bgColorPicker.classList.contains('active');
-    } else {
-      this._bgColorPicker.classList.toggle('active', enabled);
-    }
-    UI.ARIAUtils.setPressed(this._bgColorPicker, enabled);
-
+    if (enabled === undefined)
+      enabled = !this._bgColorPickerButton.toggled();
+    this._bgColorPickerButton.setToggled(enabled);
     InspectorFrontendHost.setEyeDropperActive(enabled);
     if (enabled) {
       InspectorFrontendHost.events.addEventListener(
@@ -654,7 +768,8 @@ ColorPicker.ContrastDetails = class {
     var color = Common.Color.fromRGBA(rgba);
     this._contrastInfo.setBgColor(color);
     this.update();
-    this._backgroundColorPickedCallback();
+    this._toggleBackgroundColorPicker(false);
+    this._contrastOverlay.update();
     InspectorFrontendHost.bringToFront();
   }
 
@@ -662,19 +777,13 @@ ColorPicker.ContrastDetails = class {
    * @param {!Event} event
    */
   _toggleContrastValueHovered(event) {
-    if (!this._contrastValueBubble.classList.contains('contrast-fail'))
-      return;
-
     if (event.type === 'mouseenter') {
       this._contrastValueBubble.classList.add('hover');
       for (var i = 0; i < this._contrastValueBubbleIcons.length; i++)
         this._contrastValueBubbleIcons[i].style.setProperty('background', '#333', 'important');
     } else {
       this._contrastValueBubble.classList.remove('hover');
-      for (var i = 0; i < this._contrastValueBubbleIcons.length; i++) {
-        this._contrastValueBubbleIcons[i].style.setProperty(
-            'background', this._contrastInfo.colorString(), 'important');
-      }
+      this._setContrastValueColors();
     }
   }
 };
@@ -685,7 +794,7 @@ ColorPicker.ContrastDetails.Swatch = class {
    */
   constructor(parentElement) {
     this._parentElement = parentElement;
-    this._swatchElement = parentElement.createChild('span', 'swatch contrast');
+    this._swatchElement = parentElement.createChild('span', 'swatch contrast swatch-inner-white');
     this._swatchInnerElement = this._swatchElement.createChild('span', 'swatch-inner');
   }
 
