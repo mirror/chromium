@@ -16,6 +16,24 @@
       "revId": "0c8f309f6df40ab65216ab7665b697ab9c6b2998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af624fd_709acf61",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-26T23:53:32Z",
+      "side": 1,
+      "message": "Looks like I should have set the size (or bounds) and call Show :)\n\nTurns out the widget created using CreateTopLevelFramelessPlatformWidget() will always be constrained to the visible area of the screen. I changed it to CreateTopLevelNativeWidget() for some reason it\u0027s no longer being constrained.\n\nAnyway I\u0027m able to get rid of the is_visible_ flag now",
+      "parentUuid": "9ea1f1ed_d98d0a8c",
+      "revId": "0c8f309f6df40ab65216ab7665b697ab9c6b2998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
