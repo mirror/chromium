@@ -104,6 +104,7 @@ LoginPasswordView::LoginPasswordView(const OnPasswordSubmit& on_submit)
   textfield_->set_placeholder_text(base::ASCIIToUTF16("Password (FIXME)"));
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
+  textfield_->set_password_replacement_char_to_bullet();
 
   textfield_sizer->AddChildView(textfield_);
   row->AddChildView(textfield_sizer);
