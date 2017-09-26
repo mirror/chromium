@@ -198,16 +198,12 @@ void PaintDetachedBookmarkBar(gfx::Canvas* canvas,
                               BookmarkBarView* view) {
   // Paint background for detached state; if animating, this is fade in/out.
   const ui::ThemeProvider* tp = view->GetThemeProvider();
-  gfx::Rect fill_rect = view->GetLocalBounds();
 
   // In detached mode, the bar is meant to overlap with |contents_container_|.
   // The detached background color may be partially transparent, but the layer
   // for |view| must be painted opaquely to avoid subpixel anti-aliasing
   // artifacts, so we recreate the contents container base color here.
-  canvas->FillRect(fill_rect,
-                   tp->GetColor(ThemeProperties::COLOR_CONTROL_BACKGROUND));
-  canvas->FillRect(
-      fill_rect,
+  canvas->DrawColor(
       tp->GetColor(ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_BACKGROUND));
 
   // Draw the separator below the detached bookmark bar.
