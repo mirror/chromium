@@ -27,11 +27,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ActivityState;
+import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.browseractions.BrowserActionsContextMenuHelper.BrowserActionsTestDelegate;
 import org.chromium.chrome.browser.contextmenu.ChromeContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItem;
@@ -39,6 +45,8 @@ import org.chromium.chrome.browser.contextmenu.ShareContextMenuItem;
 import org.chromium.chrome.browser.customtabs.CustomTabActivityTestRule;
 import org.chromium.chrome.browser.customtabs.CustomTabsTestUtils;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
+import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
+import org.chromium.chrome.browser.multiwindow.MultiWindowUtilsTest;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -49,6 +57,7 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.base.DeviceFormFactor;
 
@@ -61,6 +70,7 @@ import java.util.concurrent.Callable;
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
+@MinAndroidSdkLevel(24)
 public class BrowserActionActivityTest {
     private static final String TEST_PAGE = "/chrome/test/data/android/google.html";
     private static final String TEST_PAGE_2 = "/chrome/test/data/android/test.html";
@@ -456,6 +466,98 @@ public class BrowserActionActivityTest {
                         && BrowserActionsService.isBackgroundService();
             }
         });
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"TabPersistentStore", "MultiWindow"})
+    public void testTabMergingWhenChromeNotAvailable() throws Exception {
+        // Start two ChromeTabbedActivitys in MultiWindow mode.
+        mActivityTestRule.startMainActivityWithURL(mTestPage);
+        MultiWindowUtils.getInstance().setIsInMultiWindowModeForTesting(true);
+        ChromeTabbedActivity mActivity1 = mActivityTestRule.getActivity();
+        ChromeTabbedActivity.onMultiInstanceModeStarted();
+        ChromeTabbedActivity mActivity2 =
+                MultiWindowUtilsTest.createSecondChromeTabbedActivity(mActivity1);
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return mActivity2.areTabModelsInitialized()
+                        && mActivity2.getTabModelSelector().isTabStateInitialized();
+            }
+        });
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mActivity2.getTabCreator(false).createNewTab(
+                        new LoadUrlParams(mTestPage2), TabLaunchType.FROM_CHROME_UI, null);
+            }
+        });
+
+        // Save state and destroy both activities.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mActivity1.saveState();
+                mActivity2.saveState();
+            }
+        });
+        mActivity1.finish();
+        mActivity2.finish();
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return ApplicationStatus.getStateForActivity(mActivity1) == ActivityState.DESTROYED
+                        && ApplicationStatus.getStateForActivity(mActivity2)
+                        == ActivityState.DESTROYED;
+            }
+        });
+
+        // Load Browser Actions menu and open a tab in the background completely.
+        final BrowserActionActivity activity3 = startBrowserActionActivity(mTestPage3);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+        mOnFinishNativeInitializationCallback.waitForCallback(0);
+        openTabInBackground(activity3);
+
+        // Save the Browser Actions tab states and destroy the selector and activity.
+        BrowserActionsTabModelSelector selector = BrowserActionsTabModelSelector.getSelector();
+        Assert.assertNotNull(selector);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                selector.saveState();
+                selector.destroy();
+            }
+        });
+        activity3.finish();
+
+        // Relaunch a new ChromeTabbedActivity and tabs from multi-windows should be merged and
+        // Browser Actions tabs should be append at the end.
+        Intent intent = createChromeTabbedActivityIntent(ContextUtils.getApplicationContext());
+        ChromeTabbedActivity newActivity =
+                (ChromeTabbedActivity) InstrumentationRegistry.getInstrumentation()
+                        .startActivitySync(intent);
+        // Wait for the tab state to be initialized.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return newActivity.areTabModelsInitialized()
+                        && newActivity.getTabModelSelector().isTabStateInitialized();
+            }
+        });
+        TabModel model = newActivity.getTabModelSelector().getModel(false);
+        Assert.assertEquals(4, model.getCount());
+        Assert.assertEquals(mTestPage, model.getTabAt(0).getUrl());
+        Assert.assertEquals(mTestPage, model.getTabAt(1).getUrl());
+        Assert.assertEquals(mTestPage2, model.getTabAt(2).getUrl());
+        Assert.assertEquals(mTestPage3, model.getTabAt(3).getUrl());
+    }
+
+    private Intent createChromeTabbedActivityIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, ChromeTabbedActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 
     private BrowserActionActivity startBrowserActionActivity(String url) throws Exception {
