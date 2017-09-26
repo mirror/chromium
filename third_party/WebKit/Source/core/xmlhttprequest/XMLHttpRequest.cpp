@@ -42,6 +42,7 @@
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/Deprecation.h"
+#include "core/frame/Frame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/FormData.h"
@@ -65,6 +66,7 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/blob/BlobData.h"
 #include "platform/exported/WrappedResourceResponse.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -82,6 +84,7 @@
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebCORS.h"
+#include "public/platform/WebFeaturePolicyFeature.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -690,6 +693,14 @@ void XMLHttpRequest::open(const AtomicString& method,
   upload_complete_ = false;
 
   if (!async && GetExecutionContext()->IsDocument()) {
+    if (IsSupportedInFeaturePolicy(WebFeaturePolicyFeature::kSyncXHR) &&
+        !GetDocument()->GetFrame()->IsFeatureEnabled(
+            WebFeaturePolicyFeature::kSyncXHR)) {
+      exception_state.ThrowDOMException(
+          kInvalidAccessError,
+          "Synchronous requests are disabled by Feature Policy.");
+      return;
+    }
     if (GetDocument()->GetSettings() &&
         !GetDocument()->GetSettings()->GetSyncXHRInDocumentsEnabled()) {
       exception_state.ThrowDOMException(
