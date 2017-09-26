@@ -67,6 +67,40 @@
       "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9e7d74_1f3aba94",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T13:07:29Z",
+      "side": 1,
+      "message": "If you want to ensure the GL cleanup actually runs below, you should override the SetUp and TearDown methods on a test base class instead of setting up in the test body.",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61d1c6b_4e093edd",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-26T13:07:29Z",
+      "side": 1,
+      "message": "Why do this on a scoped pointer?",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
