@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fa578f8_ad432c2e",
+        "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T17:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c29e57b_627f33f3",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02371ee6_5b634608",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
         "patchSetId": 32
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T16:18:22Z",
       "side": 1,
       "message": "You probably want an else that adds null object otherwise. If you don\u0027t, ordinals of the message format will slide...",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835e16de_2af96799",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T17:11:36Z",
+      "side": 1,
+      "message": "Would it be okay to do this in a followup CL? It seems there could be a problem here, if a node can\u0027t be resolved, but this doesn\u0027t happen even if nodes are deleted between being detected by the PagePasswordsAnalyser and being logged to the console, so I\u0027m not sure what cases this might actually occur. The worst that can happen for now is an extra \"%o\" or so in the message, and there were a couple of issues with null RemoteObjects when I tried before, so it\u0027d be easier to fix this separately, I think.",
+      "parentUuid": "02371ee6_5b634608",
       "revId": "37b1952795467d7c825724eef306d867fa6c1507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7ea4d06_acfa8c44",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T17:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8f0e99_e0f9eff2",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "223327cc_ea3cbb9e",
         "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
         "patchSetId": 32
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a7792f95_bc6f6560",
+        "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T17:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "223327cc_ea3cbb9e",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1489d857_0fc33b2d",
         "filename": "third_party/WebKit/public/web/WebNode.h",
         "patchSetId": 32
@@ -84,6 +156,24 @@
       "revId": "37b1952795467d7c825724eef306d867fa6c1507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e993b8c8_731ce0ed",
+        "filename": "third_party/WebKit/public/web/WebNode.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T17:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1489d857_0fc33b2d",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
