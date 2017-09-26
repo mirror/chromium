@@ -29,7 +29,8 @@ FakeDemuxerStream::FakeDemuxerStream(bool is_audio) {
     gfx::Rect rect(0, 0, 640, 480);
     video_config_.Initialize(kCodecH264, H264PROFILE_BASELINE,
                              PIXEL_FORMAT_I420, COLOR_SPACE_SD_REC601, size,
-                             rect, size, std::vector<uint8_t>(), Unencrypted());
+                             rect, size, std::vector<uint8_t>(), Unencrypted(),
+                             VIDEO_ROTATION_0);
   }
   ON_CALL(*this, Read(_))
       .WillByDefault(Invoke(this, &FakeDemuxerStream::FakeRead));

@@ -94,6 +94,7 @@ class MEDIA_EXPORT DemuxerStream {
   // on this.
   virtual bool SupportsConfigChanges() = 0;
 
+  // TODO(jisorce): remove this in favor of VideoDecoderConfig::video_rotation
   virtual VideoRotation video_rotation() = 0;
 
  protected:

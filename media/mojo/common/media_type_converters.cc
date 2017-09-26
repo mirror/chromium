@@ -13,9 +13,12 @@
 #include "media/base/audio_bus.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/cdm_key_information.h"
+#include "media/base/data_buffer.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/decrypt_config.h"
 #include "media/base/encryption_scheme.h"
+#include "media/base/media_tracks.h"
+#include "media/base/ranges.h"
 #include "media/base/subsample_entry.h"
 #include "mojo/public/cpp/system/buffer.h"
 
@@ -54,6 +57,140 @@ TypeConverter<std::unique_ptr<media::DecryptConfig>,
     Convert(const media::mojom::DecryptConfigPtr& input) {
   return base::MakeUnique<media::DecryptConfig>(input->key_id, input->iv,
                                                 input->subsamples);
+}
+
+// static
+media::mojom::MediaTracksPtr
+TypeConverter<media::mojom::MediaTracksPtr, media::MediaTracks>::Convert(
+    const media::MediaTracks& input) {
+  media::mojom::MediaTracksPtr mojo_media_tracks(
+      media::mojom::MediaTracks::New());
+
+  for (const auto& media_track : input.tracks()) {
+    media::mojom::MediaTrackPtr mojo_media_track(
+        media::mojom::MediaTrack::New());
+    mojo_media_track->type = media_track->type();
+    mojo_media_track->id = media_track->id();
+    mojo_media_track->bytestream_track_id = media_track->bytestream_track_id();
+    mojo_media_track->kind = media_track->kind();
+    mojo_media_track->label = media_track->label();
+    mojo_media_track->language = media_track->language();
+    if (media_track->type() == media::MediaTrack::Audio)
+      mojo_media_tracks
+          ->audio_decoder_configs[media_track->bytestream_track_id()] =
+          input.getAudioConfig(media_track->bytestream_track_id());
+    else if (media_track->type() == media::MediaTrack::Video)
+      mojo_media_tracks
+          ->video_decoder_configs[media_track->bytestream_track_id()] =
+          input.getVideoConfig(media_track->bytestream_track_id());
+
+    mojo_media_tracks->tracks.push_back(std::move(mojo_media_track));
+  }
+
+  return mojo_media_tracks;
+}
+
+// static
+std::unique_ptr<media::MediaTracks> TypeConverter<
+    std::unique_ptr<media::MediaTracks>,
+    media::mojom::MediaTracksPtr>::Convert(const media::mojom::MediaTracksPtr&
+                                               input) {
+  std::unique_ptr<media::MediaTracks> media_tracks(new media::MediaTracks());
+
+  for (const auto& mojo_track : input->tracks) {
+    media::MediaTrack* media_track = nullptr;
+    if (mojo_track->type == media::MediaTrack::Type::Audio) {
+      media_track = media_tracks->AddAudioTrack(
+          input->audio_decoder_configs[mojo_track->bytestream_track_id],
+          mojo_track->bytestream_track_id, mojo_track->kind, mojo_track->label,
+          mojo_track->language);
+    } else if (mojo_track->type == media::MediaTrack::Type::Video) {
+      media_track = media_tracks->AddVideoTrack(
+          input->video_decoder_configs[mojo_track->bytestream_track_id],
+          mojo_track->bytestream_track_id, mojo_track->kind, mojo_track->label,
+          mojo_track->language);
+    }
+
+    if (media_track)
+      media_track->set_id(mojo_track->id);
+  }
+  return media_tracks;
+}
+
+// static
+media::mojom::RangesTimeDeltaPtr TypeConverter<media::mojom::RangesTimeDeltaPtr,
+                                               media::Ranges<base::TimeDelta>>::
+    Convert(const media::Ranges<base::TimeDelta>& input) {
+  media::mojom::RangesTimeDeltaPtr mojo_ranges_time_delta(
+      media::mojom::RangesTimeDelta::New());
+
+  for (size_t i = 0; i < input.size(); ++i) {
+    media::mojom::TimeDeltaPairPtr mojo_time_delta_pair(
+        media::mojom::TimeDeltaPair::New());
+    mojo_time_delta_pair->start = input.start(i);
+    mojo_time_delta_pair->end = input.end(i);
+
+    mojo_ranges_time_delta->ranges.push_back(std::move(mojo_time_delta_pair));
+  }
+
+  return mojo_ranges_time_delta;
+}
+
+// static
+media::Ranges<base::TimeDelta> TypeConverter<media::Ranges<base::TimeDelta>,
+                                             media::mojom::RangesTimeDeltaPtr>::
+    Convert(const media::mojom::RangesTimeDeltaPtr& input) {
+  media::Ranges<base::TimeDelta> ranges_time_delta;
+
+  for (const auto& mojo_time_delta_pair : input->ranges)
+    ranges_time_delta.Add(mojo_time_delta_pair->start,
+                          mojo_time_delta_pair->end);
+
+  return ranges_time_delta;
+}
+
+// static
+media::mojom::DataBufferPtr
+TypeConverter<media::mojom::DataBufferPtr, scoped_refptr<media::DataBuffer>>::
+    Convert(const scoped_refptr<media::DataBuffer>& input) {
+  DCHECK(input);
+
+  media::mojom::DataBufferPtr mojo_buffer(media::mojom::DataBuffer::New());
+  if (input->end_of_stream()) {
+    mojo_buffer->is_end_of_stream = true;
+    return mojo_buffer;
+  }
+
+  mojo_buffer->is_end_of_stream = false;
+  mojo_buffer->timestamp = input->timestamp();
+  mojo_buffer->duration = input->duration();
+  mojo_buffer->data_size = base::checked_cast<uint32_t>(input->data_size());
+
+  // TODO(dalecurtis): We intentionally do not serialize the data section of
+  // the DecoderBuffer here; this must instead be done by clients via their
+  // own DataPipe.  See http://crbug.com/432960
+
+  return mojo_buffer;
+}
+
+// static
+scoped_refptr<media::DataBuffer>
+TypeConverter<scoped_refptr<media::DataBuffer>, media::mojom::DataBufferPtr>::
+    Convert(const media::mojom::DataBufferPtr& input) {
+  if (input->is_end_of_stream)
+    return media::DataBuffer::CreateEOSBuffer();
+
+  scoped_refptr<media::DataBuffer> buffer(
+      new media::DataBuffer(input->data_size));
+  buffer->set_data_size(input->data_size);
+  buffer->set_timestamp(input->timestamp);
+  buffer->set_duration(input->duration);
+
+  // TODO(dalecurtis): We intentionally do not deserialize the data section of
+  // the DecoderBuffer here; this must instead be done by clients via their
+  // own DataPipe.  See http://crbug.com/432960
+
+  return buffer;
 }
 
 // static

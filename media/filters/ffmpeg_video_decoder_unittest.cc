@@ -232,7 +232,7 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_OpenDecoderFails) {
   VideoDecoderConfig config(kCodecTheora, VIDEO_CODEC_PROFILE_UNKNOWN,
                             kVideoFormat, COLOR_SPACE_UNSPECIFIED, kCodedSize,
                             kVisibleRect, kNaturalSize, EmptyExtraData(),
-                            Unencrypted());
+                            Unencrypted(), VIDEO_ROTATION_0);
   InitializeWithConfigWithResult(config, false);
 }
 

@@ -27,7 +27,8 @@ TEST(VideoDecoderConfigStructTraitsTest, ConvertVideoDecoderConfig_Normal) {
       &kExtraData[0], &kExtraData[0] + arraysize(kExtraData));
   VideoDecoderConfig input(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                            COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
-                           kNaturalSize, kExtraDataVector, Unencrypted());
+                           kNaturalSize, kExtraDataVector, Unencrypted(),
+                           VIDEO_ROTATION_0);
   std::vector<uint8_t> data =
       media::mojom::VideoDecoderConfig::Serialize(&input);
   VideoDecoderConfig output;
@@ -40,7 +41,8 @@ TEST(VideoDecoderConfigStructTraitsTest,
      ConvertVideoDecoderConfig_EmptyExtraData) {
   VideoDecoderConfig input(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                            COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
-                           kNaturalSize, EmptyExtraData(), Unencrypted());
+                           kNaturalSize, EmptyExtraData(), Unencrypted(),
+                           VIDEO_ROTATION_0);
   std::vector<uint8_t> data =
       media::mojom::VideoDecoderConfig::Serialize(&input);
   VideoDecoderConfig output;
@@ -53,7 +55,7 @@ TEST(VideoDecoderConfigStructTraitsTest, ConvertVideoDecoderConfig_Encrypted) {
   VideoDecoderConfig input(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                            COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
                            kNaturalSize, EmptyExtraData(),
-                           AesCtrEncryptionScheme());
+                           AesCtrEncryptionScheme(), VIDEO_ROTATION_0);
   std::vector<uint8_t> data =
       media::mojom::VideoDecoderConfig::Serialize(&input);
   VideoDecoderConfig output;
@@ -66,7 +68,8 @@ TEST(VideoDecoderConfigStructTraitsTest,
      ConvertVideoDecoderConfig_ColorSpaceInfo) {
   VideoDecoderConfig input(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                            COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
-                           kNaturalSize, EmptyExtraData(), Unencrypted());
+                           kNaturalSize, EmptyExtraData(), Unencrypted(),
+                           VIDEO_ROTATION_0);
   input.set_color_space_info(VideoColorSpace(
       VideoColorSpace::PrimaryID::BT2020,
       VideoColorSpace::TransferID::SMPTEST2084,
@@ -83,7 +86,8 @@ TEST(VideoDecoderConfigStructTraitsTest,
      ConvertVideoDecoderConfig_HDRMetadata) {
   VideoDecoderConfig input(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                            COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
-                           kNaturalSize, EmptyExtraData(), Unencrypted());
+                           kNaturalSize, EmptyExtraData(), Unencrypted(),
+                           VIDEO_ROTATION_0);
   HDRMetadata hdr_metadata;
   hdr_metadata.max_frame_average_light_level = 123;
   hdr_metadata.max_content_light_level = 456;
@@ -124,7 +128,8 @@ TEST(VideoDecoderConfigStructTraitsTest,
   const gfx::Size kInvalidNaturalSize(0, 0);
   input.Initialize(kCodecVP8, VP8PROFILE_ANY, PIXEL_FORMAT_YV12,
                    COLOR_SPACE_UNSPECIFIED, kCodedSize, kVisibleRect,
-                   kInvalidNaturalSize, EmptyExtraData(), Unencrypted());
+                   kInvalidNaturalSize, EmptyExtraData(), Unencrypted(),
+                   VIDEO_ROTATION_0);
   EXPECT_FALSE(input.IsValidConfig());
 
   // Deserialize should again fail due to invalid config.

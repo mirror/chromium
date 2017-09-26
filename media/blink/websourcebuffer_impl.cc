@@ -14,8 +14,8 @@
 #include "base/callback_helpers.h"
 #include "base/strings/string_number_conversions.h"
 #include "media/base/media_tracks.h"
+#include "media/base/source_buffer.h"
 #include "media/base/timestamp_constants.h"
-#include "media/filters/chunk_demuxer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebSourceBufferClient.h"
 
@@ -61,22 +61,23 @@ static base::TimeDelta DoubleToTimeDelta(double time) {
 }
 
 WebSourceBufferImpl::WebSourceBufferImpl(const std::string& id,
-                                         ChunkDemuxer* demuxer)
+                                         SourceBuffer* source_buffer)
     : id_(id),
-      demuxer_(demuxer),
+      source_buffer_(source_buffer),
       client_(NULL),
       append_window_end_(kInfiniteDuration) {
-  DCHECK(demuxer_);
-  demuxer_->SetTracksWatcher(
+  DCHECK(source_buffer_);
+  source_buffer_->SetTracksWatcher(
       id, base::Bind(&WebSourceBufferImpl::InitSegmentReceived,
                      base::Unretained(this)));
-  demuxer_->SetParseWarningCallback(
+  source_buffer_->SetParseWarningCallback(
       id, base::Bind(&WebSourceBufferImpl::NotifyParseWarning,
                      base::Unretained(this)));
 }
 
 WebSourceBufferImpl::~WebSourceBufferImpl() {
-  DCHECK(!demuxer_) << "Object destroyed w/o removedFromMediaSource() call";
+  DCHECK(!source_buffer_)
+      << "Object destroyed w/o removedFromMediaSource() call";
   DCHECK(!client_);
 }
 
@@ -87,15 +88,15 @@ void WebSourceBufferImpl::SetClient(blink::WebSourceBufferClient* client) {
 }
 
 bool WebSourceBufferImpl::SetMode(WebSourceBuffer::AppendMode mode) {
-  if (demuxer_->IsParsingMediaSegment(id_))
+  if (source_buffer_->IsParsingMediaSegment(id_))
     return false;
 
   switch (mode) {
     case WebSourceBuffer::kAppendModeSegments:
-      demuxer_->SetSequenceMode(id_, false);
+      source_buffer_->SetSequenceMode(id_, false);
       return true;
     case WebSourceBuffer::kAppendModeSequence:
-      demuxer_->SetSequenceMode(id_, true);
+      source_buffer_->SetSequenceMode(id_, true);
       return true;
   }
 
@@ -104,7 +105,7 @@ bool WebSourceBufferImpl::SetMode(WebSourceBuffer::AppendMode mode) {
 }
 
 blink::WebTimeRanges WebSourceBufferImpl::Buffered() {
-  Ranges<base::TimeDelta> ranges = demuxer_->GetBufferedRanges(id_);
+  Ranges<base::TimeDelta> ranges = source_buffer_->GetBufferedRanges(id_);
   blink::WebTimeRanges result(ranges.size());
   for (size_t i = 0; i < ranges.size(); i++) {
     result[i].start = ranges.start(i).InSecondsF();
@@ -114,23 +115,23 @@ blink::WebTimeRanges WebSourceBufferImpl::Buffered() {
 }
 
 double WebSourceBufferImpl::HighestPresentationTimestamp() {
-  return demuxer_->GetHighestPresentationTimestamp(id_).InSecondsF();
+  return source_buffer_->GetHighestPresentationTimestamp(id_).InSecondsF();
 }
 
 bool WebSourceBufferImpl::EvictCodedFrames(double currentPlaybackTime,
                                            size_t newDataSize) {
-  return demuxer_->EvictCodedFrames(
-      id_,
-      base::TimeDelta::FromSecondsD(currentPlaybackTime),
-      newDataSize);
+  return source_buffer_->EvictCodedFrames(
+      id_, base::TimeDelta::FromSecondsD(currentPlaybackTime), newDataSize);
 }
 
 bool WebSourceBufferImpl::Append(const unsigned char* data,
                                  unsigned length,
                                  double* timestamp_offset) {
   base::TimeDelta old_offset = timestamp_offset_;
-  bool success = demuxer_->AppendData(id_, data, length, append_window_start_,
-                                      append_window_end_, &timestamp_offset_);
+
+  bool success =
+      source_buffer_->AppendData(id_, data, length, append_window_start_,
+                                 append_window_end_, &timestamp_offset_);
 
   // Coded frame processing may update the timestamp offset. If the caller
   // provides a non-NULL |timestamp_offset| and frame processing changes the
@@ -144,9 +145,8 @@ bool WebSourceBufferImpl::Append(const unsigned char* data,
 }
 
 void WebSourceBufferImpl::ResetParserState() {
-  demuxer_->ResetParserState(id_,
-                             append_window_start_, append_window_end_,
-                             &timestamp_offset_);
+  source_buffer_->ResetParserState(id_, append_window_start_,
+                                   append_window_end_, &timestamp_offset_);
 
   // TODO(wolenetz): resetParserState should be able to modify the caller
   // timestamp offset (just like WebSourceBufferImpl::append).
@@ -156,11 +156,11 @@ void WebSourceBufferImpl::ResetParserState() {
 void WebSourceBufferImpl::Remove(double start, double end) {
   DCHECK_GE(start, 0);
   DCHECK_GE(end, 0);
-  demuxer_->Remove(id_, DoubleToTimeDelta(start), DoubleToTimeDelta(end));
+  source_buffer_->Remove(id_, DoubleToTimeDelta(start), DoubleToTimeDelta(end));
 }
 
 bool WebSourceBufferImpl::SetTimestampOffset(double offset) {
-  if (demuxer_->IsParsingMediaSegment(id_))
+  if (source_buffer_->IsParsingMediaSegment(id_))
     return false;
 
   timestamp_offset_ = DoubleToTimeDelta(offset);
@@ -168,7 +168,8 @@ bool WebSourceBufferImpl::SetTimestampOffset(double offset) {
   // http://www.w3.org/TR/media-source/#widl-SourceBuffer-timestampOffset
   // Step 6: If the mode attribute equals "sequence", then set the group start
   // timestamp to new timestamp offset.
-  demuxer_->SetGroupStartTimestampIfInSequenceMode(id_, timestamp_offset_);
+  source_buffer_->SetGroupStartTimestampIfInSequenceMode(id_,
+                                                         timestamp_offset_);
   return true;
 }
 
@@ -183,8 +184,8 @@ void WebSourceBufferImpl::SetAppendWindowEnd(double end) {
 }
 
 void WebSourceBufferImpl::RemovedFromMediaSource() {
-  demuxer_->RemoveId(id_);
-  demuxer_ = NULL;
+  source_buffer_->RemoveId(id_);
+  source_buffer_ = NULL;
   client_ = NULL;
 }
 

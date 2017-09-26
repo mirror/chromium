@@ -8,6 +8,7 @@
 #include "media/audio/null_audio_sink.h"
 #include "media/base/media.h"
 #include "media/base/video_decoder.h"
+#include "media/filters/default_demuxer_factory.h"
 #include "media/mojo/common/mojo_shared_buffer_video_frame.h"
 #include "media/mojo/common/mojo_video_frame_provider.h"
 #include "media/mojo/common/mojo_video_frame_provider_factory.h"
@@ -84,6 +85,11 @@ std::unique_ptr<RendererFactory> UtilityMojoMediaClient::CreateRendererFactory(
   return base::MakeUnique<DefaultRendererFactory>(
       media_log, nullptr, DefaultRendererFactory::GetGpuFactoriesCB(),
       std::move(video_frame_provider_factory));
+}
+
+std::unique_ptr<DemuxerFactory> UtilityMojoMediaClient::CreateDemuxerFactory(
+    MediaLog* media_log) {
+  return base::MakeUnique<DefaultDemuxerFactory>(media_log);
 }
 
 }  // namespace media

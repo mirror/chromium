@@ -15,9 +15,11 @@ public_headers = [
   "//media/base/output_device_info.h",
   "//media/base/pipeline_status.h",
   "//media/base/sample_format.h",
+  "//media/base/source_buffer_parse_warnings.h",
   "//media/base/subsample_entry.h",
   "//media/base/video_codecs.h",
   "//media/base/video_types.h",
+  "//media/base/video_rotation.h",
   "//media/base/watch_time_keys.h",
 ]
 
@@ -32,6 +34,7 @@ deps = [
 ]
 
 type_mappings = [
+  "media.mojom.MemoryPressureLevel=base::MemoryPressureListener::MemoryPressureLevel",
   "media.mojom.AudioCodec=media::AudioCodec",
   "media.mojom.BufferingState=media::BufferingState",
   "media.mojom.ChannelLayout=media::ChannelLayout",
@@ -42,9 +45,11 @@ type_mappings = [
   "media.mojom.OutputDeviceStatus=media::OutputDeviceStatus",
   "media.mojom.PipelineStatus=media::PipelineStatus",
   "media.mojom.SampleFormat=media::SampleFormat",
+  "media.mojom.SourceBufferParseWarning=media::SourceBufferParseWarning",
   "media.mojom.SubsampleEntry=media::SubsampleEntry",
   "media.mojom.VideoCodec=media::VideoCodec",
   "media.mojom.VideoCodecProfile=media::VideoCodecProfile",
   "media.mojom.VideoPixelFormat=media::VideoPixelFormat",
+  "media.mojom.VideoRotation=media::VideoRotation",
   "media.mojom.WatchTimeKey=media::WatchTimeKey",
 ]

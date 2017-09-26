@@ -1,0 +1,78 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/media_types.mojom";
+import "mojo/common/time.mojom";
+
+interface SourceBuffer {
+  [Native]
+  enum Status;
+
+  Initialize(associated SourceBufferClient client, int32 demuxer_id, handle<data_pipe_consumer> pipe);
+
+  [Sync]
+  AddId(string source_id, string type, string codecs) => (Status status);
+
+  [Sync]
+  AppendData(string id,
+             DataBuffer? buffer,
+             mojo.common.mojom.TimeDelta append_window_start,
+             mojo.common.mojom.TimeDelta append_window_end)
+             => (bool success, mojo.common.mojom.TimeDelta timestamp_offset);
+
+  SetTracksWatcher(string id);
+
+  SetParseWarningCallback(string id);
+
+  RemoveId(string id);
+
+  GetDuration() => (double duration);
+
+  GetDuration_Locked() => (double duration);
+
+  SetDuration(double duration);
+
+  [Sync]
+  GetBufferedRanges(string id) => (RangesTimeDelta? ranges);
+
+  [Sync]
+  GetHighestPresentationTimestamp(string id) => (mojo.common.mojom.TimeDelta timestamp);
+
+  [Sync]
+  ResetParserState(string id,
+                   mojo.common.mojom.TimeDelta append_window_start,
+                   mojo.common.mojom.TimeDelta append_window_end)
+                   => (mojo.common.mojom.TimeDelta timestamp_offset);
+
+  Remove(string id,
+         mojo.common.mojom.TimeDelta start,
+         mojo.common.mojom.TimeDelta end);
+
+  [Sync]
+  EvictCodedFrames(string id,
+                   mojo.common.mojom.TimeDelta current_media_time,
+                   uint64 new_data_size)
+                   => (bool success);
+
+  OnMemoryPressure(mojo.common.mojom.TimeDelta currentMediaTime,
+                   MemoryPressureLevel memory_pressure_level,
+                   bool force_instant_gc);
+
+  [Sync]
+  IsParsingMediaSegment(string id) => (bool is_parsing);
+  SetSequenceMode(string id, bool sequence_mode);
+  SetGroupStartTimestampIfInSequenceMode(string id,
+                                         mojo.common.mojom.TimeDelta timestamp_offset);
+  MarkEndOfStream(PipelineStatus status);
+  UnmarkEndOfStream();
+  Shutdown();
+};
+
+interface SourceBufferClient {
+  [Sync]
+  OnTracksWatcher(string id, MediaTracks? media_tracks) => ();
+  OnParseWarning(string id, SourceBufferParseWarning parse_warning);
+};

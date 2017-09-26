@@ -102,6 +102,10 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   // MediaResource::Type::URL.
   void InitializeRendererFromUrl(media::RendererClient* client);
 
+  // Initialize the remote renderer when |media_resource| is of type
+  // DemuxerSteamProvider::Type::REMOTE.
+  void InitializeRendererFromRemoteId(media::RendererClient* client);
+
   // Callback for connection error on |remote_renderer_|.
   void OnConnectionError();
 
@@ -160,7 +164,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   mojom::RendererPtr remote_renderer_;
 
   // Binding for RendererClient, bound to the |task_runner_|.
-  mojo::AssociatedBinding<RendererClient> client_binding_;
+  mojo::AssociatedBinding<mojom::RendererClient> client_binding_;
 
   bool encountered_error_ = false;
 

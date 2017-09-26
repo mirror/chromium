@@ -17,6 +17,7 @@
 #include "media/base/media_export.h"
 #include "media/base/video_codecs.h"
 #include "media/base/video_color_space.h"
+#include "media/base/video_rotation.h"
 #include "media/base/video_types.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -42,7 +43,8 @@ class MEDIA_EXPORT VideoDecoderConfig {
                      const gfx::Rect& visible_rect,
                      const gfx::Size& natural_size,
                      const std::vector<uint8_t>& extra_data,
-                     const EncryptionScheme& encryption_scheme);
+                     const EncryptionScheme& encryption_scheme,
+                     VideoRotation video_rotation);
 
   VideoDecoderConfig(const VideoDecoderConfig& other);
 
@@ -57,7 +59,8 @@ class MEDIA_EXPORT VideoDecoderConfig {
                   const gfx::Rect& visible_rect,
                   const gfx::Size& natural_size,
                   const std::vector<uint8_t>& extra_data,
-                  const EncryptionScheme& encryption_scheme);
+                  const EncryptionScheme& encryption_scheme,
+                  VideoRotation video_rotation);
 
   // Returns true if this object has appropriate configuration values, false
   // otherwise.
@@ -123,6 +126,8 @@ class MEDIA_EXPORT VideoDecoderConfig {
   // useful for decryptors that decrypts an encrypted stream to a clear stream.
   void SetIsEncrypted(bool is_encrypted);
 
+  VideoRotation video_rotation() const { return video_rotation_; }
+
  private:
   VideoCodec codec_;
   VideoCodecProfile profile_;
@@ -144,6 +149,8 @@ class MEDIA_EXPORT VideoDecoderConfig {
 
   VideoColorSpace color_space_info_;
   base::Optional<HDRMetadata> hdr_metadata_;
+
+  VideoRotation video_rotation_;
 
   // Not using DISALLOW_COPY_AND_ASSIGN here intentionally to allow the compiler
   // generated copy constructor and assignment operator. Since the extra data is

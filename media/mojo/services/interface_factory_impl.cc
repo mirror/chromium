@@ -34,6 +34,12 @@
 #include "media/mojo/services/mojo_cdm_service.h"
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER)
+#include "media/base/demuxer_factory.h"
+#include "media/mojo/services/mojo_demuxer_service.h"
+#include "media/mojo/services/mojo_source_buffer_service.h"
+#endif  // BUILDFLAG(ENABLE_MOJO_DEMUXER)
+
 namespace media {
 
 InterfaceFactoryImpl::InterfaceFactoryImpl(
@@ -42,10 +48,10 @@ InterfaceFactoryImpl::InterfaceFactoryImpl(
     std::unique_ptr<service_manager::ServiceContextRef> connection_ref,
     MojoMediaClient* mojo_media_client)
     :
-#if BUILDFLAG(ENABLE_MOJO_RENDERER)
+#if BUILDFLAG(ENABLE_MOJO_RENDERER) || BUILDFLAG(ENABLE_MOJO_DEMUXER)
       media_log_(media_log),
 #endif
-#if BUILDFLAG(ENABLE_MOJO_CDM)
+#if BUILDFLAG(ENABLE_MOJO_CDM) || BUILDFLAG(ENABLE_MOJO_DEMUXER)
       interfaces_(std::move(interfaces)),
 #endif
       connection_ref_(std::move(connection_ref)),
@@ -59,6 +65,28 @@ InterfaceFactoryImpl::~InterfaceFactoryImpl() {
 }
 
 // mojom::InterfaceFactory implementation.
+
+void InterfaceFactoryImpl::CreateDemuxer(mojom::DemuxerRequest request) {
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER)
+  DemuxerFactory* demuxer_factory = GetDemuxerFactory();
+  if (!demuxer_factory)
+    return;
+
+  demuxer_bindings_.AddBinding(
+      base::MakeUnique<MojoDemuxerService>(
+          demuxer_service_context_.GetWeakPtr(), demuxer_factory),
+      std::move(request));
+#endif  // BUILDFLAG(ENABLE_MOJO_DEMUXER)
+}
+
+void InterfaceFactoryImpl::CreateSourceBuffer(
+    mojom::SourceBufferRequest request) {
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER)
+  source_buffer_bindings_.AddBinding(base::MakeUnique<MojoSourceBufferService>(
+                                         demuxer_service_context_.GetWeakPtr()),
+                                     std::move(request));
+#endif  // BUILDFLAG(ENABLE_MOJO_DEMUXER)
+}
 
 void InterfaceFactoryImpl::CreateAudioDecoder(
     mojo::InterfaceRequest<mojom::AudioDecoder> request) {
@@ -115,6 +143,7 @@ void InterfaceFactoryImpl::CreateRenderer(
 
   std::unique_ptr<MojoRendererService> mojo_renderer_service =
       base::MakeUnique<MojoRendererService>(
+          demuxer_service_context_.GetWeakPtr(),
           cdm_service_context_.GetWeakPtr(), std::move(audio_sink),
           std::move(video_sink), std::move(renderer),
           MojoRendererService::InitiateSurfaceRequestCB());
@@ -164,6 +193,16 @@ CdmFactory* InterfaceFactoryImpl::GetCdmFactory() {
     LOG_IF(ERROR, !cdm_factory_) << "CdmFactory not available.";
   }
   return cdm_factory_.get();
+}
+#endif  // BUILDFLAG(ENABLE_MOJO_CDM)
+
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER)
+DemuxerFactory* InterfaceFactoryImpl::GetDemuxerFactory() {
+  if (!demuxer_factory_) {
+    demuxer_factory_ = mojo_media_client_->CreateDemuxerFactory(media_log_);
+    LOG_IF(ERROR, !demuxer_factory_) << "DemuxerFactory not available.";
+  }
+  return demuxer_factory_.get();
 }
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 

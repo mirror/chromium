@@ -30,6 +30,7 @@
 #include "media/blink/webencryptedmediaclient_impl.h"
 #include "media/blink/webmediaplayer_impl.h"
 #include "media/filters/context_3d.h"
+#include "media/filters/default_demuxer_factory.h"
 #include "media/media_features.h"
 #include "media/renderers/default_renderer_factory.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
@@ -58,6 +59,10 @@
 
 #if BUILDFLAG(ENABLE_MOJO_CDM)
 #include "media/mojo/clients/mojo_cdm_factory.h"  // nogncheck
+#endif
+
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER)
+#include "media/mojo/clients/mojo_demuxer_factory.h"  // nogncheck
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_RENDERER)
@@ -248,6 +253,22 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 
   base::WeakPtr<media::MediaObserver> media_observer;
 
+  std::unique_ptr<media::DemuxerFactory> media_demuxer_factory =
+      base::MakeUnique<media::DefaultDemuxerFactory>(media_log.get());
+
+#if BUILDFLAG(ENABLE_MOJO_DEMUXER) && BUILDFLAG(ENABLE_MOJO_RENDERER)
+  bool use_mojo_renderer_factory = true;
+#if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
+  use_mojo_renderer_factory =
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableMojoRenderer);
+#endif
+  if (use_mojo_renderer_factory) {
+    media_demuxer_factory =
+        base::MakeUnique<media::MojoDemuxerFactory>(GetMediaInterfaceFactory());
+  }
+#endif
+
   auto factory_selector =
       CreateRendererFactorySelector(media_log.get(), use_media_player_renderer,
                                     GetDecoderFactory(), &media_observer);
@@ -293,7 +314,8 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(factory_selector), url_index_.get(), std::move(params));
+      std::move(media_demuxer_factory), std::move(factory_selector),
+      url_index_.get(), std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());

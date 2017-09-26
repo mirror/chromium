@@ -68,6 +68,11 @@ struct StructTraits<media::mojom::VideoDecoderConfigDataView,
     return input.hdr_metadata();
   }
 
+  static media::VideoRotation video_rotation(
+      const media::VideoDecoderConfig& input) {
+    return input.video_rotation();
+  }
+
   static bool Read(media::mojom::VideoDecoderConfigDataView input,
                    media::VideoDecoderConfig* output);
 };

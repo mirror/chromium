@@ -37,8 +37,8 @@ VideoDecoderConfig CreateVideoConfig(VideoCodec codec, int w, int h) {
   gfx::Rect visible_rect(size);
   return VideoDecoderConfig(codec, VIDEO_CODEC_PROFILE_UNKNOWN,
                             PIXEL_FORMAT_YV12, COLOR_SPACE_HD_REC709, size,
-                            visible_rect, size, EmptyExtraData(),
-                            Unencrypted());
+                            visible_rect, size, EmptyExtraData(), Unencrypted(),
+                            VIDEO_ROTATION_0);
 }
 
 void AddAudioTrack(std::unique_ptr<MediaTracks>& t, AudioCodec codec, int id) {

@@ -55,6 +55,17 @@ MediaInterfaceProxy::~MediaInterfaceProxy() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
+void MediaInterfaceProxy::CreateDemuxer(media::mojom::DemuxerRequest request) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  GetMediaInterfaceFactory()->CreateDemuxer(std::move(request));
+}
+
+void MediaInterfaceProxy::CreateSourceBuffer(
+    media::mojom::SourceBufferRequest request) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  GetMediaInterfaceFactory()->CreateSourceBuffer(std::move(request));
+}
+
 void MediaInterfaceProxy::CreateAudioDecoder(
     media::mojom::AudioDecoderRequest request) {
   DCHECK(thread_checker_.CalledOnValidThread());

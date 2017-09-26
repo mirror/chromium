@@ -439,6 +439,7 @@ void CreateMediaPlayerRenderer(
                  base::Unretained(renderer.get()));
 
   media::MojoRendererService::Create(
+      nullptr,  // Use demuxers in renderer process.
       nullptr,  // CDMs are not supported.
       nullptr,  // Manages its own audio_sink.
       nullptr,  // Does not use video_sink. See StreamTextureWrapper instead.
