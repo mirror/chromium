@@ -435,6 +435,7 @@ source_set("common") {
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
     "//services/service_manager/runner/common",
+    "//services/service_manager/sandbox",
     "//services/ui/public/interfaces",
     "//services/video_capture/public/interfaces",
     "//services/viz/public/interfaces",

@@ -28,7 +28,6 @@ component("embedder") {
       "set_process_title.h",
       "set_process_title_linux.h",
       "shared_file_util.h",
-      "switches.h",
     ]
     sources += [
       "main.cc",
@@ -36,7 +35,6 @@ component("embedder") {
       "set_process_title.cc",
       "set_process_title_linux.cc",
       "shared_file_util.cc",
-      "switches.cc",
     ]
   }
 
@@ -61,6 +59,7 @@ component("embedder") {
   if (!is_ios) {
     # deps of ServiceManager::Main and related functionality.
     deps += [
+      ":embedder_switches",
       "//base/allocator:features",
       "//components/tracing:startup_tracing",
       "//ui/base",
@@ -76,6 +75,13 @@ component("embedder") {
   }
 
   defines = [ "SERVICE_MANAGER_EMBEDDER_IMPL" ]
+}
+
+source_set("embedder_switches") {
+  sources = [
+    "switches.cc",
+    "switches.h",
+  ]
 }
 
 source_set("unittests") {

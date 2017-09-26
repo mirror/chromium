@@ -1,0 +1,16 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("sandbox") {
+  sources = [
+    "export.h",
+    "sandbox_type.cc",
+    "sandbox_type.h",
+    "switches.cc",
+    "switches.h",
+  ]
+  deps = [
+    "//services/service_manager/embedder:embedder_switches",
+  ]
+}
