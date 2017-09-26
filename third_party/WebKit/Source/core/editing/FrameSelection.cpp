@@ -942,8 +942,6 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
 
   // FIXME: This code only handles scrolling the startContainer's layer, but
   // the selection rect could intersect more than just that.
-  if (DocumentLoader* document_loader = frame_->Loader().GetDocumentLoader())
-    document_loader->GetInitialScrollState().was_scrolled_by_user = true;
   const Position& start = selection.Start();
   DCHECK(start.AnchorNode());
   DCHECK(start.AnchorNode()->GetLayoutObject());
