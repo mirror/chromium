@@ -142,6 +142,7 @@ bool PaintImage::DecodeFromGenerator(void* memory,
                                      sk_sp<SkColorSpace> color_space,
                                      size_t frame_index) const {
   DCHECK(subset_rect_.IsEmpty());
+  CHECK_EQ(frame_index, frame_index_);
 
   // First convert the info to have the requested color space, since the decoder
   // will convert this for us.
@@ -156,7 +157,7 @@ bool PaintImage::DecodeFromGenerator(void* memory,
 
     bool result = paint_image_generator_->GetPixels(n32info, n32memory.get(),
                                                     n32info.minRowBytes(),
-                                                    frame_index, unique_id());
+                                                    frame_index_, unique_id());
     if (!result)
       return false;
 
@@ -177,13 +178,15 @@ bool PaintImage::DecodeFromGenerator(void* memory,
   }
 
   return paint_image_generator_->GetPixels(*info, memory, info->minRowBytes(),
-                                           frame_index, unique_id());
+                                           frame_index_, unique_id());
 }
 
 bool PaintImage::DecodeFromSkImage(void* memory,
                                    SkImageInfo* info,
                                    sk_sp<SkColorSpace> color_space,
                                    size_t frame_index) const {
+  CHECK_EQ(frame_index, frame_index_);
+
   auto image = GetSkImageForFrame(frame_index);
   DCHECK(image);
   if (color_space) {
@@ -238,7 +241,11 @@ size_t PaintImage::FrameCount() const {
 
 sk_sp<SkImage> PaintImage::GetSkImageForFrame(size_t index) const {
   DCHECK_LT(index, FrameCount());
+  CHECK_EQ(index, frame_index_);
 
+  return GetSkImage();
+
+  /*
   if (index == frame_index_)
     return GetSkImage();
 
@@ -246,7 +253,7 @@ sk_sp<SkImage> PaintImage::GetSkImageForFrame(size_t index) const {
       base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_, index));
   if (!subset_rect_.IsEmpty())
     image = image->makeSubset(gfx::RectToSkIRect(subset_rect_));
-  return image;
+  return image;*/
 }
 
 std::string PaintImage::ToString() const {
