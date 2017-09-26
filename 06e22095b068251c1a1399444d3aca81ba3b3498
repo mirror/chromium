@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6bddb5_aa61cc54",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-26T06:55:10Z",
+      "side": 1,
+      "message": "It seems it is still unclear how this method differs from the above. Can you add comment on what \"effective\" means?",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "06e22095b068251c1a1399444d3aca81ba3b3498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea33848_6f544533",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-26T06:55:10Z",
+      "side": 1,
+      "message": "This is called in chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc.\nShould that call be replaced by the method above?",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 29
+      },
+      "revId": "06e22095b068251c1a1399444d3aca81ba3b3498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
