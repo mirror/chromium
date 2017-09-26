@@ -10258,9 +10258,9 @@
             }
           },
           'timezone': { 'type': 'string' },
-          'ignored_policies': {
+          'ignored_policies_proto_tags': {
             'type': 'array',
-            'items': { 'type':'string' }
+            'items': { 'type':'integer' }
           }
         }
       },
@@ -10294,7 +10294,8 @@
           }
         ],
         'timezone': 'GMT',
-        'ignored_policies': ['allow_new_users', 'guest_mode_enabled']
+        # proto tag = 3 is guest_mode_enabled, proto tag = 8 is allow_new_users policies.
+        'ignored_policies_proto_tags': [3, 8]
       },
       'id': 380,
       'caption': '''Off hours intervals when device OffHours |ignored_policies| are released''',
