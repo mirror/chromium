@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da459300_a8361998",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-26T16:55:28Z",
+      "side": 1,
+      "message": "I think this is a more straightforward way of doing this... I don\u0027t really like handling only a single case and break on the rest, seems kind of awkward. The DCHECK below is really optional, since I\u0027m only taking action on a fail. If there are other modes that we might add, then we\u0027ll have to audit the code anyway to ensure we do whatever the new mode dictates.",
+      "parentUuid": "898f3584_2e9e83f1",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 41
+      },
+      "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dafba6e4_0b657554",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T19:45:18Z",
       "side": 1,
       "message": "Here\u0027s a thought. IIUC then our aim is to try to find a cache entry at a higher mip level than the requested one and scale it. If not, request a decode at the exact size supported, scale it if necessary, and use that.\n\nCould we somehow manage all of this within GetScaledImageDecode? It first checks if a full size decode is required and defaults to GetExactSizeImageDecode. Then it checks the existing ImageKeys for something at a higher mip level (the keys should exist in |frame_key_to_image_keys_|) and scales that instead. Finally it does an exact size decode of the supported size and scales it.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 30
+      },
+      "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d9682d_cf9eeb10",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-26T16:55:28Z",
+      "side": 1,
+      "message": "As discussed offline, this isn\u0027t as trivial since the cache entry can be in a bunch of different places, like unlocked, locked, at-raster. The checks for all of those to succeed aren\u0027t trivial. The gpu cache does this afaik though. Maybe we can defer this to when we start merging the caches? WDYT?",
+      "parentUuid": "dafba6e4_0b657554",
       "range": {
         "startLine": 714,
         "startChar": 0,
