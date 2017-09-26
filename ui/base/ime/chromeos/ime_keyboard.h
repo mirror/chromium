@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/observer_list.h"
+#include "ui/base/ime/modifier_key.h"
 #include "ui/base/ime/ui_base_ime_export.h"
 
 namespace chromeos {
@@ -18,19 +19,6 @@ struct AutoRepeatRate {
   AutoRepeatRate() : initial_delay_in_ms(0), repeat_interval_in_ms(0) {}
   unsigned int initial_delay_in_ms;
   unsigned int repeat_interval_in_ms;
-};
-
-enum ModifierKey {
-  kSearchKey = 0,  // Customizable.
-  kControlKey,  // Customizable.
-  kAltKey,  // Customizable.
-  kVoidKey,
-  kCapsLockKey,  // Customizable.
-  kEscapeKey,  // Customizable.
-  kBackspaceKey,  // Customizable.
-  // IMPORTANT: Add new key to the end, because the keys may have been stored
-  // in user preferences.
-  kNumModifierKeys,
 };
 
 class UI_BASE_IME_EXPORT ImeKeyboard {
