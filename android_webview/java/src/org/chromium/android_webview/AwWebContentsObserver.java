@@ -13,6 +13,7 @@ import org.chromium.net.NetError;
 import org.chromium.ui.base.PageTransition;
 
 import java.lang.ref.WeakReference;
+import android.util.Log;
 
 /**
  * Routes notifications from WebContents to AwContentsClient and other listeners.
@@ -61,6 +62,7 @@ public class AwWebContentsObserver extends WebContentsObserver {
         if (validatedUrl.length() == 0) validatedUrl = ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL;
         AwContentsClient client = getClientIfNeedToFireCallback(validatedUrl);
         if (client != null && validatedUrl.equals(mLastDidFinishLoadUrl)) {
+            Log.w("SELIM", "AwWebContentsObserver::didStopLoading calling onpagefinished " + validatedUrl);
             client.getCallbackHelper().postOnPageFinished(validatedUrl);
             mLastDidFinishLoadUrl = null;
         }
@@ -77,6 +79,7 @@ public class AwWebContentsObserver extends WebContentsObserver {
         if (isMainFrame && !isErrorUrl && errorCode == NetError.ERR_ABORTED) {
             // Need to call onPageFinished for backwards compatibility with the classic webview.
             // See also AwContents.IoThreadClientImpl.onReceivedError.
+            Log.w("SELIM", "AwWebContentsObserver::didFailLoad calling onpagefinished " + failingUrl);
             client.getCallbackHelper().postOnPageFinished(failingUrl);
         }
     }
@@ -129,6 +132,7 @@ public class AwWebContentsObserver extends WebContentsObserver {
         }
 
         if (client != null && isFragmentNavigation) {
+             Log.w("SELIM", "AwWebContentsObserver::didFinishNavigation calling onpagefinished " + url);
             client.getCallbackHelper().postOnPageFinished(url);
         }
     }

@@ -3763,6 +3763,7 @@ void WebContentsImpl::DidFailLoadWithError(
     const GURL& url,
     int error_code,
     const base::string16& error_description) {
+  LOG(WARNING) << "SELIM WebContentsImpl::DidFailLoadWithError " << url.possibly_invalid_spec();
   for (auto& observer : observers_) {
     observer.DidFailLoad(render_frame_host, url, error_code, error_description);
   }

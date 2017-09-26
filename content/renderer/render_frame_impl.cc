@@ -5407,6 +5407,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   // info.extraData is only non-null if this is a redirect. Use the extraData
   // initiation information for redirects, and check pending_navigation_params_
   // otherwise.
+
   bool is_content_initiated =
       info.extra_data ? static_cast<DocumentState*>(info.extra_data)
                             ->navigation_state()
@@ -5417,6 +5418,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   // This is fine normally, except if we're showing UI from one security
   // context and they're trying to navigate to a different context.
   const GURL& url = info.url_request.Url();
+  LOG(WARNING) << "SELIM DecidePolicyForNavigation " << url.possibly_invalid_spec();
+  if (IsBrowserSideNavigationEnabled()) LOG(WARNING) << "SELIM isurlhandledbynetstack:" << IsURLHandledByNetworkStack(url);
 
   // With PlzNavigate, the redirect list is available for the first url. So
   // maintain the old behavior of not classifying the first URL in the chain as
@@ -5433,14 +5436,11 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       render_view_->was_created_by_renderer_;
   // The handlenavigation API is deprecated and will be removed once
   // crbug.com/325351 is resolved.
-  if (GetContentClient()->renderer()->HandleNavigation(
+  if ((!IsBrowserSideNavigationEnabled() ||  !IsURLHandledByNetworkStack(url)) &&
+      GetContentClient()->renderer()->HandleNavigation(
           this, is_content_initiated, render_view_was_created_by_renderer,
           frame_, info.url_request, info.navigation_type, info.default_policy,
           is_redirect)) {
-    if (IsBrowserSideNavigationEnabled()) {
-      // Need to let the browser know so it can notify its observers.
-      Send(new FrameHostMsg_NavigationHandledByEmbedder(routing_id_));
-    }
     return blink::kWebNavigationPolicyIgnore;
   }
 #endif
