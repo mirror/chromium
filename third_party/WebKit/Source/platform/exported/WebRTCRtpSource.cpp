@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "public/platform/WebRTCRtpContributingSource.h"
+#include "public/platform/WebRTCRtpSource.h"
 
 namespace blink {
 
-WebRTCRtpContributingSource::~WebRTCRtpContributingSource() {}
+WebRTCRtpSource::~WebRTCRtpSource() {}
 
 }  // namespace blink

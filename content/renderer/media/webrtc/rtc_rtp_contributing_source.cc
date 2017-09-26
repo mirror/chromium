@@ -16,16 +16,15 @@ RTCRtpContributingSource::RTCRtpContributingSource(
 
 RTCRtpContributingSource::~RTCRtpContributingSource() {}
 
-blink::WebRTCRtpContributingSourceType RTCRtpContributingSource::SourceType()
-    const {
+blink::WebRTCRtpSourceType RTCRtpContributingSource::SourceType() const {
   switch (source_.source_type()) {
     case webrtc::RtpSourceType::SSRC:
-      return blink::WebRTCRtpContributingSourceType::SSRC;
+      return blink::WebRTCRtpSourceType::SSRC;
     case webrtc::RtpSourceType::CSRC:
-      return blink::WebRTCRtpContributingSourceType::CSRC;
+      return blink::WebRTCRtpSourceType::CSRC;
     default:
       NOTREACHED();
-      return blink::WebRTCRtpContributingSourceType::SSRC;
+      return blink::WebRTCRtpSourceType::SSRC;
   }
 }
 
@@ -35,6 +34,16 @@ double RTCRtpContributingSource::TimestampMs() const {
 
 uint32_t RTCRtpContributingSource::Source() const {
   return source_.source_id();
+}
+
+uint8_t RTCRtpContributingSource::AudioLevel() const {
+  // TODO(zstein): This should return null if we have no underlying value.
+  // We return silence (127 - see the spec) for now instead.
+  return source_.audio_level().value_or(127);
+}
+
+bool RTCRtpContributingSource::HasAudioLevel() const {
+  return static_cast<bool>(source_.audio_level());
 }
 
 }  // namespace content

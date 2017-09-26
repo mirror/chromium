@@ -8,20 +8,21 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/platform/WebRTCRtpContributingSource.h"
+#include "third_party/WebKit/public/platform/WebRTCRtpSource.h"
 #include "third_party/webrtc/api/rtpreceiverinterface.h"
 
 namespace content {
 
-class CONTENT_EXPORT RTCRtpContributingSource
-    : public blink::WebRTCRtpContributingSource {
+class CONTENT_EXPORT RTCRtpContributingSource : public blink::WebRTCRtpSource {
  public:
   explicit RTCRtpContributingSource(const webrtc::RtpSource& source);
   ~RTCRtpContributingSource() override;
 
-  blink::WebRTCRtpContributingSourceType SourceType() const override;
+  blink::WebRTCRtpSourceType SourceType() const override;
   double TimestampMs() const override;
   uint32_t Source() const override;
+  uint8_t AudioLevel() const override;
+  bool HasAudioLevel() const override;
 
  private:
   const webrtc::RtpSource source_;
