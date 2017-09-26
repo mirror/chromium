@@ -5,8 +5,8 @@
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 
 #include "base/allocator/partition_allocator/page_allocator.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/lazy_instance.h"
+#include "base/synchronization/spin_lock.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)

@@ -760,6 +760,8 @@ component("base") {
     "synchronization/lock_impl.h",
     "synchronization/lock_impl_posix.cc",
     "synchronization/lock_impl_win.cc",
+    "synchronization/spin_lock.cc",
+    "synchronization/spin_lock.h",
     "synchronization/spin_wait.h",
     "synchronization/waitable_event.h",
     "synchronization/waitable_event_mac.cc",
@@ -1360,8 +1362,6 @@ component("base") {
         "allocator/partition_allocator/page_allocator.h",
         "allocator/partition_allocator/partition_alloc.cc",
         "allocator/partition_allocator/partition_alloc.h",
-        "allocator/partition_allocator/spin_lock.cc",
-        "allocator/partition_allocator/spin_lock.h",
       ]
     }
   }
@@ -2139,6 +2139,7 @@ test("base_unittests") {
     "synchronization/atomic_flag_unittest.cc",
     "synchronization/condition_variable_unittest.cc",
     "synchronization/lock_unittest.cc",
+    "synchronization/spin_lock_unittest.cc",
     "synchronization/waitable_event_unittest.cc",
     "synchronization/waitable_event_watcher_unittest.cc",
     "sys_byteorder_unittest.cc",
@@ -2335,10 +2336,7 @@ test("base_unittests") {
   }
 
   if (use_partition_alloc) {
-    sources += [
-      "allocator/partition_allocator/partition_alloc_unittest.cc",
-      "allocator/partition_allocator/spin_lock_unittest.cc",
-    ]
+    sources += [ "allocator/partition_allocator/partition_alloc_unittest.cc" ]
   }
 
   if (is_mac) {

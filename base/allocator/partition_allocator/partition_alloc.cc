@@ -8,9 +8,9 @@
 #include <type_traits>
 
 #include "base/allocator/partition_allocator/oom.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
+#include "base/synchronization/spin_lock.h"
 
 // Two partition pages are used as guard / metadata page so make sure the super
 // page size is bigger.

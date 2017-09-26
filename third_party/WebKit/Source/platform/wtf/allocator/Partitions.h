@@ -33,8 +33,8 @@
 
 #include <string.h>
 #include "base/allocator/partition_allocator/partition_alloc.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/numerics/checked_math.h"
+#include "base/synchronization/spin_lock.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/WTF.h"
 #include "platform/wtf/WTFExport.h"
