@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa2bffc_959c5a7b",
+        "filename": "chrome/browser/resources/unpack_pak.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-09-26T01:34:37Z",
+      "side": 1,
+      "message": "You probably don\u0027t need to do this since you\u0027ve stopped referring to the directory itself as the output.",
+      "revId": "3886ebee66b35218aeed3c0460a4753a9f97641d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
