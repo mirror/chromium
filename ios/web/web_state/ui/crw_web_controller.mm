@@ -2769,12 +2769,14 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)wasShown {
+  self.visible = YES;
   if ([self.nativeController respondsToSelector:@selector(wasShown)]) {
     [self.nativeController wasShown];
   }
 }
 
 - (void)wasHidden {
+  self.visible = NO;
   if (_isHalted)
     return;
   [self recordStateInHistory];
