@@ -27,6 +27,12 @@ namespace viz {
 // QuadList.
 class VIZ_COMMON_EXPORT SharedQuadState {
  public:
+  enum class ClipState { CLIP, NON_CLIP };
+  std::string ClipStateToString(ClipState clip_state);
+
+  enum class ContentsOpaque { OPAQUE, TRANSPARENT };
+  std::string ContentsOpaqueToString(ContentsOpaque contents_opaque);
+
   SharedQuadState();
   SharedQuadState(const SharedQuadState& other);
   ~SharedQuadState();
@@ -35,8 +41,8 @@ class VIZ_COMMON_EXPORT SharedQuadState {
               const gfx::Rect& layer_rect,
               const gfx::Rect& visible_layer_rect,
               const gfx::Rect& clip_rect,
-              bool is_clipped,
-              bool are_contents_opaque,
+              ClipState clip_state,
+              ContentsOpaque contents_opaque,
               float opacity,
               SkBlendMode blend_mode,
               int sorting_context_id);
@@ -51,9 +57,9 @@ class VIZ_COMMON_EXPORT SharedQuadState {
   gfx::Rect visible_quad_layer_rect;
   // This rect lives in the target content space.
   gfx::Rect clip_rect;
-  bool is_clipped;
+  ClipState clip_state;
   // Indicates whether the quads share this sqs contains opaque content.
-  bool are_contents_opaque;
+  ContentsOpaque contents_opaque;
   float opacity;
   SkBlendMode blend_mode;
   int sorting_context_id;
