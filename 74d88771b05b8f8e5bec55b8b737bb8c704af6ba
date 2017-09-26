@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6a8c45_a7d1297e",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "aside: I find \u0027incognito window tracker\u0027 to be a disconcerting name, as it might imply tracking beyond what it actually does, and I imagine most readers would also have a similarly negative initial reaction to \u0027incognito tracking\u0027.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8676d1_e461f0eb",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "What happens when the browser window is not active? Please make sure that it doesn\u0027t activate an inactive Chrome window (Chrome shouldn\u0027t pop up when the user is doing something unrelated, eg. working/presenting/gaming)",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0379a24_93b507b2",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Perhaps this should DCHECK or early return if the widget isn\u0027t the promo?",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94c97a0_6a305fe6",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "nit: the \u0027AppMenuButton::\u0027 qualifier probably isn\u0027t needed here.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403ec96c_5fcf607e",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "This comment buries the lead; consider \"Shows the incognito window promo on the last active browser.\"",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c06210a_a4326d2e",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Update this name to match the current identifier, or use abstract terminology.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645155fb_d5bd4d21",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "All this promo code should be encapsulated elsewhere, afaict, none of it needs to be class members/functions of AppMenuButton. I would highly encourage moving all this code to IncognitoWindowPromoBubbleView, or the chrome/browser/feature_engagement/incognito_window/ directory (if those DEPS exceptions would be permissible).\n\nIf this really needs to live on AppMenuButton (which it shouldn\u0027t), this name needs to mention Incognito to provide sufficient context. Consider ShowincognitoPromoForLastActiveBrowser.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9559a862_b424dd67",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Update this name to match the current identifier, or use abstract terminology.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d705ecf1_d035af65",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Update this name to match the current identifier, or use abstract terminology.",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492b1688_8bb76a08",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Ditto... This doesn\u0027t belong here or should mention Incognito.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9226f9fc_db3f42da",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "optional nit: consider dropping \u0027window_\u0027 from this member and the one below.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5976a806_6e919bc5",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "This should be owned by the tracker or similar.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a7fc1a_247dfc72",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Update this name to match the current identifier, or use abstract terminology.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae21d97f_d6a25023",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "This should be owned by the tracker or similar.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac2e348_c25da051",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "Can you add some comments to explain what all these values mean? It\u0027s too bad that HandleClearBrowsingData doesn\u0027t explain its arguments at all... You might want to ping a reviewer that knows more about this code.",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5ed53f_ac613943",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T14:58:37Z",
+      "side": 1,
+      "message": "aside: it might be nice if IncognitoWindowTracker had a static GetForProfile, so users like this wouldn\u0027t need to access the factory singleton instance directly (it would simplify this line and drop an include from this file)",
+      "revId": "74d88771b05b8f8e5bec55b8b737bb8c704af6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
