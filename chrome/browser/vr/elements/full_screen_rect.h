@@ -18,7 +18,7 @@ class FullScreenRect : public Rect {
   ~FullScreenRect() override;
 
   void Render(UiElementRenderer* renderer,
-              const gfx::Transform& view_proj_matrix) const final;
+              const gfx::Transform& model_view_proj_matrix) const final;
 
   DISALLOW_COPY_AND_ASSIGN(FullScreenRect);
 };
