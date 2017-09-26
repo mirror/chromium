@@ -157,6 +157,9 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
   // fail to be committed.
   bool CommitAndClearPendingOverlays();
 
+  void TraceSwapEvents(int64_t trace_id,
+                       const std::vector<EGLnsecsANDROID>& egl_timestamps);
+
   EGLSurface surface_;
   bool supports_post_sub_buffer_;
   bool supports_swap_buffer_with_damage_;
@@ -169,6 +172,7 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
 
   std::vector<EGLint> supported_egl_timestamps_;
   std::vector<ui::LatencyComponentType> supported_latency_components_;
+  std::vector<const char*> supported_event_names_;
   std::vector<PendingLatencyInfo> pending_latency_infos_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceEGL);
