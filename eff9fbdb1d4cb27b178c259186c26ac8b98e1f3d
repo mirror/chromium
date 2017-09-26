@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d316a07b_54c5c221",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": "You are right. I updated description.",
+      "parentUuid": "7efc2f42_fb1b294d",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4064de7f_019b987f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T09:37:54Z",
       "side": 1,
       "message": "Could you elaborate a bit on \"scrolling status\"?",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f499d7_a71ee3f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": "I briefly added about scrolling status in description. And added detailed information in another comment.",
+      "parentUuid": "4064de7f_019b987f",
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f61add6b_e8089c8b",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-container-select.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f167ea30_b258dbbc",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a98d9f_cf5b3260",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
         "patchSetId": 1
@@ -64,6 +118,30 @@
       "writtenOn": "2017-09-18T09:37:54Z",
       "side": 1,
       "message": "Could you elaborate a bit on why CanScrollInDirection() doesn\u0027t not work in this particular case?",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e214c52_17e46472",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": "As I said in description, CanScrollInDirection returns false if it reaches its edge.\n\nPlease imagine following two scenarios:\n1) Scrollable area almost reaches its edge(but not yet), and found an focusable element in the area\n   -\u003e the element will be focused deterministically.\n2) Scrollable area reaches its edge completely, and found an focusable element in the area\n   -\u003e next focused element varied according to status of node tree.\n\nIn current implementation, \u0027CanScrollInDirection\u0027 makes unintuitively behavior.",
+      "parentUuid": "73a98d9f_cf5b3260",
       "range": {
         "startLine": 320,
         "startChar": 0,
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "503408ea_97dcbe28",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "8711eee2_de3862a2",
+      "range": {
+        "startLine": 325,
+        "startChar": 5,
+        "endLine": 325,
+        "endChar": 27
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3cfc39_f8e0164a",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2017-09-18T09:37:54Z",
       "side": 1,
       "message": "Can we make other clients of CanScrollInDirection() use HasOverflowInDirection() instead of CanScrollInDirection()?\n\nWhy do we still need CanScrollInDirection()? When is \"can scroll\" not the same as \"has overflow\"?",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db709c2_896cd24a",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-26T12:43:02Z",
+      "side": 1,
+      "message": "Still thinking. This question is hard to answer. Please wait for some more time. :)",
+      "parentUuid": "2e3cfc39_f8e0164a",
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
