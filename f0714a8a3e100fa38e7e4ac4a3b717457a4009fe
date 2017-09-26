@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f9ee10_7821428a",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T17:57:56Z",
+      "side": 1,
+      "message": "The previous code that did this earlier in the CL was \"CreditCard::StripSeparators(card_a.number()) \u003d\u003d CreditCard::StripSeparators(card_b.number());\".  Seems like StripSeparators would still be useful here.",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 56
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7f66fd_81482c88",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T17:57:56Z",
+      "side": 1,
+      "message": "Ditto here",
+      "range": {
+        "startLine": 1815,
+        "startChar": 8,
+        "endLine": 1815,
+        "endChar": 56
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a616bd9_d73d2adc",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T17:57:56Z",
+      "side": 1,
+      "message": "What does credit_card.number() look like for masked server cards?  If it\u0027s only last four, then the Network part won\u0027t even be checked and we should ensure they\u0027re FULL_SERVER_CARDs here.",
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

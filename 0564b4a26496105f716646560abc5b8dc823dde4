@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f08bae9b_7ce78e39",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-26T17:57:56Z",
+      "side": 1,
+      "message": "I don\u0027t, really; it\u0027s probably not exactly 1/10,000.  But ignoring all else, if I have a 4-digit number, the odds of being randomly given another 4-digit number and having them match is 1/10,000.  At Chrome scale we should avoid anything with the potential to fail anyway (no matter how small).",
+      "parentUuid": "aacf0577_a016fc05",
+      "range": {
+        "startLine": 1817,
+        "startChar": 4,
+        "endLine": 1818,
+        "endChar": 47
+      },
+      "revId": "0564b4a26496105f716646560abc5b8dc823dde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d9dd79_3f90c847",
         "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
         "patchSetId": 9
