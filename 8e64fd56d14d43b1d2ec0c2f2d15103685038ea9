@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9593c12a_dbd99a41",
+        "filename": "chrome/browser/mac/dock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb3b0bf2_667241b8",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4a0f67b_961e81bc",
         "filename": "chrome/browser/mac/dock.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac6b84c_d8e701d5",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4a0f67b_961e81bc",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c669c18a_341f30a9",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acee01b5_c1d3e0bd",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9441f020_1b383dee",
         "filename": "chrome/browser/mac/dock.mm",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "138a128a_fb7e1ecd",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9441f020_1b383dee",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "532204d9_d35aebb0",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e577a3c1_a3ce19e0",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532204d9_d35aebb0",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be982f3_e52a184d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22614,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-26T20:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fb9bbb_e91e2182",
+      "range": {
+        "startLine": 22614,
+        "startChar": 24,
+        "endLine": 22614,
+        "endChar": 27
+      },
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
