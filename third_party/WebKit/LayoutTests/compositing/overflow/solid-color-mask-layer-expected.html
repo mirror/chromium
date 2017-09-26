@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<style>
+#outer {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: solid 10px black;
+  border-radius: 5px;
+  overflow: hidden;
+  will-change: transform;
+}
+
+#inner {
+  width: 500px;
+  height: 500px;
+  background-color: grey;
+}
+</style>
+<script>
+  if (window.internals)
+    internals.settings.setPreferCompositingToLCDTextEnabled(true);
+</script>
+<div id="outer">
+  <div id="inner">
+      The text should not be blurry!!
+  </div>
+</div>
