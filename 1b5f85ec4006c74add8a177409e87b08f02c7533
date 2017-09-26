@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7660db7d_f9857839",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "WebContentsObserver::OnRendererUnresponsive includes a RenderWidgetHost, which seems to have been lost by the time we get here. As a result, we\u0027ll kill the main frame\u0027s process instead of the hung process.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a579ddb6_8f85a61c",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "Do you see only blue text here? Gerrit seems confused.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e392c5d_cb915073",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "This class worries me a bit (from an oopif correctness perspective). Obviously you\u0027re not regressing it.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2014c40_8f6e0c09",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "Similar to the android concern, it seems like we might be killing the wrong process here.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7188beb6_60ac7cb6",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "constexpr StringPiece, maybe?",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6e0e27_f3056842",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "I see no reason not to just fold the \"Network Error:\" prefix into these constants.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c4fd68_f572d1e8",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "I think this is incorrect. If you look at WebViewContentScriptManager::AddContentScripts, it looks like this is paired up with the routing ID of render_frame_host().\n\nWe should just drop the first argument from WebViewContentScriptManager::AddContentScripts, and use render_frame_host-\u003eGetProcess()-\u003eGetID() instead.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f098ba13_ef40c122",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-26T19:17:36Z",
+      "side": 1,
+      "message": "This also seems like it should be render_frame_host()-\u003eGetProcess()-\u003eGetID().",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
