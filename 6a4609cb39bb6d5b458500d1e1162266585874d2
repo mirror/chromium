@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "948a4526_f6f21b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f676110_30ece1eb",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75fcff96_47267dc5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d5f00cac_be74a8e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "58dfa5f5_a701249f",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3adb2c6b_72054195",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 7
@@ -86,6 +122,24 @@
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687a2047_3cf8d4e2",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3adb2c6b_72054195",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "13c83499_aea59fb6",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1dc5ad0_9100b2a2",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff9e547_28b056f5",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 7
@@ -117,6 +189,24 @@
       "writtenOn": "2017-09-25T08:59:59Z",
       "side": 1,
       "message": "Hmm, can you investigate exactly what the lifetime guarantee of ContentBrowserClient is and document it here? It will be good to have this documentation for when we move this into the Device Service, so we can reason about whether this is then problematic or not.",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f8ef5e_0abeb511",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Update: I\u0027m still trying to figure this out. From what I can tell so far, it looks like ContentBrowserClient is created early and never destroyed. But I don\u0027t exactly know what the lifetime guarantee may be.",
+      "parentUuid": "5ff9e547_28b056f5",
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "361cd394_d4361020",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a47558_6a5b1bb5",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bdf5484_ab971be2",
         "filename": "device/geolocation/location_arbitrator.cc",
         "patchSetId": 7
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "5819e9be_6561ac4a",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bdf5484_ab971be2",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0316f16e_871959e6",
         "filename": "device/geolocation/location_arbitrator_unittest.cc",
         "patchSetId": 7
@@ -171,6 +297,24 @@
       "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e9fa43_f507b761",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-26T07:24:09Z",
+      "side": 1,
+      "message": "Yep for that I add a second version that produces a TestURLRequestContextGetter instead of a nullptr: crrev.com/c/676826",
+      "parentUuid": "0316f16e_871959e6",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
