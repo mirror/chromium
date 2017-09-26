@@ -19,6 +19,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
+#include "components/navigation_metrics/navigation_metrics.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
@@ -657,6 +658,14 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
         SEARCH_ENGINE_OTHER;
     UMA_HISTOGRAM_ENUMERATION("Omnibox.SearchEngineType", search_engine_type,
                               SEARCH_ENGINE_MAX);
+  } else {
+    // |match| is a URL navigation, not a search.
+    auto core_transition = PageTransitionStripQualifier(match.transition);
+    // Exclude omnibox URL interactions that are effectively reloads.
+    if (core_transition != UI::PAGE_TRANSITION_RELOAD) {
+      DCHECK_EQ(ui::PAGE_TRANSITION_TYPED, core_transition);
+      navigation_metrics::RecordOmniboxURLNavigation(match.destination_url);
+    }
   }
 
   if (disposition != WindowOpenDisposition::NEW_BACKGROUND_TAB) {
