@@ -62,6 +62,7 @@ struct WebFloatPoint;
 struct WebMediaPlayerAction;
 struct WebPluginAction;
 struct WebPoint;
+struct WebRemoteScrollProperties;
 struct WebWindowFeatures;
 
 class WebView : protected WebWidget {
@@ -190,6 +191,12 @@ class WebView : protected WebWidget {
   virtual bool ScrollFocusedEditableElementIntoRect(const WebRect&) {
     return false;
   }
+
+  // Scrolls the given region inside the frame into view.
+  virtual void ScrollRectInRemoteFrameToVisible(
+      WebRemoteFrame*,
+      const WebRect&,
+      const WebRemoteScrollProperties&) {}
 
   // Smooth scroll the root layer to |targetX|, |targetY| in |durationMs|.
   virtual void SmoothScroll(int target_x, int target_y, long duration_ms) {}

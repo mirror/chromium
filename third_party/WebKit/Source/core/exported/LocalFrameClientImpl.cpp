@@ -1052,4 +1052,11 @@ void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
 }
 
+void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
+    const WebRect& rect_to_scroll,
+    const WebRemoteScrollProperties& properties) {
+  web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
+                                                         properties);
+}
+
 }  // namespace blink

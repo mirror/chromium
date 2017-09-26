@@ -31,6 +31,7 @@
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
@@ -72,8 +73,32 @@
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/WebRect.h"
+#include "public/platform/WebRemoteScrollProperties.h"
 
 namespace blink {
+
+namespace {
+using WebRemoteScrollAlignment = WebRemoteScrollProperties::Alignment;
+WebRemoteScrollAlignment ToWebRemoteScrollAlignment(
+    const ScrollAlignment& alignment) {
+  if (alignment == ScrollAlignment::kAlignCenterIfNeeded)
+    return WebRemoteScrollAlignment::kCenterIfNeeded;
+  if (alignment == ScrollAlignment::kAlignToEdgeIfNeeded)
+    return WebRemoteScrollAlignment::kToEdgeIfNeeded;
+  if (alignment == ScrollAlignment::kAlignTopAlways)
+    return WebRemoteScrollAlignment::kTopAlways;
+  if (alignment == ScrollAlignment::kAlignBottomAlways)
+    return WebRemoteScrollAlignment::kBottomAlways;
+  if (alignment == ScrollAlignment::kAlignLeftAlways)
+    return WebRemoteScrollAlignment::kLeftAlways;
+  if (alignment == ScrollAlignment::kAlignRightAlways)
+    return WebRemoteScrollAlignment::kRightAlways;
+  NOTREACHED();
+  return WebRemoteScrollAlignment::kCenterIfNeeded;
+}
+
+}  // namespace
 
 // Used by flexible boxes when flexing this element and by table cells.
 typedef WTF::HashMap<const LayoutBox*, LayoutUnit> OverrideSizeMap;
@@ -731,6 +756,19 @@ void LayoutBox::ScrollRectToVisibleRecursive(
         new_rect, align_x, align_y, scroll_type,
         make_visible_in_visual_viewport, scroll_behavior,
         is_for_scroll_sequence);
+  } else if (GetFrame()->IsLocalRoot() && !GetFrame()->IsMainFrame()) {
+    new_rect = EnclosingLayoutRect(
+        View()
+            ->LocalToAbsoluteQuad(FloatRect(new_rect),
+                                  kUseTransforms | kTraverseDocumentBoundaries)
+            .BoundingBox());
+    GetFrame()->Client()->ScrollRectToVisibleInParentFrame(
+        WebRect(new_rect.X().ToInt(), new_rect.Y().ToInt(),
+                new_rect.Width().ToInt(), new_rect.Height().ToInt()),
+        WebRemoteScrollProperties(ToWebRemoteScrollAlignment(align_x),
+                                  ToWebRemoteScrollAlignment(align_y),
+                                  scroll_type, make_visible_in_visual_viewport,
+                                  scroll_behavior, is_for_scroll_sequence));
   }
 }
 

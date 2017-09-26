@@ -82,6 +82,7 @@
 #include "core/input/TouchActionUtil.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/LayoutEmbeddedContent.h"
+#include "core/layout/ScrollAlignment.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
@@ -117,6 +118,8 @@
 #include "platform/exported/WebActiveGestureAnimation.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/geometry/FloatRect.h"
+#include "platform/geometry/IntRect.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/graphics/FirstPaintInvalidationTracking.h"
@@ -145,6 +148,7 @@
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebMenuSourceType.h"
+#include "public/platform/WebRemoteScrollProperties.h"
 #include "public/platform/WebTextInputInfo.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebVector.h"
@@ -202,7 +206,29 @@ static const float leftBoxRatio = 0.3f;
 static const int caretPadding = 10;
 
 namespace blink {
+namespace {
+using WebRemoteScrollAlignment = WebRemoteScrollProperties::Alignment;
+ScrollAlignment ToScrollAlignment(WebRemoteScrollAlignment alignment) {
+  switch (alignment) {
+    case WebRemoteScrollAlignment::kCenterIfNeeded:
+      return ScrollAlignment::kAlignCenterIfNeeded;
+    case WebRemoteScrollAlignment::kToEdgeIfNeeded:
+      return ScrollAlignment::kAlignToEdgeIfNeeded;
+    case WebRemoteScrollAlignment::kTopAlways:
+      return ScrollAlignment::kAlignTopAlways;
+    case WebRemoteScrollAlignment::kBottomAlways:
+      return ScrollAlignment::kAlignBottomAlways;
+    case WebRemoteScrollAlignment::kLeftAlways:
+      return ScrollAlignment::kAlignLeftAlways;
+    case WebRemoteScrollAlignment::kRightAlways:
+      return ScrollAlignment::kAlignRightAlways;
+    default:
+      NOTREACHED();
+      return ScrollAlignment::kAlignCenterIfNeeded;
+  }
+}
 
+}  // namespace
 // Change the text zoom level by kTextSizeMultiplierRatio each time the user
 // zooms text in or out (ie., change by 20%).  The min and max values limit
 // text zoom to half and 3x the original text size.  These three values match
@@ -2552,6 +2578,31 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
   }
 
   return true;
+}
+
+void WebViewImpl::ScrollRectInRemoteFrameToVisible(
+    WebRemoteFrame* web_remote_frame,
+    const WebRect& rect_to_scroll,
+    const WebRemoteScrollProperties& properties) {
+  Element* owner_element =
+      WebFrame::ToCoreFrame(*web_remote_frame)->DeprecatedLocalOwner();
+  DCHECK(owner_element);
+  LayoutObject* owner_object = owner_element->GetLayoutObject();
+
+  // Schedule the scroll.
+  auto* scroll_sequencer = GetPage()->GetSmoothScrollSequencer();
+  scroll_sequencer->AbortAnimations();
+  LayoutRect new_rect_to_scroll = EnclosingLayoutRect(
+      owner_object
+          ->LocalToAncestorQuad(FloatRect(rect_to_scroll), owner_object->View(),
+                                kUseTransforms | kTraverseDocumentBoundaries)
+          .BoundingBox());
+  owner_object->EnclosingBox()->ScrollRectToVisibleRecursive(
+      LayoutRect(new_rect_to_scroll), ToScrollAlignment(properties.align_x),
+      ToScrollAlignment(properties.align_y), properties.GetScrollType(),
+      properties.make_visible_in_visual_viewport,
+      properties.GetScrollBehavior(), properties.is_for_scroll_sequence);
+  scroll_sequencer->RunQueuedAnimations();
 }
 
 void WebViewImpl::SmoothScroll(int target_x, int target_y, long duration_ms) {

@@ -95,6 +95,7 @@ class CompositorMutatorImpl;
 class WebRemoteFrame;
 class WebSettingsImpl;
 class WebViewScheduler;
+struct WebRemoteScrollProperties;
 
 class CORE_EXPORT WebViewImpl final
     : public WebView,
@@ -184,6 +185,10 @@ class CORE_EXPORT WebViewImpl final
   void SetInitialFocus(bool reverse) override;
   void ClearFocusedElement() override;
   bool ScrollFocusedEditableElementIntoRect(const WebRect&) override;
+  void ScrollRectInRemoteFrameToVisible(
+      WebRemoteFrame*,
+      const WebRect&,
+      const WebRemoteScrollProperties&) override;
   void SmoothScroll(int target_x, int target_y, long duration_ms) override;
   void ZoomToFindInPageRect(const WebRect&);
   void AdvanceFocus(bool reverse) override;
