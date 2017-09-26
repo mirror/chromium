@@ -16,6 +16,24 @@
       "revId": "61604a11f1b02ea116a1a29770bde7484f17ddc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa4f238_b1ce83d5",
+        "filename": "base/tracked_objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-26T16:49:45Z",
+      "side": 0,
+      "message": "tracked_objects no longer exists.",
+      "parentUuid": "60069ef7_5ea5b733",
+      "revId": "61604a11f1b02ea116a1a29770bde7484f17ddc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
