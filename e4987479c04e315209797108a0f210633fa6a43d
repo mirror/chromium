@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24095b10_609597fa",
+        "filename": "extensions/browser/api/declarative_net_request/utils.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-26T18:33:00Z",
+      "side": 1,
+      "message": "Do we need this in non-test code? Move to test only target?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "e4987479c04e315209797108a0f210633fa6a43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
