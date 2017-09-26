@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser;
 
+import android.os.Build;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.view.textclassifier.TextClassifier;
@@ -57,7 +58,8 @@ public class SmartSelectionClient implements SelectionClient {
      */
     public static SmartSelectionClient create(
             ResultCallback callback, WindowAndroid windowAndroid, WebContents webContents) {
-        if (!sEnabled) return null;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null;
+
         SmartSelectionProvider provider = new SmartSelectionProvider(callback, windowAndroid);
         return new SmartSelectionClient(provider, callback, webContents);
     }

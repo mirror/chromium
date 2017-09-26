@@ -72103,6 +72103,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Search.ContextualSearchSmartSelect"
+    enum="ContextualSearchSmartSelectActivations">
+  <owner>donnd@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    Whether Smart Select was allowed to handle a gesture that would normally
+    activate contextual search.  Logged when CS is triggered by long-press.
+    Implemented for Android.
+  </summary>
+</histogram>
+
 <histogram name="Search.ContextualSearchStartedWithCapitalResultsSeen"
     enum="ContextualSearchResultsSeen">
   <obsolete>
