@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d46af552_c191cf67",
+        "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T18:47:01Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll split them in my next CL where I\u0027ll remove the return type.",
+      "parentUuid": "e5accd42_8c83e729",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "90b986a57640dfcb0f925e1d018042f74a43b9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc3069a7_e8a7632a",
         "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
         "patchSetId": 2
@@ -53,6 +77,30 @@
       "writtenOn": "2017-09-22T20:24:55Z",
       "side": 1,
       "message": "why Raw info?",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "90b986a57640dfcb0f925e1d018042f74a43b9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b35b1aa_aebb4066",
+        "filename": "components/autofill/core/browser/phone_email_validation_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T18:47:01Z",
+      "side": 1,
+      "message": "Good point again, I\u0027ll pass the app locale in my next refactor.",
+      "parentUuid": "d1980101_19499c0b",
       "range": {
         "startLine": 56,
         "startChar": 33,
