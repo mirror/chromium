@@ -239,8 +239,14 @@ class RasterBufferProviderTest
 
   void AppendTask(unsigned id, const gfx::Size& size) {
     auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
-    resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                       viz::RGBA_8888, gfx::ColorSpace());
+    if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY) {
+      resource->AllocateWithGpuMemoryBuffer(
+          size, viz::RGBA_8888, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
+          gfx::ColorSpace());
+    } else {
+      resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                         viz::RGBA_8888, gfx::ColorSpace());
+    }
 
     // The raster buffer has no tile ids associated with it for partial update,
     // so doesn't need to provide a valid dirty rect.
@@ -258,8 +264,14 @@ class RasterBufferProviderTest
     const gfx::Size size(1, 1);
 
     auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
-    resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                       viz::RGBA_8888, gfx::ColorSpace());
+    if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY) {
+      resource->AllocateWithGpuMemoryBuffer(
+          size, viz::RGBA_8888, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
+          gfx::ColorSpace());
+    } else {
+      resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                         viz::RGBA_8888, gfx::ColorSpace());
+    }
 
     std::unique_ptr<RasterBuffer> raster_buffer =
         raster_buffer_provider_->AcquireBufferForRaster(resource.get(), 0, 0);

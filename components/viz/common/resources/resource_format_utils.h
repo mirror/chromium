@@ -29,10 +29,13 @@ VIZ_RESOURCE_FORMAT_EXPORT unsigned int GLCopyTextureInternalFormat(
 
 VIZ_RESOURCE_FORMAT_EXPORT gfx::BufferFormat BufferFormat(
     ResourceFormat format);
+
 VIZ_RESOURCE_FORMAT_EXPORT bool IsResourceFormatCompressed(
     ResourceFormat format);
+
 VIZ_RESOURCE_FORMAT_EXPORT bool DoesResourceFormatSupportAlpha(
     ResourceFormat format);
+
 VIZ_RESOURCE_FORMAT_EXPORT GrPixelConfig ToGrPixelConfig(ResourceFormat format);
 
 }  // namespace viz
