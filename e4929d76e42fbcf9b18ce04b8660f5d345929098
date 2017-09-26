@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1342a51_7e327dc3",
+        "filename": "services/service_manager/embedder/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T23:14:09Z",
+      "side": 1,
+      "message": "Can\u0027t do this. If you want to move the switches to another target, you will unfortunately need a dedicated export macro and this also needs to be a component target.",
+      "revId": "e4929d76e42fbcf9b18ce04b8660f5d345929098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
