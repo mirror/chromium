@@ -70,6 +70,24 @@
       "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72dfd7c2_ed53ce5c",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-26T16:03:51Z",
+      "side": 1,
+      "message": "Yes, I understand your concerns.",
+      "parentUuid": "0ca81b46_75126b01",
+      "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
