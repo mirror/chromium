@@ -150,8 +150,6 @@ class ExtensionServiceInterface
 
   // Adds |extension| to this ExtensionService and notifies observers that the
   // extension has been loaded.
-  // TODO(michaelpg): Refactor this function into single-purpose functions and
-  // migrate common code into ExtensionRegistrar.
   virtual void AddExtension(const extensions::Extension* extension) = 0;
 
   // Check if we have preferences for the component extension and, if not or if
@@ -297,12 +295,15 @@ class ExtensionService
   // This state is stored in preferences, so persists until Chrome restarts.
   //
   // Component, external component and whitelisted policy installed extensions
-  // are exempt from being Blocked (see CanBlockExtension).
+  // are exempt from being Blocked (see CanBlockExtension in .cc file).
   void BlockAllExtensions();
 
   // All blocked extensions are reverted to their previous state, and are
   // reloaded. Newly added extensions are no longer automatically blocked.
   void UnblockAllExtensions();
+
+  // Returns true if extensions are in a blocked state.
+  bool AreExtensionsBlocked();
 
   // Updates the |extension|'s granted permissions lists to include all
   // permissions in the |extension|'s manifest and re-enables the
@@ -502,7 +503,7 @@ class ExtensionService
 
   // Removes the extension with the given id from the list of
   // terminated extensions if it is there.
-  void UntrackTerminatedExtension(const std::string& id);
+  void UntrackTerminatedExtension(const std::string& extension_id);
 
   // Update preferences for a new or updated extension; notify observers that
   // the extension is installed, e.g., to update event handlers on background
@@ -515,17 +516,6 @@ class ExtensionService
                                 const syncer::StringOrdinal& page_ordinal,
                                 const std::string& install_parameter);
 
-  // Handles sending notification that |extension| was loaded.
-  // TODO(michaelpg): Move to a delegate provided to ExtensionRegistrar, so
-  // ExtensionRegistrar is responsible for calling this at the right times.
-  void NotifyExtensionLoaded(const extensions::Extension* extension);
-
-  // Handles updating the profile when |extension| is disabled or removed.
-  // TODO(michaelpg): Move to a delegate provided to ExtensionRegistrar, so
-  // ExtensionRegistrar is responsible for calling this at the right times.
-  void PostDeactivateExtension(
-      scoped_refptr<const extensions::Extension> extension);
-
   // Common helper to finish installing the given extension.
   void FinishInstallation(const extensions::Extension* extension);
 
@@ -533,9 +523,6 @@ class ExtensionService
   // (e.g., due to an upgrade).
   void CheckPermissionsIncrease(const extensions::Extension* extension,
                                 bool is_extension_loaded);
-
-  // Helper that updates the active extension list used for crash reporting.
-  void UpdateActiveExtensionsInCrashReporter();
 
   // Helper to get the disable reasons for an installed (or upgraded) extension.
   // A return value of disable_reason::DISABLE_NONE indicates that we should

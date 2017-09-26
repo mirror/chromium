@@ -483,6 +483,8 @@ static_library("extensions") {
     "chrome_extension_function_details.h",
     "chrome_extension_host_delegate.cc",
     "chrome_extension_host_delegate.h",
+    "chrome_extension_registrar_delegate.cc",
+    "chrome_extension_registrar_delegate.h",
     "chrome_extension_web_contents_observer.cc",
     "chrome_extension_web_contents_observer.h",
     "chrome_extensions_browser_client.cc",
