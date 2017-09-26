@@ -126,11 +126,18 @@ bool Launch(content::BrowserContext* context,
             const std::string& app_id,
             const base::Optional<std::string>& intent,
             int event_flags,
-            const gfx::Rect& bounds) {
+            const gfx::Rect& bounds,
+            const std::string& package_name,
+            const std::string& activity) {
   ArcAppListPrefs* prefs = ArcAppListPrefs::Get(context);
   CHECK(prefs);
 
   std::unique_ptr<ArcAppListPrefs::AppInfo> app_info = prefs->GetApp(app_id);
+  if (!package_name.empty() && !activity.empty()) {
+    // If there is a |package_name| and |activity| specified, honor them.
+    app_info->package_name = package_name;
+    app_info->activity = activity;
+  }
   if (!app_info) {
     VLOG(2) << "Cannot launch unavailable app: " << app_id << ".";
     return false;
@@ -182,11 +189,15 @@ class AppLauncher {
   AppLauncher(content::BrowserContext* context,
               const std::string& app_id,
               const base::Optional<std::string>& launch_intent,
-              int event_flags)
+              int event_flags,
+              const std::string& package_name,
+              const std::string& activity)
       : context_(context),
         app_id_(app_id),
         launch_intent_(launch_intent),
-        event_flags_(event_flags) {}
+        event_flags_(event_flags),
+        package_name_(package_name),
+        activity_(activity) {}
 
   // This will launch the request and after the return the creator does not
   // need to delete the object anymore.
@@ -226,6 +237,8 @@ class AppLauncher {
   const std::string app_id_;
   const base::Optional<std::string> launch_intent_;
   const int event_flags_;
+  const std::string package_name_;
+  const std::string activity_;
 
   void CanHandleResolutionCallback(bool can_handle) {
     LaunchAppWithRect(GetTargetRect(can_handle ? kNexus7Size : kNexus5Size));
@@ -234,7 +247,8 @@ class AppLauncher {
   }
 
   void LaunchAppWithRect(const gfx::Rect& bounds) {
-    Launch(context_, app_id_, launch_intent_, event_flags_, bounds);
+    Launch(context_, app_id_, launch_intent_, event_flags_, bounds,
+           package_name_, activity_);
   }
 
   DISALLOW_COPY_AND_ASSIGN(AppLauncher);
@@ -252,6 +266,9 @@ const char kPlayStorePackage[] = "com.android.vending";
 const char kPlayStoreActivity[] = "com.android.vending.AssetBrowserActivity";
 const char kSettingsAppId[] = "mconboelelhjpkbdhhiijkgcimoangdj";
 const char kInitialStartParam[] = "S.org.chromium.arc.start_type=initialStart";
+const char kSettingsAppPackage[] = "com.android.settings";
+const char kSettingsAppDomainUrlActivity[] =
+    "com.android.settings.Settings$ManageDomainUrlsActivity";
 
 bool ShouldShowInLauncher(const std::string& app_id) {
   for (auto* const id : kAppIdsHiddenInLauncher) {
@@ -259,6 +276,16 @@ bool ShouldShowInLauncher(const std::string& app_id) {
       return false;
   }
   return true;
+}
+
+bool LaunchAndroidSettingsAppWithIntent(
+    content::BrowserContext* context,
+    int event_flags,
+    const base::Optional<std::string>& launch_intent,
+    const std::string& package_name,
+    const std::string& activity) {
+  return LaunchAppWithIntent(context, kSettingsAppId, launch_intent,
+                             event_flags, package_name, activity);
 }
 
 bool LaunchAndroidSettingsApp(content::BrowserContext* context,
@@ -280,15 +307,17 @@ bool LaunchPlayStoreWithUrl(const std::string& url) {
 bool LaunchApp(content::BrowserContext* context,
                const std::string& app_id,
                int event_flags) {
-  return LaunchAppWithIntent(context, app_id,
-                             base::nullopt /* launch_intent */,
-                             event_flags);
+  return LaunchAppWithIntent(context, app_id, base::nullopt /* launch_intent */,
+                             event_flags, "" /* package_name */,
+                             "" /* activity */);
 }
 
 bool LaunchAppWithIntent(content::BrowserContext* context,
                          const std::string& app_id,
                          const base::Optional<std::string>& launch_intent,
-                         int event_flags) {
+                         int event_flags,
+                         const std::string& package_name,
+                         const std::string& activity) {
   DCHECK(!launch_intent.has_value() || !launch_intent->empty());
 
   Profile* const profile = Profile::FromBrowserContext(context);
@@ -360,7 +389,8 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
   }
   arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context);
 
-  return (new AppLauncher(context, app_id, launch_intent, event_flags))
+  return (new AppLauncher(context, app_id, launch_intent, event_flags,
+                          package_name, activity))
       ->LaunchAndRelease();
 }
 
