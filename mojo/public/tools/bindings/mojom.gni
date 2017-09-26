@@ -184,6 +184,13 @@ if (enable_mojom_typemapping) {
 #       be serialized and deserialized using a legacy IPC::ParamTraits
 #       specialization.
 #
+#   scramble_message_ids (optional)
+#       If set to |true| (the default), generated mojom interfaces will use
+#       scrambled ordinal identifiers in encoded messages. Scrambling is done
+#       using the salt provided by the global configuration value
+#       |mojom_message_id_salt|, which must be set in the current build
+#       configuration.
+#
 #   component_output_prefix (optional)
 #       The prefix to use for the output_name of any component library emitted
 #       for generated C++ bindings. If this is omitted, C++ bindings targets are
@@ -322,6 +329,10 @@ template("mojom") {
       "--bytecode_path",
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
+
+    if (!defined(invoker.scramble_message_ids) || invoker.scramble_message_ids) {
+      common_generator_args += [ "--scramble_message_ids" ]
+    }
 
     if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
       common_generator_args += [ "--allow_native_structs" ]
