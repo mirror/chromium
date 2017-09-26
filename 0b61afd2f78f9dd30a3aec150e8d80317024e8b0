@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59db4e3a_fdd0a718",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-26T15:46:20Z",
+      "side": 1,
+      "message": "Why not dismiss the menu?\nThe policy of Bling if to always take into account the latest user action.",
+      "range": {
+        "startLine": 285,
+        "startChar": 21,
+        "endLine": 285,
+        "endChar": 41
+      },
+      "revId": "0b61afd2f78f9dd30a3aec150e8d80317024e8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
