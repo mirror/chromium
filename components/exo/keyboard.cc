@@ -100,6 +100,23 @@ bool IsPhysicalKeyboardEnabled() {
   return false;
 }
 
+// The accelerator keys reserved to be processed by chrome.
+const std::tuple<ui::KeyboardCode, int> kReservedAccelerators[] = {
+    std::make_tuple(ui::VKEY_SPACE, ui::EF_CONTROL_DOWN),
+    std::make_tuple(ui::VKEY_SPACE, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN),
+    std::make_tuple(ui::VKEY_F13, ui::EF_NONE),
+    std::make_tuple(ui::VKEY_I, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN)};
+
+bool IsReservedShortcut(const ui::KeyEvent* event) {
+  for (const auto& entry : kReservedAccelerators) {
+    if (event->flags() == std::get<int>(entry) &&
+        event->key_code() == std::get<ui::KeyboardCode>(entry)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +128,7 @@ Keyboard::Keyboard(KeyboardDelegate* delegate)
           kExpirationDelayForPendingKeyAcksMs)),
       weak_ptr_factory_(this) {
   auto* helper = WMHelper::GetInstance();
-  helper->AddPostTargetHandler(this);
+  helper->AddPreTargetHandler(this);
   helper->AddFocusObserver(this);
   helper->AddTabletModeObserver(this);
   helper->AddInputDeviceEventObserver(this);
@@ -125,7 +142,7 @@ Keyboard::~Keyboard() {
     focus_->RemoveSurfaceObserver(this);
   auto* helper = WMHelper::GetInstance();
   helper->RemoveFocusObserver(this);
-  helper->RemovePostTargetHandler(this);
+  helper->RemovePreTargetHandler(this);
   helper->RemoveTabletModeObserver(this);
   helper->RemoveInputDeviceEventObserver(this);
 }
@@ -174,15 +191,6 @@ void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
 // ui::EventHandler overrides:
 
 void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
-  // Pass accelerators to ShellSurfaceWidget before passing it to the delegate
-  // if ack key event is not needed.
-  if (!are_keyboard_key_acks_needed_) {
-    if (focus_ && ProcessAccelerator(focus_, event)) {
-      event->StopPropagation();
-      return;
-    }
-  }
-
   // These modifiers reflect what Wayland is aware of.  For example,
   // EF_SCROLL_LOCK_ON is missing because Wayland doesn't support scroll lock.
   const int kModifierMask = ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN |
@@ -206,7 +214,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
       auto it =
           std::find(pressed_keys_.begin(), pressed_keys_.end(), event->code());
       if (it == pressed_keys_.end()) {
-        if (focus_ && !consumed_by_ime) {
+        if (focus_ && !consumed_by_ime && !IsReservedShortcut(event)) {
           uint32_t serial = delegate_->OnKeyboardKey(event->time_stamp(),
                                                      event->code(), true);
           if (are_keyboard_key_acks_needed_) {
@@ -214,6 +222,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
                 {serial,
                  {*event, base::TimeTicks::Now() +
                               expiration_delay_for_pending_key_acks_}});
+            event->StopPropagation();
           }
         }
 
@@ -224,7 +233,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
       auto it =
           std::find(pressed_keys_.begin(), pressed_keys_.end(), event->code());
       if (it != pressed_keys_.end()) {
-        if (focus_ && !consumed_by_ime) {
+        if (focus_ && !consumed_by_ime && !IsReservedShortcut(event)) {
           uint32_t serial = delegate_->OnKeyboardKey(event->time_stamp(),
                                                      event->code(), false);
           if (are_keyboard_key_acks_needed_) {
@@ -232,6 +241,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
                 {serial,
                  {*event, base::TimeTicks::Now() +
                               expiration_delay_for_pending_key_acks_}});
+            event->StopPropagation();
           }
         }
 

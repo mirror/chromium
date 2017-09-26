@@ -75,13 +75,6 @@ const Accelerator kCloseWindowAccelerators[] = {
     {ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
     {ui::VKEY_F4, ui::EF_ALT_DOWN}};
 
-// The accelerator keys reserved to be processed by the focus manager.
-const Accelerator kReservedAccelerators[] = {
-    {ui::VKEY_SPACE, ui::EF_CONTROL_DOWN},
-    {ui::VKEY_SPACE, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
-    {ui::VKEY_F13, ui::EF_NONE},
-    {ui::VKEY_I, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN}};
-
 class CustomFrameView : public views::NonClientFrameView {
  public:
   explicit CustomFrameView(views::Widget* widget) : widget_(widget) {}
@@ -208,16 +201,7 @@ class ShellSurfaceWidget : public views::Widget {
   void OnKeyEvent(ui::KeyEvent* event) override {
     // TODO(hidehiko): Handle ESC + SHIFT + COMMAND accelerator key
     // to escape pinned mode.
-    for (const auto& entry : kReservedAccelerators) {
-      // Handle only reserved accelerators.
-      if (event->flags() == entry.modifiers &&
-          event->key_code() == entry.keycode) {
-        if (GetFocusManager()->ProcessAccelerator(ui::Accelerator(*event)))
-          event->StopPropagation();
-      }
-    }
-    // Do not call Widget::OnKeyEvent that eats focus management keys (like the
-    // tab key) as well.
+    views::Widget::OnKeyEvent(event);
   }
 
  private:
