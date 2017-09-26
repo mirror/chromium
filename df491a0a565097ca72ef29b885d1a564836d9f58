@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c180c7_17824336",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T01:34:16Z",
+      "side": 1,
+      "message": "Nit (optional)\n\nvar updateDestination \u003d dest \u003d\u003e {\n dest.capabilities \u003d printerInfo.capabilities;\n this.updateDestination_(dest);\n};\n\nif (Array.isArray(destinations)) {\n  destinations.forEach(updateDestination);\n} else {\n  updateDestination(destinations);\n}",
+      "revId": "df491a0a565097ca72ef29b885d1a564836d9f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
