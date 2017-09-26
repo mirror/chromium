@@ -22,6 +22,30 @@
       "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71a26ce_f51a0ee7",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_request.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T18:19:55Z",
+      "side": 1,
+      "message": "As for the runtime enforcement, I\u0027d like your opinion on my thought process/approach: Basically, all mojom.CopyOutputRequests should be created automatically via the struct traits (i.e., users only deal with viz::CopyOutputRequests). So, because viz::CopyOutputRequests already DCHECK against invalid values, the struct traits should never produce a mojom.CopyOutputRequest with bad values. Therefore, the runtime checks you noticed in the struct traits were meant purely to detect corrupted data after transport (or buggy struct traits conversions). I can remove the runtime checks, and/or replace them with DCHECKs, or something else...what do you suggest? :)\n\nAs for the data model aspect (use of Vector2d instead of straight result Rect): Note that the existing API allows clients to make multiple copy requests on the same layer/surface, but for different subrects. This is useful for, say, only copying the updated \"damage region\" of a surface, instead of the whole thing. The problem introduced by adding scaling ratios is that now it\u0027ll be quite common that the scaled |area| will be a result rect that does not have whole-numbered coords. For example, if we\u0027re downscaling 640px→320px (which is 2→1), then a copy request for a subrect like (10,10)x[25,25] would have a result of (5,5)x[12.5,12.5]. However, that means the service impl executing the copy request will discover it has to produce (5,5)x[13,13] in order to provide the full set of \"affected\" result pixels. This is a detail I felt should be handled by the service, rather than clients.\n\nIn addition, when it produces a scaled subregion copy, we need the service to use the same scaling algorithms/steps and config it would have used for scaling the whole surface. This is to prevent artifacts in the results when using copy requests to re-render only the updated damage regions of surfaces (because a different set of scaling steps would not transform the pixels exactly the same way).\n\nLooking at it another way, this API actually makes it much easier for client-side code to do the right thing: Set a scale ratio and select the |area| and the CopyOutputResult will contain all \"affected\" pixels (and the |rect| in the CopyOutputResult will tell you which ones).",
+      "parentUuid": "ade61408_e49ca769",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
