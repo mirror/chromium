@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d7db32d_c76caf25",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "Just curious, is this approach of mocking Windows APIs for test used anywhere else? The \"better\" approach may be to make QwaveAPI mockable and allow it to be injected via the socket\u0027s constructor, but I\u0027m curious what chromium devs think.",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1f3891_d08fb0d6",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "I think it would be better if the test just went through the UDP socket API and left DscpManager as an implementation detail. Either way, there should be some test that goes through the UDP socket API.",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a34e38_60e7a632",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "This is testing a lot of things. I think it could easily be broken into separate tests for each distinct behavior being tested. For example:\n\n* IsActive returns false if no value is set\n* IsActive returns true if value is set\n* PrepareForSend is a no-op if no value is set?\n* PrepareForSend adds and sets the flow if a value is set\n* A second PrepareForSend just calls add, but doesn\u0027t need to call set again.\n* PrepareForSend for the same address doesn\u0027t do anything\n* etc.\n\nOf course, that breakdown would change if the test were written in terms of UdpSocketWin",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2540ce3_1cce4b1a",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "Do you plan to do that in this CL?",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081956f0_d07cc48f",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "The documentation says \"on input this parameter must be 0\"; is that incorrect? It sounds like it since it\u0027s listed as an \"in/out\" parameter and not just out. Have you tested this with multiple destination addresses though?",
+      "range": {
+        "startLine": 1288,
+        "startChar": 51,
+        "endLine": 1288,
+        "endChar": 59
+      },
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a885b0cf_f3a4015d",
+        "filename": "net/socket/udp_socket_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "nit: Period at end of comment, and capitalize QoS in comments here and below?",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1f502e_ad808b88",
+        "filename": "net/socket/udp_socket_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "Seems like it may be simpler if DscpManager managed the qos handle itself, rather than being created externally and passed in.",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb8d5c1_15a9ed81",
+        "filename": "net/socket/udp_socket_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-26T21:10:13Z",
+      "side": 1,
+      "message": "Would it simplify the code to just use DscpManager for both cases, calling PrepareForSend(remote_address_) in the connected case?",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
