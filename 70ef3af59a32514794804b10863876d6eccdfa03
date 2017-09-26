@@ -22,6 +22,30 @@
       "revId": "70ef3af59a32514794804b10863876d6eccdfa03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81f5a0a_b0968144",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-26T15:32:50Z",
+      "side": 0,
+      "message": "We still cannot add this check. As I see the image decoders, even when the color behavior is set to TransformToSRGB do not properly set the color space of internal SkBitmap (it is still nullptr). We also have issues with HTMLVideoElement and Blob. I agree that this is a good check to make sure the pipeline is color corrected. I filed a bug for this: crbug.com/768855.",
+      "parentUuid": "f235fd90_17a63fcf",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 15
+      },
+      "revId": "70ef3af59a32514794804b10863876d6eccdfa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
