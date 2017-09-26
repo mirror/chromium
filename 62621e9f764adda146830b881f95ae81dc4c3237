@@ -34,6 +34,24 @@
       "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7048508_9db23cbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/View.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-26T00:49:22Z",
+      "side": 1,
+      "message": "Yep. We have a helper for that because of shadow dom. widget.hasFocus();\nif (view.hasFocus()) should work.",
+      "parentUuid": "7e39dc80_a04c653c",
+      "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
