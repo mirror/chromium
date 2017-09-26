@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2ffbf9_01bcc81b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T18:26:22Z",
+      "side": 1,
+      "message": "nit: Add curly brackets around multi-line if.",
+      "range": {
+        "startLine": 215,
+        "startChar": 50,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "5daacff18c1fdcacc036e720377583b316043503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
