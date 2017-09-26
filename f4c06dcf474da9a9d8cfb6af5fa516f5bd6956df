@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fd5b8e1_16a811c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66214e07_3a0200d8",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c79ac00c_d6f6985f",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2010fa1a_d0b150d4",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79ac00c_d6f6985f",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb4d30b_79a9dc58",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-26T06:09:16Z",
       "side": 1,
       "message": "What happens if we call WriteDecoderBuffer() twice, while the pipe isn\u0027t writable? In that case we will call ArmOrNotify() twice, but it\u0027s unclear to me what\u0027s the expected behavior here. Will we get notified again after writing everything?\n\nMy feeling is that we should only call ArmOrNotify() if the pipe isn\u0027t writable, and we do have data to write. But the old code calls ArmOrNotify() right in the constructor, which seems not necessary to me. But I might be missing something.",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d67d16_90ed27e6",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "It\u0027s true that the documentation is not very clear here, but ArmOrNotify() is documented to \u0027always succeed\u0027 (Note that this is different from Arm(); ArmOrNotify() is just a convenience wrapper to Arm() with this guarantee).\n\nThe three cases are:\n  - Not armed, not writable: Arms the watcher.\n  - Not armed, writable: Posts the ready callback immediately.\n  - Armed, not writable: Does nothing.\n\nIt\u0027s only the last case that\u0027s poorly documented, but given that the test passes with a pipe size of 1, I\u0027m confident in my interpretation. We could separately track whether the watcher is armed ourselves to avoid making the call, but as long as the implementation is a no-op I don\u0027t see a reason to.\n\nI did add the DCHECKs() in the callback implementation specifically to test for issues with this usage.",
+      "parentUuid": "fdb4d30b_79a9dc58",
       "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f8f4221c_79d0a105",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "No, we don\u0027t need to call it if we have written everything.\n\nI\u0027ve moved the check down to match the read version of the code.",
+      "parentUuid": "3122570a_e751c149",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8717170b_8a9138ca",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa2bcec_bf2f6763",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8717170b_8a9138ca",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "531851b6_a8a25000",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "046edd1a_34974149",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8280de90_21cfa900",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
         "patchSetId": 1
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "f13570a4_91636c03",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8280de90_21cfa900",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfef9e79_ea66a407",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter_unittest.cc",
         "patchSetId": 1
@@ -147,6 +285,24 @@
       "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ce9442_2560546a",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-26T18:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfef9e79_ea66a407",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
