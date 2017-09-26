@@ -39,6 +39,7 @@ class PerfBenchmark(benchmark.Benchmark):
     if options.browser_type != 'reference':
       variations = self._GetVariationsBrowserArgs(options.finder_options)
       options.AppendExtraBrowserArgs(variations)
+    options.AppendExtraBrowserArgs('--disable-expiring-histograms')
     self.SetExtraBrowserOptions(options)
 
   @staticmethod

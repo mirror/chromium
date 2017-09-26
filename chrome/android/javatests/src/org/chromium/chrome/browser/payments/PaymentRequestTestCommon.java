@@ -50,6 +50,9 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 // TODO(yolandyan): move this class to its test rule once JUnit4 migration is over
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+})
 final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
                                                 PaymentRequestServiceObserverForTest,
                                                 CardUnmaskObserverForTest {

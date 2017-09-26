@@ -27,6 +27,9 @@ public abstract class BaseSwitches {
     // Default country code to be used for search engine localization.
     public static final String DEFAULT_COUNTRY_CODE_AT_INSTALL = "default-country-code";
 
+    // Disable expiring histograms for tests.
+    public static final String DISABLE_EXPIRING_HISTOGRAMS = "disable-expiring-histograms";
+
     // Prevent instantiation.
     private BaseSwitches() {}
 }
