@@ -3,6 +3,8 @@
 # found in the LICENSE file.
 
 typemaps = [
+  # TODO(klausw): is this line needed?
+  "//ui/gfx/mojo/buffer_types_for_blink.typemap",
   "//gpu/ipc/common/mailbox_holder_for_blink.typemap",
   "//gpu/ipc/common/sync_token.typemap",
   "//services/viz/public/cpp/compositing/begin_frame_args_for_blink.typemap",

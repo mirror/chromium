@@ -14,11 +14,13 @@
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/browser_thread.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "gpu/command_buffer/common/sync_token.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #include "gpu/ipc/common/gpu_surface_tracker.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "ui/gl/android/surface_texture.h"
@@ -162,12 +164,18 @@ void MailboxToSurfaceBridge::OnContextAvailable(
   }
 
   gl_ = context_provider_->ContextGL();
+  context_support_ = context_provider_->ContextSupport();
 
   if (!gl_) {
     DLOG(ERROR) << "Did not get a GL context";
     return;
   }
+  if (!context_support_) {
+    DLOG(ERROR) << "Did not get a ContextSupport";
+    return;
+  }
   InitializeRenderer();
+  is_initialized_ = true;
 }
 
 void MailboxToSurfaceBridge::CreateSurface(
@@ -268,6 +276,55 @@ bool MailboxToSurfaceBridge::CopyMailboxToSurfaceAndSwap(
   gl_->DeleteTextures(1, &sourceTexture);
   gl_->SwapBuffers();
   return true;
+}
+
+void MailboxToSurfaceBridge::FetchSyncTokenNativeFd(
+    const gpu::SyncToken& sync_token,
+    const base::Callback<void(int32_t)>& callback) {
+  if (!context_support_) {
+    LOG(WARNING) << __FUNCTION__ << "ContextSupport not yet available";
+    std::move(callback).Run(-1);
+    return;
+  }
+  context_support_->FetchNativeSyncPointFd(sync_token, callback);
+}
+
+void MailboxToSurfaceBridge::GenerateMailbox(gpu::Mailbox& out_mailbox) {
+  if (!gl_) {
+    LOG(WARNING) << __FUNCTION__ << "GL not yet available";
+    return;
+  }
+  gl_->GenMailboxCHROMIUM(out_mailbox.name);
+}
+
+void MailboxToSurfaceBridge::ProduceSharedBuffer(
+    const gpu::Mailbox& mailbox,
+    gpu::SyncToken& sync_token,
+    const gfx::GpuMemoryBufferHandle& handle,
+    const gfx::Size& size,
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage) {
+  if (!context_support_) {
+    LOG(WARNING) << __FUNCTION__ << "ContextSupport not yet available";
+    return;
+  }
+  LOG(INFO) << __FUNCTION__ << ";;;";
+  auto buffer = gpu::GpuMemoryBufferImplAndroidHardwareBuffer::CreateFromHandle(
+      handle, size, format, usage, gpu::GpuMemoryBufferImpl::DestructionCallback());
+  LOG(INFO) << __FUNCTION__ << ";;;";
+
+  auto img = gl_->CreateImageCHROMIUM(
+      buffer->AsClientBuffer(), size.width(), size.height(), GL_RGBA);
+
+  GLuint tex = 0;
+  gl_->GenTextures(1, &tex);
+  gl_->BindTexture(GL_TEXTURE_2D, tex);
+  // glEGLImageTargetTexture2DOES equivalent? Expensive?
+  gl_->BindTexImage2DCHROMIUM(GL_TEXTURE_2D, img);
+  gl_->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
+  GLuint fence = gl_->InsertFenceSyncCHROMIUM();
+  gl_->ShallowFlushCHROMIUM();
+  gl_->GenSyncTokenCHROMIUM(fence, sync_token.GetData());
 }
 
 void MailboxToSurfaceBridge::DestroyContext() {

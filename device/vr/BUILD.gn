@@ -38,6 +38,7 @@ if (enable_vr) {
       "//gpu/ipc/common:interfaces",
       "//mojo/public/cpp/bindings",
       "//ui/gfx",
+      "//ui/gfx/mojo:mojo",
     ]
 
     if (is_android && (current_cpu == "arm" || current_cpu == "arm64")) {
@@ -147,5 +148,6 @@ mojom_component("mojo_bindings") {
     "//gpu/ipc/common:interfaces",
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
+    "//ui/gfx/mojo:mojo",
   ]
 }
