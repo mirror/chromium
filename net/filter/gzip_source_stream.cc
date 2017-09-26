@@ -11,8 +11,13 @@
 #include "base/bit_cast.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "base/strings/stringprintf.h"
 #include "net/base/io_buffer.h"
 #include "third_party/zlib/zlib.h"
+
+#include <stdio.h>
+#define LOG_FILE_NAME \
+  "/data/data/com.google.android.apps.meetings/files/gzip.txt"
 
 namespace net {
 
@@ -64,8 +69,10 @@ bool GzipSourceStream::Init() {
   int ret;
   if (type() == TYPE_GZIP || type() == TYPE_GZIP_FALLBACK) {
     ret = inflateInit2(zlib_stream_.get(), -MAX_WBITS);
+    DLOG(WARNING) << "Gzip inflateInit2 returned " << ret;
   } else {
     ret = inflateInit(zlib_stream_.get());
+    DLOG(WARNING) << "Gzip inflateInit returned " << ret;
   }
   DCHECK_NE(Z_VERSION_ERROR, ret);
   return ret == Z_OK;
@@ -85,6 +92,23 @@ std::string GzipSourceStream::GetTypeAsString() const {
   }
 }
 
+std::string IOBufferToString(const char* name, IOBuffer* buffer, int size) {
+  std::string out = base::StringPrintf("unsigned char %s[%d] = {", name, size);
+  for (int i = 0; i < size; ++i) {
+    out += base::StringPrintf("%d,", (unsigned char)buffer->data()[i]);
+  }
+
+  out += "};";
+
+  FILE* log_file = fopen(LOG_FILE_NAME, "ab+");
+  if (log_file != NULL) {
+    fprintf(log_file, "%s\n", out.c_str());
+    fclose(log_file);
+  }
+
+  return out.substr(0, 100);
+}
+
 int GzipSourceStream::FilterData(IOBuffer* output_buffer,
                                  int output_buffer_size,
                                  IOBuffer* input_buffer,
@@ -96,6 +120,10 @@ int GzipSourceStream::FilterData(IOBuffer* output_buffer,
   int input_data_size = input_buffer_size;
   int bytes_out = 0;
   bool state_compressed_entered = false;
+  // DLOG(WARNING) << "Gzip FilterData input_buffer " << input_buffer << " size
+  // " << input_buffer_size;
+  DLOG(WARNING) << IOBufferToString("input_buffer", input_buffer,
+                                    input_buffer_size);
   while (input_data_size > 0 && bytes_out < output_buffer_size) {
     InputState state = input_state_;
     switch (state) {
@@ -259,6 +287,8 @@ int GzipSourceStream::FilterData(IOBuffer* output_buffer,
     }
   }
   *consumed_bytes = input_buffer_size - input_data_size;
+  DLOG(WARNING) << "consumed_bytes " << *consumed_bytes;
+  DLOG(WARNING) << IOBufferToString("output_buffer", output_buffer, bytes_out);
   return bytes_out;
 }
 
