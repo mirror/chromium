@@ -24,6 +24,7 @@
 #include "base/timer/elapsed_timer.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "media/base/media_observer.h"
 #include "media/base/media_tracks.h"
 #include "media/base/overlay_info.h"
@@ -104,6 +105,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       WebMediaPlayerDelegate* delegate,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
+      scoped_refptr<viz::ContextProvider> context_provider,
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 
@@ -621,7 +623,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   int delegate_id_;
 
   WebMediaPlayerParams::DeferLoadCB defer_load_cb_;
-  WebMediaPlayerParams::Context3DCB context_3d_cb_;
 
   // Members for notifying upstream clients about internal memory usage.  The
   // |adjust_allocated_memory_cb_| must only be called on |main_task_runner_|.
@@ -650,6 +651,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   BufferedDataSourceHostImpl buffered_data_source_host_;
   UrlIndex* url_index_;
+  scoped_refptr<viz::ContextProvider> context_provider_;
 
   // Video rendering members.
   // The |compositor_| runs on the compositor thread, or if
