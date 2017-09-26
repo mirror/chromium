@@ -34,6 +34,24 @@
       "revId": "eefc387c1bdca6bd9fd3b7a5238f6ae67cb6cb07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1074384f_01b8e8b8",
+        "filename": "testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-26T18:27:18Z",
+      "side": 1,
+      "message": "run_telemetry_benchmark_as_googletest.py also have empty compile target in https://luci-logdog.appspot.com/v/?s\u003dchrome%2Fbb%2Fchromium.perf%2FLinux_Builder%2F148840%2F%2B%2Frecipes%2Fsteps%2Fget_compile_targets_for_scripts%2F0%2Flogs%2Fjson.output%2F0\n\nDo you know why we don\u0027t need to specify telemetry_perf_tests for run_telemetry_benchmark_as_googletest\u0027s compile target \u0026 things work fine?",
+      "parentUuid": "dc165b5c_a66ec690",
+      "revId": "eefc387c1bdca6bd9fd3b7a5238f6ae67cb6cb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
