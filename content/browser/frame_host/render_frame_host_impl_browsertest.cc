@@ -60,6 +60,17 @@ class PrerenderTestContentBrowserClient : public TestContentBrowserClient {
   DISALLOW_COPY_AND_ASSIGN(PrerenderTestContentBrowserClient);
 };
 
+class WaitReadyToCommit : public WebContentsObserver {
+ public:
+  WaitReadyToCommit(WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+  void Wait() { loop_.Run(); }
+  void ReadyToCommitNavigation(NavigationHandle*) override { loop_.Quit(); }
+
+ private:
+  base::RunLoop loop_;
+};
+
 }  // anonymous namespace
 
 // TODO(mlamouri): part of these tests were removed because they were dependent
@@ -690,6 +701,59 @@ IN_PROC_BROWSER_TEST_F(
   watcher.AlsoWaitForTitle(xhr_aborted_title);
 
   EXPECT_EQ(xhr_loaded_title, watcher.WaitAndGetTitle());
+}
+
+// A browser-initiated javascript-url navigation must not prevent the current
+// document from loading.
+// See https://crbug.com/766149.
+IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
+                       BrowserInitiatedJavascriptUrlDoNotPreventLoading) {
+  ControllableHttpResponse main_document_response(embedded_test_server(),
+                                                  "/main_document");
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Navigate. Send the header but not the body. The navigation commits in
+  //    the browser. The renderer is still loading the document.
+  {
+    GURL main_document_url(embedded_test_server()->GetURL("/main_document"));
+    shell()->LoadURL(main_document_url);
+    WaitReadyToCommit wait_ready_to_commit(shell()->web_contents());
+    main_document_response.WaitForRequest();
+    main_document_response.Send(
+        "HTTP/1.1 200 OK\r\n"
+        "Connection: close\r\n"
+        "Content-Type: text/html; charset=utf-8\r\n"
+        "\r\n");
+    wait_ready_to_commit.Wait();
+  }
+
+  // 2) A browser-initiated javascript-url navigation happens.
+  {
+    GURL javascript_url(
+        "javascript:window.domAutomationController.send('done')");
+    shell()->LoadURL(javascript_url);
+    DOMMessageQueue dom_message_queue(WebContents::FromRenderFrameHost(
+        shell()->web_contents()->GetMainFrame()));
+    std::string done;
+    EXPECT_TRUE(dom_message_queue.WaitForMessage(&done));
+    EXPECT_EQ("\"done\"", done);
+  }
+
+  // 3) The end of the response is issued. The renderer must be able to receive
+  //    it.
+  {
+    const base::string16 document_loaded_title =
+        base::ASCIIToUTF16("document loaded");
+    TitleWatcher watcher(shell()->web_contents(), document_loaded_title);
+    main_document_response.Send(
+        "<script>"
+        "   window.onload = function(){"
+        "     document.title = 'document loaded'"
+        "   }"
+        "</script>");
+    main_document_response.Done();
+    EXPECT_EQ(document_loaded_title, watcher.WaitAndGetTitle());
+  }
 }
 
 }  // namespace content
