@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec813795_ed47777d",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T18:39:10Z",
+      "side": 1,
+      "message": "Can this be injected by the behavior?\n\nattached() {\n  this.$.container.insertBefore(...);\n}",
+      "revId": "f413e95891586a0493bbe21ac884d1dc458bd279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b5bc5f_78823a60",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T18:39:10Z",
+      "side": 1,
+      "message": "Can this be injected by the behavior?\n\nattached() {\n  this.$.container.prepend(...);\n}",
+      "revId": "f413e95891586a0493bbe21ac884d1dc458bd279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

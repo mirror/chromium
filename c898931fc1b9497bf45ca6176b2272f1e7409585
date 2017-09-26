@@ -16,6 +16,24 @@
       "revId": "c898931fc1b9497bf45ca6176b2272f1e7409585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c78bbd3_54cb71b5",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-26T18:39:10Z",
+      "side": 1,
+      "message": "I think either\n- in cr_elements/shared_vars_css.html as --cr-toolbar-dropshadow\n- or, just have the behavior inject the #dropShadow element with the styles already applied. With this option, you\u0027ll also make the behavior change the opacity with JS instead of using a .has-shadow class.",
+      "parentUuid": "20b05d2c_cc42f912",
+      "revId": "c898931fc1b9497bf45ca6176b2272f1e7409585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
