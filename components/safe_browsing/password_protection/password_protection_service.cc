@@ -151,13 +151,14 @@ void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
 // static
 bool PasswordProtectionService::ShouldShowModalWarning(
     const LoginReputationClientRequest* request,
-    const LoginReputationClientResponse* response) {
+    const LoginReputationClientResponse* response,
+    bool matches_sync_password,
+    SyncAccountType account_type) {
   return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
          request->trigger_type() ==
              LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
-         request->has_password_reuse_event() &&
-         request->password_reuse_event().is_chrome_signin_password() &&
-         request->password_reuse_event().sync_account_type() ==
+         matches_sync_password &&
+         account_type ==
              LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
          (response->verdict_type() == LoginReputationClientResponse::PHISHING ||
           (response->verdict_type() ==
@@ -439,7 +440,9 @@ void PasswordProtectionService::RequestFinished(
       CacheVerdict(request->main_frame_url(), request->trigger_type(),
                    response.get(), base::Time::Now());
     }
-    if (ShouldShowModalWarning(request->request_proto(), response.get())) {
+    if (ShouldShowModalWarning(request->request_proto(), response.get(),
+                               request->matches_sync_password(),
+                               GetSyncAccountType())) {
       ShowModalWarning(request->web_contents(), response->verdict_token());
     }
   }

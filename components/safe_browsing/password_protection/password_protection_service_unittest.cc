@@ -1054,8 +1054,9 @@ TEST_P(PasswordProtectionServiceTest, VerifyShouldShowModalWarning) {
     scoped_feature_list1.InitAndDisableFeature(
         safe_browsing::kGoogleBrandedPhishingWarning);
     // Don't show modal warning is feature is disabled.
-    EXPECT_FALSE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_FALSE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
   }
 
   {
@@ -1067,34 +1068,32 @@ TEST_P(PasswordProtectionServiceTest, VerifyShouldShowModalWarning) {
     // Don't show modal warning if it is not a password reuse ping.
     ASSERT_NE(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
               request.trigger_type());
-    EXPECT_FALSE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_FALSE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
 
     // Don't show modal warning if it is not a signin password reuse.
     request.set_trigger_type(
         LoginReputationClientRequest::PASSWORD_REUSE_EVENT);
-    request.mutable_password_reuse_event()->set_is_chrome_signin_password(
-        false);
-    EXPECT_FALSE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_FALSE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/false,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
 
     // Don't show modal warning if user is using a GSUIT account.
-    request.mutable_password_reuse_event()->set_is_chrome_signin_password(true);
-    request.mutable_password_reuse_event()->set_sync_account_type(
-        LoginReputationClientRequest::PasswordReuseEvent::GSUITE);
-    EXPECT_FALSE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_FALSE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GSUITE));
 
     // When "warn_on_low_reputation" is set to false, don't show modal warning
     // on LOW_REPUTATION verdict, only show on PHISHING verdict.
-    request.mutable_password_reuse_event()->set_sync_account_type(
-        LoginReputationClientRequest::PasswordReuseEvent::GMAIL);
     response.set_verdict_type(LoginReputationClientResponse::LOW_REPUTATION);
-    EXPECT_FALSE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_FALSE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
     response.set_verdict_type(LoginReputationClientResponse::PHISHING);
-    EXPECT_TRUE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_TRUE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
   }
   {
     base::test::ScopedFeatureList scoped_feature_list3;
@@ -1104,11 +1103,13 @@ TEST_P(PasswordProtectionServiceTest, VerifyShouldShowModalWarning) {
         safe_browsing::kGoogleBrandedPhishingWarning,
         {{"softer_warning", "true"}, {"warn_on_low_reputation", "true"}});
     response.set_verdict_type(LoginReputationClientResponse::LOW_REPUTATION);
-    EXPECT_TRUE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_TRUE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
     response.set_verdict_type(LoginReputationClientResponse::PHISHING);
-    EXPECT_TRUE(
-        PasswordProtectionService::ShouldShowModalWarning(&request, &response));
+    EXPECT_TRUE(PasswordProtectionService::ShouldShowModalWarning(
+        &request, &response, /*matches_sync_password=*/true,
+        LoginReputationClientRequest::PasswordReuseEvent::GMAIL));
   }
 }
 

@@ -186,7 +186,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // If we want to show password reuse modal warning.
   static bool ShouldShowModalWarning(
       const LoginReputationClientRequest* request,
-      const LoginReputationClientResponse* response);
+      const LoginReputationClientResponse* response,
+      bool matches_sync_password,
+      SyncAccountType account_type);
 
   // Shows modal warning dialog on the current |web_contents| and pass the
   // |verdict_token| to callback of this dialog.
