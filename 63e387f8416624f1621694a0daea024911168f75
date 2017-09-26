@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a68490ce_4b222680",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-26T21:14:09Z",
+      "side": 1,
+      "message": "If there are multiple tabs added, we will show the tab switcher, so it doesn\u0027t matter whether the which one is the active tab? For only one tab added, it will be set as the active one. So set the first or the last are both fine here but the last one has simpler code.",
+      "parentUuid": "a5fdc055_24dfcff1",
+      "range": {
+        "startLine": 1086,
+        "startChar": 22,
+        "endLine": 1086,
+        "endChar": 30
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa63ff7_93489a34",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "35e81bea_5f47a935",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-26T21:14:09Z",
+      "side": 1,
+      "message": "This is used to check whether the selector has been initialized, if so, it will merge the tabs directly from the selector, otherwise do the tab merge through TabPersistenceStore. The difference between this and getInstance is getInstance will always return a selector but this one could return null.",
+      "parentUuid": "afa63ff7_93489a34",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee0becb_a62d9cd4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-26T21:00:55Z",
       "side": 1,
       "message": "do these two also require webContents? The ones about delegate factory should be tab only?",
+      "range": {
+        "startLine": 1474,
+        "startChar": 37,
+        "endLine": 1474,
+        "endChar": 70
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec0a73c_9ff50538",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-26T21:14:09Z",
+      "side": 1,
+      "message": "Some of them in here require WebContents while others also need something from native. I manually tested every line in this class and these all could crash the app.",
+      "parentUuid": "2ee0becb_a62d9cd4",
       "range": {
         "startLine": 1474,
         "startChar": 37,
