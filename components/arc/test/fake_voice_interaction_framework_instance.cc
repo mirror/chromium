@@ -44,6 +44,6 @@ void FakeVoiceInteractionFrameworkInstance::ShowVoiceInteractionSettings() {
 }
 
 void FakeVoiceInteractionFrameworkInstance::GetVoiceInteractionSettings(
-    const GetVoiceInteractionSettingsCallback& callback) {}
+    GetVoiceInteractionSettingsCallback callback) {}
 
 }  // namespace arc
