@@ -392,6 +392,11 @@ class CC_EXPORT LayerImpl {
     return contributes_to_drawn_render_surface_;
   }
 
+  void SetContributesToHitTest(bool should_hit_test) {
+    contributes_to_hit_test_ = should_hit_test;
+  }
+  bool ContributesToHitTest() { return contributes_to_hit_test_; }
+
   bool IsDrawnScrollbar() {
     return ToScrollbarLayer() && contributes_to_drawn_render_surface_;
   }
@@ -507,6 +512,10 @@ class CC_EXPORT LayerImpl {
   bool draws_content_ : 1;
   bool contributes_to_drawn_render_surface_ : 1;
   bool should_hit_test_ : 1;
+  // In addition to set should_hit_test_ from CompositedLayerMapping, which set
+  // needs push properties, we need this bit to indicate that a layer need to
+  // contribute to hit test without setting needs push properties.
+  bool contributes_to_hit_test_ : 1;
   bool is_resized_by_browser_controls_ : 1;
 
   static_assert(LAST_VIEWPORT_LAYER_TYPE < (1u << 3),
