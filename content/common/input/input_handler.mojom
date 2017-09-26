@@ -146,6 +146,13 @@ struct TouchActionOptional {
   TouchAction touch_action;
 };
 
+// Enum to indicate if we need to show selection menu.
+// Used by FrameInputHandler#adjustSelectionByCharacterOffset().
+enum SelectionMenuBehavior {
+  kHideSelectionMenu,
+  kShowSelectionMenu,
+};
+
 // Interface exposed by the browser to the renderer. The messages
 // contained in here are state changes that the renderer has taken
 // that the browser must be aware of.
@@ -309,8 +316,10 @@ interface FrameInputHandler {
   // Sent by the browser to ask the renderer to adjust the selection start and
   // end points by the given amounts. A negative amount moves the selection
   // towards the beginning of the document, a positive amount moves the
-  // selection towards the end of the document.
-  AdjustSelectionByCharacterOffset(int32 start, int32 end);
+  // selection towards the end of the document. Will send show selection menu
+  // event when needed.
+  AdjustSelectionByCharacterOffset(
+      int32 start, int32 end, SelectionMenuBehavior selection_menu_behavior);
 
   // Requests the renderer to move the selection extent point to a new position.
   // Expects a MoveRangeSelectionExtent_ACK message when finished.
