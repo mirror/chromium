@@ -46,6 +46,30 @@
       "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00587a29_b626d7b6",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-26T09:31:20Z",
+      "side": 0,
+      "message": "search::IsInstantNTP will also say \"true\" for 3P NTPs, so that\u0027s not it.\nOne possible explanation: This is a leftover from back when we still had a WebUI NTP (\"NTP4\"), which was actually served from chrome://newtab.",
+      "parentUuid": "3b1b75e6_007328da",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "facad2e0eab8c7c882c5fa63e533e963f77f912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
