@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eeb402e_c1fa452a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:18:46Z",
+      "side": 1,
+      "message": "Can you use a proper Map instance, instead of an Object?\n\nAlso, in JS variables should be namedLikeThis, per styleguide.",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
