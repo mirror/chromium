@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e517516c_fd0d278e",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T19:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8522cc5b_1025fba2",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a246b08f_96fc17ff",
         "filename": "components/autofill/core/browser/autofill_profile.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb9e35c_3305aaf3",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T19:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a246b08f_96fc17ff",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26cb3314_5dc32242",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T19:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fddcee24_d5708acd",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6bec8c_affc4b9a",
         "filename": "components/autofill/core/browser/webdata/autofill_profile_syncable_service.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b832e01b_593ce43f",
+        "filename": "components/autofill/core/browser/webdata/autofill_profile_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T19:42:46Z",
+      "side": 1,
+      "message": "Yes server always wins. I think it makes sense but let\u0027s discuss this offline.",
+      "parentUuid": "cf6bec8c_affc4b9a",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32bf564f_5c4e8e27",
         "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-25T20:26:37Z",
       "side": 1,
       "message": "git cl format doesn\u0027t always get it right",
+      "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ecaa5d_949ea774",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T19:42:46Z",
+      "side": 1,
+      "message": "Indeed! Thanks",
+      "parentUuid": "32bf564f_5c4e8e27",
       "revId": "51e5b18fa00b39a6b8e2ecfb952a5f8479955b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
