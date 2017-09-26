@@ -70,6 +70,30 @@
       "revId": "56532fb3b1e93f6d12aff8f67b2d9b2a57f11eac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66cefb9_b7680c8d",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-26T16:40:53Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "0a1f0101_3dc7e4dd",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "56532fb3b1e93f6d12aff8f67b2d9b2a57f11eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
