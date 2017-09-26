@@ -637,12 +637,10 @@ TEST_F(UDPSocketTest, CloseWithPendingRead) {
   EXPECT_FALSE(callback.have_result());
 }
 
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID)
 // Some Android devices do not support multicast socket.
 // The ones supporting multicast need WifiManager.MulitcastLock to enable it.
 // http://goo.gl/jjAk9
-//
-// TODO(fuchsia): Multicast is not implemented on Fuchsia yet.
 #define MAYBE_JoinMulticastGroup DISABLED_JoinMulticastGroup
 #else
 #define MAYBE_JoinMulticastGroup JoinMulticastGroup
@@ -662,11 +660,24 @@ TEST_F(UDPSocketTest, MAYBE_JoinMulticastGroup) {
   EXPECT_THAT(socket.Open(bind_address.GetFamily()), IsOk());
   EXPECT_THAT(socket.Bind(bind_address), IsOk());
   EXPECT_THAT(socket.JoinGroup(group_ip), IsOk());
+
+#if !defined(OS_FUCHSIA)
+  // TODO(crbug.com/768916): setsockopt() doesn't report errors properly. Enable
+  // this check once the problem is fixed in Fuchsia.
+  //
   // Joining group multiple times.
   EXPECT_NE(OK, socket.JoinGroup(group_ip));
+#endif  // !defined(OS_FUCHSIA)
+
   EXPECT_THAT(socket.LeaveGroup(group_ip), IsOk());
+
+#if !defined(OS_FUCHSIA)
+  // TODO(crbug.com/768916): setsockopt() doesn't report errors properly. Enable
+  // this check once the problem is fixed in Fuchsia.
+  //
   // Leaving group multiple times.
   EXPECT_NE(OK, socket.LeaveGroup(group_ip));
+#endif  // !defined(OS_FUCHSIA)
 
   socket.Close();
 }
