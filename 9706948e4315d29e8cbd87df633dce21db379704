@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c48892b_b7b12834",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-26T21:39:08Z",
+      "side": 1,
+      "message": "You\u0027ve mentioned wanting to implement a single filter.  Does it need both of these types of actions?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "9706948e4315d29e8cbd87df633dce21db379704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68854fd_52c6e2d9",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-26T21:39:08Z",
+      "side": 1,
+      "message": "nit: as",
+      "range": {
+        "startLine": 126,
+        "startChar": 44,
+        "endLine": 126,
+        "endChar": 49
+      },
+      "revId": "9706948e4315d29e8cbd87df633dce21db379704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64405172_fb6182d3",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-26T21:39:08Z",
+      "side": 1,
+      "message": "Sorry, I think I wasn\u0027t clear in my previous comment: I would prefer that you not add this struct, and instead pass params the normal way, using default params as needed (presumably just in the outermost API layer that takes these params, since those defaults will have been set by the time that code calls into deeper APIs).",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "9706948e4315d29e8cbd87df633dce21db379704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

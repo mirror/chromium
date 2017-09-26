@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e65545c6_78c220c9",
+        "filename": "components/metrics/file_metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-26T21:39:08Z",
+      "side": 1,
+      "message": "Yeah, I think they were, and the recommendation changed.  Dunno why.",
+      "parentUuid": "84cdc2fb_62182cdf",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "74e026de69c82062371129b01f7dae04a3339bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dc8c33b_a6fe89f6",
         "filename": "components/metrics/file_metrics_provider.h",
         "patchSetId": 1
