@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1655dbde_b6a07734",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-26T01:07:26Z",
+      "side": 1,
+      "message": "Given we know that the only invalid URLs should be empty ones, I would prefer this to use is_empty() instead and keep the DCHECK for invalid, non-empty URLs.",
+      "range": {
+        "startLine": 152,
+        "startChar": 22,
+        "endLine": 152,
+        "endChar": 30
+      },
+      "revId": "93a1b9e9a7be2b34c5f08dba65cdbb6b64d9a508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
