@@ -4,11 +4,11 @@
 
 module content.mojom;
 
-import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
+import "services/network/public/interfaces/cookie_manager.mojom";
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
@@ -59,7 +59,7 @@ interface NetworkContext {
                          URLLoaderClient client);
 
   // Get the CookieManager associated with this network context.
-  GetCookieManager(CookieManager& cookie_manager);
+  GetCookieManager(network.mojom.CookieManager& cookie_manager);
 };
 
 // Browser interface to the network service.
