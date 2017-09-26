@@ -1482,23 +1482,6 @@ def _CheckParseErrors(input_api, output_api):
   return results
 
 
-def _CheckJavaStyle(input_api, output_api):
-  """Runs checkstyle on changed java files and returns errors if any exist."""
-  import sys
-  original_sys_path = sys.path
-  try:
-    sys.path = sys.path + [input_api.os_path.join(
-        input_api.PresubmitLocalPath(), 'tools', 'android', 'checkstyle')]
-    import checkstyle
-  finally:
-    # Restore sys.path to what it was before.
-    sys.path = original_sys_path
-
-  return checkstyle.RunCheckstyle(
-      input_api, output_api, 'tools/android/checkstyle/chromium-style-5.0.xml',
-      black_list=_EXCLUDED_PATHS + input_api.DEFAULT_BLACK_LIST)
-
-
 def _MatchesFile(input_api, patterns, path):
   for pattern in patterns:
     if input_api.re.search(pattern, path):
@@ -2470,7 +2453,6 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckForWindowsLineEndings(input_api, output_api))
   results.extend(_CheckSingletonInHeaders(input_api, output_api))
   results.extend(_CheckPydepsNeedsUpdating(input_api, output_api))
-  results.extend(_CheckJavaStyle(input_api, output_api))
   results.extend(_CheckIpcOwners(input_api, output_api))
   results.extend(_CheckUselessForwardDeclarations(input_api, output_api))
   results.extend(_CheckForRiskyJsFeatures(input_api, output_api))
