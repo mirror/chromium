@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "946a48ba_1fefced3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T12:36:17Z",
+      "side": 1,
+      "message": "Please link to Service Workers Nightly, not \"V1\". Chromium tracks Nightly. V1 doesn\u0027t have nav preload, foreign fetch, link registration, etc:\nhttps://w3c.github.io/ServiceWorker/",
+      "revId": "c1b2f2000446e209985af91fc36d9c38e0aaad06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88785fc_361f2db7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T12:36:17Z",
+      "side": 1,
+      "message": "Please link to Nightly.",
+      "revId": "c1b2f2000446e209985af91fc36d9c38e0aaad06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
