@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "166ef2c7_3ad25ed3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "nit: wanna extract this logic into PerformanceMonitor? I.e. have two static methods, void PerformanceMonitor::Detach(LocalFrame*) and PerformanceMonitor* PerformanceMonitor::Attach(LocalFrame*)?",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c67892a_f251365a",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "Drop this!",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f66b8e_6352a639",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "s/local_root_/frame/",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314cb483_9c3eef24",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "drop this?",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f513eceb_673cba43",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "scary!",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e7a420_4123c17b",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-26T18:07:06Z",
+      "side": 1,
+      "message": "can we only iterate over the frames we haven\u0027t fired idle events for?",
+      "revId": "214483982101de0da7a533f4f165c2f483c692d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
