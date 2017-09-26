@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59527d84_b246bb14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "0a13fb17_2a00f935",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc627eb_527906df",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-26T16:54:48Z",
       "side": 1,
       "message": "Is this line related?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 66
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b1f810_cdaf906a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "was part of Test: fixed.",
+      "parentUuid": "7bc627eb_527906df",
       "range": {
         "startLine": 16,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3fc7eb8_0a06943a",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19fb474c_1ac946ee",
+      "range": {
+        "startLine": 2957,
+        "startChar": 9,
+        "endLine": 2957,
+        "endChar": 25
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0488401_c8945d7a",
         "filename": "ash/display/display_manager_unittest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891d5a6a_0836092b",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2971,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0488401_c8945d7a",
+      "range": {
+        "startLine": 2971,
+        "startChar": 2,
+        "endLine": 2971,
+        "endChar": 70
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c1b8e0f8_12aa700f",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3016,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdb7835_a80c9c72",
+      "range": {
+        "startLine": 3015,
+        "startChar": 0,
+        "endLine": 3016,
+        "endChar": 51
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f40ec5_bfb86abf",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-26T16:54:48Z",
       "side": 1,
       "message": "Optional nit: we should consider renaming this function now to indicate that it has side effects.",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 65
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1886c61a_206b8d56",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "I thought about it but I decided to keep it because the caller don\u0027t care about the fact that it\u0027s updating internal state. (That is, caller is calling just to get the state, not to update something).\nAnd Get (or Create) methods are not necessarily const in general.",
+      "parentUuid": "c9f40ec5_bfb86abf",
       "range": {
         "startLine": 143,
         "startChar": 44,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "12065b2e_17d8742d",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done, although it shouldn\u0027t make much difference in these cases.\nactually ids aren\u0027t used so removed.",
+      "parentUuid": "37f7a677_26569fe7",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 37
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4d246ad_3b5e2396",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa365e1_ab93e148",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d246ad_3b5e2396",
+      "range": {
+        "startLine": 271,
+        "startChar": 12,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "633ff5f3_2cfabda6",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46c12f6d_bf3f3e66",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e85e09_3a85153f",
         "filename": "ui/display/manager/display_layout_store.cc",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b728bf7_4a0bac89",
+        "filename": "ui/display/manager/display_layout_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-26T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e85e09_3a85153f",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
