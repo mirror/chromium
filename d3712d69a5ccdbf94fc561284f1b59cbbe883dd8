@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12906150_106744b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae16672b_1c277f40",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19117a1f_982dc406",
         "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T08:46:20Z",
       "side": 1,
       "message": "As I said as you\u0027re moving this I\u0027d go with HasOverrideContainingBlockForChild().",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb96734f_34948697",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "I already replied before, see below:\n\n\"There are other functions relying in this term \"ContentSize\", \"ContentWidth\" \"ContentHeight\", so the suggested renaming should be done in a follow up patch.\"",
+      "parentUuid": "19117a1f_982dc406",
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ceed50cb_3033f25e",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "e19b0f7c_761f3f29",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b83d85_d65d5577",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-26T08:46:20Z",
       "side": 1,
       "message": "This method is only used in 1 place, maybe we don\u0027t need it.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f7acbe_9ce3a312",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to have just StartGridLineXXX",
+      "parentUuid": "b1b83d85_d65d5577",
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d3cfa29f_970f24e6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "I\u0027d already thought about it. However, we would need to pass the line as well; either Untranslated{End,Start}Line() \n\nI\u0027ll give it a show, and let\u0027s see how it looks like finally.",
+      "parentUuid": "0a18159d_5cec999e",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bee8263b_0fcd962a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-26T08:46:20Z",
       "side": 1,
       "message": "What about removing StartGridLineForOutOfFlowChild() and inlining that code here.\nThat way we won\u0027t need the call to EndGridLineForOutOfFlowChild() and could reuse\nthe variables already computed.\n\nThen we could cache the start_line and use it in the other methods.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad0fafe_7626179d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "We need a way to know whether the start position is \u0027auto\u0027 or not, with this broad meaning of \u0027auto\u0027 based as well in the specific \u0027line\u0027 value. We need that for the translateOutOfFlowRTLCoordinate()\n\nThe only variables we can reuse from start to compute the end line are smallest_start and last_line. About the span, well, that\u0027s perhaps the only one that it\u0027d make sense to share. I\u0027ll try to think about it.",
+      "parentUuid": "bee8263b_0fcd962a",
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0a011c0f_c6437d01",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d2f6891_2aef44ae",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ee510b_f354c0b8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd9511_31da451c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77ee510b_f354c0b8",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "14c8f0ee_5a9a41c6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2258,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "907488ea_ec3bf784",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e6e28a7_588a7f3b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 5
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-26T08:46:20Z",
       "side": 1,
       "message": "We would use the cached value here.",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df057806_f72d96ad",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2260,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Now that I think about it, if we define a abs items\u0027 start position cache we can use it in the translateRTL function as well. I\u0027ll give it a try.",
+      "parentUuid": "8e6e28a7_588a7f3b",
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +366,24 @@
       "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1db10e_a83f2e3c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2436,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-26T10:35:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "20caa1f8_cd597379",
+      "revId": "d3712d69a5ccdbf94fc561284f1b59cbbe883dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
