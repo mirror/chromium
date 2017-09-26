@@ -22,6 +22,7 @@
 #define CSSProperty_h
 
 #include "core/CSSPropertyNames.h"
+#include "core/StylePropertyShorthand.h"
 #include "core/css/CSSValue.h"
 #include "core/css/properties/CSSPropertyAPI.h"
 #include "platform/text/TextDirection.h"
@@ -60,6 +61,10 @@ struct StylePropertyMetadata {
   unsigned inherited_ : 1;
 };
 
+enum LogicalBoxSide { kBeforeSide, kEndSide, kAfterSide, kStartSide };
+enum PhysicalBoxSide { kTopSide, kRightSide, kBottomSide, kLeftSide };
+enum LogicalExtent { kLogicalWidth, kLogicalHeight };
+
 class CSSProperty {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
@@ -87,6 +92,16 @@ class CSSProperty {
   }
   bool IsSetFromShorthand() const { return metadata_.is_set_from_shorthand_; }
   CSSPropertyID ShorthandID() const { return metadata_.ShorthandID(); }
+  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      LogicalBoxSide,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+      WritingMode,
+      LogicalExtent,
+      const CSSPropertyID*);
+  static const StylePropertyShorthand& BorderDirections();
   bool IsImportant() const { return metadata_.important_; }
 
   const CSSValue* Value() const { return value_.Get(); }

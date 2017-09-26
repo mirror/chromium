@@ -11,6 +11,8 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/parser/CSSParserTokenRange.h"
+#include "platform/text/TextDirection.h"
+#include "platform/text/WritingMode.h"
 
 namespace blink {
 
@@ -70,9 +72,13 @@ class CSSPropertyAPI {
     NOTREACHED();
   }
   virtual bool IsAffectedByAll() const { return IsEnabled() && IsProperty(); }
+  virtual const CSSPropertyAPI& ResolveDirectionAwareProperty(
+      TextDirection direction,
+      WritingMode writing_mode) const { return Get(id_); }
 
  private:
   const CSSPropertyID id_;
+
 };
 
 {% for api_class_data in api_classes_by_property_id %}

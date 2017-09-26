@@ -20,7 +20,6 @@
 
 #include "core/css/CSSProperty.h"
 
-#include "core/StylePropertyShorthand.h"
 #include "core/css/properties/CSSPropertyAPI.h"
 #include "core/style/ComputedStyleConstants.h"
 
@@ -46,9 +45,6 @@ CSSPropertyID StylePropertyMetadata::ShorthandID() const {
   DCHECK_LT(index_in_shorthands_vector_, shorthands.size());
   return shorthands.at(index_in_shorthands_vector_).id();
 }
-
-enum LogicalBoxSide { kBeforeSide, kEndSide, kAfterSide, kStartSide };
-enum PhysicalBoxSide { kTopSide, kRightSide, kBottomSide, kLeftSide };
 
 static CSSPropertyID ResolveToPhysicalProperty(
     TextDirection direction,
@@ -130,7 +126,15 @@ static CSSPropertyID ResolveToPhysicalProperty(
   }
 }
 
-enum LogicalExtent { kLogicalWidth, kLogicalHeight };
+const CSSPropertyAPI& CSSProperty::ResolveToPhysicalPropertyAPI(
+    TextDirection direction,
+    WritingMode writing_mode,
+    LogicalBoxSide logical_side,
+    const StylePropertyShorthand& shorthand) {
+  CSSPropertyID id = ResolveToPhysicalProperty(direction, writing_mode,
+                                               logical_side, shorthand);
+  return CSSPropertyAPI::Get(id);
+}
 
 static CSSPropertyID ResolveToPhysicalProperty(
     WritingMode writing_mode,
@@ -141,7 +145,16 @@ static CSSPropertyID ResolveToPhysicalProperty(
   return logical_side == kLogicalWidth ? properties[1] : properties[0];
 }
 
-static const StylePropertyShorthand& BorderDirections() {
+const CSSPropertyAPI& CSSProperty::ResolveToPhysicalPropertyAPI(
+    WritingMode writing_mode,
+    LogicalExtent logical_side,
+    const CSSPropertyID* properties) {
+  CSSPropertyID id =
+      ResolveToPhysicalProperty(writing_mode, logical_side, properties);
+  return CSSPropertyAPI::Get(id);
+}
+
+const StylePropertyShorthand& CSSProperty::BorderDirections() {
   static const CSSPropertyID kProperties[4] = {
       CSSPropertyBorderTop, CSSPropertyBorderRight, CSSPropertyBorderBottom,
       CSSPropertyBorderLeft};
