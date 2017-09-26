@@ -8,6 +8,7 @@ import "content/common/native_types.mojom";
 import "content/common/service_worker/embedded_worker.mojom";
 import "ipc/constants.mojom";
 import "mojo/common/time.mojom";
+import "services/service_manager/public/interfaces/interface_provider.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "ui/gfx/mojo/icc_profile.mojom";
 
@@ -23,6 +24,12 @@ struct CreateViewParams {
 
   // The ID of the main frame hosted in the view.
   int32 main_frame_routing_id = IPC.mojom.kRoutingIdNone;
+
+  // The initial InterfaceProvider through which the main frame can access
+  // services exposed by its RFH until the first real load commits. This may be
+  // needed if the window-opener uses document.open()/document.write() to
+  // inject content into the initial empty document in the frame.
+  service_manager.mojom.InterfaceProvider? main_frame_initial_interfaces;
 
   // The ID of the widget for the main frame.
   int32 main_frame_widget_routing_id = IPC.mojom.kRoutingIdNone;
@@ -85,6 +92,12 @@ struct CreateFrameWidgetParams {
 struct CreateFrameParams {
   // Specifies the routing ID of the new RenderFrame object.
   int32 routing_id;
+
+  // The initial InterfaceProvider through which the frame can access services
+  // exposed by its RFH until the first real load commits. This may be needed
+  // if another frame uses document.open()/document.write() to inject content
+  // into the initial empty document in the frame.
+  service_manager.mojom.InterfaceProvider? initial_interfaces;
 
   // If a valid |proxy_routing_id| is provided, the new frame will be
   // configured to replace the proxy on commit.

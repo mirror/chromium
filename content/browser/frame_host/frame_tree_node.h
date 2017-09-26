@@ -20,6 +20,7 @@
 #include "content/common/content_export.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/common/frame_replication_state.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -77,7 +78,9 @@ class CONTENT_EXPORT FrameTreeNode {
 
   FrameTreeNode* AddChild(std::unique_ptr<FrameTreeNode> child,
                           int process_id,
-                          int frame_routing_id);
+                          int frame_routing_id,
+                          service_manager::mojom::InterfaceProviderRequest
+                              initial_interfaces_request);
   void RemoveChild(FrameTreeNode* child);
 
   // Clears process specific-state in this node to prepare for a new process.

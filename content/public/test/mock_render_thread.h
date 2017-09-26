@@ -135,7 +135,8 @@ class MockRenderThread : public RenderThread {
 
   // The Frame expects to be returned a valid route_id different from its own.
   void OnCreateChildFrame(const FrameHostMsg_CreateChildFrame_Params& params,
-                          int* new_render_frame_id);
+                          int* new_render_frame_id,
+                          mojo::MessagePipeHandle* new_initial_interfaces);
 
 #if defined(OS_WIN)
   void OnDuplicateSection(base::SharedMemoryHandle renderer_handle,
