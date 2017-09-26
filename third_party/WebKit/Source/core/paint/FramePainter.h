@@ -25,11 +25,11 @@ class FramePainter {
       : frame_view_(&frame_view) {}
 
   void Paint(GraphicsContext&, const GlobalPaintFlags, const CullRect&);
-  void PaintScrollbars(GraphicsContext&, const IntRect&);
   void PaintContents(GraphicsContext&, const GlobalPaintFlags, const IntRect&);
   void PaintScrollCorner(GraphicsContext&, const IntRect& corner_rect);
 
  private:
+  void PaintScrollbars(GraphicsContext&, const IntRect&);
   void PaintScrollbar(GraphicsContext&, Scrollbar&, const IntRect&);
 
   const LocalFrameView& GetFrameView();

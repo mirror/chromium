@@ -830,7 +830,8 @@ void LayoutView::UpdateHitTestResult(HitTestResult& result,
 }
 
 bool LayoutView::UsesCompositing() const {
-  return compositor_ && compositor_->StaleInCompositingMode();
+  return !RuntimeEnabledFeatures::SlimmingPaintV2Enabled() && compositor_ &&
+         compositor_->StaleInCompositingMode();
 }
 
 PaintLayerCompositor* LayoutView::Compositor() {
