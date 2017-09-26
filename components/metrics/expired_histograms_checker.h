@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "base/metrics/record_histogram_checker.h"
 
@@ -21,11 +24,27 @@ class ExpiredHistogramsChecker final : public base::RecordHistogramChecker {
   ~ExpiredHistogramsChecker() override;
 
   // Checks if the given |histogram_hash| corresponds to an expired histogram.
-  bool ShouldRecord(uint64_t histogram_hash) const override;
+  bool ShouldRecord(uint64_t histogram_hash) override;
 
  private:
   const uint64_t* const array_;
   const size_t size_;
+
+  // Loads parameters from variation server for enabling/disabling recording
+  // particular histograms regardless of their expiry date.
+  // Safe for multiple calls.
+  void LoadVariationParameters();
+
+  // Parses a string with a variation parameter to a vector of histogram hashes.
+  std::vector<uint64_t> ParseVariationParameter(
+      const std::string& parameter) const;
+
+  // Hashes of the histograms that were affected by the Finch study.
+  std::vector<uint64_t> enabled_histograms_;
+  std::vector<uint64_t> disabled_histograms_;
+
+  // True iff variation parameters were loaded.
+  bool variation_parameters_loaded_;
 
   DISALLOW_COPY_AND_ASSIGN(ExpiredHistogramsChecker);
 };
