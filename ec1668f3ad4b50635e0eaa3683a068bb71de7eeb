@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc1b446_d6c18370",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_session_end.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T19:49:05Z",
+      "side": 1,
+      "message": "aside: boy is javascript getting hard to read these days... took me a while to figure out what this was waiting on.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "568c77ff_499464ed",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T19:49:05Z",
+      "side": 1,
+      "message": "s/VRPresentationProvidere/VRPresentationProvider",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 66
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e3790e_805e877c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T19:49:05Z",
+      "side": 1,
+      "message": "What\u0027s using these? Are they unused?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
