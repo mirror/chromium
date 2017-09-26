@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec1864c7_cdb1af51",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T11:31:52Z",
+      "side": 1,
+      "message": "I assume this line continuation is intentional? It\u0027d be good to indent it a bit to make it clear that it is a continuation of the preceding line.",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b81ce2d_d58f8cf0",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T11:31:52Z",
+      "side": 1,
+      "message": "nit: update this from Android SDK Manager to Maven",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1704caf_00d6be87",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T11:31:52Z",
+      "side": 1,
+      "message": "As you\u0027ve already got some catapult things in your path, you can use https://codesearch.chromium.org/chromium/src/third_party/catapult/common/py_utils/py_utils/tempfile_ext.py?rcl\u003d49fbcfa16b5d148a595cc50036d5e8354739f13f\u0026l\u003d12 for this.",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e571fa3_ae7f1b1e",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T11:31:52Z",
+      "side": 1,
+      "message": "nit: either indent to the depth of the first list item or drop the list contents onto the second line",
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d14cd0e4_e2ad189a",
         "filename": "build/android/play_services/update.py",
         "patchSetId": 1
@@ -13,6 +81,30 @@
       "writtenOn": "2017-09-26T10:20:15Z",
       "side": 1,
       "message": "logging.error(...)",
+      "range": {
+        "startLine": 289,
+        "startChar": 10,
+        "endLine": 289,
+        "endChar": 16
+      },
+      "revId": "9d4275c9f753a410cde245c65ef3f7078ae5a26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d5201f_cf5da24e",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T11:31:52Z",
+      "side": 1,
+      "message": "or raise an Exception.",
+      "parentUuid": "d14cd0e4_e2ad189a",
       "range": {
         "startLine": 289,
         "startChar": 10,
