@@ -16,8 +16,8 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandbox_type.h"
 #include "content/utility/utility_thread_impl.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 #if defined(OS_LINUX)
 #include "content/common/sandbox_linux/sandbox_linux.h"
