@@ -22,6 +22,30 @@
       "revId": "6397e26beacd4749cf74e4e4461ece3dbc734bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9400ef37_e975e894",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-26T18:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6b4226_32586cc9",
+      "range": {
+        "startLine": 1315,
+        "startChar": 49,
+        "endLine": 1315,
+        "endChar": 52
+      },
+      "revId": "6397e26beacd4749cf74e4e4461ece3dbc734bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
