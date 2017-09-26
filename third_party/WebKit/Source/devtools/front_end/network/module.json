@@ -71,7 +71,7 @@
             "contextTypes": [
                 "Network.NetworkPanel"
             ],
-            "className": "Network.NetworkPanel.RecordActionDelegate",
+            "className": "Network.NetworkPanel.ActionDelegate",
             "options": [
                 {
                     "value": true,
@@ -90,6 +90,19 @@
                 {
                     "platform": "mac",
                     "shortcut": "Meta+E"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "network.hide-request",
+            "contextTypes": [
+                "Network.NetworkPanel"
+            ],
+            "className": "Network.NetworkPanel.ActionDelegate",
+            "bindings": [
+                {
+                    "shortcut": "Esc"
                 }
             ]
         },

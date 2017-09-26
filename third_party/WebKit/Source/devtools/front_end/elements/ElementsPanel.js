@@ -615,57 +615,6 @@ Elements.ElementsPanel = class extends UI.Panel {
   }
 
   /**
-   * @override
-   * @param {!KeyboardEvent} event
-   */
-  handleShortcut(event) {
-    /**
-     * @param {!Elements.ElementsTreeOutline} treeOutline
-     */
-    function handleUndoRedo(treeOutline) {
-      if (UI.KeyboardShortcut.eventHasCtrlOrMeta(event) && !event.shiftKey &&
-          (event.key === 'Z' || event.key === 'z')) {  // Z key
-        treeOutline.domModel().undo();
-        event.handled = true;
-        return;
-      }
-
-      var isRedoKey = Host.isMac() ?
-          event.metaKey && event.shiftKey && (event.key === 'Z' || event.key === 'z') :  // Z key
-          event.ctrlKey && (event.key === 'Y' || event.key === 'y');                     // Y key
-      if (isRedoKey) {
-        treeOutline.domModel().redo();
-        event.handled = true;
-      }
-    }
-
-    if (UI.isEditing() && event.keyCode !== UI.KeyboardShortcut.Keys.F2.code)
-      return;
-
-    var treeOutline = null;
-    for (var i = 0; i < this._treeOutlines.length; ++i) {
-      if (this._treeOutlines[i].selectedDOMNode())
-        treeOutline = this._treeOutlines[i];
-    }
-    if (!treeOutline)
-      return;
-
-    if (!treeOutline.editing()) {
-      handleUndoRedo.call(null, treeOutline);
-      if (event.handled) {
-        this._stylesWidget.forceUpdate();
-        return;
-      }
-    }
-
-    treeOutline.handleShortcut(event);
-    if (event.handled)
-      return;
-
-    super.handleShortcut(event);
-  }
-
-  /**
    * @param {?SDK.DOMNode} node
    * @return {?Elements.ElementsTreeOutline}
    */
@@ -973,6 +922,18 @@ Elements.ElementsActionDelegate = class {
         return true;
       case 'elements.edit-as-html':
         treeOutline.toggleEditAsHTML(node);
+        return true;
+      case 'elements.undo':
+        if (UI.isEditing())
+          return false;
+        treeOutline.domModel().undo();
+        Elements.ElementsPanel.instance()._stylesWidget.forceUpdate();
+        return true;
+      case 'elements.redo':
+        if (UI.isEditing())
+          return false;
+        treeOutline.domModel().redo();
+        Elements.ElementsPanel.instance()._stylesWidget.forceUpdate();
         return true;
     }
     return false;
