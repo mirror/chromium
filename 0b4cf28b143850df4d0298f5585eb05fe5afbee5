@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "946ff668_6ee416af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "Could you add background for this test?\n\n\u003d\u003d\u003d\nWhen an event dispatch is stopped at shadow root, it was unclear\nwhat Event.target should be, and the spec was updated via\nhttps://github.com/whatwg/dom/pull/513\nso that Event.target will always set to null when an event dispatch\nis stopped at shadow root.\nThis test corresponds to the spec update.",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3424bb5f_5dbe82cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "How about checking the log to make sure the event was dispatched to\nthe expected elements?",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1dc139_1fd4b759",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "The primary purpose of these tests in this file is for testing\n|target| property of Event after dispatch, or do you want to test\nother properties as well?\n\nEither is fine, but please clarify (e.g. via comments or test title)\nwhat this test is actually testing.",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72625f45_3b9b5bbd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "s/Event Path/Event properties post dispatch\u0027\n\n(depends on the answer to the question on line 20 comment,\nsame for other instances in this file)",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252748fb_2d3d00e5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "\"nested ShadowRoots\" (plural)",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f25705_9f340733",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "\"nested ShadowRoots\" (plural)",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cb1a0f_03080b20",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-26T03:18:58Z",
+      "side": 1,
+      "message": "Could you add more cases when event dispatch stops at shadow root because\nrelatedTarget and target matches after retargeting?",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
