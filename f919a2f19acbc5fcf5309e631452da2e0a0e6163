@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a91b1c0_226b5c95",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T18:31:30Z",
+      "side": 1,
+      "message": "Consider putting this only in the constructor that takes a cursor_position.  That\u0027s the only place that should need validation.",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c999f1_e3ea47e2",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T18:31:30Z",
+      "side": 1,
+      "message": "You need to revise (redistribute?) the comments above.  Many no longer apply to these constructors.\n\nPlease also comment on the difference between the two constructors.  (Don\u0027t make us compare parameter by parameter.)",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff33ab8_fe06d31e",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T18:31:30Z",
+      "side": 1,
+      "message": "Very often in real code we have/want a cursor position, yet still do not have a desired_tld.  Did you consider that constructor?",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19667e71_7e9e02fc",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T18:31:30Z",
+      "side": 1,
+      "message": "// Helper function used by the constructors.  Initializes ___ in this class.\n?\n\n(Clearly you cannot say \"all fields\", as that\u0027s not true.)",
+      "revId": "f919a2f19acbc5fcf5309e631452da2e0a0e6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
