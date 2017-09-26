@@ -80,3 +80,33 @@ TEST_F(InstallableTaskQueueUnitTest, NextDiscardsTask) {
   task_queue.Next();
   EXPECT_FALSE(task_queue.HasCurrent());
 }
+
+TEST_F(InstallableTaskQueueUnitTest, IsParamsForPwaCheck) {
+  InstallableTaskQueue task_queue;
+  InstallableTask task1 = CreateTask(false, false, false);
+  InstallableTask task2 = CreateTask(true, true, true);
+  InstallableTask task3 = CreateTask(true, false, true);
+  InstallableTask task4 = CreateTask(false, true, false);
+
+  task_queue.Add(task1);
+  task_queue.Add(task2);
+  task_queue.Add(task3);
+  task_queue.Add(task4);
+
+  // If task2 is in the main or paused list, HasPwaCheck() should return true.
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+  task_queue.Next();
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+  task_queue.PauseCurrent();
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+  task_queue.UnpauseAll();
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+
+  // When task2 is removed, HasPwaCheck() should return false.
+  task_queue.Next();
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+  task_queue.Next();
+  EXPECT_TRUE(task_queue.HasPwaCheck());
+  task_queue.Next();
+  EXPECT_FALSE(task_queue.HasPwaCheck());
+}

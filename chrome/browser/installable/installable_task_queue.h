@@ -19,6 +19,9 @@ class InstallableTaskQueue {
   InstallableTaskQueue();
   ~InstallableTaskQueue();
 
+  // Returns true if |params| specifies a full PWA check.
+  static bool IsParamsForPwaCheck(const InstallableParams& params);
+
   // Adds task to the end of the active list of tasks to be processed.
   void Add(InstallableTask task);
 
@@ -33,6 +36,10 @@ class InstallableTaskQueue {
 
   // Reports whether there are any tasks in the paused list.
   bool HasPaused() const;
+
+  // Reports whether any tasks in the main or paused lists request a full PWA
+  // check.
+  bool HasPwaCheck() const;
 
   // Returns the currently active task.
   InstallableTask& Current();

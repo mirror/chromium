@@ -93,10 +93,8 @@ bool DoesManifestContainRequiredIcon(const content::Manifest& manifest) {
   return false;
 }
 
-// Returns true if |params| specifies a full PWA check.
-bool IsParamsForPwaCheck(const InstallableParams& params) {
-  return params.check_installable && params.fetch_valid_primary_icon;
-}
+// Used for a no-op call to GetData.
+void DoNothingCallback(const InstallableData& data) {}
 
 }  // namespace
 
@@ -190,6 +188,16 @@ void InstallableManager::RecordAddToHomescreenNoTimeout() {
 
 void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
   metrics_->RecordAddToHomescreenManifestAndIconTimeout();
+
+  // Explicitly trigger a GetData call with a no-op callback to complete the
+  // installability check. This is so we can accurately record whether or not a
+  // site is a PWA, assuming that the check finishes prior to a reset operation.
+  if (!HasPwaCheck()) {
+    InstallableParams params;
+    params.check_installable = true;
+    params.fetch_valid_primary_icon = true;
+    GetData(params, base::Bind(&DoNothingCallback));
+  }
 }
 
 void InstallableManager::RecordAddToHomescreenInstallabilityTimeout() {
@@ -273,6 +281,13 @@ content::WebContents* InstallableManager::GetWebContents() {
   return contents;
 }
 
+bool InstallableManager::HasPwaCheck() const {
+  if (metrics_->HasCompletedCheck())
+    return true;
+
+  return task_queue_.HasPwaCheck();
+}
+
 bool InstallableManager::IsComplete(const InstallableParams& params) const {
   // Returns true if for all resources:
   //  a. the params did not request it, OR
@@ -291,7 +306,7 @@ void InstallableManager::ResolveMetrics(const InstallableParams& params,
   // params. We don't yet know if the site is installable. However, if the check
   // didn't pass, we know for sure the site isn't installable, regardless of how
   // much we checked.
-  if (check_passed && !IsParamsForPwaCheck(params))
+  if (check_passed && !InstallableTaskQueue::IsParamsForPwaCheck(params))
     return;
 
   metrics_->Resolve(check_passed);
