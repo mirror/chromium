@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f7c813b_97846dc2",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-26T16:59:18Z",
+      "side": 1,
+      "message": "This should either be an enum { UNKNOWN, OCCLUDED, NOT_OCCLUDED }\n\nor a base::Optional\u003c\u003e",
+      "revId": "907b8e7eb25d209154015569995542fb8ca95fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8751e39a_2da60ae6",
+        "filename": "ui/aura/window_occlusion_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-26T16:59:18Z",
+      "side": 1,
+      "message": "With the dtor of ScopedNoWindowOcclusionComputations() triggering an occlusion computation, we don\u0027t need the tracker itself to be a WindowObserver anymore, right? (except maybe for only a few cases, like layer-opacity change etc.?)",
+      "revId": "907b8e7eb25d209154015569995542fb8ca95fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
