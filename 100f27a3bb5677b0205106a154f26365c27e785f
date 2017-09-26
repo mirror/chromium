@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e1f43ab_c4f7819d",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T12:47:55Z",
+      "side": 0,
+      "message": "hm, don\u0027t we still need this in some form for clients that don\u0027t support key acks? In that case we want all accelerators to be processed by chrome before we pass the event to the client. maybe we need to keep the PostTargetHandler for this. Maybe register a pre vs post handler depending on if acks are needed?",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 3
+      },
+      "revId": "100f27a3bb5677b0205106a154f26365c27e785f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

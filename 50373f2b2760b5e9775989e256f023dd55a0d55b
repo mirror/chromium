@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae14546_ad61d62f",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T12:47:55Z",
+      "side": 1,
+      "message": "why not Accelerator type as we used for ShellSurface?",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dee9570_2e77c59e",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T12:47:55Z",
+      "side": 1,
+      "message": "IsReservedAccelerator?",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 23
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5b35bc_99197ce5",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-26T12:47:55Z",
+      "side": 1,
+      "message": "can we just remove this override now?",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 47
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
