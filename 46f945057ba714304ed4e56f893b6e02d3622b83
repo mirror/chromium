@@ -183,6 +183,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0436ce6c_0d0d4b38",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-26T20:13:01Z",
+      "side": 1,
+      "message": "For those following along at home, Yuzhu and I talked offline about this, and the concern that drove this implementation is a) putting in an interface that it\u0027s not reasonable to simple no-op for URLLoader implementations that don\u0027t have an easy way of supporting it, and b) the distinction between an interface that will be called in band in response to a notification (CancelWithError/Resume above) and one that might be called out of band.\n\nYuzhu: Given the above, how would you feel about making these interfaces PauseNetworkRead() and ResumeNetworkRead() with commentary indicating that that won\u0027t happen if it doesn\u0027t make sense in the context of the implementation at the other end of the pipe?  That fact that reading implies caching is very much an effect of the current //net implementation that the implementation of these methods doesn\u0027t touch, so I think it\u0027s a more accurate statement?\n\nI\u0027d also like to see something in the comments about the in-band/OOB distinction you raised--I do agree it\u0027s an important one, and I don\u0027t think (?) it\u0027s been mentioned anywhere in the CL.",
+      "parentUuid": "2cb5ca2c_aeb21eae",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
