@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "2a5f2f99_f1bf97e2",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-26T01:22:26Z",
+      "side": 1,
+      "message": "Discussed this offline, and implemented a better fix than calling -reloadData.",
+      "parentUuid": "14ec9a74_0adff609",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 3
+      },
+      "revId": "5062750138eaf38c01e0a62c3423df8a4b41166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bc97d5_b46c18ac",
         "filename": "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.mm",
         "patchSetId": 2
