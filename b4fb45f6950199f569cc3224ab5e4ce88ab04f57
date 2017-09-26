@@ -90,6 +90,58 @@
     },
     {
       "key": {
+        "uuid": "2c5a3663_71f05ee6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "Mild +1 for for-loop for simplicity",
+      "parentUuid": "6df162e2_87584697",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3697fb46_6ebd9835",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "nit: explicit\n\nCan\u0027t this take non-pointer parameter?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840fbdba_9926a3fb",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "nit: have space after override, no semicolon needed after {} (and actually this could be override \u003d default;)",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a036ce7b_e1b78a5d",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 6
@@ -136,6 +188,23 @@
     },
     {
       "key": {
+        "uuid": "a891b7bb_e95f6623",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "Can you change the method order in .cc so that they\u0027re consistent with that in .h?",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5db4f91_fad5d62f",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 6
@@ -153,6 +222,23 @@
         "endLine": 150,
         "endChar": 18
       },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d09f3b4_c6bc2a92",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "Looks like this\u0027s from original code, but shouldn\u0027t this be should_notify_controller_change?",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +304,30 @@
       "side": 1,
       "message": "WebServiceWorkerProviderImpl implements Blink::WebServiceWorkerProvider.\nBut in the annotation of Blink::WebServiceWorkerProvider, there is \"ServiceWorkerContainer is called the \"client\" of the WebServiceWorkerProvider, and it implements WebServiceWorkerProviderClient.\"\nI am think if calling this |service_worker_container_| will be confusing?",
       "parentUuid": "72162c25_0a1b6305",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5935829c_dc6f8484",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "nit: drop trailing \u0027_\u0027 for public fields.\n\nWould we rather want to be just as straightforward as possible, e.g. web_service_worker_provider_ until we rename the interface names?",
+      "parentUuid": "1dce0280_3520cac7",
       "range": {
         "startLine": 58,
         "startChar": 16,
@@ -300,6 +410,24 @@
     },
     {
       "key": {
+        "uuid": "da8ce7fd_df5aa3de",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "should also delete \u0027pass it to the provider context\u0027?",
+      "parentUuid": "135a9fd2_8e7f66cc",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fd6eec9_a5372b6f",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -332,6 +460,23 @@
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a19f457_608f4ac6",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "When we get null controller? Adopt seems to basically always create a new unique_ptr.",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -405,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "2913c2b9_eebedb72",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "A little more suggestion... I felt mentioning ServiceWorkerContainerClient::From() here\u0027s not super useful as it\u0027s in Blink (far form here) and it\u0027s not where SetController is called, maybe the second sentence could be something like...\n\n\u0027In that case, the controllee_state-\u003e|provider| is set when WebServiceWorkerProviderImpl is created, and then SetController() is called when its SetClient() is called right after that.\u0027\n\n?",
+      "parentUuid": "ef630bec_f369d72d",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc113c36_a2be697e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
@@ -434,6 +597,23 @@
       "side": 1,
       "message": "Ack and thanks.",
       "parentUuid": "dc113c36_a2be697e",
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b939dec_f253f559",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:23:16Z",
+      "side": 1,
+      "message": "nit: remove empty line",
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
