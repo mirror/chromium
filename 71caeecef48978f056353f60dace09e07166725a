@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5820f099_98db53f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:30:21Z",
+      "side": 1,
+      "message": "Please provide more details about why we make this change. Probably also update the design doc about what we gain by using the secure preference.",
+      "revId": "71caeecef48978f056353f60dace09e07166725a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07271dec_109e4474",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-26T06:30:21Z",
+      "side": 1,
+      "message": "Please provide more details here. There\u0027s no way for a reader to figure out what are \"Storage IDs\".",
+      "range": {
+        "startLine": 1616,
+        "startChar": 0,
+        "endLine": 1616,
+        "endChar": 42
+      },
+      "revId": "71caeecef48978f056353f60dace09e07166725a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
