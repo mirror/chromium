@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48db0ae8_f21f3595",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T05:33:37Z",
+      "side": 1,
+      "message": "|data| field is missing. It should specify what this request sends to network.",
+      "revId": "8ebb650b255cbade6c1c12087eebbda7cec8aeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43b5dc2_befa9843",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T05:33:37Z",
+      "side": 1,
+      "message": "|cookies_allowed| and |cookies_store| fields are missing.\nThe first one specifies if this request may store cookies or not (values YES, NO), and if it can, what is the cookie store.",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "8ebb650b255cbade6c1c12087eebbda7cec8aeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc6c0c1_7c53baa0",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T05:33:37Z",
+      "side": 1,
+      "message": "nit: Can be indented.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 76
+      },
+      "revId": "8ebb650b255cbade6c1c12087eebbda7cec8aeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
