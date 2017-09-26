@@ -22,6 +22,30 @@
       "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873ad0d7_bc4e07af",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-26T17:11:11Z",
+      "side": 1,
+      "message": "It was the first thing I tried but while it is in the anonymous namespace it clashes with the definition from the MS header. Would using the base::Internal namespace for this be ok?",
+      "parentUuid": "1b028bb7_1a726c8a",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 74
+      },
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
