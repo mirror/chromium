@@ -50,8 +50,6 @@ class CONTENT_EXPORT MediaStreamUIProxy {
   virtual void OnStarted(base::OnceClosure stop_callback,
                          WindowIdCallback window_id_callback);
 
-  void SetRenderFrameHostDelegateForTests(RenderFrameHostDelegate* delegate);
-
  protected:
   explicit MediaStreamUIProxy(RenderFrameHostDelegate* test_render_delegate);
 
@@ -79,7 +77,7 @@ class CONTENT_EXPORT MediaStreamUIProxy {
 
 class CONTENT_EXPORT FakeMediaStreamUIProxy : public MediaStreamUIProxy {
  public:
-  FakeMediaStreamUIProxy();
+  FakeMediaStreamUIProxy(bool tests_use_real_render_frame_hosts);
   ~FakeMediaStreamUIProxy() override;
 
   void SetAvailableDevices(const MediaStreamDevices& devices);
