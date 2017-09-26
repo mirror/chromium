@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "008b3e7e_b7b42268",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e917c2_d96f774f",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "bfeabf47578268131a1192406ca6bf687088fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ee1452_a75a2d0f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bfeabf47578268131a1192406ca6bf687088fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e760108e_4104e920",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-26T15:00:06Z",
+      "side": 1,
+      "message": "This is a no-op if for whatever reason the density stops changing. We don\u0027t really need to worry about GVR fixing this and us breaking things because we won\u0027t get the fix until we update our GVR SDK (and we can remove this code at that time).",
+      "parentUuid": "81ee1452_a75a2d0f",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 13
+      },
+      "revId": "bfeabf47578268131a1192406ca6bf687088fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
