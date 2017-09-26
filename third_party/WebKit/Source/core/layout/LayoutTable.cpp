@@ -312,7 +312,8 @@ void LayoutTable::UpdateLogicalWidth() {
             .ClampNegativeToZero();
     if (ShrinkToAvoidFloats() && cb->IsLayoutBlockFlow() &&
         ToLayoutBlockFlow(cb)->ContainsFloats() &&
-        !has_perpendicular_containing_block)
+        !has_perpendicular_containing_block &&
+        !RuntimeEnabledFeatures::LayoutNGEnabled())
       available_content_logical_width = ShrinkLogicalWidthToAvoidFloats(
           margin_start, margin_end, ToLayoutBlockFlow(cb));
 
