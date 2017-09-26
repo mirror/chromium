@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3b0bf2_667241b8",
+        "filename": "chrome/browser/mac/dock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "This is not “was Chrome launched from the Dock?,” it’s just “is Chrome in the Dock?”",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a0f67b_961e81bc",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "No longer necessary as a standalone variable, you can fold this into the next statement (same as you did on line 356 on the “new” side).",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acee01b5_c1d3e0bd",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "AddIcon() wants a mutable dictionary, but ChromeWasLaunchedFromDock() doesn’t really need one. Since those are the only two callers, let’s make this function return a NSDictionary, and move this line into AddIcon().",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9441f020_1b383dee",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "I suppose the same applies here.",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532204d9_d35aebb0",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "Is it worth capturing errors from either of these and sending them to a “???” bucket (like LM_OTHER?) to avoid polluting data with a bunch of “false” return values that really don’t affirmatively mean “no?”",
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fb9bbb_e91e2182",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22614,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-26T17:04:38Z",
+      "side": 1,
+      "message": "Spell out disk image here and in the next one? (“dmg” may not be as clear to non-Mac people.)",
+      "range": {
+        "startLine": 22614,
+        "startChar": 24,
+        "endLine": 22614,
+        "endChar": 27
+      },
+      "revId": "8e64fd56d14d43b1d2ec0c2f2d15103685038ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
