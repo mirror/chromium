@@ -613,8 +613,11 @@ int HeadlessShellMain(int argc, const char** argv) {
   if (!ValidateCommandLine(command_line))
     return EXIT_FAILURE;
 
-  if (command_line.HasSwitch(switches::kEnableCrashReporter))
-    builder.SetCrashReporterEnabled(true);
+  // Crash reporting in headless mode is enabled by default.
+  builder.SetCrashReporterEnabled(true);
+
+  if (command_line.HasSwitch(switches::kDisableCrashReporter))
+    builder.SetCrashReporterEnabled(false);
   if (command_line.HasSwitch(switches::kCrashDumpsDir)) {
     builder.SetCrashDumpsDir(
         command_line.GetSwitchValuePath(switches::kCrashDumpsDir));
