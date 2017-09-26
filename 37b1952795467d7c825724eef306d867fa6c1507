@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "02a4aa82_f7dc354a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-26T22:16:25Z",
+      "side": 1,
+      "message": "When I tried generating issues, then deleting the offending nodes, without opening DevTools, the nodes were still resolved correctly after opening DevTools -- perhaps because they hadn\u0027t been garbage collected yet, or something along those lines. I understand what you mean, though -- it could be very misleading if such an issue occurs.\n\nOkay, I\u0027ll add a frame reference to the console messages. I also need to modify the styling a little -- currently nodes are printed with no spaces (e.g. \"%o%o\"), because it looked better, but this is an issue for null values without padding. I shall follow up tomorrow.",
+      "parentUuid": "b4e153a3_5fea327d",
+      "revId": "37b1952795467d7c825724eef306d867fa6c1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d8f0e99_e0f9eff2",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.h",
         "patchSetId": 32
