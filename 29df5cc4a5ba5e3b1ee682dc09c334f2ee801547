@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "83226719_0e2de332",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T23:47:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12065b2e_17d8742d",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 37
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d246ad_3b5e2396",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 2
