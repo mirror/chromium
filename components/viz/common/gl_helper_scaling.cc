@@ -578,7 +578,7 @@ std::unique_ptr<GLHelper::ScalerInterface> GLHelperScaling::CreateScaler(
                                        std::move(ret));
   }
   ret->SetFinalScaleRatio(scale_from, scale_to);
-  return ret;
+  return std::move(ret);
 }
 
 std::unique_ptr<GLHelper::ScalerInterface>
@@ -590,7 +590,7 @@ GLHelperScaling::CreateGrayscalePlanerizer(bool vertically_flip_texture,
   auto result = base::MakeUnique<ScalerImpl>(gl_, this, stage, nullptr);
   result->SetColorWeights(0, kRGBtoGrayscaleColorWeights);
   result->SetFinalScaleRatio(stage.scale_from, stage.scale_to);
-  return result;
+  return std::move(result);
 }
 
 std::unique_ptr<GLHelper::ScalerInterface>
@@ -619,7 +619,7 @@ GLHelperScaling::CreateI420Planerizer(int plane,
       NOTREACHED();
   }
   result->SetFinalScaleRatio(stage.scale_from, stage.scale_to);
-  return result;
+  return std::move(result);
 }
 
 std::unique_ptr<GLHelper::ScalerInterface>
@@ -633,7 +633,7 @@ GLHelperScaling::CreateI420MrtPass1Planerizer(bool vertically_flip_texture,
   result->SetColorWeights(1, kRGBtoUColorWeights);
   result->SetColorWeights(2, kRGBtoVColorWeights);
   result->SetFinalScaleRatio(stage.scale_from, stage.scale_to);
-  return result;
+  return std::move(result);
 }
 
 std::unique_ptr<GLHelper::ScalerInterface>
@@ -644,7 +644,7 @@ GLHelperScaling::CreateI420MrtPass2Planerizer(bool vertically_flip_texture,
                              vertically_flip_texture, swizzle};
   auto result = base::MakeUnique<ScalerImpl>(gl_, this, stage, nullptr);
   result->SetFinalScaleRatio(stage.scale_from, stage.scale_to);
-  return result;
+  return std::move(result);
 }
 
 // Triangle strip coordinates, used to sweep the entire source area when
