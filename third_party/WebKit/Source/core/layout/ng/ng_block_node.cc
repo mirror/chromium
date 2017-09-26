@@ -7,6 +7,7 @@
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutMultiColumnSet.h"
+#include "core/layout/LayoutTable.h"
 #include "core/layout/MinMaxSize.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
@@ -465,6 +466,11 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
     box_->SetOverrideContainingBlockContentLogicalHeight(
         available_size.inline_size);
   }
+
+  if (box_->IsTable()) {
+    ToLayoutTable(box_)->RecalcSectionsIfNeeded();
+  }
+
   // TODO(layout-ng): Does this handle scrollbars correctly?
   if (constraint_space.IsFixedSizeInline()) {
     box_->SetOverrideLogicalContentWidth(
