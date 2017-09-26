@@ -10,7 +10,6 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
-#include "base/time/default_tick_clock.h"
 #include "extensions/browser/api/api_resource_manager.h"
 #include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/browser/api/feedback_private/feedback_private_delegate.h"
@@ -56,9 +55,7 @@ void GetLogLinesFromSystemLogsResponse(const SystemLogsResponse& response,
 }  // namespace
 
 LogSourceAccessManager::LogSourceAccessManager(content::BrowserContext* context)
-    : context_(context),
-      tick_clock_(new base::DefaultTickClock),
-      weak_factory_(this) {}
+    : context_(context), tick_clock_(nullptr), weak_factory_(this) {}
 
 LogSourceAccessManager::~LogSourceAccessManager() {}
 
@@ -171,22 +168,13 @@ int LogSourceAccessManager::CreateResource(const SourceAndExtension& key) {
 
 bool LogSourceAccessManager::UpdateSourceAccessTime(
     const SourceAndExtension& key) {
-  base::TimeTicks last = GetLastExtensionAccessTime(key);
-  base::TimeTicks now = tick_clock_->NowTicks();
-  if (!last.is_null() && now < last + GetMinTimeBetweenReads()) {
-    return false;
+  if (rate_limiters_.find(key) == rate_limiters_.end()) {
+    rate_limiters_[key].reset(
+        new AccessRateLimiter(1, GetMinTimeBetweenReads()));
+    if (tick_clock_)
+      rate_limiters_[key]->SetTickClockForTesting(tick_clock_);
   }
-  last_access_times_[key] = now;
-  return true;
-}
-
-base::TimeTicks LogSourceAccessManager::GetLastExtensionAccessTime(
-    const SourceAndExtension& key) const {
-  const auto iter = last_access_times_.find(key);
-  if (iter == last_access_times_.end())
-    return base::TimeTicks();
-
-  return iter->second;
+  return rate_limiters_[key]->TryAccess();
 }
 
 size_t LogSourceAccessManager::GetNumActiveResourcesForSource(
