@@ -57,7 +57,7 @@ class WTF_EXPORT RefCountedBase {
     return ref_count_ == 1;
   }
 
-  int RefCount() const {
+  int GetRefCountForTesting() const {
 #if CHECK_REF_COUNTED_LIFECYCLE
     SECURITY_DCHECK(verifier_.IsSafeToUse());
 #endif
