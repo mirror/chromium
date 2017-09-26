@@ -19,8 +19,22 @@ InspectorTaskRunner::IgnoreInterruptsScope::~IgnoreInterruptsScope() {
   task_runner_->ignore_interrupts_ = was_ignoring_;
 }
 
+InspectorTaskRunner::PostponeInterruptsScope::PostponeInterruptsScope(
+    InspectorTaskRunner* task_runner,
+    v8::Isolate* isolate)
+    : isolate_(isolate),
+      interupt_requested_(task_runner->interupt_requested_),
+      task_runner_(task_runner),
+      ignore_interrupts_scope_(task_runner) {}
+
+InspectorTaskRunner::PostponeInterruptsScope::~PostponeInterruptsScope() {
+  if (interupt_requested_ && !task_runner_->interupt_requested_) {
+    task_runner_->InterruptAndRunAllTasksDontWait(isolate_);
+  }
+}
+
 InspectorTaskRunner::InspectorTaskRunner()
-    : ignore_interrupts_(false), killed_(false) {}
+    : interupt_requested_(false), ignore_interrupts_(false), killed_(false) {}
 
 InspectorTaskRunner::~InspectorTaskRunner() {}
 
@@ -58,6 +72,7 @@ void InspectorTaskRunner::Kill() {
 
 void InspectorTaskRunner::InterruptAndRunAllTasksDontWait(
     v8::Isolate* isolate) {
+  interupt_requested_ = true;
   isolate->RequestInterrupt(&V8InterruptCallback, this);
 }
 
@@ -72,6 +87,7 @@ void InspectorTaskRunner::RunAllTasksDontWait() {
 
 void InspectorTaskRunner::V8InterruptCallback(v8::Isolate*, void* data) {
   InspectorTaskRunner* runner = static_cast<InspectorTaskRunner*>(data);
+  runner->interupt_requested_ = false;
   if (runner->ignore_interrupts_)
     return;
   runner->RunAllTasksDontWait();
