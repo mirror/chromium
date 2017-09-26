@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c66b24_0356680d",
+        "filename": "third_party/WebKit/Source/core/css/CSSCalculationValueTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-26T06:29:11Z",
+      "side": 1,
+      "message": "I guess this was really just testing Length::Length(RefPtr\u003cCalculationValue\u003e). We may be able to refactor this test to not use ref counts by using something like Length::CalcHandles, but what you have here is fine. Maybe add a FIXME to that effect?",
+      "revId": "a410de526565e75096b30ab581cac2c2159c2250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
