@@ -46,6 +46,30 @@
       "revId": "e4051c12c35284a80470751a2fbd3ba96830dab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91119dac_e0de74fd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-26T10:04:35Z",
+      "side": 1,
+      "message": "Yes we discussed it offline. sounds good, thanks!",
+      "parentUuid": "d4586cfa_d7799119",
+      "range": {
+        "startLine": 269,
+        "startChar": 22,
+        "endLine": 269,
+        "endChar": 25
+      },
+      "revId": "e4051c12c35284a80470751a2fbd3ba96830dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
