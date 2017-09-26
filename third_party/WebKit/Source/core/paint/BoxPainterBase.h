@@ -93,6 +93,7 @@ class BoxPainterBase {
 
   static bool ShouldForceWhiteBackgroundForPrintEconomy(const Document&,
                                                         const ComputedStyle&);
+  static bool ShouldPaintShadows(const Document&);
 
   typedef Vector<const FillLayer*, 8> FillLayerOcclusionOutputList;
   // Returns true if the result fill layers have non-associative blending or
@@ -179,8 +180,6 @@ class BoxPainterBase {
                                   bool include_logical_right_edge = true);
 
  private:
-  static bool ShouldPaintShadows(const Document&);
-
   const DisplayItemClient& display_item_;
   Member<const Document> document_;
   const ComputedStyle& style_;
