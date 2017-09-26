@@ -592,8 +592,12 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
       "%s/%" PRIu32 "#%d", histogram_name().c_str(), bad_fields, identifier);
 #if !defined(OS_NACL)
   base::trace_event::AllocationRegister::Allocation allocation;
-  if (base::trace_event::FreedObjectTracker::GetInstance()->Get(this,
-                                                                &allocation)) {
+  if (((bad_fields & (1 << kDummyField)) != 0 &&
+       base::trace_event::FreedObjectTracker::GetInstance()->Get(
+           this, &allocation)) ||
+      ((bad_fields & (1 << kHistogramNameField)) != 0 &&
+       base::trace_event::FreedObjectTracker::GetInstance()->Get(
+           histogram_name().data(), &allocation))) {
     debug_string.reserve(10000);
     if (allocation.context.type_name) {
       debug_string += " (";
