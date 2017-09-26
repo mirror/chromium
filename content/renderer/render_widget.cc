@@ -1106,6 +1106,11 @@ void RenderWidget::OnDidOverscroll(const ui::DidOverscrollParams& params) {
   }
 }
 
+void RenderWidget::IsMobileOptimizedDocumentChanged(bool is_mobile_optimized) {
+  CHECK(widget_host_);
+  widget_host_->SetIsMobileOptimizedDocument(is_mobile_optimized);
+}
+
 void RenderWidget::SetInputHandler(RenderWidgetInputHandler* input_handler) {
   // Nothing to do here. RenderWidget created the |input_handler| and will take
   // ownership of it. We just verify here that we don't already have an input
@@ -2458,6 +2463,10 @@ void RenderWidget::SetupWidgetInputHandler(
     mojom::WidgetInputHandlerHostPtr host) {
   widget_input_handler_manager_->AddInterface(std::move(request));
   widget_input_handler_manager_->SetWidgetInputHandlerHost(std::move(host));
+}
+
+void RenderWidget::SetWidgetHost(mojom::WidgetHostPtr widget_host) {
+  widget_host_.Bind(widget_host.PassInterface());
 }
 
 void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {

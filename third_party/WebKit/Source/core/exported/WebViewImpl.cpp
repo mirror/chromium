@@ -2954,6 +2954,10 @@ void WebViewImpl::UpdatePageDefinedViewportConstraints(
     return;
   }
 
+  VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
+  bool is_mobile_document_before =
+      visual_viewport.ShouldDisableDesktopWorkarounds();
+
   Document* document = GetPage()->DeprecatedLocalMainFrame()->GetDocument();
 
   matches_heuristics_for_gpu_rasterization_ =
@@ -3022,6 +3026,13 @@ void WebViewImpl::UpdatePageDefinedViewportConstraints(
   }
 
   UpdateMainFrameLayoutSize();
+
+  bool is_mobile_document = visual_viewport.ShouldDisableDesktopWorkarounds();
+
+  if (is_mobile_document != is_mobile_document_before) {
+    client_->WidgetClient()->IsMobileOptimizedDocumentChanged(
+        is_mobile_document);
+  }
 }
 
 void WebViewImpl::UpdateMainFrameLayoutSize() {
