@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a47a1b_f9479ab4",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "Hmm...Do you need this extra boolean? It seems only to be used in places where we are not trusting that OnStateUpdate() is being called at the right times (i.e., that VideoCaptureImplManager could call OnStatusUpdate(ENDED) before it ever calls OnStatusUpdate(STARTED)).\n\nIf you still feel this is needed, I\u0027d suggest instead fixing the code in VideoCaptureImplManager to ensure only valid status updates are made, and in the correct sequence.",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "506f8f8eeffabe6efb059d5b624519b4266d39e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cadad04_d656cf65",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "nit: Instead of storing the new capture params in a class member, how about binding it in the OnRunStateChanged() callback? This would also ensure that parameters from the most-recent call to OnRunStateChanged(true) are being committed |this-\u003ecapture_params_|.\n\n(I could be bike-shedding here, but IMHO it\u0027s generally better standard practice to pass state changes applied during callback events along with the callbacks, rather than stashed on the side.)\n\nSomething like:\n\n  media::VideoCaptureParams new_capture_params \u003d capture_params_;\n  new_capture_params.requested_format \u003d new_format;\n  ...\n  source_-\u003eStartCapture(..., base::Bind(\u0026OnRunStateChanged, this, new_capture_params));\n\nAnd then:\n\n  void MediaStreamVideoCapturerSource::OnRunStateChanged(const media::VideoCaptureParams\u0026 new_params, bool is_running) {\n    switch(state_) {\n    ...\n    case RESTARTING:\n      if (is_running) {\n        state_ \u003d STARTED;\n        capture_params_ \u003d new_capture_params;\n      } else {\n        state_ \u003d STOPPED;\n      }\n    ...\n  }",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 52
+      },
+      "revId": "506f8f8eeffabe6efb059d5b624519b4266d39e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9247d514_e709bf4b",
+        "filename": "content/renderer/media/media_stream_video_capturer_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "nit: IMHO, base::nullopt is cleaner here.",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 57
+      },
+      "revId": "506f8f8eeffabe6efb059d5b624519b4266d39e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83259355_fe33d4ca",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "Did you mean to leave this in?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "506f8f8eeffabe6efb059d5b624519b4266d39e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410f5a48_54e6f75d",
+        "filename": "content/renderer/media/media_stream_video_source.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "s/cannot not/cannot/",
+      "range": {
+        "startLine": 104,
+        "startChar": 53,
+        "endLine": 104,
+        "endChar": 63
+      },
+      "revId": "506f8f8eeffabe6efb059d5b624519b4266d39e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

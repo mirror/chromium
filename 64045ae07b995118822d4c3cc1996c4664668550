@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a0f59cb4_be019da9",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d55de9c9_bf678052",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 26
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3328ea5c_3176e1d4",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I think NOTREACHED() is better in this case, since this should never be called.\nAdded a comment in the documentation to emphasize that if a subclass overrides StopSourceForRestartImpl(), RestartSourceImpl() must be overriden as well (and viceversa).",
       "parentUuid": "bda69ea9_30c74a84",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "64045ae07b995118822d4c3cc1996c4664668550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf60435f_79ef4ae7",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-26T04:32:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b405b8a_417101de",
       "range": {
         "startLine": 170,
         "startChar": 2,
