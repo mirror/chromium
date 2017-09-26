@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b263b4b_cfa6a13a",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:16:47Z",
+      "side": 1,
+      "message": "nit: can you add a short class-level comment?  Also maybe add a TODO comment to merge this and the one in service_worker_url_loader_job_unittest.cc",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caa8c0b_f7b6281c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T09:16:47Z",
+      "side": 1,
+      "message": "Could we add some expectations here that can tell us we actually performed the fallback?",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
