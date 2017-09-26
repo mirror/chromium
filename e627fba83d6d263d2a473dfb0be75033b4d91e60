@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "13dbc3d9_ab60ca18",
+        "filename": "components/sync/engine_impl/sync_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T17:45:28Z",
+      "side": 1,
+      "message": "OnNetworkConnectivityChangedImpl is trivial and is only called from OnNetworkChanged. Could you move the code into OnNetworkChanged and remove OnNetworkConnectivityChangedImpl.",
+      "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e997db8_fc13f9a1",
         "filename": "components/sync/engine_impl/sync_scheduler_impl.cc",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2017-09-21T22:20:46Z",
       "side": 1,
       "message": "I am planning to write a test for this logic, but not quite sure how. \nHow do I test that the update is not scheduled?",
+      "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8b3413_24daaaf1",
+        "filename": "components/sync/engine_impl/sync_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T17:45:28Z",
+      "side": 1,
+      "message": "You can\u0027t query scheduler if sync cycle is scheduled, but you can set up expectation that NormalSyncShare is not called and then running message loop. See how it is done in SyncSchedulerImpl unittests:\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/sync_scheduler_impl_unittest.cc?type\u003dcs\u0026q\u003d%22SyncSchedulerImplTest,+StartWhenNotConnected%22\u0026sq\u003dpackage:chromium\u0026l\u003d1500",
+      "parentUuid": "2e997db8_fc13f9a1",
       "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
