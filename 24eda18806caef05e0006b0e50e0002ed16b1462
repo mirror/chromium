@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20724a82_a8181f49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: Could you please elaborate a little bit more on what exactly is changed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91111de_470ff5f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: Please replace the word \"IDs\" here too.",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52be4ea6_72129f49",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: Perhaps better drop \"the only one\", as in reality there\u0027s another stable identifier - \u0027id\u0027 from policy_templates.json.",
+      "range": {
+        "startLine": 859,
+        "startChar": 42,
+        "endLine": 859,
+        "endChar": 54
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0941b9a4_cf7691a4",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: s/policies/policy/",
+      "range": {
+        "startLine": 862,
+        "startChar": 30,
+        "endLine": 862,
+        "endChar": 33
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4c730b_e2761c44",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: s/policies/policy/ here, and inside the function.",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 51
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b0e326_1e48f01d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 10297,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: \"corresponds to the DeviceAllowNewUsers policy\"",
+      "range": {
+        "startLine": 10297,
+        "startChar": 61,
+        "endLine": 10297,
+        "endChar": 88
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85e9276_4d724288",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 10297,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-26T17:28:11Z",
+      "side": 1,
+      "message": "nit: \"corresponds to the DeviceGuestModeEnabled policy\"\n(let\u0027s refer to the policy names from this file)",
+      "range": {
+        "startLine": 10297,
+        "startChar": 24,
+        "endLine": 10297,
+        "endChar": 45
+      },
+      "revId": "24eda18806caef05e0006b0e50e0002ed16b1462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
