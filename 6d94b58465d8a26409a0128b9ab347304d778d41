@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95dab940_e2cdce53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cafa391b_ec44e4e3",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075e27c6_562c3deb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e014e3b_7a7f8f83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done. I left off the ForTesting() part though because we can also use it for changing it on tapping the toggle switch.",
+      "parentUuid": "075e27c6_562c3deb",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "16cd1b4c_7f1c58a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08780e84_5bc85f35",
+      "range": {
+        "startLine": 272,
+        "startChar": 5,
+        "endLine": 272,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e71c2e9b_1c030500",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ec76c0_582df396",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e71c2e9b_1c030500",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 22
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "eb1f403a_658547cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c669f78_563f3d06",
+      "range": {
+        "startLine": 587,
+        "startChar": 23,
+        "endLine": 587,
+        "endChar": 24
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cc1343d_a36c880a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee2bfb1_23cd39dd",
+      "range": {
+        "startLine": 587,
+        "startChar": 32,
+        "endLine": 587,
+        "endChar": 53
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70804b2_48033c8a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebcba63_02d3798f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d70804b2_48033c8a",
+      "range": {
+        "startLine": 591,
+        "startChar": 17,
+        "endLine": 591,
+        "endChar": 46
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "711e55ec_1fdb6918",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2dfc3a1_429a3a3f",
+      "range": {
+        "startLine": 601,
+        "startChar": 8,
+        "endLine": 601,
+        "endChar": 29
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a679ced2_d81b03bd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1021b78_4873ad6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "I think if we convert it back to a string it gets rid of the bold formatting added? So I left the return type the same.",
+      "parentUuid": "a679ced2_d81b03bd",
+      "range": {
+        "startLine": 626,
+        "startChar": 12,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "ebb05d04_e532de4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done (though I think SPAN_INCLUSIVE_EXCLUSIVE is still OK since it\u0027s the length(), not the end character index).",
+      "parentUuid": "403105d3_0199cf75",
+      "range": {
+        "startLine": 628,
+        "startChar": 7,
+        "endLine": 634,
+        "endChar": 65
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "811b2bea_25830f16",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 6
@@ -246,6 +486,24 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21db65b6_3f1cb49c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "See above comment reply.",
+      "parentUuid": "811b2bea_25830f16",
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "83dd1878_49f6c11e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/page_info/PageInfoPopupTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "174857e3_2a8dbb90",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0412f890_2c2e0602",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/page_info/PageInfoPopupTest.java",
         "patchSetId": 6
@@ -286,6 +568,24 @@
       "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c2be32_dbe35ebb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/page_info/PageInfoPopupTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-26T07:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0412f890_2c2e0602",
+      "revId": "6d94b58465d8a26409a0128b9ab347304d778d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
