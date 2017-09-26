@@ -269,7 +269,6 @@ public class UrlBar extends AutocompleteEditText {
         }
 
         if (!hasFocus()) {
-            deEmphasizeUrl();
             emphasizeUrl();
         }
     }
@@ -735,7 +734,7 @@ public class UrlBar extends AutocompleteEditText {
      */
     public void emphasizeUrl() {
         Editable url = getText();
-        if (OmniboxUrlEmphasizer.hasEmphasisSpans(url) || hasFocus()) {
+        if (hasFocus()) {
             return;
         }
 
@@ -754,6 +753,9 @@ public class UrlBar extends AutocompleteEditText {
             // Ignore as this only is for applying color
         }
 
+        // Since we emphasize the scheme of the URL based on the security type, we need to
+        // deEmphasize first to refresh.
+        deEmphasizeUrl();
         OmniboxUrlEmphasizer.emphasizeUrl(url, getResources(), currentTab.getProfile(),
                 currentTab.getSecurityLevel(), isInternalPage,
                 mUseDarkColors, mUrlBarDelegate.shouldEmphasizeHttpsScheme());
