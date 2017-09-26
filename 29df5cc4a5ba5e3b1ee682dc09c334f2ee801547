@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a13fb17_2a00f935",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "This bug number seems to be wrong.",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc627eb_527906df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Is this line related?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 66
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fb474c_1ac946ee",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Nit: I think we can (and maybe should?) use std::make_unique\u003c\u003e() instead now.",
+      "range": {
+        "startLine": 2957,
+        "startChar": 9,
+        "endLine": 2957,
+        "endChar": 25
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0488401_c8945d7a",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2971,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "We can just use display_manager().",
+      "range": {
+        "startLine": 2971,
+        "startChar": 2,
+        "endLine": 2971,
+        "endChar": 70
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdb7835_a80c9c72",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3016,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Didn\u0027t we just get it above in line 3004?",
+      "range": {
+        "startLine": 3015,
+        "startChar": 0,
+        "endLine": 3016,
+        "endChar": 51
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f40ec5_bfb86abf",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Optional nit: we should consider renaming this function now to indicate that it has side effects.",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 65
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f7a677_26569fe7",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Nit: vector::emplace_back() and set::emplace().",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 37
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d246ad_3b5e2396",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "range": {
+        "startLine": 271,
+        "startChar": 12,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c12f6d_bf3f3e66",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Nit: consts.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e85e09_3a85153f",
+        "filename": "ui/display/manager/display_layout_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:54:48Z",
+      "side": 1,
+      "message": "Nit: For clarity, I would write this as:\n\nDCHECK_GT(list.size(), 1u);",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "29df5cc4a5ba5e3b1ee682dc09c334f2ee801547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
