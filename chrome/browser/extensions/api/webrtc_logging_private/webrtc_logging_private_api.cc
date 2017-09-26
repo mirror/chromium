@@ -13,12 +13,15 @@
 #include "base/supports_user_data.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
+#include "chrome/browser/media/webrtc/webrtc_log_list.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/api/file_handlers/app_file_handler_util.h"
+#include "extensions/browser/granted_file_entry.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
@@ -151,9 +154,29 @@ void WebrtcLoggingPrivateFunctionWithRecordingDoneCallback::FireCallback(
     bool did_manual_stop) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   api::webrtc_logging_private::RecordingInfo result;
+
+  base::FilePath path =
+      WebRtcLogList::GetWebRtcLogDirectoryForProfile(GetProfile()->GetPath());
+  bool is_directory = true;
+
+  GrantedFileEntry granted_file_entry = app_file_handler_util::CreateFileEntry(
+      browser_context(), extension(),
+      render_frame_host()->GetProcess()->GetID(), path, is_directory);
+
+  std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
+  entry->SetString("fileSystemId", granted_file_entry.filesystem_id);
+  entry->SetString("baseName", granted_file_entry.registered_name);
+  entry->SetString("id", granted_file_entry.id);
+  entry->SetBoolean("isDirectory", is_directory);
+
+  api::webrtc_logging_private::RecordingInfo::FileEntriesType file_entry;
+  api::webrtc_logging_private::RecordingInfo::FileEntriesType::Populate(
+      *entry, &file_entry);
+
   result.prefix_path = prefix_path;
   result.did_stop = did_stop;
   result.did_manual_stop = did_manual_stop;
+  result.file_entries.push_back(std::move(file_entry));
   SetResult(result.ToValue());
   SendResponse(true);
 }

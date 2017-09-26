@@ -41,6 +41,9 @@ namespace webrtcLoggingPrivate {
     // Indicates if recording was stopped manually through a
     // stopAudioDebugRecordings() or stopWebRtcEventLogging() call.
     boolean didManualStop;
+
+    // FileEntry objects for the audio diagnostic recording files.
+    [instanceOf=FileEntry] object[] fileEntries;
   };
 
   callback GenericDoneCallback = void ();
