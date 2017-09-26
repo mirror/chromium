@@ -390,7 +390,8 @@ void TableSectionPainter::PaintBoxDecorationBackground(
 
   if (has_box_shadow) {
     BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect,
-                                         layout_table_section_.StyleRef());
+                                         layout_table_section_.StyleRef(),
+                                         layout_table_section_.GetDocument());
   }
 
   if (may_have_background) {
@@ -406,7 +407,8 @@ void TableSectionPainter::PaintBoxDecorationBackground(
 
   if (has_box_shadow) {
     BoxPainterBase::PaintInsetBoxShadowWithInnerRect(
-        paint_info, paint_rect, layout_table_section_.StyleRef());
+        paint_info, paint_rect, layout_table_section_.StyleRef(),
+        layout_table_section_.GetDocument());
   }
 }
 

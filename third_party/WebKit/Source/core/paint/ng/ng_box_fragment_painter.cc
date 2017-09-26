@@ -75,6 +75,7 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
       IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
           box_fragment_, paint_info);
   const ComputedStyle& style = box_fragment_.Style();
+  const Document& document = box_fragment_.GetLayoutObject()->GetDocument();
 
   // TODO(layout-dev): Implement support for painting overflow contents.
   const DisplayItemClient& display_item_client = box_fragment_;
@@ -94,7 +95,7 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
     // FIXME: Should eventually give the theme control over whether the box
     // shadow should paint, since controls could have custom shadows of their
     // own.
-    PaintNormalBoxShadow(paint_info, paint_rect, style);
+    PaintNormalBoxShadow(paint_info, paint_rect, style, document);
 
     if (BleedAvoidanceIsClipping(box_decoration_data.bleed_avoidance)) {
       state_saver.Save();
@@ -117,11 +118,10 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
   }
 
   if (!painting_overflow_contents) {
-    PaintInsetBoxShadowWithBorderRect(paint_info, paint_rect, style);
+    PaintInsetBoxShadowWithBorderRect(paint_info, paint_rect, style, document);
 
     if (box_decoration_data.has_border_decoration) {
       Node* generating_node = box_fragment_.GetLayoutObject()->GeneratingNode();
-      const Document& document = box_fragment_.GetLayoutObject()->GetDocument();
       PaintBorder(box_fragment_, document, generating_node, paint_info,
                   paint_rect, style, box_decoration_data.bleed_avoidance);
     }

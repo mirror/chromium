@@ -64,6 +64,7 @@ class BoxPainterBase {
   static void PaintNormalBoxShadow(const PaintInfo&,
                                    const LayoutRect&,
                                    const ComputedStyle&,
+                                   const Document&,
                                    bool include_logical_left_edge = true,
                                    bool include_logical_right_edge = true);
 
@@ -71,12 +72,14 @@ class BoxPainterBase {
       const PaintInfo&,
       const LayoutRect&,
       const ComputedStyle&,
+      const Document&,
       bool include_logical_left_edge = true,
       bool include_logical_right_edge = true);
 
   static void PaintInsetBoxShadowWithInnerRect(const PaintInfo&,
                                                const LayoutRect&,
-                                               const ComputedStyle&);
+                                               const ComputedStyle&,
+                                               const Document&);
 
   static void PaintBorder(const ImageResourceObserver&,
                           const Document&,
@@ -176,6 +179,8 @@ class BoxPainterBase {
                                   bool include_logical_right_edge = true);
 
  private:
+  static bool ShouldPaintShadows(const Document&);
+
   const DisplayItemClient& display_item_;
   Member<const Document> document_;
   const ComputedStyle& style_;

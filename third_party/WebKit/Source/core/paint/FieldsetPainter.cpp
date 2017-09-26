@@ -52,14 +52,16 @@ void FieldsetPainter::PaintBoxDecorationBackground(
   BoxDecorationData box_decoration_data(layout_fieldset_);
 
   BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect,
-                                       layout_fieldset_.StyleRef());
+                                       layout_fieldset_.StyleRef(),
+                                       layout_fieldset_.GetDocument());
   BackgroundImageGeometry geometry(layout_fieldset_);
   BoxModelObjectPainter(layout_fieldset_)
       .PaintFillLayers(paint_info, box_decoration_data.background_color,
                        layout_fieldset_.Style()->BackgroundLayers(), paint_rect,
                        geometry);
   BoxPainterBase::PaintInsetBoxShadowWithBorderRect(
-      paint_info, paint_rect, layout_fieldset_.StyleRef());
+      paint_info, paint_rect, layout_fieldset_.StyleRef(),
+      layout_fieldset_.GetDocument());
 
   if (!box_decoration_data.has_border_decoration)
     return;

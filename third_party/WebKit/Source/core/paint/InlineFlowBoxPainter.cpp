@@ -131,16 +131,18 @@ inline bool InlineFlowBoxPainter::IncludeLogicalRightEdgeForBoxShadow() const {
 void InlineFlowBoxPainter::PaintNormalBoxShadow(const PaintInfo& info,
                                                 const ComputedStyle& s,
                                                 const LayoutRect& paint_rect) {
-  BoxPainterBase::PaintNormalBoxShadow(info, paint_rect, s,
-                                       IncludeLogicalLeftEdgeForBoxShadow(),
-                                       IncludeLogicalRightEdgeForBoxShadow());
+  BoxPainterBase::PaintNormalBoxShadow(
+      info, paint_rect, s, inline_flow_box_.GetLineLayoutItem().GetDocument(),
+      IncludeLogicalLeftEdgeForBoxShadow(),
+      IncludeLogicalRightEdgeForBoxShadow());
 }
 
 void InlineFlowBoxPainter::PaintInsetBoxShadow(const PaintInfo& info,
                                                const ComputedStyle& s,
                                                const LayoutRect& paint_rect) {
   BoxPainterBase::PaintInsetBoxShadowWithBorderRect(
-      info, paint_rect, s, IncludeLogicalLeftEdgeForBoxShadow(),
+      info, paint_rect, s, inline_flow_box_.GetLineLayoutItem().GetDocument(),
+      IncludeLogicalLeftEdgeForBoxShadow(),
       IncludeLogicalRightEdgeForBoxShadow());
 }
 

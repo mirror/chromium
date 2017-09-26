@@ -103,8 +103,10 @@ void TableCellPainter::PaintBoxDecorationBackground(
 
   LayoutRect paint_rect = PaintRectNotIncludingVisualOverflow(paint_offset);
 
-  if (has_box_shadow)
-    BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect, style);
+  if (has_box_shadow) {
+    BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect, style,
+                                         layout_table_cell_.GetDocument());
+  }
 
   if (has_background)
     PaintBackground(paint_info, paint_rect, layout_table_cell_);
@@ -119,7 +121,8 @@ void TableCellPainter::PaintBoxDecorationBackground(
         layout_table_cell_.BorderTop(), layout_table_cell_.BorderRight(),
         layout_table_cell_.BorderBottom(), layout_table_cell_.BorderLeft());
     BoxPainterBase::PaintInsetBoxShadowWithInnerRect(
-        paint_info, inner_rect, layout_table_cell_.StyleRef());
+        paint_info, inner_rect, layout_table_cell_.StyleRef(),
+        layout_table_cell_.GetDocument());
   }
 
   if (!needs_to_paint_border)

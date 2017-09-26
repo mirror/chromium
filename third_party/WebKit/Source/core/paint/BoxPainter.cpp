@@ -133,7 +133,8 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
     // FIXME: Should eventually give the theme control over whether the box
     // shadow should paint, since controls could have custom shadows of their
     // own.
-    BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect, style);
+    BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect, style,
+                                         layout_box_.GetDocument());
 
     if (BleedAvoidanceIsClipping(box_decoration_data.bleed_avoidance)) {
       state_saver.Save();
@@ -167,8 +168,8 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   }
 
   if (!painting_overflow_contents) {
-    BoxPainterBase::PaintInsetBoxShadowWithBorderRect(paint_info, paint_rect,
-                                                      style);
+    BoxPainterBase::PaintInsetBoxShadowWithBorderRect(
+        paint_info, paint_rect, style, layout_box_.GetDocument());
 
     // The theme will tell us whether or not we should also paint the CSS
     // border.
