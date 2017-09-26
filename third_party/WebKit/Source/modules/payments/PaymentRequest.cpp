@@ -1128,6 +1128,16 @@ void PaymentRequest::OnShippingAddressChange(PaymentAddressPtr address) {
   }
 
   shipping_address_ = new PaymentAddress(std::move(address));
+
+  if (!HasEventListeners(EventTypeNames::shippingaddresschange)) {
+    GetExecutionContext()->AddConsoleMessage(
+        ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel,
+                               "Unhandled 'shippingaddresschange' event. User "
+                               "may see outdated line items and total."));
+    payment_provider_->NoUpdate();
+    return;
+  }
+
   PaymentRequestUpdateEvent* event = PaymentRequestUpdateEvent::Create(
       GetExecutionContext(), EventTypeNames::shippingaddresschange);
   event->SetTarget(this);
@@ -1142,6 +1152,16 @@ void PaymentRequest::OnShippingOptionChange(const String& shipping_option_id) {
   DCHECK(show_resolver_);
   DCHECK(!complete_resolver_);
   shipping_option_ = shipping_option_id;
+
+  if (!HasEventListeners(EventTypeNames::shippingoptionchange)) {
+    GetExecutionContext()->AddConsoleMessage(
+        ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel,
+                               "Unhandled 'shippingoptionchange' event. User "
+                               "may see outdated line items and total."));
+    payment_provider_->NoUpdate();
+    return;
+  }
+
   PaymentRequestUpdateEvent* event = PaymentRequestUpdateEvent::Create(
       GetExecutionContext(), EventTypeNames::shippingoptionchange);
   event->SetTarget(this);
