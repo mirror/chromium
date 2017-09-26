@@ -21,6 +21,11 @@
 
 namespace blink {
 
+bool BoxPainterBase::ShouldPaintShadows(const Document& document) {
+  return !document.Printing() ||
+         document.GetSettings()->GetShouldPrintBackgrounds();
+}
+
 void BoxPainterBase::PaintFillLayers(const PaintInfo& paint_info,
                                      const Color& c,
                                      const FillLayer& fill_layer,
@@ -51,9 +56,10 @@ void BoxPainterBase::PaintFillLayers(const PaintInfo& paint_info,
 void BoxPainterBase::PaintNormalBoxShadow(const PaintInfo& info,
                                           const LayoutRect& paint_rect,
                                           const ComputedStyle& style,
+                                          const Document& document,
                                           bool include_logical_left_edge,
                                           bool include_logical_right_edge) {
-  if (!style.BoxShadow())
+  if (!style.BoxShadow() || !ShouldPaintShadows(document))
     return;
   GraphicsContext& context = info.context;
 
@@ -161,9 +167,10 @@ void BoxPainterBase::PaintInsetBoxShadowWithBorderRect(
     const PaintInfo& info,
     const LayoutRect& border_rect,
     const ComputedStyle& style,
+    const Document& document,
     bool include_logical_left_edge,
     bool include_logical_right_edge) {
-  if (!style.BoxShadow())
+  if (!style.BoxShadow() || !ShouldPaintShadows(document))
     return;
   auto bounds = style.GetRoundedInnerBorderFor(
       border_rect, include_logical_left_edge, include_logical_right_edge);
@@ -174,8 +181,9 @@ void BoxPainterBase::PaintInsetBoxShadowWithBorderRect(
 void BoxPainterBase::PaintInsetBoxShadowWithInnerRect(
     const PaintInfo& info,
     const LayoutRect& inner_rect,
-    const ComputedStyle& style) {
-  if (!style.BoxShadow())
+    const ComputedStyle& style,
+    const Document& document) {
+  if (!style.BoxShadow() || !ShouldPaintShadows(document))
     return;
   auto bounds = style.GetRoundedInnerBorderFor(inner_rect, LayoutRectOutsets());
   PaintInsetBoxShadow(info, bounds, style);
