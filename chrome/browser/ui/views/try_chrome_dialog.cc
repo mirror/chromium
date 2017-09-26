@@ -126,6 +126,68 @@ std::unique_ptr<views::LabelButton> CreateWin10StyleButton(
 
 }  // namespace
 
+// TryChromeDialogWidget -------------------------------------------------------
+
+// A custom Widget for the TryChromeDialog that notifies the dialog when either
+// the mouse is hovering over it or if it has focus.
+class TryChromeDialogWidget : public views::Widget {
+ public:
+  explicit TryChromeDialogWidget(TryChromeDialog* dialog)
+      : views::Widget(), dialog_(dialog), has_hover_(false), has_focus_(true) {}
+
+  // NativeWidgetDelegate:
+  void OnNativeFocus() override;
+  void OnNativeBlur() override;
+  void OnMouseEvent(ui::MouseEvent* event) override;
+  void OnMouseCaptureLost() override;
+
+ private:
+  TryChromeDialog* dialog_;
+  bool has_hover_;
+  bool has_focus_;
+
+  DISALLOW_COPY_AND_ASSIGN(TryChromeDialogWidget);
+};
+
+void TryChromeDialogWidget::OnNativeFocus() {
+  has_focus_ = true;
+  if (!has_hover_)
+    dialog_->GainedMouseHoverOrFocus();
+  Widget::OnNativeFocus();
+}
+
+void TryChromeDialogWidget::OnNativeBlur() {
+  has_focus_ = false;
+  if (!has_hover_)
+    dialog_->LostMouseHoverAndFocus();
+  Widget::OnNativeBlur();
+}
+
+void TryChromeDialogWidget::OnMouseEvent(ui::MouseEvent* event) {
+  switch (event->type()) {
+    case ui::ET_MOUSE_ENTERED:
+      has_hover_ = true;
+      if (!has_focus_)
+        dialog_->GainedMouseHoverOrFocus();
+      break;
+    case ui::ET_MOUSE_EXITED:
+      has_hover_ = false;
+      if (!has_focus_)
+        dialog_->LostMouseHoverAndFocus();
+      break;
+    default:
+      break;
+  }
+  Widget::OnMouseEvent(event);
+}
+
+void TryChromeDialogWidget::OnMouseCaptureLost() {
+  has_hover_ = false;
+  if (!has_focus_)
+    dialog_->LostMouseHoverAndFocus();
+  Widget::OnMouseCaptureLost();
+}
+
 // TryChromeDialog::ModalShowDelegate ------------------------------------------
 
 // A delegate for use by the modal Show() function to update the experiment
@@ -261,7 +323,7 @@ void TryChromeDialog::OnTaskbarIconRect(const gfx::Rect& icon_rect) {
   params.activatable = views::Widget::InitParams::ACTIVATABLE_YES;
   // An approximate window size. Layout() can adjust.
   params.bounds = gfx::Rect(kToastWidth, 120);
-  popup_ = new views::Widget;
+  popup_ = new TryChromeDialogWidget(this);
   popup_->Init(params);
   popup_->AddObserver(this);
 
@@ -327,6 +389,9 @@ void TryChromeDialog::OnTaskbarIconRect(const gfx::Rect& icon_rect) {
 
   // The close button is custom.
   auto close_button = base::MakeUnique<views::ImageButton>(this);
+  close_button->SetPaintToLayer();
+  close_button_layer_ = close_button->layer();
+  close_button_layer_->SetFillsBoundsOpaquely(false);
   close_button->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kInactiveToastCloseIcon, kBodyColor));
@@ -493,6 +558,16 @@ void TryChromeDialog::OnWindowMessage(HWND window,
   result_ = NOT_NOW;
   state_ = installer::ExperimentMetrics::kUserLogOff;
   delegate_->SetExperimentState(state_);
+}
+
+void TryChromeDialog::GainedMouseHoverOrFocus() {
+  if (close_button_layer_)
+    close_button_layer_->SetVisible(true);
+}
+
+void TryChromeDialog::LostMouseHoverAndFocus() {
+  if (close_button_layer_)
+    close_button_layer_->SetVisible(false);
 }
 
 void TryChromeDialog::ButtonPressed(views::Button* sender,
