@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a8ce759_9f1a23a2",
+        "filename": "content/test/data/accessibility/aria/aria-autocomplete-expected-android.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T15:17:48Z",
+      "side": 1,
+      "message": "Hmmm, this revealed that this wasn\u0027t a good test.\n\nI\u0027m going to change it from \u003cdiv role\u003dcombobox to\n\u003cinput role\u003dcombobox",
+      "revId": "8073c4269a048e40507ebdcd7802381bcb8a3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae69e2b_6a001264",
+        "filename": "content/test/data/accessibility/aria/aria-readonly-expected-android.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T15:17:48Z",
+      "side": 1,
+      "message": "I\u0027ll change this one to an \u003cinput\u003e too otherwise it\ndoesn\u0027t make sense",
+      "revId": "8073c4269a048e40507ebdcd7802381bcb8a3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d4c8ea_8dfb7fda",
+        "filename": "content/test/data/accessibility/event/aria-combo-box-collapse-expected-mac.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T15:17:48Z",
+      "side": 1,
+      "message": "I\u0027ll change this back to AXComboBox",
+      "revId": "8073c4269a048e40507ebdcd7802381bcb8a3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecffadb6_f332e1f6",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-26T15:17:48Z",
+      "side": 1,
+      "message": "I think this is wrong, I\u0027m changing it back to ComboBoxRole to match Safari.",
+      "revId": "8073c4269a048e40507ebdcd7802381bcb8a3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
