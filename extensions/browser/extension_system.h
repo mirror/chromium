@@ -29,6 +29,7 @@ namespace extensions {
 class AppSorting;
 class ContentVerifier;
 class Extension;
+class ExtensionRegistrar;
 class ExtensionSet;
 class InfoMap;
 class ManagementPolicy;
@@ -57,8 +58,13 @@ class ExtensionSystem : public KeyedService {
   // controlled by |extensions_enabled|.
   virtual void InitForRegularProfile(bool extensions_enabled) = 0;
 
-  // The ExtensionService is created at startup.
+  // The ExtensionService is created at startup. ExtensionService is only
+  // defined in Chrome.
   virtual ExtensionService* extension_service() = 0;
+
+  // The service that handles registering and unregistering extensions. Created
+  // at startup.
+  virtual ExtensionRegistrar* extension_registrar() = 0;
 
   // Per-extension data that can change during the life of the process but
   // does not persist across restarts. Lives on UI thread. Created at startup.
