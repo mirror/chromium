@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7cb29d4_e5fc32eb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ba038f_82839b2f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "I think we should use Position::ToOffsetInAnchor(), as ParentAnchoredEquivalent() does some other magic which we may not necessarily need.",
+      "range": {
+        "startLine": 21,
+        "startChar": 72,
+        "endLine": 21,
+        "endChar": 96
+      },
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e974765b_fc3728a6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "No need to check. |document| can\u0027t be null here since the input position is not null.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591b82c7_98a41c7e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "Should use TextIterator::RangeLength to compute offset_ when the anchor node is Text.",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1396f37_9218ee27",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "We should consider two cases.\n\n1. Anchor node is a container node: Convert AX tree child index to flat tree child index.\n\n2. Anchor node is text node: use CharacterIterator to convert the offset to a DOM offset.\n\nEditingPositionOf shouldn\u0027t be used here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 43
+      },
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2f0f4f_5940a0ab",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "We should DCHECK clean layout when constructing an AXPosition, by checking Document::NeedsLayoutTreeUpdate().",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a35e47a_ed025a93",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "AXPosition depends on clean layout tree, which means it can only be constructed after layout clean, and used before layout is dirtied.\n\nFor this purpose, we should store the DOM tree version and DCHECK_EQ it with the current version number. Please follow how SelectionTemplate::dom_tree_version_ is used.",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab36dfe9_0c15241f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "It\u0027s better to:\n\n1. Use AXPosition::ToPositionInFlatTreeWithAffinity() to calculate base and extent.\n\n2. Build a SelectionInFlatTree with base and extent, and convert it to a SelectionInDOMTree. An example to follow is SelectionController\u0027s ad hoc conversion.",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743d954f_ed14216d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "This branch is not necessary. The other branch already handles all cases.",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0da33ae_331d1e26",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T06:39:18Z",
+      "side": 1,
+      "message": "We should DCHECK clean layout when constructing an AXRange, and DCHECK the same dom tree version when using it.",
+      "revId": "dfa0d8d49da740472e089932333229bb8cbd1989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
