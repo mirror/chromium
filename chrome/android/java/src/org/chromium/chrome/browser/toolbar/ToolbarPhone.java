@@ -54,10 +54,12 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.omnibox.LocationBarPhone;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
+import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ColorUtils;
@@ -98,6 +100,8 @@ public class ToolbarPhone extends ToolbarLayout
     private static final int TAB_SWITCHER_MODE_POST_EXIT_ANIMATION_DURATION_MS = 100;
 
     private static final float UNINITIALIZED_PERCENT = -1f;
+
+    private static final String SURVEY_ID = "re5jgmht4qljymubtbyzwc3tpm";
 
     /** States that the toolbar can be in regarding the tab switcher. */
     protected static final int STATIC_TAB = 0;
@@ -1482,6 +1486,13 @@ public class ToolbarPhone extends ToolbarLayout
     public void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
         updateButtonVisibility();
+        if (visibility == VISIBLE) {
+            if (getToolbarDataProvider() != null && getToolbarDataProvider().getTab() != null
+                    && SurveyController.getInstance().shouldShowSurvey()) {
+                SurveyInfoBar.showSurveyInfoBar(
+                        getToolbarDataProvider().getTab().getWebContents(), SURVEY_ID, "");
+            }
+        }
     }
 
     @Override
