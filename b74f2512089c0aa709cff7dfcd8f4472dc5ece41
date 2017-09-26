@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d3a7b8_ea8194fe",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-26T23:47:46Z",
+      "side": 1,
+      "message": "optional: using \"using\" in .h files is generally not encouraged\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Aliases",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "b74f2512089c0aa709cff7dfcd8f4472dc5ece41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

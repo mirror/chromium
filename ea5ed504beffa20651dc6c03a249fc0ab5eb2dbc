@@ -46,6 +46,30 @@
       "revId": "ea5ed504beffa20651dc6c03a249fc0ab5eb2dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95a1881d_4ef6a63d",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-26T23:47:46Z",
+      "side": 0,
+      "message": "optional: It might be better to fix this as a separate CL with a focussed commit message.",
+      "parentUuid": "a0247143_4ffa33f5",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 560,
+        "endChar": 45
+      },
+      "revId": "ea5ed504beffa20651dc6c03a249fc0ab5eb2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
