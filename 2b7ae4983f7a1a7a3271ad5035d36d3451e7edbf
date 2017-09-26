@@ -22,6 +22,30 @@
       "revId": "2b7ae4983f7a1a7a3271ad5035d36d3451e7edbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b97891_8aead3e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-26T16:30:10Z",
+      "side": 1,
+      "message": "\u003e Tried to address this, but ran into a couple of issues:\n\u003e - When the bottom sheet is already half open, we don\u0027t get an event because the state change is skipped, so the stateChangeReason is not useful there.\n\nI thought we get an onContentHidden() when the Activity goes into the background, and then subsequently an onContentShown() when it is resumed?\n\n\u003e - When the bottom sheet is open over a tab and it is supposed to be reopened by startup, we don\u0027t (nor attempt to) change to the home sheet, so don\u0027t have a way to react on an event there, besides that the activity went in the foreground\n\u003e - The fact that the bottom sheet is destroyed on close could help simplifying this logic, if only we also had some logic to close the bottom sheet after some time when Chrome is idle in the background. I\u0027d love if it was the way we decided to go.\n\nHm, that\u0027s an interesting idea in general. \n\n\u003e \n\u003e Currently this best effort implementation is probably good enough and less susceptible to bugs, so I\u0027m not too keen to trying to hack something together with just the stateChangeReason. Its just spamming onSurfaceOpened when it should not, so we might get throttled fasted than intended.",
+      "parentUuid": "54f0919c_549be66d",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "2b7ae4983f7a1a7a3271ad5035d36d3451e7edbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
