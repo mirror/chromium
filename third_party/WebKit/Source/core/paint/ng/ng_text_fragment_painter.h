@@ -13,6 +13,7 @@ namespace blink {
 
 class LayoutPoint;
 class Document;
+class NGPaintFragment;
 class NGPhysicalTextFragment;
 struct PaintInfo;
 
@@ -23,13 +24,13 @@ class NGTextFragmentPainter {
   STACK_ALLOCATED();
 
  public:
-  NGTextFragmentPainter(const NGPhysicalTextFragment& text_fragment)
+  NGTextFragmentPainter(const NGPaintFragment& text_fragment)
       : fragment_(text_fragment) {}
 
   void Paint(const Document&, const PaintInfo&, const LayoutPoint&);
 
  private:
-  const NGPhysicalTextFragment& fragment_;
+  const NGPaintFragment& fragment_;
 };
 
 }  // namespace blink
