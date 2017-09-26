@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74910599_ec9b05a5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/interfaces-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-26T03:38:49Z",
+      "side": 1,
+      "message": "Looks the cssom.idl change in this CL broke html/dom/interfaces.html.\n\nhttps://wptdashboard.appspot.com/html/dom/interfaces.html",
+      "revId": "07a8b4129c235bf171061472ca683a662fd9b316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
