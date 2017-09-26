@@ -13,12 +13,22 @@ cr.define('interventions_internals', function() {
   function getPreviewsEnabled() {
     pageHandler.getPreviewsEnabled()
         .then(function(response) {
-          let message = 'OfflinePreviews: ';
-          message += response.enabled ? 'Enabled' : 'Disabled';
-          $('offlinePreviews').textContent = message;
+          let statuses = $('previewsStatuses');
+
+          response.statuses.forEach(function(value, key) {
+            let message = value.description + ': ';
+            message += value.enabled ? 'Enabled' : 'Disabled';
+
+            assert(!$(key), 'Component ' + key + ' already existed!');
+
+            let node = document.createElement('p');
+            node.setAttribute('id', key);
+            node.textContent = message;
+            statuses.appendChild(node);
+          });
         })
         .catch(function(error) {
-          node.textContent = error.message;
+          console.error(error.message);
         });
   }
 

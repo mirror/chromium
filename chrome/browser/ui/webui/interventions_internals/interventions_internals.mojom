@@ -4,8 +4,12 @@
 
 module mojom;
 
+struct PreviewsStatus {
+  string description;
+  bool enabled;
+};
+
 interface InterventionsInternalsPageHandler {
-  // Send a message showing if previews is enabled or disabled.
-  // Returns true if previews is enabled, and false otherwise.
-  GetPreviewsEnabled() => (bool enabled);
+  // Returns a map of previews modes statuses.
+  GetPreviewsEnabled() => (map<string, PreviewsStatus> statuses);
 };
