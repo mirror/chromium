@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d79a45b_9215aaf7",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T15:53:15Z",
+      "side": 0,
+      "message": "I\u0027ve been told to try detecting unused vars via a Clang plugin, but the Clang plugin page says it\u0027s a bit of work. Maybe some day...",
+      "revId": "3b09d5a1ec7d5ee8685e8b3fedc5d259d23bd634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
