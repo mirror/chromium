@@ -31,8 +31,7 @@ class URLLoaderFactory;
 // interfaces. It applies a list of URLLoaderThrottle instances which could
 // defer, resume or cancel the URL loading. If the Mojo connection fails during
 // the request it is canceled with net::ERR_FAILED.
-class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
-                                           public URLLoaderThrottle::Delegate {
+class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
  public:
   // |factory| and |client| must stay alive during the lifetime of the returned
   // object. Please note that the request may not start immediately since it
@@ -131,9 +130,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
 
   void OnClientConnectionError();
 
-  // URLLoaderThrottle::Delegate:
-  void CancelWithError(int error_code) override;
-  void Resume() override;
+  void CancelWithError(int error_code);
+  void Resume();
+
+  void PauseCachingResponseBody(URLLoaderThrottle* throttle);
+  void ResumeCachingResponseBody(URLLoaderThrottle* throttle);
 
   enum DeferredStage {
     DEFERRED_NONE,
@@ -162,6 +163,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
 
   std::vector<ThrottleEntry> throttles_;
   std::set<URLLoaderThrottle*> deferring_throttles_;
+  std::set<URLLoaderThrottle*> pausing_caching_throttles_;
 
   mojom::URLLoaderClient* forwarding_client_;
   mojo::Binding<mojom::URLLoaderClient> client_binding_;
