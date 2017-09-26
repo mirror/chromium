@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b6418a1_a282e28f",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-26T16:09:41Z",
+      "side": 1,
+      "message": "pass the initiator as const reference to prevent a copy?",
+      "revId": "386a40997dce458172895d93626ff14d9617a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
