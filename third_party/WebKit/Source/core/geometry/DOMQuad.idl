@@ -20,5 +20,5 @@ interface DOMQuad {
     [SameObject] readonly attribute DOMPoint p4;
     [NewObject] DOMRect getBounds();
 
-    serializer = { attribute };
+    [Default] object toJSON();
 };
