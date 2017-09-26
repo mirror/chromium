@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <functional>
+#include <map>
 #include <memory>
 #include <queue>
 #include <unordered_map>
@@ -304,6 +305,15 @@ class GPU_EXPORT SyncPointManager {
 
   void DestroyedSyncPointClientState(CommandBufferNamespace namespace_id,
                                      CommandBufferId command_buffer_id);
+
+  // TODO(klausw): how to properly store state? Should be indexed by
+  // sync token globally?
+  std::map<uint64_t, void*> native_sync_points;
+  std::map<uint64_t, int32_t> native_sync_point_fds;
+  std::map<uint64_t, bool> native_sync_point_fetched;
+  // Do we need the lock? All reads and writes appear to be happening from
+  // the same thread.
+  mutable base::Lock sync_point_lock;
 
  private:
   using ClientStateMap = std::unordered_map<CommandBufferId,

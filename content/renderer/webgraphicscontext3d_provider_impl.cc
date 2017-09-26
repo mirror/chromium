@@ -52,4 +52,14 @@ void WebGraphicsContext3DProviderImpl::SignalQuery(
   provider_->ContextSupport()->SignalQuery(query, callback);
 }
 
+uint32_t WebGraphicsContext3DProviderImpl::GetNativeSyncPointFd() {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  return provider_->ContextSupport()->GetNativeSyncPointFd();
+}
+
+uint64_t WebGraphicsContext3DProviderImpl::CreateNativeSyncPoint() {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  return provider_->ContextSupport()->CreateNativeSyncPoint();
+}
+
 }  // namespace content

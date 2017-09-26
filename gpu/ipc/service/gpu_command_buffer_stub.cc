@@ -287,7 +287,8 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
       message.type() != GpuCommandBufferMsg_DestroyTransferBuffer::ID &&
       message.type() != GpuCommandBufferMsg_WaitSyncToken::ID &&
       message.type() != GpuCommandBufferMsg_SignalSyncToken::ID &&
-      message.type() != GpuCommandBufferMsg_SignalQuery::ID) {
+      message.type() != GpuCommandBufferMsg_SignalQuery::ID &&
+      message.type() != GpuCommandBufferMsg_FetchNativeSyncPointFd::ID) {
     if (!MakeCurrent())
       return false;
     have_context = true;
@@ -296,6 +297,7 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
   // Always use IPC_MESSAGE_HANDLER_DELAY_REPLY for synchronous message handlers
   // here. This is so the reply can be delayed if the scheduler is unscheduled.
   bool handled = true;
+  TRACE_EVENT_BEGIN0("gpu", "MessageMap");
   IPC_BEGIN_MESSAGE_MAP(GpuCommandBufferStub, message)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SetGetBuffer, OnSetGetBuffer);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_TakeFrontBuffer, OnTakeFrontBuffer);
@@ -313,19 +315,33 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_WaitSyncToken, OnWaitSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalSyncToken, OnSignalSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalQuery, OnSignalQuery)
+    IPC_MESSAGE_HANDLER_DELAY_REPLY(GpuCommandBufferMsg_GetNativeSyncPointFd,
+                                    OnGetNativeSyncPointFd)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateNativeSyncPoint,
+                        OnCreateNativeSyncPoint)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_FetchNativeSyncPointFd,
+                        OnFetchNativeSyncPointFd)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateImage, OnCreateImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
                         OnCreateStreamTexture)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
+  TRACE_EVENT_END0("gpu", "MessageMap");
 
-  CheckCompleteWaits();
+  {
+    TRACE_EVENT0("gpu", "CheckCompleteWaits");
+    CheckCompleteWaits();
+  }
 
   // Ensure that any delayed work that was created will be handled.
   if (have_context) {
-    if (decoder_)
+    if (decoder_) {
+      TRACE_EVENT0("gpu", "ProcessPendingQueries");
       decoder_->ProcessPendingQueries(false);
+    }
+    TRACE_EVENT1("gpu", "ScheduleDelayedWork", "delta_ms",
+                 kHandleMoreWorkPeriodMs);
     ScheduleDelayedWork(
         base::TimeDelta::FromMilliseconds(kHandleMoreWorkPeriodMs));
   }
@@ -1067,6 +1083,185 @@ void GpuCommandBufferStub::OnSignalQuery(uint32_t query_id, uint32_t id) {
   }
   // Something went wrong, run callback immediately.
   OnSignalAck(id);
+}
+
+void GpuCommandBufferStub::OnGetNativeSyncPointFd(IPC::Message* reply_message) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+
+  static EGLSyncKHR prev_fences[] = {EGL_NO_SYNC_KHR, EGL_NO_SYNC_KHR,
+                                     EGL_NO_SYNC_KHR, EGL_NO_SYNC_KHR};
+  constexpr int num_prev_fences = sizeof(prev_fences) / sizeof(prev_fences[0]);
+  static int fence_idx = 0;
+
+  EGLDisplay display = eglGetCurrentDisplay();
+
+  // TODO(klausw): fix FD leak properly. This is awful. Need a "done with fence"
+  // message?
+  if (prev_fences[fence_idx] != EGL_NO_SYNC_KHR) {
+    TRACE_EVENT0("gpu", "Destroy");
+    eglDestroySyncKHR(display, prev_fences[fence_idx]);
+    // glFlush();
+  }
+
+  TRACE_EVENT_BEGIN0("gpu", "CreateSyncKHR");
+  EGLSyncKHR fence =
+      eglCreateSyncKHR(display, EGL_SYNC_NATIVE_FENCE_ANDROID, nullptr);
+  TRACE_EVENT_END0("gpu", "CreateSyncKHR");
+
+  if (fence == EGL_NO_SYNC_KHR) {
+    LOG(INFO) << __FUNCTION__ << ";;; ERROR, EGL_NO_SYNC_KHR";
+  }
+  {
+    TRACE_EVENT0("gpu", "Flush");
+    glFlush();
+  }
+  TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+  EGLint sync_fd = eglDupNativeFenceFDANDROID(display, fence);
+  TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+// LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << sync_fd;
+
+#if 0
+  EGLint val = 0;
+  EGLint ret = eglGetSyncAttribKHR(display, fence, EGL_SYNC_STATUS_KHR, &val);
+  LOG(INFO) << __FUNCTION__ << ";;; ret=" << ret << " sync_fd=" << sync_fd << " EGL_SYNC_STATUS_KHR=0x" << std::hex << val;
+#endif
+
+  prev_fences[fence_idx] = fence;
+  fence_idx = (fence_idx + 1) % num_prev_fences;
+
+  GpuCommandBufferMsg_SyncPointFd_Return sync_point;
+  sync_point.sync_fd = base::FileDescriptor(sync_fd, true /* auto_close */);
+  GpuCommandBufferMsg_GetNativeSyncPointFd::WriteReplyParams(reply_message,
+                                                             sync_point);
+  {
+    TRACE_EVENT0("gpu", "SendReply");
+    Send(reply_message);
+  }
+}
+
+void GpuCommandBufferStub::OnCreateNativeSyncPoint(uint64_t buffer_fence) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start, buffer_fence=" << buffer_fence;
+
+  EGLDisplay display = eglGetCurrentDisplay();
+  TRACE_EVENT_BEGIN0("gpu", "CreateSyncKHR");
+  EGLSyncKHR native_fence =
+      eglCreateSyncKHR(display, EGL_SYNC_NATIVE_FENCE_ANDROID, nullptr);
+  TRACE_EVENT_END0("gpu", "CreateSyncKHR");
+
+  if (native_fence == EGL_NO_SYNC_KHR) {
+    LOG(INFO) << __FUNCTION__ << ";;; ERROR, EGL_NO_SYNC_KHR";
+  }
+  {
+    TRACE_EVENT0("gpu", "Flush");
+    glFlush();
+  }
+
+  TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+  EGLint sync_fd = eglDupNativeFenceFDANDROID(display, native_fence);
+  TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+  // LOG(INFO) << __FUNCTION__ << ";;; buffer_fence=" << buffer_fence << "
+  // sync_fd=" << sync_fd;
+
+  base::AutoLock auto_lock(channel_->sync_point_manager()->sync_point_lock);
+
+  channel_->sync_point_manager()->native_sync_points[buffer_fence] =
+      native_fence;
+  channel_->sync_point_manager()->native_sync_point_fds[buffer_fence] = sync_fd;
+  channel_->sync_point_manager()->native_sync_point_fetched[buffer_fence] =
+      false;
+
+  // Do cleanup on old descriptors. TODO(klausw): use explicit destroy method?
+  // Use an intentionally large threshold for testing purposes while
+  // investigating tearing. If this is the culprit, I'd expect one glitch per
+  // second.
+  unsigned int CLEANUP_THRESHOLD = 10;
+  if (channel_->sync_point_manager()->native_sync_points.size() >
+      CLEANUP_THRESHOLD) {
+    TRACE_EVENT0("gpu", "FenceCleanup");
+    int fences_total_start =
+        channel_->sync_point_manager()->native_sync_points.size();
+    int fences_checked = 0;
+    int fences_erased = 0;
+    auto itr = channel_->sync_point_manager()->native_sync_points.begin();
+    while (itr != channel_->sync_point_manager()->native_sync_points.end()) {
+      bool was_fetched =
+          channel_->sync_point_manager()->native_sync_point_fetched[itr->first];
+      if (!was_fetched) {
+        ++itr;
+        continue;
+      }
+      EGLSyncKHR native_fence = itr->second;
+      EGLint val = 0;
+      eglGetSyncAttribKHR(display, native_fence, EGL_SYNC_STATUS_KHR, &val);
+      ++fences_checked;
+      if (val == EGL_SIGNALED_KHR) {
+        eglDestroySyncKHR(display, native_fence);
+        channel_->sync_point_manager()->native_sync_point_fetched.erase(
+            itr->first);
+        channel_->sync_point_manager()->native_sync_point_fds.erase(itr->first);
+        // Following erase must be last since it updates "itr"
+        itr = channel_->sync_point_manager()->native_sync_points.erase(itr);
+        ++fences_erased;
+      } else {
+        ++itr;
+      }
+    }
+    DVLOG(2) << __FUNCTION__ << ";;; fences total_start=" << fences_total_start
+             << " checked=" << fences_checked << " erased=" << fences_erased;
+  }
+  // LOG(INFO) << __FUNCTION__ << ";;; end";
+}
+
+void GpuCommandBufferStub::OnFetchNativeSyncPointFd(
+    const SyncToken& sync_token) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start";
+
+  // Careful, GL context is *not* current for this method for performance
+  // reasons. MakeCurrent / RestoreState can take >4ms.
+
+  // TODO(klausw): can we make this work for unverified sync tokens?
+  // Would prefer not to force waiting for a flush. This doesn't work.
+  // if (!channel_->sync_point_manager()->WaitOutOfOrderNonThreadSafe(
+  if (!sync_point_client_state_->WaitNonThreadSafe(
+          sync_token, channel_->task_runner(),
+          base::Bind(&GpuCommandBufferStub::OnFetchNativeSyncPointFdReady,
+                     this->AsWeakPtr(), sync_token))) {
+    // LOG(INFO) << __FUNCTION__ << ";;; sync call";
+    OnFetchNativeSyncPointFdReady(sync_token);
+  }
+  // LOG(INFO) << __FUNCTION__ << ";;; end";
+}
+
+void GpuCommandBufferStub::OnFetchNativeSyncPointFdReady(
+    const SyncToken& sync_token) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // Careful, GL context is *not* current for this method for performance
+  // reasons. MakeCurrent / RestoreState can take >4ms.
+
+  base::AutoLock auto_lock(channel_->sync_point_manager()->sync_point_lock);
+
+  uint64_t buffer_fence = sync_token.release_count();
+  // LOG(INFO) << __FUNCTION__ << ";;; start buffer_fence=" << buffer_fence;
+
+  int32_t sync_fd =
+      channel_->sync_point_manager()->native_sync_point_fds[buffer_fence];
+  // LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << sync_fd;
+  channel_->sync_point_manager()->native_sync_point_fds[buffer_fence] = -1;
+  channel_->sync_point_manager()->native_sync_point_fetched[buffer_fence] =
+      true;
+
+  GpuCommandBufferMsg_SyncPointFd_Return sync_point;
+  sync_point.sync_fd = base::FileDescriptor(sync_fd, true /* auto_close */);
+  {
+    TRACE_EVENT0("gpu", "SendReply");
+    Send(new GpuCommandBufferMsg_FetchNativeSyncPointFdComplete(
+        route_id_, sync_token, sync_point));
+  }
+
+  // LOG(INFO) << __FUNCTION__ << ";;; end";
 }
 
 void GpuCommandBufferStub::OnFenceSyncRelease(uint64_t release) {

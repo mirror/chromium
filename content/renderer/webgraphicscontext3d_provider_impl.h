@@ -40,6 +40,8 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
   void SetErrorMessageCallback(
       const base::Callback<void(const char*, int32_t)>&) override;
   void SignalQuery(uint32_t, const base::Closure&) override;
+  uint32_t GetNativeSyncPointFd() override;
+  uint64_t CreateNativeSyncPoint() override;
 
   ui::ContextProviderCommandBuffer* context_provider() const {
     return provider_.get();

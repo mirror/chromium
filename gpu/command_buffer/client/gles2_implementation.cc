@@ -404,6 +404,34 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  callback));
 }
 
+uint32_t GLES2Implementation::GetNativeSyncPointFd() {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  return gpu_control_->GetNativeSyncPointFd();
+}
+
+GLuint64 GLES2Implementation::CreateNativeSyncPoint() {
+  // The implementation is similar to a combined InsertFenceSyncCHROMIUM and
+  // SwapBuffers.
+
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start";
+  const uint64_t release = gpu_control_->GenerateFenceSyncRelease();
+  helper_->CommandBufferHelper::Flush();
+  gpu_control_->CreateNativeSyncPoint(release);
+  // LOG(INFO) << __FUNCTION__ << ";;; end";
+  helper_->InsertFenceSyncCHROMIUM(release);
+  return release;
+}
+
+void GLES2Implementation::FetchNativeSyncPointFd(
+    const SyncToken& sync_token,
+    const base::Callback<void(int32_t)>& callback) {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  gpu_control_->FetchNativeSyncPointFd(sync_token, callback);
+}
+
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",

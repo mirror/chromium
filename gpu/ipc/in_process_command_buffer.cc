@@ -981,6 +981,23 @@ void InProcessCommandBuffer::SignalQueryOnGpuThread(
     query->AddCallback(callback);
 }
 
+uint32_t InProcessCommandBuffer::GetNativeSyncPointFd() {
+  NOTIMPLEMENTED();
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  return 0;
+}
+
+void InProcessCommandBuffer::CreateNativeSyncPoint(uint64_t fence) {
+  NOTIMPLEMENTED();
+}
+
+void InProcessCommandBuffer::FetchNativeSyncPointFd(
+    const SyncToken& sync_token,
+    const base::Callback<void(int32_t)>& callback) {
+  NOTIMPLEMENTED();
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+}
+
 void InProcessCommandBuffer::SetLock(base::Lock*) {
   // No support for using on multiple threads.
   NOTREACHED();
