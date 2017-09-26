@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7cfed1fc_f911d12d",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "\"!\" is unnecessary (here and elsewhere), because it is implied with primitive types (string, number, boolean, function), see https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nullable-type.",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eeb402e_c1fa452a",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -13,6 +30,91 @@
       "writtenOn": "2017-09-26T18:18:46Z",
       "side": 1,
       "message": "Can you use a proper Map instance, instead of an Object?\n\nAlso, in JS variables should be namedLikeThis, per styleguide.",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdfff8e_553e8d84",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "Nit: s/so we//",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb12f4f2_f670e1b5",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "this.title_ \u003d components.title || \u0027\u0027;",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3b438d_4d5427e1",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "this.updateCardFlags_(components.flags || settings.ChromeCleanupCardFlags.NONE);",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359d3c8d_92ffaffc",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "Should this be settings.ChromeCleanupDismissSource instead of number?",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19443197_b23afbf5",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:51:01Z",
+      "side": 1,
+      "message": "Would it be cleaner to always populate all fields, using |null| where necessary? So here it would be\n\ntitle: this.i18n(...),\nicon: null,\n...\n\nThen the signature of updateIcon_ could be simplified as follows\n\n/**\n * @param {?settings.ChromeCleanupCardIcon} icon The icon to\n *  render, or null if no icon should be shown.\n * @private\n */\nupdateIcon_: function(icon) {...}\n\nSimilar for updateActionButton_()",
       "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
