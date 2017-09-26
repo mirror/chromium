@@ -409,7 +409,8 @@ int HttpCache::Transaction::TransitionToReadingState() {
   // or from the network based on whether network transaction is present or not.
   // If it's a writer and a full request then it may read from the cache if its
   // offset is behind the current offset else from the network.
-  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_));
+  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_) ||
+         (mode_ == READ && CanDoSharedWriting()));
   if (partial_) {
     if (entry_->writers->network_transaction())
       next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
@@ -647,6 +648,17 @@ void HttpCache::Transaction::AboutToBeRemovedFromWriters(int result) {
     entry_ = nullptr;
     shared_writing_error_ = result;
   }
+}
+
+bool HttpCache::Transaction::CanDoSharedWriting() const {
+  // We need to distinguish between the transactions that came in with
+  // LOAD_ONLY_FROM_CACHE set and thus do not have the permission to write to
+  // the cache with those that got mode_ assigned as READ when it was
+  // established that the headers present in the cache are valid for this
+  // transaction to start reading. The latter can participate in response body
+  // writing if writing is still in progress.
+  return !partial_ && !range_requested_ &&
+         !(effective_load_flags_ & LOAD_ONLY_FROM_CACHE);
 }
 
 //-----------------------------------------------------------------------------
@@ -1984,7 +1996,8 @@ int HttpCache::Transaction::DoFinishHeaders(int result) {
   // If the transaction needs to wait because another transaction is still
   // writing the response body, it will return ERR_IO_PENDING now and the
   // io_callback_ will be invoked when the wait is done.
-  int rv = cache_->DoneWithResponseHeaders(entry_, this, partial_ != nullptr);
+  int rv = cache_->DoneWithResponseHeaders(entry_, this, partial_ != nullptr,
+                                           CanDoSharedWriting());
   if (reading_) {
     DCHECK_EQ(OK, rv);
   }
@@ -2056,7 +2069,6 @@ int HttpCache::Transaction::DoNetworkReadCacheWrite() {
 
 int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWriteComplete");
-  DCHECK(mode_ & WRITE || mode_ == NONE);
   if (!cache_.get()) {
     TransitionToState(STATE_NONE);
     return ERR_UNEXPECTED;
