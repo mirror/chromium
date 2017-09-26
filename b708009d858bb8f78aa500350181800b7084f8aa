@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f98ea9f_41764b2c",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T18:15:21Z",
+      "side": 1,
+      "message": "I noticed that we are not using a configured value here as salt. Is it because we usually don\u0027t need the method ordinal for debugging when we get crash reports from the field?\n\n\nThis probably doesn\u0027t work because we call mojom_bindings_generator multiple times for the same interface for different languages.\nMaybe we need a salt generated in the GN template and pass the same one into the mojom_bindings_generator?",
+      "range": {
+        "startLine": 198,
+        "startChar": 48,
+        "endLine": 198,
+        "endChar": 76
+      },
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfad3e4_1ff46f6a",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T18:15:21Z",
+      "side": 1,
+      "message": "Please update comments",
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
