@@ -4,6 +4,7 @@
 
 #include "chrome/browser/devtools/chrome_devtools_session.h"
 
+#include "chrome/browser/devtools/protocol/browser_handler.h"
 #include "chrome/browser/devtools/protocol/page_handler.h"
 #include "content/public/browser/devtools_agent_host.h"
 
