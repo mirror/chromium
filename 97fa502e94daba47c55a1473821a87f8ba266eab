@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07db9e86_d978e890",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-26T09:00:34Z",
+      "side": 1,
+      "message": "I wonder if it\u0027d be cheaper to simply clear the map and just stick in the latest frame index?",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f11b6d_d7697b31",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-26T09:00:34Z",
+      "side": 1,
+      "message": "GetActiveHitTestRegionList?\n\nMaybe a comment about how it gets the HitTestRegionList corresponding to the active CompositorFrame with the provided surface_id?",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c1667d_e6321d08",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-26T09:00:34Z",
+      "side": 1,
+      "message": "FrameSinkManagerImpl* const frame_sink_manager_;",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ee89eb_dc15ebde",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-26T09:00:34Z",
+      "side": 1,
+      "message": "My usual expectation is a map will be fairly sparse and so we want to maximize spatial locality over asymptotic complexity. Please use base::flat_map instead of std::map. Maybe in the future we\u0027ll decide to use another type of map but usually flat_map is preferred.",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
