@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "4368f6ca_69900c83",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T21:36:45Z",
+      "side": 1,
+      "message": "You are actually removing an important comment. The idea is to reset callback after it is run which is done in the code in typed_url_data_type_controller.cc and would have been done if it was OnceClosure.",
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58371955_e7af0b30",
         "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
         "patchSetId": 6

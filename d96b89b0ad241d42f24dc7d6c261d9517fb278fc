@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "600ae5d8_837b7069",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T21:36:45Z",
+      "side": 1,
+      "message": "std::move is no-op on const reference, but its presence suggests transfer of ownership. Either pass task as rvalue reference or don\u0027t use std::move.",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd906b1b_5a37600b",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T21:36:45Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2569bc09_73638591",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T21:36:45Z",
+      "side": 1,
+      "message": "What happens if UpdateStorageKey fails?",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a621abd_df33302a",
+        "filename": "components/sync/driver/model_type_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-26T21:36:45Z",
+      "side": 1,
+      "message": "You are allowing raw access to sync_client_ from derived classes. Seeing sync_client_ in derived class code would suggest that it is a member variable of derived class, not base class. More common pattern is to keep the field private but provide protected accessor for it:\nhttps://cs.chromium.org/chromium/src/components/sync/driver/data_type_controller.h?type\u003dcs\u0026q\u003dDataTypeController\u0026sq\u003dpackage:chromium\u0026l\u003d146",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
