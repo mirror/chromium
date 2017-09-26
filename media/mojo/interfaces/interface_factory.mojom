@@ -13,7 +13,7 @@ import "media/mojo/interfaces/video_decoder.mojom";
 // ContentDecryptionModules created with the same factory.
 interface InterfaceFactory {
   CreateAudioDecoder(AudioDecoder& audio_decoder);
-  CreateVideoDecoder(VideoDecoder& video_decoder);
+  CreateVideoDecoder(VideoDecoder& video_decoder, string decoder_name);
 
   // Creates a Renderer.
   // The audio stream will be played on |audio_device_id|, which is defined in

@@ -81,11 +81,12 @@ void InterfaceFactoryImpl::CreateAudioDecoder(
 }
 
 void InterfaceFactoryImpl::CreateVideoDecoder(
-    mojom::VideoDecoderRequest request) {
+    mojom::VideoDecoderRequest request,
+    const std::string& decoder_name) {
 #if BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
-  video_decoder_bindings_.AddBinding(
-      base::MakeUnique<MojoVideoDecoderService>(mojo_media_client_),
-      std::move(request));
+  video_decoder_bindings_.AddBinding(base::MakeUnique<MojoVideoDecoderService>(
+                                         mojo_media_client_, decoder_name),
+                                     std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
 }
 
