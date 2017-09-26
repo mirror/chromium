@@ -9,14 +9,19 @@
 #include <unordered_set>
 #include <utility>
 
+#include "base/atomic_sequence_num.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "content/public/browser/swap_metrics_driver.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace resource_coordinator {
 
@@ -141,6 +146,27 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
     UMA_HISTOGRAM_TIMES(
         kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
         queueing_time);
+
+    ukm::SourceId ukm_source_id =
+        ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+            ->ukm_source_id();
+    if (ukm_source_id != 0) {
+      ukm::builders::
+          TabManager_BackgroundTabOpening_ForegroundTab_ExpectedTaskQueueingDuration(
+              ukm_source_id)
+              .SetExpectedTaskQueueingDuration(queueing_time.InMilliseconds())
+              .SetBackgroundTabLoadingCount(
+                  g_browser_process->GetTabManager()
+                      ->GetBackgroundTabLoadingCount())
+              .SetBackgroundTabPendingCount(
+                  g_browser_process->GetTabManager()
+                      ->GetBackgroundTabPendingCount())
+              .SetSystemTabCount(
+                  g_browser_process->GetTabManager()->GetTabCount())
+              .SetSessionId(session_id_)
+              .SetSequenceId(sequence_->GetNext())
+              .Record(ukm::UkmRecorder::Get());
+    }
   }
 }
 
@@ -163,6 +189,7 @@ void TabManagerStatsCollector::RecordBackgroundTabCount() {
 
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
+  UpdateSessionAndSequence();
 
   CreateAndInitSwapMetricsDriverIfNeeded(SessionType::kSessionRestore);
 
@@ -184,6 +211,7 @@ void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
   DCHECK(!is_in_background_tab_opening_session_);
+  UpdateSessionAndSequence();
   background_tab_count_stats_.Reset();
   CreateAndInitSwapMetricsDriverIfNeeded(SessionType::kBackgroundTabOpening);
 
@@ -258,10 +286,32 @@ void TabManagerStatsCollector::OnDidStopLoading(
             foreground_contents_switched_to_times_[contents]);
   }
   if (is_in_background_tab_opening_session_ && !IsInOverlappedSession()) {
-    UMA_HISTOGRAM_MEDIUM_TIMES(
-        kHistogramBackgroundTabOpeningTabSwitchLoadTime,
+    base::TimeDelta switch_load_time =
         base::TimeTicks::Now() -
-            foreground_contents_switched_to_times_[contents]);
+        foreground_contents_switched_to_times_[contents];
+    UMA_HISTOGRAM_MEDIUM_TIMES(kHistogramBackgroundTabOpeningTabSwitchLoadTime,
+                               switch_load_time);
+
+    ukm::SourceId ukm_source_id =
+        ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+            ->ukm_source_id();
+    if (ukm_source_id != 0) {
+      ukm::builders::
+          TabManager_Experimental_BackgroundTabOpening_TabSwitchLoadTime(
+              ukm_source_id)
+              .SetUntilTabIsLoaded(switch_load_time.InMilliseconds())
+              .SetBackgroundTabLoadingCount(
+                  g_browser_process->GetTabManager()
+                      ->GetBackgroundTabLoadingCount())
+              .SetBackgroundTabPendingCount(
+                  g_browser_process->GetTabManager()
+                      ->GetBackgroundTabPendingCount())
+              .SetSystemTabCount(
+                  g_browser_process->GetTabManager()->GetTabCount())
+              .SetSessionId(session_id_)
+              .SetSequenceId(sequence_->GetNext())
+              .Record(ukm::UkmRecorder::Get());
+    }
   }
 
   foreground_contents_switched_to_times_.erase(contents);
@@ -287,6 +337,12 @@ void TabManagerStatsCollector::ClearStatsWhenInOverlappedSession() {
 
   is_overlapping_session_restore_ = true;
   is_overlapping_background_tab_opening_ = true;
+}
+
+void TabManagerStatsCollector::UpdateSessionAndSequence() {
+  static base::AtomicSequenceNumber session_seq;
+  session_id_ = session_seq.GetNext();
+  sequence_.reset(new base::AtomicSequenceNumber());
 }
 
 // static
