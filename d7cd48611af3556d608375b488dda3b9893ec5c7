@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00bfd04a_e94de5c0",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-26T16:07:35Z",
+      "side": 1,
+      "message": "What you want is to run the callback on failure inside else {}, and run it inside MergeResponse() on success.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 33
+      },
+      "revId": "d7cd48611af3556d608375b488dda3b9893ec5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
