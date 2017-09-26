@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "265dae57_dd468850",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-26T21:07:18Z",
+      "side": 1,
+      "message": "A natural response to a compile failure might be to fix the failure (e.g. by renaming field names in the broken code), but this is exactly what we want to prevent (because such compile fix would still break reading of old serialized data).\n\nAlso - in some cases the underlying data format might change without a corresponding compile failure (e.g. if the underlying mojo serialization starts emitting and requiring a \"mojo\" marker at the start of every struct [yes - this is a silly example :-P]).\n\nAlso - how confident we are hat it is not possible that a dependency will change in a way that 1) doesn\u0027t cause a compile failure. but 2) causes a deserialization failure when an old data is read.  What about changing a type from signed to unsigned - this would probably still compile because of implicit conversions, but I don\u0027t know what would be the impact of such type change on the ability to deserialize old data.",
+      "parentUuid": "0aa23a53_b8071e4a",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
