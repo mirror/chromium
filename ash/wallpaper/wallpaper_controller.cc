@@ -220,6 +220,10 @@ SkColor WallpaperController::GetProminentColor(
   return prominent_colors_[static_cast<int>(type)];
 }
 
+base::TimeDelta WallpaperController::GetAnimationDurationOverride() const {
+  return animation_duration_override_;
+}
+
 wallpaper::WallpaperLayout WallpaperController::GetWallpaperLayout() const {
   if (current_wallpaper_)
     return current_wallpaper_->layout();
@@ -392,6 +396,11 @@ void WallpaperController::SetWallpaper(const SkBitmap& wallpaper,
     return;
 
   SetWallpaperImage(gfx::ImageSkia::CreateFrom1xBitmap(wallpaper), info);
+}
+
+void WallpaperController::SetAnimationDurationOverride(
+    base::TimeDelta duration) {
+  animation_duration_override_ = duration;
 }
 
 void WallpaperController::GetWallpaperColors(

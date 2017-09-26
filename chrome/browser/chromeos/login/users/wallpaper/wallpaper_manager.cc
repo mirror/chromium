@@ -435,6 +435,12 @@ bool WallpaperManager::IsPendingWallpaper(uint32_t image_id) {
   return false;
 }
 
+void WallpaperManager::SetAnimationDurationOverride(
+    const base::TimeDelta& duration) {
+  if (wallpaper_controller_)
+    wallpaper_controller_->SetAnimationDurationOverride(duration);
+}
+
 WallpaperManager::WallpaperResolution
 WallpaperManager::GetAppropriateResolution() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -968,13 +974,12 @@ WallpaperManager::WallpaperManager()
       content::ServiceManagerConnection::GetForProcess();
   if (connection && connection->GetConnector()) {
     // Connect to the wallpaper controller interface in the ash service.
-    ash::mojom::WallpaperControllerPtr wallpaper_controller_ptr;
     connection->GetConnector()->BindInterface(ash::mojom::kServiceName,
-                                              &wallpaper_controller_ptr);
+                                              &wallpaper_controller_);
     // Register this object as the wallpaper picker.
     ash::mojom::WallpaperPickerPtr picker;
     binding_.Bind(mojo::MakeRequest(&picker));
-    wallpaper_controller_ptr->SetWallpaperPicker(std::move(picker));
+    wallpaper_controller_->SetWallpaperPicker(std::move(picker));
   }
 }
 

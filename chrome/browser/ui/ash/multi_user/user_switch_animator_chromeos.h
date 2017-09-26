@@ -102,7 +102,7 @@ class UserSwitchAnimatorChromeOS {
   AccountId new_account_id_;
 
   // The animation speed in ms. If 0, animations are disabled.
-  int animation_speed_ms_;
+  const int animation_speed_ms_;
 
   // The next animation step for AdvanceUserTransitionAnimation().
   AnimationStep animation_step_;
