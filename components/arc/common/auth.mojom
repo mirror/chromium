@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 10
+// Next MinVersion: 11
 
 module arc.mojom;
 
@@ -12,7 +12,7 @@ enum ArcSignInFailureReason {
   // Negative values are reserved for internal use.
   // The values are shuffled to keep the backward compatibility and don't match
   // ProvisioningResult in arc_optin_uma.h
-  // Next value: 16.
+  // Next value: 18.
   UNKNOWN_ERROR = 0,
 
   // Mojo errors:
@@ -64,6 +64,12 @@ enum ArcSignInFailureReason {
 
   // Network connection is unavailable.
   [MinVersion=8] NO_NETWORK_CONNECTION = 15,
+
+  // Server does not return authorization.
+  [MinVersion=10] CHROME_SERVER_COMMUNICATION_ERROR = 16,
+
+  // ARC was disabled for Active Directory user.
+  [MinVersion=10] ARC_DISABLED = 17,
 };
 
 // These values describe account check status.
@@ -144,6 +150,9 @@ struct AccountInfo {
 
   // Whether the account is managed from Chrome OS.
   bool is_managed@2;
+
+  // Reason why auth_code or enrollment_token cannot be fetched.
+  [MinVersion=10] ArcSignInFailureReason failure_reason@5;
 };
 
 // Next Method ID: 10.
