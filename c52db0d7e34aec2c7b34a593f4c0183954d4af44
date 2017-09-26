@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7f66101f_eddd1829",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "Reword the comment to separately capture the current reality and actual requirements that we have here.",
+      "parentUuid": "8e79f2fb_3e118a66",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 67
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2556a9e6_35843f45",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I\u0027m using persistent one because i\u0027m assuming persistent_archives_dir will be more reliable than the temporary one. And the comment above described why using this value instead of the temporary one. After persistent files are moved out, this will surely be temporary archives dir.",
       "parentUuid": "2556a9e6_35843f45",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45edfdbb_61dc0eb7",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "I\u0027ll be pretty persistent here: free space related to temporary archive volume is what we need and that is what I think you should be getting.\n\nIf we need free space related to persistent storage anywhere, even just for UMA, we can explicitly add that.",
+      "parentUuid": "9c493db4_24fa1115",
       "range": {
         "startLine": 89,
         "startChar": 43,
@@ -237,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "5169034d_0ee8fed5",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "If we are running this code and between line 88 and 97 some other application preemptively writes to the disk, we are hosed, right?\nI don\u0027t think we should have that check or comment.\n\nAlso, there is absolutely no reason or requirement from the software perspective that temp and persistent dirs be on the same volume. You are documenting temporal reality and not design. This is not the right approach.",
+      "parentUuid": "b539f13b_7c42ad1b",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bda0ab9_5a869e88",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -281,6 +353,30 @@
       "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da188047_b7e8e0c5",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "It\u0027s ok if we want to UMA that. I think it will be a pretty interesting thing to do. I was just wondering if you came across this thing.",
+      "parentUuid": "eb59142d_9e57298b",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "5d4f36e0_d8e3c0e0",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94dab737_67783846",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe72749_ceddc26f",
         "filename": "components/offline_pages/core/offline_page_model_impl.h",
         "patchSetId": 5
@@ -507,6 +627,30 @@
       "side": 1,
       "message": "Was thinking to use them as a indicator when going for the \u0027fallback strategy.\" But seems it\u0027s useless right now, removed.",
       "parentUuid": "88e27802_6e68a673",
+      "range": {
+        "startLine": 50584,
+        "startChar": 17,
+        "endLine": 50584,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1da045_73ad9307",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 50584,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-26T20:21:45Z",
+      "side": 1,
+      "message": "OK. I think it should work. I thought we have to do something more complex, as in:\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model_impl.cc?type\u003dcs\u0026l\u003d93",
+      "parentUuid": "f6463eaa_515b469c",
       "range": {
         "startLine": 50584,
         "startChar": 17,
