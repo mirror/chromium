@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<title>Web Locks API: requestLock method</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestLock());
+  await promise_rejects(t, new TypeError(), requestLock('s'));
+}, 'requestLock requires a scope and a mode');
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestLock('s', ''));
+  await promise_rejects(t, new TypeError(), requestLock('s', 'foo'));
+}, 'mode must be "shared" or "exclusive"');
+
+</script>

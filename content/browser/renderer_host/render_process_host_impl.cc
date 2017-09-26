@@ -91,6 +91,7 @@
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
 #include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/locks/locks_context.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/media/midi_host.h"
@@ -1835,6 +1836,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&BackgroundSyncContext::CreateService,
                  base::Unretained(
                      storage_partition_impl_->GetBackgroundSyncContext())));
+  // Used for Workers; Windows go through registration in RenderFrameHostImpl.
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&LocksContext::CreateService,
+                 base::Unretained(storage_partition_impl_->GetLocksContext())));
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&PlatformNotificationContextImpl::CreateService,
