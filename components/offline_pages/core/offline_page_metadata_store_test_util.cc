@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/callback_forward.h"
+#include "components/offline_pages/core/model/get_pages_task.h"
 #include "components/offline_pages/core/offline_page_types.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -49,6 +50,23 @@ void OfflinePageMetadataStoreTestUtil::InsertItem(const OfflinePageItem& page) {
                        &status));
   task_runner_->RunUntilIdle();
   EXPECT_EQ(ItemActionStatus::SUCCESS, status);
+}
+
+OfflinePageItem OfflinePageMetadataStoreTestUtil::GetPageByOfflineId(
+    int64_t offline_id) {
+  OfflinePageItem out_page;
+  auto task = GetPagesTask::CreateTaskMatchingOfflineId(
+      store(),
+      base::Bind(
+          [](OfflinePageItem* out_page, const OfflinePageItem* page) {
+            if (page)
+              *out_page = *page;
+          },
+          &out_page),
+      offline_id);
+  task->Run();
+  task_runner_->RunUntilIdle();
+  return out_page;
 }
 
 }  // namespace offline_pages
