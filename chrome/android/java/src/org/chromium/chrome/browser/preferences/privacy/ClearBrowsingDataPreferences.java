@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.widget.ListView;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
@@ -35,6 +36,7 @@ import org.chromium.chrome.browser.preferences.SpinnerPreference;
 import org.chromium.chrome.browser.preferences.TextMessageWithLinkAndIconPreference;
 import org.chromium.chrome.browser.preferences.privacy.BrowsingDataCounterBridge.BrowsingDataCounterCallback;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.chrome.browser.widget.TintedDrawable;
@@ -324,6 +326,10 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
 
         RecordHistogram.recordMediumTimesHistogram("History.ClearBrowsingData.TimeSpentInDialog",
                 SystemClock.elapsedRealtime() - mDialogOpened, TimeUnit.MILLISECONDS);
+
+        if (options.contains(DialogOption.CLEAR_COOKIES_AND_SITE_DATA)) {
+            SurveyController.getInstance().clearCache(ContextUtils.getApplicationContext());
+        }
 
         int[] dataTypes = new int[options.size()];
         int i = 0;
