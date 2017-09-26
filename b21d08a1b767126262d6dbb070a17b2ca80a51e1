@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4acc2a_a8ecfbcf",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T04:39:17Z",
+      "side": 1,
+      "message": "GetRuleSet() may be null at times. Should I be calling EnsureRuleSet()? If so, how do I get the needed parameters?",
+      "revId": "b21d08a1b767126262d6dbb070a17b2ca80a51e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65340ac8_66b4e016",
+        "filename": "breakpad/src",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T04:39:17Z",
+      "side": 1,
+      "message": "fixed.",
+      "parentUuid": "2e5eed32_65a1e900",
+      "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05143b30_0183809b",
         "filename": "third_party/WebKit/Source/core/css/RuleFeature.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8b8d8d7c_b9fb936d",
+        "filename": "third_party/WebKit/Source/core/css/RuleFeature.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T04:39:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05143b30_0183809b",
+      "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2f86a55_f160dc37",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc79ae56_f7d709ec",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-26T04:39:17Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "e2f86a55_f160dc37",
+      "revId": "0cbbb377e678727aa137e15f8ab5d4bd3c1530d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
