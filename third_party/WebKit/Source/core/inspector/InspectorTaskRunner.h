@@ -47,10 +47,26 @@ class CORE_EXPORT InspectorTaskRunner final {
     InspectorTaskRunner* task_runner_;
   };
 
+  class CORE_EXPORT PostponeInterruptsScope final {
+    USING_FAST_MALLOC(PostponeInterruptsScope);
+
+   public:
+    PostponeInterruptsScope(InspectorTaskRunner*, v8::Isolate*);
+    ~PostponeInterruptsScope();
+
+   private:
+    v8::Isolate* isolate_;
+    bool interupt_requested_;
+    InspectorTaskRunner* task_runner_;
+    IgnoreInterruptsScope ignore_interrupts_scope_;
+  };
+
  private:
   static void V8InterruptCallback(v8::Isolate*, void* data);
 
+  bool interupt_requested_;
   bool ignore_interrupts_;
+
   Mutex mutex_;
   ThreadCondition condition_;
   Deque<Task> queue_;

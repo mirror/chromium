@@ -127,6 +127,8 @@ void LocalWindowProxy::Initialize() {
                                                          : non_main_frame_hist);
 
   ScriptForbiddenScope::AllowUserAgentScript allow_script;
+  InspectorTaskRunner::PostponeInterruptsScope inspector_postpone_interrupts(
+      MainThreadDebugger::Instance()->TaskRunner(), GetIsolate());
 
   v8::HandleScope handle_scope(GetIsolate());
 
