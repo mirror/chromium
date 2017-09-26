@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "edaa7cd8_ec73745d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T00:12:49Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "23304988_e62189f2",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f1b588_fd9a0ca4",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 7
@@ -240,6 +258,24 @@
       "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1266d2_9b35d77f",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T00:12:49Z",
+      "side": 1,
+      "message": "Talked with Jared offline. Here\u0027s the note in case we forgot.\nThere\u0027s absolutely no value in logging NO_CARD on address histograms. But there\u0027s no way to differentiate if it\u0027s a credit card form or an address form in autofill_metrics.cc. (We need to add a new flag to differentiate and set the flag in autofill_manager).\n\nAs for 2)\nAddress and CreditCard has two separated histogram. So no need to split.",
+      "parentUuid": "565f7f17_c55f0026",
+      "revId": "5b620f5d2f92831c2dccc815dc7691fa433f9f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
