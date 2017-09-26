@@ -227,10 +227,10 @@ class DnsUDPAttempt : public DnsAttempt {
 
   int DoSendQuery() {
     next_state_ = STATE_SEND_QUERY_COMPLETE;
-    return socket()->Write(query_->io_buffer(),
-                           query_->io_buffer()->size(),
-                           base::Bind(&DnsUDPAttempt::OnIOComplete,
-                                      base::Unretained(this)));
+    return socket()->Write(
+        NO_TRAFFIC_ANNOTATION_YET, query_->io_buffer(),
+        query_->io_buffer()->size(),
+        base::Bind(&DnsUDPAttempt::OnIOComplete, base::Unretained(this)));
   }
 
   int DoSendQueryComplete(int rv) {
@@ -422,8 +422,7 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_LENGTH;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
+          NO_TRAFFIC_ANNOTATION_YET, buffer_.get(), buffer_->BytesRemaining(),
           base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
     }
     buffer_ = new DrainableIOBuffer(query_->io_buffer(),
@@ -441,8 +440,7 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_QUERY;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
+          NO_TRAFFIC_ANNOTATION_YET, buffer_.get(), buffer_->BytesRemaining(),
           base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
     }
     buffer_ =

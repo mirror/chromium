@@ -16,6 +16,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/datagram_socket.h"
 #include "net/socket/udp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -139,7 +140,8 @@ int UDPSocket::WriteImpl(net::IOBuffer* io_buffer,
   if (!socket_.is_connected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_.Write(io_buffer, io_buffer_size, callback);
+    return socket_.Write(NO_TRAFFIC_ANNOTATION_YET, io_buffer, io_buffer_size,
+                         callback);
 }
 
 void UDPSocket::RecvFrom(int count,

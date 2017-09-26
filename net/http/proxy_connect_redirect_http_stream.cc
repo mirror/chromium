@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "net/base/net_errors.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -31,6 +32,7 @@ int ProxyConnectRedirectHttpStream::InitializeStream(
 
 int ProxyConnectRedirectHttpStream::SendRequest(
     const HttpRequestHeaders& request_headers,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HttpResponseInfo* response,
     const CompletionCallback& callback) {
   NOTREACHED();

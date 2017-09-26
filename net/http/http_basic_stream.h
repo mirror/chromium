@@ -18,6 +18,7 @@
 #include "net/base/net_export.h"
 #include "net/http/http_basic_state.h"
 #include "net/http/http_stream.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -45,6 +46,7 @@ class NET_EXPORT_PRIVATE HttpBasicStream : public HttpStream {
                        const CompletionCallback& callback) override;
 
   int SendRequest(const HttpRequestHeaders& headers,
+                  const net::NetworkTrafficAnnotationTag& traffic_annotation,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
 

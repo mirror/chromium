@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_stream.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -33,6 +34,7 @@ class ProxyConnectRedirectHttpStream : public HttpStream {
                        const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override;
   int SendRequest(const HttpRequestHeaders& request_headers,
+                  const net::NetworkTrafficAnnotationTag& traffic_annotation,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;

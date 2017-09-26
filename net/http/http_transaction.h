@@ -16,6 +16,7 @@
 #include "net/http/http_raw_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/socket/connection_attempts.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
 
 namespace net {
@@ -72,6 +73,7 @@ class NET_EXPORT_PRIVATE HttpTransaction {
   //
   // Profiling information for the request is saved to |net_log| if non-NULL.
   virtual int Start(const HttpRequestInfo* request_info,
+                    const net::NetworkTrafficAnnotationTag& traffic_annotation,
                     const CompletionCallback& callback,
                     const NetLogWithSource& net_log) = 0;
 

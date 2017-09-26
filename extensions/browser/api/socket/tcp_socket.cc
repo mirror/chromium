@@ -16,6 +16,7 @@
 #include "net/base/rand_callback.h"
 #include "net/log/net_log_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -274,7 +275,8 @@ int TCPSocket::WriteImpl(net::IOBuffer* io_buffer,
   else if (!socket_.get() || !IsConnected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_->Write(io_buffer, io_buffer_size, callback);
+    return socket_->Write(NO_TRAFFIC_ANNOTATION_YET, io_buffer, io_buffer_size,
+                          callback);
 }
 
 void TCPSocket::RefreshConnectionStatus() {

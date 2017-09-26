@@ -12,6 +12,7 @@
 #include "net/base/rand_callback.h"
 #include "net/socket/datagram_client_socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -36,7 +37,8 @@ class NET_EXPORT_PRIVATE UDPClientSocket : public DatagramClientSocket {
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
-  int Write(IOBuffer* buf,
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback) override;
   void Close() override;

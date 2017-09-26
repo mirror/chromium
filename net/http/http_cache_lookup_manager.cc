@@ -46,7 +46,10 @@ int HttpCacheLookupManager::LookupTransaction::StartLookup(
   request_->method = "GET";
   request_->load_flags = LOAD_ONLY_FROM_CACHE | LOAD_SKIP_CACHE_VALIDATION;
   cache->CreateTransaction(DEFAULT_PRIORITY, &transaction_);
-  return transaction_->Start(request_.get(), callback, net_log_);
+  // TODO(rhalavati): Traffic annotation can originate form here? Or should it
+  // be passed from HttpCacheLookupManager::OnPush?
+  return transaction_->Start(request_.get(), NO_TRAFFIC_ANNOTATION_YET,
+                             callback, net_log_);
 }
 
 void HttpCacheLookupManager::LookupTransaction::OnLookupComplete(int result) {
