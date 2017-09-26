@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5425f760_fdab2b93",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T22:24:20Z",
+      "side": 1,
+      "message": "The only thing in here that actually needs a float is the RenderSurfaceFilters so I changed it to stop going to float in the caller.",
+      "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd70f7b_26ddf0e6",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-26T22:24:20Z",
+      "side": 1,
+      "message": "This part confused me greatly, but I *think* I am accurately representing that the ScopedSamplerGL was doing (what a lot of code that was for 3 lines???)\n\nThis is weird cuz we just did the same BindTexture above for background_image_id, and you can have both, in which case, we ignore the background_image_id? Maybe so but if I did something wrong this is voted most likely spot.",
+      "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
