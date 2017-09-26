@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<template id="tmpl"></template>
+<script>
+var tmpl = document.getElementById('tmpl')
+var doc = document.implementation.createHTMLDocument();
+doc.adoptNode(tmpl.content);
+tmpl.content.appendChild(tmpl);
+console.log(tmpl.innerHTML);
+</script>

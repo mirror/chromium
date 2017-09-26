@@ -184,7 +184,8 @@ bool ContainerNode::IsHostIncludingInclusiveAncestorOfThis(
     return false;
 
   bool child_contains_parent = false;
-  if (IsInShadowTree() || GetDocument().IsTemplateDocument())
+  if (IsInShadowTree() || GetDocument().IsTemplateDocument() ||
+      (IsDocumentFragment() && ToDocumentFragment(this)->IsTemplateContent()))
     child_contains_parent = new_child.ContainsIncludingHostElements(*this);
   else
     child_contains_parent = new_child.contains(this);
