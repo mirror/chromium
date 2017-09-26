@@ -41,8 +41,6 @@ TestBrowserThreadBundle::~TestBrowserThreadBundle() {
   base::RunLoop().RunUntilIdle();
   process_launcher_thread_->Stop();
   base::RunLoop().RunUntilIdle();
-  file_thread_->Stop();
-  base::RunLoop().RunUntilIdle();
   ui_thread_->Stop();
   base::RunLoop().RunUntilIdle();
 
@@ -117,14 +115,6 @@ void TestBrowserThreadBundle::Init() {
 
 void TestBrowserThreadBundle::CreateBrowserThreads() {
   CHECK(!threads_created_);
-
-  if (options_ & REAL_FILE_THREAD) {
-    file_thread_ = base::MakeUnique<TestBrowserThread>(BrowserThread::FILE);
-    file_thread_->Start();
-  } else {
-    file_thread_ = base::MakeUnique<TestBrowserThread>(
-        BrowserThread::FILE, base::MessageLoop::current());
-  }
 
   process_launcher_thread_ = base::MakeUnique<TestBrowserThread>(
       BrowserThread::PROCESS_LAUNCHER, base::MessageLoop::current());

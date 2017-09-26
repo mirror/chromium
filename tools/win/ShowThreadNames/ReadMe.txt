@@ -37,7 +37,6 @@ thread_ID   thread_name
 2256    AudioThread
 9308    BrokerEvent
 5668    BrowserWatchdog
-8616    Chrome_FileThread
 8280    Chrome_HistoryThread
 7472    Chrome_IOThread
 6336    Chrome_ProcessLauncherThread
