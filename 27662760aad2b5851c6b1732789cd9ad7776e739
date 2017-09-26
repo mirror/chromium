@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea67102b_6169fdb9",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-26T08:23:03Z",
+      "side": 1,
+      "message": "hbos: direct invocation would work here, but I left the PostTask because it allows returning control to JavaScript more quickly and nothing of interest happens until the promise is resolved/rejected.",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
