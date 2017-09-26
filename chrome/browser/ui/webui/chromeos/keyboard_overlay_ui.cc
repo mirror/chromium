@@ -29,13 +29,13 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/chromeos/events/keyboard_layout_util.h"
+#include "ui/chromeos/events/modifier_key.h"
 #include "ui/chromeos/events/pref_names.h"
 #include "ui/display/manager/display_manager.h"
 
-using chromeos::input_method::ModifierKey;
+using ui::ime::ModifierKey;
 using content::WebUIMessageHandler;
 using ui::WebDialogUI;
 
@@ -53,13 +53,13 @@ struct ModifierToLabel {
   const ModifierKey modifier;
   const char* label;
 } kModifierToLabels[] = {
-  {chromeos::input_method::kSearchKey, "search"},
-  {chromeos::input_method::kControlKey, "ctrl"},
-  {chromeos::input_method::kAltKey, "alt"},
-  {chromeos::input_method::kVoidKey, "disabled"},
-  {chromeos::input_method::kCapsLockKey, "caps lock"},
-  {chromeos::input_method::kEscapeKey, "esc"},
-  {chromeos::input_method::kBackspaceKey, "backspace"},
+    {ui::ime::kSearchKey, "search"},
+    {ui::ime::kControlKey, "ctrl"},
+    {ui::ime::kAltKey, "alt"},
+    {ui::ime::kVoidKey, "disabled"},
+    {ui::ime::kCapsLockKey, "caps lock"},
+    {ui::ime::kEscapeKey, "esc"},
+    {ui::ime::kBackspaceKey, "backspace"},
 };
 
 struct I18nContentToMessage {
@@ -409,11 +409,11 @@ void KeyboardOverlayHandler::GetLabelMap(const base::ListValue* args) {
   PrefService* pref_service = profile_->GetPrefs();
   typedef std::map<ModifierKey, ModifierKey> ModifierMap;
   ModifierMap modifier_map;
-  modifier_map[chromeos::input_method::kSearchKey] = static_cast<ModifierKey>(
+  modifier_map[ui::ime::kSearchKey] = static_cast<ModifierKey>(
       pref_service->GetInteger(prefs::kLanguageRemapSearchKeyTo));
-  modifier_map[chromeos::input_method::kControlKey] = static_cast<ModifierKey>(
+  modifier_map[ui::ime::kControlKey] = static_cast<ModifierKey>(
       pref_service->GetInteger(prefs::kLanguageRemapControlKeyTo));
-  modifier_map[chromeos::input_method::kAltKey] = static_cast<ModifierKey>(
+  modifier_map[ui::ime::kAltKey] = static_cast<ModifierKey>(
       pref_service->GetInteger(prefs::kLanguageRemapAltKeyTo));
   // TODO(mazda): Support prefs::kLanguageRemapCapsLockKeyTo once Caps Lock is
   // added to the overlay UI.

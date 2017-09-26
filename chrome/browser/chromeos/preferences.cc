@@ -57,6 +57,7 @@
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
+#include "ui/chromeos/events/modifier_key.h"
 #include "ui/chromeos/events/pref_names.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/events/event_constants.h"
@@ -268,30 +269,28 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterStringPref(prefs::kLanguageEnabledExtensionImes, "");
 
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapSearchKeyTo, input_method::kSearchKey,
+      prefs::kLanguageRemapSearchKeyTo, ui::ime::kSearchKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF |
           PrefRegistry::PUBLIC);  // Used in ash.
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapControlKeyTo,
-      input_method::kControlKey,
+      prefs::kLanguageRemapControlKeyTo, ui::ime::kControlKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapAltKeyTo,
-      input_method::kAltKey,
+      prefs::kLanguageRemapAltKeyTo, ui::ime::kAltKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // We don't sync the CapsLock remapping pref, since the UI hides this pref
   // on certain devices, so syncing a non-default value to a device that
   // doesn't allow changing the pref would be odd. http://crbug.com/167237
   registry->RegisterIntegerPref(prefs::kLanguageRemapCapsLockKeyTo,
-                                input_method::kCapsLockKey);
+                                ui::ime::kCapsLockKey);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapEscapeKeyTo, input_method::kEscapeKey,
+      prefs::kLanguageRemapEscapeKeyTo, ui::ime::kEscapeKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapBackspaceKeyTo, input_method::kBackspaceKey,
+      prefs::kLanguageRemapBackspaceKeyTo, ui::ime::ModifierKey::kBackspaceKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapDiamondKeyTo, input_method::kControlKey,
+      prefs::kLanguageRemapDiamondKeyTo, ui::ime::kControlKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // The following pref isn't synced since the user may desire a different value
   // depending on whether an external keyboard is attached to a particular
