@@ -47,7 +47,12 @@ public class AccountManagerFacade {
     @VisibleForTesting
     public static final String FEATURE_IS_CHILD_ACCOUNT_KEY = "service_uca";
 
-    private static final AtomicReference<AccountManagerFacade> sInstance = new AtomicReference<>();
+    private static final Object sLock = new Object();
+    private static AccountManagerFacade sInstance;
+    private static AccountManagerFacade sTestingInstance;
+
+    private static final AtomicReference<AccountManagerFacade> sAtomicInstance =
+            new AtomicReference<>();
 
     private final AccountManagerDelegate mDelegate;
 
@@ -108,8 +113,13 @@ public class AccountManagerFacade {
      */
     @AnyThread
     public static void initializeAccountManagerFacade(AccountManagerDelegate delegate) {
-        if (!sInstance.compareAndSet(null, new AccountManagerFacade(delegate))) {
-            throw new IllegalStateException("AccountManagerFacade is already initialized!");
+        synchronized (sLock) {
+            if (sInstance != null) {
+                throw new IllegalStateException("AccountManagerFacade is already initialized!");
+            }
+            sInstance = new AccountManagerFacade(delegate);
+            if (sTestingInstance != null) return;
+            sAtomicInstance.set(sInstance);
         }
     }
 
@@ -121,7 +131,7 @@ public class AccountManagerFacade {
      */
     @AnyThread
     public static AccountManagerFacade get() {
-        AccountManagerFacade instance = sInstance.get();
+        AccountManagerFacade instance = sAtomicInstance.get();
         assert instance != null : "AccountManagerFacade is not initialized!";
         return instance;
     }
@@ -136,7 +146,10 @@ public class AccountManagerFacade {
     @VisibleForTesting
     @AnyThread
     public static void overrideAccountManagerFacadeForTests(AccountManagerDelegate delegate) {
-        sInstance.set(new AccountManagerFacade(delegate));
+        synchronized (sLock) {
+            sTestingInstance = new AccountManagerFacade(delegate);
+            sAtomicInstance.set(sTestingInstance);
+        }
     }
 
     /**
@@ -146,7 +159,10 @@ public class AccountManagerFacade {
     @VisibleForTesting
     @AnyThread
     public static void resetAccountManagerFacadeForTests() {
-        sInstance.set(null);
+        synchronized (sLock) {
+            sTestingInstance = null;
+            sAtomicInstance.set(sInstance);
+        }
     }
 
     /**
