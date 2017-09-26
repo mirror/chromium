@@ -6,7 +6,6 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_delegate.h"
 #include "ash/system/system_notifier.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
@@ -25,14 +24,23 @@ InactiveUserNotificationBlocker::~InactiveUserNotificationBlocker() = default;
 
 bool InactiveUserNotificationBlocker::ShouldShowNotification(
     const message_center::Notification& notification) const {
-  if (!Shell::Get()->shell_delegate()->IsMultiProfilesEnabled())
-    return true;
+  // Only block if multi-profile is being used.
+  // LOG(ERROR) << "JAMES number of users " << Shell::Get()->session_controller()->NumberOfLoggedInUsers();
+  // if (Shell::Get()->session_controller()->NumberOfLoggedInUsers() < 2)
+  //   return true;
+  if (!Shell::Get()->session_controller()->IsMultiProfileAllowed())
+      return true;
 
-  if (system_notifier::IsAshSystemNotifier(notification.notifier_id()))
+  if (system_notifier::IsAshSystemNotifier(notification.notifier_id())) {
+    LOG(ERROR) << "JAMES is system";
     return true;
+  }
 
-  return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
+  bool val = AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
          active_account_id_;
+  LOG(ERROR) << "JAMES val " << val;
+  return val;
+
 }
 
 bool InactiveUserNotificationBlocker::ShouldShowNotificationAsPopup(

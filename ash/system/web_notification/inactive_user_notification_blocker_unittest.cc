@@ -8,7 +8,6 @@
 #include "ash/shell.h"
 #include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -31,13 +30,14 @@ class InactiveUserNotificationBlockerTest
   // AshTestBase overrides:
   void SetUp() override {
     AshTestBase::SetUp();
-    TestShellDelegate* shell_delegate =
-        static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-    shell_delegate->set_multi_profiles_enabled(true);
+    // TestShellDelegate* shell_delegate =
+    //     static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
+    // shell_delegate->set_multi_profiles_enabled(true);
 
     test_session_controller_ = std::make_unique<TestSessionControllerClient>(
         Shell::Get()->session_controller());
     test_session_controller_->CreatePredefinedUserSessions(1);
+    test_session_controller_->SetMultiProfileAllowed();
 
     blocker_ = std::make_unique<InactiveUserNotificationBlocker>(
         message_center::MessageCenter::Get());

@@ -87,9 +87,9 @@ void TrayUserTest::SetUp() {
 
 void TrayUserTest::InitializeParameters(int users_logged_in,
                                         bool multiprofile) {
-  TestShellDelegate* shell_delegate =
-      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-  shell_delegate->set_multi_profiles_enabled(multiprofile);
+  // TestShellDelegate* shell_delegate =
+  //     static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
+  // shell_delegate->set_multi_profiles_enabled(multiprofile);
 
   // Set our default assumptions. Note that it is sufficient to set these
   // after everything was created.
@@ -98,6 +98,9 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
             static_cast<int>(arraysize(kPredefinedUserEmails)));
   for (int i = 0; i < users_logged_in; ++i)
     SimulateUserLogin(kPredefinedUserEmails[i]);
+
+  if (multiprofile)
+    GetSessionControllerClient()->SetMultiProfileAllowed();
 
   // Instead of using the existing tray panels we create new ones which makes
   // the access easier.
