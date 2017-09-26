@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efbee8ec_66f244e6",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "UDPSocketTest::SetDSCPFake does something similar, but doesn\u0027t validate that calls aren\u0027t made in some cases like this test does. I couldn\u0027t figure out how to do that following this pattern without global state. Passing a QwaveAPI mock in to DscpManager should work and it wouldn\u0027t require refactoring existing code I don\u0027t think.",
+      "parentUuid": "5d7db32d_c76caf25",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c1f3891_d08fb0d6",
         "filename": "net/socket/udp_socket_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T21:10:13Z",
       "side": 1,
       "message": "I think it would be better if the test just went through the UDP socket API and left DscpManager as an implementation detail. Either way, there should be some test that goes through the UDP socket API.",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0806fb5b_62071871",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "The existing tests are:\nUDPSocketTest::SetDSCP - calls SetDiffServCodePoint and just checks that nothing crashes.\nUDPSocketTest::SetDSCPFake (Windows only) - checks that the QOS APIs are called as expected from SetDiffServCodePoint with a connected socket.\n\nI could add a test that checks that the QOS API (or PrepareForSend) is called when SendTo is called after SetDiffServCodePoint on an unconnected socket. I think that covers the UDPSocketWin changes. Sound good?",
+      "parentUuid": "1c1f3891_d08fb0d6",
       "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "958c1083_c75c6e89",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30a34e38_60e7a632",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2540ce3_1cce4b1a",
         "filename": "net/socket/udp_socket_win.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3c326930_87b28b30",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "I don\u0027t think it is necessary given the perf numbers I have seen, so I wasn\u0027t planning on it.",
+      "parentUuid": "f2540ce3_1cce4b1a",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "081956f0_d07cc48f",
         "filename": "net/socket/udp_socket_win.cc",
         "patchSetId": 1
@@ -81,6 +153,30 @@
       "writtenOn": "2017-09-26T21:10:13Z",
       "side": 1,
       "message": "The documentation says \"on input this parameter must be 0\"; is that incorrect? It sounds like it since it\u0027s listed as an \"in/out\" parameter and not just out. Have you tested this with multiple destination addresses though?",
+      "range": {
+        "startLine": 1288,
+        "startChar": 51,
+        "endLine": 1288,
+        "endChar": 59
+      },
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4879b67_339aa585",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "Yes, I have seen the same socket successfully (the QoS API calls succeed) set DSCP values for multiple remote endpoints manually using AppRTC. I haven\u0027t verified with Wireshark.",
+      "parentUuid": "081956f0_d07cc48f",
       "range": {
         "startLine": 1288,
         "startChar": 51,
@@ -138,6 +234,24 @@
       "writtenOn": "2017-09-26T21:10:13Z",
       "side": 1,
       "message": "Would it simplify the code to just use DscpManager for both cases, calling PrepareForSend(remote_address_) in the connected case?",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0828ffe0_1206d81e",
+        "filename": "net/socket/udp_socket_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-09-26T22:14:31Z",
+      "side": 1,
+      "message": "The connected case doesn\u0027t need to make the call on every send (since the destination is known when SetDiffServCodePoint is called). The connected case could probably be refactored to just call DscpManager::Set and DscpManager::PrepareForSend once from SetDiffServCodePoint. I was just trying to minimize churn.",
+      "parentUuid": "cbb8d5c1_15a9ed81",
       "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
