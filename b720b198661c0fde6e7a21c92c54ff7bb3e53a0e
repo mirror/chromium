@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c3e101_ef33949b",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "I think you need to check that weak_system_store is not null.",
+      "range": {
+        "startLine": 483,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 29
+      },
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09ca040_17643d83",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 644,
+        "startChar": 12,
+        "endLine": 644,
+        "endChar": 29
+      },
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb06a270_c9cc0f8e",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "Use ScopedTestingCookieStoreIOSClient?",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6abec40_81ae0025",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "nit: No need for a linebreak",
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd042b5d_c8984da6",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "nit: Do you need |.get()| here?",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4153d87_50a38127",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "nit: // namespace",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784fdb59_730ac6b3",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T18:07:35Z",
+      "side": 1,
+      "message": "nit: No need for a linebreak here.",
+      "revId": "b720b198661c0fde6e7a21c92c54ff7bb3e53a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
