@@ -524,8 +524,7 @@ TEST_P(MostVisitedSitesTest, ShouldStartNoCallInConstructor) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldRefreshBothBackends) {
-  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+TEST_P(MostVisitedSitesTest, ShouldRefreshSuggestions) {
   EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData());
   most_visited_sites_->Refresh();
 }
