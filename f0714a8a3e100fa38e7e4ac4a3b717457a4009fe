@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "db2e6dcf_95006e74",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-26T19:20:23Z",
+      "side": 1,
+      "message": "Can this return a bool for whether a card number field was detected?\n\ni.e., something like\n\nCreditCard credit_card;\nif (personal_data_-\u003eExtractCreditCardFromFrom(*submitted_form, \u0026credit_card)) {\n event_logger_-\u003e...\n ...\n}\n\nI would suggest that the extraction done here should pick up both fields identified as cc-number as well as data that looks like a cc-number. That way you can log:\n\n - detected cc-number field. user did/didn\u0027t use autofill; and,\n - there was an cc-number accepting field that autofill didn\u0027t detect\n\nWith the bool result you would skip logging instances where a cc number was expected and was subsequently not observed... which is just noise.",
+      "range": {
+        "startLine": 432,
+        "startChar": 22,
+        "endLine": 432,
+        "endChar": 47
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6f9ee10_7821428a",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 11
