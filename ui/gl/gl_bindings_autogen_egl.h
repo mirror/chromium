@@ -89,6 +89,9 @@ typedef EGLBoolean(GL_BINDING_CALL* eglDestroySurfaceProc)(EGLDisplay dpy,
                                                            EGLSurface surface);
 typedef EGLBoolean(GL_BINDING_CALL* eglDestroySyncKHRProc)(EGLDisplay dpy,
                                                            EGLSyncKHR sync);
+typedef EGLint(GL_BINDING_CALL* eglDupNativeFenceFDANDROIDProc)(
+    EGLDisplay dpy,
+    EGLSyncKHR sync);
 typedef EGLBoolean(GL_BINDING_CALL* eglGetConfigAttribProc)(EGLDisplay dpy,
                                                             EGLConfig config,
                                                             EGLint attribute,
@@ -233,6 +236,7 @@ typedef EGLint(GL_BINDING_CALL* eglWaitSyncKHRProc)(EGLDisplay dpy,
 struct ExtensionsEGL {
   bool b_EGL_EXT_platform_base;
   bool b_EGL_ANDROID_get_native_client_buffer;
+  bool b_EGL_ANDROID_native_fence_sync;
   bool b_EGL_ANGLE_d3d_share_handle_client_buffer;
   bool b_EGL_ANGLE_program_cache_control;
   bool b_EGL_ANGLE_query_surface_pointer;
@@ -274,6 +278,7 @@ struct ProcsEGL {
   eglDestroyStreamKHRProc eglDestroyStreamKHRFn;
   eglDestroySurfaceProc eglDestroySurfaceFn;
   eglDestroySyncKHRProc eglDestroySyncKHRFn;
+  eglDupNativeFenceFDANDROIDProc eglDupNativeFenceFDANDROIDFn;
   eglGetConfigAttribProc eglGetConfigAttribFn;
   eglGetConfigsProc eglGetConfigsFn;
   eglGetCurrentContextProc eglGetCurrentContextFn;
@@ -388,6 +393,8 @@ class GL_EXPORT EGLApi {
   virtual EGLBoolean eglDestroySurfaceFn(EGLDisplay dpy,
                                          EGLSurface surface) = 0;
   virtual EGLBoolean eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) = 0;
+  virtual EGLint eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
+                                              EGLSyncKHR sync) = 0;
   virtual EGLBoolean eglGetConfigAttribFn(EGLDisplay dpy,
                                           EGLConfig config,
                                           EGLint attribute,
@@ -541,6 +548,8 @@ class GL_EXPORT EGLApi {
 #define eglDestroyStreamKHR ::gl::g_current_egl_context->eglDestroyStreamKHRFn
 #define eglDestroySurface ::gl::g_current_egl_context->eglDestroySurfaceFn
 #define eglDestroySyncKHR ::gl::g_current_egl_context->eglDestroySyncKHRFn
+#define eglDupNativeFenceFDANDROID \
+  ::gl::g_current_egl_context->eglDupNativeFenceFDANDROIDFn
 #define eglGetConfigAttrib ::gl::g_current_egl_context->eglGetConfigAttribFn
 #define eglGetConfigs ::gl::g_current_egl_context->eglGetConfigsFn
 #define eglGetCurrentContext ::gl::g_current_egl_context->eglGetCurrentContextFn

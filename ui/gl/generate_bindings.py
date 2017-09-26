@@ -1936,6 +1936,16 @@ EGL_FUNCTIONS = [
                    'GL_CHROMIUM_egl_khr_fence_sync_hack'
                  ] }],
   'arguments': 'EGLDisplay dpy, EGLSyncKHR sync' },
+{ 'return_type': 'EGLint',
+  # At least some Android O devices such as Pixel implement this
+  # but don't export the EGL_ANDROID_native_fence_sync extension.
+  # In practice it seems implied by get_native_client_buffer,
+  # so accept that as an alias, since both are mandatory for Android O.
+  'versions': [{ 'name': 'eglDupNativeFenceFDANDROID',
+                 'extensions': ['EGL_ANDROID_native_fence_sync',
+                                'EGL_ANDROID_get_native_client_buffer']}],
+  'arguments':
+      'EGLDisplay dpy, EGLSyncKHR sync' },
 { 'return_type': 'EGLBoolean',
   'names': ['eglGetConfigAttrib'],
   'arguments':
