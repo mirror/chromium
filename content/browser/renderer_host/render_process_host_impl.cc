@@ -13,6 +13,10 @@
 #include <utility>
 #include <vector>
 
+#include <fstream>
+#include <iostream>
+#include <string>
+
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -3820,6 +3824,26 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
                "should_background", priority.background, "has_pending_views",
                priority.boost_for_pending_views);
   priority_ = priority;
+
+  // Write to disk for record.
+  std::ofstream out;
+  out.open("C:\\Users\\chengx\\Documents\\file.txt",
+           std::ofstream::out | std::ofstream::app);
+  out << std::endl << "RPH id - isBackground" << std::endl;
+
+  for (base::IDMap<content::RenderProcessHost*>::iterator iter(
+           g_all_hosts.Pointer());
+       !iter.IsAtEnd(); iter.Advance()) {
+    RenderProcessHostImpl* impl =
+        static_cast<RenderProcessHostImpl*>(iter.GetCurrentValue());
+    if (impl->IsUnused())
+      continue;
+
+    // "1" means background
+    out << iter.GetCurrentKey() << " - " << impl->priority_.background
+        << std::endl;
+  }
+  out.close();
 
 #if defined(OS_WIN)
   // The cbstext.dll loads as a global GetMessage hook in the browser process
