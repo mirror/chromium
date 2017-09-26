@@ -16,6 +16,24 @@
       "revId": "eefc387c1bdca6bd9fd3b7a5238f6ae67cb6cb07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc165b5c_a66ec690",
+        "filename": "testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-26T18:16:36Z",
+      "side": 1,
+      "message": "\u003e Add comment explain where \u0027telemetry_perf_tests_new\u0027 string come from.\n\nDone.\n\n\u003e Also why do we not need it in https://cs.chromium.org/chromium/src/testing/scripts/run_telemetry_as_googletest.py?rcl\u003d20398b866a90f6f39d924e850d5057fe447d6a7f\u0026l\u003d79?\n\nI think we technically do need it, but never used it? I\u0027m not really sure though, I\u0027m not super familiar with that file.",
+      "parentUuid": "04893410_126e9e94",
+      "revId": "eefc387c1bdca6bd9fd3b7a5238f6ae67cb6cb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
