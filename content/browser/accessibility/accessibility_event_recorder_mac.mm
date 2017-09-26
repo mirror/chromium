@@ -20,7 +20,8 @@ namespace content {
 // watch for NSAccessibility events.
 class AccessibilityEventRecorderMac : public AccessibilityEventRecorder {
  public:
-  explicit AccessibilityEventRecorderMac(BrowserAccessibilityManager* manager);
+  explicit AccessibilityEventRecorderMac(BrowserAccessibilityManager* manager,
+                                         int pid);
   ~AccessibilityEventRecorderMac() override;
 
   // Callback executed every time we receive an event notification.
@@ -57,15 +58,18 @@ static void EventReceivedThunk(
 
 // static
 AccessibilityEventRecorder* AccessibilityEventRecorder::Create(
-    BrowserAccessibilityManager* manager) {
-  return new AccessibilityEventRecorderMac(manager);
+    BrowserAccessibilityManager* manager,
+    int pid) {
+  return new AccessibilityEventRecorderMac(manager, pid);
 }
 
 AccessibilityEventRecorderMac::AccessibilityEventRecorderMac(
-    BrowserAccessibilityManager* manager)
-    : AccessibilityEventRecorder(manager), observer_run_loop_source_(NULL) {
+    BrowserAccessibilityManager* manager,
+    int pid)
+    : AccessibilityEventRecorder(manager, pid),
+      observer_run_loop_source_(NULL) {
   // Get Chrome's process id.
-  int pid = [[NSProcessInfo processInfo] processIdentifier];
+  // int pid = [[NSProcessInfo processInfo] processIdentifier];
   if (kAXErrorSuccess != AXObserverCreate(pid, EventReceivedThunk,
                                           observer_ref_.InitializeInto())) {
     LOG(FATAL) << "Failed to create AXObserverRef";
@@ -152,6 +156,7 @@ void AccessibilityEventRecorderMac::EventReceived(AXUIElementRef element,
     log += base::StringPrintf(" AXValue=\"%s\"", value.c_str());
 
   event_logs_.push_back(log);
+  OnEvent(log);
 }
 
 }  // namespace content
