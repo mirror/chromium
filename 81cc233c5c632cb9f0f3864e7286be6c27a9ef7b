@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85ac1da_1232b777",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T21:46:05Z",
+      "side": 1,
+      "message": "move this to be a function in the anonymous namespace.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "81cc233c5c632cb9f0f3864e7286be6c27a9ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cc45e6_57302a24",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T21:46:05Z",
+      "side": 1,
+      "message": "Add a comment to this member to describe it a bit.",
+      "revId": "81cc233c5c632cb9f0f3864e7286be6c27a9ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc042e1_49706bd6",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T21:46:05Z",
+      "side": 1,
+      "message": "Comment this too, say it\u0027s the size of array_.",
+      "revId": "81cc233c5c632cb9f0f3864e7286be6c27a9ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cc30e5_3f117990",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T21:46:05Z",
+      "side": 1,
+      "message": "Put these down with the other data members.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "81cc233c5c632cb9f0f3864e7286be6c27a9ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd168f55_78406b28",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-26T21:46:05Z",
+      "side": 1,
+      "message": "variation params",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 67
+      },
+      "revId": "81cc233c5c632cb9f0f3864e7286be6c27a9ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
