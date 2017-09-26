@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "12e3de55_a884f3bb",
+        "filename": "chrome/browser/vr/test/gl_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T17:25:17Z",
+      "side": 1,
+      "message": "Might give the ability to vend a generic buffer given a buffer specification. But this is all maybe premature design :) Would be nice to keep this class in mind, though, as the work to generalize rendering progresses.",
+      "parentUuid": "19c4128d_bcc145f4",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c1092d_2e2cf9fc",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Not that I know of. This has been like this since a long time.",
       "parentUuid": "12b132cb_1bae477e",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a85872_111ea4d8",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T17:25:17Z",
+      "side": 1,
+      "message": "Please do log one and reference it here.",
+      "parentUuid": "fb1d4dba_1a6fe7ba",
       "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
