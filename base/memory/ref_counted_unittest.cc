@@ -578,7 +578,7 @@ TEST(RefCountedUnitTest, TestInitialRefCountIsOne) {
 }
 
 TEST(RefCountedDeathTest, TestAdoptRef) {
-  EXPECT_DCHECK_DEATH(make_scoped_refptr(new InitialRefCountIsOne));
+  EXPECT_DCHECK_DEATH(base::WrapRefCounted(new InitialRefCountIsOne));
 
   InitialRefCountIsOne* ptr = nullptr;
   EXPECT_DCHECK_DEATH(base::AdoptRef(ptr));
