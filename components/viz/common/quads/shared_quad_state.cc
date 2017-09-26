@@ -13,9 +13,33 @@
 
 namespace viz {
 
+std::string ClipStateToString(ClipState clip_state) {
+  switch (clip_state) {
+    case ClipState::CLIP:
+      return "clip";
+    case ClipState::NON_CLIP:
+      return "non_clip";
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+}
+
+std::string ContentsOpaqueToString(ContentsOpaque contents_opaque) {
+  switch (contents_opaque) {
+    case ContentsOpaque::OPAQUE:
+      return "opaque";
+    case ContentsOpaque::TRANSPARENT:
+      return "transparent";
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+}
+
 SharedQuadState::SharedQuadState()
-    : is_clipped(false),
-      opacity(0.f),
+    : clip_state(ClipState::NON_CLIP),
+      contents_opaque(ContentsOpaque::TRANSPARENT),
       blend_mode(SkBlendMode::kSrcOver),
       sorting_context_id(0) {}
 
@@ -31,8 +55,8 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
                              const gfx::Rect& quad_layer_rect,
                              const gfx::Rect& visible_quad_layer_rect,
                              const gfx::Rect& clip_rect,
-                             bool is_clipped,
-                             bool are_contents_opaque,
+                             ClipState clip_state,
+                             ContentsOpaque contents_opaque,
                              float opacity,
                              SkBlendMode blend_mode,
                              int sorting_context_id) {
@@ -40,8 +64,8 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
   this->quad_layer_rect = quad_layer_rect;
   this->visible_quad_layer_rect = visible_quad_layer_rect;
   this->clip_rect = clip_rect;
-  this->is_clipped = is_clipped;
-  this->are_contents_opaque = are_contents_opaque;
+  this->clip_state = clip_state;
+  this->contents_opaque = contents_opaque;
   this->opacity = opacity;
   this->blend_mode = blend_mode;
   this->sorting_context_id = sorting_context_id;
@@ -53,10 +77,10 @@ void SharedQuadState::AsValueInto(base::trace_event::TracedValue* value) const {
   cc::MathUtil::AddToTracedValue("layer_visible_content_rect",
                                  visible_quad_layer_rect, value);
 
-  value->SetBoolean("is_clipped", is_clipped);
+  value->SetString("clip_state", ClipStateToString(clip_state));
   cc::MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
 
-  value->SetBoolean("are_contents_opaque", are_contents_opaque);
+  value->SetString("contents_opaque", ContentsOpaqueToString(contents_opaque));
   value->SetDouble("opacity", opacity);
   value->SetString("blend_mode", SkBlendMode_Name(blend_mode));
   TracedValue::MakeDictIntoImplicitSnapshotWithCategory(
