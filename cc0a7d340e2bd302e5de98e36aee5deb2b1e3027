@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6a324fc_8739d935",
+        "filename": "cc/paint/scoped_image_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-26T00:14:46Z",
+      "side": 1,
+      "message": "I wonder if we need to move this to skia_util at this point, although that could be done in another patch.",
+      "revId": "cc0a7d340e2bd302e5de98e36aee5deb2b1e3027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4521340d_ce21bfe7",
         "filename": "cc/paint/scoped_image_flags.cc",
         "patchSetId": 13
