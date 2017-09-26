@@ -16,6 +16,24 @@
       "revId": "2bdb98f2d1fb748e13dfc5d1782f0b495d0fd1ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e76974d_c5b102f1",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T23:17:27Z",
+      "side": 0,
+      "message": "Probably a bad merge. Restored.",
+      "parentUuid": "adf644be_e4e3fff6",
+      "revId": "2bdb98f2d1fb748e13dfc5d1782f0b495d0fd1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

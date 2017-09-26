@@ -34,6 +34,24 @@
       "revId": "c898931fc1b9497bf45ca6176b2272f1e7409585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54e74c9_8f7d9604",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T23:17:27Z",
+      "side": 1,
+      "message": "I ended up doing the following:\n\n- Defined one mixin and one variable in shared_vars_css.html\n- Using those from shared_style_css.html, which in turn are used from the pages that use the new behavior (Extensions and Settings).\n- Using the mixin and new variable directly from pages that don\u0027t use the behavior (History and Downloads).\n\nEffectively all 4 pages share the same style for the drop shadow effect, regardless of whether they use the new behavior or not.",
+      "parentUuid": "1c78bbd3_54cb71b5",
+      "revId": "c898931fc1b9497bf45ca6176b2272f1e7409585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
