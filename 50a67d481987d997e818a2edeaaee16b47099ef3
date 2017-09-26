@@ -141,6 +141,30 @@
       "revId": "50a67d481987d997e818a2edeaaee16b47099ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2289cbc8_790224c5",
+        "filename": "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-26T14:27:01Z",
+      "side": 1,
+      "message": "LGTM, thanks!",
+      "parentUuid": "84b1b1aa_67261887",
+      "range": {
+        "startLine": 52,
+        "startChar": 33,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "50a67d481987d997e818a2edeaaee16b47099ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
