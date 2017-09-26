@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aab832d3_6a5698b1",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-26T23:27:00Z",
+      "side": 1,
+      "message": "There is no \"input WeeklyTime structure\". Just \"Convert to GMT timezone...\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "bc14f545b6da18f2a6f94b9e2dbf077f3ea41cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0edce391_fdef5ed5",
         "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
         "patchSetId": 3
