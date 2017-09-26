@@ -21,6 +21,7 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/blink/web_layer_impl.h"
+#include "cc/test/test_context_provider.h"
 #include "media/base/media_log.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_helpers.h"
@@ -240,7 +241,8 @@ class WebMediaPlayerImplTest : public testing::Test {
                                                   &web_frame_client_,
                                                   nullptr,
                                                   nullptr)),
-        audio_parameters_(TestAudioParameters::Normal()) {
+        audio_parameters_(TestAudioParameters::Normal()),
+        context_provider_(cc::TestContextProvider::Create()) {
     media_thread_.StartAndWaitForTesting();
   }
 
@@ -271,9 +273,10 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(),
-            base::Bind(&CreateCapabilitiesRecorder),
+            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
+                       base::Unretained(this)),
+            base::Bind(&WebMediaPlayerImplTest::ContextProviderCB,
                        base::Unretained(this))));
 }
 
@@ -288,6 +291,10 @@ class WebMediaPlayerImplTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     web_view_->Close();
+  }
+
+  void ContextProviderCB(base::Callback<void(viz::ContextProvider*)> callback) {
+    callback.Run(context_provider_.get());
   }
 
  protected:
@@ -462,6 +469,8 @@ class WebMediaPlayerImplTest : public testing::Test {
 
   // The WebMediaPlayerImpl instance under test.
   std::unique_ptr<WebMediaPlayerImpl> wmpi_;
+
+  scoped_refptr<cc::TestContextProvider> context_provider_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImplTest);
