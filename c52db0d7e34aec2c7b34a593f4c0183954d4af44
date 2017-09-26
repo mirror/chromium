@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a18afcb_fb6106e5",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af962d8_aac749c8",
+      "range": {
+        "startLine": 59,
+        "startChar": 46,
+        "endLine": 59,
+        "endChar": 73
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff7f00d6_a611ed24",
         "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c0d0ca53_0baf623c",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff7f00d6_a611ed24",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53af5eea_6be8c9b6",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T20:33:45Z",
       "side": 1,
       "message": "This presumption will not be correct in few releases.",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 67
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e79f2fb_3e118a66",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Yes and the comment will be changed when it comes. The change will definitely introduce a lot of changes in ArchiveManager, if not totally remove it.",
+      "parentUuid": "53af5eea_6be8c9b6",
       "range": {
         "startLine": 86,
         "startChar": 41,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9c493db4_24fa1115",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "I\u0027m using persistent one because i\u0027m assuming persistent_archives_dir will be more reliable than the temporary one. And the comment above described why using this value instead of the temporary one. After persistent files are moved out, this will surely be temporary archives dir.",
+      "parentUuid": "2556a9e6_35843f45",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec0ce994_598e3c6a",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-25T20:33:45Z",
       "side": 1,
       "message": "Don\u0027t DCHECK for that. I don\u0027t think it serves any good purpose other than validate and incorrect presumption.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b539f13b_7c42ad1b",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "I think it still has its value before persistent pages are moved to external storage.",
+      "parentUuid": "ec0ce994_598e3c6a",
       "range": {
         "startLine": 90,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "eb59142d_9e57298b",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s being used other than UMA, and I\u0027ve no idea who\u0027s using the exact UMA, so I\u0027m keeping it. I can remove if this UMA is obsolete.",
+      "parentUuid": "4bda0ab9_5a869e88",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30bcc280_930afcd3",
         "filename": "components/offline_pages/core/archive_manager.cc",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418becd7_72abe8a0",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30bcc280_930afcd3",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "ab3ddb86_030116a9",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291e854f_1d5572af",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "255a838f_237b447a",
         "filename": "components/offline_pages/core/archive_manager.h",
         "patchSetId": 5
@@ -197,6 +389,30 @@
       "writtenOn": "2017-09-25T20:33:45Z",
       "side": 1,
       "message": "I don\u0027t fully understand your comment.\nWould you also rename the class?",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dab737_67783846",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "I think what I meant is with persistent files moving out to external drives and moving to tasks, we might not need this or there might be tricky cases that some logic in this class will break. Changed the comments to reflect.",
+      "parentUuid": "255a838f_237b447a",
       "range": {
         "startLine": 26,
         "startChar": 18,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "894ba34b_9d752c65",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Renamed to DeleteTemporaryPagesInAbandonedCacheDir. And open to better ideas!",
+      "parentUuid": "1fe72749_ceddc26f",
+      "range": {
+        "startLine": 216,
+        "startChar": 27,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e27802_6e68a673",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -252,6 +492,30 @@
       "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6463eaa_515b469c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 50584,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Was thinking to use them as a indicator when going for the \u0027fallback strategy.\" But seems it\u0027s useless right now, removed.",
+      "parentUuid": "88e27802_6e68a673",
+      "range": {
+        "startLine": 50584,
+        "startChar": 17,
+        "endLine": 50584,
+        "endChar": 66
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "5dc9c534_f7971aa9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 99313,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "yes. similar codes are used in prefetching, and the archive_manager_unittest used histogram_tester and the UMA gets collected.",
+      "parentUuid": "30c43ff1_3c7ac122",
+      "range": {
+        "startLine": 99313,
+        "startChar": 1,
+        "endLine": 99313,
+        "endChar": 19
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94104cfc_87c4991b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -298,6 +586,30 @@
       "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5c09c1_b42999b7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 99317,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-26T02:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94104cfc_87c4991b",
+      "range": {
+        "startLine": 99317,
+        "startChar": 40,
+        "endLine": 99317,
+        "endChar": 65
+      },
+      "revId": "c52db0d7e34aec2c7b34a593f4c0183954d4af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
