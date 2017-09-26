@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d33f2382_987a6324",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32445,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-26T21:32:47Z",
+      "side": 1,
+      "message": "Milli?",
+      "range": {
+        "startLine": 32445,
+        "startChar": 68,
+        "endLine": 32445,
+        "endChar": 72
+      },
+      "revId": "4fa07d977c9e5cd4752d2a2cd8cf1ff7fca24175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc24699_b53dac2e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32454,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-26T21:32:47Z",
+      "side": 1,
+      "message": "I\u0027d suggest using a \u003chistogram_suffixes\u003e block for all these variants (see docs at the top of the file).",
+      "range": {
+        "startLine": 32454,
+        "startChar": 50,
+        "endLine": 32454,
+        "endChar": 78
+      },
+      "revId": "4fa07d977c9e5cd4752d2a2cd8cf1ff7fca24175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
