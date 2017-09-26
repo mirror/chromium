@@ -7,6 +7,469 @@
         {
             "type": "@UI.TextEditorFactory",
             "className": "TextEditor.CodeMirrorTextEditorFactory"
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-char-left",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Left"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+B Left"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-char-right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Right"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+F Right"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-up",
+            "bindings": [
+                {
+                    "shortcut": "Up"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-down",
+            "bindings": [
+                {
+                    "shortcut": "Down"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-end",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "End"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Right End"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-start",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Home"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Left Home"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-page-up",
+            "bindings": [
+                {
+                    "shortcut": "PageUp"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-page-down",
+            "bindings": [
+                {
+                    "shortcut": "PageDown"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-char-after",
+            "bindings": [
+                {
+                    "shortcut": "Delete"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-char-before",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Backspace"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+H Backspace"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.default-tab",
+            "bindings": [
+                {
+                    "shortcut": "Tab"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.indent-less",
+            "bindings": [
+                {
+                    "shortcut": "Shift+Tab"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.newline-and-indent",
+            "bindings": [
+                {
+                    "shortcut": "Enter"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.autocomplete",
+            "bindings": [
+                {
+                    "shortcut": "Ctrl+Space"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.dismiss",
+            "bindings": [
+                {
+                    "shortcut": "Esc"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-to-matching-bracket",
+            "bindings": [
+                {
+                    "shortcut": "Ctrl+M"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.select-all",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+A"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+A"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.undo-and-reveal",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Z"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Z"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.redo-and-reveal",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Shift+Ctrl+Z"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Shift+Meta+Z"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.redo",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Y"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-doc-start",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Home Ctrl+Up"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Up"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-doc-end",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+End Ctrl+Down"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Down"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.move-camel-left",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Alt+Left"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+Left"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.move-camel-right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Alt+Right"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+Right"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.select-camel-left",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Shift+Alt+Left"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Shift+Ctrl+Left"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.select-camel-right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Shift+Alt+Right"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Shift+Ctrl+Right"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-group-left",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Left"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Alt+Left Ctrl+Alt+B"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-group-right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Right"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Alt+Right Ctrl+Alt+F"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-group-before",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Backspace"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Alt+Backspace"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-group-after",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+Delete"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Alt+Delete"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.toggle-comment",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+/"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+/"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.select-next-occurrence",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+D"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+D"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.undo-last-selection",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+U"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+U"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-left",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+A"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.go-line-right",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+E"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-char-after",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+D"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.kill-line",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+K"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.transpose-chars",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Ctrl+T"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "editor.del-line-left",
+            "bindings": [
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Backspace"
+                }
+            ]
         }
     ],
     "dependencies": [
