@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be48a00_931c4b24",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-26T17:32:07Z",
+      "side": 1,
+      "message": "From line 501 above, it looks like this could possibly be PAGE_TRANSITION_LINK?",
+      "revId": "063379516a94e09171e2882e63289bbd3ff25cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
