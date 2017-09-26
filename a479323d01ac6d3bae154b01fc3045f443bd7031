@@ -93,6 +93,30 @@
       "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28c08b7_287e476c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-26T21:28:55Z",
+      "side": 1,
+      "message": "Yeah the GPU cache does this because the upload image has a mip-chain. I still don\u0027t understand why that would be more complex here. With the new CacheMissAction, wouldn\u0027t it boil down to an iteration over the vector of image keys instead of only looking for the full size decode, when calling GetDecodedImageForDrawInternal? Even if we only try to reuse full size decodes in this patch, could we isolate all the conditions to GetScaledImageDecode?\n\n1) Check if full size decode available, reuse it.\n2) Set the decode size based on whether decoding to scale can be used (!need_subset) and do that, then scale it.\n\nRight now it looks like an awkward interaction between DecodeImageInternal and GetScaledImageDecode.",
+      "parentUuid": "27d9682d_cf9eeb10",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 30
+      },
+      "revId": "a479323d01ac6d3bae154b01fc3045f443bd7031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
