@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "base/strings/string_number_conversions.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
+#include "chromeos/login/auth/authpolicy_login_helper.h"
 #include "chromeos/login/auth/user_context.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -109,6 +110,14 @@ void LockScreenController::AuthenticateUser(
     const std::string& password,
     bool authenticated_by_pin,
     mojom::LockScreenClient::AuthenticateUserCallback callback) {
+  if (account_id.GetAccountType() == AccountType::ACTIVE_DIRECTORY) {
+    // Try to get kerberos TGT while we have user's password typed on the lock
+    // screen. Failure to get TGT here is OK - that could mean e.g. Active
+    // Directory server is not reachable. AuthPolicyCredentialsManager regularly
+    // checks TGT status inside the user session.
+    chromeos::AuthPolicyLoginHelper::TryAuthenticateUser(
+        account_id.GetUserEmail(), account_id.GetObjGuid(), password);
+  }
   if (!lock_screen_client_)
     return;
 
