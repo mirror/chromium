@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b8ab4e_70d87d16",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-26T21:11:48Z",
+      "side": 0,
+      "message": "why remove this check here?  You could do it on the UI thread, unless it\u0027s just not useful.",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 560,
+        "endChar": 45
+      },
+      "revId": "ea5ed504beffa20651dc6c03a249fc0ab5eb2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
