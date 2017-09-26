@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "708ab227_5a433ab3",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T08:08:17Z",
+      "side": 1,
+      "message": "nit: policy_options is no more required, you can remove this line.",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "1670e702c6d8e4cdaf0e3c51fcc075a067d11d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6a1436_54e6c728",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T08:08:17Z",
+      "side": 1,
+      "message": "nit: Not important, but can be indented.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "1670e702c6d8e4cdaf0e3c51fcc075a067d11d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
