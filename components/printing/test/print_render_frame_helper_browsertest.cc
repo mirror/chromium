@@ -13,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "components/printing/common/print_messages.h"
 #include "components/printing/test/mock_printer.h"
@@ -245,6 +246,11 @@ class PrintRenderFrameHelperTestBase : public content::RenderViewTest {
     GetPrintRenderFrameHelper()->OnPrintPages();
     base::RunLoop().RunUntilIdle();
   }
+
+  void OnPrintPagesInFrame(const char* name) {
+    GetPrintRenderFrameHelper(name)->OnPrintPages();
+    base::RunLoop().RunUntilIdle();
+  }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -279,6 +285,13 @@ class PrintRenderFrameHelperTestBase : public content::RenderViewTest {
   PrintRenderFrameHelper* GetPrintRenderFrameHelper() {
     return PrintRenderFrameHelper::Get(
         content::RenderFrame::FromWebFrame(GetMainFrame()));
+  }
+
+  PrintRenderFrameHelper* GetPrintRenderFrameHelper(const char* frame_name) {
+    return PrintRenderFrameHelper::Get(content::RenderFrame::FromWebFrame(
+        GetMainFrame()
+            ->FindFrameByName(blink::WebString::FromUTF8(frame_name))
+            ->ToWebLocalFrame()));
   }
 
   // Naked pointer as ownership is with content::RenderViewTest::render_thread_.
@@ -392,6 +405,57 @@ TEST_F(MAYBE_PrintRenderFrameHelperTest, OnPrintPages) {
   VerifyPageCount(1);
   VerifyPagesPrinted(true);
 }
+
+TEST_F(MAYBE_PrintRenderFrameHelperTest, BasicBeforePrintAfterPrint) {
+  const char kHtml[] =
+      "<body>Hello"
+      "<script>"
+      "var beforePrintCount = 0;"
+      "var afterPrintCount = 0;"
+      "window.onbeforeprint = () => { ++beforePrintCount; };"
+      "window.onafterprint = () => { ++afterPrintCount; };"
+      "</script>"
+      "</body>";
+
+  LoadHTML(kHtml);
+  OnPrintPages();
+
+  VerifyPagesPrinted(true);
+  int result;
+  ASSERT_TRUE(ExecuteJavaScriptAndReturnIntValue(
+      base::ASCIIToUTF16("beforePrintCount"), &result));
+  EXPECT_EQ(1, result) << "beforeprint event should be dispatched once.";
+  ASSERT_TRUE(ExecuteJavaScriptAndReturnIntValue(
+      base::ASCIIToUTF16("afterPrintCount"), &result));
+  EXPECT_EQ(1, result) << "afterprint event should be dispatched once.";
+}
+
+TEST_F(MAYBE_PrintRenderFrameHelperTest, BasicBeforePrintAfterPrintSubFrame) {
+  const char kCloseOnBeforeHtml[] =
+      "<body>Hello"
+      "<iframe name=sub srcdoc='<script>"
+      "window.onbeforeprint = () => { window.frameElement.remove(); };"
+      "</script>'></iframe>"
+      "</body>";
+
+  LoadHTML(kCloseOnBeforeHtml);
+  OnPrintPagesInFrame("sub");
+  EXPECT_EQ(nullptr, GetMainFrame()->FindFrameByName("sub"));
+  VerifyPagesPrinted(false);
+
+  const char kCloseOnAfterHtml[] =
+      "<body>Hello"
+      "<iframe name=sub srcdoc='<script>"
+      "window.onafterprint = () => { window.frameElement.remove(); };"
+      "</script>'></iframe>"
+      "</body>";
+
+  LoadHTML(kCloseOnAfterHtml);
+  OnPrintPagesInFrame("sub");
+  EXPECT_EQ(nullptr, GetMainFrame()->FindFrameByName("sub"));
+  VerifyPagesPrinted(true);
+}
+
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
 #if defined(OS_MACOSX) && BUILDFLAG(ENABLE_BASIC_PRINTING)
