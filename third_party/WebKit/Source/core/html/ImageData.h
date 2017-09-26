@@ -82,14 +82,14 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
                            CanvasColorSpace,
                            ImageDataStorageFormat);
   static ImageData* Create(const IntSize&,
-                           NotShared<DOMArrayBufferView>,
+                           MaybeShared<DOMArrayBufferView>,
                            const ImageDataColorSettings* = nullptr);
 
   static ImageData* Create(unsigned width, unsigned height, ExceptionState&);
-  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
+  static ImageData* Create(MaybeShared<DOMUint8ClampedArray>,
                            unsigned width,
                            ExceptionState&);
-  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
+  static ImageData* Create(MaybeShared<DOMUint8ClampedArray>,
                            unsigned width,
                            unsigned height,
                            ExceptionState&);

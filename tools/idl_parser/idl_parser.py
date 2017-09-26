@@ -845,13 +845,14 @@ class IDLParser(object):
     members = ListFromConcat(p[2], p[4], p[5])
     p[0] = self.BuildProduction('UnionType', p, 1, members)
 
-  def p_UnionMemberType(self, p):
-    """UnionMemberType : NonAnyType
-                       | UnionType Null"""
-    if len(p) == 2:
-      p[0] = self.BuildProduction('Type', p, 1, p[1])
-    else:
-      p[0] = self.BuildProduction('Type', p, 1, ListFromConcat(p[1], p[2]))
+  def p_UnionMemberType1(self, p):
+    """UnionMemberType : ExtendedAttributeList NonAnyType"""
+    p[0] = self.BuildProduction('Type', p, 2, p[2])
+    p[0].AddChildren(p[1])
+
+  def p_UnionMemberType2(self, p):
+    """UnionMemberType : UnionType Null"""
+    p[0] = self.BuildProduction('Type', p, 1, ListFromConcat(p[1], p[2]))
 
   def p_UnionMemberTypes(self, p):
     """UnionMemberTypes : OR UnionMemberType UnionMemberTypes

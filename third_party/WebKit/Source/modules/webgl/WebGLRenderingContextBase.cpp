@@ -1516,7 +1516,7 @@ ImageData* WebGLRenderingContextBase::PaintRenderingResultsToImageData(
 
   return ImageData::Create(
       IntSize(width, height),
-      NotShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
+      MaybeShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
           image_data_pixels, 0, image_data_pixels->ByteLength())));
 }
 
