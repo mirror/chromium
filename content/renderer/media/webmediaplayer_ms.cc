@@ -20,7 +20,9 @@
 #include "content/public/renderer/media_stream_audio_renderer.h"
 #include "content/public/renderer/media_stream_renderer_factory.h"
 #include "content/public/renderer/media_stream_video_renderer.h"
+#include "content/renderer/media/media_stream_audio_source.h"
 #include "content/renderer/media/media_stream_audio_track.h"
+#include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/web_media_element_source_utils.h"
 #include "content/renderer/media/webmediaplayer_ms_compositor.h"
@@ -50,6 +52,34 @@ enum class RendererReloadAction {
 }  // namespace
 
 namespace content {
+
+namespace {
+
+bool StreamSourceAccessor(const blink::WebMediaStream& web_stream,
+                          bool (MediaStreamSource::*accessor)() const) {
+  DCHECK(!web_stream.IsNull());
+  blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
+  web_stream.AudioTracks(audio_tracks);
+  blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
+  web_stream.VideoTracks(video_tracks);
+
+  for (auto& track : audio_tracks) {
+    MediaStreamSource* source = MediaStreamAudioSource::From(track.Source());
+    if (!(source->*accessor)())
+      return false;
+  }
+
+  for (auto& track : video_tracks) {
+    MediaStreamSource* source =
+        MediaStreamVideoSource::GetVideoSource(track.Source());
+    if (!(source->*accessor)())
+      return false;
+  }
+
+  return true;
+}
+
+}  // namespace
 
 // FrameDeliverer is responsible for delivering frames received on
 // the IO thread by calling of EnqueueFrame() method of |compositor_|.
@@ -649,12 +679,14 @@ void WebMediaPlayerMS::Paint(blink::WebCanvas* canvas,
 
 bool WebMediaPlayerMS::HasSingleSecurityOrigin() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return true;
+  return StreamSourceAccessor(web_stream_,
+                              &MediaStreamSource::HasSingleSecurityOrigin);
 }
 
 bool WebMediaPlayerMS::DidPassCORSAccessCheck() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return true;
+  return StreamSourceAccessor(web_stream_,
+                              &MediaStreamSource::DidPassCORSAccessCheck);
 }
 
 double WebMediaPlayerMS::MediaTimeForTimeValue(double timeValue) const {

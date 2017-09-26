@@ -55,4 +55,12 @@ void MediaStreamSource::ResetSourceStoppedCallback() {
   stop_callback_.Reset();
 }
 
+bool MediaStreamSource::HasSingleSecurityOrigin() const {
+  return true;
+}
+
+bool MediaStreamSource::DidPassCORSAccessCheck() const {
+  return true;
+}
+
 }  // namespace content

@@ -55,6 +55,9 @@ class CONTENT_EXPORT MediaStreamSource
   // in the future.
   void ResetSourceStoppedCallback();
 
+  virtual bool HasSingleSecurityOrigin() const;
+  virtual bool DidPassCORSAccessCheck() const;
+
  protected:
   // Called when StopSource is called. It allows derived classes to implement
   // its own Stop method.

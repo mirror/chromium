@@ -107,6 +107,9 @@ class CAPTURE_EXPORT VideoCapturerSource {
   // may still occur after this call, so the caller must take care to
   // use refcounted or weak references in |new_frame_callback|.
   virtual void StopCapture() = 0;
+
+  virtual bool HasSingleSecurityOrigin() const;
+  virtual bool DidPassCORSAccessCheck() const;
 };
 
 }  // namespace media

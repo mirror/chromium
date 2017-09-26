@@ -70,6 +70,14 @@ HtmlVideoElementCapturerSource::GetPreferredFormats() {
   return formats;
 }
 
+bool HtmlVideoElementCapturerSource::HasSingleSecurityOrigin() const {
+  return web_media_player_ && web_media_player_->HasSingleSecurityOrigin();
+}
+
+bool HtmlVideoElementCapturerSource::DidPassCORSAccessCheck() const {
+  return web_media_player_ && web_media_player_->DidPassCORSAccessCheck();
+}
+
 void HtmlVideoElementCapturerSource::StartCapture(
     const media::VideoCaptureParams& params,
     const VideoCaptureDeliverFrameCB& new_frame_callback,
