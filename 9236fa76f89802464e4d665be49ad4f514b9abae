@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9386a0_18c5fd1b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T05:38:56Z",
+      "side": 1,
+      "message": "Would it be better to name this CreateRegistrationObjectInfo()?\n\n// Returns an object info representing |registration|. The object info holds a Mojo connection to the ServiceWorkerRegistrationHandle for the |registration| to ensure the handle stays alive while the object info is alive. A new handle is created if one does not already exist.\nblink::mojom::ServiceWorkerRegistrationObjectInfoPtr CreateRegistrationObjectInfo()",
+      "revId": "9236fa76f89802464e4d665be49ad4f514b9abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8807b621_2516b8f1",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T05:38:56Z",
+      "side": 1,
+      "message": "I think we should do a follow-up CL with a dedicated struct as per kinuko\u0027s suggestion, so we don\u0027t leave it in this half-way taken state.",
+      "revId": "9236fa76f89802464e4d665be49ad4f514b9abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8c42f1_e03827da",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T05:38:56Z",
+      "side": 1,
+      "message": "optional nit: I\u0027m losing this battle, but I\u0027d prefer to use \"Mojo\" to refer to the Mojo system, and \"mojo\" to the common English word or the mojo namespace.",
+      "revId": "9236fa76f89802464e4d665be49ad4f514b9abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

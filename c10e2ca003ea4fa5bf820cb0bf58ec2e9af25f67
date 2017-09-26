@@ -423,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "1c562e9f_fa2e62d0",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-26T05:38:56Z",
+      "side": 1,
+      "message": "I think kinuko@ is just saying that ControllerState itself shouldn\u0027t be reset. So it\u0027s OK to std::move away registration, installing, waiting, and active. And it\u0027d be clearer to put all those fields in a dedicated struct that gets reset in Take().\n\nBut I also agree that it can be follow-up work.",
+      "parentUuid": "706eef2e_2b4b56a5",
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9068c917_c06d7d96",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 6
