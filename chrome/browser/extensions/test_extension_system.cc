@@ -18,6 +18,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/extension_prefs.h"
+#include "extensions/browser/extension_registrar.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extensions_browser_client.h"
@@ -72,12 +73,17 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
+  extension_registrar_ = std::make_unique<ExtensionRegistrar>(profile_);
   extension_service_->ClearProvidersForTesting();
   return extension_service_.get();
 }
 
 ExtensionService* TestExtensionSystem::extension_service() {
   return extension_service_.get();
+}
+
+ExtensionRegistrar* TestExtensionSystem::extension_registrar() {
+  return extension_registrar_.get();
 }
 
 RuntimeData* TestExtensionSystem::runtime_data() {
