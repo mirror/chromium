@@ -88,6 +88,24 @@
       "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e1d8ce_98269349",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57453,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-09-26T14:33:26Z",
+      "side": 1,
+      "message": "You probably want to use https://codesearch.chromium.org/chromium/src/base/metrics/histogram_macros.h?q\u003dhistogram_macros\u0026sq\u003dpackage:chromium\u0026l\u003d69 actually\n\nand can use 9 or whatever as a max as it will act like an overflow bucket.",
+      "parentUuid": "88cfc5cd_4cb612ad",
+      "revId": "e19038d886696d2f8701bb2c73adc8093d0b3d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
