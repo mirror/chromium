@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dd1f130_a7855e84",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-26T07:49:27Z",
+      "side": 1,
+      "message": "We are directly sending focus bounds in focus highlight. The bounds is not passed via chrome.automation API. We don\u0027t need to do this calculation for focus highlight.",
+      "parentUuid": "b54729f5_98e5001d",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3df17d4_c8949dfa",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc4b0ef8_6758480a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-26T07:49:27Z",
+      "side": 1,
+      "message": "Make sense. GetBounds doesn\u0027t return correct value if focused window or root node is not available. I\u0027ve changed the interface.",
+      "parentUuid": "f3df17d4_c8949dfa",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49582a8d_d73b2d4c",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-25T16:59:55Z",
       "side": 1,
       "message": "nit: it\u0027s (or it is the)",
+      "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "898467ea_43eeb307",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-26T07:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49582a8d_d73b2d4c",
       "revId": "2ab15e01111d5ceedbc3e3c53d02e52eb6453092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
