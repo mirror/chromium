@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ash/login_status.h"
+#include "ash/public/cpp/session_types.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "base/logging.h"
@@ -57,7 +58,8 @@ void TestSessionControllerClient::Reset() {
   session_info_ = mojom::SessionInfo::New();
   session_info_->can_lock_screen = true;
   session_info_->should_lock_screen_automatically = false;
-  session_info_->add_user_session_policy = AddUserSessionPolicy::ALLOWED;
+  // By default, act like there is only one user account on the device.
+  session_info_->add_user_session_policy = AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
   session_info_->state = session_manager::SessionState::LOGIN_PRIMARY;
 
   controller_->ClearUserSessionsForTest();
@@ -78,6 +80,11 @@ void TestSessionControllerClient::SetCanLockScreen(bool can_lock) {
 void TestSessionControllerClient::SetShouldLockScreenAutomatically(
     bool should_lock) {
   session_info_->should_lock_screen_automatically = should_lock;
+  controller_->SetSessionInfo(session_info_->Clone());
+}
+
+void TestSessionControllerClient::SetMultiProfileAllowed() {
+  session_info_->add_user_session_policy = AddUserSessionPolicy::ALLOWED;
   controller_->SetSessionInfo(session_info_->Clone());
 }
 

@@ -241,7 +241,7 @@ void SessionControllerClient::CycleActiveUser(
 }
 
 void SessionControllerClient::ShowMultiProfileLogin() {
-  if (!IsMultiProfileEnabled())
+  if (!profiles::IsMultipleProfilesEnabled() || !UserManager::IsInitialized())
     return;
 
   // Only regular non-supervised users could add other users to current session.
@@ -250,55 +250,52 @@ void SessionControllerClient::ShowMultiProfileLogin() {
     return;
   }
 
-  if (UserManager::Get()->GetLoggedInUsers().size() >=
-      session_manager::kMaximumNumberOfUserSessions) {
+  if (GetAddUserSessionPolicy() != ash::AddUserSessionPolicy::ALLOWED)
+    return;
+
+  // Don't show the info dialog if any logged-in user in the multi-profile
+  // session dismissed it.
+  bool show_intro = true;
+  const user_manager::UserList logged_in_users =
+      UserManager::Get()->GetLoggedInUsers();
+  for (User* user : logged_in_users) {
+    show_intro &=
+        !multi_user_util::GetProfileFromAccountId(user->GetAccountId())
+              ->GetPrefs()
+              ->GetBoolean(prefs::kMultiProfileNeverShowIntro);
+    LOG(ERROR) << "JAMES show_intro " << show_intro;
+    if (!show_intro)
+      break;
+  }
+  if (show_intro) {
+    session_controller_->ShowMultiprofilesIntroDialog(
+        base::Bind(&OnAcceptMultiprofilesIntroDialog));
     return;
   }
-
   // Launch sign in screen to add another user to current session.
-  if (!UserManager::Get()->GetUsersAllowedForMultiProfile().empty()) {
-    // Don't show the dialog if any logged-in user in the multi-profile session
-    // dismissed it.
-    bool show_intro = true;
-    const user_manager::UserList logged_in_users =
-        UserManager::Get()->GetLoggedInUsers();
-    for (User* user : logged_in_users) {
-      show_intro &=
-          !multi_user_util::GetProfileFromAccountId(user->GetAccountId())
-               ->GetPrefs()
-               ->GetBoolean(prefs::kMultiProfileNeverShowIntro);
-      if (!show_intro)
-        break;
-    }
-    if (show_intro) {
-      session_controller_->ShowMultiprofilesIntroDialog(
-          base::Bind(&OnAcceptMultiprofilesIntroDialog));
-    } else {
-      chromeos::UserAddingScreen::Get()->Start();
-    }
-  }
+  chromeos::UserAddingScreen::Get()->Start();
 }
 
-// static
-bool SessionControllerClient::IsMultiProfileEnabled() {
-  if (!profiles::IsMultipleProfilesEnabled() || !UserManager::IsInitialized())
-    return false;
-  size_t admitted_users_to_be_added =
-      UserManager::Get()->GetUsersAllowedForMultiProfile().size();
-  size_t logged_in_users = UserManager::Get()->GetLoggedInUsers().size();
-  if (logged_in_users == 0) {
-    // The shelf gets created on the login screen and as such we have to create
-    // all multi profile items of the the system tray menu before the user logs
-    // in. For special cases like Kiosk mode and / or guest mode this isn't a
-    // problem since either the browser gets restarted and / or the flag is not
-    // allowed, but for an "ephermal" user (see crbug.com/312324) it is not
-    // decided yet if they could add other users to their session or not.
-    // TODO(skuhne): As soon as the issue above needs to be resolved, this logic
-    // should change.
-    logged_in_users = 1;
-  }
-  return (admitted_users_to_be_added + logged_in_users) > 1;
-}
+// // static
+// bool SessionControllerClient::IsMultiProfileEnabled() {
+//   if (!profiles::IsMultipleProfilesEnabled() || !UserManager::IsInitialized())
+//     return false;
+//   size_t admitted_users_to_be_added =
+//       UserManager::Get()->GetUsersAllowedForMultiProfile().size();
+//   size_t logged_in_users = UserManager::Get()->GetLoggedInUsers().size();
+//   if (logged_in_users == 0) {
+//     // The shelf gets created on the login screen and as such we have to create
+//     // all multi profile items of the the system tray menu before the user logs
+//     // in. For special cases like Kiosk mode and / or guest mode this isn't a
+//     // problem since either the browser gets restarted and / or the flag is not
+//     // allowed, but for an "ephermal" user (see crbug.com/312324) it is not
+//     // decided yet if they could add other users to their session or not.
+//     // TODO(skuhne): As soon as the issue above needs to be resolved, this logic
+//     // should change.
+//     logged_in_users = 1;
+//   }
+//   return (admitted_users_to_be_added + logged_in_users) > 1;
+// }
 
 void SessionControllerClient::ActiveUserChanged(const User* active_user) {
   SendSessionInfoIfChanged();
