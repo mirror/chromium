@@ -27,10 +27,14 @@ class RemoteSuggestionsProvider : public ContentSuggestionsProvider {
   // Fetches suggestions from the server for all remote categories and replaces
   // old suggestions by the new ones. The request to the server is performed as
   // an background request. Background requests are used for actions not
-  // triggered by the user and have lower priority on the server. After the
-  // fetch finished, the provided |callback| will be triggered with the status
-  // of the fetch (unless nullptr).
+  // immediately triggered by the user and have lower priority on the server.
+  // After the fetch finished, the provided |callback| will be triggered with
+  // the status of the fetch (unless nullptr).
   virtual void RefetchInTheBackground(FetchStatusCallback callback) = 0;
+
+  // Same as Refetch, with the additional hint that it is worth for the
+  // observers to block and wait for new suggestions to arrive.
+  virtual void RefetchForDisplay(FetchStatusCallback callback) = 0;
 
   virtual const RemoteSuggestionsFetcher* suggestions_fetcher_for_debugging()
       const = 0;
