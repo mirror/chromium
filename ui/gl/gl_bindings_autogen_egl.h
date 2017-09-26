@@ -103,6 +103,8 @@ typedef EGLSurface(GL_BINDING_CALL* eglGetCurrentSurfaceProc)(EGLint readdraw);
 typedef EGLDisplay(GL_BINDING_CALL* eglGetDisplayProc)(
     EGLNativeDisplayType display_id);
 typedef EGLint(GL_BINDING_CALL* eglGetErrorProc)(void);
+typedef EGLClientBuffer(GL_BINDING_CALL* eglGetNativeClientBufferANDROIDProc)(
+    void* ahardwarebuffer);
 typedef EGLDisplay(GL_BINDING_CALL* eglGetPlatformDisplayEXTProc)(
     EGLenum platform,
     void* native_display,
@@ -230,6 +232,7 @@ typedef EGLint(GL_BINDING_CALL* eglWaitSyncKHRProc)(EGLDisplay dpy,
 
 struct ExtensionsEGL {
   bool b_EGL_EXT_platform_base;
+  bool b_EGL_ANDROID_get_native_client_buffer;
   bool b_EGL_ANGLE_d3d_share_handle_client_buffer;
   bool b_EGL_ANGLE_program_cache_control;
   bool b_EGL_ANGLE_query_surface_pointer;
@@ -278,6 +281,7 @@ struct ProcsEGL {
   eglGetCurrentSurfaceProc eglGetCurrentSurfaceFn;
   eglGetDisplayProc eglGetDisplayFn;
   eglGetErrorProc eglGetErrorFn;
+  eglGetNativeClientBufferANDROIDProc eglGetNativeClientBufferANDROIDFn;
   eglGetPlatformDisplayEXTProc eglGetPlatformDisplayEXTFn;
   eglGetProcAddressProc eglGetProcAddressFn;
   eglGetSyncAttribKHRProc eglGetSyncAttribKHRFn;
@@ -397,6 +401,8 @@ class GL_EXPORT EGLApi {
   virtual EGLSurface eglGetCurrentSurfaceFn(EGLint readdraw) = 0;
   virtual EGLDisplay eglGetDisplayFn(EGLNativeDisplayType display_id) = 0;
   virtual EGLint eglGetErrorFn(void) = 0;
+  virtual EGLClientBuffer eglGetNativeClientBufferANDROIDFn(
+      void* ahardwarebuffer) = 0;
   virtual EGLDisplay eglGetPlatformDisplayEXTFn(EGLenum platform,
                                                 void* native_display,
                                                 const EGLint* attrib_list) = 0;
@@ -542,6 +548,8 @@ class GL_EXPORT EGLApi {
 #define eglGetCurrentSurface ::gl::g_current_egl_context->eglGetCurrentSurfaceFn
 #define eglGetDisplay ::gl::g_current_egl_context->eglGetDisplayFn
 #define eglGetError ::gl::g_current_egl_context->eglGetErrorFn
+#define eglGetNativeClientBufferANDROID \
+  ::gl::g_current_egl_context->eglGetNativeClientBufferANDROIDFn
 #define eglGetPlatformDisplayEXT \
   ::gl::g_current_egl_context->eglGetPlatformDisplayEXTFn
 #define eglGetProcAddress ::gl::g_current_egl_context->eglGetProcAddressFn
