@@ -16,6 +16,24 @@
       "revId": "e4929d76e42fbcf9b18ce04b8660f5d345929098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c0b2db_4d49f9fa",
+        "filename": "services/service_manager/embedder/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-26T23:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1342a51_7e327dc3",
+      "revId": "e4929d76e42fbcf9b18ce04b8660f5d345929098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
