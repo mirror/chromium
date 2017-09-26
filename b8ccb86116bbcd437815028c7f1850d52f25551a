@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade61408_e49ca769",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_request.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T09:14:38Z",
+      "side": 1,
+      "message": "My general comment is it\u0027s a bit unfortunate to rely on runtime enforcement.\n\nIs it impossible to specify the result rect and calculate the scaling from that?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
