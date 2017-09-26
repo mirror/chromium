@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e603e1f_af446ad8",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-09-26T22:35:53Z",
+      "side": 1,
+      "message": "I changed this from unique_ptr to a bare ptr because this will be shared with all the RateLimiter objects that are created. I can\u0027t use shared_ptr because of Chromium rules. I can\u0027t use const ptrs because NowTicks() is not const. If you know of a better way to do this, let me know.",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
