@@ -602,7 +602,8 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     }
     for (size_t i = 0; i < allocation.context.backtrace.frame_count; ++i) {
       base::trace_event::StackFrame& frame =
-          allocation.context.backtrace.frames[i];
+          allocation.context.backtrace
+              .frames[allocation.context.backtrace.frame_count - 1 - i];
       switch (frame.type) {
         case base::trace_event::StackFrame::Type::TRACE_EVENT_NAME:
           debug_string += " EV=\"";
