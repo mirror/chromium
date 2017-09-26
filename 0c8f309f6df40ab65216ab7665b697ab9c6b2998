@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea1f1ed_d98d0a8c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T00:05:39Z",
+      "side": 1,
+      "message": "It looks as though you never show this widget (or give it a size). That might be why the popup is not visible on Mac, and allow you to remove the separate |is_visible_| member.\n\nOtherwise, we need to find out why the popup is saying it\u0027s not visible on Mac.\n\nI suspect it\u0027s also not *actually* visible on Aura, but popup_-\u003eIsVisible() is lying everywhere *except* Mac. Running with --enable-pixel-output-in-tests and placing some base::RunLoop().Run() calls to pause the test run at the right place should allow you to verify.",
+      "revId": "0c8f309f6df40ab65216ab7665b697ab9c6b2998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
