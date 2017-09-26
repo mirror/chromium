@@ -172,6 +172,9 @@ class Surface final : public ui::PropertyHandler {
   // Returns the current input region of surface in the form of a hit-test mask.
   void GetHitTestMask(gfx::Path* mask) const;
 
+  // Returns the current input region of surface in the form of HitTestRects.
+  std::unique_ptr<std::vector<gfx::Rect>> GetHitTestRects() const;
+
   // Surface does not own cursor providers. It is the responsibility of the
   // caller to remove the cursor provider before it is destroyed.
   void RegisterCursorProvider(CursorProvider* provider);
