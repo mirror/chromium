@@ -105,6 +105,24 @@
       "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cd0b96_0062081b",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-26T14:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "456b6c9a_cf07c379",
+      "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
