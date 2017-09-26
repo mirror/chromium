@@ -47,8 +47,10 @@ void PlaybackImageProvider::BeginRaster() {
   DCHECK(decoded_at_raster_.empty());
   DCHECK(!in_raster_);
   in_raster_ = true;
+#if 0
   for (auto& draw_image : at_raster_images_)
     decoded_at_raster_.push_back(GetDecodedDrawImage(draw_image));
+#endif
 }
 
 void PlaybackImageProvider::EndRaster() {
