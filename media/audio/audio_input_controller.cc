@@ -20,6 +20,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
+#include "media/audio/audio_io.h"
+#include "media/audio/audio_manager.h"
+#include "media/base/audio_bus.h"
 #include "media/base/user_input_monitor.h"
 
 namespace media {
@@ -123,10 +126,6 @@ class AudioInputController::AudioCallback
     received_callback_ = true;
 
     DeliverDataToSyncWriter(source, capture_time, volume);
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-    controller_->debug_recording_helper_.OnData(source);
-#endif
   }
 
   void OnError() override {
@@ -186,9 +185,6 @@ AudioInputController::AudioInputController(
       sync_writer_(sync_writer),
       type_(type),
       user_input_monitor_(user_input_monitor),
-#if BUILDFLAG(ENABLE_WEBRTC)
-      debug_recording_helper_(params, task_runner_, base::OnceClosure()),
-#endif
       weak_ptr_factory_(this) {
   DCHECK(creator_task_runner_.get());
   DCHECK(handler_);
@@ -454,10 +450,6 @@ void AudioInputController::DoClose() {
     LogSilenceState(silence_state_);
 #endif
 
-#if BUILDFLAG(ENABLE_WEBRTC)
-  debug_recording_helper_.DisableDebugRecording();
-#endif
-
   max_volume_ = 0.0;
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
@@ -525,25 +517,6 @@ void AudioInputController::DoLogAudioLevels(float level_dbfs,
   if (microphone_volume_percent < kLowLevelMicrophoneLevelPercent)
     log_string += " <=> low microphone level!";
   handler_->OnLog(this, log_string);
-#endif
-}
-
-void AudioInputController::EnableDebugRecording(
-    const base::FilePath& file_name) {
-#if BUILDFLAG(ENABLE_WEBRTC)
-  DCHECK(creator_task_runner_->BelongsToCurrentThread());
-  task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&AudioInputController::DoEnableDebugRecording,
-                                this, file_name));
-#endif
-}
-
-void AudioInputController::DisableDebugRecording() {
-#if BUILDFLAG(ENABLE_WEBRTC)
-  DCHECK(creator_task_runner_->BelongsToCurrentThread());
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&AudioInputController::DoDisableDebugRecording, this));
 #endif
 }
 
@@ -616,19 +589,6 @@ void AudioInputController::LogCallbackError() {
       break;
   }
 }
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-void AudioInputController::DoEnableDebugRecording(
-    const base::FilePath& file_name) {
-  DCHECK(task_runner_->BelongsToCurrentThread());
-  debug_recording_helper_.EnableDebugRecording(file_name);
-}
-
-void AudioInputController::DoDisableDebugRecording() {
-  DCHECK(task_runner_->BelongsToCurrentThread());
-  debug_recording_helper_.DisableDebugRecording();
-}
-#endif  // BUILDFLAG(ENABLE_WEBRTC)
 
 void AudioInputController::LogMessage(const std::string& message) {
   DCHECK(task_runner_->BelongsToCurrentThread());
