@@ -65,9 +65,6 @@ void DebugDaemonLogSource::Fetch(const SysLogsSourceCallback& callback) {
   client->GetWiMaxStatus(base::Bind(&DebugDaemonLogSource::OnGetWiMaxStatus,
                                     weak_ptr_factory_.GetWeakPtr()));
   ++num_pending_requests_;
-  client->GetUserLogFiles(base::Bind(&DebugDaemonLogSource::OnGetUserLogFiles,
-                                     weak_ptr_factory_.GetWeakPtr()));
-  ++num_pending_requests_;
 
   if (scrub_) {
     client->GetScrubbedBigLogs(base::Bind(&DebugDaemonLogSource::OnGetLogs,
@@ -159,8 +156,8 @@ void DebugDaemonLogSource::OnGetUserLogFiles(
                    weak_ptr_factory_.GetWeakPtr(), base::Owned(response)));
   } else {
     (*response_)[kUserLogFileKeyName] = kNotAvailable;
-    RequestCompleted();
   }
+  callback_.Run(response_.get());
 }
 
 // static
@@ -201,7 +198,12 @@ void DebugDaemonLogSource::RequestCompleted() {
   --num_pending_requests_;
   if (num_pending_requests_ > 0)
     return;
-  callback_.Run(response_.get());
+  // When all other logs are collected, fetch the user logs, because any errors
+  // fetching the other logs is reported in the user logs.
+  chromeos::DebugDaemonClient* client =
+      chromeos::DBusThreadManager::Get()->GetDebugDaemonClient();
+  client->GetUserLogFiles(base::Bind(&DebugDaemonLogSource::OnGetUserLogFiles,
+                                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 }  // namespace system_logs
