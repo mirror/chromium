@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd742127_f793fd79",
+        "filename": "tools/metrics/metrics_python_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-26T06:33:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f11aed4_b65907f7",
+      "revId": "6760ecec66b185a29b91f4268fb25465c76585c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c1663a3_34d31b1a",
         "filename": "tools/metrics/metrics_python_tests.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T02:36:02Z",
       "side": 1,
       "message": "The tests appear to be sensitive to order they\u0027re run in, which means that the sys.path setups in the tests are probably wrong. I didn\u0027t spend enough time poking at them to figure out what needs to change, but it shouldn\u0027t be too tricky.",
+      "revId": "6760ecec66b185a29b91f4268fb25465c76585c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1234743_13db1859",
+        "filename": "tools/metrics/metrics_python_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-26T06:33:11Z",
+      "side": 1,
+      "message": "I\u0027m surprised the test order matters. All the tests should be independent.",
+      "parentUuid": "1c1663a3_34d31b1a",
       "revId": "6760ecec66b185a29b91f4268fb25465c76585c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
