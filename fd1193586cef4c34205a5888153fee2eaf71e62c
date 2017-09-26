@@ -69,6 +69,24 @@
       "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1896b06_553f5cac",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-26T13:29:27Z",
+      "side": 0,
+      "message": "But we don\u0027t ever set them - they were the way that we communicated which properties we had constructed compositor proxies of on the main thread, but since CompositorProxy has been removed they will always be MutableProperty::kNone so we can remove all of this code.",
+      "parentUuid": "dd011858_edd6fef0",
+      "revId": "fd1193586cef4c34205a5888153fee2eaf71e62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
