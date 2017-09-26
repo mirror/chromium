@@ -36,8 +36,9 @@ class InstallableMetrics {
   class Recorder {
    public:
     virtual ~Recorder() {}
+    virtual bool HasCompletedCheck() const = 0;
     virtual void Resolve(bool check_passed) {}
-    virtual void Flush(bool has_paused) {}
+    virtual void Flush(bool waiting_for_service_worker) {}
 
     virtual void RecordMenuOpen() = 0;
     virtual void RecordMenuItemAddToHomescreen() = 0;
@@ -49,6 +50,9 @@ class InstallableMetrics {
 
   InstallableMetrics();
   ~InstallableMetrics();
+
+  // Returns true if a full PWA check has been completed, false otherwise.
+  bool HasCompletedCheck() const;
 
   // This records the state of the installability check when the Android menu is
   // opened.
@@ -74,7 +78,7 @@ class InstallableMetrics {
   void Resolve(bool check_passed);
 
   // Called to save any queued metrics.
-  void Flush(bool has_paused);
+  void Flush(bool waiting_for_service_worker);
 
   // Called to indicate that the InstallableManager has started working on the
   // current page.
