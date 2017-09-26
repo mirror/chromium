@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2782ca8_4754fc39",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T18:59:02Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 300,
+        "startChar": 29,
+        "endLine": 300,
+        "endChar": 31
+      },
+      "revId": "d26061a783e71ccd4819632f59b111f1a8132178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
