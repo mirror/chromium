@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b48adc5_22be3841",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:30:24Z",
+      "side": 1,
+      "message": "Nevermind, don\u0027t use !string. Just string should do since primitives are non-nullable by default.\n(https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#non-nullable-type)\n\nThe others (except the flags I think) can use the !",
+      "parentUuid": "5b1ce917_88cd3c5e",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e9b828_6b81d63d",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
