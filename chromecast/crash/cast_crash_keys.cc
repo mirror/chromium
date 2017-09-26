@@ -73,6 +73,9 @@ size_t RegisterCastCrashKeys() {
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", ::crash_keys::kMediumSize},
+
+      // Temporary for crbug.com/750267, crbug.com/754946
+      {"tracked_scoped_refptr_state", kSmallSize},
   };
 
   return base::debug::InitCrashKeys(fixed_keys, arraysize(fixed_keys),
