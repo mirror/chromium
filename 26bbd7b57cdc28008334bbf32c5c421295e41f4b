@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a67bfc_3b11d2ea",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T23:02:02Z",
+      "side": 1,
+      "message": "Do you really need to cache this? In the one place you use it could you instead call native_window_-\u003eGetRootWindow()?",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "26bbd7b57cdc28008334bbf32c5c421295e41f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce5acfd_69677f11",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T23:02:02Z",
+      "side": 1,
+      "message": "How come you call FullscreenStateChanged rather than SetEnabled(false)?",
+      "range": {
+        "startLine": 370,
+        "startChar": 6,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "26bbd7b57cdc28008334bbf32c5c421295e41f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
