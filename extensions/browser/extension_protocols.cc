@@ -199,6 +199,16 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
   }
 
   void GetResponseInfo(net::HttpResponseInfo* info) override {
+    // Set the mime type for the request. We do this here (rather than when we
+    // build the rest of the headers) because the mime type is retrieved only
+    // after URLRequestFileJob::Start() is called.
+    std::string mime_type;
+    bool found_mime_type = GetMimeType(&mime_type);
+    if (found_mime_type) {
+      response_info_.headers->AddHeader(
+          base::StringPrintf("Content-Type: %s", mime_type.c_str()));
+    }
+
     *info = response_info_;
   }
 
