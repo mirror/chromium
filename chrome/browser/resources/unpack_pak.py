@@ -6,10 +6,15 @@
 import argparse
 import os
 import re
+import shutil
 import sys
 
 
 _HERE_PATH = os.path.join(os.path.dirname(__file__))
+
+# The name of a dummy file to be updated always after all other files have been
+# written. This file is declared as the "output" for GN's purposes
+_TIMESTAMP_FILENAME = os.path.join('unpack.stamp')
 
 
 _SRC_PATH = os.path.normpath(os.path.join(_HERE_PATH, '..', '..', '..'))
@@ -44,6 +49,10 @@ def unpack(pak_path, out_path):
         resource_filenames[res.group(2)] = res.group(1)
   assert resource_filenames
 
+  # Delete top level unpak directory, to ensure that it will have the latest
+  # timestamp.
+  shutil.rmtree(out_path)
+
   # Extract packed files, while preserving directory structure.
   for (resource_id, text) in data.resources.iteritems():
     filename = resource_filenames[resource_ids[resource_id]]
@@ -61,6 +70,10 @@ def main():
   args = parser.parse_args()
 
   unpack(args.pak_file, args.out_folder)
+
+  timestamp_file_path = os.path.join(args.out_folder, _TIMESTAMP_FILENAME)
+  with open(timestamp_file_path, 'a'):
+    os.utime(timestamp_file_path, None)
 
 
 if __name__ == '__main__':
