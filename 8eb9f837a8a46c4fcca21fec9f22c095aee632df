@@ -118,6 +118,40 @@
       "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4697cfb2_39be396c",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:16:07Z",
+      "side": 1,
+      "message": "When is this observer removed? See my other comment for more details.",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d423421f_12590506",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T18:16:07Z",
+      "side": 1,
+      "message": "Any C++ observers should be registered within OnJavascriptAllowed and unregistered within OnJavascriptDisallowed, see more details at https://chromium.googlesource.com/chromium/src/+/master/docs/webui_explainer.md#webuimessagehandler_onjavascriptallowed",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
