@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5525a45f_e1a9410b",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a66f93_7e5f41a2",
+      "range": {
+        "startLine": 353,
+        "startChar": 68,
+        "endLine": 353,
+        "endChar": 69
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ece5d99_f74b6fef",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -253,6 +277,30 @@
         "startChar": 8,
         "endLine": 355,
         "endChar": 11
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52943ee1_72d7b4e1",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Agreed. Lets do this in another CL though.",
+      "parentUuid": "1208e037_dc88a6a2",
+      "range": {
+        "startLine": 355,
+        "startChar": 40,
+        "endLine": 355,
+        "endChar": 41
       },
       "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -472,6 +520,54 @@
     },
     {
       "key": {
+        "uuid": "00b48f2a_b0b2ae8f",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2e66095_71cafce7",
+      "range": {
+        "startLine": 361,
+        "startChar": 8,
+        "endLine": 361,
+        "endChar": 10
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24159b0f_4164c701",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51089b5f_581217b1",
+      "range": {
+        "startLine": 361,
+        "startChar": 42,
+        "endLine": 361,
+        "endChar": 43
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d5eed8_642681be",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 8
@@ -483,6 +579,30 @@
       "writtenOn": "2017-09-25T21:14:27Z",
       "side": 1,
       "message": "I didn\u0027t think this was a valid scenario, i.e.: the syncing account is not the default one in the browser.",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 20
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1957fe23_7b8e701f",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Some of these states may indeed be impossible to reach.\n\nThis one however I think is reachable:\n1) Signin to Gaia using accounts B then A\n2) enable Sync on account A\n   * Chrome does not reorder the Gaia accounts right away, it will do on the next Chrome restart\n3) Quit Chrome\n4) Revoke the Chrome token for account A, but the cookie is still valid somehow (maybe not possible if we have cookie-token binding).\n5) Restart Chrome\n\nNow we are in this particular edge case where Chrome should reorder the accounts to put the Sync account in first position, but the token for Sync is actually invalid. We decided to keep account B in the cookie in that case, because that\u0027s how it was before Chrome restart, but it could also make sense to logout everything.",
+      "parentUuid": "33d5eed8_642681be",
       "range": {
         "startLine": 362,
         "startChar": 8,
@@ -538,6 +658,54 @@
       "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e9cc31_28289f7e",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8043e4d3_839eb56a",
+      "range": {
+        "startLine": 401,
+        "startChar": 22,
+        "endLine": 401,
+        "endChar": 23
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbef0613_7858f73e",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-26T10:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b08685_98f15f89",
+      "range": {
+        "startLine": 401,
+        "startChar": 25,
+        "endLine": 401,
+        "endChar": 26
+      },
+      "revId": "29dbd434ff14d51792e5c01d86ff06a819f2766e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
