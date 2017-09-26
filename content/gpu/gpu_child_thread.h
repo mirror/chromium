@@ -106,6 +106,7 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
 
 #if defined(OS_ANDROID)
   static std::unique_ptr<media::AndroidOverlay> CreateAndroidOverlay(
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
       const base::UnguessableToken& routing_token,
       media::AndroidOverlayConfig);
 #endif
