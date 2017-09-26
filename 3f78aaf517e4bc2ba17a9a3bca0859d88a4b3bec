@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1434e0d8_e4e3ed57",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-26T01:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dfa9070_18c5686a",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95992b7f_b617c0f9",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b9f86604_8d7808a1",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-26T01:37:07Z",
+      "side": 1,
+      "message": "Our UrlLoadObserver waits for |target_url| to be opened. But the navigation appends a \u0027?\u0027 to target URL so the url that we should wait for has the \u0027?\u0027 at the end. This function used to append the \u0027?\u0027 to |target_url| but I figured making the caller explicitly append \u0027?\u0027 would be clearer. It\u0027s not a strong preference though.",
+      "parentUuid": "95992b7f_b617c0f9",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1234292_4059c446",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-18T06:06:36Z",
       "side": 1,
       "message": "I wonder why we don\u0027t want this?\n\n(Maybe with POST it\u0027s hard to get the data to properly send over to the app window, but is there any reason for GET form requests not to open an app window?)",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85a69d9_1130da83",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-26T01:37:07Z",
+      "side": 1,
+      "message": "When I click on a submit button I expect the website to replace the form with a success message. I think opening the app in this case would break that expectation. Imagine submitting the form and then a new window opens with a success message, but the form is still there in the other tab.",
+      "parentUuid": "c1234292_4059c446",
       "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
