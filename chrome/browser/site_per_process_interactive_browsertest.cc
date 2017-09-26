@@ -1463,3 +1463,71 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessInteractiveBrowserTest,
   EXPECT_EQ(cached_date, date) << "Cached date was '" << cached_date
                                << "' but current date is '" << date << "'.";
 }
+
+// This test verifies that scrolling an element into view works fine across
+// OOPIFs.
+IN_PROC_BROWSER_TEST_F(SitePerProcessInteractiveBrowserTest,
+                       ScrollElementIntoView) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(b)"));
+  ui_test_utils::NavigateToURL(browser(), main_url);
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
+  content::RenderFrameHost* child_frame = ChildFrameAt(main_frame, 0);
+  gfx::Rect content_bounds = web_contents->GetContainerBounds();
+
+  // Helper method which sends a mouse click to a certain point and waits for a
+  // message send from the renderer at the point.
+  auto send_click_and_get_response =
+      [&content_bounds](const gfx::Point& point) {
+        content::DOMMessageQueue message_queue;
+        ui_controls::SendMouseMove(point.x() + content_bounds.x(),
+                                   point.y() + content_bounds.y());
+        ui_controls::SendMouseClick(ui_controls::LEFT);
+        std::string reply;
+        message_queue.WaitForMessage(&reply);
+        return reply;
+      };
+
+  int kIframeMarginLeft = content_bounds.width() + 100;
+  int kIframeMarginTop = content_bounds.height() + 100;
+  const gfx::Point test_point_in_child_frame(10, 10);
+  const std::string main_frame_message = "\"MAIN_FRAME_CLICKED\"";
+  const std::string set_up_main_frame_script = base::StringPrintf(
+      "var frame = document.querySelector('iframe');"
+      "frame.style.marginTop = '%dpx';"
+      "frame.style.marginLeft = '%dpx';"
+      "window.onclick = function(e) {"
+      "window.domAutomationController.send(%s);"
+      "};",
+      kIframeMarginTop, kIframeMarginLeft, main_frame_message.c_str());
+  EXPECT_TRUE(ExecuteScript(main_frame, set_up_main_frame_script));
+
+  // The iframe is scrolled out of view so transforming point will default to
+  // the point itself. Therefore, sending a click at the point will end up in
+  // the main frame.
+  gfx::Point transformed_point =
+      child_frame->GetView()->TransformPointToRootCoordSpace(
+          test_point_in_child_frame);
+  EXPECT_EQ(main_frame_message,
+            send_click_and_get_response(test_point_in_child_frame));
+
+  const std::string child_frame_message = "\"CHILD_FRAME_CLICKED\"";
+  const std::string set_up_child_and_scroll_into_view_script =
+      base::StringPrintf(
+          "window.onclick = function() {"
+          "  window.domAutomationController.send(%s);"
+          "}; "
+          "document.body.scrollIntoView();",
+          child_frame_message.c_str());
+  EXPECT_TRUE(
+      ExecuteScript(child_frame, set_up_child_and_scroll_into_view_script));
+
+  std::string reply;
+  while (reply != child_frame_message) {
+    transformed_point = child_frame->GetView()->TransformPointToRootCoordSpace(
+        test_point_in_child_frame);
+    reply = send_click_and_get_response(transformed_point);
+  }
+}
