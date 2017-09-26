@@ -5387,7 +5387,8 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeDefaultHandleVisibility) {
                                  &web_view_helper);
 
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
-  frame->SelectRange(WebRange(0, 5));
+  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kHideSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
   EXPECT_FALSE(frame->SelectionRange().IsNull());
 
   EXPECT_FALSE(frame->GetFrame()->Selection().IsHandleVisible())
@@ -5402,7 +5403,8 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeHideHandle) {
                                  &web_view_helper);
 
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
-  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kHideSelectionHandle);
+  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kHideSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
 
   EXPECT_FALSE(frame->GetFrame()->Selection().IsHandleVisible())
       << "Selection handle should not be visible with kHideSelectionHandle";
@@ -5416,7 +5418,8 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeShowHandle) {
                                  &web_view_helper);
 
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
-  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kShowSelectionHandle);
+  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kShowSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
 
   EXPECT_TRUE(frame->GetFrame()->Selection().IsHandleVisible())
       << "Selection handle should be visible with kShowSelectionHandle";
@@ -5430,14 +5433,18 @@ TEST_P(ParameterizedWebFrameTest, SelectRangePreserveHandleVisibility) {
                                  &web_view_helper);
 
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
-  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kHideSelectionHandle);
-  frame->SelectRange(WebRange(0, 6), WebLocalFrame::kPreserveHandleVisibility);
+  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kHideSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
+  frame->SelectRange(WebRange(0, 6), WebLocalFrame::kPreserveHandleVisibility,
+                     WebLocalFrame::kHideSelectionMenu);
 
   EXPECT_FALSE(frame->GetFrame()->Selection().IsHandleVisible())
       << "kPreserveHandleVisibility should keep handles invisible";
 
-  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kShowSelectionHandle);
-  frame->SelectRange(WebRange(0, 6), WebLocalFrame::kPreserveHandleVisibility);
+  frame->SelectRange(WebRange(0, 5), WebLocalFrame::kShowSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
+  frame->SelectRange(WebRange(0, 6), WebLocalFrame::kPreserveHandleVisibility,
+                     WebLocalFrame::kHideSelectionMenu);
 
   EXPECT_TRUE(frame->GetFrame()->Selection().IsHandleVisible())
       << "kPreserveHandleVisibility should keep handles visible";
@@ -6658,7 +6665,9 @@ TEST_P(ParameterizedWebFrameTest, ReplaceMisspelledRange) {
 
   const int kAllTextBeginOffset = 0;
   const int kAllTextLength = 11;
-  frame->SelectRange(WebRange(kAllTextBeginOffset, kAllTextLength));
+  frame->SelectRange(WebRange(kAllTextBeginOffset, kAllTextLength),
+                     WebLocalFrame::kHideSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
   EphemeralRange selection_range = frame->GetFrame()
                                        ->Selection()
                                        .ComputeVisibleSelectionInDOMTree()
@@ -6704,7 +6713,9 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkers) {
 
   const int kAllTextBeginOffset = 0;
   const int kAllTextLength = 11;
-  frame->SelectRange(WebRange(kAllTextBeginOffset, kAllTextLength));
+  frame->SelectRange(WebRange(kAllTextBeginOffset, kAllTextLength),
+                     WebLocalFrame::kHideSelectionHandle,
+                     WebLocalFrame::kHideSelectionMenu);
   EphemeralRange selection_range = frame->GetFrame()
                                        ->Selection()
                                        .ComputeVisibleSelectionInDOMTree()
