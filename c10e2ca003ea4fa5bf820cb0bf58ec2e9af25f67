@@ -318,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "267d06d4_0c833025",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T08:08:18Z",
+      "side": 1,
+      "message": "That makes sense.",
+      "parentUuid": "e627aef3_5f6c5777",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50f1dc44_ee1497d3",
         "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
         "patchSetId": 6
@@ -578,6 +602,30 @@
       "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b625f7_3e4fd266",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-26T08:08:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a7aee4c_d57b2e48",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "c10e2ca003ea4fa5bf820cb0bf58ec2e9af25f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
