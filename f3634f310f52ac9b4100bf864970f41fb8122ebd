@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20478ef2_c2ebbd51",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T18:25:40Z",
+      "side": 1,
+      "message": "Hmm... we should be able to specify this in the schema file with a maxLength property; unfortunately, it looks like we only have support for that in json files so far.  Can you file a bug against me to port it to IDL and remove this?  (or, if you\u0027re up for it, feel free to take a stab at it - but don\u0027t feel obligated. :))",
+      "revId": "f3634f310f52ac9b4100bf864970f41fb8122ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad8d5fe_ad40a44d",
+        "filename": "chrome/test/data/extensions/api_test/notifications/api/basic_usage/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T18:25:40Z",
+      "side": 1,
+      "message": "var id \u003d \u0027a\u0027.repeat(1024);\n?\n\n(or 501, if you wanted to be stricter)",
+      "revId": "f3634f310f52ac9b4100bf864970f41fb8122ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
