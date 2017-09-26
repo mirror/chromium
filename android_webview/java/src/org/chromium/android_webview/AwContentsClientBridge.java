@@ -313,6 +313,7 @@ public class AwContentsClientBridge {
                 // Need to call onPageFinished after onReceivedError for backwards compatibility
                 // with the classic webview. See also AwWebContentsObserver.didFailLoad which is
                 // used when we want to send onPageFinished alone.
+                Log.w("SELIM", "AwWebContentsClientBridge::onReceivedError Posting onpagefinished after error " + request.url);
                 mClient.getCallbackHelper().postOnPageFinished(request.url);
             }
         }

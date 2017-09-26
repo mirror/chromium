@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
+#include "build/build_config.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -414,7 +415,24 @@ void NavigationRequest::BeginNavigation() {
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
                                "BeginNavigation");
 
+  LOG(WARNING) << "SELIM NavigationRequest::BeginNavigation "
+               << common_params_.url.spec();
+
   state_ = STARTED;
+
+  CreateNavigationHandle();
+
+#if defined(OS_ANDROID)
+  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
+          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
+          request_params_.original_url,
+          request_params_.original_method,
+          request_params_.has_user_gesture, false,
+          frame_tree_node_->IsMainFrame())) {
+    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+    return;
+  }
+#endif
 
   // Check Content Security Policy before the NavigationThrottles run. This
   // gives CSP a chance to modify requests that NavigationThrottles would
@@ -424,7 +442,6 @@ void NavigationRequest::BeginNavigation() {
       CONTENT_SECURITY_POLICY_CHECK_FAILED) {
     // Create a navigation handle so that the correct error code can be set on
     // it by OnRequestFailed().
-    CreateNavigationHandle();
     OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt, false);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
@@ -438,15 +455,12 @@ void NavigationRequest::BeginNavigation() {
           LegacyProtocolInSubresourceCheckResult::BLOCK_REQUEST) {
     // Create a navigation handle so that the correct error code can be set on
     // it by OnRequestFailed().
-    CreateNavigationHandle();
     OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
   }
-
-  CreateNavigationHandle();
 
   if (IsURLHandledByNetworkStack(common_params_.url) &&
       !navigation_handle_->IsSameDocument()) {
@@ -542,6 +556,7 @@ void NavigationRequest::TransferNavigationHandleOwnership(
 void NavigationRequest::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
     const scoped_refptr<ResourceResponse>& response) {
+
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanRedirectToURL(
           redirect_info.new_url)) {
     DVLOG(1) << "Denied redirect for "
@@ -645,6 +660,20 @@ void NavigationRequest::OnRequestRedirected(
       response->head.connection_info, expected_process,
       base::Bind(&NavigationRequest::OnRedirectChecksComplete,
                  base::Unretained(this)));
+
+#if defined(OS_ANDROID)
+    LOG(WARNING) << "SELIM NavigationRequest::OnRequestRedirected " << redirect_info.new_url.possibly_invalid_spec();
+  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
+          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
+          redirect_info.new_url,
+          redirect_info.new_method,
+          request_params_.has_user_gesture, true,
+          frame_tree_node_->IsMainFrame())) {
+    navigation_handle_->set_net_error_code(net::ERR_ABORTED);
+    frame_tree_node_->ResetNavigationRequest(false, true);
+    return;
+  }
+#endif
 }
 
 void NavigationRequest::OnResponseStarted(

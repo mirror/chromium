@@ -219,6 +219,7 @@ public class AwContentsClientCallbackHelper {
                 }
                 case MSG_ON_PAGE_FINISHED: {
                     final String url = (String) msg.obj;
+                    android.util.Log.w("SELIM", "MSG_ON_PAGE_FINISHED " + url);
                     mContentsClient.onPageFinished(url);
                     break;
                 }
@@ -234,6 +235,7 @@ public class AwContentsClientCallbackHelper {
                 case MSG_SYNTHESIZE_PAGE_LOADING: {
                     final String url = (String) msg.obj;
                     mContentsClient.onPageStarted(url);
+                    android.util.Log.w("SELIM", "MSG_SYNTHESIZE_PAGE_LOADING " + url);
                     mContentsClient.onLoadResource(url);
                     mContentsClient.onProgressChanged(100);
                     mContentsClient.onPageFinished(url);
