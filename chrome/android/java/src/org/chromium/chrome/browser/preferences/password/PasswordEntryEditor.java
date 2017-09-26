@@ -388,7 +388,7 @@ public class PasswordEntryEditor extends Fragment {
     private void displayPassword() {
         getActivity().getWindow().setFlags(LayoutParams.FLAG_SECURE, LayoutParams.FLAG_SECURE);
 
-        changeHowPasswordIsDisplayed(R.drawable.ic_visibility_off,
+        changeHowPasswordIsDisplayed(R.drawable.ic_visibility_off_black,
                 InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
                 R.string.password_entry_editor_hide_stored_password);
         RecordHistogram.recordEnumeratedHistogram(
@@ -397,7 +397,7 @@ public class PasswordEntryEditor extends Fragment {
     }
 
     private void hidePassword() {
-        changeHowPasswordIsDisplayed(R.drawable.ic_visibility,
+        changeHowPasswordIsDisplayed(R.drawable.ic_visibility_black,
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD,
                 R.string.password_entry_editor_view_stored_password);
         RecordHistogram.recordEnumeratedHistogram(
