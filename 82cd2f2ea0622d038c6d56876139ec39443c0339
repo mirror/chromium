@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f14445_4eb4448c",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T07:03:40Z",
+      "side": 1,
+      "message": "I guess it would be hard to make legacy IPC use an enum, but perhaps we can use an enum here?",
+      "range": {
+        "startLine": 315,
+        "startChar": 30,
+        "endLine": 315,
+        "endChar": 54
+      },
+      "revId": "82cd2f2ea0622d038c6d56876139ec39443c0339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe8e4e_01aec030",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T07:03:40Z",
+      "side": 1,
+      "message": "Per Google style, virtual functions should not use default arguments. Can we fix this? It\u0027d also be better to use an enum (it\u0027s not clear what a bool argument means without looking at the parameter name)",
+      "revId": "82cd2f2ea0622d038c6d56876139ec39443c0339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
