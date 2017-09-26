@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "446d9110_017d08f7",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-26T18:49:50Z",
+      "side": 1,
+      "message": "I am pretty sure that this is not enough to block CQ upon people forgetting to run generate_system_health_csv\n\nWhat this does is the PRESUBMIT script will generate the csv file, but not include it in the commit",
+      "revId": "f9c5cd495bc6827b3f6aa1ceb53af06ce008f359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
