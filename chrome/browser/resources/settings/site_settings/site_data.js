@@ -48,7 +48,10 @@ Polymer({
 
   /** @override */
   ready: function() {
-    this.loadCookies();
+    this.browserProxy_.getDisplayList(0, 30).then((listInfo) => {
+      console.log('getDisplayList ', listInfo);
+      this.loadCookies();
+    });
   },
 
   /**

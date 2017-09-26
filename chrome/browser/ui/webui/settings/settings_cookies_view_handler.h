@@ -15,6 +15,15 @@
 
 class CookiesTreeModelUtil;
 
+class HostManagedList {
+ public:
+  HostManagedList();
+
+ private:
+  int view_begin_;
+  int view_end_;
+};
+
 namespace settings {
 
 class CookiesViewHandler : public SettingsPageUIHandler,
@@ -43,8 +52,11 @@ class CookiesViewHandler : public SettingsPageUIHandler,
   void TreeModelEndBatch(CookiesTreeModel* model) override;
 
  private:
-  // Creates the CookiesTreeModel if neccessary.
+  // Creates the CookiesTreeModel if necessary.
   void EnsureCookiesTreeModelCreated();
+
+  void HandleGetDisplayList(const base::ListValue* args);
+  void HandleRemoveItem(const base::ListValue* args);
 
   // Updates search filter for cookies tree model.
   void HandleUpdateSearchResults(const base::ListValue* args);
@@ -66,6 +78,8 @@ class CookiesViewHandler : public SettingsPageUIHandler,
   // update the WebUI.
   void SendChildren(const CookieTreeNode* parent);
 
+  void SendLocalDataList(const CookieTreeNode* parent);
+
   // Package and send cookie details for a site.
   void SendCookieDetails(const CookieTreeNode* parent);
 
@@ -78,6 +92,11 @@ class CookiesViewHandler : public SettingsPageUIHandler,
 
   // Flag to indicate whether there is a batch update in progress.
   bool batch_update_;
+
+  //
+  bool is_local_data_request_;
+  int local_data_request_start_;
+  int local_data_request_count_;
 
   std::unique_ptr<CookiesTreeModelUtil> model_util_;
 
