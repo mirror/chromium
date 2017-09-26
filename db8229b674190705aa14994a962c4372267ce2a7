@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7750820e_0f914ee3",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T22:43:37Z",
+      "side": 1,
+      "message": "would BlobStorage(der_holder.begin(), der_holder.end()) work?  If so, that might be a bit more intuitive.",
+      "revId": "db8229b674190705aa14994a962c4372267ce2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fd6cb6_dce8f241",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T22:43:37Z",
+      "side": 1,
+      "message": "optional: could just do\nif (ssl_info.unverified_cert) {\n\n}\n\n(here and below)",
+      "revId": "db8229b674190705aa14994a962c4372267ce2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57f5568_0505fb39",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T22:43:37Z",
+      "side": 1,
+      "message": "this should be type: binary, too",
+      "revId": "db8229b674190705aa14994a962c4372267ce2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f06ce28_7d32e970",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T22:43:37Z",
+      "side": 1,
+      "message": "For these comments, the type is already specified, so let\u0027s avoid putting it in the description, too.  So here, maybe\n\"Whether the chain that was built is valid.\"",
+      "revId": "db8229b674190705aa14994a962c4372267ce2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb5f852_7b2d9e8a",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T22:43:37Z",
+      "side": 1,
+      "message": "Here, \"The protocol that was used.\", etc (same for below)",
+      "revId": "db8229b674190705aa14994a962c4372267ce2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
