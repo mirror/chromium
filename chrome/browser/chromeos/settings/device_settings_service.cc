@@ -212,6 +212,11 @@ void DeviceSettingsService::RemoveObserver(Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void DeviceSettingsService::SetDeviceOffHoursControllerForTesting(
+    policy::DeviceOffHoursController* controller) {
+  device_off_hours_controller_.reset(controller);
+}
+
 void DeviceSettingsService::OwnerKeySet(bool success) {
   if (!success) {
     LOG(ERROR) << "Owner key change failed.";
