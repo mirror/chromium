@@ -15,6 +15,7 @@
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device_loader.h"
+#include "components/proximity_auth/logging/logging.h"
 
 namespace chromeos {
 
@@ -39,7 +40,9 @@ HostScanner::HostScanner(
       device_id_tether_network_guid_map_(device_id_tether_network_guid_map),
       host_scan_cache_(host_scan_cache),
       clock_(clock),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+        scan_beginning_timestamp_ = clock_->Now();
+      }
 
 HostScanner::~HostScanner() {}
 
@@ -75,6 +78,16 @@ void HostScanner::OnTetherAvailabilityResponse(
     std::vector<HostScannerOperation::ScannedDeviceInfo>&
         scanned_device_list_so_far,
     bool is_final_scan_result) {
+  // hack
+  if (scanned_device_list_so_far.empty()) {
+    base::TimeDelta time_since_scan_began =
+        clock_->Now() - scan_beginning_timestamp_;
+    PA_LOG(ERROR) << "There were N=" << num_successful_attempts_ << " successful scans and " << time_since_scan_began.InSeconds() << " seconds before failure.";
+  } else {
+    num_successful_attempts_++;
+  }
+  // end of hack
+
   if (scanned_device_list_so_far.empty() && !is_final_scan_result) {
     was_notification_showing_when_current_scan_started_ =
         IsPotentialHotspotNotificationShowing();

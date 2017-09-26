@@ -103,6 +103,9 @@ class HostScanner : public HostScannerOperation::Observer {
   HostScanCache* host_scan_cache_;
   base::Clock* clock_;
 
+  int num_successful_attempts_ = 0;
+  base::Time scan_beginning_timestamp_;
+
   bool is_fetching_hosts_ = false;
   bool was_notification_showing_when_current_scan_started_ = false;
   bool was_notification_shown_in_current_scan_ = false;
