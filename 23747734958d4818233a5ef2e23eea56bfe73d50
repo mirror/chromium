@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6731d3_7627ca6d",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T20:44:19Z",
+      "side": 1,
+      "message": "do we need base::Optional\u003cstd::string\u003e() here and below, rather than just passing name_string?  (base::Optional has an implicit constructor taking its underlying type)",
+      "revId": "23747734958d4818233a5ef2e23eea56bfe73d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6778c154_7258fab5",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T20:44:19Z",
+      "side": 1,
+      "message": "prefer\nif (name_string)  // using optional\u0027s operator bool()\nor\nif (name_string.has_value())",
+      "revId": "23747734958d4818233a5ef2e23eea56bfe73d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8f136d_eba83b56",
+        "filename": "chrome/browser/extensions/component_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-26T20:44:19Z",
+      "side": 1,
+      "message": "document name and description and probably comment on the implications of not localizing the manifest",
+      "revId": "23747734958d4818233a5ef2e23eea56bfe73d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
