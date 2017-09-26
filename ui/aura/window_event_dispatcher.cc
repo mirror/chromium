@@ -83,6 +83,7 @@ WindowEventDispatcher::WindowEventDispatcher(WindowTreeHost* host)
     : host_(host),
       mouse_pressed_handler_(NULL),
       mouse_moved_handler_(NULL),
+      pinch_handler_(NULL),
       event_dispatch_target_(NULL),
       old_dispatch_target_(NULL),
       synthesize_mouse_move_(false),
@@ -332,6 +333,8 @@ void WindowEventDispatcher::OnWindowHidden(Window* invisible,
     mouse_pressed_handler_ = NULL;
   if (invisible->Contains(mouse_moved_handler_))
     mouse_moved_handler_ = NULL;
+  if (invisible->Contains(pinch_handler_))
+    pinch_handler_ = NULL;
 
   // If events are being dispatched from a nested message-loop, and the target
   // of the outer loop is hidden or moved to another dispatcher during
@@ -565,6 +568,8 @@ ui::EventDispatchDetails WindowEventDispatcher::PreDispatchEvent(
     details = PreDispatchTouchEvent(target_window, event->AsTouchEvent());
   } else if (event->IsKeyEvent()) {
     details = PreDispatchKeyEvent(event->AsKeyEvent());
+  } else if (event->IsPinchEvent()) {
+    details = PreDispatchPinchEvent(target_window, event->AsGestureEvent());
   }
   if (details.dispatcher_destroyed || details.target_destroyed)
     return details;
@@ -951,6 +956,23 @@ DispatchDetails WindowEventDispatcher::PreDispatchMouseEvent(
       break;
     case ui::ET_MOUSE_RELEASED:
       mouse_pressed_handler_ = NULL;
+      break;
+    default:
+      break;
+  }
+
+  return PreDispatchLocatedEvent(target, event);
+}
+
+DispatchDetails WindowEventDispatcher::PreDispatchPinchEvent(
+    Window* target,
+    ui::GestureEvent* event) {
+  switch (event->type()) {
+    case ui::ET_GESTURE_PINCH_BEGIN:
+      pinch_handler_ = target;
+      break;
+    case ui::ET_GESTURE_PINCH_END:
+      pinch_handler_ = NULL;
       break;
     default:
       break;
