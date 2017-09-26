@@ -6,7 +6,6 @@
 
 #include <memory>
 #include "core/dom/DOMNodeIds.h"
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/loader/EmptyClients.h"

@@ -5,7 +5,6 @@
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
 
 #include <memory>
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"

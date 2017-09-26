@@ -31,7 +31,6 @@
 #include "modules/filesystem/LocalFileSystemClient.h"
 
 #include <memory>
-#include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/workers/WorkerContentSettingsClient.h"

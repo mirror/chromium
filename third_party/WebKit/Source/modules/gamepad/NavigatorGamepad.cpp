@@ -25,7 +25,6 @@
 
 #include "modules/gamepad/NavigatorGamepad.h"
 
-#include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
 #include "core/page/Page.h"

@@ -25,7 +25,6 @@
 
 #include "modules/filesystem/DOMWindowFileSystem.h"
 
-#include "core/dom/Document.h"
 #include "core/fileapi/FileError.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"

@@ -4,7 +4,6 @@
 
 #include "modules/compositorworker/WindowAnimationWorklet.h"
 
-#include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 

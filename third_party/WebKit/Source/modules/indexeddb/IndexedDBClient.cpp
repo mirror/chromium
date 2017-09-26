@@ -5,7 +5,6 @@
 #include "modules/indexeddb/IndexedDBClient.h"
 
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"

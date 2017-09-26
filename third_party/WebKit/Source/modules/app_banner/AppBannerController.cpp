@@ -7,7 +7,6 @@
 #include <memory>
 #include <utility>
 #include "core/EventTypeNames.h"
-#include "core/dom/Document.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/app_banner/BeforeInstallPromptEvent.h"
