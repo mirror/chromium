@@ -46,6 +46,30 @@
       "revId": "56532fb3b1e93f6d12aff8f67b2d9b2a57f11eac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1f0101_3dc7e4dd",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-09-26T07:30:41Z",
+      "side": 1,
+      "message": "Owen, could you prepare a separate CL to fix the said bug? to make the purpose of this CL simpler.",
+      "parentUuid": "d1844d20_4c4876fd",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "56532fb3b1e93f6d12aff8f67b2d9b2a57f11eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
