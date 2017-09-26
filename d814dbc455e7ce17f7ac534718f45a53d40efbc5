@@ -46,6 +46,30 @@
       "revId": "d814dbc455e7ce17f7ac534718f45a53d40efbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71109ac2_62ad93a3",
+        "filename": "chrome/browser/media/webrtc/webrtc_apprtc_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-09-26T10:44:40Z",
+      "side": 1,
+      "message": "The test failed on that, so it\u0027s a breakage that accumulated while the test was disabled. I didn\u0027t look into the deeper reason; the test passes when adding it, and we\u0027ve been quite liberal with allowing IO from larger tests like this one.",
+      "parentUuid": "4398b06b_14954d3a",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 51
+      },
+      "revId": "d814dbc455e7ce17f7ac534718f45a53d40efbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
