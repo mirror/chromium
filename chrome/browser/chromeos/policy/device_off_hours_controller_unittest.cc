@@ -6,10 +6,14 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_power_manager_client.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace em = enterprise_management;
 
@@ -153,6 +157,40 @@ TEST_F(DeviceOffHoursControllerTest, CheckOffHoursModeOn) {
   EXPECT_TRUE(device_settings_service_.device_settings()
                   ->guest_mode_enabled()
                   .guest_mode_enabled());
+}
+
+class MockDeviceOffHoursController : public policy::DeviceOffHoursController {
+ public:
+  MOCK_METHOD0(UpdateOffHoursMode, void());
+};
+
+class OffHoursWakeUpUpdate : public testing::Test {
+ public:
+  OffHoursWakeUpUpdate() {}
+  void SetUp() override {
+    std::unique_ptr<chromeos::DBusThreadManagerSetter> dbus_setter =
+        chromeos::DBusThreadManager::GetSetterForTesting();
+    power_manager_client_ = new chromeos::FakePowerManagerClient();
+    dbus_setter->SetPowerManagerClient(base::WrapUnique(power_manager_client_));
+    chromeos::DBusThreadManager::Initialize();
+  }
+
+  chromeos::FakePowerManagerClient* power_manager() {
+    return power_manager_client_;
+  }
+
+ private:
+  chromeos::FakePowerManagerClient* power_manager_client_;
+
+  DISALLOW_COPY_AND_ASSIGN(OffHoursWakeUpUpdate);
+};
+
+TEST_F(OffHoursWakeUpUpdate, CheckSendSuspendDone) {
+  std::unique_ptr<MockDeviceOffHoursController> mock_controller =
+      base::MakeUnique<MockDeviceOffHoursController>();
+  EXPECT_CALL(*mock_controller, UpdateOffHoursMode());
+  power_manager()->SendSuspendDone();
+  EXPECT_TRUE(testing::Mock::VerifyAndClearExpectations(mock_controller.get()));
 }
 
 }  // namespace chromeos

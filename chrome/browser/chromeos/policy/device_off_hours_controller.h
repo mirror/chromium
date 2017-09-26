@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "chromeos/dbus/power_manager_client.h"
 
 namespace policy {
 
@@ -52,11 +53,11 @@ ApplyOffHoursPolicyToProto(
 // policies in PrefValueMap and PolicyMap. The system will revert to the default
 // behavior for the removed policies. And behavior of policies is handled during
 // decoding process from proto to PolicyMap.
-class DeviceOffHoursController {
+class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
-  ~DeviceOffHoursController();
+  ~DeviceOffHoursController() override;
 
   // Return current "OffHours" mode status.
   bool IsOffHoursMode();
@@ -67,6 +68,9 @@ class DeviceOffHoursController {
       const enterprise_management::ChromeDeviceSettingsProto&
           device_settings_proto);
 
+  // chromeos::PowerManagerClient::Observer:
+  void SuspendDone(const base::TimeDelta& sleep_duration) override;
+
  private:
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to
   // update current proto.
@@ -74,7 +78,7 @@ class DeviceOffHoursController {
 
   // Check if "OffHours" mode is in current time. Update current status in
   // |off_hours_mode_|. Set timer to next update "OffHours" mode.
-  void UpdateOffHoursMode();
+  virtual void UpdateOffHoursMode();
 
   // Turn on and off "OffHours" mode and call "OffHoursModeIsChanged()" if
   // "OffHours" mode is changed.
