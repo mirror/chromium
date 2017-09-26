@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4573769_7a27ebd2",
+        "filename": "chrome/browser/vr/test/gl_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T12:48:44Z",
+      "side": 1,
+      "message": "This is interesting. Eventually, I would like to update UiRenderer so that we can make one call to Draw and pass in \"platform graphics utils\" that could vend out frames in a platform-specific way. Do you think this could be generalized for that purpose? Please ping me in the likely event that I\u0027ve been unclear :)",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c1092d_2e2cf9fc",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T12:48:44Z",
+      "side": 1,
+      "message": "This, I believe, duplicates a bit of what cjgrant is working on.\n\nI don\u0027t think this is a big problem for now, and would be ameliorated by making a pixel test fixture. This would let you write a new TEST_F using the fixture for each pixel-testable scenario. I presume that the fixture will expose two functions for \"set things up so that I can configure the scene\" and \"now that I\u0027ve configured the scene, please render\", allowing the test author to concentrate on the middle bit: setting up the scene.",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b132cb_1bae477e",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T12:48:44Z",
+      "side": 1,
+      "message": "Oh! Do we have a bug to track this?",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279fb7d4_fccc092a",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T12:48:44Z",
+      "side": 1,
+      "message": "Do we really have to write to files? This seems fine for debugging, but if we\u0027re running this on a bot to ensure that pixel testing continues to build/run, it would be best not to produce these files.",
+      "revId": "937f4474f8d2400758b5a6a6e4d34e9824f57de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
