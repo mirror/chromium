@@ -129,6 +129,10 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // populates |matches_| with cached results.
   void MaybeUseCachedSuggestions();
 
+  // Checks whether personalized suggestions are enabled either by a field
+  // trial or a saved preference.
+  bool PersonalizedSuggestionsEnabled() const;
+
   // Used for efficiency when creating the verbatim match.  Can be null.
   HistoryURLProvider* history_url_provider_;
 

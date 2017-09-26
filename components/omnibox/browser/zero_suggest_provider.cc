@@ -98,6 +98,8 @@ void ZeroSuggestProvider::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterStringPref(omnibox::kZeroSuggestCachedResults,
                                std::string());
+  registry->RegisterBooleanPref(omnibox::kZeroSuggestChromeHomePersonalized,
+                                false);
 }
 
 void ZeroSuggestProvider::Start(const AutocompleteInput& input,
@@ -149,8 +151,7 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
       static_cast<int>(ZeroSuggestEligibility::ELIGIBLE_MAX_VALUE));
 
   bool can_attach_current_url =
-      can_send_current_url &&
-      !OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial() &&
+      can_send_current_url && !PersonalizedSuggestionsEnabled() &&
       !OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial();
 
   if (!can_attach_current_url &&
@@ -165,7 +166,8 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
   // suggestions, if based on local browsing history.
   MaybeUseCachedSuggestions();
 
-  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial()) {
+  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial() &&
+      !PersonalizedSuggestionsEnabled()) {
     most_visited_urls_.clear();
     scoped_refptr<history::TopSites> ts = client()->GetTopSites();
     if (ts) {
@@ -218,7 +220,7 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
 }
 
 void ZeroSuggestProvider::DeleteMatch(const AutocompleteMatch& match) {
-  if (OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial()) {
+  if (PersonalizedSuggestionsEnabled()) {
     // Remove the deleted match from the cache, so it is not shown to the user
     // again. Since we cannot remove just one result, blow away the cache.
     client()->GetPrefs()->SetString(omnibox::kZeroSuggestCachedResults,
@@ -333,8 +335,7 @@ void ZeroSuggestProvider::OnURLFetchComplete(const net::URLFetcher* source) {
 bool ZeroSuggestProvider::StoreSuggestionResponse(
     const std::string& json_data,
     const base::Value& parsed_data) {
-  if (!OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial() ||
-      json_data.empty())
+  if (!PersonalizedSuggestionsEnabled() || json_data.empty())
     return false;
   client()->GetPrefs()->SetString(omnibox::kZeroSuggestCachedResults,
                                   json_data);
@@ -431,7 +432,8 @@ void ZeroSuggestProvider::ConvertResultsToAutocompleteMatches() {
   UMA_HISTOGRAM_COUNTS("ZeroSuggest.AllResults", num_results);
 
   // Show Most Visited results after ZeroSuggest response is received.
-  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial()) {
+  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial() &&
+      !PersonalizedSuggestionsEnabled()) {
     if (!current_url_match_.destination_url.is_valid())
       return;
     matches_.push_back(current_url_match_);
@@ -497,7 +499,7 @@ bool ZeroSuggestProvider::ShouldShowNonContextualZeroSuggest(
   // If we cannot send URLs, then only the MostVisited and Personalized
   // variations can be shown.
   if (!OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial() &&
-      !OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial())
+      !PersonalizedSuggestionsEnabled())
     return false;
 
   // Only show zero suggest for HTTP[S] pages.
@@ -510,6 +512,7 @@ bool ZeroSuggestProvider::ShouldShowNonContextualZeroSuggest(
     return false;
 
   if (OmniboxFieldTrial::InZeroSuggestMostVisitedWithoutSerpFieldTrial() &&
+      !PersonalizedSuggestionsEnabled() &&
       client()
           ->GetTemplateURLService()
           ->IsSearchResultsPageFromDefaultSearchProvider(current_page_url))
@@ -519,7 +522,7 @@ bool ZeroSuggestProvider::ShouldShowNonContextualZeroSuggest(
 }
 
 void ZeroSuggestProvider::MaybeUseCachedSuggestions() {
-  if (!OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial())
+  if (!PersonalizedSuggestionsEnabled())
     return;
 
   std::string json_data =
@@ -533,4 +536,11 @@ void ZeroSuggestProvider::MaybeUseCachedSuggestions() {
       results_from_cache_ = !matches_.empty();
     }
   }
+}
+
+bool ZeroSuggestProvider::PersonalizedSuggestionsEnabled() const {
+  return const_cast<AutocompleteProviderClient*>(client())
+             ->GetPrefs()
+             ->GetBoolean(omnibox::kZeroSuggestChromeHomePersonalized) ||
+         OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial();
 }
