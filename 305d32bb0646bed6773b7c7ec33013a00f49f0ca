@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "646db44e_58d1a6f8",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-26T19:30:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it matters but you might want to create the observer before you call GoBack(), just in case it\u0027s possible that the GoBack() navigation finishes before GoBack() returns.",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "305d32bb0646bed6773b7c7ec33013a00f49f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
