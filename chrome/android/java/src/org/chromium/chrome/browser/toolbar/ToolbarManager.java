@@ -958,6 +958,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         currentTab.loadUrl(new LoadUrlParams(homePageUrl, PageTransition.HOME_PAGE));
     }
 
+    @Override
+    public void openURL(String url) {
+        Tab currentTab = mToolbarModel.getTab();
+        if (currentTab == null) return;
+        currentTab.loadUrl(new LoadUrlParams(url, PageTransition.HOME_PAGE));
+    }
+
     /**
      * Triggered when the URL input field has gained or lost focus.
      * @param hasFocus Whether the URL field has gained focus.
