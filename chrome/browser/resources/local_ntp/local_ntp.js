@@ -89,6 +89,7 @@ var IDS = {
   LOGO_DOODLE: 'logo-doodle',
   LOGO_DOODLE_IMAGE: 'logo-doodle-image',
   LOGO_DOODLE_LINK: 'logo-doodle-link',
+  LOGO_DOODLE_NOTIFIER: 'logo-doodle-notifier',
   NOTIFICATION: 'mv-notice',
   NOTIFICATION_CLOSE_BUTTON: 'mv-notice-x',
   NOTIFICATION_MESSAGE: 'mv-msg',
@@ -130,13 +131,38 @@ var MAX_NUM_TILES_TO_SHOW = 8;
 
 
 /**
+ * Returns theme background info, first checking for ?notheme. If the page URL
+ * has a ?notheme= query param, returns a fallback light-colored theme.
+ */
+function getThemeBackgroundInfo() {
+  var urlParams = new URL(window.location).searchParams;
+  if (urlParams.get('notheme') === null) {
+    return ntpApiHandle.themeBackgroundInfo;
+  } else {
+    return {
+      alternateLogo: false,
+      backgroundColorRgba: [255, 255, 255, 255],
+      colorRgba: [255, 255, 255, 255],
+      headerColorRgba: [150, 150, 150, 255],
+      linkColorRgba: [6, 55, 116, 255],
+      sectionBorderColorRgba: [150, 150, 150, 255],
+      textColorLightRgba: [102, 102, 102, 255],
+      textColorRgba: [0, 0, 0, 255],
+      usingDefaultTheme: true,
+    };
+  }
+}
+
+
+/**
  * Heuristic to determine whether a theme should be considered to be dark, so
  * the colors of various UI elements can be adjusted.
  * @param {ThemeBackgroundInfo|undefined} info Theme background information.
  * @return {boolean} Whether the theme is dark.
  * @private
  */
-function getIsThemeDark(info) {
+function getIsThemeDark() {
+  var info = getThemeBackgroundInfo();
   if (!info)
     return false;
   // Heuristic: light text implies dark theme.
@@ -151,8 +177,8 @@ function getIsThemeDark(info) {
  * @private
  */
 function renderTheme() {
-  var info = ntpApiHandle.themeBackgroundInfo;
-  var isThemeDark = getIsThemeDark(info);
+  var info = getThemeBackgroundInfo();
+  var isThemeDark = getIsThemeDark();
   $(IDS.NTP_CONTENTS).classList.toggle(CLASSES.DARK, isThemeDark);
   if (!info) {
     return;
@@ -199,7 +225,7 @@ function renderOneGoogleBarTheme() {
     var oneGoogleBarApi = window.gbar.a;
     var oneGoogleBarPromise = oneGoogleBarApi.bf();
     oneGoogleBarPromise.then(function(oneGoogleBar) {
-      var isThemeDark = getIsThemeDark(ntpApiHandle.themeBackgroundInfo);
+      var isThemeDark = getIsThemeDark();
       var setForegroundStyle = oneGoogleBar.pc.bind(oneGoogleBar);
       setForegroundStyle(isThemeDark ? 1 : 0);
     });
@@ -595,6 +621,16 @@ function init() {
           }
         });
       }
+    });
+
+    // Set up doodle notifier (but it's invisible unless theme is dark).
+    var doodleNotifier = $(IDS.LOGO_DOODLE_NOTIFIER);
+    doodleNotifier.title = configData.translatedStrings.clickToViewDoodle;
+    doodleNotifier.addEventListener('click', function(e) {
+      e.preventDefault();
+      var url = new URL(window.location);
+      url.searchParams.set('notheme', 1);
+      window.location = url;
     });
   } else {
     document.body.classList.add(CLASSES.NON_GOOGLE_PAGE);
