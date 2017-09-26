@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08dce7f_c29ecd40",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-26T12:49:57Z",
+      "side": 1,
+      "message": "nit: can you add the following here:\n\n# TODO(jbudorick): Reconcile this with the output manager once\n# https://codereview.chromium.org/2933993002/ lands.",
+      "revId": "cc1e6f181cfe8b2df622e397f583d6be4f35d317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
