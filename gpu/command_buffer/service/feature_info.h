@@ -120,6 +120,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool ext_robustness = false;
     bool ext_pixel_buffer_object = false;
     bool oes_rgb8_rgba8 = false;
+    bool chromium_texture_storage_image = false;
   };
 
   FeatureInfo();

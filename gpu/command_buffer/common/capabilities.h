@@ -184,6 +184,9 @@ struct GPU_EXPORT Capabilities {
 
   bool texture_npot = false;
 
+  // Use GL_CHROMIUM_texture_storage_image extension if true.
+  bool texture_storage_image = false;
+
   int major_version = 2;
   int minor_version = 0;
 };

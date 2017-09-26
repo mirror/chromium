@@ -44,6 +44,7 @@ using testing::NiceMock;
 using testing::Return;
 using testing::StrictMock;
 using testing::_;
+using testing::AnyNumber;
 
 namespace cc {
 namespace {
@@ -410,23 +411,16 @@ void GetResourcePixels(DisplayResourceProvider* resource_provider,
                        viz::ResourceFormat format,
                        uint8_t* pixels) {
   resource_provider->WaitSyncToken(id);
-  switch (resource_provider->default_resource_type()) {
-    case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE: {
-      DisplayResourceProvider::ScopedReadLockGL lock_gl(resource_provider, id);
-      ASSERT_NE(0U, lock_gl.texture_id());
-      context->bindTexture(GL_TEXTURE_2D, lock_gl.texture_id());
-      context->GetPixels(size, format, pixels);
-      break;
-    }
-    case ResourceProvider::RESOURCE_TYPE_BITMAP: {
-      DisplayResourceProvider::ScopedReadLockSoftware lock_software(
-          resource_provider, id);
-      memcpy(pixels,
-             lock_software.sk_bitmap()->getPixels(),
-             lock_software.sk_bitmap()->getSize());
-      break;
-    }
+  if (resource_provider->IsSoftware()) {
+    DisplayResourceProvider::ScopedReadLockSoftware lock_software(
+        resource_provider, id);
+    memcpy(pixels, lock_software.sk_bitmap()->getPixels(),
+           lock_software.sk_bitmap()->getSize());
+  } else {
+    DisplayResourceProvider::ScopedReadLockGL lock_gl(resource_provider, id);
+    ASSERT_NE(0U, lock_gl.texture_id());
+    context->bindTexture(GL_TEXTURE_2D, lock_gl.texture_id());
+    context->GetPixels(size, format, pixels);
   }
 }
 
@@ -435,15 +429,14 @@ class ResourceProviderTest
  public:
   explicit ResourceProviderTest(bool child_needs_sync_token)
       : shared_data_(ContextSharedData::Create()),
-        context3d_(NULL),
-        child_context_(NULL),
-        main_thread_task_runner_(BlockingTaskRunner::Create(NULL)) {
+        main_thread_task_runner_(BlockingTaskRunner::Create(nullptr)) {
     switch (GetParam()) {
       case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
       case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE: {
         std::unique_ptr<ResourceProviderContext> context3d(
             ResourceProviderContext::Create(shared_data_.get()));
         context3d_ = context3d.get();
+        context3d_->set_support_texture_storage_image(true);
         context_provider_ = TestContextProvider::Create(std::move(context3d));
         context_provider_->BindToCurrentThread();
 
@@ -540,8 +533,8 @@ class ResourceProviderTest
 
  protected:
   std::unique_ptr<ContextSharedData> shared_data_;
-  ResourceProviderContext* context3d_;
-  ResourceProviderContext* child_context_;
+  ResourceProviderContext* context3d_ = nullptr;
+  ResourceProviderContext* child_context_ = nullptr;
   scoped_refptr<TestContextProvider> context_provider_;
   scoped_refptr<TestContextProvider> child_context_provider_;
   std::unique_ptr<BlockingTaskRunner> main_thread_task_runner_;
@@ -556,7 +549,8 @@ class ResourceProviderTest
 void CheckCreateResource(ResourceProvider::ResourceType expected_default_type,
                          DisplayResourceProvider* resource_provider,
                          ResourceProviderContext* context) {
-  DCHECK_EQ(expected_default_type, resource_provider->default_resource_type());
+  DCHECK_EQ(resource_provider->IsSoftware(),
+            expected_default_type == ResourceProvider::RESOURCE_TYPE_BITMAP);
 
   gfx::Size size(1, 1);
   viz::ResourceFormat format = viz::RGBA_8888;
@@ -570,12 +564,12 @@ void CheckCreateResource(ResourceProvider::ResourceType expected_default_type,
   if (expected_default_type == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
     EXPECT_EQ(0u, context->NumTextures());
 
-  uint8_t data[4] = { 1, 2, 3, 4 };
+  uint8_t data[4] = {1, 2, 3, 4};
   resource_provider->CopyToResource(id, data, size);
   if (expected_default_type == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
     EXPECT_EQ(1u, context->NumTextures());
 
-  uint8_t result[4] = { 0 };
+  uint8_t result[4] = {0};
   GetResourcePixels(resource_provider, context, id, size, format, result);
   EXPECT_EQ(0, memcmp(data, result, pixel_size));
 
@@ -3058,11 +3052,7 @@ class AllocationTrackingContext3D : public TextureStateTrackingContext {
   MOCK_METHOD1(destroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD2(bindTexImage2DCHROMIUM, void(GLenum, GLint));
   MOCK_METHOD2(releaseTexImage2DCHROMIUM, void(GLenum, GLint));
-
-  // We're mocking bindTexture, so we override
-  // TestWebGraphicsContext3D::texParameteri to avoid assertions related to the
-  // currently bound texture.
-  void texParameteri(GLenum target, GLenum pname, GLint param) override {}
+  MOCK_METHOD3(texParameteri, void(GLenum target, GLenum pname, GLint param));
 };
 
 TEST_P(ResourceProviderTest, TextureAllocation) {
@@ -3089,6 +3079,7 @@ TEST_P(ResourceProviderTest, TextureAllocation) {
   uint8_t pixels[16] = { 0 };
   int texture_id = 123;
 
+  EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
   // Lazy allocation. Don't allocate when creating the resource.
   id = resource_provider->CreateResource(
       size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
@@ -3102,6 +3093,7 @@ TEST_P(ResourceProviderTest, TextureAllocation) {
   resource_provider->DeleteResource(id);
 
   Mock::VerifyAndClearExpectations(context);
+  EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
 
   // Do allocate when we set the pixels.
   id = resource_provider->CreateResource(
@@ -3165,6 +3157,7 @@ TEST_P(ResourceProviderTest, TextureAllocationHint) {
           .Times(support_immutable_texture ? 1 : 0);
       EXPECT_CALL(*context, texImage2D(_, _, _, 2, 2, _, _, _, _))
           .Times(support_immutable_texture ? 0 : 1);
+      EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
       resource_provider->AllocateForTesting(id);
 
       EXPECT_CALL(*context, RetireTextureId(texture_id)).Times(1);
@@ -3218,6 +3211,61 @@ TEST_P(ResourceProviderTest, TextureAllocationHint_BGRA) {
           .Times(is_immutable_hint ? 1 : 0);
       EXPECT_CALL(*context, texImage2D(_, _, _, 2, 2, _, _, _, _))
           .Times(is_immutable_hint ? 0 : 1);
+      EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
+      resource_provider->AllocateForTesting(id);
+
+      EXPECT_CALL(*context, RetireTextureId(texture_id)).Times(1);
+      resource_provider->DeleteResource(id);
+
+      Mock::VerifyAndClearExpectations(context);
+    }
+  }
+}
+
+TEST_P(ResourceProviderTest, ImageTextureAllocationHint_BGRA) {
+  // Only for GL textures.
+  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER)
+    return;
+  std::unique_ptr<AllocationTrackingContext3D> context_owned(
+      new StrictMock<AllocationTrackingContext3D>);
+  AllocationTrackingContext3D* context = context_owned.get();
+  context->set_support_texture_format_bgra8888(true);
+  context->set_support_texture_storage(true);
+  context->set_support_texture_usage(true);
+  auto context_provider = TestContextProvider::Create(std::move(context_owned));
+  context_provider->BindToCurrentThread();
+
+  std::unique_ptr<ResourceProvider> resource_provider(
+      base::MakeUnique<ResourceProvider>(
+          context_provider.get(), shared_bitmap_manager_.get(),
+          gpu_memory_buffer_manager_.get(), nullptr,
+          kDelegatedSyncPointsRequired, kEnableColorCorrectRendering,
+          CreateResourceSettings()));
+
+  gfx::Size size(2, 2);
+  const viz::ResourceFormat formats[2] = {viz::RGBA_8888, viz::BGRA_8888};
+
+  const ResourceProvider::TextureHint hints[4] = {
+      ResourceProvider::TEXTURE_HINT_DEFAULT,
+      ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      ResourceProvider::TEXTURE_HINT_FRAMEBUFFER,
+      ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+  };
+  for (size_t i = 0; i < arraysize(formats); ++i) {
+    for (GLuint texture_id = 1; texture_id <= arraysize(hints); ++texture_id) {
+      // Lazy allocation. Don't allocate when creating the resource.
+      viz::ResourceId id = resource_provider->CreateResource(
+          size, hints[texture_id - 1], formats[i], gfx::ColorSpace());
+
+      EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(texture_id));
+      EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, texture_id)).Times(2);
+      bool is_immutable_hint =
+          hints[texture_id - 1] & ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+
+      EXPECT_CALL(*context, texStorage2DEXT(_, _, _, 2, 2))
+          .Times(is_immutable_hint ? 1 : 0);
+      EXPECT_CALL(*context, texImage2D(_, _, _, 2, 2, _, _, _, _))
+          .Times(is_immutable_hint ? 0 : 1);
       resource_provider->AllocateForTesting(id);
 
       EXPECT_CALL(*context, RetireTextureId(texture_id)).Times(1);
@@ -3264,6 +3312,7 @@ TEST_P(ResourceProviderTest, Image_GLTexture) {
     // Create texture and image upon releasing the lock.
     EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(kTextureId));
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
+    EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
     EXPECT_CALL(*context, createImageCHROMIUM(_, kWidth, kHeight, GL_RGBA))
         .WillOnce(Return(kImageId));
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
@@ -3483,7 +3532,9 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL) {
   // First use will allocate lazily when accessing the texture.
   {
     EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(kTextureId));
-    EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId)).Times(2);
+    EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
+    EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
+    EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
     EXPECT_CALL(*context, texImage2D(GL_TEXTURE_2D, 0, GLInternalFormat(format),
                                      kWidth, kHeight, 0, GLDataFormat(format),
                                      GLDataType(format), nullptr));
@@ -3534,6 +3585,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer) {
   {
     EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(kTextureId));
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
+    EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
     EXPECT_CALL(*context, createImageCHROMIUM(_, kWidth, kHeight,
                                               GLInternalFormat(format)))
         .WillOnce(Return(kImageId));
@@ -3589,6 +3641,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
   {
     EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(kTextureId));
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
+    EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
     ResourceProvider::ScopedWriteLockGL lock(resource_provider.get(), id);
     Mock::VerifyAndClearExpectations(context);
 
@@ -3674,6 +3727,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer_Mailbox) {
   {
     EXPECT_CALL(*context, NextTextureId()).WillOnce(Return(kTextureId));
     EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
+    EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
     ResourceProvider::ScopedWriteLockGL lock(resource_provider.get(), id);
     Mock::VerifyAndClearExpectations(context);
 

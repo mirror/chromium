@@ -271,14 +271,7 @@ INSTANTIATE_TEST_CASE_P(
     PixelResourceTest,
     LayerTreeHostMasksForBackgroundFiltersPixelTest,
     ::testing::Combine(
-        ::testing::Values(SOFTWARE,
-                          GL_GPU_RASTER_2D_DRAW,
-                          GL_ONE_COPY_2D_STAGING_2D_DRAW,
-                          GL_ONE_COPY_RECT_STAGING_2D_DRAW,
-                          GL_ONE_COPY_EXTERNAL_STAGING_2D_DRAW,
-                          GL_ZERO_COPY_2D_DRAW,
-                          GL_ZERO_COPY_RECT_DRAW,
-                          GL_ZERO_COPY_EXTERNAL_DRAW),
+        ::testing::Values(SOFTWARE, GPU, ONE_COPY, ZERO_COPY),
         ::testing::Values(Layer::LayerMaskType::SINGLE_TEXTURE_MASK,
                           Layer::LayerMaskType::MULTI_TEXTURE_MASK)));
 
