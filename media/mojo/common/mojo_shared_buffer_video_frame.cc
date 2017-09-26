@@ -18,6 +18,29 @@ static inline size_t RoundUp(size_t value, size_t alignment) {
   return ((value + (alignment - 1)) & ~(alignment - 1));
 }
 
+MojoSharedBufferVideoFrame::MojoBuffer::MojoBuffer(size_t data_size)
+    : data_size_(0), shared_buffer_mapping_(nullptr) {
+  Init(data_size);
+}
+
+MojoSharedBufferVideoFrame::MojoBuffer::~MojoBuffer() {}
+
+size_t MojoSharedBufferVideoFrame::MojoBuffer::size() const {
+  return data_size_;
+}
+
+void MojoSharedBufferVideoFrame::MojoBuffer::resize(size_t data_size) {
+  Init(data_size);
+}
+
+const uint8_t* MojoSharedBufferVideoFrame::MojoBuffer::data() const {
+  return reinterpret_cast<const uint8_t*>(shared_buffer_mapping_.get());
+}
+
+uint8_t* MojoSharedBufferVideoFrame::MojoBuffer::data() {
+  return reinterpret_cast<uint8_t*>(shared_buffer_mapping_.get());
+}
+
 // static
 scoped_refptr<MojoSharedBufferVideoFrame>
 MojoSharedBufferVideoFrame::WrapMojoSharedBufferVideoFrame(

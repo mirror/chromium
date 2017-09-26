@@ -142,6 +142,26 @@ bool RequiresEvenSizeAllocation(VideoPixelFormat format) {
   return false;
 }
 
+VideoFrame::BasicBuffer::BasicBuffer(size_t data_size) : data_(data_size) {}
+
+VideoFrame::BasicBuffer::~BasicBuffer() {}
+
+size_t VideoFrame::BasicBuffer::size() const {
+  return data_.size();
+}
+
+void VideoFrame::BasicBuffer::resize(size_t data_size) {
+  data_.resize(data_size);
+}
+
+const uint8_t* VideoFrame::BasicBuffer::data() const {
+  return &data_[0];
+}
+
+uint8_t* VideoFrame::BasicBuffer::data() {
+  return &data_[0];
+}
+
 // static
 bool VideoFrame::IsValidConfig(VideoPixelFormat format,
                                StorageType storage_type,
