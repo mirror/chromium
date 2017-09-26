@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6812f5f8_141caee0",
+        "filename": "chrome/browser/resources/unpack_pak.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T01:28:51Z",
+      "side": 1,
+      "message": "This part is probably not necessary anymore (part of previous patch), since now the only thing declared as a GN output is the dummy file. Leaning towards removing this, unless there is a good reason to keep it.",
+      "revId": "230d4fa1fc5b16f328df3f9f943e949425b7e036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
