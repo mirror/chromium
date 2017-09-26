@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee6593a_8508e27c",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "I think all these set_prevent_inline_autocomplete shouldn\u0027t be necessary for this test.  Try removing them?",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79cc827_9bbc4698",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "Try removing?",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1835df80_fc5aeacc",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "This whole comment is out of date.  There is no \"query refinement\" anymore.\nI suggest something like\n// On-focus providers need the current URL in order to display a match that displays the URL of the current page.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72289414_63bf0880",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "base fields?\nWhen I think base, I think this is a subclass of a base class.  That\u0027s not what you mean though.  Can you rephrase please?",
+      "range": {
+        "startLine": 232,
+        "startChar": 9,
+        "endLine": 232,
+        "endChar": 20
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2ed5e7_66c18cd0",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "Not sure if this is needed.  Try removing?",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6375398_c832cfed",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "Try removing?",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3988dfae_b52fddae",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "You appear to have forgot the from_omnibox_focus here.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec68bcb0_364cf5b7",
+        "filename": "components/omnibox/browser/physical_web_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "Probably not necessary.  Remove?\n\nditto below",
+      "range": {
+        "startLine": 334,
+        "startChar": 46,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60ccc51_0b5be1df",
+        "filename": "components/omnibox/browser/zero_suggest_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-26T23:18:34Z",
+      "side": 1,
+      "message": "I don\u0027t think the prevent inline autocomplete is necessary (appropriate) for any test in this file.  Remove them?",
+      "range": {
+        "startLine": 247,
+        "startChar": 46,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
