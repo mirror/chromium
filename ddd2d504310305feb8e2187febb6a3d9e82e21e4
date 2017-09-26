@@ -437,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "7f6f9423_93d32242",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T22:08:32Z",
+      "side": 1,
+      "message": "My point here is the usage of NSHTTPSystemCookieStore by it self doesn\u0027t give both options of sync and async - for example in GTMsessionFetcher it would be much easier to directly use NSHTTPSystemCookieStore as sync object",
+      "parentUuid": "04d55982_7b4c1542",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46caa86f_4e2b1cc1",
         "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
         "patchSetId": 5
@@ -648,6 +672,30 @@
       "side": 1,
       "message": "If the method is used by CookieStoreIOS then maybe it should be a part of CookieStoreIOS instead?",
       "parentUuid": "2ca0bd99_778adfd8",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970b6367_84c6f1ae",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T22:08:32Z",
+      "side": 1,
+      "message": "it can be used by any client that needs to keep track of creation time with the SystemCookieStore. (in that case it was cookiestoreios), also this makes the implementation simpler as if it was of the client then each client will provide a callback just to update the creation time for each call of set \u0026 one to remove the time with each delete.",
+      "parentUuid": "8e3cbf09_5de2cf51",
       "range": {
         "startLine": 70,
         "startChar": 13,
