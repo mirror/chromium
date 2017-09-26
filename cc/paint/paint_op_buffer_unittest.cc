@@ -2820,8 +2820,10 @@ class MockImageProvider : public ImageProvider {
 
   ~MockImageProvider() override = default;
 
-  ScopedDecodedDrawImage GetDecodedDrawImage(
-      const DrawImage& draw_image) override {
+  ScopedDecodedDrawImage GetDecodedDrawImage(const PaintImage& paint_image,
+                                             const SkRect& src_rect,
+                                             SkFilterQuality filter_quality,
+                                             const SkMatrix& matrix) override {
     if (fail_all_decodes_)
       return ScopedDecodedDrawImage();
 

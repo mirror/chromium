@@ -19,11 +19,6 @@
 
 namespace cc {
 namespace {
-SkIRect RoundOutRect(const SkRect& rect) {
-  SkIRect result;
-  rect.roundOut(&result);
-  return result;
-}
 
 bool IsImageShader(const PaintFlags& flags) {
   return flags.HasShader() &&
@@ -75,10 +70,8 @@ class ScopedImageFlags {
     total_image_matrix.preConcat(ctm);
     SkRect src_rect =
         SkRect::MakeIWH(paint_image.width(), paint_image.height());
-    DrawImage draw_image(paint_image, RoundOutRect(src_rect),
-                         flags.getFilterQuality(), total_image_matrix);
-    scoped_decoded_draw_image_ =
-        image_provider->GetDecodedDrawImage(draw_image);
+    scoped_decoded_draw_image_ = image_provider->GetDecodedDrawImage(
+        paint_image, src_rect, flags.getFilterQuality(), total_image_matrix);
 
     if (!scoped_decoded_draw_image_)
       return;
@@ -1122,12 +1115,11 @@ void DrawImageOp::RasterWithFlags(const DrawImageOp* op,
     return;
   }
 
-  DrawImage draw_image(
-      op->image, SkIRect::MakeWH(op->image.width(), op->image.height()),
+  SkRect image_rect = SkRect::MakeIWH(op->image.width(), op->image.height());
+  auto scoped_decoded_draw_image = params.image_provider->GetDecodedDrawImage(
+      op->image, image_rect,
       flags ? flags->getFilterQuality() : kNone_SkFilterQuality,
       canvas->getTotalMatrix());
-  auto scoped_decoded_draw_image =
-      params.image_provider->GetDecodedDrawImage(draw_image);
   if (!scoped_decoded_draw_image)
     return;
 
@@ -1168,11 +1160,9 @@ void DrawImageRectOp::RasterWithFlags(const DrawImageRectOp* op,
   matrix.setRectToRect(op->src, op->dst, SkMatrix::kFill_ScaleToFit);
   matrix.postConcat(canvas->getTotalMatrix());
 
-  DrawImage draw_image(
-      op->image, RoundOutRect(op->src),
+  auto scoped_decoded_draw_image = params.image_provider->GetDecodedDrawImage(
+      op->image, op->src,
       flags ? flags->getFilterQuality() : kNone_SkFilterQuality, matrix);
-  auto scoped_decoded_draw_image =
-      params.image_provider->GetDecodedDrawImage(draw_image);
   if (!scoped_decoded_draw_image)
     return;
 

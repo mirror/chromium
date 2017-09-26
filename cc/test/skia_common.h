@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/memory/ref_counted.h"
-#include "cc/paint/draw_image.h"
 #include "cc/paint/image_animation_count.h"
 #include "cc/paint/paint_image.h"
 #include "cc/paint/paint_image_generator.h"
@@ -36,12 +35,6 @@ sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size);
 PaintImage CreateDiscardablePaintImage(
     const gfx::Size& size,
     sk_sp<SkColorSpace> color_space = nullptr);
-
-DrawImage CreateDiscardableDrawImage(const gfx::Size& size,
-                                     sk_sp<SkColorSpace> color_space,
-                                     SkRect rect,
-                                     SkFilterQuality filter_quality,
-                                     const SkMatrix& matrix);
 
 PaintImage CreateAnimatedImage(
     const gfx::Size& size,
