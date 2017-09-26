@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661abdf0_95ff1985",
+        "filename": "chrome/test/chromedriver/client/chromedriver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-26T21:04:56Z",
+      "side": 1,
+      "message": "Should be Rect",
+      "range": {
+        "startLine": 463,
+        "startChar": 15,
+        "endLine": 463,
+        "endChar": 19
+      },
+      "revId": "161f140d7cae71b906220f0c4cafa4ec9e30ce83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee325b9_55310815",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-26T21:04:56Z",
+      "side": 1,
+      "message": "GetWindowRect",
+      "range": {
+        "startLine": 309,
+        "startChar": 25,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "161f140d7cae71b906220f0c4cafa4ec9e30ce83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df5afc2_dfcb829d",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-26T21:04:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t execute the following code if |status| is error",
+      "revId": "161f140d7cae71b906220f0c4cafa4ec9e30ce83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
