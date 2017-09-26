@@ -57,11 +57,15 @@ LocalSharedObjectsContainer::LocalSharedObjectsContainer(Profile* profile)
 LocalSharedObjectsContainer::~LocalSharedObjectsContainer() {
 }
 
+size_t LocalSharedObjectsContainer::GetCookieCount() const {
+  return cookies()->GetCookieCount();
+}
+
 size_t LocalSharedObjectsContainer::GetObjectCount() const {
   size_t count = 0;
   count += appcaches()->GetAppCacheCount();
   count += channel_ids()->GetChannelIDCount();
-  count += cookies()->GetCookieCount();
+  count += GetCookieCount();
   count += databases()->GetDatabaseCount();
   count += file_systems()->GetFileSystemCount();
   count += indexed_dbs()->GetIndexedDBCount();
@@ -72,7 +76,7 @@ size_t LocalSharedObjectsContainer::GetObjectCount() const {
   return count;
 }
 
-size_t LocalSharedObjectsContainer::GetObjectCountForDomain(
+size_t LocalSharedObjectsContainer::GetCookieCountForDomain(
     const GURL& origin) const {
   size_t count = 0;
 
@@ -103,6 +107,14 @@ size_t LocalSharedObjectsContainer::GetObjectCountForDomain(
         ++count;
     }
   }
+  return count;
+}
+
+size_t LocalSharedObjectsContainer::GetObjectCountForDomain(
+    const GURL& origin) const {
+  size_t count = 0;
+
+  count += GetCookieCountForDomain(origin);
 
   // Count local storages for the domain of the given |origin|.
   const std::set<GURL> local_storage_info =

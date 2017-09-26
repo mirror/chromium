@@ -36,6 +36,12 @@ class LocalSharedObjectsContainer {
   // Returns the number of objects for the given |origin|.
   size_t GetObjectCountForDomain(const GURL& origin) const;
 
+  // Returns the number of cookies stored in the container.
+  size_t GetCookieCount() const;
+
+  // Returns the number of cookies for the given |origin|.
+  size_t GetCookieCountForDomain(const GURL& origin) const;
+
   // Empties the container.
   void Reset();
 

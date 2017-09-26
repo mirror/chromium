@@ -842,14 +842,14 @@ void PageInfo::PresentSiteData() {
 
   // Add first party cookie and site data counts.
   PageInfoUI::CookieInfo cookie_info;
-  cookie_info.allowed = allowed_objects.GetObjectCountForDomain(site_url_);
-  cookie_info.blocked = blocked_objects.GetObjectCountForDomain(site_url_);
+  cookie_info.allowed = allowed_objects.GetCookieCountForDomain(site_url_);
+  cookie_info.blocked = blocked_objects.GetCookieCountForDomain(site_url_);
   cookie_info.is_first_party = true;
   cookie_info_list.push_back(cookie_info);
 
   // Add third party cookie counts.
-  cookie_info.allowed = allowed_objects.GetObjectCount() - cookie_info.allowed;
-  cookie_info.blocked = blocked_objects.GetObjectCount() - cookie_info.blocked;
+  cookie_info.allowed = allowed_objects.GetCookieCount() - cookie_info.allowed;
+  cookie_info.blocked = blocked_objects.GetCookieCount() - cookie_info.blocked;
   cookie_info.is_first_party = false;
   cookie_info_list.push_back(cookie_info);
 
