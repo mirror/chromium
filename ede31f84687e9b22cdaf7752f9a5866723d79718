@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c39162_fefb10c5",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "nit for the existing code. The number here isn\u0027t really a constant, since it\u0027s coming from the settings.",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347a1c0d_9c6e048e",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Do we want to make this a pass-through instead?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8c4b61_67743311",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Looking at the PWG specs and pwg_encoder.cc, it appears PWG DPIs are 2D, but PwgHeaderInfo isn\u0027t. Shall we fix PwgHeaderInfo instead of doing this? We can probably make the PwgHeaderInfo change in a separate CL before this one.",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c108acf_60dd5332",
+        "filename": "components/printing/renderer/print_render_frame_helper_pdf_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "So would some Blink-side changes help make this simpler?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc49c61_f0a68ba1",
+        "filename": "components/printing/test/mock_printer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Do we need change MockPrinter, if it\u0027s just going to have a square DPI anyway?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc599f9b_052ba2ec",
+        "filename": "pdf/pdf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "I\u0027m having a strange sense of deja vu, as if I\u0027ve previously commented about the existence of |dpi_y| here.",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d8c930_edc9c026",
+        "filename": "pdf/pdf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Do we want this to be dpi_x then?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c24fe32_d2416a68",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4353,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Just to be clear, this is compensating for the all the changes above?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25335b93_d002802e",
+        "filename": "printing/pdf_render_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "No need. gfx::Size()\u0027s default ctor already does this.",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde652b7_56469ef8",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "If there aren\u0027t many callers left, maybe we want to just convert them to call set_dpi_xy().",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ab3597_32d621ff",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "So this is reverting r501074?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d3cd72_a1de2a14",
+        "filename": "printing/printing_context_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T00:23:01Z",
+      "side": 1,
+      "message": "Is this a change that we can land separately?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
