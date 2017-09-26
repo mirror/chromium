@@ -16,6 +16,24 @@
       "revId": "d08f0826cfdb337e1facbaddf0435121976c4808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df04de3_884615bb",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeolocationWatchers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-26T07:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "279960f6_11a74019",
+      "revId": "d08f0826cfdb337e1facbaddf0435121976c4808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
