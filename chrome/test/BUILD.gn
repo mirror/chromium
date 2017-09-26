@@ -2386,8 +2386,14 @@ test("browser_tests") {
       }
       if (is_win || is_linux) {
         sources += [
+          "../browser/download/download_service_browsertest.cc",
           "../browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
           "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc",
+        ]
+
+        deps += [
+          "//components/download/content/test:test_support",
+          "//components/download/public/test:test_support",
         ]
       }
     }
