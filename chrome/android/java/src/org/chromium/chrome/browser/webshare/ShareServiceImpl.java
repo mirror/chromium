@@ -54,7 +54,7 @@ public class ShareServiceImpl implements ShareService {
         RecordHistogram.recordEnumeratedHistogram("WebShare.ApiCount", WEBSHARE_METHOD_SHARE,
                 WEBSHARE_METHOD_COUNT);
 
-        if (mActivity == null) {
+        if (mActivity == null || !url.isValid) {
             RecordHistogram.recordEnumeratedHistogram("WebShare.ShareOutcome",
                     WEBSHARE_OUTCOME_UNKNOWN_FAILURE, WEBSHARE_OUTCOME_COUNT);
             callback.call(ShareError.INTERNAL_ERROR);
@@ -77,7 +77,7 @@ public class ShareServiceImpl implements ShareService {
             }
         };
 
-        ShareParams params = new ShareParams.Builder(mActivity, title, url.url)
+        ShareParams params = new ShareParams.Builder(mActivity, title, url.spec)
                                      .setText(text)
                                      .setCallback(innerCallback)
                                      .build();

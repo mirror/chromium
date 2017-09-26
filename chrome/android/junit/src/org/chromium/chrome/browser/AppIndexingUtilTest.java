@@ -17,7 +17,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -127,7 +126,8 @@ public class AppIndexingUtilTest {
 
     private Url createUrl(String s) {
         Url url = new Url();
-        url.url = s;
+        url.isValid = true;
+        url.spec = s;
         return url;
     }
 

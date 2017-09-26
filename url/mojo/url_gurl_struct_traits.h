@@ -14,29 +14,18 @@ namespace mojo {
 
 template <>
 struct StructTraits<url::mojom::UrlDataView, GURL> {
-  static base::StringPiece url(const GURL& r) {
+  static bool is_valid(const GURL& r) { return r.is_valid(); }
+
+  static base::StringPiece spec(const GURL& r) {
     if (r.possibly_invalid_spec().length() > url::kMaxURLChars ||
         !r.is_valid()) {
       return base::StringPiece();
     }
 
-    return base::StringPiece(r.possibly_invalid_spec().c_str(),
-                             r.possibly_invalid_spec().length());
+    return r.possibly_invalid_spec();
   }
-  static bool Read(url::mojom::UrlDataView data, GURL* out) {
-    base::StringPiece url_string;
-    if (!data.ReadUrl(&url_string))
-      return false;
 
-    if (url_string.length() > url::kMaxURLChars)
-      return false;
-
-    *out = GURL(url_string);
-    if (!url_string.empty() && !out->is_valid())
-      return false;
-
-    return true;
-  }
+  static bool Read(url::mojom::UrlDataView data, GURL* out);
 };
 
 }

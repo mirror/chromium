@@ -32,13 +32,20 @@ class UrlTestImpl : public mojom::UrlTest {
   mojo::Binding<UrlTest> binding_;
 };
 
+class MojoGURLStructTraitsTest : public ::testing::Test {
+ public:
+  MojoGURLStructTraitsTest() : impl_(MakeRequest(&proxy_)) {}
+
+  mojom::UrlTest* proxy() { return proxy_.get(); }
+
+ private:
+  base::MessageLoop message_loop_;
+  mojom::UrlTestPtr proxy_;
+  UrlTestImpl impl_;
+};
+
 // Mojo version of chrome IPC test in url/ipc/url_param_traits_unittest.cc.
-TEST(MojoGURLStructTraitsTest, Basic) {
-  base::MessageLoop message_loop;
-
-  mojom::UrlTestPtr proxy;
-  UrlTestImpl impl(MakeRequest(&proxy));
-
+TEST_F(MojoGURLStructTraitsTest, Basic) {
   const char* serialize_cases[] = {
     "http://www.google.com/",
     "http://user:pass@host.com:888/foo;bar?baz#nop",
@@ -47,7 +54,7 @@ TEST(MojoGURLStructTraitsTest, Basic) {
   for (size_t i = 0; i < arraysize(serialize_cases); i++) {
     GURL input(serialize_cases[i]);
     GURL output;
-    EXPECT_TRUE(proxy->BounceUrl(input, &output));
+    EXPECT_TRUE(proxy()->BounceUrl(input, &output));
 
     // We want to test each component individually to make sure its range was
     // correctly serialized and deserialized, not just the spec.
@@ -69,7 +76,7 @@ TEST(MojoGURLStructTraitsTest, Basic) {
         kMaxURLChars + 1, 'a');
     GURL input(url.c_str());
     GURL output;
-    EXPECT_TRUE(proxy->BounceUrl(input, &output));
+    EXPECT_TRUE(proxy()->BounceUrl(input, &output));
     EXPECT_TRUE(output.is_empty());
   }
 
@@ -77,19 +84,28 @@ TEST(MojoGURLStructTraitsTest, Basic) {
   Origin non_unique = Origin::UnsafelyCreateOriginWithoutNormalization(
       "http", "www.google.com", 80, "");
   Origin output;
-  EXPECT_TRUE(proxy->BounceOrigin(non_unique, &output));
+  EXPECT_TRUE(proxy()->BounceOrigin(non_unique, &output));
   EXPECT_EQ(non_unique, output);
   EXPECT_FALSE(output.unique());
 
   Origin unique;
-  EXPECT_TRUE(proxy->BounceOrigin(unique, &output));
+  EXPECT_TRUE(proxy()->BounceOrigin(unique, &output));
   EXPECT_TRUE(output.unique());
 
   Origin with_sub_origin = Origin::CreateFromNormalizedTupleWithSuborigin(
       "http", "www.google.com", 80, "suborigin");
-  EXPECT_TRUE(proxy->BounceOrigin(with_sub_origin, &output));
+  EXPECT_TRUE(proxy()->BounceOrigin(with_sub_origin, &output));
   EXPECT_EQ(with_sub_origin, output);
   EXPECT_FALSE(output.unique());
+}
+
+TEST_F(MojoGURLStructTraitsTest, Invalid) {
+  GURL input("https//example.com/");
+  ASSERT_FALSE(input.is_valid());
+  GURL output;
+  EXPECT_TRUE(proxy()->BounceUrl(input, &output));
+  EXPECT_FALSE(output.is_valid());
+  // TODO(dcheng): Add a test for an invalid spec not round-tripping over IPC.
 }
 
 }  // namespace url

@@ -150,7 +150,8 @@ public class CopylessPasteTest {
 
         WebPage expected = new WebPage();
         expected.url = new Url();
-        expected.url.url = mTestServer.getURL(DATA_PAGE);
+        expected.url.isValid = true;
+        expected.url.spec = mTestServer.getURL(DATA_PAGE);
         expected.title = "JSON-LD for AppIndexing Test";
         Entity e = new Entity();
         e.type = "Hotel";
