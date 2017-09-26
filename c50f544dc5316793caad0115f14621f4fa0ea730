@@ -22,6 +22,40 @@
       "revId": "c50f544dc5316793caad0115f14621f4fa0ea730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae6e3cc_19dd2731",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T22:51:48Z",
+      "side": 1,
+      "message": "should be a component target which also defines SERVICE_MANAGER_SANDBOX_IMPL?",
+      "revId": "c50f544dc5316793caad0115f14621f4fa0ea730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc893a7_25f0f164",
+        "filename": "services/service_manager/sandbox/switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-26T22:51:48Z",
+      "side": 1,
+      "message": "why is this needed? can we avoid this (and thus also avoid splitting out embedder_switches as a separate target from embedder)?",
+      "revId": "c50f544dc5316793caad0115f14621f4fa0ea730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
