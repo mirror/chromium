@@ -81,15 +81,6 @@ class WorkspaceLayoutManagerKeyboardTest2 : public AshTestBase {
                              work_area.width(), work_area.height() / 2);
   }
 
-  void DisableNewVKMode() {
-    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-    if (!command_line->HasSwitch(
-            ::switches::kDisableNewVirtualKeyboardBehavior)) {
-      command_line->AppendSwitch(
-          ::switches::kDisableNewVirtualKeyboardBehavior);
-    }
-  }
-
   const gfx::Rect& keyboard_bounds() const { return keyboard_bounds_; }
 
  private:
@@ -101,9 +92,6 @@ class WorkspaceLayoutManagerKeyboardTest2 : public AshTestBase {
 };
 
 TEST_F(WorkspaceLayoutManagerKeyboardTest2, ChangeWorkAreaInNonStickyMode) {
-  // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
-
   keyboard::SetAccessibilityKeyboardEnabled(true);
   InitKeyboardBounds();
   Shell::Get()->CreateKeyboard();
@@ -131,8 +119,9 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest2, ChangeWorkAreaInNonStickyMode) {
       work_area.height() - kb_controller->GetContainerWindow()->bounds().y();
   gfx::Rect changed_window_bounds(orig_window_bounds);
   changed_window_bounds.Offset(0, -shift);
-  // Window should be shifted up.
-  EXPECT_EQ(changed_window_bounds, window->bounds());
+
+  // Window should not be shifted up.
+  EXPECT_EQ(orig_window_bounds, window->bounds());
 
   kb_controller->HideKeyboard(
       keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
