@@ -22,6 +22,30 @@
       "revId": "c9f649fe266618a096f7fce171639b95114c73bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dacc096_d6983e68",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-26T16:30:10Z",
+      "side": 1,
+      "message": "Good question. We can keep showing SSL interstitials for preload Tabs. We should not show CaptivePortal UI if the Tab is in background.\n\nAlso WebState::IsHidden API will be used in other places (TabUsageRecorder and SadTabTabHelper).",
+      "parentUuid": "386d8446_3836d52f",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 21
+      },
+      "revId": "c9f649fe266618a096f7fce171639b95114c73bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
