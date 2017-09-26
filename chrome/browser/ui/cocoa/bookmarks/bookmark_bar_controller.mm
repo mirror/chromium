@@ -243,6 +243,7 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   CGFloat originalImportBookmarksButtonWidth_;
   CGFloat originalNoItemInterelementPadding_;
   BOOL didCreateExtraButtons_;
+  BOOL closingBookmarkFolders_;
 
   // Maps bookmark node IDs to instantiated buttons for ease of lookup.
   std::unordered_map<int64_t, base::scoped_nsobject<BookmarkButton>>
@@ -280,6 +281,7 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
         [[BookmarkFolderTarget alloc] initWithController:self
                                                  profile:browser_->profile()]);
     didCreateExtraButtons_ = NO;
+    closingBookmarkFolders_ = NO;
 
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     folderImage_.reset(
@@ -2346,6 +2348,13 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
 // Close all bookmark folders.  "Folder" here is the fake menu for
 // bookmark folders, not a button context menu.
 - (void)closeAllBookmarkFolders {
+  // In some circumstances (fullscreen mode, for example), doing
+  // this leads to a relayout, which can call this reentrantly.
+  // Ensure we don't overrelease by no-oping while a close is in-progress.
+  if (closingBookmarkFolders_)
+    return;
+
+  closingBookmarkFolders_ = YES;
   [self watchForExitEvent:NO];
 
   // Grab the parent button under to make sure that the highlighting that was
@@ -2354,6 +2363,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   [folderController_ close];
   [parentButton setNeedsDisplay:YES];
   folderController_ = nil;
+  closingBookmarkFolders_ = NO;
 }
 
 - (void)closeBookmarkFolder:(id)sender {
