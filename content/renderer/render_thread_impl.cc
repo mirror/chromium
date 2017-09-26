@@ -857,8 +857,7 @@ void RenderThreadImpl::Init(
     is_distance_field_text_enabled_ = false;
   }
 
-  WebRuntimeFeatures::EnableCompositorImageAnimations(
-      command_line.HasSwitch(switches::kEnableCompositorImageAnimations));
+  WebRuntimeFeatures::EnableCompositorImageAnimations(false);
 
   // Note that under Linux, the media library will normally already have
   // been initialized by the Zygote before this instance became a Renderer.
