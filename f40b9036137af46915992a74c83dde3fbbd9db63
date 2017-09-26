@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2edef85b_cbecd255",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-26T17:58:35Z",
+      "side": 1,
+      "message": "currently uses options as the popup - not sure if this is considered bad practice or not?",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
