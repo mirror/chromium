@@ -140,6 +140,24 @@
       "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c786821_277ffa78",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-26T08:16:16Z",
+      "side": 1,
+      "message": "Opened https://crbug.com/768733 to discuss.",
+      "parentUuid": "7b6fe33a_eff28462",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
