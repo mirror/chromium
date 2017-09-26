@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12ad4888_0d915697",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Haven\u0027t seen the rest of the CL yet, but should we just immediately treat it as a failure on incognito for now?  We can return a null download service if that works better (do we already?) so you can tell easily.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd72ea29_8638df3c",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Sadness :(!  I think this is fixed now.",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 75
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb40df0_8079ac16",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Do you have to set the others as nullptr?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd70fa9_43e539c9",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Add a TODO to validate the chain/headers before returning CONTINUE?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 52
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a94236_f4ea7029",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Add a TODO to return false if the background fetch hasn\u0027t finished yet?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 14
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cf13c5_d43e4178",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "// namespace download for consistency?",
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239b7b60_3aed3d49",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "Add \"// download::Client implementation.\" over this block of methods?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8c2548_64e828b5",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "new line before private members?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f12511_44f3219b",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-26T21:33:43Z",
+      "side": 1,
+      "message": "D\u0027oh we set the public API to -1, -2, -3 but didn\u0027t adjust this one.  That\u0027s ok though we handle the conversions manually in proto_conversions.cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
