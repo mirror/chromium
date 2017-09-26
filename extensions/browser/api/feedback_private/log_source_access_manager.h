@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "components/feedback/system_logs/system_logs_source.h"
 #include "content/public/browser/browser_context.h"
+#include "extensions/browser/api/feedback_private/log_source_access_rate_limiter.h"
 #include "extensions/common/api/feedback_private.h"
 
 namespace extensions {
@@ -40,10 +41,7 @@ class LogSourceAccessManager {
   static void SetRateLimitingTimeoutForTesting(const base::TimeDelta* timeout);
 
   // Override the default base::Time clock with a custom clock for testing.
-  // Pass in |clock|=nullptr to revert to default behavior.
-  void SetTickClockForTesting(std::unique_ptr<base::TickClock> clock) {
-    tick_clock_ = std::move(clock);
-  }
+  void SetTickClockForTesting(base::TickClock* clock) { tick_clock_ = clock; }
 
   // Initiates a fetch from a log source, as specified in |params|. See
   // feedback_private.idl for more info about the actual parameters.
@@ -102,12 +100,6 @@ class LogSourceAccessManager {
   // delete from |last_access_times_|.
   bool UpdateSourceAccessTime(const SourceAndExtension& key);
 
-  // Returns the last time that |key.source| was accessed by |key.extension|.
-  // If it was never accessed by the extension, returns an empty base::TimeTicks
-  // object.
-  base::TimeTicks GetLastExtensionAccessTime(
-      const SourceAndExtension& key) const;
-
   // Returns the number of entries in |sources_| with source=|source|.
   size_t GetNumActiveResourcesForSource(
       api::feedback_private::LogSource source) const;
@@ -125,14 +117,15 @@ class LogSourceAccessManager {
   // This intentionally kept separate from |sources_| because entries can be
   // removed from and re-added to |sources_|, but that should not erase the
   // recorded access times.
-  std::map<SourceAndExtension, base::TimeTicks> last_access_times_;
+  std::map<SourceAndExtension, std::unique_ptr<LogSourceAccessRateLimiter>>
+      rate_limiters_;
 
   // For fetching browser resources like ApiResourceManager.
   content::BrowserContext* context_;
 
   // Provides a timer clock implementation for keeping track of access times.
   // Can override the default clock for testing.
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   base::WeakPtrFactory<LogSourceAccessManager> weak_factory_;
 
