@@ -28,6 +28,13 @@ class CC_EXPORT ScopedResource : public Resource {
                 ResourceProvider::TextureHint hint,
                 viz::ResourceFormat format,
                 const gfx::ColorSpace& color_space);
+
+  void Allocate(const gfx::Size& size,
+                ResourceProvider::TextureHint hint,
+                viz::ResourceFormat format,
+                const gfx::ColorSpace& color_space,
+                bool local);
+
   void AllocateWithGpuMemoryBuffer(const gfx::Size& size,
                                    viz::ResourceFormat format,
                                    gfx::BufferUsage usage,
